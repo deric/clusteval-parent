@@ -1,5 +1,7 @@
 language: java
-sudo: false
+cache: packages
+sudo: true
+before_install: './install-backend'
 jdk:
   - oraclejdk7
   - openjdk7
