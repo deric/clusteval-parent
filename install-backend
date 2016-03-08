@@ -1,4 +1,6 @@
 #!/bin/bash
 set -xe
 sudo apt-get install r-base
+mkdir -p ~/R/library
+export R_LIBS="~/R/library"
 R < install.R --no-save
