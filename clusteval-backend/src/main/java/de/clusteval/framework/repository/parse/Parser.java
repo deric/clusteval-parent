@@ -179,20 +179,23 @@ public abstract class Parser<P extends RepositoryObject> {
                                                                UnknownDataStatisticException, UnknownRunStatisticException, UnknownRunDataStatisticException,
                                                                UnknownRunResultPostprocessorException, UnknownDataRandomizerException {
         String runMode = Parser.getModeOfRun(file);
-        if (runMode.equals("clustering")) {
-            return Parser.parseFromFile(ClusteringRun.class, file);
-        } else if (runMode.equals("parameter_optimization")) {
-            return Parser.parseFromFile(ParameterOptimizationRun.class, file);
-        } else if (runMode.equals("internal_parameter_optimization")) {
-            return Parser.parseFromFile(InternalParameterOptimizationRun.class, file);
-        } else if (runMode.equals("dataAnalysis")) {
-            return Parser.parseFromFile(DataAnalysisRun.class, file);
-        } else if (runMode.equals("runAnalysis")) {
-            return Parser.parseFromFile(RunAnalysisRun.class, file);
-        } else if (runMode.equals("runDataAnalysis")) {
-            return Parser.parseFromFile(RunDataAnalysisRun.class, file);
-        } else if (runMode.equals("robustnessAnalysis")) {
-            return Parser.parseFromFile(RobustnessAnalysisRun.class, file);
+        switch (runMode) {
+            case "clustering":
+                return Parser.parseFromFile(ClusteringRun.class, file);
+            case "parameter_optimization":
+                return Parser.parseFromFile(ParameterOptimizationRun.class, file);
+            case "internal_parameter_optimization":
+                return Parser.parseFromFile(InternalParameterOptimizationRun.class, file);
+            case "dataAnalysis":
+                return Parser.parseFromFile(DataAnalysisRun.class, file);
+            case "runAnalysis":
+                return Parser.parseFromFile(RunAnalysisRun.class, file);
+            case "runDataAnalysis":
+                return Parser.parseFromFile(RunDataAnalysisRun.class, file);
+            case "robustnessAnalysis":
+                return Parser.parseFromFile(RobustnessAnalysisRun.class, file);
+            default:
+                break;
         }
         return null;
     }
@@ -303,7 +306,7 @@ class RobustnessAnalysisRunParser extends ExecutionRunParser<RobustnessAnalysisR
             throw new RunException("At least one run result identifier must be specified");
         }
         // 10.07.2014: remove duplicates.
-        list = new ArrayList<String>(new HashSet<String>(Arrays.asList(list))).toArray(new String[0]);
+        list = new ArrayList<>(new HashSet<>(Arrays.asList(list))).toArray(new String[0]);
         this.uniqueRunIdentifiers = Arrays.asList(list);
 
         String randomizerS = getProps().getString("randomizer");
@@ -316,7 +319,7 @@ class RobustnessAnalysisRunParser extends ExecutionRunParser<RobustnessAnalysisR
         int numberOfRandomizedDataSets = getProps().getInt("numberOfRandomizedDataSets");
 
         // get randomizer parameter sets
-        List<ParameterSet> paramSets = new ArrayList<ParameterSet>();
+        List<ParameterSet> paramSets = new ArrayList<>();
         int c = 1;
         while (getProps().getSections().contains(randomizerS + "_" + c)) {
             ParameterSet paramSet = new ParameterSet();
@@ -359,18 +362,18 @@ class RobustnessAnalysisRunParser extends ExecutionRunParser<RobustnessAnalysisR
                                                     UnknownRunResultPostprocessorException, UnknownDataRandomizerException {
 
         if (this.repo instanceof RunResultRepository) {
-            this.originalDataConfigs = new ArrayList<DataConfig>();
+            this.originalDataConfigs = new ArrayList<>();
             // get the original data configs
             String[] list = getProps().getStringArray("dataConfig");
             if (list.length == 0) {
                 throw new RunException("At least one data config must be specified");
             }
             // 10.07.2014: remove duplicates.
-            list = new ArrayList<String>(new HashSet<String>(Arrays.asList(list))).toArray(new String[0]);
+            list = new ArrayList<>(new HashSet<String>(Arrays.asList(list))).toArray(new String[0]);
             for (String dataConfig : list) {
                 this.originalDataConfigs.add(repo.getParent().getStaticObjectWithName(DataConfig.class, dataConfig));
             }
-            this.dataConfigs = new ArrayList<DataConfig>(this.originalDataConfigs);
+            this.dataConfigs = new ArrayList<>(this.originalDataConfigs);
 
             // class DataConfigFileExtFilter implements FilenameFilter {
             //
@@ -403,7 +406,7 @@ class RobustnessAnalysisRunParser extends ExecutionRunParser<RobustnessAnalysisR
             // this.dataConfigs = randomizedDataConfigs;
         } else {
             super.parseDataConfigurations();
-            this.originalDataConfigs = new ArrayList<DataConfig>(this.dataConfigs);
+            this.originalDataConfigs = new ArrayList<>(this.dataConfigs);
         }
     }
 }
@@ -431,12 +434,12 @@ class DataAnalysisRunParser extends AnalysisRunParser<DataAnalysisRun> {
             throw new RunException("At least one data config must be specified");
         }
 
-        /*
-		 * An analysis run consists of a set of dataconfigs
+        /**
+         * An analysis run consists of a set of dataconfigs
          */
-        List<DataConfig> dataConfigs = new LinkedList<DataConfig>();
+        List<DataConfig> dataConfigs = new LinkedList<>();
 
-        List<DataStatistic> dataStatistics = new LinkedList<DataStatistic>();
+        List<DataStatistic> dataStatistics = new LinkedList<>();
 
         for (String dataConfig : list) {
             dataConfigs.add(repo.getRegisteredObject(Parser.parseFromFile(DataConfig.class,
@@ -448,7 +451,7 @@ class DataAnalysisRunParser extends AnalysisRunParser<DataAnalysisRun> {
          * loaded once so that they are ALL registered as missing in the
          * repository.
          */
-        List<UnknownDataStatisticException> thrownExceptions = new ArrayList<UnknownDataStatisticException>();
+        List<UnknownDataStatisticException> thrownExceptions = new ArrayList<>();
         for (String dataStatistic : getProps().getStringArray("dataStatistics")) {
             try {
                 dataStatistics.add(DataStatistic.parseFromString(repo, dataStatistic));
@@ -464,8 +467,6 @@ class DataAnalysisRunParser extends AnalysisRunParser<DataAnalysisRun> {
         result = new DataAnalysisRun(repo, context, changeDate, absPath, dataConfigs, dataStatistics);
         result = repo.getRegisteredObject(result, false);
     }
-;
-
 }
 
 class DataConfigParser extends RepositoryObjectParser<DataConfig> {
@@ -534,12 +535,12 @@ class DataSetConfigParser extends RepositoryObjectParser<DataSetConfig> {
     protected ConversionInputToStandardConfiguration configInputToStandard;
     protected ConversionStandardToInputConfiguration configStandardToInput;
 
-    /*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * de.clusteval.framework.repository.RepositoryObjectParser#parseFromFile
-	 * (java.io.File)
+    /**
+     * (non-Javadoc)
+     *
+     * @see
+     * de.clusteval.framework.repository.RepositoryObjectParser#parseFromFile
+     * (java.io.File)
      */
     @Override
     public void parseFromFile(File absPath) throws NoRepositoryFoundException, ConfigurationException,
@@ -602,7 +603,7 @@ class DataSetConfigParser extends RepositoryObjectParser<DataSetConfig> {
                     }
                 }
             } else {
-                preprocessorBeforeDistance = new ArrayList<DataPreprocessor>();
+                preprocessorBeforeDistance = new ArrayList<>();
             }
 
             List<DataPreprocessor> preprocessorAfterDistance;
@@ -610,7 +611,7 @@ class DataSetConfigParser extends RepositoryObjectParser<DataSetConfig> {
                 preprocessorAfterDistance = DataPreprocessor.parseFromString(repo,
                         getProps().getStringArray("preprocessorAfterDistance"));
             } else {
-                preprocessorAfterDistance = new ArrayList<DataPreprocessor>();
+                preprocessorAfterDistance = new ArrayList<>();
             }
 
             configInputToStandard = new ConversionInputToStandardConfiguration(distanceMeasure, similarityPrecision,
@@ -681,7 +682,7 @@ class DataSetParser extends RepositoryObjectParser<DataSet> {
         try {
             Map<String, String> attributeValues = extractDataSetAttributes(absPath);
 
-            if (attributeValues.size() == 0) {
+            if (attributeValues.isEmpty()) {
                 throw new NoDataSetException("The file " + absPath + " does not contain a dataset header.");
             }
 
@@ -712,7 +713,7 @@ class DataSetParser extends RepositoryObjectParser<DataSet> {
             if (attributeValues.containsKey("dataSetFormat")) {
                 if (attributeValues.containsKey("dataSetFormatVersion")) {
                     dsFormat = DataSetFormat.parseFromString(repo, attributeValues.get("dataSetFormat"),
-                            Integer.valueOf(attributeValues.get("dataSetFormatVersion")).intValue());
+                            Integer.parseInt(attributeValues.get("dataSetFormatVersion")));
                 } else {
                     dsFormat = DataSetFormat.parseFromString(repo, attributeValues.get("datasetFormat"));
                 }
@@ -813,24 +814,24 @@ class ExecutionRunParser<T extends ExecutionRun> extends RunParser<T> {
                                                          UnknownRunResultPostprocessorException, UnknownDataRandomizerException {
         super.parseFromFile(absPath);
 
-        /*
-		 * A run consists of a set of programconfigs and a set of dataconfigs,
-		 * that are pairwise combined.
+        /**
+         * A run consists of a set of programconfigs and a set of dataconfigs,
+         * that are pairwise combined.
          */
-        programConfigs = new LinkedList<ProgramConfig>();
-        dataConfigs = new LinkedList<DataConfig>();
-        /*
-		 * The quality measures that should be calculated for every pair of
-		 * programconfig+dataconfig.
+        programConfigs = new LinkedList<>();
+        dataConfigs = new LinkedList<>();
+        /**
+         * The quality measures that should be calculated for every pair of
+         * programconfig+dataconfig.
          */
-        qualityMeasures = new LinkedList<ClusteringQualityMeasure>();
-        /*
-		 * A list with parameter values that are set in the run config. They
-		 * will overwrite the default values of the program config.
+        qualityMeasures = new LinkedList<>();
+        /**
+         * A list with parameter values that are set in the run config. They
+         * will overwrite the default values of the program config.
          */
-        runParamValues = new ArrayList<Map<ProgramParameter<?>, String>>();
+        runParamValues = new ArrayList<>();
 
-        maxExecutionTimes = new HashMap<String, Integer>();
+        maxExecutionTimes = new HashMap<>();
 
         parseProgramConfigurations();
 
@@ -862,7 +863,7 @@ class ExecutionRunParser<T extends ExecutionRun> extends RunParser<T> {
             throw new RunException("At least one program config must be specified");
         }
         // 10.07.2014: remove duplicates.
-        list = new ArrayList<String>(new HashSet<String>(Arrays.asList(list))).toArray(new String[0]);
+        list = new ArrayList<>(new HashSet<>(Arrays.asList(list))).toArray(new String[0]);
         for (String programConfig : list) {
             ProgramConfig newProgramConfig = Parser.parseFromFile(ProgramConfig.class,
                     new File(FileUtils.buildPath(repo.getBasePath(ProgramConfig.class), programConfig + ".config")));
@@ -875,8 +876,8 @@ class ExecutionRunParser<T extends ExecutionRun> extends RunParser<T> {
             newProgramConfig = repo.getRegisteredObject(newProgramConfig);
             programConfigs.add(newProgramConfig);
 
-            /*
-			 * parse the overriding parameter-values for this program config
+            /**
+             * parse the overriding parameter-values for this program config
              */
             parseProgramConfigParams(newProgramConfig);
         }
@@ -901,7 +902,7 @@ class ExecutionRunParser<T extends ExecutionRun> extends RunParser<T> {
          * be loaded once so that they are ALL registered as missing in the
          * repository.
          */
-        List<UnknownClusteringQualityMeasureException> thrownExceptions = new ArrayList<UnknownClusteringQualityMeasureException>();
+        List<UnknownClusteringQualityMeasureException> thrownExceptions = new ArrayList<>();
         for (String qualityMeasure : getProps().getStringArray("qualityMeasures")) {
             try {
                 // parse parameters for this quality measure
@@ -947,7 +948,7 @@ class ExecutionRunParser<T extends ExecutionRun> extends RunParser<T> {
             throw new RunException("At least one data config must be specified");
         }
         // 10.07.2014: remove duplicates.
-        list = new ArrayList<String>(new HashSet<String>(Arrays.asList(list))).toArray(new String[0]);
+        list = new ArrayList<>(new HashSet<>(Arrays.asList(list))).toArray(new String[0]);
         for (String dataConfig : list) {
             dataConfigs.add(repo.getRegisteredObject(Parser.parseFromFile(DataConfig.class,
                     new File(FileUtils.buildPath(repo.getBasePath(DataConfig.class), dataConfig + ".dataconfig")))));
@@ -1320,12 +1321,12 @@ class ParameterOptimizationRunParser extends ExecutionRunParser<ParameterOptimiz
 
 class ProgramConfigParser extends RepositoryObjectParser<ProgramConfig> {
 
-    /*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * de.clusteval.framework.repository.RepositoryObjectParser#parseFromFile
-	 * (java.io.File)
+    /**
+     * (non-Javadoc)
+     *
+     * @see
+     * de.clusteval.framework.repository.RepositoryObjectParser#parseFromFile
+     * (java.io.File)
      */
     @Override
     public void parseFromFile(File absPath) throws NoRepositoryFoundException, ConfigurationException,
@@ -1354,14 +1355,14 @@ class ProgramConfigParser extends RepositoryObjectParser<ProgramConfig> {
             context = Context.parseFromString(repo, "ClusteringContext");
         }
 
-        /*
-		 * Added 07.08.2012 Type of programconfig is either standalone or R
+        /**
+         * Added 07.08.2012 Type of programconfig is either standalone or R
          */
         String type;
         if (getProps().containsKey("type")) {
             type = getProps().getString("type");
-        } else // Default
-        {
+        } else {
+            // Default
             type = "standalone";
         }
 
@@ -1403,7 +1404,7 @@ class ProgramConfigParser extends RepositoryObjectParser<ProgramConfig> {
 
             String alias = getProps().getString("alias");
 
-            Map<String, String> envVars = new HashMap<String, String>();
+            Map<String, String> envVars = new HashMap<>();
             Iterator<String> vars = getProps().getSection("envVars").getKeys();
             while (vars.hasNext()) {
                 String var = vars.next();
@@ -1415,17 +1416,16 @@ class ProgramConfigParser extends RepositoryObjectParser<ProgramConfig> {
             programP = RProgram.parseFromString(repo, type);
 
             RProgram rProgram = (RProgram) programP;
-
-            compatibleDataSetFormats = new ArrayList<DataSetFormat>(rProgram.getCompatibleDataSetFormats());
-
+            compatibleDataSetFormats = new ArrayList<>(rProgram.getCompatibleDataSetFormats());
             runresultFormat = rProgram.getRunResultFormat();
         } else {
             throw new UnknownProgramTypeException("The type " + type + " is unknown.");
         }
 
         List<String> paras = Arrays.asList(getProps().getStringArray("parameters"));
-        List<ProgramParameter<?>> params = new ArrayList<ProgramParameter<?>>();
-        List<ProgramParameter<?>> optimizableParameters = new ArrayList<ProgramParameter<?>>();
+
+        List<ProgramParameter<?>> params = new ArrayList<>();
+        List<ProgramParameter<?>> optimizableParameters = new ArrayList<>();
 
         changeDate = absPath.lastModified();
 
