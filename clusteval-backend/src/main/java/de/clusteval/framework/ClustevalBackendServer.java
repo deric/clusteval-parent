@@ -70,7 +70,6 @@ import de.clusteval.program.UnknownProgramParameterException;
 import de.clusteval.program.UnknownProgramTypeException;
 import de.clusteval.program.r.UnknownRProgramException;
 import de.clusteval.run.InvalidRunModeException;
-import de.wiwie.wiutils.backend.RUN_STATUS;
 import de.clusteval.run.Run;
 import de.clusteval.run.RunException;
 import de.clusteval.run.result.ParameterOptimizationResult;
@@ -89,9 +88,10 @@ import de.clusteval.run.runnable.RunAnalysisIterationRunnable;
 import de.clusteval.run.runnable.RunAnalysisRunRunnable;
 import de.clusteval.run.statistics.UnknownRunDataStatisticException;
 import de.clusteval.run.statistics.UnknownRunStatisticException;
-import de.wiwie.wiutils.backend.IBackendServer;
 import de.clusteval.utils.InvalidConfigurationFileException;
 import de.clusteval.utils.MyHighlightingCompositeConverter;
+import de.wiwie.wiutils.backend.IBackendServer;
+import de.wiwie.wiutils.backend.RUN_STATUS;
 import de.wiwie.wiutils.file.FileUtils;
 import de.wiwie.wiutils.utils.Pair;
 import de.wiwie.wiutils.utils.Triple;
@@ -404,7 +404,7 @@ public class ClustevalBackendServer implements IBackendServer {
 			InterruptedException, DatabaseConnectException {
 
 		// bugfix for log4j warning
-		org.apache.log4j.Logger.getRootLogger().setLevel(org.apache.log4j.Level.OFF);
+		//org.apache.log4j.Logger.getRootLogger().setLevel(org.apache.log4j.Level.OFF);
 		org.apache.log4j.Logger.getRootLogger().addAppender(
 				new org.apache.log4j.ConsoleAppender(new org.apache.log4j.PatternLayout("%d %-5p %c - %F:%L - %m%n")));
 

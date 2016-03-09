@@ -29,6 +29,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.rules.TestName;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Christian Wiwie
@@ -42,6 +44,7 @@ public abstract class AbstractClustEvalTest {
     protected RepositoryObject repositoryObject;
     protected Context context;
     protected boolean useDatabase;
+    static Logger logger = LoggerFactory.getLogger(AbstractClustEvalTest.class);
 
     /**
      *
@@ -65,6 +68,9 @@ public abstract class AbstractClustEvalTest {
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
         ClustevalBackendServer.logLevel(Level.WARN);
+//        BasicConfigurator.configure();
+
+        logger.info("Starting tests");
     }
 
     /**
