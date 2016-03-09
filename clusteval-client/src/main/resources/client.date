@@ -6,4 +6,3 @@ gitbranch=${git.branch}
 gitrev=${git.commit.id.abbrev}, ${git.build.time}
 version=${project.version}
 build=${git.commit.id}
-
