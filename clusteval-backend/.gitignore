@@ -1,0 +1,8 @@
+*.SimMatrix
+*.strip
+*.strip.out
+*.strip.out2
+*.strip.out.row
+*.strip.out.matriHeader
+*.strip.out.matriHeader2
+
