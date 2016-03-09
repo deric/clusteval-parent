@@ -16,9 +16,7 @@ import org.junit.Test;
  * @author Christian Wiwie
  *
  */
-public class TestAbsoluteSpearmanCorrelationDistanceMeasure
-        extends
-        AbstractClustEvalTest {
+public class TestAbsoluteSpearmanCorrelationDistanceMeasure extends AbstractClustEvalTest {
 
     @Test
     public void test() throws UnknownDistanceMeasureException,
