@@ -53,4 +53,9 @@ public class SimilarityMatrixInt extends AbstractSimilarityMatrix {
         matrix.setQuick(id1, id2, (int) similarity);
     }
 
+    @Override
+    int getColumns() {
+        return matrix.columns();
+    }
+
 }

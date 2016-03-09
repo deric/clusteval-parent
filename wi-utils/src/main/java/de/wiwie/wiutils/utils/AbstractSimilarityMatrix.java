@@ -30,6 +30,7 @@ public abstract class AbstractSimilarityMatrix {
     public abstract double get(int id1, int id2);
 
     abstract int getRows();
+    abstract int getColumns();
 
     abstract boolean isSymmetric();
 

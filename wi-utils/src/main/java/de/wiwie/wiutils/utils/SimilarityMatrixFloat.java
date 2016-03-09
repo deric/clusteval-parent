@@ -53,4 +53,9 @@ public class SimilarityMatrixFloat extends AbstractSimilarityMatrix {
         matrix.setQuick(id1, id2, (float) similarity);
     }
 
+    @Override
+    int getColumns() {
+        return matrix.columns();
+    }
+
 }

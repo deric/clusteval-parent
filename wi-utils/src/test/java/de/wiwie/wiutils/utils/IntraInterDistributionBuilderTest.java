@@ -17,45 +17,37 @@
  */
 package de.wiwie.wiutils.utils;
 
-import cern.colt.matrix.tdouble.impl.DenseDoubleMatrix2D;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  *
  * @author deric
  */
-public class SimilarityMatrixDouble extends AbstractSimilarityMatrix {
+public class IntraInterDistributionBuilderTest {
 
-    private final DenseDoubleMatrix2D matrix;
-
-    public SimilarityMatrixDouble(int rows, int columns) {
-        super(rows, columns);
-        this.matrix = new DenseDoubleMatrix2D(rows, columns);
+    public IntraInterDistributionBuilderTest() {
     }
 
-    @Override
-    public double get(int id1, int id2) {
-        return matrix.getQuick(id1, id2);
+    @Before
+    public void setUp() {
     }
 
-    @Override
-    int getRows() {
-        return matrix.rows();
+    @After
+    public void tearDown() {
     }
 
-    @Override
-    boolean isSymmetric() {
-        //TODO: not supported?
-        return false;
+    @Test
+    public void testFillArray() {
     }
 
-    @Override
-    void set(int id1, int id2, double similarity) {
-        matrix.setQuick(id1, id2, similarity);
+    @Test
+    public void testGetResult() {
     }
 
-    @Override
-    int getColumns() {
-        return matrix.columns();
+    @Test
+    public void testGetResultAsArray() {
     }
 
 }
