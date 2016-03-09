@@ -1,0 +1,3 @@
+datasetName = lupus
+datasetFile = Baechler2003.txt
+distanceMeasureAbsoluteToRelative = SpearmanCorrelationRDistanceMeasure

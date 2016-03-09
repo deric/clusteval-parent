@@ -1,0 +1,3 @@
+datasetName = DS1
+datasetFile = Zachary_karate_club_similarities.txt
+firstRowHeader = 0
