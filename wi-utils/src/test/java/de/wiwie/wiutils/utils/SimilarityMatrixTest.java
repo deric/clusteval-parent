@@ -17,6 +17,7 @@
  */
 package de.wiwie.wiutils.utils;
 
+import static junit.framework.Assert.assertEquals;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -42,6 +43,14 @@ public class SimilarityMatrixTest {
     public void testMatrix() {
         SimilarityMatrix A = new SimilarityMatrix(new double[][]{new double[]{1.0, 2.0}, new double[]{2.0, 1.0}});
         System.out.println("A: " + A.toString());
+    }
+
+    @Test
+    public void testEquals() {
+        SimilarityMatrix A = new SimilarityMatrix(new double[][]{new double[]{1.0, 2.0}, new double[]{2.0, 1.0}});
+        SimilarityMatrix B = new SimilarityMatrix(new double[][]{new double[]{1.0, 2.0}, new double[]{2.0, 1.0}});
+
+        assertEquals(A, B);
     }
 
 }

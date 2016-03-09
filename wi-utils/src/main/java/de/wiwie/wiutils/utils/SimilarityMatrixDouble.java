@@ -58,4 +58,20 @@ public class SimilarityMatrixDouble extends AbstractSimilarityMatrix {
         return matrix.columns();
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof SimilarityMatrixDouble)) {
+            return false;
+        }
+
+        SimilarityMatrixDouble other = (SimilarityMatrixDouble) obj;
+        return matrix.equals(other.matrix);
+    }
+
 }
