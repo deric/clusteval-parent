@@ -1958,4 +1958,19 @@ public class ArraysExt {
         int[] result = ArraysExt.toPrimitive(list.toArray(new Integer[0]));
         return result;
     }
+
+    /**
+     * Reverse contents of array (without modifying)
+     *
+     * @param array
+     * @return reversed array
+     */
+    public static double[] rev(double[] array) {
+        double[] res = new double[array.length];
+        int j = 0;
+        for (int i = array.length - 1; i >= 0; i--) {
+            res[j++] = array[i];
+        }
+        return res;
+    }
 }
