@@ -31,7 +31,7 @@ import org.junit.Test;
  * @author Christian Wiwie
  *
  */
-public class TestClustering extends AbstractClustEvalTest {
+public class ClusteringTest extends AbstractClustEvalTest {
 
     @Test
     public void testParseFromIntArray() throws RegisterException {
