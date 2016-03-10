@@ -56,4 +56,16 @@ public interface IRepositoryObject {
      */
     void setAbsolutePath(final File absFilePath);
 
+    boolean addListener(final RepositoryListener listener);
+
+    /**
+     * Remove a listener from this objects listener.
+     *
+     * @param listener The listener to remove.
+     * @return True, if the listener was removed successfully
+     */
+    boolean removeListener(final RepositoryListener listener);
+
+    long getChangeDate();
+
 }

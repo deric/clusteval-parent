@@ -13,12 +13,12 @@
 package de.clusteval.run;
 
 import de.clusteval.api.ClusteringEvaluation;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.repository.RepositoryEvent;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
 import de.clusteval.context.Context;
 import de.clusteval.data.DataConfig;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RepositoryRemoveEvent;
 import de.clusteval.framework.repository.RepositoryReplaceEvent;
 import de.clusteval.framework.threading.RunSchedulerThread;
@@ -151,7 +151,7 @@ public abstract class ExecutionRun extends Run {
      * @param parameterValues The parameter values of this run.
      * @throws RegisterException
      */
-    protected ExecutionRun(final Repository repository, final Context context,
+    protected ExecutionRun(final IRepository repository, final Context context,
             final boolean register, final long changeDate, final File absPath,
             final List<ProgramConfig> programConfigs,
             final List<DataConfig> dataConfigs,
@@ -204,8 +204,7 @@ public abstract class ExecutionRun extends Run {
         this.qualityMeasures = ClusteringQualityMeasure
                 .cloneQualityMeasures(other.qualityMeasures);
         this.postProcessors = clonePostProcessors(other.postProcessors);
-        this.maxExecutionTimes = new HashMap<String, Integer>(
-                other.maxExecutionTimes);
+        this.maxExecutionTimes = new HashMap<>(other.maxExecutionTimes);
 
         initRunPairs(
                 ProgramConfig.cloneProgramConfigurations(other.programConfigs),
@@ -255,10 +254,10 @@ public abstract class ExecutionRun extends Run {
     public void perform(final RunSchedulerThread runScheduler)
             throws IOException, RunRunnableInitializationException,
                    RunInitializationException {
-        /*
-		 * Before we start we check, whether this run has been terminated by
-		 * invoking terminate(). This is also the reason, why we have to
-		 * synchronize here in order to avoid only partial termination.
+        /**
+         * Before we start we check, whether this run has been terminated by
+         * invoking terminate(). This is also the reason, why we have to
+         * synchronize here in order to avoid only partial termination.
          */
         synchronized (this.runnables) {
             if (this.getStatus().equals(RUN_STATUS.TERMINATED)) {
@@ -287,10 +286,10 @@ public abstract class ExecutionRun extends Run {
             final String runIdentString) throws MissingParameterValueException,
                                                 IOException, NoRunResultFormatParserException,
                                                 RunRunnableInitializationException, RunInitializationException {
-        /*
-		 * Before we start we check, whether this run has been terminated by
-		 * invoking terminate(). This is also the reason, why we have to
-		 * synchronize here in order to avoid only partial termination.
+        /**
+         * Before we start we check, whether this run has been terminated by
+         * invoking terminate(). This is also the reason, why we have to
+         * synchronize here in order to avoid only partial termination.
          */
         synchronized (this.runnables) {
             if (this.getStatus().equals(RUN_STATUS.TERMINATED)) {
@@ -328,14 +327,13 @@ public abstract class ExecutionRun extends Run {
         // ExecutionRun runCopy = this.clone();
         ExecutionRun runCopy = this;
 
-        final Pair<ProgramConfig, DataConfig> pair = runCopy.getRunPairs().get(
-                p);
+        final Pair<ProgramConfig, DataConfig> pair = runCopy.getRunPairs().get(p);
 
         ProgramConfig programConfig = pair.getFirst();
         DataConfig dataConfig = pair.getSecond();
 
-        /*
-		 * Copy to results directory
+        /**
+         * Copy to results directory
          */
         // 06.04.2013: create File objects for later use in order to create new
         // data configuration and program configuration objects
@@ -725,7 +723,7 @@ public abstract class ExecutionRun extends Run {
      * @return A list containing all clustering quality measures to be evaluated
      * during execution of this run.
      */
-    public List<ClusteringQualityMeasure> getQualityMeasures() {
+    public List<ClusteringEvaluation> getQualityMeasures() {
         return this.qualityMeasures;
     }
 

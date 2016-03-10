@@ -16,7 +16,10 @@
  */
 package de.clusteval.api.repository;
 
+import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.InvalidRepositoryException;
+import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import java.io.File;
 
@@ -45,6 +48,13 @@ public interface IRepository {
     IRepository getParent();
 
     /**
+     * @return The absolute path to the root of this repository.
+     */
+    public String getBasePath();
+
+    String getBasePath(final Class<? extends IRepositoryObject> c);
+
+    /**
      * @return The absolute path to the directory, where for a certain runresult
      * (identified by its unique run identifier) all log files are stored.
      */
@@ -68,7 +78,6 @@ public interface IRepository {
     <T extends IRepositoryObject> T getStaticObjectWithName(final Class<T> c, final String name);
 
     //<T extends IRepositoryObject> Collection<T> getCollectionStaticEntities(final Class<T> c);
-
     <T extends IRepositoryObject> T getCollectionStaticEntities(final Class<T> c);
 
     <T extends IRepositoryObject> boolean isClassRegistered(final Class<T> c);
@@ -80,4 +89,14 @@ public interface IRepository {
     <T extends IRepositoryObject> boolean registerClass(final Class<T> c);
 
     <T extends IRepositoryObject> boolean unregisterClass(final Class<T> c);
+
+    int getCurrentDataSetFormatVersion(final String formatClass) throws UnknownDataSetFormatException;
+
+    IRengine getRengineForCurrentThread() throws RException;
+
+    public String getAnalysisResultsBasePath();
+
+    public String getClusterResultsBasePath();
+
+    boolean updateStatusOfRun(final IRun run, final String newStatus);
 }

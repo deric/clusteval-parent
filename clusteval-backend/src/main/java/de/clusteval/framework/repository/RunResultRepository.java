@@ -33,7 +33,6 @@ import de.clusteval.data.dataset.type.DataSetType;
 import de.clusteval.data.distance.DistanceMeasure;
 import de.clusteval.data.goldstandard.GoldStandard;
 import de.clusteval.data.goldstandard.GoldStandardConfig;
-import de.clusteval.data.goldstandard.format.GoldStandardFormat;
 import de.clusteval.data.preprocessing.DataPreprocessor;
 import de.clusteval.data.randomizer.DataRandomizer;
 import de.clusteval.data.statistics.DataStatistic;
@@ -119,9 +118,8 @@ public class RunResultRepository extends Repository implements IRepository {
     @Override
     protected void initAttributes() {
 
-        this.staticRepositoryEntities = new StaticRepositoryEntityMap();
-
-        this.dynamicRepositoryEntities = new DynamicRepositoryEntityMap();
+        this.staticRepositoryEntities = new RepositoryEntityMap<>();
+        this.dynamicRepositoryEntities = new RepositoryEntityMap<>();
 
         this.createAndAddStaticEntity(DataConfig.class,
                 FileUtils.buildPath(this.basePath, "configs"));
@@ -254,7 +252,7 @@ public class RunResultRepository extends Repository implements IRepository {
                 this.parent.dynamicRepositoryEntities
                 .get(RunResultFormat.class));
 
-        this.goldStandardFormats = new ConcurrentHashMap<GoldStandardFormat, GoldStandardFormat>();
+        this.goldStandardFormats = new ConcurrentHashMap<>();
 
         this.internalDoubleAttributes = this.parent.internalDoubleAttributes;
         this.internalStringAttributes = this.parent.internalStringAttributes;

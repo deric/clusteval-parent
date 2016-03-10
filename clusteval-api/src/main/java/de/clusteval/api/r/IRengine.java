@@ -39,16 +39,37 @@ public interface IRengine {
      * @throws RLibraryNotLoadedException
      * @throws InterruptedException
      */
-    public boolean loadLibrary(final String name, final String requiredByClass)
+    boolean loadLibrary(final String name, final String requiredByClass)
             throws RLibraryNotLoadedException, InterruptedException;
 
     /**
      * This method clears all variables stored in the session corresponding to
-     * this rengine.
+     * this Rengine.
      *
      * @throws de.clusteval.api.r.RException
      * @throws InterruptedException
      */
-    public void clear() throws RException, InterruptedException;
+    void clear() throws RException, InterruptedException;
+
+    /**
+     * This method allows to assign a two-dimensional double array.
+     *
+     * @param arg0 The variable name in R.
+     * @param arg1 A two-dimensional double array which is assigned to the new
+     * variable.
+     * @throws de.clusteval.api.r.RException
+     * @throws InterruptedException
+     */
+    void assign(String arg0, double[][] arg1) throws RException, InterruptedException;
+
+    /**
+     * TODO: use this instead of printStackTrace() This method logs the last
+     * error.
+     *
+     * @throws InterruptedException
+     */
+    void printLastError() throws InterruptedException;
+
+    boolean interrupt();
 
 }

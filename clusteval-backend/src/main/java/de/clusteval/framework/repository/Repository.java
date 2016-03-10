@@ -85,7 +85,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.logging.Level;
 import java.util.regex.Pattern;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
@@ -114,50 +113,6 @@ import org.slf4j.LoggerFactory;
 public class Repository implements IRepository {
 
     /**
-     * A map containing all repository objects. This includes this repository
-     * but also all run result repositories or other child repositories, that
-     * are contained within this repository.
-     */
-    protected static Map<String, Repository> repositories = new HashMap<>();
-
-    /**
-     * This method returns a repository (if available) with the given root path.
-     *
-     * @param absFilePath The absolute root path of the repository.
-     * @return The repository with the given root path.
-     */
-    public static Repository getRepositoryForExactPath(final String absFilePath) {
-        return Repository.repositories.get(absFilePath);
-    }
-
-    /**
-     * This method returns the lowest repository in repository-hierarchy, that
-     * contains the given path. That means, if there are several nested
-     * repositories for the given path, this method will return the lowest one
-     * of the hierarchy.
-     *
-     * @param absFilePath The absolute file path we want to find the repository
-     * for.
-     * @return The repository for the given path, which is lowest in the
-     * repository-hierarchy.
-     * @throws NoRepositoryFoundException
-     */
-    public static Repository getRepositoryForPath(final String absFilePath) throws NoRepositoryFoundException {
-        String resultPath = null;
-        for (String repoPath : Repository.repositories.keySet()) {
-            if (absFilePath.startsWith(repoPath + System.getProperty("file.separator"))) {
-                if (resultPath == null || repoPath.length() > resultPath.length()) {
-                    resultPath = repoPath;
-                }
-            }
-        }
-        if (resultPath == null) {
-            throw new NoRepositoryFoundException(absFilePath);
-        }
-        return Repository.repositories.get(resultPath);
-    }
-
-    /**
      * This method checks, whether the given string represents an internal
      * attribute placeholder, that means it follows the format of
      * {@value #internalAttributePattern}.
@@ -169,45 +124,6 @@ public class Repository implements IRepository {
     public static boolean isInternalAttribute(final String value) {
         Pattern p = internalAttributePattern;
         return p.matcher(value).matches();
-    }
-
-    /**
-     * Register a new repository.
-     *
-     * @param repository The new repository to register.
-     * @return The old repository, if the new repository replaced an old one
-     * with equal root path. Null otherwise.
-     * @throws RepositoryAlreadyExistsException
-     * @throws InvalidRepositoryException
-     */
-    public IRepository register(IRepository repository)
-            throws RepositoryAlreadyExistsException, InvalidRepositoryException {
-        Repository other = null;
-        try {
-            other = Repository.getRepositoryForPath(repository.basePath);
-        } catch (NoRepositoryFoundException e) {
-        }
-        if (other == null) {
-            return Repository.repositories.put(repository.basePath, repository);
-        }
-        if (other.basePath.equals(repository.basePath)) {
-            throw new RepositoryAlreadyExistsException(other.basePath);
-        }
-        if (repository.parent == null || !repository.parent.equals(other)) {
-            throw new InvalidRepositoryException("Repositories must not be nested without parental relationship");
-        }
-        return Repository.repositories.put(repository.basePath, repository);
-    }
-
-    /**
-     * Unregister the given repository.
-     *
-     * @param repository The repository to remove.
-     * @return The removed repository. If null, the given repository was not
-     * registered.
-     */
-    public static Repository unregister(Repository repository) {
-        return Repository.repositories.remove(repository.basePath);
     }
 
     /**
@@ -300,7 +216,6 @@ public class Repository implements IRepository {
     protected RepositoryEntityMap<IRepositoryObject, StaticRepositoryEntity<IRepositoryObject>> staticRepositoryEntities;
     protected RepositoryEntityMap<IRepositoryObject, DynamicRepositoryEntity<IRepositoryObject>> dynamicRepositoryEntities;
 
-
     /**
      * A map containing all goldstandard formats registered in this repository.
      */
@@ -375,19 +290,6 @@ public class Repository implements IRepository {
 
     private Map<Thread, MyRengine> rEngines;
 
-    private static IRepository instance;
-
-    public static IRepository getInstance() {
-        if (instance == null) {
-            try {
-                instance = new Repository(System.getProperty("user.dir"), null);
-            } catch (FileNotFoundException | RepositoryAlreadyExistsException | InvalidRepositoryException | RepositoryConfigNotFoundException | RepositoryConfigurationException | DatabaseConnectException ex) {
-                java.util.logging.Logger.getLogger(Repository.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        return instance;
-    }
-
     /**
      * Instantiates a new repository.
      *
@@ -443,7 +345,7 @@ public class Repository implements IRepository {
 
         File repositoryConfigFile = new File(FileUtils.buildPath(this.basePath, "repository.config"));
 
-        Repository.register(this);
+        RepositoryController.getInstance().register(this);
 
         if (overrideConfig != null) {
             this.repositoryConfig = overrideConfig;
@@ -468,7 +370,6 @@ public class Repository implements IRepository {
         // this.rEngineException = e;
         // }
         this.rEngines = new HashMap<>();
-        Repository.instance = this;
     }
 
     /**
@@ -671,7 +572,7 @@ public class Repository implements IRepository {
      * arithmetic operations.
      *
      * <p>
-     * A helper method of null null null null null null null     {@link ProgramParameter#evaluateDefaultValue(DataConfig, ProgramConfig)},
+     * A helper method of null null null null null null null null null     {@link ProgramParameter#evaluateDefaultValue(DataConfig, ProgramConfig)},
 	 * {@link ProgramParameter#evaluateMinValue(DataConfig, ProgramConfig)} and
      * {@link ProgramParameter#evaluateMaxValue(DataConfig, ProgramConfig)}.
      *
@@ -758,7 +659,7 @@ public class Repository implements IRepository {
         return this.basePath;
     }
 
-    public String getBasePath(final Class<? extends RepositoryObject> c) {
+    public String getBasePath(final Class<? extends IRepositoryObject> c) {
         if (this.staticRepositoryEntities.containsKey(c)) {
             return this.staticRepositoryEntities.get(c).getBasePath();
         }
@@ -923,14 +824,16 @@ public class Repository implements IRepository {
     }
 
     public <T extends IRepositoryObject> Collection<Class<? extends IRepositoryObject>> getClasses(Class<T> c) {
-        return this.dynamicRepositoryEntities.get(c).getClasses();
+        return (Collection<Class<? extends IRepositoryObject>>) this.dynamicRepositoryEntities.get(c).getClasses();
     }
 
+    @Override
     public String getAnalysisResultsBasePath() {
         return ((RunResultRepositoryEntity) this.staticRepositoryEntities.get(RunResult.class))
                 .getAnalysisResultsBasePath();
     }
 
+    @Override
     public String getClusterResultsBasePath() {
         return ((RunResultRepositoryEntity) this.staticRepositoryEntities.get(RunResult.class))
                 .getClusterResultsBasePath();
@@ -989,6 +892,7 @@ public class Repository implements IRepository {
      * @return The current version for the given dataset format class.
      * @throws UnknownDataSetFormatException
      */
+    @Override
     public int getCurrentDataSetFormatVersion(final String formatClass) throws UnknownDataSetFormatException {
         return ((DataSetFormatRepositoryEntity) this.dynamicRepositoryEntities.get(DataSetFormat.class))
                 .getCurrentDataSetFormatVersion(formatClass);
@@ -1104,6 +1008,7 @@ public class Repository implements IRepository {
      * repository object.
      * @return The repository object which has the given absolute path.
      */
+    @Override
     public IRepositoryObject getRegisteredObject(final File absFilePath) {
         return this.pathToRepositoryObject.get(absFilePath);
     }
@@ -1241,15 +1146,15 @@ public class Repository implements IRepository {
      * slow if many run result folders are present).
      */
     public Collection<String> getRunResultIdentifier() {
-        Collection<String> result = new HashSet<String>();
+        Collection<String> result = new HashSet<>();
 
         for (File resultDir : new File(this.getBasePath(RunResult.class)).listFiles()) {
             if (resultDir.isDirectory()) {
                 File clustersDir = new File(FileUtils.buildPath(resultDir.getAbsolutePath(), "clusters"));
                 if (clustersDir.exists() && clustersDir.isDirectory()) {
-                    /*
-					 * Take only those, that contain at least one *.complete
-					 * file
+                    /**
+                     * Take only those, that contain at least one *.complete
+                     * file
                      */
                     for (File resultsFile : clustersDir.listFiles()) {
                         if (resultsFile.getName().endsWith(".complete")) {
@@ -1469,17 +1374,17 @@ public class Repository implements IRepository {
                         : null,
                         FileUtils.buildPath(this.formatsBasePath, "runresult")));
 
-        this.goldStandardFormats = new ConcurrentHashMap<GoldStandardFormat, GoldStandardFormat>();
+        this.goldStandardFormats = new ConcurrentHashMap<>();
 
-        this.internalDoubleAttributes = new ConcurrentHashMap<String, NamedDoubleAttribute>();
-        this.internalStringAttributes = new ConcurrentHashMap<String, NamedStringAttribute>();
-        this.internalIntegerAttributes = new ConcurrentHashMap<String, NamedIntegerAttribute>();
+        this.internalDoubleAttributes = new ConcurrentHashMap<>();
+        this.internalStringAttributes = new ConcurrentHashMap<>();
+        this.internalIntegerAttributes = new ConcurrentHashMap<>();
 
         // added 14.04.2013
-        this.knownFinderExceptions = new ConcurrentHashMap<String, List<Throwable>>();
-        this.finderClassLoaders = new ConcurrentHashMap<URL, URLClassLoader>();
-        this.finderWaitingFiles = new ConcurrentHashMap<File, List<File>>();
-        this.finderLoadedJarFileChangeDates = new ConcurrentHashMap<String, Long>();
+        this.knownFinderExceptions = new ConcurrentHashMap<>();
+        this.finderClassLoaders = new ConcurrentHashMap<>();
+        this.finderWaitingFiles = new ConcurrentHashMap<>();
+        this.finderLoadedJarFileChangeDates = new ConcurrentHashMap<>();
     }
 
     /**
@@ -1554,7 +1459,7 @@ public class Repository implements IRepository {
      *
      */
     @SuppressWarnings("unused")
-    protected void initializePaths() throws InvalidRepositoryException {
+    private void initializePaths() throws InvalidRepositoryException {
         this.supplementaryBasePath = FileUtils.buildPath(this.basePath, "supp");
         this.suppClusteringBasePath = FileUtils.buildPath(this.supplementaryBasePath, "clustering");
         this.formatsBasePath = FileUtils.buildPath(this.supplementaryBasePath, "formats");

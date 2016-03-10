@@ -19,7 +19,7 @@ import org.rosuda.REngine.Rserve.RserveException;
 
 public class DynamicRepositoryEntity<T extends IRepositoryObject> extends RepositoryEntity<T> {
 
-    protected static Map<String, Class<? extends RepositoryObject>> loadedClasses = new HashMap<String, Class<? extends RepositoryObject>>();
+    protected static Map<String, Class<? extends RepositoryObject>> loadedClasses = new HashMap<>();
 
     protected DynamicRepositoryEntity<T> parent;
 
@@ -33,8 +33,8 @@ public class DynamicRepositoryEntity<T extends IRepositoryObject> extends Reposi
             final DynamicRepositoryEntity<T> parent, final String basePath) {
         super(repository, basePath);
         this.parent = parent;
-        this.objects = new HashMap<String, List<T>>();
-        this.classes = new HashMap<String, Class<? extends T>>();
+        this.objects = new HashMap<>();
+        this.classes = new HashMap<>();
     }
 
     public Collection<Class<? extends T>> getClasses() {

@@ -40,6 +40,11 @@ public class RException extends ClustEvalException {
         this.engine = rEngine;
     }
 
+    public RException(IRengine engine, String msg, Throwable cause) {
+        super(msg, cause);
+        this.engine = engine;
+    }
+
     public IRengine getEngine() {
         return engine;
     }

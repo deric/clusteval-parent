@@ -12,10 +12,11 @@
  */
 package de.clusteval.cluster;
 
-import de.clusteval.api.cluster.quality.ClusteringQualitySet;
 import de.clusteval.api.cluster.quality.ClusteringQualityMeasureValue;
+import de.clusteval.api.cluster.quality.ClusteringQualitySet;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
 import de.clusteval.data.DataConfig;
@@ -81,13 +82,13 @@ public class Clustering extends RepositoryObject implements Iterable<Cluster> {
      * @param absPath
      * @throws RegisterException
      */
-    public Clustering(Repository repository, long changeDate, File absPath)
+    public Clustering(IRepository repository, long changeDate, File absPath)
             throws RegisterException {
         super(repository, false, changeDate, absPath);
-        this.clusters = new HashSet<Cluster>();
-        this.clusterIdToCluster = new HashMap<String, Cluster>();
-        this.itemToCluster = new HashMap<ClusterItem, Map<Cluster, Float>>();
-        this.itemIdToItem = new HashMap<String, ClusterItem>();
+        this.clusters = new HashSet<>();
+        this.clusterIdToCluster = new HashMap<>();
+        this.itemToCluster = new HashMap<>();
+        this.itemIdToItem = new HashMap<>();
 
         this.register();
     }
@@ -112,8 +113,8 @@ public class Clustering extends RepositoryObject implements Iterable<Cluster> {
         try {
             result = new Clustering(this.repository, this.changeDate,
                     this.absPath);
-            final Map<Cluster, Cluster> clusters = new HashMap<Cluster, Cluster>();
-            final Map<ClusterItem, ClusterItem> items = new HashMap<ClusterItem, ClusterItem>();
+            final Map<Cluster, Cluster> clusters = new HashMap<>();
+            final Map<ClusterItem, ClusterItem> items = new HashMap<>();
 
             for (Cluster cl : this.clusters) {
                 Cluster newCluster = new Cluster(cl.id);

@@ -12,6 +12,8 @@
  */
 package de.clusteval.framework.repository;
 
+import de.clusteval.api.r.IRengine;
+import de.clusteval.api.r.RException;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.framework.RLibraryNotLoadedException;
 import java.io.IOException;
@@ -36,7 +38,7 @@ import org.slf4j.LoggerFactory;
  * @author Christian Wiwie
  *
  */
-public class MyRengine {
+public class MyRengine implements IRengine {
 
     protected RConnection connection;
 
@@ -68,7 +70,7 @@ public class MyRengine {
         // set buffer size to 100MB
         // this.connection.setSendBufferSize(1024l * 1024 * 1024 * 100);
         this.log = LoggerFactory.getLogger(this.getClass());
-        this.loadedLibraries = new HashSet<String>();
+        this.loadedLibraries = new HashSet<>();
     }
 
     /**
@@ -85,6 +87,7 @@ public class MyRengine {
      * @throws RLibraryNotLoadedException
      * @throws InterruptedException
      */
+    @Override
     public boolean loadLibrary(final String name, final String requiredByClass)
             throws RLibraryNotLoadedException, InterruptedException {
         if (this.interrupted) {
@@ -109,14 +112,17 @@ public class MyRengine {
      * This method clears all variables stored in the session corresponding to
      * this rengine.
      *
-     * @throws RserveException
      * @throws InterruptedException
      */
-    public void clear() throws RserveException, InterruptedException {
+    public void clear() throws InterruptedException, RException {
         if (interrupted) {
             throw new InterruptedException();
         }
-        this.eval("rm(list=ls(all=TRUE))");
+        try {
+            this.eval("rm(list=ls(all=TRUE))");
+        } catch (RserveException ex) {
+            throw new RException(this, ex.getMessage(), ex);
+        }
     }
 
     /**
@@ -125,11 +131,12 @@ public class MyRengine {
      * @param arg0 The variable name in R.
      * @param arg1 A two-dimensional double array which is assigned to the new
      * variable.
-     * @throws REngineException
+     * @throws de.clusteval.api.r.RException
+
      * @throws InterruptedException
      */
-    public void assign(String arg0, double[][] arg1) throws REngineException,
-                                                            InterruptedException {
+    @Override
+    public void assign(String arg0, double[][] arg1) throws RException, InterruptedException {
         if (interrupted) {
             throw new InterruptedException();
         }
@@ -139,10 +146,13 @@ public class MyRengine {
         for (int i = 0; i < x; i++) {
             System.arraycopy(arg1[i], 0, oneDim, i * y, y);
         }
-        this.eval(arg0 + " <- c()");
-        this.connection.assign(arg0, oneDim);
-        this.eval(arg0 + " <- matrix(" + arg0 + ",nrow=" + x + ",ncol=" + y
-                + ",byrow=T)");
+        try {
+            this.eval(arg0 + " <- c()");
+            this.connection.assign(arg0, oneDim);
+            this.eval(arg0 + " <- matrix(" + arg0 + ",nrow=" + x + ",ncol=" + y + ",byrow=T)");
+        } catch (REngineException e) {
+            throw new RException(this, e.getMessage(), e);
+        }
     }
 
     /**
@@ -254,6 +264,7 @@ public class MyRengine {
         return this.connection.close();
     }
 
+    @Override
     public boolean interrupt() {
         try {
             interrupted = true;

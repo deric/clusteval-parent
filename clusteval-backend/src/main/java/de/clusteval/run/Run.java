@@ -12,10 +12,11 @@
  */
 package de.clusteval.run;
 
-import de.clusteval.context.Context;
+import de.clusteval.api.repository.IRun;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.api.repository.RepositoryEvent;
+import de.clusteval.context.Context;
+import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RepositoryObject;
 import de.clusteval.framework.repository.RepositoryRemoveEvent;
 import de.clusteval.framework.repository.RepositoryReplaceEvent;
@@ -68,7 +69,7 @@ import java.util.concurrent.ExecutionException;
  * @author Christian Wiwie
  *
  */
-public abstract class Run extends RepositoryObject {
+public abstract class Run extends RepositoryObject implements IRun {
 
     /**
      * This method is invoked by different copy-constructors of subclasses of
@@ -83,15 +84,17 @@ public abstract class Run extends RepositoryObject {
      */
     protected static List<Map<ProgramParameter<?>, String>> cloneParameterValues(
             List<Map<ProgramParameter<?>, String>> parameterValues) {
-        List<Map<ProgramParameter<?>, String>> result = new ArrayList<Map<ProgramParameter<?>, String>>();
+        List<Map<ProgramParameter<?>, String>> result = new ArrayList<>();
 
-        for (Map<ProgramParameter<?>, String> map : parameterValues) {
-            Map<ProgramParameter<?>, String> copyMap = new HashMap<ProgramParameter<?>, String>();
-            for (Map.Entry<ProgramParameter<?>, String> entry : map.entrySet()) {
+        parameterValues.stream().map((map) -> {
+            Map<ProgramParameter<?>, String> copyMap = new HashMap<>();
+            map.entrySet().stream().forEach((entry) -> {
                 copyMap.put(entry.getKey().clone(), entry.getValue() + "");
-            }
+            });
+            return copyMap;
+        }).forEach((copyMap) -> {
             result.add(copyMap);
-        }
+        });
 
         return result;
     }

@@ -12,8 +12,9 @@
  */
 package de.clusteval.context;
 
-import de.clusteval.data.dataset.format.DataSetFormat;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
+import de.clusteval.data.dataset.format.DataSetFormat;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RepositoryObject;
 import de.clusteval.run.result.format.RunResultFormat;
@@ -65,7 +66,7 @@ public abstract class Context extends RepositoryObject {
      * @param absPath
      * @throws RegisterException
      */
-    public Context(Repository repository, boolean register, long changeDate,
+    public Context(IRepository repository, boolean register, long changeDate,
             File absPath) throws RegisterException {
         super(repository, register, changeDate, absPath);
     }

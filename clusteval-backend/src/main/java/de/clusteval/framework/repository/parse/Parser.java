@@ -3,6 +3,8 @@
  */
 package de.clusteval.framework.repository.parse;
 
+import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.repository.RegisterException;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.cluster.paramOptimization.InvalidOptimizationParameterException;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
@@ -32,7 +34,6 @@ import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
 import de.clusteval.data.dataset.format.ConversionStandardToInputConfiguration;
 import de.clusteval.data.dataset.format.DataSetFormat;
 import de.clusteval.data.dataset.format.RelativeDataSetFormat;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.data.dataset.type.DataSetType;
 import de.clusteval.data.dataset.type.UnknownDataSetTypeException;
 import de.clusteval.data.distance.DistanceMeasure;
@@ -49,7 +50,6 @@ import de.clusteval.data.randomizer.UnknownDataRandomizerException;
 import de.clusteval.data.statistics.DataStatistic;
 import de.clusteval.data.statistics.UnknownDataStatisticException;
 import de.clusteval.framework.repository.NoRepositoryFoundException;
-import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RepositoryObject;
 import de.clusteval.framework.repository.RunResultRepository;
@@ -1609,9 +1609,9 @@ class RunAnalysisRunParser extends AnalysisRunParser<RunAnalysisRun> {
         /*
 		 * An analysis run consists of a set of dataconfigs
          */
-        List<String> uniqueRunIdentifiers = new LinkedList<String>();
+        List<String> uniqueRunIdentifiers = new LinkedList<>();
 
-        List<RunStatistic> runStatistics = new LinkedList<RunStatistic>();
+        List<RunStatistic> runStatistics = new LinkedList<>();
 
         uniqueRunIdentifiers.addAll(Arrays.asList(getProps().getStringArray("uniqueRunIdentifiers")));
 
@@ -1620,7 +1620,7 @@ class RunAnalysisRunParser extends AnalysisRunParser<RunAnalysisRun> {
          * loaded once so that they are ALL registered as missing in the
          * repository.
          */
-        List<UnknownRunStatisticException> thrownExceptions = new ArrayList<UnknownRunStatisticException>();
+        List<UnknownRunStatisticException> thrownExceptions = new ArrayList<>();
         for (String runStatistic : getProps().getStringArray("runStatistics")) {
             try {
                 runStatistics.add(RunStatistic.parseFromString(repo, runStatistic));

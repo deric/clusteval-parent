@@ -223,7 +223,7 @@ public class StaticRepositoryEntity<T extends IRepositoryObject> extends Reposit
             boolean result = this.objects.remove(object) != null;
             result &= this.nameToObject.remove(object.toString()) != null;
             result &= this.repository.pathToRepositoryObject
-                    .remove(object.absPath) != null;
+                    .remove(object.getAbsolutePath()) != null;
             if (result) {
                 this.unregisterAfterRemove(object);
             }
