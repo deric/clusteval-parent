@@ -42,7 +42,7 @@ import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.framework.threading.RunSchedulerThread;
 import de.wiwie.wiutils.backend.RUN_STATUS;
 import de.clusteval.run.Run;
-import de.clusteval.utils.InternalAttributeException;
+import de.clusteval.api.exceptions.InternalAttributeException;
 
 /**
  * An abstract class that corresponds to a smaller atomic part of a {@link Run}.

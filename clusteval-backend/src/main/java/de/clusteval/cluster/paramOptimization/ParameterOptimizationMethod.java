@@ -30,7 +30,7 @@ import de.clusteval.run.result.ClusteringRunResult;
 import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.run.result.RunResultParseException;
 import de.clusteval.run.runnable.ExecutionRunRunnable;
-import de.clusteval.utils.InternalAttributeException;
+import de.clusteval.api.exceptions.InternalAttributeException;
 import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;

@@ -35,7 +35,7 @@ import de.clusteval.run.ParameterOptimizationRun;
 import de.clusteval.run.Run;
 import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.run.result.RunResultParseException;
-import de.clusteval.utils.InternalAttributeException;
+import de.clusteval.api.exceptions.InternalAttributeException;
 import de.clusteval.utils.plot.Plotter;
 import de.wiwie.wiutils.file.FileUtils;
 import de.wiwie.wiutils.utils.Triple;

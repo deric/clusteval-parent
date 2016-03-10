@@ -97,9 +97,9 @@ public abstract class Context extends RepositoryObject {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.clusteval.framework.repository.RepositoryObject#hashCode()
+     * (non-Javadoc)
+     *
+     * @see de.clusteval.framework.repository.RepositoryObject#hashCode()
      */
     @Override
     public int hashCode() {

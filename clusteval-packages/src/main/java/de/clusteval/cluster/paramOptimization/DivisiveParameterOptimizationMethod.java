@@ -33,7 +33,7 @@ import de.clusteval.program.ProgramConfig;
 import de.clusteval.program.ProgramParameter;
 import de.clusteval.program.StringProgramParameter;
 import de.clusteval.run.ParameterOptimizationRun;
-import de.clusteval.utils.InternalAttributeException;
+import de.clusteval.api.exceptions.InternalAttributeException;
 
 /**
  * @author Christian Wiwie

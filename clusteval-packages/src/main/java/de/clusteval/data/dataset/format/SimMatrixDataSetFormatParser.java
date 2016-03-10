@@ -28,7 +28,7 @@ import de.clusteval.data.dataset.DataSet;
 import de.clusteval.data.dataset.RelativeDataSet;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.utils.FormatVersion;
+import de.clusteval.api.FormatVersion;
 
 /**
  * @author Christian Wiwie

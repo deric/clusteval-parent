@@ -15,7 +15,7 @@ package de.clusteval.program;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.data.DataConfig;
 import de.clusteval.framework.repository.Repository;
-import de.clusteval.utils.InternalAttributeException;
+import de.clusteval.api.exceptions.InternalAttributeException;
 import javax.script.ScriptException;
 
 /**

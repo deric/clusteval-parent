@@ -18,6 +18,7 @@ import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.RNotAvailableException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.r.RLibraryInferior;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.data.DataConfig;
@@ -173,7 +174,7 @@ public abstract class ClusteringQualityMeasure extends RepositoryObject implemen
      * quality measure exception
      */
     public static ClusteringQualityMeasure parseFromString(
-            final Repository repository, String qualityMeasure,
+            final IRepository repository, String qualityMeasure,
             ClusteringQualityMeasureParameters parameters)
             throws UnknownClusteringQualityMeasureException {
 

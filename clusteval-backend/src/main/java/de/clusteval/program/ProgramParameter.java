@@ -23,7 +23,7 @@ import de.clusteval.data.DataConfig;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RepositoryObject;
-import de.clusteval.utils.InternalAttributeException;
+import de.clusteval.api.exceptions.InternalAttributeException;
 
 /**
  * An object of this class corresponds to a parameter of a program.

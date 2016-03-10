@@ -12,8 +12,8 @@
  */
 package de.clusteval.utils;
 
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RepositoryObject;
 import java.io.File;
 
@@ -36,7 +36,7 @@ public abstract class NamedAttribute<T> extends RepositoryObject {
      * @param value
      * @throws RegisterException
      */
-    public NamedAttribute(final Repository repository, final String name,
+    public NamedAttribute(final IRepository repository, final String name,
             final T value) throws RegisterException {
         super(repository, false, System.currentTimeMillis(), new File(name));
 

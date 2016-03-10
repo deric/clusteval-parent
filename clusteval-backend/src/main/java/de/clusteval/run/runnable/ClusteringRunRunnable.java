@@ -32,7 +32,7 @@ import de.clusteval.program.ProgramParameter;
 import de.clusteval.run.ClusteringRun;
 import de.clusteval.run.Run;
 import de.clusteval.run.result.ClusteringRunResult;
-import de.clusteval.utils.InternalAttributeException;
+import de.clusteval.api.exceptions.InternalAttributeException;
 
 /**
  * A type of an execution runnable, that corresponds to {@link ClusteringRun}

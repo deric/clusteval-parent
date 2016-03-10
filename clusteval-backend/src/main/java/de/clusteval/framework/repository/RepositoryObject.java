@@ -174,7 +174,7 @@ public abstract class RepositoryObject implements RepositoryListener, IRepositor
      * individually.
      */
     @Override
-    public final boolean register() throws RegisterException {
+    public boolean register() throws RegisterException {
         return this.repository.register(this);
     }
 

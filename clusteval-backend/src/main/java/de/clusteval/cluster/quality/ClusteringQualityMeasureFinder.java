@@ -140,7 +140,7 @@ class ClusteringQualityMeasureURLClassLoader extends URLClassLoader {
                 @SuppressWarnings("unchecked")
                 Class<? extends ClusteringQualityMeasure> qualityMeasure = (Class<? extends ClusteringQualityMeasure>) result;
 
-                this.parent.getRepository().registerClass(
+                parent.getRepository().registerClass(
                         ClusteringQualityMeasure.class, qualityMeasure);
             }
         }

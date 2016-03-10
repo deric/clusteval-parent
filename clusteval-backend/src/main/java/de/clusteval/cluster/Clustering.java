@@ -478,7 +478,7 @@ public class Clustering extends RepositoryObject implements Iterable<Cluster> {
      * @throws IOException Signals that an I/O exception has occurred.
      */
     public static Pair<ParameterSet, Clustering> parseFromFile(
-            final Repository repository, final File absFilePath,
+            final IRepository repository, final File absFilePath,
             final boolean parseQualities) throws IOException {
         ClusteringParser parser = new ClusteringParser(repository,
                 absFilePath.getAbsolutePath(), parseQualities);

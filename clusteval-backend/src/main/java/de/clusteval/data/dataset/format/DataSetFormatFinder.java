@@ -22,7 +22,7 @@ import java.util.Iterator;
 
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
-import de.clusteval.utils.FormatVersion;
+import de.clusteval.api.FormatVersion;
 import de.clusteval.utils.JARFinder;
 import de.clusteval.utils.RecursiveSubDirectoryIterator;
 

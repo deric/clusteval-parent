@@ -10,9 +10,6 @@
  *     Christian Wiwie - initial API and implementation
  *****************************************************************************
  */
-/**
- *
- */
 package de.clusteval.framework.repository;
 
 import de.clusteval.api.r.InvalidRepositoryException;
@@ -88,7 +85,7 @@ public class RunResultRepository extends Repository implements IRepository {
      * @throws RepositoryConfigNotFoundException
      * @throws DatabaseConnectException
      */
-    public RunResultRepository(String basePath, Repository parent)
+    public RunResultRepository(String basePath, IRepository parent)
             throws FileNotFoundException, RepositoryAlreadyExistsException,
                    InvalidRepositoryException, RepositoryConfigNotFoundException,
                    RepositoryConfigurationException, DatabaseConnectException {
@@ -118,8 +115,8 @@ public class RunResultRepository extends Repository implements IRepository {
     @Override
     protected void initAttributes() {
 
-        this.staticRepositoryEntities = new RepositoryEntityMap<>();
-        this.dynamicRepositoryEntities = new RepositoryEntityMap<>();
+        this.staticRepositoryEntities = new StaticRepositoryEntityMap();
+        this.dynamicRepositoryEntities = new DynamicRepositoryEntityMap();
 
         this.createAndAddStaticEntity(DataConfig.class,
                 FileUtils.buildPath(this.basePath, "configs"));

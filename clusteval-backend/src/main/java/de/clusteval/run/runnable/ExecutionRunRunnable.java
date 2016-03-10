@@ -75,7 +75,7 @@ import de.clusteval.run.result.format.RunResultFormat;
 import de.clusteval.run.result.format.RunResultNotFoundException;
 import de.clusteval.run.result.postprocessing.RunResultPostprocessor;
 import de.clusteval.utils.FormatConversionException;
-import de.clusteval.utils.InternalAttributeException;
+import de.clusteval.api.exceptions.InternalAttributeException;
 import de.clusteval.api.exceptions.RNotAvailableException;
 import de.clusteval.utils.plot.Plotter;
 import de.wiwie.wiutils.file.FileUtils;

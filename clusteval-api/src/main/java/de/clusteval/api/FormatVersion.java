@@ -11,7 +11,7 @@
 /**
  * 
  */
-package de.clusteval.utils;
+package de.clusteval.api;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

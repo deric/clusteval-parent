@@ -17,7 +17,7 @@ import java.io.File;
 
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
-import de.clusteval.utils.FormatVersion;
+import de.clusteval.api.FormatVersion;
 
 /**
  * @author Christian Wiwie

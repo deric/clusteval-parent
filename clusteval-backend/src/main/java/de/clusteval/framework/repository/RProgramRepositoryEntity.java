@@ -3,12 +3,12 @@
  */
 package de.clusteval.framework.repository;
 
+import de.clusteval.api.r.RException;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.program.Program;
 import de.clusteval.program.r.RProgram;
 import java.lang.reflect.InvocationTargetException;
-import org.rosuda.REngine.Rserve.RserveException;
 
 /**
  * @author Christian Wiwie
@@ -76,7 +76,7 @@ public class RProgramRepositoryEntity extends DynamicRepositoryEntity<RProgram> 
             this.repository.getRengineForCurrentThread();
 
             result = super.ensureLibraries(classObject);
-        } catch (RserveException e) {
+        } catch (RException e) {
             this.repository.warn("\"" + classObject.getSimpleName()
                     + "\" could not be loaded since it requires R and no connection could be established.");
             repository.warn(e.getMessage());

@@ -30,6 +30,10 @@ public class RException extends ClustEvalException {
 
     protected IRengine engine;
 
+    public RException(String msg, Throwable cause) {
+        super(msg, cause);
+    }
+
     /**
      *
      * @param rEngine

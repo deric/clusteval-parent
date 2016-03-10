@@ -43,7 +43,7 @@ import de.clusteval.run.Run;
 import de.clusteval.run.result.RunResultParseException;
 import de.clusteval.utils.AbstractClustEvalTest;
 import de.clusteval.utils.FormatConversionException;
-import de.clusteval.utils.InternalAttributeException;
+import de.clusteval.api.exceptions.InternalAttributeException;
 import de.clusteval.api.exceptions.RNotAvailableException;
 import de.wiwie.wiutils.utils.SimilarityMatrix.NUMBER_PRECISION;
 import java.io.File;

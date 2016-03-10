@@ -12,8 +12,11 @@
  */
 package de.clusteval.framework.repository;
 
+import de.clusteval.api.exceptions.InternalAttributeException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.InvalidRepositoryException;
+import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.IRepositoryObject;
@@ -68,7 +71,6 @@ import de.clusteval.run.statistics.RunDataStatisticCalculator;
 import de.clusteval.run.statistics.RunStatistic;
 import de.clusteval.run.statistics.RunStatisticCalculator;
 import de.clusteval.utils.Finder;
-import de.clusteval.utils.InternalAttributeException;
 import de.clusteval.utils.NamedDoubleAttribute;
 import de.clusteval.utils.NamedIntegerAttribute;
 import de.clusteval.utils.NamedStringAttribute;
@@ -153,7 +155,7 @@ public class Repository implements IRepository {
      * parental relationship is indicated by setting this parent repository
      * attribute.
      */
-    protected Repository parent;
+    protected IRepository parent;
 
     /**
      * The absolute path of the root of this repository.
@@ -213,8 +215,9 @@ public class Repository implements IRepository {
      */
     protected Map<File, IRepositoryObject> pathToRepositoryObject;
 
-    protected RepositoryEntityMap<IRepositoryObject, StaticRepositoryEntity<IRepositoryObject>> staticRepositoryEntities;
-    protected RepositoryEntityMap<IRepositoryObject, DynamicRepositoryEntity<IRepositoryObject>> dynamicRepositoryEntities;
+    protected StaticRepositoryEntityMap staticRepositoryEntities;
+
+    protected DynamicRepositoryEntityMap dynamicRepositoryEntities;
 
     /**
      * A map containing all goldstandard formats registered in this repository.
@@ -302,7 +305,7 @@ public class Repository implements IRepository {
      * @throws RepositoryConfigNotFoundException
      * @throws DatabaseConnectException
      */
-    public Repository(final String basePath, final Repository parent)
+    public Repository(final String basePath, final IRepository parent)
             throws FileNotFoundException, RepositoryAlreadyExistsException, InvalidRepositoryException,
                    RepositoryConfigNotFoundException, RepositoryConfigurationException, DatabaseConnectException {
         this(basePath, parent, null);
@@ -322,7 +325,7 @@ public class Repository implements IRepository {
      * @throws RepositoryConfigNotFoundException
      * @throws DatabaseConnectException
      */
-    public Repository(final String basePath, final Repository parent, final RepositoryConfig overrideConfig)
+    public Repository(final String basePath, final IRepository parent, final RepositoryConfig overrideConfig)
             throws FileNotFoundException, RepositoryAlreadyExistsException, InvalidRepositoryException,
                    RepositoryConfigNotFoundException, RepositoryConfigurationException, DatabaseConnectException {
         super();
@@ -572,7 +575,8 @@ public class Repository implements IRepository {
      * arithmetic operations.
      *
      * <p>
-     * A helper method of null null null null null null null null null     {@link ProgramParameter#evaluateDefaultValue(DataConfig, ProgramConfig)},
+     * A helper method of null null null null null null null null null null null
+     * null null     {@link ProgramParameter#evaluateDefaultValue(DataConfig, ProgramConfig)},
 	 * {@link ProgramParameter#evaluateMinValue(DataConfig, ProgramConfig)} and
      * {@link ProgramParameter#evaluateMaxValue(DataConfig, ProgramConfig)}.
      *
@@ -823,8 +827,8 @@ public class Repository implements IRepository {
         return (Class<? extends T>) this.dynamicRepositoryEntities.get(c).getRegisteredClass(className);
     }
 
-    public <T extends IRepositoryObject> Collection<Class<? extends IRepositoryObject>> getClasses(Class<T> c) {
-        return (Collection<Class<? extends IRepositoryObject>>) this.dynamicRepositoryEntities.get(c).getClasses();
+    public <T extends IRepositoryObject> Collection<Class<? extends T>> getClasses(Class<T> c) {
+        return this.dynamicRepositoryEntities.get(c).getClasses();
     }
 
     @Override
@@ -1585,15 +1589,20 @@ public class Repository implements IRepository {
 
     /**
      * @return The MyRengine object corresponding to the current thread.
-     * @throws RserveException
+     * @throws de.clusteval.api.r.RException
      */
-    public MyRengine getRengineForCurrentThread() throws RserveException {
+    @Override
+    public IRengine getRengineForCurrentThread() throws RException {
         Thread currentThread = Thread.currentThread();
         synchronized (this.rEngines) {
-            if (!this.rEngines.containsKey(currentThread)) {
-                this.rEngines.put(currentThread, new MyRengine(""));
+            try {
+                if (!this.rEngines.containsKey(currentThread)) {
+                    this.rEngines.put(currentThread, new MyRengine(""));
+                }
+                return this.rEngines.get(currentThread);
+            } catch (RserveException ex) {
+                throw new RException(ex.getMessage(), ex);
             }
-            return this.rEngines.get(currentThread);
         }
     }
 

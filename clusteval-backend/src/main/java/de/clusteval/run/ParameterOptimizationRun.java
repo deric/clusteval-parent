@@ -12,6 +12,7 @@
  */
 package de.clusteval.run;
 
+import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.cluster.quality.ClusteringQualitySet;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.repository.RepositoryEvent;
@@ -157,7 +158,7 @@ public class ParameterOptimizationRun extends ExecutionRun {
      */
     public ParameterOptimizationRun(final Repository repository, final Context context, final long changeDate,
             final File absPath, final List<ProgramConfig> programConfigs, final List<DataConfig> dataConfigs,
-            final List<ClusteringQualityMeasure> qualityMeasures,
+            final List<ClusteringEvaluation> qualityMeasures,
             final List<Map<ProgramParameter<?>, String>> parameterValues,
             final List<List<ProgramParameter<?>>> optimizationParameters,
             final List<ParameterOptimizationMethod> optimizationMethods,
@@ -181,7 +182,7 @@ public class ParameterOptimizationRun extends ExecutionRun {
                 method.addListener(this);
             }
 
-            for (ClusteringQualityMeasure measure : this.qualityMeasures) {
+            for (ClusteringEvaluation measure : this.qualityMeasures) {
                 // added 21.03.2013: measures are only registered here, if this
                 // run has been registered
                 measure.register();
@@ -316,7 +317,7 @@ public class ParameterOptimizationRun extends ExecutionRun {
                     // has the runnable already initialized the optimization
                     // method
                     // and result?
-                    if (paramOptRes != null && isInMemory) {
+                    if (isInMemory) {
                         // get the best achieved qualities
                         ClusteringQualitySet bestQuals = thread.getOptimizationMethod().getResult()
                                 .getOptimalCriterionValue();
@@ -328,7 +329,7 @@ public class ParameterOptimizationRun extends ExecutionRun {
                         Map<ClusteringQualityMeasure, Map<String, String>> bestParamsMap = new HashMap<>();
                         for (ClusteringQualityMeasure measure : bestParams.keySet()) {
                             ParameterSet pSet = bestParams.get(measure);
-                            Map<String, String> tmp = new HashMap<String, String>();
+                            Map<String, String> tmp = new HashMap<>();
                             for (String p : pSet.keySet()) {
                                 tmp.put(p.toString(), pSet.get(p));
                             }
@@ -336,14 +337,13 @@ public class ParameterOptimizationRun extends ExecutionRun {
                             bestParamsMap.put(measure, tmp);
                         }
 
-                        for (ClusteringQualityMeasure measure : bestQuals.keySet()) {
+                        for (ClusteringEvaluation measure : bestQuals.keySet()) {
                             qualities.put(measure.getAlias(),
                                     Pair.getPair(bestParamsMap.get(measure), bestQuals.get(measure).toString()));
                         }
                     }
 
-                    result.put(configs, new Pair<Double, Map<String, Pair<Map<String, String>, String>>>(
-                            (double) t.getProgressPrinter().getPercent(), qualities));
+                    result.put(configs, new Pair<>((double) t.getProgressPrinter().getPercent(), qualities));
                 } finally {
                     if (!isInMemory) {
                         paramOptRes.unloadFromMemory();

@@ -94,7 +94,7 @@ public class DynamicRepositoryEntity<T extends IRepositoryObject> extends Reposi
                 return parent.getRegisteredObject(object, ignoreChangeDate);
             } else if (ignoreChangeDate || other == null) {
                 return other;
-            } else if (other.changeDate == object.changeDate) {
+            } else if (other.getChangeDate() == object.getChangeDate()) {
                 return other;
             }
             return object;

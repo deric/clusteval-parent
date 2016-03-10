@@ -3,6 +3,7 @@
  */
 package de.clusteval.framework.repository;
 
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.IRepositoryObject;
 import de.clusteval.api.repository.RegisterException;
 import java.io.File;
@@ -25,7 +26,7 @@ public abstract class DumpableRepositoryObject extends RepositoryObject {
      * identification and equality checks of objects.
      * @throws RegisterException
      */
-    public DumpableRepositoryObject(final Repository repository,
+    public DumpableRepositoryObject(final IRepository repository,
             final boolean register, final long changeDate, final File absPath)
             throws RegisterException {
         super(repository, register, changeDate, absPath);
@@ -45,7 +46,7 @@ public abstract class DumpableRepositoryObject extends RepositoryObject {
      * identification and equality checks of objects.
      * @throws RegisterException
      */
-    public DumpableRepositoryObject(final Repository repository,
+    public DumpableRepositoryObject(final IRepository repository,
             final long changeDate, final File absPath) throws RegisterException {
         this(repository, true, changeDate, absPath);
     }
@@ -61,8 +62,8 @@ public abstract class DumpableRepositoryObject extends RepositoryObject {
      */
     public DumpableRepositoryObject(final IRepositoryObject other)
             throws RegisterException {
-        this(other.getRepository(), false, other.changeDate, new File(
-                other.absPath.getAbsolutePath()));
+        this(other.getRepository(), false, other.getChangeDate(), new File(
+                other.getAbsolutePath()));
     }
 
     /**

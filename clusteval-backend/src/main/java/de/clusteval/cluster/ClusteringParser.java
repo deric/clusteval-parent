@@ -19,7 +19,6 @@ import de.clusteval.cluster.quality.ClusteringQualityMeasure;
 import de.clusteval.cluster.quality.ClusteringQualityMeasureParameters;
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
 import de.clusteval.framework.repository.NoRepositoryFoundException;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RepositoryController;
 import de.clusteval.program.ParameterSet;
 import de.wiwie.wiutils.utils.Pair;
@@ -38,7 +37,7 @@ import java.util.Map;
  */
 public class ClusteringParser extends TextFileParser {
 
-    protected Repository repository;
+    protected IRepository repository;
 
     protected boolean parseQualities;
 
@@ -62,7 +61,7 @@ public class ClusteringParser extends TextFileParser {
      * also be parsed. Those will be taken from .qual-files.
      * @throws IOException Signals that an I/O exception has occurred.
      */
-    public ClusteringParser(final Repository repository,
+    public ClusteringParser(final IRepository repository,
             final String absFilePath, final boolean parseQualities)
             throws IOException {
         super(absFilePath, new int[]{0}, new int[]{1});

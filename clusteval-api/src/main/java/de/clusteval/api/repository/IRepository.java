@@ -30,6 +30,16 @@ import java.io.File;
 public interface IRepository {
 
     /**
+     * Initializes this repository by creating a supervisor thread
+     * {@link #createSupervisorThread()} and waiting until
+     * {@link #isInitialized()} returns true.
+     *
+     * @throws InterruptedException Is thrown, if the current thread is
+     * interrupted while waiting for finishing the initialization process.
+     */
+    void initialize() throws InterruptedException;
+
+    /**
      * Register a new repository.
      *
      * @param repository The new repository to register.
@@ -99,4 +109,8 @@ public interface IRepository {
     public String getClusterResultsBasePath();
 
     boolean updateStatusOfRun(final IRun run, final String newStatus);
+
+    <T extends IRepositoryObject, S extends T> boolean registerClass(final Class<T> base, final Class<S> c);
+
+    //boolean registerRunDataStatisticCalculator(Class<? extends RunDataStatisticCalculator<? extends RunDataStatistic>> runDataStatisticCalculator);
 }

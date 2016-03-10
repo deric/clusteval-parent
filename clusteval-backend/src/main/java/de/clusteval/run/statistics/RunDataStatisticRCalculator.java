@@ -61,7 +61,7 @@ import de.clusteval.run.RunException;
 import de.clusteval.run.result.AnalysisRunResultException;
 import de.clusteval.run.result.RunResultParseException;
 import de.clusteval.run.result.format.UnknownRunResultFormatException;
-import de.clusteval.utils.InternalAttributeException;
+import de.clusteval.api.exceptions.InternalAttributeException;
 import de.clusteval.utils.InvalidConfigurationFileException;
 import de.clusteval.api.exceptions.RNotAvailableException;
 
