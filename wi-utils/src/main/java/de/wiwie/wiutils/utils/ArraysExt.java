@@ -233,7 +233,7 @@ public class ArraysExt {
      * @return The filtered array.
      */
     public static int[] filter(int[] x, Filter filter) {
-        List<Integer> result = new LinkedList<Integer>();
+        List<Integer> result = new LinkedList<>();
         for (int val : x) {
             if (filter.filter(val)) {
                 result.add(val);
@@ -604,7 +604,7 @@ public class ArraysExt {
      * @return An array containing only the entries that are not equal to NaN.
      */
     public static double[] removeNA(final double... array) {
-        final List<Double> result = new ArrayList<Double>();
+        final List<Double> result = new ArrayList<>();
 
         for (double d : array) {
             if (!Double.isNaN(d) && !Double.isInfinite(d)) {
@@ -724,12 +724,8 @@ public class ArraysExt {
      */
     public static String[] merge(String[] array1, String[] array2) {
         String[] result = new String[array1.length + array2.length];
-        for (int pos = 0; pos < array1.length; pos++) {
-            result[pos] = array1[pos];
-        }
-        for (int pos = 0; pos < array2.length; pos++) {
-            result[array1.length + pos] = array2[pos];
-        }
+        System.arraycopy(array1, 0, result, 0, array1.length);
+        System.arraycopy(array2, 0, result, array1.length, array2.length);
         return result;
     }
 
@@ -742,12 +738,8 @@ public class ArraysExt {
      */
     public static double[] merge(double[] array1, double[] array2) {
         double[] result = new double[array1.length + array2.length];
-        for (int pos = 0; pos < array1.length; pos++) {
-            result[pos] = array1[pos];
-        }
-        for (int pos = 0; pos < array2.length; pos++) {
-            result[array1.length + pos] = array2[pos];
-        }
+        System.arraycopy(array1, 0, result, 0, array1.length);
+        System.arraycopy(array2, 0, result, array1.length, array2.length);
         return result;
     }
 
@@ -760,12 +752,8 @@ public class ArraysExt {
      */
     public static int[] merge(int[] array1, int[] array2) {
         int[] result = new int[array1.length + array2.length];
-        for (int pos = 0; pos < array1.length; pos++) {
-            result[pos] = array1[pos];
-        }
-        for (int pos = 0; pos < array2.length; pos++) {
-            result[array1.length + pos] = array2[pos];
-        }
+        System.arraycopy(array1, 0, result, 0, array1.length);
+        System.arraycopy(array2, 0, result, array1.length, array2.length);
         return result;
     }
 
@@ -949,6 +937,7 @@ public class ArraysExt {
     /**
      * Prints an array to the systems output stream.
      *
+     * @param <T>
      * @param array The input array.
      */
     public static <T> void print(T[] array) {
@@ -959,6 +948,7 @@ public class ArraysExt {
      * Prints an two-dimensional array to the systems output stream. Subarrays
      * are printed row-wise.
      *
+     * @param <T>
      * @param array The input array.
      */
     public static <T> void print(T[][] array) {
@@ -1096,7 +1086,7 @@ public class ArraysExt {
      * Create an array of a value repeated a certain number of times.
      *
      * @param val The double value to be repeated
-     * @param times Number of times the integer value should be repated
+     * @param times Number of times the integer value should be repeated
      * @return The result array.
      */
     public static int[] rep(int val, int times) {
@@ -1113,7 +1103,7 @@ public class ArraysExt {
      * Create an array of a value repeated a certain number of times.
      *
      * @param val The double value to be repeated
-     * @param times Number of times the double value should be repated
+     * @param times Number of times the double value should be repeated
      * @return The result array.
      */
     public static double[] rep(double val, int times) {
