@@ -13,7 +13,7 @@
  */
 package de.clusteval.program.r;
 
-import de.clusteval.framework.repository.RegisterException;
+import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.threading.SupervisorThread;
 import de.clusteval.utils.FinderThread;

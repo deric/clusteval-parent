@@ -25,11 +25,11 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 
 import de.clusteval.framework.ClustevalBackendServer;
-import de.clusteval.framework.repository.InvalidRepositoryException;
+import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.framework.repository.NoRepositoryFoundException;
-import de.clusteval.framework.repository.RegisterException;
+import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
-import de.clusteval.framework.repository.RepositoryAlreadyExistsException;
+import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
 import de.clusteval.framework.repository.db.DatabaseConnectException;

@@ -13,7 +13,7 @@ import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.framework.threading.RunSchedulerThread;
 import de.clusteval.run.Run;
-import de.clusteval.utils.RNotAvailableException;
+import de.clusteval.api.exceptions.RNotAvailableException;
 
 /**
  * @author Christian Wiwie

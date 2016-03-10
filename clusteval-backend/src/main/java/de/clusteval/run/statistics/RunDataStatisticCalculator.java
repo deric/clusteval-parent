@@ -21,7 +21,7 @@ import java.util.List;
 
 import de.clusteval.data.statistics.RunDataStatisticCalculateException;
 import de.clusteval.data.statistics.StatisticCalculateException;
-import de.clusteval.framework.repository.RegisterException;
+import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.utils.StatisticCalculator;
 

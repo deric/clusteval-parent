@@ -10,9 +10,6 @@
  *     Christian Wiwie - initial API and implementation
  *****************************************************************************
  */
-/**
- *
- */
 package de.clusteval.utils;
 
 import ch.qos.logback.classic.Level;
@@ -37,6 +34,8 @@ import org.slf4j.LoggerFactory;
  *
  */
 public abstract class AbstractClustEvalTest {
+
+    public static double DELTA = 1e-9;
 
     @Rule
     public TestName name = new TestName();

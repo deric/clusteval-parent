@@ -21,14 +21,14 @@ import de.clusteval.context.Context;
 import de.clusteval.context.UnknownContextException;
 import de.clusteval.data.DataConfig;
 import de.clusteval.framework.RLibraryNotLoadedException;
-import de.clusteval.framework.repository.RegisterException;
+import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
-import de.clusteval.framework.repository.RepositoryEvent;
+import de.clusteval.api.repository.RepositoryEvent;
 import de.clusteval.framework.repository.RepositoryObject;
 import de.clusteval.framework.repository.RepositoryRemoveEvent;
 import de.clusteval.framework.repository.RepositoryReplaceEvent;
 import de.clusteval.framework.repository.RunResultRepository;
-import de.clusteval.utils.RNotAvailableException;
+import de.clusteval.api.exceptions.RNotAvailableException;
 
 /**
  * A wrapper class for programs used by this framework.

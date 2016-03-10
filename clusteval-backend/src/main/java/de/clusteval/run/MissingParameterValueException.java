@@ -13,7 +13,7 @@
  */
 package de.clusteval.run;
 
-import de.clusteval.utils.ClustEvalException;
+import de.clusteval.api.exceptions.ClustEvalException;
 
 // TODO: Auto-generated Javadoc
 /**

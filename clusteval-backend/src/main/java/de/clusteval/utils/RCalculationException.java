@@ -12,6 +12,8 @@
  */
 package de.clusteval.utils;
 
+import de.clusteval.api.exceptions.ClustEvalException;
+
 /**
  * @author Christian Wiwie
  *

@@ -20,7 +20,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import de.wiwie.wiutils.utils.ArrayIterator;
-import de.clusteval.framework.repository.RegisterException;
+import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RepositoryObject;
 import de.clusteval.framework.threading.RunSchedulerThread;

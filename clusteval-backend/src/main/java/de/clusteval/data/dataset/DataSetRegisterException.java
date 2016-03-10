@@ -13,7 +13,7 @@
  */
 package de.clusteval.data.dataset;
 
-import de.clusteval.framework.repository.RegisterException;
+import de.clusteval.api.repository.RegisterException;
 
 /**
  * @author Christian Wiwie

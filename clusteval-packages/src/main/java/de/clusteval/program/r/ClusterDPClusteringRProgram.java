@@ -28,15 +28,15 @@ import de.clusteval.context.Context;
 import de.clusteval.context.UnknownContextException;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.format.DataSetFormat;
-import de.clusteval.data.dataset.format.UnknownDataSetFormatException;
+import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.framework.RLibraryNotLoadedException;
-import de.clusteval.framework.repository.RegisterException;
+import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.program.Program;
 import de.clusteval.program.ProgramConfig;
 import de.clusteval.run.result.format.RunResultFormat;
 import de.clusteval.run.result.format.UnknownRunResultFormatException;
-import de.clusteval.utils.RNotAvailableException;
+import de.clusteval.api.exceptions.RNotAvailableException;
 import de.wiwie.wiutils.file.FileUtils;
 
 /**

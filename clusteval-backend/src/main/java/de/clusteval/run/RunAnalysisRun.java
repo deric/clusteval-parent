@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
 import de.clusteval.context.Context;
 import de.clusteval.context.UnknownContextException;
 import de.clusteval.framework.repository.NoRepositoryFoundException;
-import de.clusteval.framework.repository.RegisterException;
+import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.threading.RunSchedulerThread;
 import de.clusteval.run.runnable.RunAnalysisRunRunnable;

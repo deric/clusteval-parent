@@ -17,7 +17,7 @@ import de.clusteval.data.dataset.DataSetConfig;
 import de.clusteval.data.dataset.DataSetConfigFinderThread;
 import de.clusteval.data.goldstandard.GoldStandardConfig;
 import de.clusteval.data.goldstandard.GoldStandardConfigFinderThread;
-import de.clusteval.framework.repository.RegisterException;
+import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.threading.SupervisorThread;
 import de.clusteval.utils.Finder;

@@ -34,16 +34,16 @@ import de.clusteval.data.dataset.DataSet;
 import de.clusteval.data.dataset.DataSet.WEBSITE_VISIBILITY;
 import de.clusteval.data.dataset.format.AbsoluteDataSetFormat;
 import de.clusteval.data.dataset.format.DataSetFormat;
-import de.clusteval.data.dataset.format.UnknownDataSetFormatException;
+import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.data.dataset.type.DataSetType;
 import de.clusteval.data.dataset.type.UnknownDataSetTypeException;
 import de.clusteval.data.distance.UnknownDistanceMeasureException;
 import de.clusteval.data.goldstandard.GoldStandard;
-import de.clusteval.framework.repository.RegisterException;
+import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RepositoryObject;
 import de.clusteval.framework.repository.RepositoryObjectDumpException;
-import de.clusteval.program.r.RLibraryInferior;
+import de.clusteval.api.r.RLibraryInferior;
 import de.wiwie.wiutils.file.FileUtils;
 
 /**

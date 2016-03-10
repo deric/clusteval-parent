@@ -20,7 +20,7 @@ import de.wiwie.wiutils.utils.StringExt;
 import cern.colt.matrix.tlong.LongMatrix2D;
 import cern.colt.matrix.tlong.impl.SparseLongMatrix2D;
 import de.clusteval.framework.RLibraryRequirement;
-import de.clusteval.framework.repository.RegisterException;
+import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
 
 /**

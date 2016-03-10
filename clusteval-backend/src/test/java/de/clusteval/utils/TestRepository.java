@@ -23,10 +23,10 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
 
-import de.clusteval.framework.repository.InvalidRepositoryException;
+import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.framework.repository.NoRepositoryFoundException;
 import de.clusteval.framework.repository.Repository;
-import de.clusteval.framework.repository.RepositoryAlreadyExistsException;
+import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.framework.repository.config.DefaultRepositoryConfig;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;

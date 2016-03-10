@@ -11,13 +11,13 @@ import java.lang.reflect.InvocationTargetException;
 
 import org.rosuda.REngine.REngineException;
 
-import de.clusteval.data.dataset.format.InvalidDataSetFormatVersionException;
-import de.clusteval.data.dataset.format.UnknownDataSetFormatException;
+import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
+import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.data.statistics.StatisticCalculateException;
-import de.clusteval.framework.repository.RegisterException;
+import de.clusteval.api.repository.RegisterException;
 import de.clusteval.run.statistics.RunStatistic;
 import de.clusteval.utils.FormatConversionException;
-import de.clusteval.utils.RNotAvailableException;
+import de.clusteval.api.exceptions.RNotAvailableException;
 import de.clusteval.utils.Statistic;
 import de.clusteval.utils.StatisticCalculator;
 import de.wiwie.wiutils.file.FileUtils;

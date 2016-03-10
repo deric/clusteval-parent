@@ -20,7 +20,7 @@ import java.util.Map;
 
 import de.clusteval.context.Context;
 import de.clusteval.data.DataConfig;
-import de.clusteval.framework.repository.RegisterException;
+import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
 
 /**

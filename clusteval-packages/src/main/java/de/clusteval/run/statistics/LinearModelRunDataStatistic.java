@@ -23,7 +23,7 @@ import java.util.Map;
 import de.wiwie.wiutils.utils.ArraysExt;
 import de.wiwie.wiutils.utils.Pair;
 import de.wiwie.wiutils.utils.StringExt;
-import de.clusteval.framework.repository.RegisterException;
+import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
 
 /**

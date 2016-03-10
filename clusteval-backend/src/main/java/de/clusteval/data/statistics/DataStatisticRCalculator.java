@@ -21,14 +21,14 @@ import org.rosuda.REngine.REngineException;
 import org.rosuda.REngine.Rserve.RserveException;
 
 import de.clusteval.data.DataConfig;
-import de.clusteval.data.dataset.format.InvalidDataSetFormatVersionException;
-import de.clusteval.data.dataset.format.UnknownDataSetFormatException;
+import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
+import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.data.goldstandard.format.UnknownGoldStandardFormatException;
 import de.clusteval.framework.repository.MyRengine;
-import de.clusteval.framework.repository.RException;
-import de.clusteval.framework.repository.RegisterException;
+import de.clusteval.api.r.RException;
+import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
-import de.clusteval.utils.RNotAvailableException;
+import de.clusteval.api.exceptions.RNotAvailableException;
 
 /**
  * This class is parent class of all different kind of analyses on a DataConfig.

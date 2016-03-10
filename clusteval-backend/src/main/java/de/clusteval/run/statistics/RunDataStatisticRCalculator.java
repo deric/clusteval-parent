@@ -32,8 +32,8 @@ import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.DataSetNotFoundException;
 import de.clusteval.data.dataset.NoDataSetException;
-import de.clusteval.data.dataset.format.InvalidDataSetFormatVersionException;
-import de.clusteval.data.dataset.format.UnknownDataSetFormatException;
+import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
+import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.data.dataset.type.UnknownDataSetTypeException;
 import de.clusteval.data.distance.UnknownDistanceMeasureException;
 import de.clusteval.data.goldstandard.GoldStandardConfigNotFoundException;
@@ -43,13 +43,13 @@ import de.clusteval.data.goldstandard.format.UnknownGoldStandardFormatException;
 import de.clusteval.data.statistics.IncompatibleDataConfigDataStatisticException;
 import de.clusteval.data.statistics.RunDataStatisticCalculateException;
 import de.clusteval.data.statistics.UnknownDataStatisticException;
-import de.clusteval.framework.repository.InvalidRepositoryException;
+import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.framework.repository.MyRengine;
 import de.clusteval.framework.repository.NoRepositoryFoundException;
-import de.clusteval.framework.repository.RException;
-import de.clusteval.framework.repository.RegisterException;
+import de.clusteval.api.r.RException;
+import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
-import de.clusteval.framework.repository.RepositoryAlreadyExistsException;
+import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
 import de.clusteval.program.NoOptimizableProgramParameterException;
@@ -63,7 +63,7 @@ import de.clusteval.run.result.RunResultParseException;
 import de.clusteval.run.result.format.UnknownRunResultFormatException;
 import de.clusteval.utils.InternalAttributeException;
 import de.clusteval.utils.InvalidConfigurationFileException;
-import de.clusteval.utils.RNotAvailableException;
+import de.clusteval.api.exceptions.RNotAvailableException;
 
 /**
  * @author Christian Wiwie

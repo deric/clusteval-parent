@@ -12,7 +12,7 @@
  */
 package de.clusteval.cluster;
 
-import de.clusteval.framework.repository.RegisterException;
+import de.clusteval.api.repository.RegisterException;
 import de.clusteval.program.ParameterSet;
 import de.clusteval.utils.AbstractClustEvalTest;
 import de.wiwie.wiutils.utils.Pair;

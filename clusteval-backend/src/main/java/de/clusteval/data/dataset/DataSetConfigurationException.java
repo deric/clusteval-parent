@@ -13,6 +13,8 @@
  */
 package de.clusteval.data.dataset;
 
+import de.clusteval.api.exceptions.DataSetException;
+
 /**
  * @author Christian Wiwie
  * 

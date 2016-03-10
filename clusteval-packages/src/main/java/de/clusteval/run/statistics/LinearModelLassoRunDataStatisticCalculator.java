@@ -16,13 +16,13 @@
 package de.clusteval.run.statistics;
 
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
-import de.clusteval.cluster.quality.ClusteringQualityMeasureValue;
-import de.clusteval.cluster.quality.ClusteringQualitySet;
+import de.clusteval.api.cluster.quality.ClusteringQualityMeasureValue;
+import de.clusteval.api.cluster.quality.ClusteringQualitySet;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.statistics.DataStatistic;
 import de.clusteval.data.statistics.DoubleValueDataStatistic;
 import de.clusteval.framework.repository.MyRengine;
-import de.clusteval.framework.repository.RegisterException;
+import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.program.ParameterSet;
 import de.clusteval.program.Program;

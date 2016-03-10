@@ -17,7 +17,7 @@ import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 
 import de.clusteval.data.DataConfig;
-import de.clusteval.framework.repository.RegisterException;
+import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.utils.StatisticCalculator;
 

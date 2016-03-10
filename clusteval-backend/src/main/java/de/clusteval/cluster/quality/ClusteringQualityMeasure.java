@@ -12,17 +12,19 @@
  */
 package de.clusteval.cluster.quality;
 
+import de.clusteval.api.ClusteringEvaluation;
+import de.clusteval.api.cluster.quality.ClusteringQualityMeasureValue;
+import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
+import de.clusteval.api.exceptions.RNotAvailableException;
+import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.r.RLibraryInferior;
+import de.clusteval.api.repository.RegisterException;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.data.DataConfig;
-import de.clusteval.data.dataset.format.InvalidDataSetFormatVersionException;
-import de.clusteval.data.dataset.format.UnknownDataSetFormatException;
 import de.clusteval.data.goldstandard.format.UnknownGoldStandardFormatException;
-import de.clusteval.framework.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RepositoryObject;
-import de.clusteval.program.r.RLibraryInferior;
 import de.clusteval.utils.RCalculationException;
-import de.clusteval.utils.RNotAvailableException;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -72,8 +74,7 @@ import java.util.List;
  *
  * @author Christian Wiwie
  */
-public abstract class ClusteringQualityMeasure extends RepositoryObject
-        implements RLibraryInferior {
+public abstract class ClusteringQualityMeasure extends RepositoryObject implements ClusteringEvaluation, RLibraryInferior {
 
     protected ClusteringQualityMeasureParameters parameters;
 
@@ -150,11 +151,11 @@ public abstract class ClusteringQualityMeasure extends RepositoryObject
      * @param qualityMeasures The quality measures to be cloned.
      * @return A list containining cloned objects of the given quality measures.
      */
-    public static List<ClusteringQualityMeasure> cloneQualityMeasures(
-            final List<ClusteringQualityMeasure> qualityMeasures) {
-        List<ClusteringQualityMeasure> result = new ArrayList<>();
+    public static List<ClusteringEvaluation> cloneQualityMeasures(
+            final List<ClusteringEvaluation> qualityMeasures) {
+        List<ClusteringEvaluation> result = new ArrayList<>();
 
-        for (ClusteringQualityMeasure qualityMeasure : qualityMeasures) {
+        for (ClusteringEvaluation qualityMeasure : qualityMeasures) {
             result.add(qualityMeasure.clone());
         }
 
@@ -255,6 +256,7 @@ public abstract class ClusteringQualityMeasure extends RepositoryObject
      * @param quality2 The second quality value.
      * @return True, if quality1 is better than quality2
      */
+    @Override
     public final boolean isBetterThan(ClusteringQualityMeasureValue quality1,
             ClusteringQualityMeasureValue quality2) {
         if (!quality1.isTerminated) {
@@ -276,7 +278,8 @@ public abstract class ClusteringQualityMeasure extends RepositoryObject
         return isBetterThanHelper(quality1, quality2);
     }
 
-    protected abstract boolean isBetterThanHelper(
+    @Override
+    public abstract boolean isBetterThanHelper(
             ClusteringQualityMeasureValue quality1,
             ClusteringQualityMeasureValue quality2);
 

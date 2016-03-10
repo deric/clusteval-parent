@@ -19,7 +19,7 @@ import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
 import de.clusteval.cluster.quality.ClusteringQualityMeasureParameters;
-import de.clusteval.cluster.quality.ClusteringQualitySet;
+import de.clusteval.api.cluster.quality.ClusteringQualitySet;
 import de.clusteval.context.Context;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.DataSet;

@@ -13,6 +13,7 @@
  */
 package de.clusteval.cluster.quality;
 
+import de.clusteval.api.cluster.quality.ClusteringQualityMeasureValue;
 import java.io.File;
 import java.io.IOException;
 
@@ -22,14 +23,14 @@ import org.rosuda.REngine.Rserve.RserveException;
 
 import de.clusteval.cluster.Clustering;
 import de.clusteval.data.DataConfig;
-import de.clusteval.data.dataset.format.InvalidDataSetFormatVersionException;
-import de.clusteval.data.dataset.format.UnknownDataSetFormatException;
+import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
+import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.data.goldstandard.format.UnknownGoldStandardFormatException;
 import de.clusteval.framework.repository.MyRengine;
-import de.clusteval.framework.repository.RException;
-import de.clusteval.framework.repository.RegisterException;
+import de.clusteval.api.r.RException;
+import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
-import de.clusteval.utils.RNotAvailableException;
+import de.clusteval.api.exceptions.RNotAvailableException;
 
 /**
  * This type of clustering quality measure uses the R framework to calculate

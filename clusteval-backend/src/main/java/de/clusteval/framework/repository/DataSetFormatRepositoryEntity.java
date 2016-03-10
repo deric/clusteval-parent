@@ -9,7 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import de.clusteval.data.dataset.format.DataSetFormat;
 import de.clusteval.data.dataset.format.DataSetFormatParser;
-import de.clusteval.data.dataset.format.UnknownDataSetFormatException;
+import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 
 /**
  * @author Christian Wiwie

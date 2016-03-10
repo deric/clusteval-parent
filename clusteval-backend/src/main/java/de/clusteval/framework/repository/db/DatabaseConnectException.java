@@ -3,7 +3,7 @@
  */
 package de.clusteval.framework.repository.db;
 
-import de.clusteval.utils.ClustEvalException;
+import de.clusteval.api.exceptions.ClustEvalException;
 
 /**
  * @author Christian Wiwie

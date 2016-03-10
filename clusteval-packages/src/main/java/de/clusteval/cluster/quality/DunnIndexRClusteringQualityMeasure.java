@@ -13,6 +13,7 @@
  */
 package de.clusteval.cluster.quality;
 
+import de.clusteval.api.cluster.quality.ClusteringQualityMeasureValue;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -31,7 +32,7 @@ import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.RelativeDataSet;
 import de.clusteval.framework.RLibraryRequirement;
 import de.clusteval.framework.repository.MyRengine;
-import de.clusteval.framework.repository.RegisterException;
+import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
 
 /**

@@ -19,7 +19,7 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Iterator;
 
-import de.clusteval.framework.repository.RegisterException;
+import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.utils.JARFinder;
 import de.clusteval.utils.RecursiveSubDirectoryIterator;

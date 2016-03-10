@@ -10,19 +10,16 @@
  *     Christian Wiwie - initial API and implementation
  *****************************************************************************
  */
-/**
- *
- */
 package de.clusteval.cluster;
 
+import de.clusteval.api.cluster.quality.ClusteringQualitySet;
+import de.clusteval.api.cluster.quality.ClusteringQualityMeasureValue;
+import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
+import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.repository.RegisterException;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
-import de.clusteval.cluster.quality.ClusteringQualityMeasureValue;
-import de.clusteval.cluster.quality.ClusteringQualitySet;
 import de.clusteval.data.DataConfig;
-import de.clusteval.data.dataset.format.InvalidDataSetFormatVersionException;
-import de.clusteval.data.dataset.format.UnknownDataSetFormatException;
 import de.clusteval.data.goldstandard.format.UnknownGoldStandardFormatException;
-import de.clusteval.framework.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RepositoryObject;
 import de.clusteval.program.ParameterSet;
@@ -172,8 +169,7 @@ public class Clustering extends RepositoryObject implements Iterable<Cluster> {
             final Map<Cluster, Float> newMap = new HashMap<Cluster, Float>();
 
             for (Map.Entry<Cluster, Float> entry2 : entry.getValue().entrySet()) {
-                newMap.put(entry2.getKey().clone(),
-                        new Float(entry2.getValue()));
+                newMap.put(entry2.getKey().clone(), entry2.getValue());
             }
 
             result.put(entry.getKey().clone(), newMap);
@@ -217,9 +213,9 @@ public class Clustering extends RepositoryObject implements Iterable<Cluster> {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#hashCode()
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#hashCode()
      */
     @Override
     public int hashCode() {
@@ -297,7 +293,7 @@ public class Clustering extends RepositoryObject implements Iterable<Cluster> {
             Map<ClusterItem, Float> items = cluster.getFuzzyItems();
             for (ClusterItem item : items.keySet()) {
                 if (!this.itemToCluster.containsKey(item)) {
-                    this.itemToCluster.put(item, new HashMap<Cluster, Float>());
+                    this.itemToCluster.put(item, new HashMap<>());
                 }
                 this.itemToCluster.get(item).putAll(item.getFuzzyClusters());
 
@@ -589,6 +585,8 @@ public class Clustering extends RepositoryObject implements Iterable<Cluster> {
     /**
      * The passed clustering is assumed to be a hard (non-fuzzy) clustering.
      *
+     * @param repository
+     * @param absPath
      * @param objectIds The ids of the cluster items.
      * @param clusterIds Position i holds the cluster id of cluster item i.
      * @return A clustering wrapper object.

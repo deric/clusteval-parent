@@ -19,7 +19,7 @@ import java.util.List;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.DataSet;
 import de.clusteval.data.statistics.DataStatistic;
-import de.clusteval.framework.repository.RegisterException;
+import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.threading.RunSchedulerThread;
 import de.clusteval.run.DataAnalysisRun;
 import de.clusteval.run.Run;

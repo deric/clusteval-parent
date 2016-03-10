@@ -16,7 +16,7 @@ package de.clusteval.run.runnable;
 import java.io.File;
 import java.util.List;
 
-import de.clusteval.framework.repository.RegisterException;
+import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.threading.RunSchedulerThread;
 import de.clusteval.run.Run;
 import de.clusteval.run.RunAnalysisRun;

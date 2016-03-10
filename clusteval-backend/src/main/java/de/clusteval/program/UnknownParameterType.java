@@ -13,7 +13,7 @@
  */
 package de.clusteval.program;
 
-import de.clusteval.utils.ClustEvalException;
+import de.clusteval.api.exceptions.ClustEvalException;
 
 /**
  * @author Christian Wiwie

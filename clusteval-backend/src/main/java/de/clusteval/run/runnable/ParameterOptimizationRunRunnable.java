@@ -18,15 +18,15 @@ import de.clusteval.cluster.paramOptimization.ParameterOptimizationException;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
 import de.clusteval.cluster.paramOptimization.ParameterSetAlreadyEvaluatedException;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
-import de.clusteval.cluster.quality.ClusteringQualityMeasureValue;
-import de.clusteval.cluster.quality.ClusteringQualitySet;
+import de.clusteval.api.cluster.quality.ClusteringQualityMeasureValue;
+import de.clusteval.api.cluster.quality.ClusteringQualitySet;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.format.IncompatibleDataSetFormatException;
-import de.clusteval.data.dataset.format.InvalidDataSetFormatVersionException;
-import de.clusteval.data.dataset.format.UnknownDataSetFormatException;
+import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
+import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.data.goldstandard.IncompleteGoldStandardException;
 import de.clusteval.data.goldstandard.format.UnknownGoldStandardFormatException;
-import de.clusteval.framework.repository.RegisterException;
+import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.threading.RunSchedulerThread;
 import de.clusteval.program.ParameterSet;
 import de.clusteval.program.ProgramConfig;
@@ -297,11 +297,11 @@ public class ParameterOptimizationRunRunnable extends ExecutionRunRunnable {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * de.clusteval.run.runnable.ExecutionRunRunnable#decorateIterationWrapper
-	 * (de.clusteval.run.runnable.ExecutionIterationWrapper, int)
+     * (non-Javadoc)
+     *
+     * @see
+     * de.clusteval.run.runnable.ExecutionRunRunnable#decorateIterationWrapper
+     * (de.clusteval.run.runnable.ExecutionIterationWrapper, int)
      */
     @Override
     protected void decorateIterationWrapper(

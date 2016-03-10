@@ -16,9 +16,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import de.clusteval.framework.repository.DumpableRepositoryObject;
-import de.clusteval.framework.repository.RegisterException;
+import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
-import de.clusteval.framework.repository.RepositoryEvent;
+import de.clusteval.api.repository.RepositoryEvent;
 import de.clusteval.framework.repository.RepositoryMoveEvent;
 import de.clusteval.framework.repository.RepositoryObjectDumpException;
 import de.clusteval.framework.repository.RepositoryRemoveEvent;

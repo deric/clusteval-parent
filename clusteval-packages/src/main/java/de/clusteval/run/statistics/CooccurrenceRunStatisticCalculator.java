@@ -22,7 +22,7 @@ import de.clusteval.cluster.ClusterItem;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.data.statistics.RunStatisticCalculateException;
 import de.clusteval.framework.repository.MyRengine;
-import de.clusteval.framework.repository.RegisterException;
+import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.program.ParameterSet;
 import de.clusteval.run.result.ParameterOptimizationResult;

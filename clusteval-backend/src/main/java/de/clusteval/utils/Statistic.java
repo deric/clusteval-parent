@@ -15,10 +15,10 @@ package de.clusteval.utils;
 
 import java.io.File;
 
-import de.clusteval.framework.repository.RegisterException;
+import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RepositoryObject;
-import de.clusteval.program.r.RLibraryInferior;
+import de.clusteval.api.r.RLibraryInferior;
 
 /**
  * An abstract class representing a property of some object, that can be

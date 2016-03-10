@@ -10,7 +10,7 @@
  ******************************************************************************/
 package de.clusteval.data.dataset.format;
 
-import de.clusteval.data.dataset.DataSetException;
+import de.clusteval.api.exceptions.DataSetException;
 
 /**
  * @author Christian Wiwie

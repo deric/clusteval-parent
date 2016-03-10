@@ -8,18 +8,20 @@
  * Contributors:
  *     Christian Wiwie - initial API and implementation
  ******************************************************************************/
-/**
- *
- */
 package de.clusteval.run.result;
 
+import de.clusteval.api.cluster.quality.ClusteringQualitySet;
+import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.r.InvalidRepositoryException;
+import de.clusteval.api.r.RepositoryAlreadyExistsException;
+import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.repository.RegisterException;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.cluster.paramOptimization.InvalidOptimizationParameterException;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
 import de.clusteval.cluster.paramOptimization.UnknownParameterOptimizationMethodException;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
-import de.clusteval.cluster.quality.ClusteringQualitySet;
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
 import de.clusteval.context.IncompatibleContextException;
 import de.clusteval.context.UnknownContextException;
@@ -30,7 +32,6 @@ import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.DataSetNotFoundException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.data.dataset.NoDataSetException;
-import de.clusteval.data.dataset.format.UnknownDataSetFormatException;
 import de.clusteval.data.dataset.type.UnknownDataSetTypeException;
 import de.clusteval.data.distance.UnknownDistanceMeasureException;
 import de.clusteval.data.goldstandard.GoldStandardConfigNotFoundException;
@@ -40,11 +41,8 @@ import de.clusteval.data.goldstandard.format.UnknownGoldStandardFormatException;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
 import de.clusteval.data.statistics.UnknownDataStatisticException;
-import de.clusteval.framework.repository.InvalidRepositoryException;
 import de.clusteval.framework.repository.NoRepositoryFoundException;
-import de.clusteval.framework.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
-import de.clusteval.framework.repository.RepositoryAlreadyExistsException;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
@@ -84,9 +82,8 @@ import org.apache.commons.configuration.ConfigurationException;
  *
  */
 
-public class ParameterOptimizationResult extends ExecutionRunResult
-		implements
-			Iterable<Pair<ParameterSet, ClusteringQualitySet>> {
+public class ParameterOptimizationResult extends ExecutionRunResult implements
+     			Iterable<Pair<ParameterSet, ClusteringQualitySet>> {
 
 	/**
 	 * @param parentRepository
@@ -145,7 +142,7 @@ public class ParameterOptimizationResult extends ExecutionRunResult
 	 * @throws UnknownRunResultPostprocessorException
 	 * @throws UnknownDataRandomizerException
 	 */
-    public static Run parseFromRunResultFolder2(final Repository parentRepository, final File runResultFolder,
+    public static Run parseFromRunResultFolder2(final IRepository parentRepository, final File runResultFolder,
          			final List<ParameterOptimizationResult> result, final boolean parseClusterings,
 			final boolean storeClusterings, final boolean register) throws IOException, UnknownRunResultFormatException,
 					UnknownDataSetFormatException, UnknownClusteringQualityMeasureException, InvalidRunModeException,
@@ -242,7 +239,7 @@ public class ParameterOptimizationResult extends ExecutionRunResult
 	 * @throws RegisterException
 	 * @throws RunResultParseException
 	 */
-    public static ParameterOptimizationResult parseFromRunResultCompleteFile(final Repository repository,
+    public static ParameterOptimizationResult parseFromRunResultCompleteFile(final IRepository repository,
          			ParameterOptimizationRun run, ParameterOptimizationMethod method, File completeFile,
 			final boolean parseClusterings, final boolean storeClusterings, final boolean register)
 					throws RegisterException, RunResultParseException {
@@ -304,8 +301,8 @@ public class ParameterOptimizationResult extends ExecutionRunResult
 	 * @throws RegisterException
 	 *
 	 */
-	public ParameterOptimizationResult(final Repository repository, final long changeDate, final File absPath,
-			final String runIdentString, final Run run, final ParameterOptimizationMethod method)
+    public ParameterOptimizationResult(final IRepository repository, final long changeDate, final File absPath,
+         			final String runIdentString, final Run run, final ParameterOptimizationMethod method)
 					throws RegisterException {
 		this(repository, false, changeDate, absPath, runIdentString, run, method, false, false);
 	}

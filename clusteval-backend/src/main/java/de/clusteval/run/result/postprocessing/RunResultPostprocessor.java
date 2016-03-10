@@ -19,10 +19,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.clusteval.cluster.Clustering;
-import de.clusteval.framework.repository.RegisterException;
+import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RepositoryObject;
-import de.clusteval.program.r.RLibraryInferior;
+import de.clusteval.api.r.RLibraryInferior;
 
 /**
  * @author Christian Wiwie

@@ -17,7 +17,7 @@ import de.clusteval.data.dataset.format.DataSetFormat;
 import de.clusteval.data.dataset.format.DataSetFormatFinderThread;
 import de.clusteval.data.dataset.type.DataSetType;
 import de.clusteval.data.dataset.type.DataSetTypeFinderThread;
-import de.clusteval.framework.repository.RegisterException;
+import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.threading.SupervisorThread;
 

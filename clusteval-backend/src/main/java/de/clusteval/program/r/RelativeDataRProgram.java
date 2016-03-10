@@ -22,10 +22,10 @@ import de.wiwie.wiutils.utils.SimilarityMatrix;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.RelativeDataSet;
 import de.clusteval.framework.RLibraryNotLoadedException;
-import de.clusteval.framework.repository.RegisterException;
+import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.program.ProgramConfig;
-import de.clusteval.utils.RNotAvailableException;
+import de.clusteval.api.exceptions.RNotAvailableException;
 
 /**
  * @author Christian Wiwie

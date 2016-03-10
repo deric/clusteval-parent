@@ -13,7 +13,7 @@
  */
 package de.clusteval.data.goldstandard;
 
-import de.clusteval.data.DataException;
+import de.clusteval.api.exceptions.DataException;
 
 /**
  * @author Christian Wiwie

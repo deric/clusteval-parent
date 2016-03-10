@@ -4,39 +4,36 @@
  * are made available under the terms of the GNU Public License v3.0
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/gpl.html
- * 
+ *
  * Contributors:
  *     Christian Wiwie - initial API and implementation
  ******************************************************************************/
-/**
- * 
- */
 package de.clusteval.utils;
 
-import static ch.qos.logback.core.pattern.color.ANSIConstants.DEFAULT_FG;
-import static ch.qos.logback.core.pattern.color.ANSIConstants.RED_FG;
-import static ch.qos.logback.core.pattern.color.ANSIConstants.YELLOW_FG;
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.pattern.color.HighlightingCompositeConverter;
 import ch.qos.logback.classic.spi.ILoggingEvent;
+import static ch.qos.logback.core.pattern.color.ANSIConstants.DEFAULT_FG;
+import static ch.qos.logback.core.pattern.color.ANSIConstants.RED_FG;
+import static ch.qos.logback.core.pattern.color.ANSIConstants.YELLOW_FG;
 
 /**
  * @author Christian Wiwie
- * 
+ *
  */
 public class MyHighlightingCompositeConverter
 		extends
 			HighlightingCompositeConverter {
 
 	/**
-	 * 
+	 *
 	 */
 	public MyHighlightingCompositeConverter() {
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see ch.qos.logback.classic.pattern.color.HighlightingCompositeConverter#
 	 * getForegroundColorCode(ch.qos.logback.classic.spi.ILoggingEvent)
 	 */

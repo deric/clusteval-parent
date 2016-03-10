@@ -20,10 +20,10 @@ import java.util.List;
 import java.util.Set;
 
 import de.clusteval.data.dataset.DataSet;
-import de.clusteval.framework.repository.RegisterException;
+import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RepositoryObject;
-import de.clusteval.program.r.RLibraryInferior;
+import de.clusteval.api.r.RLibraryInferior;
 
 /**
  * 

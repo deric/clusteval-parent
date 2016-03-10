@@ -21,9 +21,9 @@ import java.util.List;
 import de.wiwie.wiutils.utils.SimilarityMatrix.NUMBER_PRECISION;
 import de.clusteval.data.dataset.DataSet.WEBSITE_VISIBILITY;
 import de.clusteval.data.dataset.format.AbsoluteDataSetFormat;
-import de.clusteval.data.dataset.format.InvalidDataSetFormatVersionException;
+import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.data.dataset.type.DataSetType;
-import de.clusteval.framework.repository.RegisterException;
+import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
 
 /**

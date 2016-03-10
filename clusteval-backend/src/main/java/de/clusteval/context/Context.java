@@ -13,7 +13,7 @@
 package de.clusteval.context;
 
 import de.clusteval.data.dataset.format.DataSetFormat;
-import de.clusteval.framework.repository.RegisterException;
+import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RepositoryObject;
 import de.clusteval.run.result.format.RunResultFormat;

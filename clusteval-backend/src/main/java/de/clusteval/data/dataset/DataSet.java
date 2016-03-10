@@ -23,15 +23,15 @@ import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
 import de.clusteval.data.dataset.format.ConversionStandardToInputConfiguration;
 import de.clusteval.data.dataset.format.DataSetFormat;
 import de.clusteval.data.dataset.format.DataSetFormatParser;
-import de.clusteval.data.dataset.format.InvalidDataSetFormatVersionException;
+import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.data.dataset.format.RelativeDataSetFormat;
-import de.clusteval.data.dataset.format.UnknownDataSetFormatException;
+import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.data.dataset.type.DataSetType;
 import de.clusteval.data.preprocessing.DataPreprocessor;
 import de.clusteval.framework.ClustevalBackendServer;
-import de.clusteval.framework.repository.RegisterException;
+import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
-import de.clusteval.framework.repository.RepositoryEvent;
+import de.clusteval.api.repository.RepositoryEvent;
 import de.clusteval.framework.repository.RepositoryMoveEvent;
 import de.clusteval.framework.repository.RepositoryObject;
 import de.clusteval.framework.repository.RepositoryRemoveEvent;
@@ -39,7 +39,7 @@ import de.clusteval.framework.repository.RepositoryReplaceEvent;
 import de.clusteval.utils.FormatConversionException;
 import de.clusteval.utils.NamedDoubleAttribute;
 import de.clusteval.utils.NamedIntegerAttribute;
-import de.clusteval.utils.RNotAvailableException;
+import de.clusteval.api.exceptions.RNotAvailableException;
 
 /**
  * A wrapper class for a dataset on the filesystem.

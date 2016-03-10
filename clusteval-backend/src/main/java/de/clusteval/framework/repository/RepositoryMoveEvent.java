@@ -13,6 +13,8 @@
  */
 package de.clusteval.framework.repository;
 
+import de.clusteval.api.repository.RepositoryEvent;
+
 /**
  * A {@link RepositoryMoveEvent} is created, when some repository object is
  * replaced by another repository object, where replacing means, that the old

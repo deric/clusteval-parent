@@ -12,7 +12,8 @@
  */
 package de.clusteval.utils;
 
-import de.clusteval.framework.repository.RegisterException;
+import de.clusteval.api.repository.IRepositoryObject;
+import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RepositoryObject;
 import de.clusteval.framework.repository.RepositoryRemoveEvent;
@@ -113,7 +114,7 @@ public abstract class FileFinder<T extends RepositoryObject> extends Finder<T> {
             /*
 			 * Remove the corresponding object from the repository
              */
-            RepositoryObject object = this.repository.getRegisteredObject(file);
+            IRepositoryObject object = this.repository.getRegisteredObject(file);
             if (object != null) {
                 object.unregister();
                 object.notify(new RepositoryRemoveEvent(object));

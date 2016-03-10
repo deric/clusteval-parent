@@ -16,8 +16,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import de.clusteval.data.dataset.format.DataSetFormat;
-import de.clusteval.data.dataset.format.UnknownDataSetFormatException;
-import de.clusteval.framework.repository.RegisterException;
+import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.run.result.format.RunResultFormat;
 import de.clusteval.run.result.format.UnknownRunResultFormatException;

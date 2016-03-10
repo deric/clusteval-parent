@@ -15,7 +15,7 @@ package de.clusteval.data.dataset.format;
 
 import java.io.File;
 
-import de.clusteval.framework.repository.RegisterException;
+import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.utils.FormatVersion;
 

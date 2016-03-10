@@ -30,7 +30,7 @@ import org.rosuda.REngine.Rserve.RserveException;
 import de.clusteval.data.goldstandard.GoldStandard;
 import de.clusteval.framework.RLibraryRequirement;
 import de.clusteval.framework.repository.MyRengine;
-import de.clusteval.framework.repository.RegisterException;
+import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
 import de.wiwie.wiutils.file.FileUtils;
 import de.wiwie.wiutils.utils.ArraysExt;

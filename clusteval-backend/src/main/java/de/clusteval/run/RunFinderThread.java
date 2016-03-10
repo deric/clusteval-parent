@@ -23,7 +23,7 @@ import de.clusteval.data.goldstandard.GoldStandardConfig;
 import de.clusteval.data.goldstandard.GoldStandardConfigFinderThread;
 import de.clusteval.data.statistics.DataStatistic;
 import de.clusteval.data.statistics.DataStatisticFinderThread;
-import de.clusteval.framework.repository.RegisterException;
+import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.threading.SupervisorThread;
 import de.clusteval.program.ProgramConfig;

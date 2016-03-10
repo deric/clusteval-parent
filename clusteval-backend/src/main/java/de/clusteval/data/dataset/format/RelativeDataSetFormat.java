@@ -10,13 +10,14 @@
  ******************************************************************************/
 package de.clusteval.data.dataset.format;
 
+import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import java.io.File;
 import java.io.IOException;
 
 import de.wiwie.wiutils.utils.SimilarityMatrix;
 import de.wiwie.wiutils.utils.SimilarityMatrix.NUMBER_PRECISION;
 import de.clusteval.data.dataset.DataSet;
-import de.clusteval.framework.repository.RegisterException;
+import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
 
 /**

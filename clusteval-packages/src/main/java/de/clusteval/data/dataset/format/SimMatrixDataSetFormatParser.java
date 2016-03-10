@@ -13,6 +13,7 @@
  */
 package de.clusteval.data.dataset.format;
 
+import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
@@ -26,7 +27,7 @@ import de.wiwie.wiutils.utils.parse.TextFileParser.OUTPUT_MODE;
 import de.clusteval.data.dataset.DataSet;
 import de.clusteval.data.dataset.RelativeDataSet;
 import de.clusteval.framework.ClustevalBackendServer;
-import de.clusteval.framework.repository.RegisterException;
+import de.clusteval.api.repository.RegisterException;
 import de.clusteval.utils.FormatVersion;
 
 /**

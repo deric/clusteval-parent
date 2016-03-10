@@ -13,6 +13,7 @@
  */
 package de.clusteval.program.r;
 
+import de.clusteval.api.r.RLibraryInferior;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -30,18 +31,18 @@ import de.wiwie.wiutils.utils.StringExt;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.format.DataSetFormat;
-import de.clusteval.data.dataset.format.UnknownDataSetFormatException;
+import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.framework.RLibraryNotLoadedException;
 import de.clusteval.framework.RLibraryRequirement;
 import de.clusteval.framework.repository.MyRengine;
-import de.clusteval.framework.repository.RegisterException;
+import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.program.Program;
 import de.clusteval.program.ProgramConfig;
 import de.clusteval.program.ProgramParameter;
 import de.clusteval.run.result.format.RunResultFormat;
 import de.clusteval.run.result.format.UnknownRunResultFormatException;
-import de.clusteval.utils.RNotAvailableException;
+import de.clusteval.api.exceptions.RNotAvailableException;
 
 /**
  * A type of progam that encapsulates a program embedded in R.

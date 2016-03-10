@@ -17,7 +17,7 @@ import de.clusteval.data.distance.DistanceMeasure;
 import de.clusteval.data.distance.DistanceMeasureFinderThread;
 import de.clusteval.data.preprocessing.DataPreprocessor;
 import de.clusteval.data.preprocessing.DataPreprocessorFinderThread;
-import de.clusteval.framework.repository.RegisterException;
+import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.threading.SupervisorThread;
 import de.clusteval.utils.Finder;

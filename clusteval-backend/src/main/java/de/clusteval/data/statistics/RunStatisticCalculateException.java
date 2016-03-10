@@ -3,7 +3,7 @@
  */
 package de.clusteval.data.statistics;
 
-import de.clusteval.utils.ClustEvalException;
+import de.clusteval.api.exceptions.ClustEvalException;
 
 /**
  * @author Christian Wiwie

@@ -16,7 +16,7 @@ package de.clusteval.run.result;
 import java.io.File;
 
 import de.clusteval.data.DataConfig;
-import de.clusteval.framework.repository.RegisterException;
+import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.program.ProgramConfig;
 import de.clusteval.run.Run;

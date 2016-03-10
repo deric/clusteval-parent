@@ -3,6 +3,7 @@
  */
 package de.clusteval.framework.repository;
 
+import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.program.Program;
 import de.clusteval.program.r.RProgram;

@@ -13,6 +13,8 @@
  */
 package de.clusteval.data.dataset.format;
 
+import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
+import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -24,8 +26,8 @@ import org.slf4j.LoggerFactory;
 
 import de.wiwie.wiutils.utils.SimilarityMatrix.NUMBER_PRECISION;
 import de.clusteval.data.dataset.DataSet;
-import de.clusteval.framework.repository.RegisterException;
-import de.clusteval.utils.RNotAvailableException;
+import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.exceptions.RNotAvailableException;
 
 /**
  * @author Christian Wiwie
