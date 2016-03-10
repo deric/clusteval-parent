@@ -39,4 +39,13 @@ public class ArraysExtTest {
         assertTrue(Arrays.equals(expect, res));
     }
 
+    @Test
+    public void testRev_int() {
+        int[] test = new int[]{1, 2, 3};
+        int[] expect = new int[]{3, 2, 1};
+        int[] res = ArraysExt.rev(test);
+
+        assertTrue(Arrays.equals(expect, res));
+    }
+
 }

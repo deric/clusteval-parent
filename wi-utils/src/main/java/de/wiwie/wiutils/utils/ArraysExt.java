@@ -1930,8 +1930,8 @@ public class ArraysExt {
      * @return The input array without duplicates.
      */
     public static double[] unique(double[] array) {
-        Set<Double> set = new HashSet<Double>();
-        List<Double> list = new ArrayList<Double>();
+        Set<Double> set = new HashSet<>();
+        List<Double> list = new ArrayList<>();
         for (double d : array) {
             if (set.add(d)) {
                 list.add(d);
@@ -1948,8 +1948,8 @@ public class ArraysExt {
      * @return The input array without duplicates.
      */
     public static int[] unique(int[] array) {
-        Set<Integer> set = new HashSet<Integer>();
-        List<Integer> list = new ArrayList<Integer>();
+        Set<Integer> set = new HashSet<>();
+        List<Integer> list = new ArrayList<>();
         for (int d : array) {
             if (set.add(d)) {
                 list.add(d);
@@ -1967,6 +1967,21 @@ public class ArraysExt {
      */
     public static double[] rev(double[] array) {
         double[] res = new double[array.length];
+        int j = 0;
+        for (int i = array.length - 1; i >= 0; i--) {
+            res[j++] = array[i];
+        }
+        return res;
+    }
+
+    /**
+     * Reverse contents of array (without modifying)
+     *
+     * @param array
+     * @return reversed array
+     */
+    public static int[] rev(int[] array) {
+        int[] res = new int[array.length];
         int j = 0;
         for (int i = array.length - 1; i >= 0; i--) {
             res[j++] = array[i];
