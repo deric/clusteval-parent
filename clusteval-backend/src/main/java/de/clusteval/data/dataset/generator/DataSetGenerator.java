@@ -29,7 +29,6 @@ import de.clusteval.data.dataset.format.DataSetFormat;
 import de.clusteval.data.dataset.type.DataSetType;
 import de.clusteval.data.dataset.type.UnknownDataSetTypeException;
 import de.clusteval.data.goldstandard.GoldStandard;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RepositoryObject;
 import de.wiwie.wiutils.file.FileUtils;
 import java.io.BufferedWriter;
@@ -80,7 +79,7 @@ public abstract class DataSetGenerator extends AbstractDataSetProvider implement
 
     /**
      * This attribute corresponds to the name of the folder located in
-     * {@link Repository#getDataSetBasePath()}, in which the dataset (and
+     * {@link IRepository#getDataSetBasePath()}, in which the dataset (and
      * goldstandard) will be stored.
      */
     private String folderName;
