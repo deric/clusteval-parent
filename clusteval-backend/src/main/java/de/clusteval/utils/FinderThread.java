@@ -12,9 +12,9 @@
  */
 package de.clusteval.utils;
 
+import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.repository.IRepositoryObject;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.framework.repository.Repository;
-import de.clusteval.framework.repository.RepositoryObject;
 import de.clusteval.framework.threading.ClustevalThread;
 import de.clusteval.framework.threading.SupervisorThread;
 import org.slf4j.Logger;
@@ -25,9 +25,9 @@ import org.slf4j.LoggerFactory;
  * @param <T>
  *
  */
-public abstract class FinderThread<T extends RepositoryObject> extends ClustevalThread {
+public abstract class FinderThread<T extends IRepositoryObject> extends ClustevalThread {
 
-    protected Repository repository;
+    protected IRepository repository;
 
     protected Class<T> classToFind;
 
@@ -47,7 +47,7 @@ public abstract class FinderThread<T extends RepositoryObject> extends Clusteval
      *
      */
     public FinderThread(final SupervisorThread supervisorThread,
-            final Repository repository, final Class<T> classToFind,
+            final IRepository repository, final Class<T> classToFind,
             boolean checkOnce) {
         this(supervisorThread, repository, classToFind, 60000, checkOnce);
     }
@@ -61,7 +61,7 @@ public abstract class FinderThread<T extends RepositoryObject> extends Clusteval
      *
      */
     public FinderThread(final SupervisorThread supervisorThread,
-            final Repository repository, final Class<T> classToFind,
+            final IRepository repository, final Class<T> classToFind,
             final long sleepTime, boolean checkOnce) {
         super(supervisorThread);
         this.classToFind = classToFind;
@@ -85,9 +85,9 @@ public abstract class FinderThread<T extends RepositoryObject> extends Clusteval
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Thread#run()
+     * (non-Javadoc)
+     *
+     * @see java.lang.Thread#run()
      */
     @Override
     public void run() {

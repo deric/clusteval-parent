@@ -61,9 +61,9 @@ public abstract class NamedAttribute<T> extends RepositoryObject {
     protected abstract T cloneValue(final T value);
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.wiwie.wiutils.utils.RepositoryObject#equals(java.lang.Object)
+     * (non-Javadoc)
+     *
+     * @see de.wiwie.wiutils.utils.RepositoryObject#equals(java.lang.Object)
      */
     @Override
     public boolean equals(Object obj) {

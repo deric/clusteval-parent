@@ -78,7 +78,6 @@ import de.wiwie.wiutils.utils.ProgressPrinter;
 import de.wiwie.wiutils.utils.parse.TextFileParser;
 import de.wiwie.wiutils.utils.parse.TextFileParser.OUTPUT_MODE;
 import java.io.File;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -209,27 +208,14 @@ public class ClustQualityEval {
 
                         File f = new File(FileUtils.buildPath(
                                 repo.getBasePath(), "clusters"));
-                        File[] childs = f.listFiles(new FilenameFilter() {
-
-                            /*
-							 * (non-Javadoc)
-							 *
-							 * @see java.io.FilenameFilter#accept(java.io.File,
-							 * java.lang.String)
-                             */
-                            @Override
-                            public boolean accept(File dir, String name) {
-                                return name.startsWith(pc.getName() + "_"
-                                        + dataConfig.getName())
-                                        && name.endsWith(".results.conv");
-                            }
-                        });
+                        File[] childs = f.listFiles((File dir, String name1) -> name1.startsWith(pc.getName() + "_"
+                                + dataConfig.getName()) && name1.endsWith(".results.conv"));
                         // printer = new MyProgressPrinter(childs.length, true);
                         ((ch.qos.logback.classic.Logger) LoggerFactory
                                 .getLogger(Logger.ROOT_LOGGER_NAME))
                                 .info("Assessing qualities of clusterings ...");
 
-                        final Map<Long, ClusteringQualitySet> qualsMap = new HashMap<Long, ClusteringQualitySet>();
+                        final Map<Long, ClusteringQualitySet> qualsMap = new HashMap<>();
 
                         for (File clusteringFile : childs) {
                             try {
@@ -241,8 +227,7 @@ public class ClustQualityEval {
                                 // measure
                                 // hasn't
                                 // been evaluated
-                                List<ClusteringQualityMeasure> toEvaluate = new ArrayList<ClusteringQualityMeasure>(
-                                        measures);
+                                List<ClusteringQualityMeasure> toEvaluate = new ArrayList<>(measures);
                                 try {
                                     if (cl.getQualities() != null) {
                                         toEvaluate.removeAll(cl.getQualities()
@@ -300,13 +285,8 @@ public class ClustQualityEval {
                                 allQuals.putAll(quals);
                                 qualsMap.put(iterationNumber, allQuals);
 
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            } catch (UnknownGoldStandardFormatException e) {
-                                e.printStackTrace();
-                            } catch (UnknownDataSetFormatException e) {
-                                e.printStackTrace();
-                            } catch (InvalidDataSetFormatVersionException e) {
+                            } catch (IOException | UnknownGoldStandardFormatException |
+                                    UnknownDataSetFormatException | InvalidDataSetFormatVersionException e) {
                                 e.printStackTrace();
                             }
                         }
@@ -340,11 +320,11 @@ public class ClustQualityEval {
                             protected List<ClusteringQualityMeasure> measures;
 
                             /*
-							 * (non-Javadoc)
-							 *
-							 * @see
-							 * de.wiwie.wiutils.utils.parse.TextFileParser#processLine(java.lang.
-							 * String[], java.lang.String[])
+                             * (non-Javadoc)
+                             *
+                             * @see
+                             * de.wiwie.wiutils.utils.parse.TextFileParser#processLine(java.lang.
+                             * String[], java.lang.String[])
                              */
                             @Override
                             protected void processLine(String[] key,
@@ -352,16 +332,16 @@ public class ClustQualityEval {
                             }
 
                             /*
-							 * (non-Javadoc)
-							 *
-							 * @see
-							 * de.wiwie.wiutils.utils.parse.TextFileParser#getLineOutput(java
-							 * .lang .String[], java.lang.String[])
+                             * (non-Javadoc)
+                             *
+                             * @see
+                             * de.wiwie.wiutils.utils.parse.TextFileParser#getLineOutput(java
+                             * .lang .String[], java.lang.String[])
                              */
                             @Override
                             protected String getLineOutput(String[] key,
                                     String[] value) {
-                                StringBuffer sb = new StringBuffer();
+                                StringBuilder sb = new StringBuilder();
                                 // sb.append(combineColumns(value));
                                 sb.append(combineColumns(Arrays
                                         .copyOf(value, 2)));
@@ -370,7 +350,7 @@ public class ClustQualityEval {
                                     sb.append(outSplit);
                                     sb.append(combineColumns(Arrays
                                             .copyOfRange(value, 2, value.length)));
-                                    measures = new ArrayList<ClusteringQualityMeasure>();
+                                    measures = new ArrayList<>();
                                     for (int i = 2; i < value.length; i++) {
                                         try {
                                             measures.add(ClusteringQualityMeasure
@@ -460,20 +440,20 @@ public class ClustQualityEval {
                 OUTPUT_MODE.STREAM) {
 
             /*
-			 * (non-Javadoc)
-			 *
-			 * @see de.wiwie.wiutils.utils.parse.TextFileParser#processLine(java.lang.String[],
-			 * java.lang.String[])
+             * (non-Javadoc)
+             *
+             * @see de.wiwie.wiutils.utils.parse.TextFileParser#processLine(java.lang.String[],
+             * java.lang.String[])
              */
             @Override
             protected void processLine(String[] key, String[] value) {
             }
 
             /*
-			 * (non-Javadoc)
-			 *
-			 * @see de.wiwie.wiutils.utils.parse.TextFileParser#getLineOutput(java.lang.String[],
-			 * java.lang.String[])
+             * (non-Javadoc)
+             *
+             * @see de.wiwie.wiutils.utils.parse.TextFileParser#getLineOutput(java.lang.String[],
+             * java.lang.String[])
              */
             @Override
             protected String getLineOutput(String[] key, String[] value) {
@@ -545,9 +525,9 @@ class MyProgressPrinter extends ProgressPrinter {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.wiwie.wiutils.utils.ProgressPrinter#log(java.lang.String)
+     * (non-Javadoc)
+     *
+     * @see de.wiwie.wiutils.utils.ProgressPrinter#log(java.lang.String)
      */
     @Override
     protected void log(String message) {

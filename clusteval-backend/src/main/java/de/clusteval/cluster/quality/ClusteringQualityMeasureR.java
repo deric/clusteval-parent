@@ -13,6 +13,7 @@
 package de.clusteval.cluster.quality;
 
 import de.clusteval.api.cluster.quality.ClusteringQualityMeasureValue;
+import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.RNotAvailableException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
@@ -117,7 +118,7 @@ public abstract class ClusteringQualityMeasureR extends ClusteringQualityMeasure
 
     protected abstract ClusteringQualityMeasureValue getQualityOfClusteringHelper(
             Clustering clustering, Clustering goldStandard,
-            DataConfig dataConfig, final MyRengine rEngine)
+            IDataConfig dataConfig, final MyRengine rEngine)
             throws UnknownGoldStandardFormatException,
                    UnknownDataSetFormatException, IOException,
                    InvalidDataSetFormatVersionException, REngineException,

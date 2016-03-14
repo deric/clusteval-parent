@@ -12,13 +12,13 @@
  */
 package de.clusteval.data.goldstandard;
 
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.cluster.Cluster;
 import de.clusteval.cluster.ClusterItem;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.data.goldstandard.format.UnknownGoldStandardFormatException;
 import de.clusteval.framework.repository.NoRepositoryFoundException;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RepositoryController;
 import de.clusteval.framework.repository.RepositoryObject;
 import de.wiwie.wiutils.utils.text.TextFileMapParser;
@@ -46,14 +46,14 @@ public class GoldStandard extends RepositoryObject {
     /**
      * Instantiates a new goldstandard object.
      *
-     * @param repository the repository this goldstandard should be registered
-     * at.
-     * @param changeDate The change date of this goldstandard is used for
-     * equality checks.
+     * @param repository          the repository this goldstandard should be registered
+     *                            at.
+     * @param changeDate          The change date of this goldstandard is used for
+     *                            equality checks.
      * @param absGoldStandardPath The absolute path of this goldstandard.
      * @throws RegisterException
      */
-    public GoldStandard(final Repository repository, final long changeDate,
+    public GoldStandard(final IRepository repository, final long changeDate,
             final File absGoldStandardPath) throws RegisterException {
         super(repository, false, changeDate, absGoldStandardPath);
 
@@ -76,9 +76,9 @@ public class GoldStandard extends RepositoryObject {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see framework.repository.RepositoryObject#clone()
+     * (non-Javadoc)
+     *
+     * @see framework.repository.RepositoryObject#clone()
      */
     @Override
     public GoldStandard clone() {
@@ -101,7 +101,7 @@ public class GoldStandard extends RepositoryObject {
      * happens later in the {@link #loadIntoMemory()} method.
      *
      * @param absGoldStandardPath The absolute path to the goldstandard file
-     * that should be parsed.
+     *                            that should be parsed.
      * @return The goldstandard object.
      * @throws NoRepositoryFoundException
      * @throws GoldStandardNotFoundException
@@ -146,7 +146,7 @@ public class GoldStandard extends RepositoryObject {
                     this.absPath.getAbsolutePath(), 0, 1);
             parser.process();
 
-            Map<String, Cluster> clusterMap = new HashMap<String, Cluster>();
+            Map<String, Cluster> clusterMap = new HashMap<>();
 
             Map<String, String> mapping = parser.getResult();
             for (String itemId : mapping.keySet()) {
@@ -161,14 +161,17 @@ public class GoldStandard extends RepositoryObject {
                         String clusterId = split[0];
                         String fuzzy;
                         // with fuzzy coefficient
-                        if (split.length == 2) {
-                            fuzzy = split[1];
-                        } // without fuzzy coefficient
-                        else if (split.length == 1) {
-                            fuzzy = "1.0";
-                        } // unsupported
-                        else {
-                            throw new ArrayIndexOutOfBoundsException();
+                        switch (split.length) {
+                            // without fuzzy coefficient
+                            case 2:
+                                fuzzy = split[1];
+                                break;
+                            // unsupported
+                            case 1:
+                                fuzzy = "1.0";
+                                break;
+                            default:
+                                throw new ArrayIndexOutOfBoundsException();
                         }
 
                         if (!clusterMap.containsKey(clusterId)) {
@@ -236,7 +239,7 @@ public class GoldStandard extends RepositoryObject {
      *
      * @return The clustering object representing the goldstandard.
      * @throws UnknownGoldStandardFormatException the unknown gold standard
-     * format exception
+     *                                            format exception
      */
     public Clustering getClustering() throws UnknownGoldStandardFormatException {
         if (!isInMemory()) {
@@ -246,9 +249,9 @@ public class GoldStandard extends RepositoryObject {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#toString()
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#toString()
      */
     @Override
     public String toString() {

@@ -12,8 +12,8 @@
  */
 package de.clusteval.cluster.quality;
 
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.utils.JARFinder;
 import de.clusteval.utils.RecursiveSubDirectoryIterator;
 import java.io.File;
@@ -31,18 +31,18 @@ public class ClusteringQualityMeasureFinder extends JARFinder<ClusteringQualityM
      * Instantiates a new clustering quality measure finder.
      *
      * @param repository The repository to register the new data configurations
-     * at.
+     *                   at.
      * @throws RegisterException
      */
-    public ClusteringQualityMeasureFinder(final Repository repository)
+    public ClusteringQualityMeasureFinder(final IRepository repository)
             throws RegisterException {
         super(repository, ClusteringQualityMeasure.class);
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.wiwie.wiutils.utils.JARFinder#classForJARFile(java.io.File)
+     * (non-Javadoc)
+     *
+     * @see de.wiwie.wiutils.utils.JARFinder#classForJARFile(java.io.File)
      */
     @Override
     protected String[] classNamesForJARFile(File f) {
@@ -51,9 +51,9 @@ public class ClusteringQualityMeasureFinder extends JARFinder<ClusteringQualityM
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.wiwie.wiutils.utils.JARFinder#getURLClassLoader0(java.io.File)
+     * (non-Javadoc)
+     *
+     * @see de.wiwie.wiutils.utils.JARFinder#getURLClassLoader0(java.io.File)
      */
     @Override
     protected URLClassLoader getURLClassLoader0(File f, final ClassLoader parent)
@@ -64,9 +64,9 @@ public class ClusteringQualityMeasureFinder extends JARFinder<ClusteringQualityM
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.wiwie.wiutils.utils.JARFinder#isJARLoaded(java.io.File)
+     * (non-Javadoc)
+     *
+     * @see de.wiwie.wiutils.utils.JARFinder#isJARLoaded(java.io.File)
      */
     @Override
     protected boolean isJARLoaded(File f) {
@@ -77,9 +77,9 @@ public class ClusteringQualityMeasureFinder extends JARFinder<ClusteringQualityM
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.wiwie.wiutils.utils.Finder#checkFile(java.io.File)
+     * (non-Javadoc)
+     *
+     * @see de.wiwie.wiutils.utils.Finder#checkFile(java.io.File)
      */
     @Override
     protected boolean checkFile(File file) {

@@ -43,7 +43,6 @@ import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
 import de.clusteval.data.statistics.UnknownDataStatisticException;
 import de.clusteval.framework.repository.NoRepositoryFoundException;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RepositoryController;
 import de.clusteval.framework.repository.RepositoryObject;
 import de.clusteval.framework.repository.RunResultRepository;
@@ -238,7 +237,7 @@ public abstract class RunResult extends RepositoryObject {
      * @param run
      * @throws RegisterException
      */
-    public RunResult(Repository repository, long changeDate, File absPath, final String runIdentString, final Run run)
+    public RunResult(IRepository repository, long changeDate, File absPath, final String runIdentString, final Run run)
             throws RegisterException {
         super(repository, false, changeDate, absPath);
         this.runIdentString = runIdentString;
@@ -258,16 +257,16 @@ public abstract class RunResult extends RepositoryObject {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see framework.repository.RepositoryObject#clone()
+     * (non-Javadoc)
+     *
+     * @see framework.repository.RepositoryObject#clone()
      */
     @Override
     public abstract RunResult clone();
 
     /**
      * @return The unique identifier of this runresult, equal to the name of the
-     * runresult folder.
+     *         runresult folder.
      */
     public String getIdentifier() {
         return this.runIdentString;
@@ -284,7 +283,7 @@ public abstract class RunResult extends RepositoryObject {
      * Checks, whether this run result is currently held in memory.
      *
      * @return True, if this run result is currently held in memory. False
-     * otherwise.
+     *         otherwise.
      */
     public abstract boolean isInMemory();
 
@@ -313,9 +312,9 @@ public abstract class RunResult extends RepositoryObject {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.clusteval.framework.repository.RepositoryObject#register()
+     * (non-Javadoc)
+     *
+     * @see de.clusteval.framework.repository.RepositoryObject#register()
      */
     @Override
     public boolean register() throws RegisterException {

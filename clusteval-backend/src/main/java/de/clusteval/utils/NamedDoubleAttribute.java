@@ -12,8 +12,8 @@
  */
 package de.clusteval.utils;
 
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.framework.repository.Repository;
 
 /**
  * @author Christian Wiwie
@@ -27,7 +27,7 @@ public class NamedDoubleAttribute extends NamedAttribute<Double> {
      * @param value
      * @throws RegisterException
      */
-    public NamedDoubleAttribute(final Repository repository, final String name,
+    public NamedDoubleAttribute(final IRepository repository, final String name,
             final Double value) throws RegisterException {
         super(repository, name, value);
         this.register();
@@ -51,7 +51,7 @@ public class NamedDoubleAttribute extends NamedAttribute<Double> {
      */
     @Override
     protected Double cloneValue(Double value) {
-        return new Double(value);
+        return value;
     }
 
     /*

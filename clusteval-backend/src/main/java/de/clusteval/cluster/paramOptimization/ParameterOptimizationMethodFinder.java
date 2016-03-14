@@ -12,8 +12,8 @@
  */
 package de.clusteval.cluster.paramOptimization;
 
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.utils.JARFinder;
 import de.clusteval.utils.RecursiveSubDirectoryIterator;
 import java.io.File;
@@ -31,18 +31,18 @@ public class ParameterOptimizationMethodFinder extends JARFinder<ParameterOptimi
      * Instantiates a new clustering quality measure finder.
      *
      * @param repository The repository to register the new data configurations
-     * at.
+     *                   at.
      * @throws RegisterException
      */
-    public ParameterOptimizationMethodFinder(final Repository repository)
+    public ParameterOptimizationMethodFinder(final IRepository repository)
             throws RegisterException {
         super(repository, ParameterOptimizationMethod.class);
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.wiwie.wiutils.utils.Finder#checkFile(java.io.File)
+     * (non-Javadoc)
+     *
+     * @see de.wiwie.wiutils.utils.Finder#checkFile(java.io.File)
      */
     @Override
     protected boolean checkFile(File file) {
@@ -50,9 +50,9 @@ public class ParameterOptimizationMethodFinder extends JARFinder<ParameterOptimi
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.wiwie.wiutils.utils.Finder#getIterator()
+     * (non-Javadoc)
+     *
+     * @see de.wiwie.wiutils.utils.Finder#getIterator()
      */
     @Override
     protected Iterator<File> getIterator() {
@@ -60,9 +60,9 @@ public class ParameterOptimizationMethodFinder extends JARFinder<ParameterOptimi
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.wiwie.wiutils.utils.JARFinder#classNameForJARFile(java.io.File)
+     * (non-Javadoc)
+     *
+     * @see de.wiwie.wiutils.utils.JARFinder#classNameForJARFile(java.io.File)
      */
     @Override
     protected String[] classNamesForJARFile(File f) {
@@ -71,9 +71,9 @@ public class ParameterOptimizationMethodFinder extends JARFinder<ParameterOptimi
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.wiwie.wiutils.utils.JARFinder#isJARLoaded(java.io.File)
+     * (non-Javadoc)
+     *
+     * @see de.wiwie.wiutils.utils.JARFinder#isJARLoaded(java.io.File)
      */
     @Override
     protected boolean isJARLoaded(File f) {
@@ -84,9 +84,9 @@ public class ParameterOptimizationMethodFinder extends JARFinder<ParameterOptimi
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.wiwie.wiutils.utils.JARFinder#getURLClassLoader0(java.io.File)
+     * (non-Javadoc)
+     *
+     * @see de.wiwie.wiutils.utils.JARFinder#getURLClassLoader0(java.io.File)
      */
     @Override
     protected URLClassLoader getURLClassLoader0(File f, final ClassLoader parent)
@@ -114,9 +114,9 @@ class ParameterOptimizationMethodURLClassLoader extends URLClassLoader {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see java.net.URLClassLoader#findClass(java.lang.String)
+     * (non-Javadoc)
+     *
+     * @see java.net.URLClassLoader#findClass(java.lang.String)
      */
     @Override
     protected Class<?> findClass(String name) throws ClassNotFoundException {
@@ -155,9 +155,9 @@ class ParameterOptimizationMethodURLClassLoader extends URLClassLoader {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.ClassLoader#loadClass(java.lang.String)
+     * (non-Javadoc)
+     *
+     * @see java.lang.ClassLoader#loadClass(java.lang.String)
      */
     // @Override
     // public Class<?> loadClass(String name) throws ClassNotFoundException {

@@ -17,6 +17,8 @@ import de.clusteval.api.repository.IRepositoryObject;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.repository.RepositoryEvent;
 import de.clusteval.api.repository.RepositoryListener;
+import de.clusteval.api.repository.RepositoryMoveEvent;
+import de.clusteval.api.repository.RepositoryRemoveEvent;
 import de.wiwie.wiutils.file.FileUtils;
 import java.io.File;
 import java.io.IOException;
@@ -81,9 +83,9 @@ public abstract class RepositoryObject implements RepositoryListener, IRepositor
      *
      * @param repository The repository this object is registered in.
      * @param changeDate The changedate of this object can be used for
-     * identification and equality checks of objects.
-     * @param absPath The absolute path of this object is used for
-     * identification and equality checks of objects.
+     *                   identification and equality checks of objects.
+     * @param absPath    The absolute path of this object is used for
+     *                   identification and equality checks of objects.
      * @throws RegisterException
      */
     public RepositoryObject(final IRepository repository, final long changeDate,
@@ -95,12 +97,12 @@ public abstract class RepositoryObject implements RepositoryListener, IRepositor
      * Instantiates a new repository object.
      *
      * @param repository The repository this object is registered in.
-     * @param register Whether this object should be registered implicitely in
-     * the repository or if the user wants to register manually later.
+     * @param register   Whether this object should be registered implicitely in
+     *                   the repository or if the user wants to register manually later.
      * @param changeDate The changedate of this object can be used for
-     * identification and equality checks of objects.
-     * @param absPath The absolute path of this object is used for
-     * identification and equality checks of objects.
+     *                   identification and equality checks of objects.
+     * @param absPath    The absolute path of this object is used for
+     *                   identification and equality checks of objects.
      * @throws RegisterException
      */
     public RepositoryObject(final IRepository repository,
@@ -170,8 +172,8 @@ public abstract class RepositoryObject implements RepositoryListener, IRepositor
      *
      * @return true, if successful
      * @throws RegisterException An exception is thrown if something goes wrong
-     * during the registering process, that might be interesting to handle
-     * individually.
+     *                           during the registering process, that might be interesting to handle
+     *                           individually.
      */
     @Override
     public boolean register() throws RegisterException {
@@ -205,9 +207,9 @@ public abstract class RepositoryObject implements RepositoryListener, IRepositor
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#equals(java.lang.Object)
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
     public boolean equals(Object obj) {
@@ -219,9 +221,9 @@ public abstract class RepositoryObject implements RepositoryListener, IRepositor
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#hashCode()
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#hashCode()
      */
     @Override
     public int hashCode() {
@@ -244,8 +246,8 @@ public abstract class RepositoryObject implements RepositoryListener, IRepositor
      * waiting for the operation to finish.
      *
      * @param copyDestination The absolute path to the destination file.
-     * @param overwrite Whether the possibly already existing target file should
-     * be overwritten.
+     * @param overwrite       Whether the possibly already existing target file should
+     *                        be overwritten.
      * @return True, if the copy operation was successful.
      */
     public boolean copyTo(final File copyDestination, final boolean overwrite) {
@@ -264,11 +266,11 @@ public abstract class RepositoryObject implements RepositoryListener, IRepositor
      * and the equality checks return false.
      *
      * @param copyDestination The absolute path to the destination file.
-     * @param overwrite Whether the possibly already existing target file should
-     * be overwritten.
-     * @param wait Whether to wait for this operation to finish, were the
-     * completion of the operation is determined by steadily comparing source
-     * and target file for equality.
+     * @param overwrite       Whether the possibly already existing target file should
+     *                        be overwritten.
+     * @param wait            Whether to wait for this operation to finish, were the
+     *                        completion of the operation is determined by steadily comparing source
+     *                        and target file for equality.
      * @return True, if the copy operation was successful.
      */
     public boolean copyTo(final File copyDestination, final boolean overwrite,
@@ -314,9 +316,9 @@ public abstract class RepositoryObject implements RepositoryListener, IRepositor
      * not terminate, if source and target filesystem use different encodings
      * and the equality checks return false.
      *
-     * @param moveDest The absolute path to the destination file.
+     * @param moveDest  The absolute path to the destination file.
      * @param overwrite Whether the possibly already existing target file should
-     * be overwritten.
+     *                  be overwritten.
      * @return True, if the move operation was successful.
      */
     public boolean moveTo(final File moveDest, final boolean overwrite) {
@@ -340,7 +342,7 @@ public abstract class RepositoryObject implements RepositoryListener, IRepositor
      * overwriting enabled.
      *
      * @param moveFolderDestination The folder into which this file should be
-     * move
+     *                              move
      * @return True, if the move operation was successful.
      */
     public boolean moveToFolder(final File moveFolderDestination) {
@@ -352,9 +354,9 @@ public abstract class RepositoryObject implements RepositoryListener, IRepositor
      * the destination folder.
      *
      * @param moveFolderDestination The folder in which this file should be
-     * copied
-     * @param overwrite Whether a possibly already existing target file within
-     * the destination folder should be overwritten.
+     *                              copied
+     * @param overwrite             Whether a possibly already existing target file within
+     *                              the destination folder should be overwritten.
      * @return True, if the copy operation was successful.
      */
     public boolean moveToFolder(final File moveFolderDestination,
@@ -370,7 +372,7 @@ public abstract class RepositoryObject implements RepositoryListener, IRepositor
      * overwriting enabled.
      *
      * @param copyFolderDestination The folder in which this file should be
-     * copied
+     *                              copied
      * @return True, if the copy operation was successful.
      */
     public boolean copyToFolder(final File copyFolderDestination) {
@@ -382,9 +384,9 @@ public abstract class RepositoryObject implements RepositoryListener, IRepositor
      * the destination folder.
      *
      * @param copyFolderDestination The folder in which this file should be
-     * copied
-     * @param overwrite Whether a possibly already existing target file within
-     * the destination folder should be overwritten.
+     *                              copied
+     * @param overwrite             Whether a possibly already existing target file within
+     *                              the destination folder should be overwritten.
      * @return True, if the copy operation was successful.
      */
     public boolean copyToFolder(final File copyFolderDestination,
@@ -425,7 +427,7 @@ public abstract class RepositoryObject implements RepositoryListener, IRepositor
      * needs to inform its listeners about the passed event.
      *
      * @param event The event related to this object which is going to be
-     * propagated to the listeners of this object.
+     *              propagated to the listeners of this object.
      * @throws RegisterException
      */
     private void notifyListener(final RepositoryEvent event)
@@ -438,9 +440,9 @@ public abstract class RepositoryObject implements RepositoryListener, IRepositor
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.wiwie.wiutils.utils.RepositoryListener#notify(utils.RepositoryEvent)
+     * (non-Javadoc)
+     *
+     * @see de.wiwie.wiutils.utils.RepositoryListener#notify(utils.RepositoryEvent)
      */
     @Override
     public void notify(RepositoryEvent e) throws RegisterException {
@@ -455,7 +457,7 @@ public abstract class RepositoryObject implements RepositoryListener, IRepositor
             }
         } else if (e instanceof RepositoryRemoveEvent) {
             RepositoryRemoveEvent event = (RepositoryRemoveEvent) e;
-            if (event.old.equals(this)) {
+            if (event.getRemovedObject().equals(this)) {
                 // this object is going to be removed and replaced from the
                 // repository
                 this.notifyListener(event);
@@ -464,7 +466,7 @@ public abstract class RepositoryObject implements RepositoryListener, IRepositor
             }
         } else if (e instanceof RepositoryMoveEvent) {
             RepositoryMoveEvent event = (RepositoryMoveEvent) e;
-            if (event.object.equals(this)) {
+            if (event.getObject().equals(this)) {
                 // this object has been moved
                 this.notifyListener(event);
             } else {

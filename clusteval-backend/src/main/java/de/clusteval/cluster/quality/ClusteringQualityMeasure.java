@@ -88,7 +88,7 @@ public abstract class ClusteringQualityMeasure extends RepositoryObject implemen
      * @param parameters
      * @throws RegisterException
      */
-    public ClusteringQualityMeasure(final Repository repo,
+    public ClusteringQualityMeasure(final IRepository repo,
             final boolean register, final long changeDate, final File absPath,
             final ClusteringQualityMeasureParameters parameters)
             throws RegisterException {
@@ -116,12 +116,12 @@ public abstract class ClusteringQualityMeasure extends RepositoryObject implemen
     /**
      * Gets the quality of clustering.
      *
-     * @param clustering the clustering
+     * @param clustering   the clustering
      * @param goldStandard The expected goldstandard.
-     * @param dataConfig the data config
+     * @param dataConfig   the data config
      * @return the quality of clustering
-     * @throws UnknownGoldStandardFormatException the unknown gold standard
-     * format exception
+     * @throws UnknownGoldStandardFormatException   the unknown gold standard
+     *                                              format exception
      * @throws UnknownDataSetFormatException
      * @throws InvalidDataSetFormatVersionException
      * @throws IOException
@@ -141,7 +141,7 @@ public abstract class ClusteringQualityMeasure extends RepositoryObject implemen
      * quality measure supports validating fuzzy clusterings.
      *
      * @return True, if this measure supports fuzzy clusterings, false
-     * otherwise.
+     *         otherwise.
      */
     public abstract boolean supportsFuzzyClusterings();
 
@@ -166,12 +166,12 @@ public abstract class ClusteringQualityMeasure extends RepositoryObject implemen
     /**
      * Parses the from string.
      *
-     * @param repository the repository
+     * @param repository     the repository
      * @param qualityMeasure the quality measure
      * @param parameters
      * @return the clustering quality measure
      * @throws UnknownClusteringQualityMeasureException the unknown clustering
-     * quality measure exception
+     *                                                  quality measure exception
      */
     public static ClusteringQualityMeasure parseFromString(
             final IRepository repository, String qualityMeasure,
@@ -189,7 +189,8 @@ public abstract class ClusteringQualityMeasure extends RepositoryObject implemen
                             new File(qualityMeasure), parameters);
 
             return measure;
-        } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | SecurityException | InvocationTargetException | NoSuchMethodException e) {
+        } catch (InstantiationException | IllegalAccessException | IllegalArgumentException |
+                SecurityException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         } catch (NullPointerException e) {
 
@@ -200,9 +201,9 @@ public abstract class ClusteringQualityMeasure extends RepositoryObject implemen
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#equals(java.lang.Object)
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
     public boolean equals(Object obj) {
@@ -212,9 +213,9 @@ public abstract class ClusteringQualityMeasure extends RepositoryObject implemen
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#clone()
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#clone()
      */
     @Override
     public ClusteringQualityMeasure clone() {
@@ -230,9 +231,9 @@ public abstract class ClusteringQualityMeasure extends RepositoryObject implemen
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#hashCode()
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#hashCode()
      */
     @Override
     public int hashCode() {
@@ -240,9 +241,9 @@ public abstract class ClusteringQualityMeasure extends RepositoryObject implemen
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#toString()
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#toString()
      */
     @Override
     public String toString() {
@@ -286,13 +287,13 @@ public abstract class ClusteringQualityMeasure extends RepositoryObject implemen
 
     /**
      * @return The minimal value of the range of possible values of this quality
-     * measure.
+     *         measure.
      */
     public abstract double getMinimum();
 
     /**
      * @return The maximal value of the range of possible values of this quality
-     * measure.
+     *         measure.
      */
     public abstract double getMaximum();
 
@@ -301,7 +302,7 @@ public abstract class ClusteringQualityMeasure extends RepositoryObject implemen
      * subclass needs a goldstandard to be able to be computed.
      *
      * @return True, if this clustering quality measure requires a goldstandard
-     * to be able to assess the quality of a clustering.
+     *         to be able to assess the quality of a clustering.
      */
     public abstract boolean requiresGoldstandard();
 

@@ -121,7 +121,7 @@ public class Repository implements IRepository {
      *
      * @param value The string to check whether it is a internal attribute.
      * @return True, if the given string is an internal attribute, false
-     * otherwise.
+     *         otherwise.
      */
     public static boolean isInternalAttribute(final String value) {
         Pattern p = internalAttributePattern;
@@ -296,7 +296,7 @@ public class Repository implements IRepository {
     /**
      * Instantiates a new repository.
      *
-     * @param parent Can be null, if this repository has no parent repository.
+     * @param parent   Can be null, if this repository has no parent repository.
      * @param basePath The absolute path of the root of this repository.
      * @throws FileNotFoundException
      * @throws InvalidRepositoryException
@@ -314,10 +314,10 @@ public class Repository implements IRepository {
     /**
      * Instantiates a new repository.
      *
-     * @param parent Can be null, if this repository has no parent repository.
-     * @param basePath The absolute path of the root of this repository.
+     * @param parent         Can be null, if this repository has no parent repository.
+     * @param basePath       The absolute path of the root of this repository.
      * @param overrideConfig Set this parameter != null, if you want to override
-     * the repository.config file.
+     *                       the repository.config file.
      * @throws FileNotFoundException
      * @throws InvalidRepositoryException
      * @throws RepositoryAlreadyExistsException
@@ -354,7 +354,7 @@ public class Repository implements IRepository {
             this.repositoryConfig = overrideConfig;
         } else if (repositoryConfigFile.exists()) {
             /*
-			 * Parsing the configuration file (if it exists)
+             * Parsing the configuration file (if it exists)
              */
             this.repositoryConfig = RepositoryConfig.parseFromFile(repositoryConfigFile);
             this.log.debug("Using repository configuration: " + repositoryConfigFile);
@@ -392,7 +392,7 @@ public class Repository implements IRepository {
      * the given class name.
      *
      * @param className The class name for which we want to clear the missing
-     * libraries.
+     *                  libraries.
      * @return The old exceptions that were present for this class.
      */
     public Set<RLibraryNotLoadedException> clearMissingRLibraries(String className) {
@@ -405,6 +405,7 @@ public class Repository implements IRepository {
      * provide this method, to allow for commiting at certain points such that
      * we can afterwards guarantee a certain state of the DB and operate on it.
      */
+    @Override
     public void commitDB() {
         synchronized (this.sqlCommunicator) {
             this.sqlCommunicator.commitDB();
@@ -515,9 +516,9 @@ public class Repository implements IRepository {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#equals(java.lang.Object)
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
     public boolean equals(Object obj) {
@@ -534,12 +535,12 @@ public class Repository implements IRepository {
      * This method evaluates all internal attribute placeholders contained in
      * the passed string.
      *
-     * @param old The string which might contain internal attribute
-     * placeholders.
-     * @param dataConfig The data configuration which might be needed to
-     * evaluate the placeholders.
+     * @param old           The string which might contain internal attribute
+     *                      placeholders.
+     * @param dataConfig    The data configuration which might be needed to
+     *                      evaluate the placeholders.
      * @param programConfig The program configuration which might be needed to
-     * evaluate the placeholders.
+     *                      evaluate the placeholders.
      * @return The parameter value with evaluated placeholders.
      * @throws InternalAttributeException
      */
@@ -576,12 +577,12 @@ public class Repository implements IRepository {
      *
      * <p>
      * A helper method of null null null null null null null null null null null
-     * null null     {@link ProgramParameter#evaluateDefaultValue(DataConfig, ProgramConfig)},
+     * null null null null     {@link ProgramParameter#evaluateDefaultValue(DataConfig, ProgramConfig)},
 	 * {@link ProgramParameter#evaluateMinValue(DataConfig, ProgramConfig)} and
      * {@link ProgramParameter#evaluateMaxValue(DataConfig, ProgramConfig)}.
      *
      * @param script The parameter value containing javascript arithmetic
-     * operations.
+     *               operations.
      * @return The evaluated expression.
      * @throws ScriptException
      */
@@ -604,12 +605,12 @@ public class Repository implements IRepository {
      * A helper method for
      * {@link #evaluateInternalAttributes(String, DataConfig, ProgramConfig)}.
      *
-     * @param old The parameter value that might contain placeholders which need
-     * to be extended.
-     * @param dataConfig The data configuration which might be needed to extend
-     * the placeholders.
+     * @param old           The parameter value that might contain placeholders which need
+     *                      to be extended.
+     * @param dataConfig    The data configuration which might be needed to extend
+     *                      the placeholders.
      * @param programConfig The program configuration which might be needed to
-     * extend the placeholders.
+     *                      extend the placeholders.
      * @return The parameter value with extended placeholders.
      */
     @SuppressWarnings("unused")
@@ -633,6 +634,7 @@ public class Repository implements IRepository {
     /**
      * @throws InterruptedException
      */
+    @Override
     public void terminateSupervisorThread() throws InterruptedException {
         this.terminateSupervisorThread(false);
     }
@@ -659,10 +661,12 @@ public class Repository implements IRepository {
     /**
      * @return The absolute path to the root of this repository.
      */
+    @Override
     public String getBasePath() {
         return this.basePath;
     }
 
+    @Override
     public String getBasePath(final Class<? extends IRepositoryObject> c) {
         if (this.staticRepositoryEntities.containsKey(c)) {
             return this.staticRepositoryEntities.get(c).getBasePath();
@@ -680,24 +684,25 @@ public class Repository implements IRepository {
         return (T) this.staticRepositoryEntities.get(c).findByString(name);
     }
 
-    public boolean isInitialized(final Class<? extends RepositoryObject> c) {
+    @Override
+    public boolean isInitialized(final Class<? extends IRepositoryObject> c) {
         if (this.staticRepositoryEntities.containsKey(c)) {
             return this.staticRepositoryEntities.get(c).isInitialized();
         }
         return this.dynamicRepositoryEntities.get(c).isInitialized();
     }
 
-    public <T extends RepositoryObject> T getRegisteredObject(final T object) {
+    public <T extends IRepositoryObject> T getRegisteredObject(final T object) {
         return this.getRegisteredObject(object, true);
     }
 
-    public <T extends RepositoryObject> T getRegisteredObject(final T object, final boolean ignoreChangeDate) {
+    public <T extends IRepositoryObject> T getRegisteredObject(final T object, final boolean ignoreChangeDate) {
         @SuppressWarnings("unchecked")
         Class<T> c = (Class<T>) object.getClass();
         return this.getRegisteredObject(c, object, ignoreChangeDate);
     }
 
-    public <T extends RepositoryObject, S extends T> S getRegisteredObject(final Class<T> c, final S object,
+    public <T extends IRepositoryObject, S extends T> S getRegisteredObject(final Class<T> c, final S object,
             final boolean ignoreChangeDate) {
         boolean staticEntityFound = false;
         boolean dynamicEntityFound = false;
@@ -705,7 +710,7 @@ public class Repository implements IRepository {
                 || (dynamicEntityFound = this.dynamicRepositoryEntities.containsKey(c)))
                 && object.getClass().getSuperclass() != null
                 && RepositoryObject.class.isAssignableFrom(c.getSuperclass())) {
-            return this.getRegisteredObject((Class<RepositoryObject>) c.getSuperclass(), object,
+            return this.getRegisteredObject((Class<IRepositoryObject>) c.getSuperclass(), object,
                     ignoreChangeDate);
         }
         if (staticEntityFound) {
@@ -768,7 +773,7 @@ public class Repository implements IRepository {
         return false;
     }
 
-    public <T extends RepositoryObject> void setInitialized(final Class<T> c) {
+    public <T extends IRepositoryObject> void setInitialized(final Class<T> c) {
         if (this.staticRepositoryEntities.containsKey(c)) {
             this.staticRepositoryEntities.get(c).setInitialized();
         } else {
@@ -814,6 +819,7 @@ public class Repository implements IRepository {
     }
 
     @SuppressWarnings("unchecked")
+    @Override
     public <T extends IRepositoryObject, S extends T> boolean unregisterClass(final Class<T> base, final Class<S> c) {
         if (!this.dynamicRepositoryEntities.containsKey(base) && base.getSuperclass() != null
                 && RepositoryObject.class.isAssignableFrom(base.getSuperclass())) {
@@ -822,6 +828,7 @@ public class Repository implements IRepository {
         return this.dynamicRepositoryEntities.get(base).unregisterClass(c);
     }
 
+    @Override
     public <T extends IRepositoryObject> Class<? extends T> getRegisteredClass(final Class<T> c,
             final String className) {
         return (Class<? extends T>) this.dynamicRepositoryEntities.get(c).getRegisteredClass(className);
@@ -891,7 +898,7 @@ public class Repository implements IRepository {
      * formats class and overwrite the format version.
      *
      * @param formatClass The dataset format class for which we want to know the
-     * current version.
+     *                    current version.
      *
      * @return The current version for the given dataset format class.
      * @throws UnknownDataSetFormatException
@@ -904,9 +911,10 @@ public class Repository implements IRepository {
 
     /**
      * @param formatClass The dataset format class for which we want to set the
-     * current version.
-     * @param version The new version of the dataset format class.
+     *                    current version.
+     * @param version     The new version of the dataset format class.
      */
+    @Override
     public void putCurrentDataSetFormatVersion(final String formatClass, final int version) {
         ((DataSetFormatRepositoryEntity) this.dynamicRepositoryEntities.get(DataSetFormat.class))
                 .putCurrentDataSetFormatVersion(formatClass, version);
@@ -918,7 +926,7 @@ public class Repository implements IRepository {
      *
      * @param dataSetFormatName The name of the class of the dataset format.
      * @return The class of the dataset format parser with the given name or
-     * null, if it does not exist.
+     *         null, if it does not exist.
      */
     public Class<? extends DataSetFormatParser> getDataSetFormatParser(final String dataSetFormatName) {
         return ((DataSetFormatRepositoryEntity) this.dynamicRepositoryEntities.get(DataSetFormat.class))
@@ -932,7 +940,7 @@ public class Repository implements IRepository {
      *
      * @param value The name of the internal double attribute.
      * @return The internal double attribute with the given name or null, if
-     * there is no attribute with the given name
+     *         there is no attribute with the given name
      */
     public NamedDoubleAttribute getInternalDoubleAttribute(final String value) {
         if (!isInternalAttribute(value)) {
@@ -952,7 +960,7 @@ public class Repository implements IRepository {
      *
      * @param value The name of the internal integer attribute.
      * @return The internal integer attribute with the given name or null, if
-     * there is no attribute with the given name
+     *         there is no attribute with the given name
      */
     public NamedIntegerAttribute getInternalIntegerAttribute(final String value) {
         if (!isInternalAttribute(value)) {
@@ -972,7 +980,7 @@ public class Repository implements IRepository {
      *
      * @param value The name of the internal string attribute.
      * @return The internal string attribute with the given name or null, if
-     * there is no attribute with the given name
+     *         there is no attribute with the given name
      */
     public NamedStringAttribute getInternalStringAttribute(final String value) {
         if (!isInternalAttribute(value)) {
@@ -987,7 +995,7 @@ public class Repository implements IRepository {
 
     /**
      * @return The absolute path to the directory, where for a certain runresult
-     * (identified by its unique run identifier) all log files are stored.
+     *         (identified by its unique run identifier) all log files are stored.
      */
     @Override
     public String getLogBasePath() {
@@ -997,7 +1005,7 @@ public class Repository implements IRepository {
     /**
      *
      * @return The parent repository of this repository, or null if this
-     * repository has no parent.
+     *         repository has no parent.
      */
     @Override
     public IRepository getParent() {
@@ -1009,7 +1017,7 @@ public class Repository implements IRepository {
      * that belongs to the passed absolute path.
      *
      * @param absFilePath The absolute path for which we want to find the
-     * repository object.
+     *                    repository object.
      * @return The repository object which has the given absolute path.
      */
     @Override
@@ -1037,7 +1045,7 @@ public class Repository implements IRepository {
      * absolute path.
      *
      * @param object The object for which we want to find an equal registered
-     * object.
+     *               object.
      * @return The registered object equal to the passed object.
      */
     public NamedDoubleAttribute getRegisteredObject(final NamedDoubleAttribute object) {
@@ -1068,7 +1076,7 @@ public class Repository implements IRepository {
      * absolute path.
      *
      * @param object The object for which we want to find an equal registered
-     * object.
+     *               object.
      * @return The registered object equal to the passed object.
      */
     public NamedIntegerAttribute getRegisteredObject(final NamedIntegerAttribute object) {
@@ -1099,7 +1107,7 @@ public class Repository implements IRepository {
      * absolute path.
      *
      * @param object The object for which we want to find an equal registered
-     * object.
+     *               object.
      * @return The registered object equal to the passed object.
      */
     public NamedStringAttribute getRegisteredObject(final NamedStringAttribute object) {
@@ -1136,7 +1144,7 @@ public class Repository implements IRepository {
      *
      * @param runResultFormatName The runresult format name.
      * @return The runresult format parser for the given runresult format name,
-     * or null if it does not exist.
+     *         or null if it does not exist.
      */
     public Class<? extends RunResultFormatParser> getRunResultFormatParser(final String runResultFormatName) {
         return ((RunResultFormatRepositoryEntity) this.dynamicRepositoryEntities.get(RunResultFormat.class))
@@ -1145,9 +1153,9 @@ public class Repository implements IRepository {
 
     /**
      * @return A collection with the names of those runresult directories
-     * contained in the repository of this server, that contain a clusters
-     * subfolder and at least one *.complete file containing results (can be
-     * slow if many run result folders are present).
+     *         contained in the repository of this server, that contain a clusters
+     *         subfolder and at least one *.complete file containing results (can be
+     *         slow if many run result folders are present).
      */
     public Collection<String> getRunResultIdentifier() {
         Collection<String> result = new HashSet<>();
@@ -1175,8 +1183,8 @@ public class Repository implements IRepository {
 
     /**
      * @return A collection with the names of all run result directories
-     * contained in the repository of this server. Those run result directories
-     * can be resumed, if they were terminated before.
+     *         contained in the repository of this server. Those run result directories
+     *         can be resumed, if they were terminated before.
      */
     public Collection<String> getRunResumes() {
         Collection<String> result = new HashSet<String>();
@@ -1192,9 +1200,9 @@ public class Repository implements IRepository {
 
     /**
      * @return In case the backend is connected to a mysql database in the
-     * frontend, this returns an sql communicator, which updates the database
-     * after changes of repository objects (removal, addition), otherwise it
-     * returns a stub sql communicator.
+     *         frontend, this returns an sql communicator, which updates the database
+     *         after changes of repository objects (removal, addition), otherwise it
+     *         returns a stub sql communicator.
      */
     public SQLCommunicator getSqlCommunicator() {
         return sqlCommunicator;
@@ -1203,8 +1211,8 @@ public class Repository implements IRepository {
     /**
      *
      * @return The supervisor thread is responsible for starting and keeping
-     * alive all threads that check the repository on the filesystem for
-     * changes.
+     *         alive all threads that check the repository on the filesystem for
+     *         changes.
      */
     public SupervisorThread getSupervisorThread() {
         return supervisorThread;
@@ -1212,7 +1220,7 @@ public class Repository implements IRepository {
 
     /**
      * @return The absolute path to the directory within this repository, where
-     * all supplementary materials are stored.
+     *         all supplementary materials are stored.
      */
     public String getSupplementaryBasePath() {
         return this.supplementaryBasePath;
@@ -1220,16 +1228,16 @@ public class Repository implements IRepository {
 
     /**
      * @return The absolute path to the directory within this repository, where
-     * all supplementary materials related to clustering are stored.
+     *         all supplementary materials related to clustering are stored.
      */
     public String getSupplementaryClusteringBasePath() {
         return this.suppClusteringBasePath;
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#hashCode()
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#hashCode()
      */
     @Override
     public int hashCode() {
@@ -1397,7 +1405,7 @@ public class Repository implements IRepository {
      * {@link #isInitialized()} returns true.
      *
      * @throws InterruptedException Is thrown, if the current thread is
-     * interrupted while waiting for finishing the initialization process.
+     *                              interrupted while waiting for finishing the initialization process.
      */
     public void initialize() throws InterruptedException {
         if (isInitialized() || this.supervisorThread != null) {
@@ -1515,7 +1523,7 @@ public class Repository implements IRepository {
      * runresult format class.
      *
      * @param runResultFormat The class for which we want to know whether a
-     * parser has been registered.
+     *                        parser has been registered.
      * @return True, if the parser has been registered.
      */
     public boolean isRegisteredForRunResultFormat(final Class<? extends RunResultFormat> runResultFormat) {
@@ -1528,7 +1536,7 @@ public class Repository implements IRepository {
      * format with the given class name.
      *
      * @param runResultFormatName The class for which we want to know whether a
-     * parser has been registered.
+     *                            parser has been registered.
      * @return True, if the parser has been registered.
      */
     public boolean isRegisteredForRunResultFormat(final String runResultFormatName) {
@@ -1648,7 +1656,7 @@ public class Repository implements IRepository {
      * dataset format class.
      *
      * @param dsFormat The class for which we want to know whether a parser has
-     * been registered.
+     *                 been registered.
      * @return True, if the parser has been registered.
      */
     public boolean isRegisteredForDataSetFormat(final Class<? extends DataSetFormat> dsFormat) {
@@ -1675,9 +1683,9 @@ public class Repository implements IRepository {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#toString()
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#toString()
      */
     @Override
     public String toString() {
@@ -1730,7 +1738,7 @@ public class Repository implements IRepository {
      * {@link Run#setStatus(de.clusteval.run.RUN_STATUS)} and ensures that the
      * new status is passed to the whole framework, e.g. the frontend database.
      *
-     * @param run The run which changed its status.
+     * @param run       The run which changed its status.
      * @param newStatus The new status of the run.
      * @return True, if the propagation of the new status was successful.
      */
@@ -1744,23 +1752,25 @@ public class Repository implements IRepository {
      * RunResultRepostories we do not want to log everything, therefore we
      * change the log level to debug.
      *
-     * @param The message to log.
+     * @param message The message to log.
      */
-    protected void warn(final String message) {
+    public void warn(final String message) {
         this.log.warn(message);
     }
 
     /**
      * @return The map containing all known finder exceptions.
      */
+    @Override
     public Map<String, List<Throwable>> getKnownFinderExceptions() {
         return this.knownFinderExceptions;
     }
 
     /**
      * @return The class loaders used by the finders to load classes
-     * dynamically.
+     *         dynamically.
      */
+    @Override
     public Map<URL, URLClassLoader> getJARFinderClassLoaders() {
         return this.finderClassLoaders;
     }
@@ -1768,8 +1778,9 @@ public class Repository implements IRepository {
     /**
      *
      * @return A map containing dependencies between jar files that are loaded
-     * dynamically.
+     *         dynamically.
      */
+    @Override
     public Map<File, List<File>> getJARFinderWaitingFiles() {
         return this.finderWaitingFiles;
     }
@@ -1777,9 +1788,17 @@ public class Repository implements IRepository {
     /**
      *
      * @return The change dates of the jar files that were loaded dynamically by
-     * jar finder instances.
+     *         jar finder instances.
      */
     public Map<String, Long> getFinderLoadedJarFileChangeDates() {
         return this.finderLoadedJarFileChangeDates;
+    }
+
+    public StaticRepositoryEntityMap getStaticEntities() {
+        return staticRepositoryEntities;
+    }
+
+    public DynamicRepositoryEntityMap getDynamicEntities() {
+        return dynamicRepositoryEntities;
     }
 }

@@ -12,12 +12,13 @@
  */
 package de.clusteval.data.distance;
 
-import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
+import de.clusteval.api.exceptions.RNotAvailableException;
+import de.clusteval.api.r.RLibraryInferior;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
+import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RepositoryObject;
-import de.clusteval.api.r.RLibraryInferior;
-import de.clusteval.api.exceptions.RNotAvailableException;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
@@ -80,9 +81,9 @@ public abstract class DistanceMeasure extends RepositoryObject
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#clone()
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#clone()
      */
     @Override
     public final DistanceMeasure clone() {
@@ -100,12 +101,12 @@ public abstract class DistanceMeasure extends RepositoryObject
     /**
      * Parses the from string.
      *
-     * @param repository the repository
+     * @param repository      the repository
      * @param distanceMeasure the distance measure
      * @return the distance measure
      * @throws UnknownDistanceMeasureException
      */
-    public static DistanceMeasure parseFromString(final Repository repository,
+    public static DistanceMeasure parseFromString(final IRepository repository,
             String distanceMeasure) throws UnknownDistanceMeasureException {
         Class<? extends DistanceMeasure> c = repository.getRegisteredClass(
                 DistanceMeasure.class, "de.clusteval.data.distance."
@@ -117,7 +118,8 @@ public abstract class DistanceMeasure extends RepositoryObject
                             new File(distanceMeasure));
 
             return measure;
-        } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | SecurityException | InvocationTargetException | NoSuchMethodException e) {
+        } catch (InstantiationException | IllegalAccessException | IllegalArgumentException |
+                SecurityException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         } catch (NullPointerException e) {
 
@@ -145,7 +147,7 @@ public abstract class DistanceMeasure extends RepositoryObject
      * implementation.
      *
      * @return True, if this distance measure supports bulk distance calculation
-     * of matrices.
+     *         of matrices.
      */
     public abstract boolean supportsMatrix();
 
@@ -161,7 +163,7 @@ public abstract class DistanceMeasure extends RepositoryObject
      * matrix.
      *
      * @param matrix A matrix containing samples in each row and features in the
-     * columns.
+     *               columns.
      * @return Matrix containing all pairwise distances of rows of the matrix
      * @throws RNotAvailableException
      * @throws InterruptedException
@@ -171,9 +173,9 @@ public abstract class DistanceMeasure extends RepositoryObject
             throws RNotAvailableException, InterruptedException;
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#equals(java.lang.Object)
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
     public boolean equals(Object obj) {
@@ -181,9 +183,9 @@ public abstract class DistanceMeasure extends RepositoryObject
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#hashCode()
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#hashCode()
      */
     @Override
     public int hashCode() {

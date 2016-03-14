@@ -16,12 +16,20 @@
  */
 package de.clusteval.api.repository;
 
+import de.clusteval.api.data.IDataConfig;
+import de.clusteval.api.exceptions.InternalAttributeException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
+import de.clusteval.program.IProgramConfig;
 import java.io.File;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -35,7 +43,7 @@ public interface IRepository {
      * {@link #isInitialized()} returns true.
      *
      * @throws InterruptedException Is thrown, if the current thread is
-     * interrupted while waiting for finishing the initialization process.
+     *                              interrupted while waiting for finishing the initialization process.
      */
     void initialize() throws InterruptedException;
 
@@ -44,7 +52,7 @@ public interface IRepository {
      *
      * @param repository The new repository to register.
      * @return The old repository, if the new repository replaced an old one
-     * with equal root path. Null otherwise.
+     *         with equal root path. Null otherwise.
      * @throws RepositoryAlreadyExistsException
      * @throws InvalidRepositoryException
      */
@@ -53,7 +61,7 @@ public interface IRepository {
     /**
      *
      * @return The parent repository of this repository, or null if this
-     * repository has no parent.
+     *         repository has no parent.
      */
     IRepository getParent();
 
@@ -66,7 +74,7 @@ public interface IRepository {
 
     /**
      * @return The absolute path to the directory, where for a certain runresult
-     * (identified by its unique run identifier) all log files are stored.
+     *         (identified by its unique run identifier) all log files are stored.
      */
     public String getLogBasePath();
 
@@ -75,7 +83,7 @@ public interface IRepository {
      * that belongs to the passed absolute path.
      *
      * @param absFilePath The absolute path for which we want to find the
-     * repository object.
+     *                    repository object.
      * @return The repository object which has the given absolute path.
      */
     IRepositoryObject getRegisteredObject(final File absFilePath);
@@ -87,8 +95,8 @@ public interface IRepository {
 
     <T extends IRepositoryObject> T getStaticObjectWithName(final Class<T> c, final String name);
 
-    //<T extends IRepositoryObject> Collection<T> getCollectionStaticEntities(final Class<T> c);
-    <T extends IRepositoryObject> T getCollectionStaticEntities(final Class<T> c);
+    <T extends IRepositoryObject> Collection<T> getCollectionStaticEntities(final Class<T> c);
+    //<T extends IRepositoryObject> T getCollectionStaticEntities(final Class<T> c);
 
     <T extends IRepositoryObject> boolean isClassRegistered(final Class<T> c);
 
@@ -99,6 +107,13 @@ public interface IRepository {
     <T extends IRepositoryObject> boolean registerClass(final Class<T> c);
 
     <T extends IRepositoryObject> boolean unregisterClass(final Class<T> c);
+
+    <T extends IRepositoryObject, S extends T> boolean unregisterClass(final Class<T> base, final Class<S> c);
+
+    <T extends IRepositoryObject> Class<? extends T> getRegisteredClass(final Class<T> c,
+            final String className);
+
+    <T extends IRepositoryObject> Collection<Class<? extends T>> getClasses(Class<T> c);
 
     int getCurrentDataSetFormatVersion(final String formatClass) throws UnknownDataSetFormatException;
 
@@ -113,4 +128,86 @@ public interface IRepository {
     <T extends IRepositoryObject, S extends T> boolean registerClass(final Class<T> base, final Class<S> c);
 
     //boolean registerRunDataStatisticCalculator(Class<? extends RunDataStatisticCalculator<? extends RunDataStatistic>> runDataStatisticCalculator);
+    /**
+     * This method evaluates all internal attribute placeholders contained in
+     * the passed string.
+     *
+     * @param old           The string which might contain internal attribute
+     *                      placeholders.
+     * @param dataConfig    The data configuration which might be needed to
+     *                      evaluate the placeholders.
+     * @param programConfig The program configuration which might be needed to
+     *                      evaluate the placeholders.
+     * @return The parameter value with evaluated placeholders.
+     * @throws InternalAttributeException
+     */
+    String evaluateInternalAttributes(final String old, final IDataConfig dataConfig,
+            final IProgramConfig programConfig) throws InternalAttributeException;
+
+    void terminateSupervisorThread() throws InterruptedException;
+
+    StaticRepositoryEntityMap getStaticEntities();
+
+    DynamicRepositoryEntityMap getDynamicEntities();
+
+    boolean isInitialized(final Class<? extends IRepositoryObject> c);
+
+    <T extends IRepositoryObject> T getRegisteredObject(final T object);
+
+    <T extends IRepositoryObject> T getRegisteredObject(final T object, final boolean ignoreChangeDate);
+
+    <T extends IRepositoryObject, S extends T> boolean unregister(final S object);
+
+    /**
+     * @return The map containing all known finder exceptions.
+     */
+    Map<String, List<Throwable>> getKnownFinderExceptions();
+
+    <T extends IRepositoryObject> void setInitialized(final Class<T> c);
+
+    /**
+     * @return The class loaders used by the finders to load classes
+     *         dynamically.
+     */
+    Map<URL, URLClassLoader> getJARFinderClassLoaders();
+
+    /**
+     *
+     * @return A map containing dependencies between jar files that are loaded
+     *         dynamically.
+     */
+    Map<File, List<File>> getJARFinderWaitingFiles();
+
+    /**
+     *
+     * @return The change dates of the jar files that were loaded dynamically by
+     *         jar finder instances.
+     */
+    Map<String, Long> getFinderLoadedJarFileChangeDates();
+
+    /**
+     * This method is a helper method for sql communication. The sql
+     * communicator usually does not commit after every change. Therefore we
+     * provide this method, to allow for commiting at certain points such that
+     * we can afterwards guarantee a certain state of the DB and operate on it.
+     */
+    void commitDB();
+
+    /**
+     * @param formatClass The dataset format class for which we want to set the
+     *                    current version.
+     * @param version     The new version of the dataset format class.
+     */
+    void putCurrentDataSetFormatVersion(final String formatClass, final int version);
+
+    /**
+     * A helper method for logging, which can overwritten to change the
+     * logger-level in subclasses of this class. For example in
+     * RunResultRepostories we do not want to log everything, therefore we
+     * change the log level to debug.
+     *
+     * @param message The message to log.
+     */
+    void warn(final String message);
+
 }

@@ -24,7 +24,7 @@ import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.format.AbsoluteDataSetFormat;
 import de.clusteval.data.dataset.format.DataSetFormat;
 import de.clusteval.framework.repository.Repository;
-import de.clusteval.framework.repository.RepositoryRemoveEvent;
+import de.clusteval.api.repository.RepositoryRemoveEvent;
 import de.clusteval.framework.threading.RunSchedulerThread;
 import de.clusteval.program.ParameterSet;
 import de.clusteval.program.ProgramConfig;

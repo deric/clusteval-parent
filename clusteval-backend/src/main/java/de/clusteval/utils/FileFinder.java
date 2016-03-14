@@ -12,11 +12,10 @@
  */
 package de.clusteval.utils;
 
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.IRepositoryObject;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.framework.repository.Repository;
-import de.clusteval.framework.repository.RepositoryObject;
-import de.clusteval.framework.repository.RepositoryRemoveEvent;
+import de.clusteval.api.repository.RepositoryRemoveEvent;
 import de.clusteval.framework.repository.parse.Parser;
 import java.io.File;
 import java.io.PrintWriter;
@@ -30,31 +29,29 @@ import java.util.HashSet;
  * @param <T>
  *
  */
-public abstract class FileFinder<T extends RepositoryObject> extends Finder<T> {
+public abstract class FileFinder<T extends IRepositoryObject> extends Finder<T> {
 
     /**
      * @param repository
      * @param classToFind
      * @throws RegisterException
      */
-    public FileFinder(Repository repository, Class<T> classToFind)
-            throws RegisterException {
+    public FileFinder(IRepository repository, Class<T> classToFind) throws RegisterException {
         super(repository, classToFind);
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.wiwie.wiutils.utils.Finder#doOnFileFound(java.io.File)
+     * (non-Javadoc)
+     *
+     * @see de.wiwie.wiutils.utils.Finder#doOnFileFound(java.io.File)
      */
     @Override
-    protected void doOnFileFound(File file) throws InterruptedException,
-                                                   Exception {
+    protected void doOnFileFound(File file) throws InterruptedException, Exception {
         try {
             T newObject = parseObjectFromFile(file);
             /*
-			 * We want to be informed when this object changed, such that we can
-			 * clear our known exceptions
+             * We want to be informed when this object changed, such that we can
+             * clear our known exceptions
              */
             newObject.addListener(this);
 
@@ -83,8 +80,7 @@ public abstract class FileFinder<T extends RepositoryObject> extends Finder<T> {
                         + " " + file + ": " + e.getMessage());
             } else {
                 if (!knownExceptions.containsKey(file.getAbsolutePath())) {
-                    knownExceptions.put(file.getAbsolutePath(),
-                            new ArrayList<Throwable>());
+                    knownExceptions.put(file.getAbsolutePath(), new ArrayList<>());
                 }
                 knownExceptions.get(file.getAbsolutePath()).add(e);
                 String message;
@@ -112,7 +108,7 @@ public abstract class FileFinder<T extends RepositoryObject> extends Finder<T> {
             }
 
             /*
-			 * Remove the corresponding object from the repository
+             * Remove the corresponding object from the repository
              */
             IRepositoryObject object = this.repository.getRegisteredObject(file);
             if (object != null) {
@@ -122,7 +118,7 @@ public abstract class FileFinder<T extends RepositoryObject> extends Finder<T> {
         }
     }
 
-    protected Collection<? extends RepositoryObject> getRegisteredObjectSet() {
+    protected Collection<? extends IRepositoryObject> getRegisteredObjectSet() {
         return this.repository.getCollectionStaticEntities(getClassToFind());
     }
 
@@ -132,14 +128,14 @@ public abstract class FileFinder<T extends RepositoryObject> extends Finder<T> {
          * First check whether all registered objects currently in the
          * repository do still exist
          */
-        Collection<RepositoryObject> toRemove = new HashSet<>();
-        for (RepositoryObject object : getRegisteredObjectSet()) {
+        Collection<IRepositoryObject> toRemove = new HashSet<>();
+        for (IRepositoryObject object : getRegisteredObjectSet()) {
             if (!new File(object.getAbsolutePath()).exists()) {
                 toRemove.add(object);
             }
         }
 
-        for (RepositoryObject object : toRemove) {
+        for (IRepositoryObject object : toRemove) {
             object.unregister();
             object.notify(new RepositoryRemoveEvent(object));
         }

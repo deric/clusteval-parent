@@ -12,9 +12,9 @@
  */
 package de.clusteval.utils;
 
+import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.repository.IRepositoryObject;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.framework.repository.Repository;
-import de.clusteval.framework.repository.RepositoryObject;
 import de.wiwie.wiutils.file.FileUtils;
 import java.io.File;
 import java.net.MalformedURLException;
@@ -31,7 +31,7 @@ import java.util.Map;
  * @param <T>
  *
  */
-public abstract class JARFinder<T extends RepositoryObject> extends Finder<T> {
+public abstract class JARFinder<T extends IRepositoryObject> extends Finder<T> {
 
     protected Map<URL, URLClassLoader> classLoaders;
 
@@ -44,7 +44,7 @@ public abstract class JARFinder<T extends RepositoryObject> extends Finder<T> {
      * @param classToFind
      * @throws RegisterException
      */
-    public JARFinder(Repository repository, Class<T> classToFind)
+    public JARFinder(IRepository repository, Class<T> classToFind)
             throws RegisterException {
         super(repository, classToFind);
         this.classLoaders = this.repository.getJARFinderClassLoaders();
@@ -61,9 +61,9 @@ public abstract class JARFinder<T extends RepositoryObject> extends Finder<T> {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.wiwie.wiutils.utils.Finder#doOnFileFound(java.io.File)
+     * (non-Javadoc)
+     *
+     * @see de.wiwie.wiutils.utils.Finder#doOnFileFound(java.io.File)
      */
     @Override
     protected void doOnFileFound(File file) throws Exception {
@@ -119,8 +119,7 @@ public abstract class JARFinder<T extends RepositoryObject> extends Finder<T> {
                         }
                     } else {
                         if (!knownExceptions.containsKey(className)) {
-                            knownExceptions.put(className,
-                                    new ArrayList<Throwable>());
+                            knownExceptions.put(className, new ArrayList<>());
                         }
                         knownExceptions.get(className).add(e);
 
@@ -154,10 +153,8 @@ public abstract class JARFinder<T extends RepositoryObject> extends Finder<T> {
                                         + " because a required class is missing:"
                                         + e.getMessage());
                                 // add this file to the waiting files
-                                if (!waitingFiles
-                                        .containsKey(potentialParentFile)) {
-                                    waitingFiles.put(potentialParentFile,
-                                            new ArrayList<File>());
+                                if (!waitingFiles.containsKey(potentialParentFile)) {
+                                    waitingFiles.put(potentialParentFile, new ArrayList<>());
                                 }
                                 waitingFiles.get(potentialParentFile).add(f);
                             }
@@ -221,10 +218,10 @@ public abstract class JARFinder<T extends RepositoryObject> extends Finder<T> {
 
     protected void validateRegisteredObjects() {
         /*
-		 * First check whether all registered objects currently in the
-		 * repository do still exist
+         * First check whether all registered objects currently in the
+         * repository do still exist
          */
-        Collection<Class<? extends T>> toRemove = new HashSet<Class<? extends T>>();
+        Collection<Class<? extends T>> toRemove = new HashSet<>();
         for (Class<? extends T> object : getRegisteredObjectSet()) {
             if (!new File(FileUtils.buildPath(getBaseDir().getAbsolutePath(),
                     object.getSimpleName() + ".jar")).exists()) {
@@ -238,13 +235,12 @@ public abstract class JARFinder<T extends RepositoryObject> extends Finder<T> {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.wiwie.wiutils.utils.Finder#findAndRegisterObjects()
+     * (non-Javadoc)
+     *
+     * @see de.wiwie.wiutils.utils.Finder#findAndRegisterObjects()
      */
     @Override
-    public void findAndRegisterObjects() throws RegisterException,
-                                                InterruptedException {
+    public void findAndRegisterObjects() throws RegisterException, InterruptedException {
         validateRegisteredObjects();
         super.findAndRegisterObjects();
     }

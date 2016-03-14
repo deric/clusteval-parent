@@ -30,8 +30,8 @@ public interface IRepositoryObject {
      *
      * @return true, if successful
      * @throws RegisterException An exception is thrown if something goes wrong
-     * during the registering process, that might be interesting to handle
-     * individually.
+     *                           during the registering process, that might be interesting to handle
+     *                           individually.
      */
     boolean register() throws RegisterException;
 
@@ -67,5 +67,7 @@ public interface IRepositoryObject {
     boolean removeListener(final RepositoryListener listener);
 
     long getChangeDate();
+
+    void notify(RepositoryEvent e) throws RegisterException;
 
 }

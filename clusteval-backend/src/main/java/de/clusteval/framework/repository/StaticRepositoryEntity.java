@@ -16,6 +16,7 @@
  */
 package de.clusteval.framework.repository;
 
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.IRepositoryObject;
 import de.clusteval.api.repository.RegisterException;
 import java.util.Collection;
@@ -33,7 +34,7 @@ public class StaticRepositoryEntity<T extends IRepositoryObject> extends Reposit
     protected Map<T, T> objects;
     protected Map<String, T> nameToObject;
 
-    public StaticRepositoryEntity(final Repository repository,
+    public StaticRepositoryEntity(final IRepository repository,
             final StaticRepositoryEntity<T> parent, final String basePath) {
         super(repository, basePath);
         this.parent = parent;
@@ -112,7 +113,7 @@ public class StaticRepositoryEntity<T extends IRepositoryObject> extends Reposit
                 return parent.getRegisteredObject(object, ignoreChangeDate);
             } else if (ignoreChangeDate || other == null) {
                 return other;
-            } else if (other.changeDate == object.changeDate) {
+            } else if (other.getChangeDate() == object.getChangeDate()) {
                 return other;
             }
             return object;
@@ -164,7 +165,7 @@ public class StaticRepositoryEntity<T extends IRepositoryObject> extends Reposit
     protected <S extends T> boolean registerWhenExisting(final S old,
             final S object) throws RegisterException {
         // check, whether the changeDate is equal
-        if (old.changeDate >= object.changeDate) {
+        if (old.getChangeDate() >= object.getChangeDate()) {
             return false;
         }
 

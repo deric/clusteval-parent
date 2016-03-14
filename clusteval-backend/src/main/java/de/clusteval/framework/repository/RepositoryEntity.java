@@ -16,13 +16,14 @@
  */
 package de.clusteval.framework.repository;
 
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.IRepositoryObject;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.data.dataset.DataSetFinderThread;
 
 public abstract class RepositoryEntity<T extends IRepositoryObject> {
 
-    protected Repository repository;
+    protected IRepository repository;
 
     /**
      * A boolean attribute indicating whether the datasets have been initialized
@@ -38,7 +39,7 @@ public abstract class RepositoryEntity<T extends IRepositoryObject> {
 
     protected boolean printOnRegister = true;
 
-    public RepositoryEntity(final Repository repository, final String basePath) {
+    public RepositoryEntity(final IRepository repository, final String basePath) {
         super();
         this.repository = repository;
         this.initialized = false;

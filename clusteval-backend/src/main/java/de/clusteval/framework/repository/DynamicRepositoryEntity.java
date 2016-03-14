@@ -3,6 +3,7 @@
  */
 package de.clusteval.framework.repository;
 
+import de.clusteval.api.repository.RepositoryRemoveEvent;
 import de.clusteval.api.repository.IRepositoryObject;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.RLibraryNotLoadedException;

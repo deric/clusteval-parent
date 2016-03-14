@@ -3,7 +3,9 @@
  */
 package de.clusteval.framework.repository.parse;
 
+import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.repository.IRepositoryObject;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.cluster.paramOptimization.InvalidOptimizationParameterException;
@@ -108,6 +110,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author Christian Wiwie
+ * @param <P>
  *
  */
 public abstract class Parser<P extends RepositoryObject> {
@@ -146,7 +149,7 @@ public abstract class Parser<P extends RepositoryObject> {
         return null;
     }
 
-    public static <T extends RepositoryObject> T parseFromFile(final Class<T> c, final File absPath)
+    public static <T extends IRepositoryObject> T parseFromFile(final Class<T> c, final File absPath)
             throws UnknownDataSetFormatException, GoldStandardNotFoundException, GoldStandardConfigurationException,
                    DataSetConfigurationException, DataSetNotFoundException, DataSetConfigNotFoundException,
                    GoldStandardConfigNotFoundException, NoDataSetException, DataConfigurationException,
@@ -245,11 +248,11 @@ class AnalysisRunParser<T extends AnalysisRun<?>> extends RunParser<T> {
 class ClusteringRunParser extends ExecutionRunParser<ClusteringRun> {
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * de.clusteval.framework.repository.ExecutionRunParser#parseFromFile(java
-	 * .io.File)
+     * (non-Javadoc)
+     *
+     * @see
+     * de.clusteval.framework.repository.ExecutionRunParser#parseFromFile(java
+     * .io.File)
      */
     @Override
     public void parseFromFile(File absPath) throws ConfigurationException, UnknownContextException,
@@ -279,11 +282,11 @@ class RobustnessAnalysisRunParser extends ExecutionRunParser<RobustnessAnalysisR
     protected List<DataConfig> originalDataConfigs;
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * de.clusteval.framework.repository.ExecutionRunParser#parseFromFile(java
-	 * .io.File)
+     * (non-Javadoc)
+     *
+     * @see
+     * de.clusteval.framework.repository.ExecutionRunParser#parseFromFile(java
+     * .io.File)
      */
     @Override
     public void parseFromFile(File absPath) throws ConfigurationException, UnknownContextException,
@@ -341,10 +344,10 @@ class RobustnessAnalysisRunParser extends ExecutionRunParser<RobustnessAnalysisR
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.clusteval.framework.repository.parse.ExecutionRunParser#
-	 * parseDataConfigurations()
+     * (non-Javadoc)
+     *
+     * @see de.clusteval.framework.repository.parse.ExecutionRunParser#
+     * parseDataConfigurations()
      */
     @Override
     protected void parseDataConfigurations() throws RunException, UnknownDataSetFormatException,
@@ -472,11 +475,11 @@ class DataAnalysisRunParser extends AnalysisRunParser<DataAnalysisRun> {
 class DataConfigParser extends RepositoryObjectParser<DataConfig> {
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * de.clusteval.framework.repository.RepositoryObjectParser#parseFromFile
-	 * (java.io.File)
+     * (non-Javadoc)
+     *
+     * @see
+     * de.clusteval.framework.repository.RepositoryObjectParser#parseFromFile
+     * (java.io.File)
      */
     @Override
     public void parseFromFile(File absPath) throws NoRepositoryFoundException, ConfigurationException,
@@ -657,11 +660,11 @@ class DataSetParser extends RepositoryObjectParser<DataSet> {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * de.clusteval.framework.repository.RepositoryObjectParser#parseFromFile
-	 * (java.io.File)
+     * (non-Javadoc)
+     *
+     * @see
+     * de.clusteval.framework.repository.RepositoryObjectParser#parseFromFile
+     * (java.io.File)
      */
     @Override
     public void parseFromFile(File absPath) throws NoRepositoryFoundException, ConfigurationException,
@@ -694,14 +697,14 @@ class DataSetParser extends RepositoryObjectParser<DataSet> {
             }
             // check whether the alias is already taken by another dataset ->
             // throw exception
-            Collection<DataSet> dataSets;
+            Collection<IDataSet> dataSets;
             if (repo instanceof RunResultRepository) {
-                dataSets = repo.getParent().getCollectionStaticEntities(DataSet.class);
+                dataSets = repo.getParent().getCollectionStaticEntities(IDataSet.class);
             } else {
-                dataSets = repo.getCollectionStaticEntities(DataSet.class);
+                dataSets = repo.getCollectionStaticEntities(IDataSet.class);
             }
 
-            for (DataSet ds : dataSets) {
+            for (IDataSet ds : dataSets) {
                 if (!(repo instanceof RunResultRepository) && !(ds.getAbsolutePath().equals(absPath.getAbsolutePath()))
                         && ds.getAlias().equals(alias)) {
                     throw new DataSetConfigurationException("The alias (" + alias + ") of the data set "
@@ -745,7 +748,7 @@ class DataSetParser extends RepositoryObjectParser<DataSet> {
             LoggerFactory.getLogger(DataSet.class).debug("Parsing dataset \"" + absPath + "\"");
 
             /*
-			 * Either the format is absolute or relative
+             * Either the format is absolute or relative
              */
             if (RelativeDataSetFormat.class.isAssignableFrom(dsFormat.getClass())) {
                 result = new RelativeDataSet(repo, true, changeDate, absPath, alias, (RelativeDataSetFormat) dsFormat,
@@ -963,7 +966,7 @@ class ExecutionRunParser<T extends ExecutionRun> extends RunParser<T> {
 
         if (getProps().getSections().contains(programConfig.getName())) {
             /*
-			 * General parameters, not only for optimization.
+             * General parameters, not only for optimization.
              */
             Iterator<String> itParams = getProps().getSection(programConfig.getName()).getKeys();
             while (itParams.hasNext()) {
@@ -1023,11 +1026,11 @@ class ExecutionRunParser<T extends ExecutionRun> extends RunParser<T> {
 class GoldStandardConfigParser extends RepositoryObjectParser<GoldStandardConfig> {
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * de.clusteval.framework.repository.RepositoryObjectParser#parseFromFile
-	 * (java.io.File)
+     * (non-Javadoc)
+     *
+     * @see
+     * de.clusteval.framework.repository.RepositoryObjectParser#parseFromFile
+     * (java.io.File)
      */
     @Override
     public void parseFromFile(File absPath) throws NoRepositoryFoundException, ConfigurationException,
@@ -1066,11 +1069,11 @@ class GoldStandardConfigParser extends RepositoryObjectParser<GoldStandardConfig
 class InternalParameterOptimizationRunParser extends ExecutionRunParser<InternalParameterOptimizationRun> {
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * de.clusteval.framework.repository.ExecutionRunParser#parseFromFile(java
-	 * .io.File)
+     * (non-Javadoc)
+     *
+     * @see
+     * de.clusteval.framework.repository.ExecutionRunParser#parseFromFile(java
+     * .io.File)
      */
     @Override
     public void parseFromFile(File absPath) throws ConfigurationException, UnknownContextException,
@@ -1122,7 +1125,7 @@ class ParameterOptimizationRunParser extends ExecutionRunParser<ParameterOptimiz
 
         this.optimizationParameters = new ArrayList<List<ProgramParameter<?>>>();
         /*
-		 * The optimization methods, for every program one method.
+         * The optimization methods, for every program one method.
          */
         this.optimizationMethods = new ArrayList<ParameterOptimizationMethod>();
 
@@ -1190,10 +1193,10 @@ class ParameterOptimizationRunParser extends ExecutionRunParser<ParameterOptimiz
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.clusteval.framework.repository.ExecutionRunParser#
-	 * isParamConfigurationEntry(java.lang.String)
+     * (non-Javadoc)
+     *
+     * @see de.clusteval.framework.repository.ExecutionRunParser#
+     * isParamConfigurationEntry(java.lang.String)
      */
     @Override
     protected boolean isParamConfigurationEntry(String name) {
@@ -1202,10 +1205,10 @@ class ParameterOptimizationRunParser extends ExecutionRunParser<ParameterOptimiz
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * de.clusteval.framework.repository.ExecutionRunParser#addParamValueToMap()
+     * (non-Javadoc)
+     *
+     * @see
+     * de.clusteval.framework.repository.ExecutionRunParser#addParamValueToMap()
      */
     @Override
     protected boolean checkParamValueToMap(final String param) {
@@ -1218,10 +1221,10 @@ class ParameterOptimizationRunParser extends ExecutionRunParser<ParameterOptimiz
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.clusteval.framework.repository.ExecutionRunParser#
-	 * parseProgramConfigurations()
+     * (non-Javadoc)
+     *
+     * @see de.clusteval.framework.repository.ExecutionRunParser#
+     * parseProgramConfigurations()
      */
     @Override
     protected void parseProgramConfigurations()
@@ -1239,8 +1242,8 @@ class ParameterOptimizationRunParser extends ExecutionRunParser<ParameterOptimiz
                    UnknownRunDataStatisticException, UnknownRunResultPostprocessorException, UnknownDataRandomizerException {
 
         /*
-		 * Default optimization method for all programs, where no specific
-		 * method is defined
+         * Default optimization method for all programs, where no specific
+         * method is defined
          */
         paramOptMethod = getProps().getString("optimizationMethod");
         paramOptMethods = new ArrayList<String>();
@@ -1249,11 +1252,11 @@ class ParameterOptimizationRunParser extends ExecutionRunParser<ParameterOptimiz
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.clusteval.framework.repository.ExecutionRunParser#
-	 * parseProgramConfiguration(de.clusteval.program.ProgramConfig,
-	 * java.util.Map)
+     * (non-Javadoc)
+     *
+     * @see de.clusteval.framework.repository.ExecutionRunParser#
+     * parseProgramConfiguration(de.clusteval.program.ProgramConfig,
+     * java.util.Map)
      */
     @Override
     protected void parseProgramConfigParams(ProgramConfig programConfig) throws NoOptimizableProgramParameterException,
@@ -1264,15 +1267,15 @@ class ParameterOptimizationRunParser extends ExecutionRunParser<ParameterOptimiz
         if (getProps().getSections().contains(programConfig.getName())) {
 
             /*
-			 * These parameters are used for parameter optimization. If we are
-			 * in parameter optimization mode and there are concrete values for
-			 * this parameters in this section, they will be ignored.
+             * These parameters are used for parameter optimization. If we are
+             * in parameter optimization mode and there are concrete values for
+             * this parameters in this section, they will be ignored.
              */
             optimizationParas = getProps().getSection(programConfig.getName()).getStringArray("optimizationParameters");
 
             /*
-			 * Check whether the given optimization parameter are indeed defined
-			 * as optimizable parameters in the program config.
+             * Check whether the given optimization parameter are indeed defined
+             * as optimizable parameters in the program config.
              */
             for (String optPa : optimizationParas) {
                 try {
@@ -1285,7 +1288,7 @@ class ParameterOptimizationRunParser extends ExecutionRunParser<ParameterOptimiz
                     optParaList.add(p);
                 } catch (UnknownProgramParameterException e) {
                     /*
-					 * Modify the message
+                     * Modify the message
                      */
                     throw new UnknownProgramParameterException(
                             "The run " + absPath.getName() + " contained invalid parameter values: "
@@ -1296,13 +1299,13 @@ class ParameterOptimizationRunParser extends ExecutionRunParser<ParameterOptimiz
             if (getProps().getSection(programConfig.getName()).containsKey("optimizationMethod")) {
                 paramOptMethods.add(getProps().getSection(programConfig.getName()).getString("optimizationMethod"));
             } /*
-			 * Default optimization method of this run config
+             * Default optimization method of this run config
              */ else {
                 paramOptMethods.add(paramOptMethod);
             }
         } /*
-		 * If there are no explicit optimization parameters set in the run
-		 * config, use all optimizable parameters of program config.
+         * If there are no explicit optimization parameters set in the run
+         * config, use all optimizable parameters of program config.
          */ else {
             optParaList.addAll(programConfig.getOptimizableParams());
             paramOptMethods.add(paramOptMethod);
@@ -1498,8 +1501,8 @@ class ProgramConfigParser extends RepositoryObjectParser<ProgramConfig> {
         // "Goldstandard", null, null));
 
         /*
-		 * Get the optimization parameters (parameters, that can be optimized
-		 * for this program in parameter_optimization runmode
+         * Get the optimization parameters (parameters, that can be optimized
+         * for this program in parameter_optimization runmode
          */
         String[] optimizableParams = getProps().getStringArray("optimizationParameters");
 
@@ -1518,7 +1521,7 @@ class ProgramConfigParser extends RepositoryObjectParser<ProgramConfig> {
             params.add(param);
 
             /*
-			 * Check if this parameter is declared as an optimizable parameter
+             * Check if this parameter is declared as an optimizable parameter
              */
             boolean optimizable = false;
             for (String optPa : optimizableParams) {
@@ -1530,8 +1533,8 @@ class ProgramConfigParser extends RepositoryObjectParser<ProgramConfig> {
 
             if (optimizable) {
                 /*
-				 * Check if min and max values are given for this parameter,
-				 * which is necessary for optimizing it
+                 * Check if min and max values are given for this parameter,
+                 * which is necessary for optimizing it
                  */
                 if (!(param.isMinValueSet() || !param.isMaxValueSet()) && !param.isOptionsSet()) {
                     throw new InvalidOptimizationParameterException("The parameter " + param
@@ -1607,7 +1610,7 @@ class RunAnalysisRunParser extends AnalysisRunParser<RunAnalysisRun> {
         super.parseFromFile(absPath);
 
         /*
-		 * An analysis run consists of a set of dataconfigs
+         * An analysis run consists of a set of dataconfigs
          */
         List<String> uniqueRunIdentifiers = new LinkedList<>();
 
@@ -1658,10 +1661,10 @@ class RunDataAnalysisRunParser extends AnalysisRunParser<RunDataAnalysisRun> {
                                                    UnknownRunResultPostprocessorException, UnknownDataRandomizerException {
         super.parseFromFile(absPath);
 
-        List<String> uniqueRunAnalysisRunIdentifiers = new LinkedList<String>();
-        List<String> uniqueDataAnalysisRunIdentifiers = new LinkedList<String>();
+        List<String> uniqueRunAnalysisRunIdentifiers = new LinkedList<>();
+        List<String> uniqueDataAnalysisRunIdentifiers = new LinkedList<>();
 
-        List<RunDataStatistic> runDataStatistics = new LinkedList<RunDataStatistic>();
+        List<RunDataStatistic> runDataStatistics = new LinkedList<>();
 
         uniqueRunAnalysisRunIdentifiers.addAll(Arrays.asList(getProps().getStringArray("uniqueRunIdentifiers")));
         uniqueDataAnalysisRunIdentifiers.addAll(Arrays.asList(getProps().getStringArray("uniqueDataIdentifiers")));
@@ -1671,7 +1674,7 @@ class RunDataAnalysisRunParser extends AnalysisRunParser<RunDataAnalysisRun> {
          * loaded once so that they are ALL registered as missing in the
          * repository.
          */
-        List<UnknownRunDataStatisticException> thrownExceptions = new ArrayList<UnknownRunDataStatisticException>();
+        List<UnknownRunDataStatisticException> thrownExceptions = new ArrayList<>();
         for (String runStatistic : getProps().getStringArray("runDataStatistics")) {
             try {
                 runDataStatistics.add(RunDataStatistic.parseFromString(repo, runStatistic));
@@ -1730,9 +1733,9 @@ class RunParser<T extends Run> extends RepositoryObjectParser<T> {
 class RunResultDataSetConfigParser extends DataSetConfigParser {
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.clusteval.framework.repository.DataSetConfigParser#getDataSet()
+     * (non-Javadoc)
+     *
+     * @see de.clusteval.framework.repository.DataSetConfigParser#getDataSet()
      */
     @Override
     protected DataSet getDataSet() {

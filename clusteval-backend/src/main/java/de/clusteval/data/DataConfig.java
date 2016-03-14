@@ -21,7 +21,7 @@ import de.clusteval.data.goldstandard.GoldStandardConfig;
 import de.clusteval.framework.repository.DumpableRepositoryObject;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RepositoryObjectDumpException;
-import de.clusteval.framework.repository.RepositoryRemoveEvent;
+import de.clusteval.api.repository.RepositoryRemoveEvent;
 import de.clusteval.framework.repository.RepositoryReplaceEvent;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -91,15 +91,15 @@ public class DataConfig extends DumpableRepositoryObject {
     /**
      * Instantiates a new data configuration.
      *
-     * @param repository The repository this data configuration should be
-     * registered at.
-     * @param changeDate The change date of this data configuration is used for
-     * equality checks.
-     * @param absPath The absolute path of this data configuration.
+     * @param repository    The repository this data configuration should be
+     *                      registered at.
+     * @param changeDate    The change date of this data configuration is used for
+     *                      equality checks.
+     * @param absPath       The absolute path of this data configuration.
      * @param datasetConfig The dataset configuration encapsulated by this data
-     * configuration.
-     * @param gsConfig The goldstandard configuration encapsulated by this data
-     * configuration.
+     *                      configuration.
+     * @param gsConfig      The goldstandard configuration encapsulated by this data
+     *                      configuration.
      * @throws RegisterException
      */
     public DataConfig(final IRepository repository, final long changeDate,
@@ -124,7 +124,7 @@ public class DataConfig extends DumpableRepositoryObject {
      * {@link ClusteringQualityMeasure#requiresGoldstandard()}).
      *
      * @return True, if this data configuration has a goldstandard, false
-     * otherwise.
+     *         otherwise.
      */
     public boolean hasGoldStandardConfig() {
         return this.goldstandardConfig != null;
@@ -148,9 +148,9 @@ public class DataConfig extends DumpableRepositoryObject {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see framework.repository.RepositoryObject#clone()
+     * (non-Javadoc)
+     *
+     * @see framework.repository.RepositoryObject#clone()
      */
     @Override
     public DataConfig clone() {
@@ -166,9 +166,9 @@ public class DataConfig extends DumpableRepositoryObject {
     /**
      *
      * @return If during the execution of a run the dataset has been converted
-     * to a different format, this method returns the converted dataset
-     * configuration. If no conversion has been performed, this method returns
-     * the original dataset configuration.
+     *         to a different format, this method returns the converted dataset
+     *         configuration. If no conversion has been performed, this method returns
+     *         the original dataset configuration.
      */
     public DataSetConfig getDatasetConfig() {
         return dataSetConfig;
@@ -176,7 +176,7 @@ public class DataConfig extends DumpableRepositoryObject {
 
     /**
      * @return The goldstandard configuration of this data configuration. Is
-     * null, if there is no goldstandard configuration.
+     *         null, if there is no goldstandard configuration.
      */
     public GoldStandardConfig getGoldstandardConfig() {
         return goldstandardConfig;
@@ -193,9 +193,9 @@ public class DataConfig extends DumpableRepositoryObject {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#toString()
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#toString()
      */
     @Override
     public String toString() {
@@ -203,9 +203,9 @@ public class DataConfig extends DumpableRepositoryObject {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.wiwie.wiutils.utils.RepositoryObject#notify(utils.RepositoryEvent)
+     * (non-Javadoc)
+     *
+     * @see de.wiwie.wiutils.utils.RepositoryObject#notify(utils.RepositoryEvent)
      */
     @Override
     public void notify(RepositoryEvent e) throws RegisterException {
@@ -274,26 +274,26 @@ public class DataConfig extends DumpableRepositoryObject {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * de.clusteval.framework.repository.DumpableRepositoryObject#dumpToFileHelper
-	 * ()
+     * (non-Javadoc)
+     *
+     * @see
+     * de.clusteval.framework.repository.DumpableRepositoryObject#dumpToFileHelper
+     * ()
      */
     @Override
     protected void dumpToFileHelper() throws RepositoryObjectDumpException {
         try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(
-                    this.absPath));
-            writer.append("datasetConfig = "
-                    + new File(this.dataSetConfig.getAbsolutePath()).getName()
-                    .replace(".dsconfig", ""));
-            writer.newLine();
-            writer.append("goldstandardConfig = "
-                    + new File(this.goldstandardConfig.getAbsolutePath())
-                    .getName().replace(".gsconfig", ""));
-            writer.newLine();
-            writer.close();
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(
+                    this.absPath))) {
+                writer.append("datasetConfig = "
+                        + new File(this.dataSetConfig.getAbsolutePath()).getName()
+                        .replace(".dsconfig", ""));
+                writer.newLine();
+                writer.append("goldstandardConfig = "
+                        + new File(this.goldstandardConfig.getAbsolutePath())
+                        .getName().replace(".gsconfig", ""));
+                writer.newLine();
+            }
         } catch (IOException e) {
             throw new RepositoryObjectDumpException(e);
         }

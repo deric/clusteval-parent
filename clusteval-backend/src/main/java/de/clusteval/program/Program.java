@@ -25,7 +25,7 @@ import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.api.repository.RepositoryEvent;
 import de.clusteval.framework.repository.RepositoryObject;
-import de.clusteval.framework.repository.RepositoryRemoveEvent;
+import de.clusteval.api.repository.RepositoryRemoveEvent;
 import de.clusteval.framework.repository.RepositoryReplaceEvent;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.api.exceptions.RNotAvailableException;

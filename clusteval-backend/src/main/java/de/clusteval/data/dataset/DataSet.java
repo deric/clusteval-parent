@@ -12,11 +12,15 @@
  */
 package de.clusteval.data.dataset;
 
+import de.clusteval.api.data.IDataSet;
+import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.RNotAvailableException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.repository.RepositoryEvent;
+import de.clusteval.api.repository.RepositoryMoveEvent;
+import de.clusteval.api.repository.RepositoryRemoveEvent;
 import de.clusteval.context.Context;
 import de.clusteval.data.dataset.format.AbsoluteDataSetFormat;
 import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
@@ -28,9 +32,7 @@ import de.clusteval.data.dataset.type.DataSetType;
 import de.clusteval.data.preprocessing.DataPreprocessor;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.framework.repository.Repository;
-import de.clusteval.framework.repository.RepositoryMoveEvent;
 import de.clusteval.framework.repository.RepositoryObject;
-import de.clusteval.framework.repository.RepositoryRemoveEvent;
 import de.clusteval.framework.repository.RepositoryReplaceEvent;
 import de.clusteval.utils.FormatConversionException;
 import de.clusteval.utils.NamedDoubleAttribute;
@@ -58,7 +60,7 @@ import java.util.Map;
  * @author Christian Wiwie
  *
  */
-public abstract class DataSet extends RepositoryObject {
+public abstract class DataSet extends RepositoryObject implements IDataSet {
 
     /**
      * This enum describes the visibility of a dataset on the website.
@@ -131,15 +133,16 @@ public abstract class DataSet extends RepositoryObject {
     /**
      * Instantiates a new dataset object.
      *
-     * @param repository The repository this dataset should be registered at.
-     * @param register Whether this dataset should be registered in the
-     * repository.
-     * @param changeDate The change date of this dataset is used for equality
-     * checks.
-     * @param absPath The absolute path of this dataset.
-     * @param alias A short alias name for this data set.
-     * @param dsFormat The format of this dataset.
-     * @param dsType The type of this dataset
+     * @param repository        The repository this dataset should be registered at.
+     * @param register          Whether this dataset should be registered in the
+     *                          repository.
+     * @param changeDate        The change date of this dataset is used for equality
+     *                          checks.
+     * @param absPath           The absolute path of this dataset.
+     * @param alias             A short alias name for this data set.
+     * @param dsFormat          The format of this dataset.
+     * @param dsType            The type of this dataset
+     * @param websiteVisibility
      * @throws RegisterException
      */
     public DataSet(final Repository repository, final boolean register,
@@ -176,11 +179,11 @@ public abstract class DataSet extends RepositoryObject {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * de.clusteval.framework.repository.RepositoryObject#setAbsolutePath(java
-	 * .io.File)
+     * (non-Javadoc)
+     *
+     * @see
+     * de.clusteval.framework.repository.RepositoryObject#setAbsolutePath(java
+     * .io.File)
      */
     @Override
     public void setAbsolutePath(File absFilePath) {
@@ -237,7 +240,7 @@ public abstract class DataSet extends RepositoryObject {
      * @see DataSet#datasetFormat
      * @return The dataset format
      */
-    public DataSetFormat getDataSetFormat() {
+    public IDataSetFormat getDataSetFormat() {
         return datasetFormat;
     }
 
@@ -280,9 +283,9 @@ public abstract class DataSet extends RepositoryObject {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#toString()
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#toString()
      */
     @Override
     public String toString() {
@@ -290,9 +293,9 @@ public abstract class DataSet extends RepositoryObject {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.wiwie.wiutils.utils.RepositoryObject#copyTo(java.io.File, boolean)
+     * (non-Javadoc)
+     *
+     * @see de.wiwie.wiutils.utils.RepositoryObject#copyTo(java.io.File, boolean)
      */
     @Override
     public boolean copyTo(File copyDestination, final boolean overwrite) {
@@ -314,9 +317,9 @@ public abstract class DataSet extends RepositoryObject {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.wiwie.wiutils.utils.RepositoryObject#copyToFolder(java.io.File, boolean)
+     * (non-Javadoc)
+     *
+     * @see de.wiwie.wiutils.utils.RepositoryObject#copyToFolder(java.io.File, boolean)
      */
     @Override
     public boolean copyToFolder(File copyFolderDestination,
@@ -403,7 +406,7 @@ public abstract class DataSet extends RepositoryObject {
      *
      * @param newContent The new content of this dataset.
      * @return True, if the content of this dataset has been updated to the new
-     * object.
+     *         object.
      */
     public abstract boolean setDataSetContent(Object newContent);
 
@@ -421,15 +424,15 @@ public abstract class DataSet extends RepositoryObject {
      * on the type of the Run). Then it is converted to the target format.
      *
      * @param context
-     * @param targetFormat This is the format, the dataset is expected to be in
-     * after the conversion process. After the dataset is converted to the
-     * internal format, it is converted to the target format.
+     * @param targetFormat          This is the format, the dataset is expected to be in
+     *                              after the conversion process. After the dataset is converted to the
+     *                              internal format, it is converted to the target format.
      * @param configInputToStandard This is the configuration that is used
-     * during the conversion from the original format to the internal standard
-     * format.
+     *                              during the conversion from the original format to the internal standard
+     *                              format.
      * @param configStandardToInput This is the configuration that is used
-     * during the conversion from the internal standard format to the target
-     * format.
+     *                              during the conversion from the internal standard format to the target
+     *                              format.
      * @return The dataset in the target format.
      * @throws FormatConversionException
      * @throws IOException
@@ -463,11 +466,9 @@ public abstract class DataSet extends RepositoryObject {
 
             // check, whether dataset format parsers are registered.
             if ((!sourceFormat.equals(context.getStandardInputFormat()) && !this
-                    .getRepository().isRegisteredForDataSetFormat(
-                            sourceFormat.getClass()))
+                    .getRepository().isRegisteredForDataSetFormat(sourceFormat.getClass()))
                     || (!targetFormat.equals(context.getStandardInputFormat()) && !this
-                    .getRepository().isRegisteredForDataSetFormat(
-                            targetFormat.getClass()))) {
+                    .getRepository().isRegisteredForDataSetFormat(targetFormat.getClass()))) {
                 throw new FormatConversionException(
                         "No conversion from "
                         + sourceFormat
@@ -534,8 +535,8 @@ public abstract class DataSet extends RepositoryObject {
                         "Convert to input format of method %s",
                         targetFormat.toString()));
                 /*
-				 * This temporary dataset is now in our standard format. Store
-				 * it and convert it to the target format.
+                 * This temporary dataset is now in our standard format. Store
+                 * it and convert it to the target format.
                  */
                 try {
                     result = result.convertStandardToDirectly(context,
@@ -557,14 +558,15 @@ public abstract class DataSet extends RepositoryObject {
      * standard format to a target format directly, that means using one
      * conversion step.
      *
-     * @param targetFormat This is the format, the dataset is expected to be in
-     * after the conversion process. After the dataset is converted to the
-     * internal format, it is converted to the target format.
+     * @param context
+     * @param targetFormat          This is the format, the dataset is expected to be in
+     *                              after the conversion process. After the dataset is converted to the
+     *                              internal format, it is converted to the target format.
      * @param configStandardToInput This is the configuration that is used
-     * during the conversion from the internal standard format to the target
-     * format.
+     *                              during the conversion from the internal standard format to the target
+     *                              format.
      * @return The dataset in the target format.
-     * @throws IOException Signals that an I/O exception has occurred.
+     * @throws IOException                          Signals that an I/O exception has occurred.
      * @throws InvalidDataSetFormatVersionException
      * @throws RegisterException
      * @throws UnknownDataSetFormatException
@@ -618,14 +620,15 @@ public abstract class DataSet extends RepositoryObject {
      * format to a internal standard format directly, that means using one
      * conversion step.
      *
-     * @param dsFormat This is the format, the dataset is expected to be in
-     * after the conversion process. After the dataset is converted to the
-     * internal format, it is converted to the target format.
+     * @param context
+     * @param dsFormat              This is the format, the dataset is expected to be in
+     *                              after the conversion process. After the dataset is converted to the
+     *                              internal format, it is converted to the target format.
      * @param configInputToStandard This is the configuration that is used
-     * during the conversion from the original format to the internal standard
-     * format.
+     *                              during the conversion from the original format to the internal standard
+     *                              format.
      * @return The dataset in the target format.
-     * @throws IOException Signals that an I/O exception has occurred.
+     * @throws IOException                          Signals that an I/O exception has occurred.
      * @throws InvalidDataSetFormatVersionException
      * @throws RegisterException
      * @throws UnknownDataSetFormatException
@@ -657,9 +660,9 @@ public abstract class DataSet extends RepositoryObject {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.wiwie.wiutils.utils.RepositoryObject#notify(utils.RepositoryEvent)
+     * (non-Javadoc)
+     *
+     * @see de.wiwie.wiutils.utils.RepositoryObject#notify(utils.RepositoryEvent)
      */
     @Override
     public void notify(RepositoryEvent e) throws RegisterException {
@@ -705,9 +708,9 @@ public abstract class DataSet extends RepositoryObject {
      * is overwritten.
      *
      * @param targetFile A file object wrapping the absolute path of the
-     * destination this dataset should be moved to.
-     * @param overwrite A boolean indicating, whether to overwrite a possibly
-     * existing target file.
+     *                   destination this dataset should be moved to.
+     * @param overwrite  A boolean indicating, whether to overwrite a possibly
+     *                   existing target file.
      * @return True, if this dataset has been moved successfully.
      */
     @Override
@@ -743,7 +746,7 @@ public abstract class DataSet extends RepositoryObject {
      * @return This dataset in the internal standard format.
      * @see #thisInStandardFormat
      */
-    public DataSet getInStandardFormat() {
+    public IDataSet getInStandardFormat() {
         return this.thisInStandardFormat;
     }
 
@@ -751,7 +754,7 @@ public abstract class DataSet extends RepositoryObject {
      * @return This dataset in its original format.
      * @see #originalDataSet
      */
-    public DataSet getOriginalDataSet() {
+    public IDataSet getOriginalDataSet() {
         return this.originalDataSet;
     }
 

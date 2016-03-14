@@ -3,6 +3,7 @@
  */
 package de.clusteval.data.dataset;
 
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
@@ -12,7 +13,6 @@ import de.clusteval.data.distance.UnknownDistanceMeasureException;
 import de.clusteval.data.goldstandard.GoldStandard;
 import de.clusteval.data.goldstandard.GoldStandardConfig;
 import de.clusteval.data.preprocessing.DataPreprocessor;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RepositoryObject;
 import de.clusteval.framework.repository.RepositoryObjectDumpException;
 import de.wiwie.wiutils.file.FileUtils;
@@ -41,7 +41,7 @@ public abstract class AbstractDataSetProvider extends RepositoryObject {
      * @param absPath
      * @throws RegisterException
      */
-    public AbstractDataSetProvider(Repository repository, boolean register, long changeDate, File absPath)
+    public AbstractDataSetProvider(IRepository repository, boolean register, long changeDate, File absPath)
             throws RegisterException {
         super(repository, register, changeDate, absPath);
     }

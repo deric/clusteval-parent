@@ -10,10 +10,7 @@
  *     Christian Wiwie - initial API and implementation
  *****************************************************************************
  */
-package de.clusteval.framework.repository;
-
-import de.clusteval.api.repository.IRepositoryObject;
-import de.clusteval.api.repository.RepositoryEvent;
+package de.clusteval.api.repository;
 
 /**
  * A {@link RepositoryRemoveEvent} is created, when some

@@ -49,7 +49,7 @@ import de.clusteval.data.randomizer.UnknownDataRandomizerException;
 import de.clusteval.data.statistics.UnknownDataStatisticException;
 import de.clusteval.framework.repository.NoRepositoryFoundException;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.framework.repository.RepositoryRemoveEvent;
+import de.clusteval.api.repository.RepositoryRemoveEvent;
 import de.clusteval.framework.repository.RepositoryReplaceEvent;
 import de.clusteval.framework.repository.parse.Parser;
 import de.clusteval.program.NoOptimizableProgramParameterException;
