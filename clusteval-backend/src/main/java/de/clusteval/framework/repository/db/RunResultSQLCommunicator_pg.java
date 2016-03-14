@@ -11,7 +11,7 @@
 package de.clusteval.framework.repository.db;
 
 import de.clusteval.api.exceptions.DatabaseConnectException;
-import de.clusteval.framework.repository.Repository;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.program.ProgramConfig;
 import de.clusteval.run.Run;
 import java.sql.DriverManager;
@@ -30,7 +30,7 @@ public class RunResultSQLCommunicator_pg extends DefaultSQLCommunicator {
      * @param mysqlConfig
      * @throws DatabaseConnectException
      */
-    public RunResultSQLCommunicator_pg(Repository repository,
+    public RunResultSQLCommunicator_pg(IRepository repository,
             final SQLConfig mysqlConfig) throws DatabaseConnectException {
         super(repository, mysqlConfig);
         this.objectIds = repository.getParent().getDb().getObjectIds();

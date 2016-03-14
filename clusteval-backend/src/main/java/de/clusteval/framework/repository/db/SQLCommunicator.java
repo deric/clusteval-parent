@@ -28,7 +28,6 @@ import de.clusteval.data.dataset.type.DataSetType;
 import de.clusteval.data.goldstandard.GoldStandard;
 import de.clusteval.data.goldstandard.GoldStandardConfig;
 import de.clusteval.data.statistics.DataStatistic;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.db.SQLConfig.DB_TYPE;
 import de.clusteval.program.DoubleProgramParameter;
 import de.clusteval.program.IntegerProgramParameter;
@@ -74,7 +73,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * The sql communicator is responsible for the communication between
- * {@link Repository} and mysql database.
+ * {@link IRepository} and mysql database.
  *
  * <p>
  * Therefore a sql communicator has a connection {@link #conn} and a

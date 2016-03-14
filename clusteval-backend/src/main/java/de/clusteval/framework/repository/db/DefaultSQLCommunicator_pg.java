@@ -1731,7 +1731,7 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
     protected boolean registerDataSetFormatClass(
             Class<? extends DataSetFormat> object) {
         try {
-            DataSetFormat format = object.getConstructor(Repository.class,
+            DataSetFormat format = object.getConstructor(IRepository.class,
                     boolean.class, long.class, File.class, int.class)
                     .newInstance(repository, false, System.currentTimeMillis(),
                             new File(object.getSimpleName()), 1);
@@ -1757,7 +1757,7 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
     protected boolean registerDataSetTypeClass(
             Class<? extends DataSetType> object) {
         try {
-            DataSetType type = object.getConstructor(Repository.class,
+            DataSetType type = object.getConstructor(IRepository.class,
                     boolean.class, long.class, File.class).newInstance(
                             repository, false, System.currentTimeMillis(),
                             new File(object.getSimpleName()));
@@ -1799,7 +1799,7 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
             Class<? extends ClusteringQualityMeasure> object) {
         try {
             ClusteringQualityMeasure measure = object.getConstructor(
-                    Repository.class, boolean.class, long.class, File.class,
+                    IRepository.class, boolean.class, long.class, File.class,
                     ClusteringQualityMeasureParameters.class).newInstance(
                             repository, false, System.currentTimeMillis(),
                             new File(object.getSimpleName()),
@@ -1867,7 +1867,7 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
             int statisticId;
             try {
                 DataStatistic statistic = object
-                        .getConstructor(Repository.class, boolean.class,
+                        .getConstructor(IRepository.class, boolean.class,
                                 long.class, File.class).newInstance(repository,
                                 false, System.currentTimeMillis(),
                                 new File(object.getSimpleName()));
@@ -1884,17 +1884,8 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
             } catch (SQLException e) {
                 e.printStackTrace();
                 statisticId = getStatisticId(object.getSimpleName());
-            } catch (IllegalArgumentException e) {
-                e.printStackTrace();
-            } catch (SecurityException e) {
-                e.printStackTrace();
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            } catch (NoSuchMethodException e) {
+            } catch (IllegalArgumentException | SecurityException | InstantiationException |
+                    IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
                 e.printStackTrace();
             }
             return true;
@@ -1918,7 +1909,7 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
             int statisticId;
             try {
                 RunStatistic runStatistic = object
-                        .getConstructor(Repository.class, boolean.class,
+                        .getConstructor(IRepository.class, boolean.class,
                                 long.class, File.class).newInstance(repository,
                                 false, System.currentTimeMillis(),
                                 new File(object.getSimpleName()));
@@ -1968,7 +1959,7 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
             int statisticId;
             try {
                 RunDataStatistic runDataStatistic = object
-                        .getConstructor(Repository.class, boolean.class,
+                        .getConstructor(IRepository.class, boolean.class,
                                 long.class, File.class).newInstance(repository,
                                 false, System.currentTimeMillis(),
                                 new File(object.getSimpleName()));

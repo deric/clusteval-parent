@@ -24,6 +24,7 @@ import de.clusteval.run.statistics.RunStatisticFinderThread;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.ConcurrentModificationException;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -54,9 +55,7 @@ public abstract class SupervisorThread extends Thread implements ISupervisorThre
     public static List<Class<? extends ClustevalThread>> createList(
             Class<? extends ClustevalThread>... classes) {
         List<Class<? extends ClustevalThread>> result = new ArrayList<>();
-        for (Class<? extends ClustevalThread> clazz : classes) {
-            result.add(clazz);
-        }
+        result.addAll(Arrays.asList(classes));
         return result;
     }
 

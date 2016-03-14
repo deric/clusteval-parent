@@ -12,7 +12,6 @@
  */
 package de.clusteval.framework.repository;
 
-import de.clusteval.api.repository.RepositoryReplaceEvent;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.IRepositoryObject;
 import de.clusteval.api.repository.RegisterException;
@@ -20,6 +19,7 @@ import de.clusteval.api.repository.RepositoryEvent;
 import de.clusteval.api.repository.RepositoryListener;
 import de.clusteval.api.repository.RepositoryMoveEvent;
 import de.clusteval.api.repository.RepositoryRemoveEvent;
+import de.clusteval.api.repository.RepositoryReplaceEvent;
 import de.wiwie.wiutils.file.FileUtils;
 import java.io.File;
 import java.io.IOException;
@@ -449,7 +449,7 @@ public abstract class RepositoryObject implements RepositoryListener, IRepositor
     public void notify(RepositoryEvent e) throws RegisterException {
         if (e instanceof RepositoryReplaceEvent) {
             RepositoryReplaceEvent event = (RepositoryReplaceEvent) e;
-            if (event.old.equals(this)) // this object is going to be removed and replaced from the
+            if (event.getOld().equals(this)) // this object is going to be removed and replaced from the
             // repository
             {
                 this.notifyListener(event);
