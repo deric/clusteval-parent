@@ -50,4 +50,20 @@ public interface IGoldStandard extends IRepositoryObject {
      */
     IGoldStandard clone();
 
+    /**
+     * Gets the major name of this goldstandard. The major name corresponds to
+     * the folder the goldstandard resides in in the filesystem.
+     *
+     * @return The major name
+     */
+    String getMajorName();
+
+    /**
+     * Gets the minor name of this goldstandard. The minor name corresponds to
+     * the name of the file of this goldstandard.
+     *
+     * @return The minor name
+     */
+    public String getMinorName();
+
 }

@@ -280,6 +280,7 @@ public class GoldStandard extends RepositoryObject implements IGoldStandard {
      *
      * @return The major name
      */
+    @Override
     public String getMajorName() {
         return absPath.getParentFile().getName();
     }
@@ -290,6 +291,7 @@ public class GoldStandard extends RepositoryObject implements IGoldStandard {
      *
      * @return The minor name
      */
+    @Override
     public String getMinorName() {
         return absPath.getName();
     }
