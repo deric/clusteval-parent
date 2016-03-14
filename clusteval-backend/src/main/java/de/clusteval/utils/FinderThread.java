@@ -16,7 +16,7 @@ import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.IRepositoryObject;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.ISupervisorThread;
-import de.clusteval.framework.threading.ClustevalThread;
+import de.clusteval.framework.ClustevalThread;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

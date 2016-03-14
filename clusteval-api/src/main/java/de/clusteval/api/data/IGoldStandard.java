@@ -44,4 +44,10 @@ public interface IGoldStandard extends IRepositoryObject {
      */
     IClustering getClustering() throws UnknownGoldStandardFormatException;
 
+    /**
+     *
+     * @return cloned object
+     */
+    IGoldStandard clone();
+
 }

@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.framework.threading;
 
+import de.clusteval.framework.ClustevalThread;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethodFinderThread;
 import de.clusteval.cluster.quality.ClusteringQualityMeasureFinderThread;

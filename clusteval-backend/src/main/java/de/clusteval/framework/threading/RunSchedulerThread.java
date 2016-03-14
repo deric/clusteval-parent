@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.framework.threading;
 
+import de.clusteval.framework.ClustevalThread;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.framework.IScheduler;

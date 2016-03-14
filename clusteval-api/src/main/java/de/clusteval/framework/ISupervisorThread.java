@@ -31,4 +31,11 @@ public interface ISupervisorThread {
 
     IScheduler getRunScheduler();
 
+    /**
+     * @param clazz
+     *              The class for which we want the thread instance
+     * @return The thread instance of the passed class.
+     */
+    public ClustevalThread getThread(Class<? extends ClustevalThread> clazz);
+
 }

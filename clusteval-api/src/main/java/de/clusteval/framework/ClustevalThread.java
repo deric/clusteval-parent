@@ -8,9 +8,8 @@
  * Contributors:
  *     Christian Wiwie - initial API and implementation
  ***************************************************************************** */
-package de.clusteval.framework.threading;
+package de.clusteval.framework;
 
-import de.clusteval.framework.ISupervisorThread;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
