@@ -29,7 +29,7 @@ import de.clusteval.run.result.postprocessing.RunResultPostprocessor;
 import de.clusteval.run.runnable.ExecutionRunRunnable;
 import de.clusteval.run.runnable.RunRunnable;
 import de.clusteval.run.runnable.RunRunnableInitializationException;
-import de.wiwie.wiutils.backend.RUN_STATUS;
+import de.clusteval.framework.RUN_STATUS;
 import de.wiwie.wiutils.file.FileUtils;
 import de.wiwie.wiutils.utils.Pair;
 import java.io.File;

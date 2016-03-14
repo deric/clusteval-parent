@@ -13,7 +13,7 @@
  */
 package de.clusteval.serverclient;
 
-import de.wiwie.wiutils.backend.RUN_STATUS;
+import de.clusteval.framework.RUN_STATUS;
 import de.wiwie.wiutils.utils.ArraysExt;
 import de.wiwie.wiutils.utils.Pair;
 import java.rmi.ConnectException;

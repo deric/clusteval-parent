@@ -39,7 +39,7 @@ import de.clusteval.framework.threading.RepositorySupervisorThread;
 import de.clusteval.framework.threading.SupervisorThread;
 import de.clusteval.run.Run;
 import de.clusteval.run.result.RunResult;
-import de.wiwie.wiutils.backend.RUN_STATUS;
+import de.clusteval.framework.RUN_STATUS;
 
 /**
  * @author Christian Wiwie

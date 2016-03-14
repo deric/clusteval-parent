@@ -40,7 +40,7 @@ import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.framework.threading.RunSchedulerThread;
-import de.wiwie.wiutils.backend.RUN_STATUS;
+import de.clusteval.framework.RUN_STATUS;
 import de.clusteval.run.Run;
 import de.clusteval.api.exceptions.InternalAttributeException;
 

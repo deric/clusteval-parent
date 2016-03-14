@@ -16,6 +16,7 @@ import de.clusteval.cluster.quality.ClusteringQualityMeasureFinderThread;
 import de.clusteval.data.dataset.DataSetConfigFinderThread;
 import de.clusteval.data.dataset.format.DataSetFormatFinderThread;
 import de.clusteval.data.statistics.DataStatisticFinderThread;
+import de.clusteval.framework.IScheduler;
 import de.clusteval.framework.ISupervisorThread;
 import de.clusteval.run.RunFinderThread;
 import de.clusteval.run.result.format.RunResultFormatFinderThread;
@@ -291,7 +292,8 @@ public abstract class SupervisorThread extends Thread implements ISupervisorThre
     /**
      * @return The run scheduler thread.
      */
-    public RunSchedulerThread getRunScheduler() {
+    @Override
+    public IScheduler getRunScheduler() {
         return (RunSchedulerThread) this.threads.get(RunSchedulerThread.class);
     }
 

@@ -1,9 +1,9 @@
 package de.clusteval.run.runnable;
 
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.statistics.DataStatistic;
 import de.clusteval.data.statistics.DataStatisticCalculator;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.utils.StatisticCalculator;
 import de.wiwie.wiutils.file.FileUtils;
 import java.io.File;
@@ -57,7 +57,7 @@ public class DataAnalysisIterationRunnable extends
                 .getRepository().getDataStatisticCalculator(
                         getStatistic().getClass().getName());
         Constructor<? extends DataStatisticCalculator> constr = calcClass
-                .getConstructor(Repository.class, long.class, File.class,
+                .getConstructor(IRepository.class, long.class, File.class,
                         DataConfig.class);
         DataStatisticCalculator calc = constr.newInstance(this.getRun()
                 .getRepository(), calcFile.lastModified(), calcFile, this

@@ -12,6 +12,8 @@ package de.clusteval.framework.threading;
 
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.framework.ClustevalBackendServer;
+import de.clusteval.framework.IScheduler;
+import de.clusteval.framework.RUN_STATUS;
 import de.clusteval.run.MissingParameterValueException;
 import de.clusteval.run.Run;
 import de.clusteval.run.RunInitializationException;
@@ -22,7 +24,6 @@ import de.clusteval.run.runnable.IterationRunnable;
 import de.clusteval.run.runnable.IterationWrapper;
 import de.clusteval.run.runnable.RunRunnable;
 import de.clusteval.run.runnable.RunRunnableInitializationException;
-import de.wiwie.wiutils.backend.RUN_STATUS;
 import de.wiwie.wiutils.file.FileUtils;
 import de.wiwie.wiutils.utils.Pair;
 import de.wiwie.wiutils.utils.Triple;
@@ -55,7 +56,7 @@ import org.slf4j.LoggerFactory;
  * @author Christian Wiwie
  *
  */
-public class RunSchedulerThread extends ClustevalThread {
+public class RunSchedulerThread extends ClustevalThread implements IScheduler {
 
     /**
      * A queue containing all the runs that were scheduled, but not yet
@@ -158,7 +159,7 @@ public class RunSchedulerThread extends ClustevalThread {
                 }
             }
 
-            Collection<Run> toRemove = new HashSet<Run>();
+            Collection<Run> toRemove = new HashSet<>();
 
             // add the running runs
             if (this.clientToRuns.containsKey(clientId)) {

@@ -91,8 +91,6 @@ import de.clusteval.run.statistics.UnknownRunDataStatisticException;
 import de.clusteval.run.statistics.UnknownRunStatisticException;
 import de.clusteval.utils.InvalidConfigurationFileException;
 import de.clusteval.utils.MyHighlightingCompositeConverter;
-import de.wiwie.wiutils.backend.IBackendServer;
-import de.wiwie.wiutils.backend.RUN_STATUS;
 import de.wiwie.wiutils.file.FileUtils;
 import de.wiwie.wiutils.utils.Pair;
 import de.wiwie.wiutils.utils.Triple;
