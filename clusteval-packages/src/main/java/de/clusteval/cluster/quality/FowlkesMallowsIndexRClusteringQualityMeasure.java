@@ -24,8 +24,8 @@ import org.rosuda.REngine.REXP;
 import org.rosuda.REngine.REXPMismatchException;
 import org.rosuda.REngine.REngineException;
 
-import de.clusteval.cluster.Cluster;
-import de.clusteval.cluster.ClusterItem;
+import de.clusteval.api.cluster.Cluster;
+import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.data.DataConfig;
 import de.clusteval.framework.RLibraryRequirement;

@@ -13,14 +13,18 @@
 package de.clusteval.cluster;
 
 import de.clusteval.api.ClusteringEvaluation;
+import de.clusteval.api.cluster.Cluster;
+import de.clusteval.api.cluster.ClusterItem;
+import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.cluster.quality.ClusteringQualityMeasureValue;
 import de.clusteval.api.cluster.quality.ClusteringQualitySet;
+import de.clusteval.api.data.IDataConfig;
+import de.clusteval.api.exceptions.ClusteringParseException;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.data.DataConfig;
-import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.framework.repository.RepositoryObject;
 import de.clusteval.program.ParameterSet;
 import de.wiwie.wiutils.utils.Pair;
@@ -37,7 +41,7 @@ import java.util.Set;
 /**
  * A clustering contains several clusters. Every cluster contains cluster items.
  */
-public class Clustering extends RepositoryObject implements Iterable<Cluster> {
+public class Clustering extends RepositoryObject implements Iterable<Cluster>, IClustering {
 
     /**
      * The fuzzy size of this clustering is the sum of all fuzzy coefficients of
@@ -116,12 +120,12 @@ public class Clustering extends RepositoryObject implements Iterable<Cluster> {
             final Map<ClusterItem, ClusterItem> items = new HashMap<>();
 
             for (Cluster cl : this.clusters) {
-                Cluster newCluster = new Cluster(cl.id);
+                Cluster newCluster = new Cluster(cl.getId());
                 clusters.put(cl, newCluster);
 
-                for (Map.Entry<ClusterItem, Float> e : cl.fuzzyItems.entrySet()) {
+                for (Map.Entry<ClusterItem, Float> e : cl.getFuzzyItems().entrySet()) {
                     if (!items.containsKey(e.getKey())) {
-                        ClusterItem newItem = new ClusterItem(e.getKey().id);
+                        ClusterItem newItem = new ClusterItem(e.getKey().getId());
                         items.put(e.getKey(), newItem);
                     }
                     ClusterItem item = items.get(e.getKey());
@@ -183,11 +187,11 @@ public class Clustering extends RepositoryObject implements Iterable<Cluster> {
         final Set<ClusterItem> items = new HashSet<>();
 
         for (Cluster cl : clusters) {
-            Cluster newCluster = new Cluster(cl.id);
+            Cluster newCluster = new Cluster(cl.getId());
 
-            for (Map.Entry<ClusterItem, Float> e : cl.fuzzyItems.entrySet()) {
+            for (Map.Entry<ClusterItem, Float> e : cl.getFuzzyItems().entrySet()) {
                 if (!items.contains(e.getKey())) {
-                    items.add(new ClusterItem(e.getKey().id));
+                    items.add(new ClusterItem(e.getKey().getId()));
                 }
             }
 
@@ -340,7 +344,7 @@ public class Clustering extends RepositoryObject implements Iterable<Cluster> {
         this.fuzzySize -= fuzzy;
 
         if (this.itemToCluster.get(item).isEmpty()) {
-            this.itemIdToItem.remove(item.id);
+            this.itemIdToItem.remove(item.getId());
             this.itemToCluster.remove(item);
         }
 
@@ -447,10 +451,10 @@ public class Clustering extends RepositoryObject implements Iterable<Cluster> {
                     continue;
                 }
 
-                if (!newClusters.containsKey(cl.id)) {
-                    newClusters.put(cl.id, new Cluster(cl.id));
+                if (!newClusters.containsKey(cl.getId())) {
+                    newClusters.put(cl.getId(), new Cluster(cl.getId()));
                 }
-                newClusters.get(cl.id).add(new ClusterItem(item.id), 1.0f);
+                newClusters.get(cl.getId()).add(new ClusterItem(item.getId()), 1.0f);
             }
             for (Cluster cl : newClusters.values()) {
                 result.addCluster(cl);
@@ -656,7 +660,7 @@ public class Clustering extends RepositoryObject implements Iterable<Cluster> {
      * @throws UnknownDataSetFormatException
      * @throws InvalidDataSetFormatVersionException
      */
-    public ClusteringQualitySet assessQuality(final DataConfig dataConfig,
+    public ClusteringQualitySet assessQuality(final IDataConfig dataConfig,
             final List<ClusteringEvaluation> qualityMeasures)
             throws UnknownGoldStandardFormatException, IOException,
                    UnknownDataSetFormatException, InvalidDataSetFormatVersionException {
@@ -684,7 +688,7 @@ public class Clustering extends RepositoryObject implements Iterable<Cluster> {
             }
             ClusteringQualityMeasureValue quality;
             try {
-                Clustering goldStandard = null;
+                IClustering goldStandard = null;
                 if (dataConfig.hasGoldStandardConfig()) {
                     goldStandard = dataConfig.getGoldstandardConfig()
                             .getGoldstandard().getClustering();

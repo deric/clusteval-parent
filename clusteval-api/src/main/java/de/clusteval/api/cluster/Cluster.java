@@ -10,7 +10,7 @@
  *     Christian Wiwie - initial API and implementation
  *****************************************************************************
  */
-package de.clusteval.cluster;
+package de.clusteval.api.cluster;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -63,9 +63,9 @@ public class Cluster implements Iterable<ClusterItem> {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#clone()
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#clone()
      */
     @Override
     public Cluster clone() {
@@ -77,7 +77,7 @@ public class Cluster implements Iterable<ClusterItem> {
         final Map<ClusterItem, Float> result = new HashMap<>();
 
         for (Map.Entry<ClusterItem, Float> entry : fuzzyItems.entrySet()) {
-            result.put(entry.getKey().clone(), new Float(entry.getValue()));
+            result.put(entry.getKey().clone(), entry.getValue());
         }
 
         return result;
@@ -103,16 +103,16 @@ public class Cluster implements Iterable<ClusterItem> {
 
     /**
      * @return A map with all items contained in this cluster together with
-     * their fuzzy coefficients.
+     *         their fuzzy coefficients.
      */
     public Map<ClusterItem, Float> getFuzzyItems() {
         return this.fuzzyItems;
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#equals(java.lang.Object)
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
     public boolean equals(Object o) {
@@ -153,7 +153,7 @@ public class Cluster implements Iterable<ClusterItem> {
     /**
      * Add a new item to this cluster with a certain fuzzy coefficient.
      *
-     * @param item The item to add.
+     * @param item  The item to add.
      * @param fuzzy The fuzzy coefficient of the new item.
      * @return true, if successful
      */

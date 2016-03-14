@@ -16,8 +16,8 @@
 package de.clusteval.cluster.quality;
 
 import ch.qos.logback.classic.Level;
-import de.clusteval.cluster.Cluster;
-import de.clusteval.cluster.ClusterItem;
+import de.clusteval.api.cluster.Cluster;
+import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.context.Context;
 import de.clusteval.context.UnknownContextException;
@@ -42,7 +42,7 @@ import de.clusteval.framework.repository.config.RepositoryConfigNotFoundExceptio
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
 import de.clusteval.utils.AbstractClustEvalTest;
 import de.clusteval.utils.FormatConversionException;
-import de.clusteval.utils.RCalculationException;
+import de.clusteval.api.r.RCalculationException;
 import de.clusteval.api.exceptions.RNotAvailableException;
 import de.wiwie.wiutils.utils.SimilarityMatrix.NUMBER_PRECISION;
 import java.io.File;

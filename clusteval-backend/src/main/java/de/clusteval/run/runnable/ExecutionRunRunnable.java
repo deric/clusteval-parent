@@ -34,7 +34,7 @@ import de.wiwie.wiutils.utils.StringExt;
 import de.wiwie.wiutils.utils.Triple;
 import de.wiwie.wiutils.utils.parse.TextFileParser;
 import de.wiwie.wiutils.utils.parse.TextFileParser.OUTPUT_MODE;
-import de.clusteval.cluster.ClusterItem;
+import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.NoParameterSetFoundException;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;

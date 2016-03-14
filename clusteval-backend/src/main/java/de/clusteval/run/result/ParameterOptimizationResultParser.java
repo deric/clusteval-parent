@@ -16,7 +16,7 @@
 package de.clusteval.run.result;
 
 import de.clusteval.cluster.Clustering;
-import de.clusteval.cluster.ClusteringParseException;
+import de.clusteval.api.exceptions.ClusteringParseException;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
 import de.clusteval.api.cluster.quality.ClusteringQualityMeasureValue;

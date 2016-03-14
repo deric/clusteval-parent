@@ -12,16 +12,18 @@
  */
 package de.clusteval.data;
 
+import de.clusteval.api.data.IDataConfig;
+import de.clusteval.api.data.IDataSetConfig;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.repository.RepositoryEvent;
+import de.clusteval.api.repository.RepositoryRemoveEvent;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
 import de.clusteval.data.dataset.DataSetConfig;
 import de.clusteval.data.goldstandard.GoldStandardConfig;
 import de.clusteval.framework.repository.DumpableRepositoryObject;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RepositoryObjectDumpException;
-import de.clusteval.api.repository.RepositoryRemoveEvent;
 import de.clusteval.framework.repository.RepositoryReplaceEvent;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -49,7 +51,7 @@ import java.util.List;
  * @author Christian Wiwie
  *
  */
-public class DataConfig extends DumpableRepositoryObject {
+public class DataConfig extends DumpableRepositoryObject implements IDataConfig {
 
     /**
      * A helper method for cloning a list of data configurations.
@@ -73,7 +75,7 @@ public class DataConfig extends DumpableRepositoryObject {
      * configuration contains options and settings how to handle the
      * encapsulated dataset.
      */
-    protected DataSetConfig dataSetConfig;
+    protected IDataSetConfig dataSetConfig;
 
     /**
      * The original dataset config. is only != null, if the corresponding
@@ -103,7 +105,7 @@ public class DataConfig extends DumpableRepositoryObject {
      * @throws RegisterException
      */
     public DataConfig(final IRepository repository, final long changeDate,
-            final File absPath, final DataSetConfig datasetConfig,
+            final File absPath, final IDataSetConfig datasetConfig,
             final GoldStandardConfig gsConfig) throws RegisterException {
         super(repository, false, changeDate, absPath);
 
@@ -126,6 +128,7 @@ public class DataConfig extends DumpableRepositoryObject {
      * @return True, if this data configuration has a goldstandard, false
      *         otherwise.
      */
+    @Override
     public boolean hasGoldStandardConfig() {
         return this.goldstandardConfig != null;
     }
@@ -170,7 +173,7 @@ public class DataConfig extends DumpableRepositoryObject {
      *         configuration. If no conversion has been performed, this method returns
      *         the original dataset configuration.
      */
-    public DataSetConfig getDatasetConfig() {
+    public IDataSetConfig getDatasetConfig() {
         return dataSetConfig;
     }
 

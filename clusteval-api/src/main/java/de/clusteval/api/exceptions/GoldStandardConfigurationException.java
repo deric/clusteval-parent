@@ -11,7 +11,7 @@
 /**
  * 
  */
-package de.clusteval.data.goldstandard;
+package de.clusteval.api.exceptions;
 
 import de.clusteval.api.exceptions.GoldStandardException;
 

@@ -25,7 +25,7 @@ import de.clusteval.data.DataConfig;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RepositoryObject;
-import de.clusteval.utils.RCalculationException;
+import de.clusteval.api.r.RCalculationException;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;

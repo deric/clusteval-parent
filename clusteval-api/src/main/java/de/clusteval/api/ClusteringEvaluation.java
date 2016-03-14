@@ -16,12 +16,14 @@
  */
 package de.clusteval.api;
 
+import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.cluster.quality.ClusteringQualityMeasureValue;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.RNotAvailableException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
+import de.clusteval.api.r.RCalculationException;
 import de.clusteval.api.repository.IRepositoryObject;
 import java.io.IOException;
 
@@ -94,7 +96,7 @@ public interface ClusteringEvaluation extends IRepositoryObject {
      * @throws InterruptedException
      */
     ClusteringQualityMeasureValue getQualityOfClustering(
-            Clustering clustering, Clustering goldStandard,
+            IClustering clustering, IClustering goldStandard,
             IDataConfig dataConfig) throws UnknownGoldStandardFormatException,
                                            UnknownDataSetFormatException, IOException,
                                            InvalidDataSetFormatVersionException, RNotAvailableException,

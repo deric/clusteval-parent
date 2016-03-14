@@ -13,6 +13,8 @@
  */
 package de.clusteval.data.goldstandard;
 
+import de.clusteval.api.exceptions.GoldStandardConfigurationException;
+import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardNotFoundException;
 import java.io.File;
 import java.io.FileNotFoundException;

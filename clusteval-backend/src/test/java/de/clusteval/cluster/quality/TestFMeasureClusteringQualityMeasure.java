@@ -22,10 +22,10 @@ import junit.framework.Assert;
 import org.junit.Test;
 
 import ch.qos.logback.classic.Level;
-import de.clusteval.cluster.Cluster;
-import de.clusteval.cluster.ClusterItem;
+import de.clusteval.api.cluster.Cluster;
+import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.cluster.Clustering;
-import de.clusteval.cluster.ClusteringParseException;
+import de.clusteval.api.exceptions.ClusteringParseException;
 import de.clusteval.data.DataConfig;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
@@ -39,7 +39,7 @@ import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
 import de.clusteval.utils.AbstractClustEvalTest;
-import de.clusteval.utils.RCalculationException;
+import de.clusteval.api.r.RCalculationException;
 import de.clusteval.api.exceptions.RNotAvailableException;
 
 /**

@@ -12,13 +12,15 @@
  */
 package de.clusteval.data.goldstandard;
 
+import de.clusteval.api.cluster.Cluster;
+import de.clusteval.api.cluster.ClusterItem;
+import de.clusteval.api.cluster.IClustering;
+import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.exceptions.GoldStandardNotFoundException;
+import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.cluster.Cluster;
-import de.clusteval.cluster.ClusterItem;
 import de.clusteval.cluster.Clustering;
-import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.framework.repository.NoRepositoryFoundException;
 import de.clusteval.framework.repository.RepositoryController;
 import de.clusteval.framework.repository.RepositoryObject;
@@ -33,7 +35,7 @@ import java.util.Map;
  * @author Christian Wiwie
  *
  */
-public class GoldStandard extends RepositoryObject {
+public class GoldStandard extends RepositoryObject implements IGoldStandard {
 
     /**
      * This attribute holds the clustering that corresponds to the goldstandard.
@@ -130,6 +132,7 @@ public class GoldStandard extends RepositoryObject {
      *
      * @return true, if is in memory
      */
+    @Override
     public boolean isInMemory() {
         return this.clustering != null;
     }
@@ -141,6 +144,7 @@ public class GoldStandard extends RepositoryObject {
      * @return true, if successful
      * @throws UnknownGoldStandardFormatException
      */
+    @Override
     public boolean loadIntoMemory() throws UnknownGoldStandardFormatException {
         try {
             TextFileMapParser parser = new TextFileMapParser(
@@ -242,7 +246,8 @@ public class GoldStandard extends RepositoryObject {
      * @throws UnknownGoldStandardFormatException the unknown gold standard
      *                                            format exception
      */
-    public Clustering getClustering() throws UnknownGoldStandardFormatException {
+    @Override
+    public IClustering getClustering() throws UnknownGoldStandardFormatException {
         if (!isInMemory()) {
             loadIntoMemory();
         }

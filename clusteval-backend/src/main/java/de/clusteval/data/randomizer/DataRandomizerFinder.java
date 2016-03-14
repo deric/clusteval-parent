@@ -12,8 +12,8 @@
  */
 package de.clusteval.data.randomizer;
 
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.utils.JARFinder;
 import de.clusteval.utils.RecursiveSubDirectoryIterator;
 import java.io.File;
@@ -33,15 +33,15 @@ public class DataRandomizerFinder extends JARFinder<DataRandomizer> {
      * @param repository the repository
      * @throws RegisterException
      */
-    public DataRandomizerFinder(final Repository repository)
+    public DataRandomizerFinder(final IRepository repository)
             throws RegisterException {
         super(repository, DataRandomizer.class);
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.wiwie.wiutils.utils.Finder#checkFile(java.io.File)
+     * (non-Javadoc)
+     *
+     * @see de.wiwie.wiutils.utils.Finder#checkFile(java.io.File)
      */
     @Override
     protected boolean checkFile(File file) {
@@ -49,9 +49,9 @@ public class DataRandomizerFinder extends JARFinder<DataRandomizer> {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.wiwie.wiutils.utils.JARFinder#classNameForJARFile(java.io.File)
+     * (non-Javadoc)
+     *
+     * @see de.wiwie.wiutils.utils.JARFinder#classNameForJARFile(java.io.File)
      */
     @Override
     protected String[] classNamesForJARFile(File f) {
@@ -60,9 +60,9 @@ public class DataRandomizerFinder extends JARFinder<DataRandomizer> {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.wiwie.wiutils.utils.Finder#getIterator()
+     * (non-Javadoc)
+     *
+     * @see de.wiwie.wiutils.utils.Finder#getIterator()
      */
     @Override
     protected Iterator<File> getIterator() {
@@ -70,9 +70,9 @@ public class DataRandomizerFinder extends JARFinder<DataRandomizer> {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.wiwie.wiutils.utils.JARFinder#isJARLoaded(java.io.File)
+     * (non-Javadoc)
+     *
+     * @see de.wiwie.wiutils.utils.JARFinder#isJARLoaded(java.io.File)
      */
     @Override
     protected boolean isJARLoaded(File f) {
@@ -84,9 +84,9 @@ public class DataRandomizerFinder extends JARFinder<DataRandomizer> {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.wiwie.wiutils.utils.JARFinder#getURLClassLoader(java.io.File)
+     * (non-Javadoc)
+     *
+     * @see de.wiwie.wiutils.utils.JARFinder#getURLClassLoader(java.io.File)
      */
     @Override
     protected URLClassLoader getURLClassLoader0(File f, final ClassLoader parent)
@@ -112,9 +112,9 @@ class DataSetRandomizerURLClassLoader extends URLClassLoader {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.ClassLoader#loadClass(java.lang.String)
+     * (non-Javadoc)
+     *
+     * @see java.lang.ClassLoader#loadClass(java.lang.String)
      */
     @Override
     public Class<?> loadClass(String name) throws ClassNotFoundException {

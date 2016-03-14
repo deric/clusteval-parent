@@ -10,6 +10,8 @@
  ***************************************************************************** */
 package de.clusteval.data.goldstandard;
 
+import de.clusteval.api.data.IGoldStandard;
+import de.clusteval.api.data.IGoldStandardConfig;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.repository.RepositoryEvent;
@@ -43,13 +45,13 @@ import java.io.IOException;
  * @author Christian Wiwie
  *
  */
-public class GoldStandardConfig extends DumpableRepositoryObject {
+public class GoldStandardConfig extends DumpableRepositoryObject implements IGoldStandardConfig {
 
     /**
      * A goldstandard configuration encapsulates a goldstandard. This attribute
      * stores a reference to the goldstandard wrapper object.
      */
-    private GoldStandard goldStandard;
+    private IGoldStandard goldStandard;
 
     /**
      * Instantiates a new goldstandard configuration.
@@ -68,7 +70,7 @@ public class GoldStandardConfig extends DumpableRepositoryObject {
      */
     public GoldStandardConfig(final IRepository repository,
             final long changeDate, final File absPath,
-            final GoldStandard goldstandard) throws RegisterException {
+            final IGoldStandard goldstandard) throws RegisterException {
         super(repository, false, changeDate, absPath);
 
         this.goldStandard = goldstandard;
@@ -110,7 +112,7 @@ public class GoldStandardConfig extends DumpableRepositoryObject {
      * @return The goldstandard this configuration belongs to.
      * @see #goldStandard
      */
-    public GoldStandard getGoldstandard() {
+    public IGoldStandard getGoldstandard() {
         return goldStandard;
     }
 

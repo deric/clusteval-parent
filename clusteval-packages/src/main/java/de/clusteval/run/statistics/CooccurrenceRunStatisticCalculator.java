@@ -17,8 +17,8 @@ package de.clusteval.run.statistics;
 
 import cern.colt.matrix.tlong.LongMatrix2D;
 import cern.colt.matrix.tlong.impl.SparseLongMatrix2D;
-import de.clusteval.cluster.Cluster;
-import de.clusteval.cluster.ClusterItem;
+import de.clusteval.api.cluster.Cluster;
+import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.data.statistics.RunStatisticCalculateException;
 import de.clusteval.framework.repository.MyRengine;

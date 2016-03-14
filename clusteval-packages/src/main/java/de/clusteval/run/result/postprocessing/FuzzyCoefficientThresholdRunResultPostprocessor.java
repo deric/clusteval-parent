@@ -8,8 +8,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import de.clusteval.cluster.Cluster;
-import de.clusteval.cluster.ClusterItem;
+import de.clusteval.api.cluster.Cluster;
+import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;

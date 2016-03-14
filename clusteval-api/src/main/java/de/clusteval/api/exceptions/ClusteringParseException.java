@@ -10,9 +10,7 @@
  *     Christian Wiwie - initial API and implementation
  *****************************************************************************
  */
-package de.clusteval.cluster;
-
-import de.clusteval.api.exceptions.ClustEvalException;
+package de.clusteval.api.exceptions;
 
 /**
  * @author Christian Wiwie
@@ -20,9 +18,6 @@ import de.clusteval.api.exceptions.ClustEvalException;
  */
 public class ClusteringParseException extends ClustEvalException {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = 7502633065467161765L;
 
     /**

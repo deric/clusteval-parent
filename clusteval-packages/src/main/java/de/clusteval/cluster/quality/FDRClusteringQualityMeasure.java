@@ -18,7 +18,7 @@ import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
 
-import de.clusteval.cluster.ClusterItem;
+import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.data.DataConfig;
 import de.clusteval.api.repository.RegisterException;

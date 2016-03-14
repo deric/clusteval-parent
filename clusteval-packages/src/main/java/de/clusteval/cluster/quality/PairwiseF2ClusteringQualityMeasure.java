@@ -18,8 +18,8 @@ import java.io.File;
 import java.io.Serializable;
 import java.util.Map;
 
-import de.clusteval.cluster.Cluster;
-import de.clusteval.cluster.ClusterItem;
+import de.clusteval.api.cluster.Cluster;
+import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.data.DataConfig;
 import de.clusteval.api.repository.RegisterException;

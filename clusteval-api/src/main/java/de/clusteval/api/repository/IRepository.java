@@ -242,4 +242,12 @@ public interface IRepository {
      */
     boolean isRegisteredForDataSetFormat(final Class<? extends IDataSetFormat> dsFormat);
 
+    /**
+     *
+     * @return The supervisor thread is responsible for starting and keeping
+     *         alive all threads that check the repository on the filesystem for
+     *         changes.
+     */
+    public SupervisorThread getSupervisorThread();
+
 }

@@ -48,4 +48,6 @@ public interface IDataConfig extends IRepositoryObject {
      */
     IDataSetConfig getDatasetConfig();
 
+    IGoldStandardConfig getGoldstandardConfig();
+
 }
