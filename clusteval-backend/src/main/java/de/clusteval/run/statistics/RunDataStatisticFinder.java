@@ -12,8 +12,8 @@
  */
 package de.clusteval.run.statistics;
 
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.utils.JARFinder;
 import de.clusteval.utils.RecursiveSubDirectoryIterator;
 import java.io.File;
@@ -35,7 +35,7 @@ public class RunDataStatisticFinder extends JARFinder<RunDataStatistic> {
      * @param repository the repository
      * @throws RegisterException
      */
-    public RunDataStatisticFinder(final Repository repository)
+    public RunDataStatisticFinder(final IRepository repository)
             throws RegisterException {
         super(repository, RunDataStatistic.class);
     }

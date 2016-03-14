@@ -12,8 +12,8 @@
  */
 package de.clusteval.run.statistics;
 
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.utils.JARFinder;
 import de.clusteval.utils.RecursiveSubDirectoryIterator;
 import java.io.File;
@@ -35,7 +35,7 @@ public class RunStatisticFinder extends JARFinder<RunStatistic> {
      * @param repository the repository
      * @throws RegisterException
      */
-    public RunStatisticFinder(final Repository repository)
+    public RunStatisticFinder(final IRepository repository)
             throws RegisterException {
         super(repository, RunStatistic.class);
     }
@@ -69,9 +69,9 @@ public class RunStatisticFinder extends JARFinder<RunStatistic> {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.wiwie.wiutils.utils.Finder#checkFile(java.io.File)
+     * (non-Javadoc)
+     *
+     * @see de.wiwie.wiutils.utils.Finder#checkFile(java.io.File)
      */
     @Override
     protected boolean checkFile(File file) {
@@ -79,9 +79,9 @@ public class RunStatisticFinder extends JARFinder<RunStatistic> {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.wiwie.wiutils.utils.JARFinder#classNamesForJARFile(java.io.File)
+     * (non-Javadoc)
+     *
+     * @see de.wiwie.wiutils.utils.JARFinder#classNamesForJARFile(java.io.File)
      */
     @Override
     protected String[] classNamesForJARFile(File f) {
@@ -93,9 +93,9 @@ public class RunStatisticFinder extends JARFinder<RunStatistic> {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.wiwie.wiutils.utils.Finder#getIterator()
+     * (non-Javadoc)
+     *
+     * @see de.wiwie.wiutils.utils.Finder#getIterator()
      */
     @Override
     protected Iterator<File> getIterator() {
@@ -103,9 +103,9 @@ public class RunStatisticFinder extends JARFinder<RunStatistic> {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.wiwie.wiutils.utils.JARFinder#isJARLoaded(java.io.File)
+     * (non-Javadoc)
+     *
+     * @see de.wiwie.wiutils.utils.JARFinder#isJARLoaded(java.io.File)
      */
     @Override
     protected boolean isJARLoaded(File f) {
@@ -131,9 +131,9 @@ class RunStatisticURLClassLoader extends URLClassLoader {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.ClassLoader#loadClass(java.lang.String)
+     * (non-Javadoc)
+     *
+     * @see java.lang.ClassLoader#loadClass(java.lang.String)
      */
     @Override
     public Class<?> loadClass(String name) throws ClassNotFoundException {
@@ -151,8 +151,7 @@ class RunStatisticURLClassLoader extends URLClassLoader {
                     && !name.equals("de.clusteval.run.statistics.RunStatisticRCalculator")) {
                 @SuppressWarnings("unchecked")
                 Class<? extends RunStatisticCalculator<? extends RunStatistic>> runStatisticCalculator = (Class<? extends RunStatisticCalculator<? extends RunStatistic>>) result;
-                this.parent.getRepository().registerRunStatisticCalculator(
-                        runStatisticCalculator);
+                this.parent.getRepository().registerRunStatisticCalculator(runStatisticCalculator);
             }
         }
         return result;
