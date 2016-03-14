@@ -15,6 +15,7 @@
  */
 package de.clusteval.program.r;
 
+import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.exceptions.RNotAvailableException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.r.RException;

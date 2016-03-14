@@ -11,6 +11,7 @@
 package de.clusteval.data.preprocessing;
 
 import de.clusteval.api.r.RLibraryInferior;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.data.dataset.DataSet;
 import de.clusteval.framework.repository.Repository;
@@ -49,9 +50,7 @@ import java.util.Set;
  * @author Christian Wiwie
  *
  */
-public abstract class DataPreprocessor extends RepositoryObject
-        implements
-        RLibraryInferior {
+public abstract class DataPreprocessor extends RepositoryObject implements RLibraryInferior {
 
     /**
      * @param repository
@@ -60,7 +59,7 @@ public abstract class DataPreprocessor extends RepositoryObject
      * @param absPath
      * @throws RegisterException
      */
-    public DataPreprocessor(Repository repository, boolean register,
+    public DataPreprocessor(IRepository repository, boolean register,
             long changeDate, File absPath) throws RegisterException {
         super(repository, register, changeDate, absPath);
     }
@@ -107,7 +106,7 @@ public abstract class DataPreprocessor extends RepositoryObject
      * @throws UnknownDataPreprocessorException
      */
     public static List<DataPreprocessor> parseFromString(
-            final Repository repository, String[] dataPreprocessors)
+            final IRepository repository, String[] dataPreprocessors)
             throws UnknownDataPreprocessorException {
         List<DataPreprocessor> result = new ArrayList<>();
 
@@ -128,7 +127,7 @@ public abstract class DataPreprocessor extends RepositoryObject
      * @return the data preprocessor
      * @throws UnknownDataPreprocessorException
      */
-    public static DataPreprocessor parseFromString(final Repository repository,
+    public static DataPreprocessor parseFromString(final IRepository repository,
             String dataPreprocessor) throws UnknownDataPreprocessorException {
 
         Class<? extends DataPreprocessor> c = repository.getRegisteredClass(

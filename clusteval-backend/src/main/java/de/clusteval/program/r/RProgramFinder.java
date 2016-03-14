@@ -12,6 +12,7 @@
  */
 package de.clusteval.program.r;
 
+import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.utils.JARFinder;

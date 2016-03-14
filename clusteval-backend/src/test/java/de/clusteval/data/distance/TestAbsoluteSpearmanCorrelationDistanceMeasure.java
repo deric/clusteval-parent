@@ -3,6 +3,7 @@
  */
 package de.clusteval.data.distance;
 
+import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
 import de.clusteval.utils.AbstractClustEvalTest;
 import de.clusteval.api.exceptions.RNotAvailableException;

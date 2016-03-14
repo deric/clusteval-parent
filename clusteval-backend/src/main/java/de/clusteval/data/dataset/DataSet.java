@@ -329,13 +329,6 @@ public abstract class DataSet extends RepositoryObject implements IDataSet {
     }
 
     /**
-     * Checks whether this dataset is loaded into the memory.
-     *
-     * @return true, if is in memory
-     */
-    public abstract boolean isInMemory();
-
-    /**
      * Load this dataset into memory. When this method is invoked, it parses the
      * dataset file on the filesystem using the
      * {@link DataSetFormatParser#parse(DataSet)} method corresponding to the
@@ -351,6 +344,7 @@ public abstract class DataSet extends RepositoryObject implements IDataSet {
      * @throws IOException
      * @throws IllegalArgumentException
      */
+    @Override
     public boolean loadIntoMemory() throws IllegalArgumentException,
                                            IOException, InvalidDataSetFormatVersionException,
                                            UnknownDataSetFormatException {
@@ -454,7 +448,7 @@ public abstract class DataSet extends RepositoryObject implements IDataSet {
                 .getAbsolutePath()));
         synchronized (sourceFile) {
             DataSet result = null;
-            DataSetFormat sourceFormat = this.getDataSetFormat();
+            IDataSetFormat sourceFormat = this.getDataSetFormat();
 
             // check if we can convert from source to target format
             // right now no conversion from relative to absolute possible

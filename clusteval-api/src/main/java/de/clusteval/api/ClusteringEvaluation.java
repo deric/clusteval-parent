@@ -17,7 +17,13 @@
 package de.clusteval.api;
 
 import de.clusteval.api.cluster.quality.ClusteringQualityMeasureValue;
+import de.clusteval.api.data.IDataConfig;
+import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
+import de.clusteval.api.exceptions.RNotAvailableException;
+import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.repository.IRepositoryObject;
+import java.io.IOException;
 
 /**
  *
@@ -30,7 +36,7 @@ public interface ClusteringEvaluation extends IRepositoryObject {
      * quality measure supports validating fuzzy clusterings.
      *
      * @return True, if this measure supports fuzzy clusterings, false
-     * otherwise.
+     *         otherwise.
      */
     boolean supportsFuzzyClusterings();
 
@@ -44,13 +50,13 @@ public interface ClusteringEvaluation extends IRepositoryObject {
 
     /**
      * @return The minimal value of the range of possible values of this quality
-     * measure.
+     *         measure.
      */
     double getMinimum();
 
     /**
      * @return The maximal value of the range of possible values of this quality
-     * measure.
+     *         measure.
      */
     double getMaximum();
 
@@ -59,7 +65,7 @@ public interface ClusteringEvaluation extends IRepositoryObject {
      * subclass needs a goldstandard to be able to be computed.
      *
      * @return True, if this clustering quality measure requires a goldstandard
-     * to be able to assess the quality of a clustering.
+     *         to be able to assess the quality of a clustering.
      */
     boolean requiresGoldstandard();
 
@@ -70,5 +76,28 @@ public interface ClusteringEvaluation extends IRepositoryObject {
      * @return The alias of this clustering quality measure.
      */
     String getAlias();
+
+    /**
+     * Gets the quality of clustering.
+     *
+     * @param clustering   the clustering
+     * @param goldStandard The expected goldstandard.
+     * @param dataConfig   the data config
+     * @return the quality of clustering
+     * @throws UnknownGoldStandardFormatException   the unknown gold standard
+     *                                              format exception
+     * @throws UnknownDataSetFormatException
+     * @throws InvalidDataSetFormatVersionException
+     * @throws IOException
+     * @throws RNotAvailableException
+     * @throws RCalculationException
+     * @throws InterruptedException
+     */
+    ClusteringQualityMeasureValue getQualityOfClustering(
+            Clustering clustering, Clustering goldStandard,
+            IDataConfig dataConfig) throws UnknownGoldStandardFormatException,
+                                           UnknownDataSetFormatException, IOException,
+                                           InvalidDataSetFormatVersionException, RNotAvailableException,
+                                           RCalculationException, InterruptedException;
 
 }

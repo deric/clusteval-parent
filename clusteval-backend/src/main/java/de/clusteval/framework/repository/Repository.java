@@ -12,6 +12,8 @@
  */
 package de.clusteval.framework.repository;
 
+import de.clusteval.api.data.IDataSetFormat;
+import de.clusteval.api.data.IDataSetFormatParser;
 import de.clusteval.api.exceptions.InternalAttributeException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.r.IRengine;
@@ -19,6 +21,7 @@ import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.repository.IRepositoryConfig;
 import de.clusteval.api.repository.IRepositoryObject;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.cluster.Clustering;
@@ -259,7 +262,7 @@ public class Repository implements IRepository {
      * the repository should communicate and insert its information into a sql
      * database.
      */
-    protected RepositoryConfig repositoryConfig;
+    protected IRepositoryConfig repositoryConfig;
 
     /**
      * This attribute maps the names of a class to all exceptions of required R
@@ -577,7 +580,7 @@ public class Repository implements IRepository {
      *
      * <p>
      * A helper method of null null null null null null null null null null null
-     * null null null null     {@link ProgramParameter#evaluateDefaultValue(DataConfig, ProgramConfig)},
+     * null null null null null null     {@link ProgramParameter#evaluateDefaultValue(DataConfig, ProgramConfig)},
 	 * {@link ProgramParameter#evaluateMinValue(DataConfig, ProgramConfig)} and
      * {@link ProgramParameter#evaluateMaxValue(DataConfig, ProgramConfig)}.
      *
@@ -1133,7 +1136,7 @@ public class Repository implements IRepository {
     /**
      * @return The configuration of this repository.
      */
-    public RepositoryConfig getRepositoryConfig() {
+    public IRepositoryConfig getRepositoryConfig() {
         return this.repositoryConfig;
     }
 
@@ -1187,7 +1190,7 @@ public class Repository implements IRepository {
      *         can be resumed, if they were terminated before.
      */
     public Collection<String> getRunResumes() {
-        Collection<String> result = new HashSet<String>();
+        Collection<String> result = new HashSet<>();
 
         for (File resultDir : new File(this.getBasePath(RunResult.class)).listFiles()) {
             if (resultDir.isDirectory()) {
@@ -1250,9 +1253,9 @@ public class Repository implements IRepository {
      * RunResultRepostories we do not want to log everything, therefore we
      * change the log level to debug.
      *
-     * @param The message to log.
+     * @param message The message to log.
      */
-    protected void info(final String message) {
+    public void info(final String message) {
         this.log.info(message);
     }
 
@@ -1646,8 +1649,9 @@ public class Repository implements IRepository {
      * @param dsFormatParser The dataset format parser to register.
      * @return True, if the dataset format parser replaced an old object.
      */
-    public boolean registerDataSetFormatParser(final Class<? extends DataSetFormatParser> dsFormatParser) {
-        return ((DataSetFormatRepositoryEntity) this.dynamicRepositoryEntities.get(DataSetFormat.class))
+    @Override
+    public boolean registerDataSetFormatParser(final Class<? extends IDataSetFormatParser> dsFormatParser) {
+        return ((DataSetFormatRepositoryEntity) this.dynamicRepositoryEntities.get(IDataSetFormat.class))
                 .registerDataSetFormatParser(dsFormatParser);
     }
 
@@ -1659,8 +1663,9 @@ public class Repository implements IRepository {
      *                 been registered.
      * @return True, if the parser has been registered.
      */
-    public boolean isRegisteredForDataSetFormat(final Class<? extends DataSetFormat> dsFormat) {
-        return ((DataSetFormatRepositoryEntity) this.dynamicRepositoryEntities.get(DataSetFormat.class))
+    @Override
+    public boolean isRegisteredForDataSetFormat(final Class<? extends IDataSetFormat> dsFormat) {
+        return ((DataSetFormatRepositoryEntity) this.dynamicRepositoryEntities.get(IDataSetFormat.class))
                 .isRegisteredForDataSetFormat(dsFormat);
     }
 

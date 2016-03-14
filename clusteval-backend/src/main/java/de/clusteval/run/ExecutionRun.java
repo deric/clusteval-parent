@@ -16,10 +16,10 @@ import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.repository.RepositoryEvent;
+import de.clusteval.api.repository.RepositoryRemoveEvent;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
 import de.clusteval.context.Context;
 import de.clusteval.data.DataConfig;
-import de.clusteval.api.repository.RepositoryRemoveEvent;
 import de.clusteval.framework.repository.RepositoryReplaceEvent;
 import de.clusteval.framework.threading.RunSchedulerThread;
 import de.clusteval.program.ProgramConfig;
@@ -136,19 +136,19 @@ public abstract class ExecutionRun extends Run {
      * The constructor of this class takes a name, date and configuration. It is
      * protected, to force usage of the static method
      *
-     * @param repository the repository
+     * @param repository        the repository
      * @param context
-     * @param register Whether the new instance should be registered at the
-     * repository.
-     * @param changeDate The date this run was performed.
-     * @param absPath The absolute path to the file on the filesystem that
-     * corresponds to this run.
-     * @param programConfigs The program configurations of the new run.
-     * @param dataConfigs The data configurations of the new run.
-     * @param qualityMeasures The clustering quality measures of the new run.
+     * @param register          Whether the new instance should be registered at the
+     *                          repository.
+     * @param changeDate        The date this run was performed.
+     * @param absPath           The absolute path to the file on the filesystem that
+     *                          corresponds to this run.
+     * @param programConfigs    The program configurations of the new run.
+     * @param dataConfigs       The data configurations of the new run.
+     * @param qualityMeasures   The clustering quality measures of the new run.
      * @param postProcessors
      * @param maxExecutionTimes
-     * @param parameterValues The parameter values of this run.
+     * @param parameterValues   The parameter values of this run.
      * @throws RegisterException
      */
     protected ExecutionRun(final IRepository repository, final Context context,
@@ -212,9 +212,9 @@ public abstract class ExecutionRun extends Run {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see framework.repository.RepositoryObject#clone()
+     * (non-Javadoc)
+     *
+     * @see framework.repository.RepositoryObject#clone()
      */
     @Override
     public abstract ExecutionRun clone();
@@ -231,9 +231,9 @@ public abstract class ExecutionRun extends Run {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see run.Run#getUpperLimitProgress()
+     * (non-Javadoc)
+     *
+     * @see run.Run#getUpperLimitProgress()
      */
     @Override
     protected long getUpperLimitProgress() {
@@ -304,9 +304,9 @@ public abstract class ExecutionRun extends Run {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see run.Run#getNumberOfRunRunnables()
+     * (non-Javadoc)
+     *
+     * @see run.Run#getNumberOfRunRunnables()
      */
     @Override
     protected int getNumberOfRunRunnables() {
@@ -320,8 +320,8 @@ public abstract class ExecutionRun extends Run {
         File movedConfigsDir = getMovedConfigsDir();
 
         /*
-		 * We only operate on this copy, in order to avoid multithreading
-		 * problems.
+         * We only operate on this copy, in order to avoid multithreading
+         * problems.
          */
         // changed 22.01.2013
         // ExecutionRun runCopy = this.clone();
@@ -363,8 +363,8 @@ public abstract class ExecutionRun extends Run {
                 .getAbsolutePath();
 
         /*
-		 * To avoid overwriting of the input or conversion files, we copy it to
-		 * the results directory (which is unique for this run).
+         * To avoid overwriting of the input or conversion files, we copy it to
+         * the results directory (which is unique for this run).
          */
         // changed 01.09.2012, don't create subdirectory for
         // programConfig_dataConfig
@@ -382,7 +382,7 @@ public abstract class ExecutionRun extends Run {
         }
 
         /*
-		 * Copy gold standard
+         * Copy gold standard
          */
         String movedGoldStandard = null;
         if (dataConfig.hasGoldStandardConfig()) {
@@ -409,11 +409,11 @@ public abstract class ExecutionRun extends Run {
         }
 
         /*
-		 * 06.04.2013: create a new data configuration object for use within the
-		 * runnable bugfix: the runnable so far accessed the old data
-		 * configuration and program configuration objects. this lead to
-		 * inconsistent behaviour when accessing internal attributes, because
-		 * all threads were operating on the same objects.
+         * 06.04.2013: create a new data configuration object for use within the
+         * runnable bugfix: the runnable so far accessed the old data
+         * configuration and program configuration objects. this lead to
+         * inconsistent behaviour when accessing internal attributes, because
+         * all threads were operating on the same objects.
          */
         DataConfig newDataConfig = dataConfig.clone();
         newDataConfig.setAbsolutePath(copiedDataConfig);
@@ -430,9 +430,9 @@ public abstract class ExecutionRun extends Run {
         newProgramConfig.setAbsolutePath(copiedProgramConfig);
 
         /*
-		 * Start a thread with the invocation line and a path to the log file.
-		 * The RunThread redirects all the output of the program into the
-		 * logFile.
+         * Start a thread with the invocation line and a path to the log file.
+         * The RunThread redirects all the output of the program into the
+         * logFile.
          */
         final ExecutionRunRunnable t = createRunRunnableFor(runScheduler,
                 runCopy, newProgramConfig, newDataConfig, runIdentString,
@@ -447,8 +447,8 @@ public abstract class ExecutionRun extends Run {
         File movedConfigsDir = getMovedConfigsDir();
 
         /*
-		 * We only operate on this copy, in order to avoid multithreading
-		 * problems.
+         * We only operate on this copy, in order to avoid multithreading
+         * problems.
          */
         // changed 22.01.2013
         // ExecutionRun runCopy = this.clone();
@@ -461,7 +461,7 @@ public abstract class ExecutionRun extends Run {
         DataConfig dataConfig = pair.getSecond();
 
         /*
-		 * Copy to results directory
+         * Copy to results directory
          */
         // 06.04.2013: create File objects for later use in order to create new
         // data configuration and program configuration objects
@@ -493,8 +493,8 @@ public abstract class ExecutionRun extends Run {
                 .getAbsolutePath();
 
         /*
-		 * To avoid overwriting of the input or conversion files, we copy it to
-		 * the results directory (which is unique for this run).
+         * To avoid overwriting of the input or conversion files, we copy it to
+         * the results directory (which is unique for this run).
          */
         // changed 01.09.2012, don't create subdirectory for
         // programConfig_dataConfig
@@ -514,13 +514,13 @@ public abstract class ExecutionRun extends Run {
         }
 
         /*
-		 * Change the path to the input in the DataSetConfig.
+         * Change the path to the input in the DataSetConfig.
          */
         dataConfig.getDatasetConfig().getDataSet()
                 .setAbsolutePath(new File(movedInput));
 
         /*
-		 * Copy gold standard
+         * Copy gold standard
          */
         String movedGoldStandard = null;
         if (dataConfig.hasGoldStandardConfig()) {
@@ -539,11 +539,11 @@ public abstract class ExecutionRun extends Run {
             }
         }
         /*
-		 * 06.04.2013: create a new data configuration object for use within the
-		 * runnable bugfix: the runnable so far accessed the old data
-		 * configuration and program configuration objects. this lead to
-		 * inconsistent behaviour when accessing internal attributes, because
-		 * all threads were operating on the same objects.
+         * 06.04.2013: create a new data configuration object for use within the
+         * runnable bugfix: the runnable so far accessed the old data
+         * configuration and program configuration objects. this lead to
+         * inconsistent behaviour when accessing internal attributes, because
+         * all threads were operating on the same objects.
          */
         DataConfig newDataConfig = dataConfig.clone();
         newDataConfig.setAbsolutePath(copiedDataConfig);
@@ -561,9 +561,9 @@ public abstract class ExecutionRun extends Run {
         newProgramConfig.setAbsolutePath(copiedProgramConfig);
 
         /*
-		 * Start a thread with the invocation line and a path to the log file.
-		 * The RunThread redirects all the output of the program into the
-		 * logFile.
+         * Start a thread with the invocation line and a path to the log file.
+         * The RunThread redirects all the output of the program into the
+         * logFile.
          */
         final ExecutionRunRunnable t = createRunRunnableFor(runScheduler,
                 runCopy, newProgramConfig, newDataConfig, runIdentString, true,
@@ -586,18 +586,18 @@ public abstract class ExecutionRun extends Run {
      * corresponding runnable runtime type for the runtime type of this run.
      * Override it in your own sub type of the ExecutionRun class.
      *
-     * @param runScheduler The run scheduler to which the newly created runnable
-     * should be passed.
-     * @param run A reference to a cloned copy of this run that should be
-     * executed.
-     * @param programConfig The program configuration that is used by the
-     * resulting runnable.
-     * @param dataConfig The data configuration that is used by the resulting
-     * runnable.
+     * @param runScheduler   The run scheduler to which the newly created runnable
+     *                       should be passed.
+     * @param run            A reference to a cloned copy of this run that should be
+     *                       executed.
+     * @param programConfig  The program configuration that is used by the
+     *                       resulting runnable.
+     * @param dataConfig     The data configuration that is used by the resulting
+     *                       runnable.
      * @param runIdentString The unique run identification string, that
-     * identifies this execution of the run.
-     * @param isResume A boolean which indicates, whether the created runnable
-     * should perform a run or resume one.
+     *                       identifies this execution of the run.
+     * @param isResume       A boolean which indicates, whether the created runnable
+     *                       should perform a run or resume one.
      * @return The runnable being executed asynchronously.
      */
     protected abstract ExecutionRunRunnable createRunRunnableFor(
@@ -612,28 +612,28 @@ public abstract class ExecutionRun extends Run {
      * measures require a goldstandard. If a data configuration does not contain
      * a goldstandard, such quality measures cannot be calculated.
      *
-     * @param dataConfigs The data configurations to check.
+     * @param dataConfigs     The data configurations to check.
      * @param qualityMeasures The quality measures to check.
      * @throws RunException An exception that indicates, that some quality
-     * measures and data configurations are not compatible.
+     *                      measures and data configurations are not compatible.
      */
     public static void checkCompatibilityQualityMeasuresDataConfigs(
             final List<DataConfig> dataConfigs,
-            final List<ClusteringQualityMeasure> qualityMeasures)
+            final List<ClusteringEvaluation> qualityMeasures)
             throws RunException {
         /*
-		 * Check whether some dataconfigs don't have goldstandards but quality
-		 * measures require them
+         * Check whether some dataconfigs don't have goldstandards but quality
+         * measures require them
          */
 
-        Set<ClusteringQualityMeasure> qualityMeasuresRequireGS = new HashSet<ClusteringQualityMeasure>();
-        for (ClusteringQualityMeasure qualityMeasure : qualityMeasures) {
+        Set<ClusteringEvaluation> qualityMeasuresRequireGS = new HashSet<>();
+        for (ClusteringEvaluation qualityMeasure : qualityMeasures) {
             if (qualityMeasure.requiresGoldstandard()) {
                 qualityMeasuresRequireGS.add(qualityMeasure);
             }
         }
 
-        Set<DataConfig> dataConfigsWithoutGS = new HashSet<DataConfig>();
+        Set<DataConfig> dataConfigsWithoutGS = new HashSet<>();
         for (DataConfig dataConfig : dataConfigs) {
             if (!dataConfig.hasGoldStandardConfig()
                     && qualityMeasuresRequireGS.size() > 0) {
@@ -661,7 +661,7 @@ public abstract class ExecutionRun extends Run {
      * not affect the runs currently performing.
      *
      * @param programConfigs The list of program configurations of this run.
-     * @param dataConfigs The list of data configurations of this run.
+     * @param dataConfigs    The list of data configurations of this run.
      * @throws RegisterException
      */
     protected void initRunPairs(final List<ProgramConfig> programConfigs,
@@ -670,21 +670,20 @@ public abstract class ExecutionRun extends Run {
         this.programConfigs = programConfigs;
         this.dataConfigs = dataConfigs;
 
-        this.runPairs = new ArrayList<Pair<ProgramConfig, DataConfig>>();
+        this.runPairs = new ArrayList<>();
 
         for (ProgramConfig programConfig : this.programConfigs) {
             for (DataConfig dataConfig : this.dataConfigs) {
 
-                runPairs.add(new Pair<ProgramConfig, DataConfig>(
-                        new ProgramConfig(programConfig), new DataConfig(
-                                dataConfig)));
+                runPairs.add(new Pair<>(new ProgramConfig(programConfig),
+                        new DataConfig(dataConfig)));
             }
         }
     }
 
     /**
      * @return The list of runpairs consisting of program and data
-     * configurations each.
+     *         configurations each.
      */
     public List<Pair<ProgramConfig, DataConfig>> getRunPairs() {
         return this.runPairs;
@@ -692,7 +691,7 @@ public abstract class ExecutionRun extends Run {
 
     /**
      * @return A list of maps containing parameter values. Every entry of the
-     * list corresponds to one runpair.
+     *         list corresponds to one runpair.
      */
     public List<Map<ProgramParameter<?>, String>> getParameterValues() {
         return parameterValues;
@@ -721,16 +720,16 @@ public abstract class ExecutionRun extends Run {
 
     /**
      * @return A list containing all clustering quality measures to be evaluated
-     * during execution of this run.
+     *         during execution of this run.
      */
     public List<ClusteringEvaluation> getQualityMeasures() {
         return this.qualityMeasures;
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.wiwie.wiutils.utils.RepositoryObject#notify(utils.RepositoryEvent)
+     * (non-Javadoc)
+     *
+     * @see de.wiwie.wiutils.utils.RepositoryObject#notify(utils.RepositoryEvent)
      */
     @Override
     public void notify(RepositoryEvent e) throws RegisterException {

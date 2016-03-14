@@ -15,10 +15,11 @@
  */
 package de.clusteval.data.goldstandard;
 
+import de.clusteval.api.exceptions.GoldStandardNotFoundException;
 import de.clusteval.cluster.Cluster;
 import de.clusteval.cluster.ClusterItem;
 import de.clusteval.cluster.Clustering;
-import de.clusteval.data.goldstandard.format.UnknownGoldStandardFormatException;
+import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.framework.repository.NoRepositoryFoundException;
 import de.clusteval.api.repository.RegisterException;

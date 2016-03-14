@@ -12,13 +12,13 @@
  */
 package de.clusteval.run;
 
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.IRun;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.repository.RepositoryEvent;
-import de.clusteval.context.Context;
-import de.clusteval.framework.repository.Repository;
-import de.clusteval.framework.repository.RepositoryObject;
 import de.clusteval.api.repository.RepositoryRemoveEvent;
+import de.clusteval.context.Context;
+import de.clusteval.framework.repository.RepositoryObject;
 import de.clusteval.framework.repository.RepositoryReplaceEvent;
 import de.clusteval.framework.threading.RunSchedulerThread;
 import de.clusteval.program.ProgramParameter;
@@ -177,7 +177,7 @@ public abstract class Run extends RepositoryObject implements IRun {
      * corresponds to this run.
      * @throws RegisterException
      */
-    protected Run(final Repository repository, final Context context,
+    protected Run(final IRepository repository, final Context context,
             final long changeDate, final File absPath) throws RegisterException {
         super(repository, false, changeDate, absPath);
 

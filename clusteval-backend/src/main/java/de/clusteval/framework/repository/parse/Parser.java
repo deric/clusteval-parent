@@ -3,6 +3,7 @@
  */
 package de.clusteval.framework.repository.parse;
 
+import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.repository.IRepositoryObject;
@@ -39,12 +40,12 @@ import de.clusteval.data.dataset.format.RelativeDataSetFormat;
 import de.clusteval.data.dataset.type.DataSetType;
 import de.clusteval.data.dataset.type.UnknownDataSetTypeException;
 import de.clusteval.data.distance.DistanceMeasure;
-import de.clusteval.data.distance.UnknownDistanceMeasureException;
+import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.data.goldstandard.GoldStandard;
 import de.clusteval.data.goldstandard.GoldStandardConfig;
 import de.clusteval.data.goldstandard.GoldStandardConfigNotFoundException;
 import de.clusteval.data.goldstandard.GoldStandardConfigurationException;
-import de.clusteval.data.goldstandard.GoldStandardNotFoundException;
+import de.clusteval.api.exceptions.GoldStandardNotFoundException;
 import de.clusteval.data.preprocessing.DataPreprocessor;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.randomizer.DataRandomizer;
@@ -66,7 +67,7 @@ import de.clusteval.program.UnknownProgramParameterException;
 import de.clusteval.program.UnknownProgramTypeException;
 import de.clusteval.program.r.RProgram;
 import de.clusteval.program.r.RProgramConfig;
-import de.clusteval.program.r.UnknownRProgramException;
+import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.run.AnalysisRun;
 import de.clusteval.run.ClusteringRun;
 import de.clusteval.run.DataAnalysisRun;
@@ -82,7 +83,7 @@ import de.clusteval.run.result.format.RunResultFormat;
 import de.clusteval.run.result.format.UnknownRunResultFormatException;
 import de.clusteval.run.result.postprocessing.RunResultPostprocessor;
 import de.clusteval.run.result.postprocessing.RunResultPostprocessorParameters;
-import de.clusteval.run.result.postprocessing.UnknownRunResultPostprocessorException;
+import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
 import de.clusteval.run.statistics.RunDataStatistic;
 import de.clusteval.run.statistics.RunStatistic;
 import de.clusteval.run.statistics.UnknownRunDataStatisticException;
@@ -795,7 +796,7 @@ class ExecutionRunParser<T extends ExecutionRun> extends RunParser<T> {
 
     protected List<ProgramConfig> programConfigs;
     protected List<DataConfig> dataConfigs;
-    protected List<ClusteringQualityMeasure> qualityMeasures;
+    protected List<ClusteringEvaluation> qualityMeasures;
     protected List<Map<ProgramParameter<?>, String>> runParamValues;
     protected Map<ProgramParameter<?>, String> paramMap;
     protected List<RunResultPostprocessor> postprocessor;

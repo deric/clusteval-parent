@@ -11,27 +11,25 @@
 /**
  * 
  */
-package de.clusteval.data.goldstandard.format;
+package de.clusteval.api.exceptions;
 
-import de.clusteval.data.goldstandard.GoldStandardException;
+import de.clusteval.api.exceptions.GoldStandardException;
 
 /**
  * @author Christian Wiwie
+ * 
  */
-public class UnknownGoldStandardFormatException extends GoldStandardException {
+public class GoldStandardNotFoundException extends GoldStandardException {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 5160151162340633793L;
+	private static final long serialVersionUID = -2215573555406810759L;
 
 	/**
-	 * Instantiates a new unknown gold standard format exception.
-	 * 
 	 * @param message
-	 *            the message
 	 */
-	public UnknownGoldStandardFormatException(final String message) {
+	public GoldStandardNotFoundException(final String message) {
 		super(message);
 	}
 }

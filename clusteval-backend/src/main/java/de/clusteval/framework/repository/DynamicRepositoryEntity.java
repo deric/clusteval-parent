@@ -3,9 +3,9 @@
  */
 package de.clusteval.framework.repository;
 
-import de.clusteval.api.repository.RepositoryRemoveEvent;
 import de.clusteval.api.repository.IRepositoryObject;
 import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.repository.RepositoryRemoveEvent;
 import de.clusteval.framework.RLibraryNotLoadedException;
 import de.clusteval.framework.RLibraryRequirement;
 import de.clusteval.utils.UnsatisfiedRLibraryException;
@@ -39,7 +39,7 @@ public class DynamicRepositoryEntity<T extends IRepositoryObject> extends Reposi
     }
 
     public Collection<Class<? extends T>> getClasses() {
-        Collection<Class<? extends T>> result = new HashSet<Class<? extends T>>(
+        Collection<Class<? extends T>> result = new HashSet<>(
                 this.classes.values());
 
         if (parent != null) {
@@ -133,7 +133,7 @@ public class DynamicRepositoryEntity<T extends IRepositoryObject> extends Reposi
 
             DynamicRepositoryEntity.loadedClasses.put(object.getName(), object);
 
-            this.repository.log.info("Dynamic class registered: "
+            this.repository.info("Dynamic class registered: "
                     + object.getSimpleName());
 
             this.repository.sqlCommunicator.register(object);

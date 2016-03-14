@@ -9,7 +9,7 @@ import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
 import de.clusteval.data.dataset.format.ConversionStandardToInputConfiguration;
 import de.clusteval.data.distance.DistanceMeasure;
-import de.clusteval.data.distance.UnknownDistanceMeasureException;
+import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.data.goldstandard.GoldStandard;
 import de.clusteval.data.goldstandard.GoldStandardConfig;
 import de.clusteval.data.preprocessing.DataPreprocessor;

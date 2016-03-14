@@ -12,6 +12,7 @@
  */
 package de.clusteval.data.distance;
 
+import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.exceptions.RNotAvailableException;
 import de.clusteval.api.r.RLibraryInferior;
 import de.clusteval.api.repository.IRepository;

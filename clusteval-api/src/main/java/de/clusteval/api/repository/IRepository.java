@@ -17,6 +17,8 @@
 package de.clusteval.api.repository;
 
 import de.clusteval.api.data.IDataConfig;
+import de.clusteval.api.data.IDataSetFormat;
+import de.clusteval.api.data.IDataSetFormatParser;
 import de.clusteval.api.exceptions.InternalAttributeException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.r.IRengine;
@@ -209,5 +211,35 @@ public interface IRepository {
      * @param message The message to log.
      */
     void warn(final String message);
+
+    /**
+     * Log info message
+     *
+     * @param message the message
+     */
+    void info(final String message);
+
+    /**
+     * @param comm The new sql communicator.
+     */
+    void setSQLCommunicator(final SQLCommunicator comm);
+
+    /**
+     * This method registers a dataset format parser.
+     *
+     * @param dsFormatParser The dataset format parser to register.
+     * @return True, if the dataset format parser replaced an old object.
+     */
+    boolean registerDataSetFormatParser(final Class<? extends IDataSetFormatParser> dsFormatParser);
+
+    /**
+     * This method checks whether a parser has been registered for the given
+     * dataset format class.
+     *
+     * @param dsFormat The class for which we want to know whether a parser has
+     *                 been registered.
+     * @return True, if the parser has been registered.
+     */
+    boolean isRegisteredForDataSetFormat(final Class<? extends IDataSetFormat> dsFormat);
 
 }

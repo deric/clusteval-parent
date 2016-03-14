@@ -11,23 +11,32 @@
 /**
  * 
  */
-package de.clusteval.program.r;
+package de.clusteval.api.exceptions;
+
+import de.clusteval.api.exceptions.DataException;
 
 /**
  * @author Christian Wiwie
  * 
  */
-public class UnknownRProgramException extends Exception {
+public abstract class GoldStandardException extends DataException {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 7487877880458179088L;
+	private static final long serialVersionUID = -7235966832673486396L;
 
 	/**
 	 * @param message
 	 */
-	public UnknownRProgramException(final String message) {
+	public GoldStandardException(String message) {
 		super(message);
+	}
+
+	/**
+	 * @param t
+	 */
+	public GoldStandardException(Throwable t) {
+		super(t);
 	}
 }

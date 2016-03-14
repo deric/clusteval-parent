@@ -22,7 +22,7 @@ import de.clusteval.api.r.RException;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.data.DataConfig;
-import de.clusteval.data.goldstandard.format.UnknownGoldStandardFormatException;
+import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.framework.repository.MyRengine;
 import de.clusteval.framework.repository.Repository;
 import java.io.File;

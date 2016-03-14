@@ -12,16 +12,15 @@
  */
 package de.clusteval.cluster;
 
+import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.cluster.quality.ClusteringQualityMeasureValue;
 import de.clusteval.api.cluster.quality.ClusteringQualitySet;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.cluster.quality.ClusteringQualityMeasure;
 import de.clusteval.data.DataConfig;
-import de.clusteval.data.goldstandard.format.UnknownGoldStandardFormatException;
-import de.clusteval.framework.repository.Repository;
+import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.framework.repository.RepositoryObject;
 import de.clusteval.program.ParameterSet;
 import de.wiwie.wiutils.utils.Pair;
@@ -141,7 +140,7 @@ public class Clustering extends RepositoryObject implements Iterable<Cluster> {
 
     protected static Map<String, Cluster> cloneClusterIdToCluster(
             Map<String, Cluster> clusterIdToCluster) {
-        final Map<String, Cluster> result = new HashMap<String, Cluster>();
+        final Map<String, Cluster> result = new HashMap<>();
 
         for (Map.Entry<String, Cluster> entry : clusterIdToCluster.entrySet()) {
             result.put(entry.getKey(), entry.getValue().clone());
@@ -152,7 +151,7 @@ public class Clustering extends RepositoryObject implements Iterable<Cluster> {
 
     protected static Map<String, ClusterItem> cloneItemIdToItem(
             Map<String, ClusterItem> itemIdToItem) {
-        final Map<String, ClusterItem> result = new HashMap<String, ClusterItem>();
+        final Map<String, ClusterItem> result = new HashMap<>();
 
         for (Map.Entry<String, ClusterItem> entry : itemIdToItem.entrySet()) {
             result.put(entry.getKey(), entry.getValue().clone());
@@ -163,11 +162,11 @@ public class Clustering extends RepositoryObject implements Iterable<Cluster> {
 
     protected static Map<ClusterItem, Map<Cluster, Float>> cloneItemToClusters(
             Map<ClusterItem, Map<Cluster, Float>> itemToCluster2) {
-        final Map<ClusterItem, Map<Cluster, Float>> result = new HashMap<ClusterItem, Map<Cluster, Float>>();
+        final Map<ClusterItem, Map<Cluster, Float>> result = new HashMap<>();
 
         for (Map.Entry<ClusterItem, Map<Cluster, Float>> entry : itemToCluster2
                 .entrySet()) {
-            final Map<Cluster, Float> newMap = new HashMap<Cluster, Float>();
+            final Map<Cluster, Float> newMap = new HashMap<>();
 
             for (Map.Entry<Cluster, Float> entry2 : entry.getValue().entrySet()) {
                 newMap.put(entry2.getKey().clone(), entry2.getValue());
@@ -180,8 +179,8 @@ public class Clustering extends RepositoryObject implements Iterable<Cluster> {
     }
 
     protected static Set<Cluster> cloneClusters(Set<Cluster> clusters) {
-        final Set<Cluster> result = new HashSet<Cluster>();
-        final Set<ClusterItem> items = new HashSet<ClusterItem>();
+        final Set<Cluster> result = new HashSet<>();
+        final Set<ClusterItem> items = new HashSet<>();
 
         for (Cluster cl : clusters) {
             Cluster newCluster = new Cluster(cl.id);
@@ -199,9 +198,9 @@ public class Clustering extends RepositoryObject implements Iterable<Cluster> {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#equals(java.lang.Object)
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
     public boolean equals(Object obj) {
@@ -227,7 +226,7 @@ public class Clustering extends RepositoryObject implements Iterable<Cluster> {
     /**
      * @param item The item to look for.
      * @return A map containing all clusters together with fuzzy coefficients,
-     * in which the given item is contained.
+     *         in which the given item is contained.
      */
     public Map<Cluster, Float> getClusterForItem(ClusterItem item) {
         return this.itemToCluster.get(item);
@@ -284,7 +283,7 @@ public class Clustering extends RepositoryObject implements Iterable<Cluster> {
      *
      * @param cluster The cluster to add.
      * @return true, if the cluster is added and hasn't been in the clustering
-     * before.
+     *         before.
      */
     public boolean addCluster(final Cluster cluster) {
         boolean b = this.clusters.add(cluster);
@@ -326,7 +325,7 @@ public class Clustering extends RepositoryObject implements Iterable<Cluster> {
     /**
      * Remove a cluster item from the specified cluster.
      *
-     * @param item The item to remove
+     * @param item    The item to remove
      * @param cluster The cluster to remove the item from.
      * @return True if this item was contained in this clustering.
      */
@@ -358,16 +357,16 @@ public class Clustering extends RepositoryObject implements Iterable<Cluster> {
 
     /**
      * @return The number of items in this clustering. In case of fuzzy
-     * clusterings this may differ from the fuzzy size.
+     *         clusterings this may differ from the fuzzy size.
      */
     public int size() {
         return this.itemToCluster.keySet().size();
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Iterable#iterator()
+     * (non-Javadoc)
+     *
+     * @see java.lang.Iterable#iterator()
      */
     @Override
     public Iterator<Cluster> iterator() {
@@ -375,9 +374,9 @@ public class Clustering extends RepositoryObject implements Iterable<Cluster> {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#toString()
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#toString()
      */
     @Override
     public String toString() {
@@ -387,8 +386,8 @@ public class Clustering extends RepositoryObject implements Iterable<Cluster> {
     /**
      *
      * @return A string representing this clustering, where clusters are
-     * separated by semi-colons and elements of clusters are separated by
-     * commas.
+     *         separated by semi-colons and elements of clusters are separated by
+     *         commas.
      */
     public String toFormattedString() {
         StringBuilder sb = new StringBuilder();
@@ -419,7 +418,7 @@ public class Clustering extends RepositoryObject implements Iterable<Cluster> {
      * are ties, the assigned cluster is randomly selected.
      *
      * @return A hard clustering resulting from converting this fuzzy
-     * clustering.
+     *         clustering.
      */
     public Clustering toHardClustering() {
 
@@ -471,9 +470,9 @@ public class Clustering extends RepositoryObject implements Iterable<Cluster> {
      *
      * @param repository
      *
-     * @param absFilePath The absolute path to the input file.
+     * @param absFilePath    The absolute path to the input file.
      * @param parseQualities True, if the qualities of the clusterings should
-     * also be parsed. Those will be taken from .qual-files.
+     *                       also be parsed. Those will be taken from .qual-files.
      * @return A map containing parameter sets and corresponding clusterings.
      * @throws IOException Signals that an I/O exception has occurred.
      */
@@ -564,7 +563,7 @@ public class Clustering extends RepositoryObject implements Iterable<Cluster> {
      *
      * @param clusterIds The cluster ids of the objects.
      * @return Fuzzy coefficient matrix. [i][j] holds the fuzzy coefficient for
-     * object i and cluster j.
+     *         object i and cluster j.
      */
     public static float[][] clusterIdsToFuzzyCoeff(final int[] clusterIds) {
         Map<Integer, Integer> clusterPos = new HashMap<>();
@@ -588,30 +587,32 @@ public class Clustering extends RepositoryObject implements Iterable<Cluster> {
      *
      * @param repository
      * @param absPath
-     * @param objectIds The ids of the cluster items.
+     * @param objectIds  The ids of the cluster items.
      * @param clusterIds Position i holds the cluster id of cluster item i.
      * @return A clustering wrapper object.
      */
-    public static Clustering parseFromIntArray(final Repository repository,
+    public static Clustering parseFromIntArray(final IRepository repository,
             final File absPath, final String[] objectIds, final int[] clusterIds) {
         return parseFromFuzzyCoeffMatrix(repository, absPath, objectIds,
                 clusterIdsToFuzzyCoeff(clusterIds));
     }
 
     /**
-     * @param objectIds The ids of the cluster items.
+     * @param repository
+     * @param absPath
+     * @param objectIds   The ids of the cluster items.
      * @param fuzzyCoeffs Position [i,j] is the fuzzy coefficient of object i
-     * and cluster j.
+     *                    and cluster j.
      * @return A clustering wrapper object.
      */
     public static Clustering parseFromFuzzyCoeffMatrix(
-            final Repository repository, final File absPath,
+            final IRepository repository, final File absPath,
             final String[] objectIds, final float[][] fuzzyCoeffs) {
         if (objectIds.length != fuzzyCoeffs.length) {
             throw new IllegalArgumentException(
                     "The number of object ids and cluster ids needs to be the same.");
         }
-        Map<String, Cluster> clusters = new HashMap<String, Cluster>();
+        Map<String, Cluster> clusters = new HashMap<>();
 
         for (int i = 0; i < fuzzyCoeffs.length; i++) {
             ClusterItem item = new ClusterItem(objectIds[i]);
@@ -648,15 +649,15 @@ public class Clustering extends RepositoryObject implements Iterable<Cluster> {
      *
      * @param qualityMeasures the quality measures
      * @return A set of qualities for every quality measure that was passed in
-     * the list.
-     * @throws UnknownGoldStandardFormatException the unknown gold standard
-     * format exception
-     * @throws IOException Signals that an I/O exception has occurred.
+     *         the list.
+     * @throws UnknownGoldStandardFormatException   the unknown gold standard
+     *                                              format exception
+     * @throws IOException                          Signals that an I/O exception has occurred.
      * @throws UnknownDataSetFormatException
      * @throws InvalidDataSetFormatVersionException
      */
     public ClusteringQualitySet assessQuality(final DataConfig dataConfig,
-            final List<ClusteringQualityMeasure> qualityMeasures)
+            final List<ClusteringEvaluation> qualityMeasures)
             throws UnknownGoldStandardFormatException, IOException,
                    UnknownDataSetFormatException, InvalidDataSetFormatVersionException {
         // added: 30.07.2014: assume all ids of the dataset missing in the
@@ -675,7 +676,7 @@ public class Clustering extends RepositoryObject implements Iterable<Cluster> {
 
         // TODO: 20.08.2012 ensure, that this runresult is in standard format
         final ClusteringQualitySet resultSet = new ClusteringQualitySet();
-        for (ClusteringQualityMeasure qualityMeasure : qualityMeasures) {
+        for (ClusteringEvaluation qualityMeasure : qualityMeasures) {
             // do not calculate, when there is no goldstandard
             if (qualityMeasure.requiresGoldstandard()
                     && !dataConfig.hasGoldStandardConfig()) {
@@ -702,7 +703,8 @@ public class Clustering extends RepositoryObject implements Iterable<Cluster> {
                 // .unloadFromMemory();
                 // we rethrow some exceptions, since they mean, that we
                 // cannot calculate ANY quality measures for this data
-            } catch (UnknownGoldStandardFormatException | IOException | UnknownDataSetFormatException | InvalidDataSetFormatVersionException e) {
+            } catch (UnknownGoldStandardFormatException | IOException |
+                    UnknownDataSetFormatException | InvalidDataSetFormatVersionException e) {
                 throw e;
             } catch (Exception e) {
                 // all the remaining exceptions are catched, because they

@@ -19,6 +19,7 @@ package de.clusteval.api.data;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.RNotAvailableException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.repository.IRepositoryObject;
 import de.clusteval.api.repository.RegisterException;
 import java.io.IOException;
 import java.security.InvalidParameterException;
@@ -27,7 +28,7 @@ import java.security.InvalidParameterException;
  *
  * @author deric
  */
-public interface IDataSetFormatParser {
+public interface IDataSetFormatParser extends IRepositoryObject {
 
     /**
      * Convert the given dataset with this dataset format and the given version

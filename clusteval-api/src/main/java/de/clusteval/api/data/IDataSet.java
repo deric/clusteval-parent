@@ -16,7 +16,10 @@
  */
 package de.clusteval.api.data;
 
+import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
+import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.repository.IRepositoryObject;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -52,4 +55,31 @@ public interface IDataSet extends IRepositoryObject {
     List<String> getIds();
 
     IDataSetFormat getDataSetFormat();
+
+    /**
+     * Checks whether this dataset is loaded into the memory.
+     *
+     * @return true, if is in memory
+     */
+    boolean isInMemory();
+
+    /*
+     * Load this dataset into memory. When this method is invoked, it parses the
+     * dataset file on the filesystem using the
+     * {@link DataSetFormatParser#parse(DataSet)} method corresponding to the
+     * dataset format of this dataset. Then the contents of the dataset is
+     * stored in a member variable. Depending on whether this dataset is
+     * relative or absolute, this member variable varies: For absolute datasets
+     * the data is stored in {@link AbsoluteDataSet#dataMatrix}, for relative
+     * datasets in {@link RelativeDataSet#similarities}
+     *
+     * @return true, if successful
+     * @throws UnknownDataSetFormatException
+     * @throws InvalidDataSetFormatVersionException
+     * @throws IOException
+     * @throws IllegalArgumentException
+     */
+    public boolean loadIntoMemory() throws IllegalArgumentException,
+                                           IOException, InvalidDataSetFormatVersionException,
+                                           UnknownDataSetFormatException;
 }

@@ -23,7 +23,7 @@ import org.rosuda.REngine.Rserve.RserveException;
 import de.clusteval.data.DataConfig;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
-import de.clusteval.data.goldstandard.format.UnknownGoldStandardFormatException;
+import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.framework.repository.MyRengine;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.repository.RegisterException;

@@ -17,6 +17,7 @@
 package de.clusteval.api.data;
 
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
+import de.clusteval.api.repository.IRepositoryObject;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
 import java.io.IOException;
 
@@ -24,7 +25,7 @@ import java.io.IOException;
  *
  * @author deric
  */
-public interface IDataSetFormat {
+public interface IDataSetFormat extends IRepositoryObject {
 
     Object parse(final IDataSet dataSet, SimilarityMatrix.NUMBER_PRECISION precision)
             throws IllegalArgumentException, IOException, InvalidDataSetFormatVersionException;

@@ -29,7 +29,7 @@ import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
 import de.clusteval.data.dataset.format.ConversionStandardToInputConfiguration;
 import de.clusteval.data.dataset.format.DataSetFormat;
 import de.clusteval.data.distance.DistanceMeasure;
-import de.clusteval.data.distance.UnknownDistanceMeasureException;
+import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.data.preprocessing.DataPreprocessor;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.api.r.InvalidRepositoryException;
