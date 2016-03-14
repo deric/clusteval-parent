@@ -113,14 +113,14 @@ public abstract class DataSet extends RepositoryObject implements IDataSet {
      * clustering method. This attribute holds the version of this dataset in
      * the standard format.
      */
-    protected DataSet thisInStandardFormat;
+    protected IDataSet thisInStandardFormat;
 
     /**
      * When a dataset is used during a run, it first is converted to the
      * internal standard format and afterwards into the format required by the
      * clustering method. This attribute holds the original unconverted dataset.
      */
-    protected DataSet originalDataSet;
+    protected IDataSet originalDataSet;
 
     /**
      * The checksum of a dataset is used to check a dataset for changes and to
@@ -303,8 +303,7 @@ public abstract class DataSet extends RepositoryObject implements IDataSet {
     }
 
     @Override
-    public boolean copyTo(File copyDestination, final boolean overwrite,
-            final boolean updateAbsolutePath) {
+    public boolean copyTo(File copyDestination, final boolean overwrite, final boolean updateAbsolutePath) {
         boolean result = false;
         if (!copyDestination.exists() || overwrite) {
             result = this.datasetFormat.copyDataSetTo(this, copyDestination,
@@ -322,10 +321,8 @@ public abstract class DataSet extends RepositoryObject implements IDataSet {
      * @see de.wiwie.wiutils.utils.RepositoryObject#copyToFolder(java.io.File, boolean)
      */
     @Override
-    public boolean copyToFolder(File copyFolderDestination,
-            final boolean overwrite) {
-        return this.datasetFormat.copyDataSetToFolder(this,
-                copyFolderDestination, overwrite);
+    public boolean copyToFolder(File copyFolderDestination, final boolean overwrite) {
+        return this.datasetFormat.copyDataSetToFolder(this, copyFolderDestination, overwrite);
     }
 
     /**
@@ -361,6 +358,7 @@ public abstract class DataSet extends RepositoryObject implements IDataSet {
      * the data is stored in {@link AbsoluteDataSet#dataMatrix}, for relative
      * datasets in {@link RelativeDataSet#similarities}
      *
+     * @param precision
      * @return true, if successful
      * @throws UnknownDataSetFormatException
      * @throws InvalidDataSetFormatVersionException
@@ -447,7 +445,7 @@ public abstract class DataSet extends RepositoryObject implements IDataSet {
         File sourceFile = ClustevalBackendServer.getCommonFile(new File(this
                 .getAbsolutePath()));
         synchronized (sourceFile) {
-            DataSet result = null;
+            IDataSet result = null;
             IDataSetFormat sourceFormat = this.getDataSetFormat();
 
             // check if we can convert from source to target format
@@ -519,8 +517,7 @@ public abstract class DataSet extends RepositoryObject implements IDataSet {
                 // 13.04.2013: apply all data preprocessors after distance
                 // conversion
                 this.log.debug("Apply preprocessors");
-                preprocessors = configInputToStandard
-                        .getPreprocessorsAfterDistance();
+                preprocessors = configInputToStandard.getPreprocessorsAfterDistance();
                 for (DataPreprocessor proc : preprocessors) {
                     result = proc.preprocess(result);
                 }
@@ -566,14 +563,14 @@ public abstract class DataSet extends RepositoryObject implements IDataSet {
      * @throws UnknownDataSetFormatException
      * @throws FormatConversionException
      */
-    protected DataSet convertStandardToDirectly(final Context context,
+    protected IDataSet convertStandardToDirectly(final Context context,
             final DataSetFormat targetFormat,
             final ConversionStandardToInputConfiguration configStandardToInput)
             throws IOException, InvalidDataSetFormatVersionException,
                    RegisterException, UnknownDataSetFormatException,
                    FormatConversionException {
 
-        DataSet result = null;
+        IDataSet result = null;
 
         // if the target format is equal to the standard format, we simply
         // return the old dataset
@@ -591,10 +588,10 @@ public abstract class DataSet extends RepositoryObject implements IDataSet {
                 this.originalDataSet.copyTo(
                         new File(this.originalDataSet.getAbsolutePath()
                                 + ".conv"), false, false);
-                DataSet tmp = this.originalDataSet.clone();
+                IDataSet tmp = this.originalDataSet.clone();
                 tmp.setAbsolutePath(new File(this.originalDataSet
                         .getAbsolutePath() + ".conv"));
-                tmp.originalDataSet = this.originalDataSet;
+                tmp.setOriginal(originalDataSet);
                 result = tmp;
             } else {
                 throw new FormatConversionException(
@@ -604,8 +601,7 @@ public abstract class DataSet extends RepositoryObject implements IDataSet {
             result = targetFormat.convertToThisFormat(this, targetFormat,
                     configStandardToInput);
         }
-        result.thisInStandardFormat = this;
-        result.originalDataSet = this.originalDataSet;
+        result.setStandard(this);
         return result;
     }
 
@@ -630,13 +626,13 @@ public abstract class DataSet extends RepositoryObject implements IDataSet {
      * @throws InvalidParameterException
      * @throws InterruptedException
      */
-    protected DataSet convertToStandardDirectly(final Context context,
+    protected IDataSet convertToStandardDirectly(final Context context,
             final ConversionInputToStandardConfiguration configInputToStandard)
             throws IOException, InvalidDataSetFormatVersionException,
                    RegisterException, UnknownDataSetFormatException,
                    InvalidParameterException, RNotAvailableException,
                    InterruptedException {
-        DataSet result = null;
+        IDataSet result;
 
         // if the source format is equal to the standard format, we simply
         // return the old dataset
@@ -646,9 +642,9 @@ public abstract class DataSet extends RepositoryObject implements IDataSet {
         } else {
             result = this.getDataSetFormat().convertToStandardFormat(this, configInputToStandard);
         }
-        result.thisInStandardFormat = result;
+        result.setStandard(result);
         this.thisInStandardFormat = result;
-        result.originalDataSet = this.originalDataSet;
+        result.setOriginal(originalDataSet);
         return result;
     }
 
@@ -743,12 +739,22 @@ public abstract class DataSet extends RepositoryObject implements IDataSet {
         return this.thisInStandardFormat;
     }
 
+    @Override
+    public void setStandard(IDataSet result) {
+        this.thisInStandardFormat = result;
+    }
+
     /**
      * @return This dataset in its original format.
      * @see #originalDataSet
      */
+    @Override
     public IDataSet getOriginalDataSet() {
         return this.originalDataSet;
+    }
+
+    public void setOriginal(IDataSet dataset) {
+        this.originalDataSet = dataset;
     }
 
     /**

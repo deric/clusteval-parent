@@ -19,10 +19,13 @@ import ch.qos.logback.classic.encoder.PatternLayoutEncoder;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.ConsoleAppender;
 import ch.qos.logback.core.FileAppender;
+import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigurationException;
 import de.clusteval.api.exceptions.GoldStandardNotFoundException;
+import de.clusteval.api.exceptions.NoDataSetException;
+import de.clusteval.api.exceptions.RepositoryObjectDumpException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownDataSetGeneratorException;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
@@ -45,9 +48,7 @@ import de.clusteval.data.DataConfigurationException;
 import de.clusteval.data.dataset.DataSet;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
-import de.clusteval.data.dataset.DataSetNotFoundException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
-import de.clusteval.data.dataset.NoDataSetException;
 import de.clusteval.data.dataset.generator.DataSetGenerationException;
 import de.clusteval.data.dataset.generator.DataSetGenerator;
 import de.clusteval.data.dataset.generator.GoldStandardGenerationException;
@@ -61,7 +62,6 @@ import de.clusteval.framework.repository.MyRengine;
 import de.clusteval.framework.repository.NoRepositoryFoundException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RepositoryController;
-import de.clusteval.api.exceptions.RepositoryObjectDumpException;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
 import de.clusteval.framework.threading.RunSchedulerThread;
@@ -341,7 +341,7 @@ public class ClustevalBackendServer implements IBackendServer {
      * @return The repository used by this server.
      * @see #repository
      */
-    public Repository getRepository() {
+    public IRepository getRepository() {
         synchronized (this.repository) {
             return this.repository;
         }

@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.data.preprocessing;
 
+import de.clusteval.api.data.IDataPreprocessor;
 import de.clusteval.api.r.RLibraryInferior;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
@@ -49,7 +50,7 @@ import java.util.Set;
  * @author Christian Wiwie
  *
  */
-public abstract class DataPreprocessor extends RepositoryObject implements RLibraryInferior {
+public abstract class DataPreprocessor extends RepositoryObject implements RLibraryInferior, IDataPreprocessor {
 
     /**
      * @param repository

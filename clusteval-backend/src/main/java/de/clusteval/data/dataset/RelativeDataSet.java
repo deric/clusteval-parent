@@ -8,17 +8,14 @@
  * Contributors:
  *     Christian Wiwie - initial API and implementation
  ***************************************************************************** */
-/**
- *
- */
 package de.clusteval.data.dataset;
 
+import de.clusteval.api.data.IDataSetType;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.data.dataset.DataSet.WEBSITE_VISIBILITY;
 import de.clusteval.data.dataset.format.RelativeDataSetFormat;
-import de.clusteval.data.dataset.type.DataSetType;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
 import de.wiwie.wiutils.utils.SimilarityMatrix.NUMBER_PRECISION;
 import java.io.File;
@@ -60,11 +57,10 @@ public class RelativeDataSet extends DataSet {
      */
     public RelativeDataSet(IRepository repository, final boolean register,
             long changeDate, File absPath, final String alias,
-            RelativeDataSetFormat dsFormat, DataSetType dsType,
+            RelativeDataSetFormat dsFormat, IDataSetType dsType,
             final WEBSITE_VISIBILITY websiteVisibility)
             throws RegisterException {
-        super(repository, register, changeDate, absPath, alias, dsFormat,
-                dsType, websiteVisibility);
+        super(repository, register, changeDate, absPath, alias, dsFormat, dsType, websiteVisibility);
     }
 
     /**

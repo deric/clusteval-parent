@@ -360,6 +360,7 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
     /**
      * @return The version number of the dataset format.
      */
+    @Override
     public int getVersion() {
         return this.version;
     }
@@ -435,8 +436,7 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
      *                        file.
      * @return True, if the copy operation was successful.
      */
-    public boolean copyDataSetTo(final DataSet dataSet,
-            final File copyDestination, final boolean overwrite) {
+    public boolean copyDataSetTo(final IDataSet dataSet, final File copyDestination, final boolean overwrite) {
         try {
             if (!copyDestination.exists() || overwrite) {
                 org.apache.commons.io.FileUtils.copyFile(

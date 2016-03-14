@@ -23,9 +23,9 @@ import org.junit.Test;
 
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
-import de.clusteval.data.dataset.DataSetNotFoundException;
+import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
-import de.clusteval.data.dataset.NoDataSetException;
+import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.data.dataset.type.UnknownDataSetTypeException;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;

@@ -13,6 +13,8 @@
  */
 package de.clusteval.data.dataset;
 
+import de.clusteval.api.exceptions.NoDataSetException;
+import de.clusteval.api.exceptions.DataSetNotFoundException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;

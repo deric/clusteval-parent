@@ -22,6 +22,7 @@ import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.repository.IRepositoryObject;
 import de.clusteval.api.repository.RegisterException;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
+import java.io.File;
 import java.io.IOException;
 import java.security.InvalidParameterException;
 
@@ -69,4 +70,71 @@ public interface IDataSetFormat extends IRepositoryObject {
                                                                                                               InvalidDataSetFormatVersionException, RegisterException,
                                                                                                               UnknownDataSetFormatException, RNotAvailableException,
                                                                                                               InvalidParameterException, InterruptedException;
+
+    /**
+     *
+     * @return cloned object
+     */
+    IDataSetFormat clone();
+
+    /**
+     * This method copies the given dataset to the given target file, assuming
+     * that the format of the dataset is this dataset format.
+     *
+     * @param dataSet
+     *                        The dataset to copy to the target file destination.
+     * @param copyDestination
+     *                        The target file to which to copy the given dataset.
+     * @param overwrite
+     *                        Whether to overwrite the possibly already existing target
+     *                        file.
+     * @return True, if the copy operation was successful.
+     */
+    boolean copyDataSetTo(final IDataSet dataSet, final File copyDestination, final boolean overwrite);
+
+    /**
+     * This method copies the given dataset into the given target folder,
+     * assuming that the format of the dataset is this dataset format.
+     *
+     * @param dataSet
+     *                              The dataset to copy to the target file destination.
+     * @param copyFolderDestination
+     *                              The target folder to which into copy the given dataset.
+     * @param overwrite
+     *                              Whether to overwrite the possibly already existing target
+     *                              file.
+     * @return True, if the copy operation was successful.
+     */
+    public boolean copyDataSetToFolder(final IDataSet dataSet, final File copyFolderDestination, final boolean overwrite);
+
+    /**
+     * This method copies the given dataset to the given target file, assuming
+     * that the format of the dataset is this dataset format.
+     *
+     * @param dataSet
+     *                        The dataset to copy to the target file destination.
+     * @param moveDestination
+     *                        The target file to which to copy the given dataset.
+     * @param overwrite
+     *                        Whether to overwrite the possibly already existing target
+     *                        file.
+     * @return True, if the copy operation was successful.
+     */
+    public boolean moveDataSetTo(final IDataSet dataSet, final File moveDestination, final boolean overwrite);
+
+    /**
+     * @return The version number of the dataset format.
+     */
+    public int getVersion();
+
+    /**
+     * @param normalized
+     *                   Whether this dataset is normalized.
+     */
+    void setNormalized(final boolean normalized);
+
+    /**
+     * @return Whether this dataset is normalized.
+     */
+    boolean getNormalized();
 }

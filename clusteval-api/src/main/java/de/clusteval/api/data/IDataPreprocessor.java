@@ -22,8 +22,6 @@ import de.clusteval.api.repository.IRepositoryObject;
  *
  * @author deric
  */
-public interface IDataSetType extends IRepositoryObject {
-
-    IDataSetType clone();
+public interface IDataPreprocessor extends IRepositoryObject {
 
 }

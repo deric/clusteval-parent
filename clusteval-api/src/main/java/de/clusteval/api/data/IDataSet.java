@@ -19,6 +19,7 @@ package de.clusteval.api.data;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.repository.IRepositoryObject;
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -37,10 +38,19 @@ public interface IDataSet extends IRepositoryObject {
     IDataSet getInStandardFormat();
 
     /**
+     * Set dataset in standard format
+     *
+     * @param result
+     */
+    void setStandard(IDataSet result);
+
+    /**
      * @return This dataset in its original format.
      * @see #originalDataSet
      */
     IDataSet getOriginalDataSet();
+
+    void setOriginal(IDataSet dataset);
 
     /**
      * Compute dataset checksum
@@ -79,8 +89,16 @@ public interface IDataSet extends IRepositoryObject {
      * @throws IOException
      * @throws IllegalArgumentException
      */
-    boolean loadIntoMemory() throws IllegalArgumentException,                                           IOException, InvalidDataSetFormatVersionException,
+    boolean loadIntoMemory() throws IllegalArgumentException, IOException, InvalidDataSetFormatVersionException,
                                     UnknownDataSetFormatException;
 
     IDataSetType getDataSetType();
+
+    boolean copyTo(File copyDestination, final boolean overwrite);
+
+    boolean copyTo(File copyDestination, final boolean overwrite, final boolean updateAbsolutePath);
+
+    boolean copyToFolder(File copyFolderDestination, final boolean overwrite);
+
+    IDataSet clone();
 }
