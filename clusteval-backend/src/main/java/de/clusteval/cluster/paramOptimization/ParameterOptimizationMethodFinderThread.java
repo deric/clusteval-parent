@@ -10,8 +10,8 @@
  ***************************************************************************** */
 package de.clusteval.cluster.paramOptimization;
 
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.threading.SupervisorThread;
 import de.clusteval.utils.FinderThread;
 
@@ -33,7 +33,7 @@ public class ParameterOptimizationMethodFinderThread extends FinderThread<Parame
      */
     public ParameterOptimizationMethodFinderThread(
             final SupervisorThread supervisorThread,
-            final Repository repository, final boolean checkOnce) {
+            final IRepository repository, final boolean checkOnce) {
         super(supervisorThread, repository, ParameterOptimizationMethod.class,
                 30000, checkOnce);
     }
@@ -52,7 +52,7 @@ public class ParameterOptimizationMethodFinderThread extends FinderThread<Parame
      */
     public ParameterOptimizationMethodFinderThread(
             final SupervisorThread supervisorThread,
-            final Repository repository, final long sleepTime,
+            final IRepository repository, final long sleepTime,
             final boolean checkOnce) {
         super(supervisorThread, repository, ParameterOptimizationMethod.class,
                 sleepTime, checkOnce);

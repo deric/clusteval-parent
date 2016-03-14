@@ -16,7 +16,6 @@ import de.clusteval.data.dataset.format.DataSetFormat;
 import de.clusteval.data.dataset.format.DataSetFormatFinderThread;
 import de.clusteval.data.dataset.type.DataSetType;
 import de.clusteval.data.dataset.type.DataSetTypeFinderThread;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.threading.SupervisorThread;
 
 /**
@@ -46,7 +45,7 @@ public class RunResultDataSetFinderThread extends DataSetFinderThread {
      */
     public RunResultDataSetFinderThread(
             final SupervisorThread supervisorThread,
-            final Repository framework, final long sleepTime,
+            final IRepository framework, final long sleepTime,
             final boolean checkOnce) {
         super(supervisorThread, framework, sleepTime, checkOnce);
     }

@@ -37,7 +37,7 @@ import de.clusteval.framework.repository.NoRepositoryFoundException;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RepositoryObject;
-import de.clusteval.framework.repository.RepositoryReplaceEvent;
+import de.clusteval.api.repository.RepositoryReplaceEvent;
 
 /**
  * @author Christian Wiwie

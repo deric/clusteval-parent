@@ -20,7 +20,6 @@ import de.clusteval.api.repository.RegisterException;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.format.DataSetFormat;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RepositoryObject;
 import de.clusteval.framework.repository.parse.Parser;
 import de.clusteval.program.ParameterSet;
@@ -198,25 +197,25 @@ public abstract class ParameterOptimizationMethod extends RepositoryObject imple
     protected boolean isResume;
 
     /**
-     * @param repository The repository this object is registered in.
-     * @param register Whether this object should be registered implicitely in
-     * the repository or if the user wants to register manually later.
-     * @param changeDate The changedate of this object can be used for
-     * identification and equality checks of objects.
-     * @param absPath The absolute path of this object is used for
-     * identification and equality checks of objects.
-     * @param run The run this method belongs to.
-     * @param programConfig The program configuration this method was created
-     * for.
-     * @param dataConfig The data configuration this method was created for.
-     * @param params This list holds the program parameters that are to be
-     * optimized by the parameter optimization run.
+     * @param repository            The repository this object is registered in.
+     * @param register              Whether this object should be registered implicitely in
+     *                              the repository or if the user wants to register manually later.
+     * @param changeDate            The changedate of this object can be used for
+     *                              identification and equality checks of objects.
+     * @param absPath               The absolute path of this object is used for
+     *                              identification and equality checks of objects.
+     * @param run                   The run this method belongs to.
+     * @param programConfig         The program configuration this method was created
+     *                              for.
+     * @param dataConfig            The data configuration this method was created for.
+     * @param params                This list holds the program parameters that are to be
+     *                              optimized by the parameter optimization run.
      * @param optimizationCriterion The quality measure used as the optimization
-     * criterion (see {@link #optimizationCriterion}).
-     * @param totalIterationCount The total number of iterations to be performed
-     * by this parameter optimization.
-     * @param isResume This boolean indiciates, whether the run is a resumption
-     * of a previous run execution or a completely new execution.
+     *                              criterion (see {@link #optimizationCriterion}).
+     * @param totalIterationCount   The total number of iterations to be performed
+     *                              by this parameter optimization.
+     * @param isResume              This boolean indiciates, whether the run is a resumption
+     *                              of a previous run execution or a completely new execution.
      * @throws RegisterException
      */
     public ParameterOptimizationMethod(final IRepository repository,
@@ -264,11 +263,11 @@ public abstract class ParameterOptimizationMethod extends RepositoryObject imple
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * de.clusteval.framework.repository.RepositoryObject#equals(java.lang.Object
-	 * )
+     * (non-Javadoc)
+     *
+     * @see
+     * de.clusteval.framework.repository.RepositoryObject#equals(java.lang.Object
+     * )
      */
     @Override
     public boolean equals(Object obj) {
@@ -288,9 +287,9 @@ public abstract class ParameterOptimizationMethod extends RepositoryObject imple
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.clusteval.framework.repository.RepositoryObject#hashCode()
+     * (non-Javadoc)
+     *
+     * @see de.clusteval.framework.repository.RepositoryObject#hashCode()
      */
     @Override
     public int hashCode() {
@@ -309,7 +308,7 @@ public abstract class ParameterOptimizationMethod extends RepositoryObject imple
 
     /**
      * @return This list holds the program parameters that are to be optimized
-     * by the parameter optimization run.
+     *         by the parameter optimization run.
      */
     public List<ProgramParameter<?>> getOptimizationParameter() {
         return this.params;
@@ -317,7 +316,7 @@ public abstract class ParameterOptimizationMethod extends RepositoryObject imple
 
     /**
      * @return The quality measure used as the optimization criterion (see
-     * {@link #optimizationCriterion}).
+     *         {@link #optimizationCriterion}).
      */
     public final ClusteringQualityMeasure getOptimizationCriterion() {
         return this.optimizationCriterion;
@@ -334,8 +333,8 @@ public abstract class ParameterOptimizationMethod extends RepositoryObject imple
      * be thrown.
      *
      * @param parameterSet
-     * @param qualities The clustering qualities for the clustering of the last
-     * iteration.
+     * @param qualities    The clustering qualities for the clustering of the last
+     *                     iteration.
      */
     public synchronized void giveQualityFeedback(
             final ParameterSet parameterSet,
@@ -382,12 +381,12 @@ public abstract class ParameterOptimizationMethod extends RepositoryObject imple
      * first.
      *
      * @param forcedParameterSet If this parameter is set != null, this
-     * parameter set is forced to be evaluated in the next iteration.
+     *                           parameter set is forced to be evaluated in the next iteration.
      * @return The next parameter set.
      * @throws InternalAttributeException
      * @throws RegisterException
-     * @throws NoParameterSetFoundException This exception is thrown, if no
-     * parameter set was found that was not already evaluated before.
+     * @throws NoParameterSetFoundException          This exception is thrown, if no
+     *                                               parameter set was found that was not already evaluated before.
      * @throws InterruptedException
      * @throws ParameterSetAlreadyEvaluatedException
      */
@@ -398,7 +397,7 @@ public abstract class ParameterOptimizationMethod extends RepositoryObject imple
 
     /**
      * @return True, if there are more iterations together with parameter sets
-     * that have to be evaluated.
+     *         that have to be evaluated.
      */
     public abstract boolean hasNext();
 
@@ -419,8 +418,8 @@ public abstract class ParameterOptimizationMethod extends RepositoryObject imple
      * @return The parameter set that is being evaluated in the next iteration.
      * @throws InternalAttributeException
      * @throws RegisterException
-     * @throws NoParameterSetFoundException This exception is thrown, if no
-     * parameter set was found that was not already evaluated before.
+     * @throws NoParameterSetFoundException          This exception is thrown, if no
+     *                                               parameter set was found that was not already evaluated before.
      * @throws InterruptedException
      * @throws ParameterSetAlreadyEvaluatedException
      */
@@ -453,14 +452,14 @@ public abstract class ParameterOptimizationMethod extends RepositoryObject imple
      * first.
      *
      * @param forcedParameterSet If this parameter is set != null, this
-     * parameter set is forced to be evaluated in the next iteration.
-     * @param iterationNumber The original number of the iteration when it was
-     * previously performed.
+     *                           parameter set is forced to be evaluated in the next iteration.
+     * @param iterationNumber    The original number of the iteration when it was
+     *                           previously performed.
      * @return The parameter set that is being evaluated in the next iteration.
      * @throws InternalAttributeException
      * @throws RegisterException
-     * @throws NoParameterSetFoundException This exception is thrown, if no
-     * parameter set was found that was not already evaluated before.
+     * @throws NoParameterSetFoundException          This exception is thrown, if no
+     *                                               parameter set was found that was not already evaluated before.
      * @throws InterruptedException
      * @throws ParameterSetAlreadyEvaluatedException
      */
@@ -540,24 +539,24 @@ public abstract class ParameterOptimizationMethod extends RepositoryObject imple
      * This method takes a string and some additional parameters and parses from
      * it a parameter optimization method.
      *
-     * @param repository The repository in which the method should look up the
-     * parameter optimization method class and where the new object should be
-     * registered.
+     * @param repository                  The repository in which the method should look up the
+     *                                    parameter optimization method class and where the new object should be
+     *                                    registered.
      * @param parameterOptimizationMethod The name of the parameter optimization
-     * method class.
-     * @param run The run the new parameter optimization method belongs to.
-     * @param programConfig The program configuration the new parameter
-     * optimization method belongs to.
-     * @param dataConfig The data configuration the new parameter optimization
-     * method belongs to.
-     * @param params The parameters of the program encapsulated by the program
-     * configuration that are to be optimized.
-     * @param optimizationCriterion The quality measure used as the optimization
-     * criterion (see {@link #optimizationCriterion}).
-     * @param totalIterationCount This array holds the number of iterations that
-     * are to be performed for each optimization parameter.
-     * @param isResume This boolean indiciates, whether the run is a resumption
-     * of a previous run execution or a completely new execution.
+     *                                    method class.
+     * @param run                         The run the new parameter optimization method belongs to.
+     * @param programConfig               The program configuration the new parameter
+     *                                    optimization method belongs to.
+     * @param dataConfig                  The data configuration the new parameter optimization
+     *                                    method belongs to.
+     * @param params                      The parameters of the program encapsulated by the program
+     *                                    configuration that are to be optimized.
+     * @param optimizationCriterion       The quality measure used as the optimization
+     *                                    criterion (see {@link #optimizationCriterion}).
+     * @param totalIterationCount         This array holds the number of iterations that
+     *                                    are to be performed for each optimization parameter.
+     * @param isResume                    This boolean indiciates, whether the run is a resumption
+     *                                    of a previous run execution or a completely new execution.
      * @return The parsed parameter optimization method.
      * @throws UnknownParameterOptimizationMethodException
      */
@@ -576,7 +575,7 @@ public abstract class ParameterOptimizationMethod extends RepositoryObject imple
                         + parameterOptimizationMethod);
         try {
             Constructor<? extends ParameterOptimizationMethod> constr = c
-                    .getConstructor(Repository.class, boolean.class,
+                    .getConstructor(IRepository.class, boolean.class,
                             long.class, File.class,
                             ParameterOptimizationRun.class,
                             ProgramConfig.class, DataConfig.class, List.class,
@@ -590,7 +589,8 @@ public abstract class ParameterOptimizationMethod extends RepositoryObject imple
                     dataConfig, params, optimizationCriterion,
                     totalIterationCount, isResume);
             return method;
-        } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | SecurityException | IllegalArgumentException | InvocationTargetException e) {
+        } catch (InstantiationException | IllegalAccessException | NoSuchMethodException |
+                SecurityException | IllegalArgumentException | InvocationTargetException e) {
             e.printStackTrace();
         } catch (NullPointerException e) {
 
@@ -602,8 +602,8 @@ public abstract class ParameterOptimizationMethod extends RepositoryObject imple
 
     /**
      * @return An array holding the number of iterations that should be
-     * performed for each optimization parameter. Keep in mind the hints in
-     * {@link #totalIterationCount}.
+     *         performed for each optimization parameter. Keep in mind the hints in
+     *         {@link #totalIterationCount}.
      * @see #totalIterationCount
      */
     public int getIterationPerParameter() {
@@ -621,7 +621,7 @@ public abstract class ParameterOptimizationMethod extends RepositoryObject imple
      * finished.
      *
      * @return An wrapper object holding all the results that are calculated
-     * throughout execution of the parameter optimization run.
+     *         throughout execution of the parameter optimization run.
      */
     public ParameterOptimizationResult getResult() {
         // Removed 27.11.2012
@@ -644,6 +644,7 @@ public abstract class ParameterOptimizationMethod extends RepositoryObject imple
      * {@link #hasNext()} or {@link #next()}).
      *
      * @param absResultPath The absolute path pointing to the result file.
+     * @throws de.clusteval.cluster.paramOptimization.ParameterOptimizationException
      * @throws InternalAttributeException
      * @throws RegisterException
      * @throws RunResultParseException
@@ -676,7 +677,7 @@ public abstract class ParameterOptimizationMethod extends RepositoryObject imple
                 List<ParameterSet> parameterSets = oldResults
                         .getParameterSets();
                 List<Long> iterationNumbers = oldResults.getIterationNumbers();
-                SortedMap<Long, ParameterSet> paramSetsWithOrdering = new TreeMap<Long, ParameterSet>();
+                SortedMap<Long, ParameterSet> paramSetsWithOrdering = new TreeMap<>();
                 for (int i = 0; i < parameterSets.size(); i++) {
                     paramSetsWithOrdering.put(iterationNumbers.get(i),
                             parameterSets.get(i));
@@ -688,12 +689,11 @@ public abstract class ParameterOptimizationMethod extends RepositoryObject imple
                     final long iterationNumber = entry.getKey();
                     try {
                         this.next(paramSet, iterationNumber);
-                    } catch (NoParameterSetFoundException e) {
+                    } catch (NoParameterSetFoundException | ParameterSetAlreadyEvaluatedException e) {
                         // doesn't occur
-                    } catch (ParameterSetAlreadyEvaluatedException e) {
-                        // we can ignore this exception here and give the same
-                        // feedback as before.
                     }
+                    // we can ignore this exception here and give the same
+                    // feedback as before.
                     this.giveQualityFeedback(paramSet, oldResults.get(paramSet));
                 }
                 isResume = false;
@@ -707,6 +707,7 @@ public abstract class ParameterOptimizationMethod extends RepositoryObject imple
      * This method initializes the parameter values of each optimization
      * parameter that should be assessed during the process.
      *
+     * @throws de.clusteval.cluster.paramOptimization.ParameterOptimizationException
      * @throws InternalAttributeException
      */
     @SuppressWarnings("unused")
@@ -740,7 +741,7 @@ public abstract class ParameterOptimizationMethod extends RepositoryObject imple
     /**
      *
      * @return The number of finished iterations, for which we have received
-     * qualities.
+     *         qualities.
      */
     public int getFinishedCount() {
         return this.finishedCount;
@@ -758,7 +759,8 @@ public abstract class ParameterOptimizationMethod extends RepositoryObject imple
         try {
             return this.getClass().getConstructor(this.getClass())
                     .newInstance(this);
-        } catch (IllegalArgumentException | SecurityException | InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+        } catch (IllegalArgumentException | SecurityException | InstantiationException |
+                IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
         this.log.warn("Cloning instance of class "
@@ -770,7 +772,7 @@ public abstract class ParameterOptimizationMethod extends RepositoryObject imple
      * By default, we take the first parameter as density parameter for plots
      *
      * @return The optimization parameter, that should be used as the axis
-     * variable to plot the results.
+     *         variable to plot the results.
      */
     public ProgramParameter<?> getPlotDensityParameter() {
         return this.params.get(0);
@@ -778,7 +780,7 @@ public abstract class ParameterOptimizationMethod extends RepositoryObject imple
 
     /**
      * @param isResume A boolean indicating, whether the run is a resumption of
-     * a previous run execution or a completely new execution.
+     *                 a previous run execution or a completely new execution.
      */
     public void setResume(boolean isResume) {
         this.isResume = isResume;
@@ -799,7 +801,7 @@ public abstract class ParameterOptimizationMethod extends RepositoryObject imple
      * {@link ParameterOptimizationRun#checkCompatibilityParameterOptimizationMethod}.
      *
      * @return A list with all dataset format classes that are compatible to
-     * this parameter optimization method.
+     *         this parameter optimization method.
      */
     public abstract List<Class<? extends DataSetFormat>> getCompatibleDataSetFormatBaseClasses();
 
@@ -818,7 +820,7 @@ public abstract class ParameterOptimizationMethod extends RepositoryObject imple
      * {@link ParameterOptimizationRun#checkCompatibilityParameterOptimizationMethod}.
      *
      * @return A list with all programs that are compatible to this parameter
-     * optimization method.
+     *         optimization method.
      */
     public abstract List<String> getCompatibleProgramNames();
 

@@ -10,8 +10,8 @@
  ***************************************************************************** */
 package de.clusteval.cluster.quality;
 
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.threading.SupervisorThread;
 import de.clusteval.utils.FinderThread;
 
@@ -19,9 +19,7 @@ import de.clusteval.utils.FinderThread;
  * @author Christian Wiwie
  *
  */
-public class ClusteringQualityMeasureFinderThread
-        extends
-        FinderThread<ClusteringQualityMeasure> {
+public class ClusteringQualityMeasureFinderThread extends FinderThread<ClusteringQualityMeasure> {
 
     /**
      * @param supervisorThread
@@ -34,7 +32,7 @@ public class ClusteringQualityMeasureFinderThread
      */
     public ClusteringQualityMeasureFinderThread(
             final SupervisorThread supervisorThread,
-            final Repository repository, final boolean checkOnce) {
+            final IRepository repository, final boolean checkOnce) {
         super(supervisorThread, repository, ClusteringQualityMeasure.class,
                 30000, checkOnce);
     }
@@ -52,7 +50,7 @@ public class ClusteringQualityMeasureFinderThread
      */
     public ClusteringQualityMeasureFinderThread(
             final SupervisorThread supervisorThread,
-            final Repository repository, final long sleepTime,
+            final IRepository repository, final long sleepTime,
             final boolean checkOnce) {
         super(supervisorThread, repository, ClusteringQualityMeasure.class,
                 sleepTime, checkOnce);

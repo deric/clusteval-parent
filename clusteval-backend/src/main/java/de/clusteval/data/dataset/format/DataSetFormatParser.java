@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset.format;
 
+import de.clusteval.api.data.ConversionConfiguration;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.data.IDataSetFormatParser;

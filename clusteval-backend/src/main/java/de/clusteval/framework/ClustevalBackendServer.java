@@ -19,9 +19,19 @@ import ch.qos.logback.classic.encoder.PatternLayoutEncoder;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.ConsoleAppender;
 import ch.qos.logback.core.FileAppender;
+import de.clusteval.api.exceptions.DatabaseConnectException;
+import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
+import de.clusteval.api.exceptions.GoldStandardConfigurationException;
+import de.clusteval.api.exceptions.GoldStandardNotFoundException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.exceptions.UnknownDataSetGeneratorException;
+import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
+import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
+import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
+import de.clusteval.api.r.UnknownRProgramException;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.cluster.paramOptimization.InvalidOptimizationParameterException;
@@ -41,13 +51,7 @@ import de.clusteval.data.dataset.NoDataSetException;
 import de.clusteval.data.dataset.generator.DataSetGenerationException;
 import de.clusteval.data.dataset.generator.DataSetGenerator;
 import de.clusteval.data.dataset.generator.GoldStandardGenerationException;
-import de.clusteval.api.exceptions.UnknownDataSetGeneratorException;
 import de.clusteval.data.dataset.type.UnknownDataSetTypeException;
-import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
-import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
-import de.clusteval.api.exceptions.GoldStandardConfigurationException;
-import de.clusteval.api.exceptions.GoldStandardNotFoundException;
-import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.randomizer.DataRandomizeException;
 import de.clusteval.data.randomizer.DataRandomizer;
@@ -60,7 +64,6 @@ import de.clusteval.framework.repository.RepositoryController;
 import de.clusteval.framework.repository.RepositoryObjectDumpException;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
-import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.framework.threading.RunSchedulerThread;
 import de.clusteval.framework.threading.SupervisorThread;
 import de.clusteval.program.NoOptimizableProgramParameterException;
@@ -68,7 +71,6 @@ import de.clusteval.program.Program;
 import de.clusteval.program.UnknownParameterType;
 import de.clusteval.program.UnknownProgramParameterException;
 import de.clusteval.program.UnknownProgramTypeException;
-import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.run.InvalidRunModeException;
 import de.clusteval.run.Run;
 import de.clusteval.run.RunException;
@@ -76,7 +78,6 @@ import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.run.result.RunResult;
 import de.clusteval.run.result.RunResultParseException;
 import de.clusteval.run.result.format.UnknownRunResultFormatException;
-import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
 import de.clusteval.run.runnable.AnalysisIterationRunnable;
 import de.clusteval.run.runnable.DataAnalysisIterationRunnable;
 import de.clusteval.run.runnable.DataAnalysisRunRunnable;
@@ -259,7 +260,7 @@ public class ClustevalBackendServer implements IBackendServer {
      * Every backend server has exactly one repository, which stores all the
      * data on the filesystem.
      */
-    protected Repository repository;
+    protected IRepository repository;
 
     /**
      * The number of clients connected to this server so far. This number is
@@ -307,7 +308,7 @@ public class ClustevalBackendServer implements IBackendServer {
      * @param repository The repository used by this server.
      * @throws InterruptedException
      */
-    public ClustevalBackendServer(final Repository repository) throws InterruptedException {
+    public ClustevalBackendServer(final IRepository repository) throws InterruptedException {
         this(repository, true);
     }
 
@@ -316,7 +317,7 @@ public class ClustevalBackendServer implements IBackendServer {
      * @param registerServer
      * @throws InterruptedException
      */
-    public ClustevalBackendServer(final Repository repository, final boolean registerServer)
+    public ClustevalBackendServer(final IRepository repository, final boolean registerServer)
             throws InterruptedException {
         super();
 

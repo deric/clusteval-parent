@@ -10,8 +10,8 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset;
 
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.threading.SupervisorThread;
 import de.clusteval.utils.Finder;
 import de.clusteval.utils.FinderThread;
@@ -33,7 +33,7 @@ public class RunResultDataSetConfigFinderThread extends FinderThread<DataSetConf
      */
     public RunResultDataSetConfigFinderThread(
             final SupervisorThread supervisorThread,
-            final Repository repository, final boolean checkOnce) {
+            final IRepository repository, final boolean checkOnce) {
         super(supervisorThread, repository, DataSetConfig.class, 30000,
                 checkOnce);
     }
@@ -51,7 +51,7 @@ public class RunResultDataSetConfigFinderThread extends FinderThread<DataSetConf
      */
     public RunResultDataSetConfigFinderThread(
             final SupervisorThread supervisorThread,
-            final Repository repository, final long sleepTime,
+            final IRepository repository, final long sleepTime,
             final boolean checkOnce) {
         super(supervisorThread, repository, DataSetConfig.class, sleepTime,
                 checkOnce);

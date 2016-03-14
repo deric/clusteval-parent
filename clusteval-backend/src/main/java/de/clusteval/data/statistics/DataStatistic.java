@@ -14,7 +14,6 @@ package de.clusteval.data.statistics;
 
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.run.DataAnalysisRun;
 import de.clusteval.utils.Statistic;
 import java.io.File;
@@ -114,14 +113,14 @@ public abstract class DataStatistic extends Statistic {
      * @return A subclass of {@link DataStatistic}.
      * @throws UnknownDataStatisticException
      */
-    public static DataStatistic parseFromString(final Repository repository,
+    public static DataStatistic parseFromString(final IRepository repository,
             String dataStatistic) throws UnknownDataStatisticException {
         Class<? extends DataStatistic> c = repository.getRegisteredClass(
                 DataStatistic.class, "de.clusteval.data.statistics."
                 + dataStatistic);
 
         try {
-            DataStatistic statistic = c.getConstructor(Repository.class,
+            DataStatistic statistic = c.getConstructor(IRepository.class,
                     boolean.class, long.class, File.class).newInstance(
                             repository, false, System.currentTimeMillis(),
                             new File(dataStatistic));
@@ -146,7 +145,7 @@ public abstract class DataStatistic extends Statistic {
      * @return A subclass of {@link DataStatistic}.
      * @throws UnknownDataStatisticException
      */
-    public static List<DataStatistic> parseFromString(final Repository repo,
+    public static List<DataStatistic> parseFromString(final IRepository repo,
             String[] dataStatistics) throws UnknownDataStatisticException {
         List<DataStatistic> result = new LinkedList<>();
         for (String dataStatistic : dataStatistics) {

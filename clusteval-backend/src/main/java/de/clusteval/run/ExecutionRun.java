@@ -20,7 +20,7 @@ import de.clusteval.api.repository.RepositoryRemoveEvent;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
 import de.clusteval.context.Context;
 import de.clusteval.data.DataConfig;
-import de.clusteval.framework.repository.RepositoryReplaceEvent;
+import de.clusteval.api.repository.RepositoryReplaceEvent;
 import de.clusteval.framework.threading.RunSchedulerThread;
 import de.clusteval.program.ProgramConfig;
 import de.clusteval.program.ProgramParameter;

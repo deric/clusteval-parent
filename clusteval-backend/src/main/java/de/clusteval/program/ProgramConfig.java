@@ -18,7 +18,7 @@ import de.clusteval.data.dataset.format.DataSetFormat;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RepositoryObject;
 import de.clusteval.api.repository.RepositoryRemoveEvent;
-import de.clusteval.framework.repository.RepositoryReplaceEvent;
+import de.clusteval.api.repository.RepositoryReplaceEvent;
 import de.clusteval.run.ParameterOptimizationRun;
 import de.clusteval.run.result.format.RunResultFormat;
 import java.io.File;

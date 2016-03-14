@@ -8,7 +8,7 @@
  * Contributors:
  *     Christian Wiwie - initial API and implementation
  ***************************************************************************** */
-package de.clusteval.data.dataset.format;
+package de.clusteval.api.data;
 
 /**
  * A wrapper class for the configuration of conversion processes throughout the

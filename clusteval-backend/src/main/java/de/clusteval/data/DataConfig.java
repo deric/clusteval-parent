@@ -24,7 +24,7 @@ import de.clusteval.data.goldstandard.GoldStandardConfig;
 import de.clusteval.framework.repository.DumpableRepositoryObject;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RepositoryObjectDumpException;
-import de.clusteval.framework.repository.RepositoryReplaceEvent;
+import de.clusteval.api.repository.RepositoryReplaceEvent;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;

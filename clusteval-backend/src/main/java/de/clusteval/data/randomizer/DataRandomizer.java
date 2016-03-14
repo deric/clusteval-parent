@@ -10,19 +10,16 @@
  *     Christian Wiwie - initial API and implementation
  *****************************************************************************
  */
-/**
- *
- */
 package de.clusteval.data.randomizer;
 
 import de.clusteval.api.r.RLibraryInferior;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.AbstractDataSetProvider;
 import de.clusteval.data.dataset.DataSet;
 import de.clusteval.data.dataset.generator.DataSetGenerationException;
 import de.clusteval.data.goldstandard.GoldStandard;
-import de.clusteval.framework.repository.Repository;
 import de.wiwie.wiutils.file.FileUtils;
 import de.wiwie.wiutils.utils.Pair;
 import java.io.File;
@@ -82,7 +79,7 @@ public abstract class DataRandomizer extends AbstractDataSetProvider implements 
      * @param absPath
      * @throws RegisterException
      */
-    public DataRandomizer(Repository repository, boolean register, long changeDate, File absPath)
+    public DataRandomizer(IRepository repository, boolean register, long changeDate, File absPath)
             throws RegisterException {
         super(repository, register, changeDate, absPath);
     }
@@ -98,9 +95,9 @@ public abstract class DataRandomizer extends AbstractDataSetProvider implements 
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see framework.repository.RepositoryObject#clone()
+     * (non-Javadoc)
+     *
+     * @see framework.repository.RepositoryObject#clone()
      */
     @Override
     public DataRandomizer clone() {
@@ -125,9 +122,9 @@ public abstract class DataRandomizer extends AbstractDataSetProvider implements 
 
     /**
      * @return A wrapper object keeping all options of your dataset generator
-     * together with the default options of all dataset generators. The options
-     * returned by this method are going to be used and interpreted in your
-     * subclass implementation in {@link #randomizeDataConfig()} .
+     *         together with the default options of all dataset generators. The options
+     *         returned by this method are going to be used and interpreted in your
+     *         subclass implementation in {@link #randomizeDataConfig()} .
      */
     public Options getAllOptions() {
         // options of actual generator implementation
@@ -140,8 +137,8 @@ public abstract class DataRandomizer extends AbstractDataSetProvider implements 
 
     /**
      * @return A wrapper object keeping the options of your dataset generator.
-     * The options returned by this method are going to be used and interpreted
-     * in your subclass implementation in {@link #generateDataSet()} .
+     *         The options returned by this method are going to be used and interpreted
+     *         in your subclass implementation in {@link #generateDataSet()} .
      */
     protected abstract Options getOptions();
 
@@ -157,8 +154,8 @@ public abstract class DataRandomizer extends AbstractDataSetProvider implements 
      * @param cliArguments
      * @return The generated {@link DataSet}.
      * @throws DataRandomizeException This exception is thrown, if the passed
-     * arguments are not valid, or parsing of the written data set/ gold
-     * standard or config files fails.
+     *                                arguments are not valid, or parsing of the written data set/ gold
+     *                                standard or config files fails.
      * @throws DataRandomizeException
      */
     // TODO: remove onlySimulate attribute
@@ -198,7 +195,7 @@ public abstract class DataRandomizer extends AbstractDataSetProvider implements 
      * attribute
      *
      * @param options The existing Options attribute, holding already the
-     * options of the actual generator implementation.
+     *                options of the actual generator implementation.
      */
     private void addDefaultOptions(final Options options) {
         OptionBuilder.withArgName("dataConfig");
@@ -238,25 +235,25 @@ public abstract class DataRandomizer extends AbstractDataSetProvider implements 
      * @throws InterruptedException
      *
      * @throws DataSetGenerationException If something goes wrong during the
-     * generation process, this exception is thrown.
+     *                                    generation process, this exception is thrown.
      */
     protected abstract Pair<DataSet, GoldStandard> randomizeDataConfig() throws InterruptedException;
 
     /**
      * Parses a dataconfig randomizer from string.
      *
-     * @param repository the repository
+     * @param repository     the repository
      * @param dataRandomizer The simple name of the dataset randomizer class.
      * @return the clustering quality measure
      * @throws UnknownDataRandomizerException
      */
-    public static DataRandomizer parseFromString(final Repository repository, String dataRandomizer)
+    public static DataRandomizer parseFromString(final IRepository repository, String dataRandomizer)
             throws UnknownDataRandomizerException {
 
         Class<? extends DataRandomizer> c = repository.getRegisteredClass(DataRandomizer.class,
                 "de.clusteval.data.randomizer." + dataRandomizer);
         try {
-            DataRandomizer generator = c.getConstructor(Repository.class, boolean.class, long.class, File.class)
+            DataRandomizer generator = c.getConstructor(IRepository.class, boolean.class, long.class, File.class)
                     .newInstance(repository, false, System.currentTimeMillis(), new File(dataRandomizer));
             return generator;
 

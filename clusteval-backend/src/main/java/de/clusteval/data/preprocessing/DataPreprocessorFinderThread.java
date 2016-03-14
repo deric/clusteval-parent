@@ -10,8 +10,8 @@
  ***************************************************************************** */
 package de.clusteval.data.preprocessing;
 
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.threading.SupervisorThread;
 import de.clusteval.utils.FinderThread;
 
@@ -29,7 +29,7 @@ public class DataPreprocessorFinderThread extends FinderThread<DataPreprocessor>
      */
     public DataPreprocessorFinderThread(
             final SupervisorThread supervisorThread,
-            final Repository repository, final boolean checkOnce) {
+            final IRepository repository, final boolean checkOnce) {
         super(supervisorThread, repository, DataPreprocessor.class, 30000,
                 checkOnce);
     }
@@ -43,7 +43,7 @@ public class DataPreprocessorFinderThread extends FinderThread<DataPreprocessor>
      */
     public DataPreprocessorFinderThread(
             final SupervisorThread supervisorThread,
-            final Repository framework, final long sleepTime,
+            final IRepository framework, final long sleepTime,
             final boolean checkOnce) {
         super(supervisorThread, framework, DataPreprocessor.class, sleepTime,
                 checkOnce);

@@ -10,11 +10,13 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset.format;
 
+import de.clusteval.api.data.ConversionConfiguration;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.RNotAvailableException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.data.dataset.DataSet;
 import de.clusteval.framework.repository.Repository;
@@ -120,7 +122,7 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
      * @return The parsed dataset format.
      * @throws UnknownDataSetFormatException
      */
-    public static DataSetFormat parseFromString(final Repository repository,
+    public static DataSetFormat parseFromString(final IRepository repository,
             String datasetFormat, final int formatVersion)
             throws UnknownDataSetFormatException {
         Class<? extends DataSetFormat> c = repository.getRegisteredClass(
@@ -128,7 +130,7 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
                 + datasetFormat);
         try {
             Constructor<? extends DataSetFormat> constr = c.getConstructor(
-                    Repository.class, boolean.class, long.class, File.class,
+                    IRepository.class, boolean.class, long.class, File.class,
                     int.class);
             // changed 21.03.2013: do not register dataset formats here
             return constr.newInstance(repository, false,
@@ -156,7 +158,7 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
      * @return The parsed dataset format.
      * @throws UnknownDataSetFormatException
      */
-    public static DataSetFormat parseFromString(final Repository repository,
+    public static DataSetFormat parseFromString(final IRepository repository,
             String datasetFormat) throws UnknownDataSetFormatException {
         return parseFromString(repository, datasetFormat,
                 repository.getCurrentDataSetFormatVersion(datasetFormat));
@@ -177,7 +179,7 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
      * @throws UnknownDataSetFormatException
      *                                       the unknown data set format exception
      */
-    public static List<DataSetFormat> parseFromString(final Repository repo,
+    public static List<DataSetFormat> parseFromString(final IRepository repo,
             String[] datasetFormats) throws UnknownDataSetFormatException {
         List<DataSetFormat> result = new LinkedList<>();
         for (String dsFormat : datasetFormats) {
@@ -313,7 +315,7 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
      *                   The version of the dataset format.
      * @throws RegisterException
      */
-    public DataSetFormat(final Repository repo, final boolean register,
+    public DataSetFormat(final IRepository repo, final boolean register,
             final long changeDate, final File absPath, final int version)
             throws RegisterException {
         super(repo, false, changeDate, absPath);

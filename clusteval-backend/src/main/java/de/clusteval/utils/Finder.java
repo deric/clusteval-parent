@@ -16,7 +16,7 @@ import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.repository.RepositoryEvent;
 import de.clusteval.framework.repository.RepositoryObject;
 import de.clusteval.api.repository.RepositoryRemoveEvent;
-import de.clusteval.framework.repository.RepositoryReplaceEvent;
+import de.clusteval.api.repository.RepositoryReplaceEvent;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Iterator;

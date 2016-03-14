@@ -10,8 +10,8 @@
  ***************************************************************************** */
 package de.clusteval.data.statistics;
 
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.utils.JARFinder;
 import de.clusteval.utils.RecursiveSubDirectoryIterator;
 import java.io.File;
@@ -34,7 +34,7 @@ public class DataStatisticFinder extends JARFinder<DataStatistic> {
      *                   the repository
      * @throws RegisterException
      */
-    public DataStatisticFinder(final Repository repository)
+    public DataStatisticFinder(final IRepository repository)
             throws RegisterException {
         super(repository, DataStatistic.class);
     }

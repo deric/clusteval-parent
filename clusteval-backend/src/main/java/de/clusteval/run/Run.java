@@ -19,7 +19,7 @@ import de.clusteval.api.repository.RepositoryEvent;
 import de.clusteval.api.repository.RepositoryRemoveEvent;
 import de.clusteval.context.Context;
 import de.clusteval.framework.repository.RepositoryObject;
-import de.clusteval.framework.repository.RepositoryReplaceEvent;
+import de.clusteval.api.repository.RepositoryReplaceEvent;
 import de.clusteval.framework.threading.RunSchedulerThread;
 import de.clusteval.program.ProgramParameter;
 import de.clusteval.run.result.ClusteringRunResult;

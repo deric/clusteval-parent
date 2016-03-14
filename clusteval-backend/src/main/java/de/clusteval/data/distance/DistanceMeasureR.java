@@ -12,12 +12,12 @@
  */
 package de.clusteval.data.distance;
 
+import de.clusteval.api.exceptions.RNotAvailableException;
+import de.clusteval.api.r.RException;
+import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.repository.RegisterException;
 import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
 import de.clusteval.framework.repository.MyRengine;
-import de.clusteval.api.r.RException;
-import de.clusteval.api.repository.RegisterException;
-import de.clusteval.framework.repository.Repository;
-import de.clusteval.api.exceptions.RNotAvailableException;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
 import java.io.File;
 import org.rosuda.REngine.REXPMismatchException;
@@ -39,7 +39,7 @@ public abstract class DistanceMeasureR extends DistanceMeasure {
      * @param absPath
      * @throws RegisterException
      */
-    public DistanceMeasureR(Repository repository, boolean register,
+    public DistanceMeasureR(IRepository repository, boolean register,
             long changeDate, File absPath) throws RegisterException {
         super(repository, register, changeDate, absPath);
     }

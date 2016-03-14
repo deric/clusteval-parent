@@ -14,7 +14,6 @@ import de.clusteval.api.r.RLibraryInferior;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.data.dataset.DataSet;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RepositoryObject;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
@@ -134,7 +133,7 @@ public abstract class DataPreprocessor extends RepositoryObject implements RLibr
                 DataPreprocessor.class, "de.clusteval.data.preprocessing."
                 + dataPreprocessor);
         try {
-            DataPreprocessor preprocessor = c.getConstructor(Repository.class,
+            DataPreprocessor preprocessor = c.getConstructor(IRepository.class,
                     boolean.class, long.class, File.class).newInstance(
                             repository, true, System.currentTimeMillis(),
                             new File(dataPreprocessor));

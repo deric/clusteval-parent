@@ -12,7 +12,6 @@ package de.clusteval.data.distance;
 
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.threading.SupervisorThread;
 import de.clusteval.utils.FinderThread;
 
@@ -40,7 +39,7 @@ public class DistanceMeasureFinderThread extends FinderThread<DistanceMeasure> {
      * @param checkOnce
      */
     public DistanceMeasureFinderThread(final SupervisorThread supervisorThread,
-            final Repository framework, final long sleepTime,
+            final IRepository framework, final long sleepTime,
             final boolean checkOnce) {
         super(supervisorThread, framework, DistanceMeasure.class, sleepTime,
                 checkOnce);

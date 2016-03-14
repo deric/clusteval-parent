@@ -12,6 +12,7 @@
  */
 package de.clusteval.data.dataset.format;
 
+import de.clusteval.api.data.ConversionConfiguration;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.data.dataset.DataSet;

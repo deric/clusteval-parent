@@ -12,7 +12,6 @@ package de.clusteval.data.dataset.type;
 
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RepositoryObject;
 import java.io.File;
 import java.lang.reflect.Constructor;
@@ -111,7 +110,7 @@ public abstract class DataSetType extends RepositoryObject {
                 + datasetType);
         try {
             Constructor<? extends DataSetType> constr = c.getConstructor(
-                    Repository.class, boolean.class, long.class, File.class);
+                    IRepository.class, boolean.class, long.class, File.class);
             // changed 21.03.2013: do not register dataset types here
             return constr.newInstance(repository, false,
                     System.currentTimeMillis(), new File(datasetType));

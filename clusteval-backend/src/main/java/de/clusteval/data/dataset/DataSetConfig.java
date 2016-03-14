@@ -23,7 +23,7 @@ import de.clusteval.framework.repository.Repository;
 import de.clusteval.api.repository.RepositoryMoveEvent;
 import de.clusteval.framework.repository.RepositoryObjectDumpException;
 import de.clusteval.api.repository.RepositoryRemoveEvent;
-import de.clusteval.framework.repository.RepositoryReplaceEvent;
+import de.clusteval.api.repository.RepositoryReplaceEvent;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;

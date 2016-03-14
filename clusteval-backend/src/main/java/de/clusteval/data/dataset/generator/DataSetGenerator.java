@@ -12,9 +12,11 @@
  */
 package de.clusteval.data.dataset.generator;
 
-import de.clusteval.api.exceptions.UnknownDataSetGeneratorException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.exceptions.UnknownDataSetGeneratorException;
+import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.r.RLibraryInferior;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.AbsoluteDataSet;
@@ -25,7 +27,6 @@ import de.clusteval.data.dataset.format.AbsoluteDataSetFormat;
 import de.clusteval.data.dataset.format.DataSetFormat;
 import de.clusteval.data.dataset.type.DataSetType;
 import de.clusteval.data.dataset.type.UnknownDataSetTypeException;
-import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.data.goldstandard.GoldStandard;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RepositoryObject;
@@ -113,7 +114,7 @@ public abstract class DataSetGenerator extends AbstractDataSetProvider implement
      * @param absPath
      * @throws RegisterException
      */
-    public DataSetGenerator(Repository repository, boolean register, long changeDate, File absPath)
+    public DataSetGenerator(IRepository repository, boolean register, long changeDate, File absPath)
             throws RegisterException {
         super(repository, register, changeDate, absPath);
     }
@@ -129,25 +130,16 @@ public abstract class DataSetGenerator extends AbstractDataSetProvider implement
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see framework.repository.RepositoryObject#clone()
+     * (non-Javadoc)
+     *
+     * @see framework.repository.RepositoryObject#clone()
      */
     @Override
     public RepositoryObject clone() {
         try {
             return this.getClass().getConstructor(this.getClass()).newInstance(this);
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        } catch (SecurityException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
+        } catch (IllegalArgumentException | SecurityException | InstantiationException |
+                IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
         this.log.warn("Cloning instance of class " + this.getClass().getSimpleName() + " failed");
@@ -156,9 +148,9 @@ public abstract class DataSetGenerator extends AbstractDataSetProvider implement
 
     /**
      * @return A wrapper object keeping all options of your dataset generator
-     * together with the default options of all dataset generators. The options
-     * returned by this method are going to be used and interpreted in your
-     * subclass implementation in {@link #generateDataSet()} .
+     *         together with the default options of all dataset generators. The options
+     *         returned by this method are going to be used and interpreted in your
+     *         subclass implementation in {@link #generateDataSet()} .
      */
     public Options getAllOptions() {
         // options of actual generator implementation
@@ -171,8 +163,8 @@ public abstract class DataSetGenerator extends AbstractDataSetProvider implement
 
     /**
      * @return A wrapper object keeping the options of your dataset generator.
-     * The options returned by this method are going to be used and interpreted
-     * in your subclass implementation in {@link #generateDataSet()} .
+     *         The options returned by this method are going to be used and interpreted
+     *         in your subclass implementation in {@link #generateDataSet()} .
      */
     protected abstract Options getOptions();
 
@@ -186,7 +178,7 @@ public abstract class DataSetGenerator extends AbstractDataSetProvider implement
      * dataset, but within the goldstandard directory of the repository.
      *
      * @return A boolean indicating, whether your dataset generator also
-     * generates a corresponding goldstandard for the created dataset.
+     *         generates a corresponding goldstandard for the created dataset.
      */
     public abstract boolean generatesGoldStandard();
 
@@ -197,8 +189,8 @@ public abstract class DataSetGenerator extends AbstractDataSetProvider implement
      *
      * @param cliArguments
      * @return The generated {@link DataSet}.
-     * @throws ParseException This exception is thrown, if the passed arguments
-     * are not valid.
+     * @throws ParseException                  This exception is thrown, if the passed arguments
+     *                                         are not valid.
      * @throws DataSetGenerationException
      * @throws GoldStandardGenerationException
      * @throws InterruptedException
@@ -269,7 +261,7 @@ public abstract class DataSetGenerator extends AbstractDataSetProvider implement
      * attribute
      *
      * @param options The existing Options attribute, holding already the
-     * options of the actual generator implementation.
+     *                options of the actual generator implementation.
      */
     private void addDefaultOptions(final Options options) {
         OptionBuilder.withArgName("folderName");
@@ -326,7 +318,7 @@ public abstract class DataSetGenerator extends AbstractDataSetProvider implement
      * attribute.
      *
      * @throws DataSetGenerationException If something goes wrong during the
-     * generation process, this exception is thrown.
+     *                                    generation process, this exception is thrown.
      * @throws InterruptedException
      */
     protected abstract void generateDataSet() throws DataSetGenerationException, InterruptedException;
@@ -338,27 +330,27 @@ public abstract class DataSetGenerator extends AbstractDataSetProvider implement
      * wrapper object for it.
      *
      * @return A {@link GoldStandard} wrapper object for the generated
-     * goldstandard file.
+     *         goldstandard file.
      * @throws GoldStandardGenerationException If something goes wrong during
-     * the generation process, this exception is thrown.
+     *                                         the generation process, this exception is thrown.
      */
     protected abstract GoldStandard generateGoldStandard() throws GoldStandardGenerationException;
 
     /**
      * Parses a dataset generator from string.
      *
-     * @param repository the repository
+     * @param repository       the repository
      * @param dataSetGenerator The simple name of the dataset generator class.
      * @return the clustering quality measure
      * @throws UnknownDataSetGeneratorException
      */
-    public static DataSetGenerator parseFromString(final Repository repository, String dataSetGenerator)
+    public static DataSetGenerator parseFromString(final IRepository repository, String dataSetGenerator)
             throws UnknownDataSetGeneratorException {
 
         Class<? extends DataSetGenerator> c = repository.getRegisteredClass(DataSetGenerator.class,
                 "de.clusteval.data.dataset.generator." + dataSetGenerator);
         try {
-            DataSetGenerator generator = c.getConstructor(Repository.class, boolean.class, long.class, File.class)
+            DataSetGenerator generator = c.getConstructor(IRepository.class, boolean.class, long.class, File.class)
                     .newInstance(repository, false, System.currentTimeMillis(), new File(dataSetGenerator));
             return generator;
 

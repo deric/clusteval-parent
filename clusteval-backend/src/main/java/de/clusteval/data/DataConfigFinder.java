@@ -13,7 +13,6 @@ package de.clusteval.data;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.utils.FileFinder;
 import de.wiwie.wiutils.utils.ArrayIterator;
 import java.io.File;
@@ -22,7 +21,7 @@ import java.util.Iterator;
 /**
  * Objects of this class look for new data configuration-files in the directory
  * defined in the corresponding repository (see
- * {@link Repository#dataConfigBasePath}).
+ * {@link IRepository#dataConfigBasePath}).
  *
  * @author Christian Wiwie
  *

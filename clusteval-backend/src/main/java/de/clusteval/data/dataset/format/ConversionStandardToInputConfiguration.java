@@ -10,6 +10,8 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset.format;
 
+import de.clusteval.api.data.ConversionConfiguration;
+
 /**
  * @author Christian Wiwie
  *

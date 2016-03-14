@@ -33,6 +33,7 @@ import java.net.URLClassLoader;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import javax.script.ScriptException;
 
 /**
  *
@@ -257,5 +258,22 @@ public interface IRepository {
      *         changes.
      */
     public SupervisorThread getSupervisorThread();
+
+    /**
+     * This method is used to evaluate parameter values containing JavaScript
+     * arithmetic operations.
+     *
+     * <p>
+     * A helper method of null null null null null null null null null null null
+     * null null null null null null null null null     {@link ProgramParameter#evaluateDefaultValue(DataConfig, ProgramConfig)},
+	 * {@link ProgramParameter#evaluateMinValue(DataConfig, ProgramConfig)} and
+     * {@link ProgramParameter#evaluateMaxValue(DataConfig, ProgramConfig)}.
+     *
+     * @param script The parameter value containing javascript arithmetic
+     *               operations.
+     * @return The evaluated expression.
+     * @throws ScriptException
+     */
+    public String evaluateJavaScript(final String script) throws ScriptException;
 
 }

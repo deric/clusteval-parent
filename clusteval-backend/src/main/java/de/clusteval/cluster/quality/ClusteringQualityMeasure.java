@@ -17,15 +17,14 @@ import de.clusteval.api.cluster.quality.ClusteringQualityMeasureValue;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.RNotAvailableException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
+import de.clusteval.api.r.RCalculationException;
 import de.clusteval.api.r.RLibraryInferior;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.data.DataConfig;
-import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RepositoryObject;
-import de.clusteval.api.r.RCalculationException;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -183,7 +182,7 @@ public abstract class ClusteringQualityMeasure extends RepositoryObject implemen
                         "de.clusteval.cluster.quality." + qualityMeasure);
         try {
             ClusteringQualityMeasure measure = c.getConstructor(
-                    Repository.class, boolean.class, long.class, File.class,
+                    IRepository.class, boolean.class, long.class, File.class,
                     ClusteringQualityMeasureParameters.class).newInstance(
                             repository, false, System.currentTimeMillis(),
                             new File(qualityMeasure), parameters);

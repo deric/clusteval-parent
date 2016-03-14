@@ -15,7 +15,6 @@ package de.clusteval.context;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.data.dataset.format.DataSetFormat;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RepositoryObject;
 import de.clusteval.run.result.format.RunResultFormat;
 import java.io.File;
@@ -37,14 +36,14 @@ public abstract class Context extends RepositoryObject {
      * @return A context object of the class with the given simple name
      * @throws UnknownContextException
      */
-    public static Context parseFromString(final Repository repository,
+    public static Context parseFromString(final IRepository repository,
             final String contextName) throws UnknownContextException {
 
         Class<? extends Context> c = repository.getRegisteredClass(
                 Context.class, "de.clusteval.context." + contextName);
         Constructor<? extends Context> constr;
         try {
-            constr = c.getConstructor(Repository.class, boolean.class,
+            constr = c.getConstructor(IRepository.class, boolean.class,
                     long.class, File.class);
             return constr.newInstance(repository, false,
                     System.currentTimeMillis(), new File(contextName));

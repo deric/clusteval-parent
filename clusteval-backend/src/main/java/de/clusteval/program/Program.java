@@ -20,7 +20,7 @@ import de.clusteval.context.UnknownContextException;
 import de.clusteval.data.DataConfig;
 import de.clusteval.framework.RLibraryNotLoadedException;
 import de.clusteval.framework.repository.RepositoryObject;
-import de.clusteval.framework.repository.RepositoryReplaceEvent;
+import de.clusteval.api.repository.RepositoryReplaceEvent;
 import de.clusteval.framework.repository.RunResultRepository;
 import java.io.File;
 import java.io.IOException;

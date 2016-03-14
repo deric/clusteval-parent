@@ -12,6 +12,7 @@
  */
 package de.clusteval.framework.repository;
 
+import de.clusteval.api.repository.RepositoryReplaceEvent;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.IRepositoryObject;
 import de.clusteval.api.repository.RegisterException;

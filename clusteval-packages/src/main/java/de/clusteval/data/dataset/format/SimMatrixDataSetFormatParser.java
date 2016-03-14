@@ -13,6 +13,7 @@
  */
 package de.clusteval.data.dataset.format;
 
+import de.clusteval.api.data.ConversionConfiguration;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import java.io.BufferedWriter;
 import java.io.File;

@@ -20,7 +20,7 @@ import de.clusteval.framework.repository.Repository;
 import de.clusteval.api.repository.RepositoryEvent;
 import de.clusteval.framework.repository.RepositoryObject;
 import de.clusteval.api.repository.RepositoryRemoveEvent;
-import de.clusteval.framework.repository.RepositoryReplaceEvent;
+import de.clusteval.api.repository.RepositoryReplaceEvent;
 
 
 /**

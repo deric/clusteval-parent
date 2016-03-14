@@ -17,10 +17,12 @@ import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.RNotAvailableException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.repository.RepositoryEvent;
 import de.clusteval.api.repository.RepositoryMoveEvent;
 import de.clusteval.api.repository.RepositoryRemoveEvent;
+import de.clusteval.api.repository.RepositoryReplaceEvent;
 import de.clusteval.context.Context;
 import de.clusteval.data.dataset.format.AbsoluteDataSetFormat;
 import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
@@ -33,7 +35,6 @@ import de.clusteval.data.preprocessing.DataPreprocessor;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RepositoryObject;
-import de.clusteval.framework.repository.RepositoryReplaceEvent;
 import de.clusteval.utils.FormatConversionException;
 import de.clusteval.utils.NamedDoubleAttribute;
 import de.clusteval.utils.NamedIntegerAttribute;
@@ -145,7 +146,7 @@ public abstract class DataSet extends RepositoryObject implements IDataSet {
      * @param websiteVisibility
      * @throws RegisterException
      */
-    public DataSet(final Repository repository, final boolean register,
+    public DataSet(final IRepository repository, final boolean register,
             final long changeDate, final File absPath, final String alias,
             final DataSetFormat dsFormat, final DataSetType dsType,
             final WEBSITE_VISIBILITY websiteVisibility)

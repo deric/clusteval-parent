@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset.format;
 
+import de.clusteval.api.data.ConversionConfiguration;
 import de.clusteval.data.distance.DistanceMeasure;
 import de.clusteval.data.preprocessing.DataPreprocessor;
 import de.wiwie.wiutils.utils.SimilarityMatrix.NUMBER_PRECISION;

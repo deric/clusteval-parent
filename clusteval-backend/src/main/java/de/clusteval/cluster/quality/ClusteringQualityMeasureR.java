@@ -17,14 +17,14 @@ import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.RNotAvailableException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.data.DataConfig;
-import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.framework.repository.MyRengine;
-import de.clusteval.framework.repository.Repository;
 import java.io.File;
 import java.io.IOException;
 import org.rosuda.REngine.REXPMismatchException;
@@ -50,7 +50,7 @@ public abstract class ClusteringQualityMeasureR extends ClusteringQualityMeasure
      * @param parameters
      * @throws RegisterException
      */
-    public ClusteringQualityMeasureR(final Repository repo,
+    public ClusteringQualityMeasureR(final IRepository repo,
             final boolean register, final long changeDate, final File absPath,
             final ClusteringQualityMeasureParameters parameters)
             throws RegisterException {
