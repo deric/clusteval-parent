@@ -25,9 +25,9 @@ import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RException;
+import de.clusteval.api.r.RLibraryNotLoadedException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.framework.ISupervisorThread;
-import de.clusteval.api.r.RLibraryNotLoadedException;
 import de.clusteval.program.IProgramConfig;
 import java.io.File;
 import java.net.URL;
@@ -302,4 +302,6 @@ public interface IRepository {
      * @return A boolean indicating, whether the exception was new.
      */
     boolean addMissingRLibraryException(RLibraryNotLoadedException e);
+
+    Map<File, IRepositoryObject> getPathToRepositoryObject();
 }

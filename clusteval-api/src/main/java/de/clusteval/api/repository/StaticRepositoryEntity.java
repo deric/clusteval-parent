@@ -179,7 +179,7 @@ public class StaticRepositoryEntity<T extends IRepositoryObject> extends Reposit
         synchronized (this.objects) {
             this.objects.put(object, object);
             this.nameToObject.put(object.toString(), object);
-            this.repository.pathToRepositoryObject.put(object.absPath, object);
+            this.repository.getPathToRepositoryObject().put(object.getAbsPath(), object);
             old.notify(event);
 
             this.repository.getDb().register(object, true);
@@ -192,8 +192,8 @@ public class StaticRepositoryEntity<T extends IRepositoryObject> extends Reposit
         synchronized (this.objects) {
             this.objects.put(object, object);
             this.nameToObject.put(object.toString(), object);
-            repository.pathToRepositoryObject.put(object.absPath, object);
-            repository.pathToRepositoryObject.put(object.absPath, object);
+            repository.getPathToRepositoryObject().put(object.getAbsPath(), object);
+            repository.getPathToRepositoryObject().put(object.getAbsPath(), object);
             if (this.printOnRegister) {
                 this.repository.info("New " + object.getClass().getSimpleName()
                         + ": " + object.toString());
@@ -222,7 +222,7 @@ public class StaticRepositoryEntity<T extends IRepositoryObject> extends Reposit
         synchronized (this.objects) {
             boolean result = this.objects.remove(object) != null;
             result &= this.nameToObject.remove(object.toString()) != null;
-            result &= this.repository.pathToRepositoryObject
+            result &= this.repository.getPathToRepositoryObject()
                     .remove(object.getAbsolutePath()) != null;
             if (result) {
                 this.unregisterAfterRemove(object);

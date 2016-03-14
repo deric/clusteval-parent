@@ -158,6 +158,10 @@ public abstract class RepositoryObject implements RepositoryListener, IRepositor
         return absPath.getAbsolutePath();
     }
 
+    public File getAbsPath() {
+        return absPath;
+    }
+
     /**
      * @param absFilePath The new absolute file path.
      * @see #absPath

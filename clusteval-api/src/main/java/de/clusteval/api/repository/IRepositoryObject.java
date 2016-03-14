@@ -56,6 +56,8 @@ public interface IRepositoryObject {
      */
     void setAbsolutePath(final File absFilePath);
 
+    File getAbsPath();
+
     boolean addListener(final RepositoryListener listener);
 
     /**
