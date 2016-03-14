@@ -16,6 +16,7 @@ import ch.qos.logback.classic.Level;
 import de.clusteval.context.Context;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.framework.repository.Repository;
+import de.clusteval.framework.repository.RepositoryController;
 import de.clusteval.framework.repository.RepositoryObject;
 import de.clusteval.framework.repository.config.DefaultRepositoryConfig;
 import de.clusteval.run.result.RunResult;
@@ -119,7 +120,7 @@ public abstract class AbstractClustEvalTest {
         while (getRepository().getSupervisorThread().isAlive()) {
             Thread.sleep(100);
         }
-        Repository.unregister(getRepository());
+        RepositoryController.getInstance().unregister(getRepository());
     }
 
     protected Repository getRepository() {

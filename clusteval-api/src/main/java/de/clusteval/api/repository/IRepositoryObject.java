@@ -72,4 +72,66 @@ public interface IRepositoryObject {
 
     void notify(RepositoryEvent e) throws RegisterException;
 
+    /**
+     * A convenience method for {@link #copyTo(File, boolean)}, with overwriting
+     * enabled.
+     *
+     * @param copyDestination The absolute path to the destination file.
+     * @return True, if the copy operation was successful.
+     */
+    boolean copyTo(final File copyDestination);
+
+    /**
+     * A convenience method for {@link #copyTo(File, boolean, boolean)}, with
+     * waiting for the operation to finish.
+     *
+     * @param copyDestination The absolute path to the destination file.
+     * @param overwrite       Whether the possibly already existing target file should
+     *                        be overwritten.
+     * @return True, if the copy operation was successful.
+     */
+    boolean copyTo(final File copyDestination, final boolean overwrite);
+
+    /**
+     * This method copies the file corresponding to this repository object to
+     * the destination.
+     *
+     * <p>
+     * <b>Hint:</b> Use the wait parameter with caution: It might increase the
+     * ressource load of this method considerably. Also the wait operation might
+     * not terminate, if source and target filesystem use different encodings
+     * and the equality checks return false.
+     *
+     * @param copyDestination The absolute path to the destination file.
+     * @param overwrite       Whether the possibly already existing target file should
+     *                        be overwritten.
+     * @param wait            Whether to wait for this operation to finish, were the
+     *                        completion of the operation is determined by steadily comparing source
+     *                        and target file for equality.
+     * @return True, if the copy operation was successful.
+     */
+    public boolean copyTo(final File copyDestination, final boolean overwrite, final boolean wait);
+
+    /**
+     * A convenience method for {@link #copyToFolder(File, boolean)}, with
+     * overwriting enabled.
+     *
+     * @param copyFolderDestination The folder in which this file should be
+     *                              copied
+     * @return True, if the copy operation was successful.
+     */
+    public boolean copyToFolder(final File copyFolderDestination);
+
+    /**
+     * This method copies the file corresponding to this repository object into
+     * the destination folder.
+     *
+     * @param copyFolderDestination The folder in which this file should be
+     *                              copied
+     * @param overwrite             Whether a possibly already existing target file within
+     *                              the destination folder should be overwritten.
+     * @return True, if the copy operation was successful.
+     */
+    public boolean copyToFolder(final File copyFolderDestination, final boolean overwrite);
+
 }

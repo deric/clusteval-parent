@@ -16,11 +16,20 @@
  */
 package de.clusteval.framework;
 
+import de.clusteval.api.repository.IRun;
+import java.util.Set;
+
 /**
  * Runs scheduler
  *
  * @author deric
  */
 public interface IScheduler {
+
+    /**
+     *
+     * @return A collection of runs, that have been executed or resumed.
+     */
+    public Set<IRun> getRuns();
 
 }

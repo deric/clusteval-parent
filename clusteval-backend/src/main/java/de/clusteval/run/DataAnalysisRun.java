@@ -88,11 +88,9 @@ public class DataAnalysisRun extends AnalysisRun<DataStatistic> {
      *              The data analysis run to be cloned.
      * @throws RegisterException
      */
-    protected DataAnalysisRun(final DataAnalysisRun other)
-            throws RegisterException {
+    protected DataAnalysisRun(final DataAnalysisRun other) throws RegisterException {
         super(other);
-        this.dataConfigs = DataConfig
-                .cloneDataConfigurations(other.dataConfigs);
+        this.dataConfigs = DataConfig.cloneDataConfigurations(other.dataConfigs);
     }
 
     /*
@@ -102,7 +100,7 @@ public class DataAnalysisRun extends AnalysisRun<DataStatistic> {
      */
     @Override
     protected List<DataStatistic> cloneStatistics(List<DataStatistic> statistics) {
-        final List<DataStatistic> result = new ArrayList<DataStatistic>();
+        final List<DataStatistic> result = new ArrayList<>();
 
         for (DataStatistic st : statistics) {
             result.add(st.clone());
@@ -182,8 +180,7 @@ public class DataAnalysisRun extends AnalysisRun<DataStatistic> {
                 "inputs", dataConfig.getName(), new File(input).getParentFile()
                 .getName(), new File(input).getName());
         if (!(new File(movedInput).exists())) {
-            dataConfig.getDatasetConfig().getDataSet()
-                    .copyTo(new File(movedInput));
+            dataConfig.getDatasetConfig().getDataSet().copyTo(new File(movedInput));
         }
 
         /*

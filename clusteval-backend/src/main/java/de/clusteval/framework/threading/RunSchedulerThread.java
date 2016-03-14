@@ -10,9 +10,10 @@
  ***************************************************************************** */
 package de.clusteval.framework.threading;
 
-import de.clusteval.framework.ClustevalThread;
 import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.repository.IRun;
 import de.clusteval.framework.ClustevalBackendServer;
+import de.clusteval.framework.ClustevalThread;
 import de.clusteval.framework.IScheduler;
 import de.clusteval.framework.RUN_STATUS;
 import de.clusteval.run.MissingParameterValueException;
@@ -390,7 +391,7 @@ public class RunSchedulerThread extends ClustevalThread implements IScheduler {
      *         resumes.
      */
     public Queue<String> getQueue() {
-        final Queue<String> result = new ConcurrentLinkedQueue<String>();
+        final Queue<String> result = new ConcurrentLinkedQueue<>();
 
         for (Map.Entry<String, Collection<Run>> entry : this.clientToRuns
                 .entrySet()) {
@@ -420,8 +421,8 @@ public class RunSchedulerThread extends ClustevalThread implements IScheduler {
      *
      * @return A collection of runs, that have been executed or resumed.
      */
-    public Set<Run> getRuns() {
-        final Set<Run> result = new HashSet<Run>();
+    public Set<IRun> getRuns() {
+        final Set<IRun> result = new HashSet<>();
         for (Collection<Run> coll : this.clientToRunResumes.values()) {
             result.addAll(coll);
         }

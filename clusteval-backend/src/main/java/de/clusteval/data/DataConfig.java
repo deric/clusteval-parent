@@ -172,6 +172,7 @@ public class DataConfig extends DumpableRepositoryObject implements IDataConfig 
      *         configuration. If no conversion has been performed, this method returns
      *         the original dataset configuration.
      */
+    @Override
     public IDataSetConfig getDatasetConfig() {
         return dataSetConfig;
     }

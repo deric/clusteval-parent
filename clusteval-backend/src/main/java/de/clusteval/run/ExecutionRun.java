@@ -17,10 +17,11 @@ import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.repository.RepositoryEvent;
 import de.clusteval.api.repository.RepositoryRemoveEvent;
+import de.clusteval.api.repository.RepositoryReplaceEvent;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
 import de.clusteval.context.Context;
 import de.clusteval.data.DataConfig;
-import de.clusteval.api.repository.RepositoryReplaceEvent;
+import de.clusteval.framework.RUN_STATUS;
 import de.clusteval.framework.threading.RunSchedulerThread;
 import de.clusteval.program.ProgramConfig;
 import de.clusteval.program.ProgramParameter;
@@ -29,7 +30,6 @@ import de.clusteval.run.result.postprocessing.RunResultPostprocessor;
 import de.clusteval.run.runnable.ExecutionRunRunnable;
 import de.clusteval.run.runnable.RunRunnable;
 import de.clusteval.run.runnable.RunRunnableInitializationException;
-import de.clusteval.framework.RUN_STATUS;
 import de.wiwie.wiutils.file.FileUtils;
 import de.wiwie.wiutils.utils.Pair;
 import java.io.File;
@@ -397,8 +397,7 @@ public abstract class ExecutionRun extends Run {
                     "goldstandards", new File(goldStandard).getParentFile()
                     .getName(), new File(goldStandard).getName());
             if (!(new File(movedGoldStandard).exists())) {
-                dataConfig.getGoldstandardConfig().getGoldstandard()
-                        .copyTo(new File(movedGoldStandard), false);
+                dataConfig.getGoldstandardConfig().getGoldstandard().copyTo(new File(movedGoldStandard), false);
             }
 
             // /*

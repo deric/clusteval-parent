@@ -13,6 +13,7 @@
 package de.clusteval.data.distance;
 
 import de.clusteval.api.exceptions.RNotAvailableException;
+import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
@@ -65,7 +66,7 @@ public abstract class DistanceMeasureR extends DistanceMeasure {
     public final double getDistance(double[] point1, double[] point2)
             throws RNotAvailableException, InterruptedException {
         try {
-            MyRengine rEngine = repository.getRengineForCurrentThread();
+            IRengine rEngine = repository.getRengineForCurrentThread();
             try {
                 try {
                     return getDistanceHelper(point1, point2, rEngine);
@@ -81,7 +82,7 @@ public abstract class DistanceMeasureR extends DistanceMeasure {
             } finally {
                 rEngine.clear();
             }
-        } catch (RserveException e) {
+        } catch (RException e) {
             throw new RNotAvailableException(e.getMessage());
         }
     }
@@ -96,7 +97,7 @@ public abstract class DistanceMeasureR extends DistanceMeasure {
             ConversionInputToStandardConfiguration config, double[][] matrix)
             throws RNotAvailableException, InterruptedException {
         try {
-            MyRengine rEngine = repository.getRengineForCurrentThread();
+            IRengine rEngine = repository.getRengineForCurrentThread();
             try {
                 this.log.debug("Transferring coordinates to R");
                 rEngine.assign("matrix", matrix);

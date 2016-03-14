@@ -13,10 +13,10 @@ package de.clusteval.run.result;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.IRepositoryObject;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.framework.threading.RunSchedulerThread;
+import de.clusteval.framework.IScheduler;
+import de.clusteval.framework.RUN_STATUS;
 import de.clusteval.run.Run;
 import de.clusteval.utils.FileFinder;
-import de.clusteval.framework.RUN_STATUS;
 import de.wiwie.wiutils.utils.ArrayIterator;
 import java.io.File;
 import java.util.ArrayList;
@@ -92,8 +92,7 @@ public class RunResultFinder extends FileFinder<RunResult> {
     }
 
     protected boolean isRunning(final String uniqueRunIdentifier) {
-        RunSchedulerThread runScheduler = repository.getSupervisorThread()
-                .getRunScheduler();
+        IScheduler runScheduler = repository.getSupervisorThread().getRunScheduler();
         Collection<Run> runs = runScheduler.getRuns();
         for (Run run : runs) {
             if ((run.getStatus().equals(RUN_STATUS.RUNNING) || run.getStatus()

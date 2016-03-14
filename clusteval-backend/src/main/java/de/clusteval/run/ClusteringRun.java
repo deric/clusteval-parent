@@ -15,7 +15,6 @@ package de.clusteval.run;
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.cluster.quality.ClusteringQualityMeasure;
 import de.clusteval.context.Context;
 import de.clusteval.data.DataConfig;
 import de.clusteval.framework.threading.RunSchedulerThread;
@@ -56,7 +55,7 @@ public class ClusteringRun extends ExecutionRun {
     public ClusteringRun(IRepository repository, final Context context,
             long changeDate, File absPath, List<ProgramConfig> programConfigs,
             List<DataConfig> dataConfigs,
-            List<ClusteringQualityMeasure> qualityMeasures,
+            List<ClusteringEvaluation> qualityMeasures,
             List<Map<ProgramParameter<?>, String>> parameterValues,
             final List<RunResultPostprocessor> postProcessors,
             final Map<String, Integer> maxExecutionTimes)

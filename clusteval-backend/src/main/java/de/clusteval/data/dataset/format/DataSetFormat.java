@@ -436,6 +436,7 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
      *                        file.
      * @return True, if the copy operation was successful.
      */
+    @Override
     public boolean copyDataSetTo(final IDataSet dataSet, final File copyDestination, final boolean overwrite) {
         try {
             if (!copyDestination.exists() || overwrite) {
@@ -461,8 +462,8 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
      *                        file.
      * @return True, if the copy operation was successful.
      */
-    public boolean moveDataSetTo(final DataSet dataSet,
-            final File moveDestination, final boolean overwrite) {
+    @Override
+    public boolean moveDataSetTo(final IDataSet dataSet, final File moveDestination, final boolean overwrite) {
         try {
             if (!moveDestination.exists() || overwrite) {
                 org.apache.commons.io.FileUtils.moveFile(
@@ -487,8 +488,8 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
      *                              file.
      * @return True, if the copy operation was successful.
      */
-    public boolean copyDataSetToFolder(final DataSet dataSet,
-            final File copyFolderDestination, final boolean overwrite) {
+    @Override
+    public boolean copyDataSetToFolder(final IDataSet dataSet, final File copyFolderDestination, final boolean overwrite) {
         try {
             File targetFile = new File(FileUtils.buildPath(
                     copyFolderDestination.getAbsolutePath(),

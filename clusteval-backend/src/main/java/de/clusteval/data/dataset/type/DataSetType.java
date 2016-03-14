@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset.type;
 
+import de.clusteval.api.data.IDataSetType;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.RepositoryObject;
@@ -103,13 +104,13 @@ public abstract class DataSetType extends RepositoryObject {
      * @throws UnknownDataSetTypeException
      *                                     the unknown data set type exception
      */
-    public static DataSetType parseFromString(final IRepository repository,
+    public static IDataSetType parseFromString(final IRepository repository,
             String datasetType) throws UnknownDataSetTypeException {
         Class<? extends DataSetType> c = repository.getRegisteredClass(
                 DataSetType.class, "de.clusteval.data.dataset.type."
                 + datasetType);
         try {
-            Constructor<? extends DataSetType> constr = c.getConstructor(
+            Constructor<? extends IDataSetType> constr = (Constructor<? extends IDataSetType>) c.getConstructor(
                     IRepository.class, boolean.class, long.class, File.class);
             // changed 21.03.2013: do not register dataset types here
             return constr.newInstance(repository, false,
@@ -133,9 +134,9 @@ public abstract class DataSetType extends RepositoryObject {
      * @throws UnknownDataSetTypeException
      *                                     the unknown data set type exception
      */
-    public static List<DataSetType> parseFromString(final IRepository repo,
+    public static List<IDataSetType> parseFromString(final IRepository repo,
             String[] datasetTypes) throws UnknownDataSetTypeException {
-        List<DataSetType> result = new LinkedList<>();
+        List<IDataSetType> result = new LinkedList<>();
         for (String dsType : datasetTypes) {
             result.add(parseFromString(repo, dsType));
         }

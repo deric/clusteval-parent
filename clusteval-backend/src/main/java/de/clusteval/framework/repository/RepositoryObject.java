@@ -278,8 +278,7 @@ public abstract class RepositoryObject implements RepositoryListener, IRepositor
      *                        and target file for equality.
      * @return True, if the copy operation was successful.
      */
-    public boolean copyTo(final File copyDestination, final boolean overwrite,
-            final boolean wait) {
+    public boolean copyTo(final File copyDestination, final boolean overwrite, final boolean wait) {
         try {
             if (!copyDestination.exists() || overwrite) {
                 org.apache.commons.io.FileUtils.copyFile(this.absPath,
@@ -380,6 +379,7 @@ public abstract class RepositoryObject implements RepositoryListener, IRepositor
      *                              copied
      * @return True, if the copy operation was successful.
      */
+    @Override
     public boolean copyToFolder(final File copyFolderDestination) {
         return copyToFolder(copyFolderDestination, true);
     }
@@ -394,8 +394,7 @@ public abstract class RepositoryObject implements RepositoryListener, IRepositor
      *                              the destination folder should be overwritten.
      * @return True, if the copy operation was successful.
      */
-    public boolean copyToFolder(final File copyFolderDestination,
-            final boolean overwrite) {
+    public boolean copyToFolder(final File copyFolderDestination, final boolean overwrite) {
         File targetFile = new File(
                 FileUtils.buildPath(copyFolderDestination.getAbsolutePath(),
                         this.absPath.getName()));

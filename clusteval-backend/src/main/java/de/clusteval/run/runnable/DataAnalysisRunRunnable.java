@@ -12,6 +12,7 @@
  */
 package de.clusteval.run.runnable;
 
+import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.DataSet;
@@ -94,7 +95,7 @@ public class DataAnalysisRunRunnable extends
     public void beforeRun() {
         super.beforeRun();
 
-        DataSet current = this.dataConfig.getDatasetConfig().getDataSet();
+        IDataSet current = this.dataConfig.getDatasetConfig().getDataSet();
 
         DataSet ds;
         try {

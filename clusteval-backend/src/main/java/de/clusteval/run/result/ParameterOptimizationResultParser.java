@@ -10,17 +10,14 @@
  *     Christian Wiwie - initial API and implementation
  *****************************************************************************
  */
-/**
- *
- */
 package de.clusteval.run.result;
 
-import de.clusteval.cluster.Clustering;
-import de.clusteval.api.exceptions.ClusteringParseException;
-import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
-import de.clusteval.cluster.quality.ClusteringQualityMeasure;
+import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.cluster.quality.ClusteringQualityMeasureValue;
 import de.clusteval.api.cluster.quality.ClusteringQualitySet;
+import de.clusteval.api.exceptions.ClusteringParseException;
+import de.clusteval.cluster.Clustering;
+import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
 import de.clusteval.program.ParameterSet;
 import de.clusteval.program.ProgramParameter;
 import de.clusteval.run.ParameterOptimizationRun;
@@ -38,8 +35,8 @@ import java.util.List;
  */
 public class ParameterOptimizationResultParser extends TextFileParser {
 
-    protected List<ProgramParameter<?>> parameters = new ArrayList<ProgramParameter<?>>();
-    protected List<ClusteringQualityMeasure> qualityMeasures = new ArrayList<ClusteringQualityMeasure>();
+    protected List<ProgramParameter<?>> parameters = new ArrayList<>();
+    protected List<ClusteringEvaluation> qualityMeasures = new ArrayList<>();
     protected ParameterOptimizationMethod method;
     protected ParameterOptimizationRun run;
     protected ParameterOptimizationResult tmpResult;
@@ -74,7 +71,7 @@ public class ParameterOptimizationResultParser extends TextFileParser {
     protected void processLine(String[] key, String[] value) {
         if (this.currentLine == 0) {
             /*
-			 * Parse header line
+             * Parse header line
              */
             // 04.04.2013: added iteration number into first column
             String[] paramSplit = StringExt.split(value[1], ",");
@@ -83,7 +80,7 @@ public class ParameterOptimizationResultParser extends TextFileParser {
             }
             for (int i = 2; i < value.length; i++) {
                 String q = value[i];
-                for (ClusteringQualityMeasure other : run.getQualityMeasures()) {
+                for (ClusteringEvaluation other : run.getQualityMeasures()) {
                     if (other.getClass().getSimpleName().equals(q)) {
                         qualityMeasures.add(other);
                         break;
@@ -188,7 +185,7 @@ public class ParameterOptimizationResultParser extends TextFileParser {
                 // granted
                 // if (absFile.exists()) {
                 for (int pos = 2; pos < value.length; pos++) {
-                    ClusteringQualityMeasure other = this.qualityMeasures.get(pos - 2);
+                    ClusteringEvaluation other = this.qualityMeasures.get(pos - 2);
                     qualitySet.put(other, ClusteringQualityMeasureValue.parseFromString(value[pos]));
                 }
                 // }
@@ -232,9 +229,9 @@ public class ParameterOptimizationResultParser extends TextFileParser {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.wiwie.wiutils.utils.parse.TextFileParser#split(java.lang.String)
+     * (non-Javadoc)
+     *
+     * @see de.wiwie.wiutils.utils.parse.TextFileParser#split(java.lang.String)
      */
     public String[] split(String line) {
         return this.splitLines ? StringExt.split(line, this.inSplit) : new String[]{line};
