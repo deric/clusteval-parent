@@ -25,7 +25,6 @@ import de.clusteval.data.dataset.format.DataSetFormat;
 import de.clusteval.framework.RLibraryNotLoadedException;
 import de.clusteval.framework.RLibraryRequirement;
 import de.clusteval.framework.repository.MyRengine;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.program.Program;
 import de.clusteval.program.ProgramConfig;
 import de.clusteval.program.ProgramParameter;
@@ -145,7 +144,7 @@ public abstract class RProgram extends Program implements RLibraryInferior {
 
         try {
             Constructor<? extends RProgram> constr = c
-                    .getConstructor(Repository.class);
+                    .getConstructor(IRepository.class);
             RProgram program = constr.newInstance(repository);
             return program;
         } catch (InstantiationException | IllegalAccessException | NoSuchMethodException |

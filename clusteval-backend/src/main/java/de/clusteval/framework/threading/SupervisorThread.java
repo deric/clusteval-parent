@@ -17,7 +17,6 @@ import de.clusteval.data.dataset.DataSetConfigFinderThread;
 import de.clusteval.data.dataset.format.DataSetFormatFinderThread;
 import de.clusteval.data.statistics.DataStatisticFinderThread;
 import de.clusteval.framework.ISupervisorThread;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.run.RunFinderThread;
 import de.clusteval.run.result.format.RunResultFormatFinderThread;
 import de.clusteval.run.statistics.RunStatisticFinderThread;
@@ -138,7 +137,7 @@ public abstract class SupervisorThread extends Thread implements ISupervisorThre
                                     // it
                                     thread.getConstructor(
                                             SupervisorThread.class,
-                                            Repository.class, long.class,
+                                            IRepository.class, long.class,
                                             boolean.class).newInstance(
                                             this,
                                             repository,
@@ -150,7 +149,7 @@ public abstract class SupervisorThread extends Thread implements ISupervisorThre
                                     // the thread class
                                     thread.getConstructor(
                                             SupervisorThread.class,
-                                            Repository.class, boolean.class)
+                                            IRepository.class, boolean.class)
                                     .newInstance(this, repository,
                                             checkOnce));
                 } catch (IllegalArgumentException | SecurityException | InstantiationException |
@@ -184,7 +183,7 @@ public abstract class SupervisorThread extends Thread implements ISupervisorThre
                             try {
                                 constr = threadClass.getConstructor(
                                         ISupervisorThread.class,
-                                        Repository.class, boolean.class);
+                                        IRepository.class, boolean.class);
                                 this.threads.put(threadClass, constr
                                         .newInstance(this, repository, false));
                             } catch (NoSuchMethodException | SecurityException |

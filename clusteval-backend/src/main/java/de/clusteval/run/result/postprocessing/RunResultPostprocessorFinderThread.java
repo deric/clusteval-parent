@@ -10,9 +10,9 @@
  ***************************************************************************** */
 package de.clusteval.run.result.postprocessing;
 
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.framework.repository.Repository;
-import de.clusteval.framework.threading.SupervisorThread;
+import de.clusteval.framework.ISupervisorThread;
 import de.clusteval.utils.FinderThread;
 
 /**
@@ -28,8 +28,8 @@ public class RunResultPostprocessorFinderThread extends FinderThread<RunResultPo
      *
      */
     public RunResultPostprocessorFinderThread(
-            final SupervisorThread supervisorThread,
-            final Repository repository, final boolean checkOnce) {
+            final ISupervisorThread supervisorThread,
+            final IRepository repository, final boolean checkOnce) {
         super(supervisorThread, repository, RunResultPostprocessor.class, 30000,
                 checkOnce);
     }
@@ -42,8 +42,8 @@ public class RunResultPostprocessorFinderThread extends FinderThread<RunResultPo
      *
      */
     public RunResultPostprocessorFinderThread(
-            final SupervisorThread supervisorThread,
-            final Repository framework, final long sleepTime,
+            final ISupervisorThread supervisorThread,
+            final IRepository framework, final long sleepTime,
             final boolean checkOnce) {
         super(supervisorThread, framework, RunResultPostprocessor.class, sleepTime,
                 checkOnce);

@@ -33,7 +33,7 @@ import de.clusteval.data.goldstandard.GoldStandard;
 import de.clusteval.data.goldstandard.GoldStandardConfig;
 import de.clusteval.data.statistics.DataStatistic;
 import de.clusteval.framework.repository.NoRepositoryFoundException;
-import de.clusteval.framework.repository.Repository;
+import de.clusteval.framework.repository.RepositoryController;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.program.DoubleProgramParameter;
 import de.clusteval.program.IntegerProgramParameter;
@@ -78,10 +78,10 @@ import java.util.logging.Logger;
 /**
  * A default sql communicator is the standard implementation of the abstract
  * {@link SQLCommunicator} and is intended as a default for standard
- * repositories of type {@link Repository}.
+ * repositories of type {@link IRepository}.
  *
  * <p>
- * Subclasses of {@link Repository}, e.g. {@link RunResultRepository} have their
+ * Subclasses of {@link IRepository}, e.g. {@link RunResultRepository} have their
  * own sql communicator implementations.
  *
  * @author Christian Wiwie
@@ -1166,7 +1166,7 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
             }
 
             // insert clustering quality measures into DB
-            for (ClusteringQualityMeasure measure : object.getQualityMeasures()) {
+            for (ClusteringEvaluation measure : object.getQualityMeasures()) {
 
                 int measureId = getObjectId(measure);
 
@@ -1465,8 +1465,7 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
     }
 
     @Override
-    protected int getParameterOptimizationMethodId(final String name)
-            throws SQLException {
+    public int getParameterOptimizationMethodId(final String name) throws SQLException {
         return this.select(this.getTableParameterOptimizationMethods(), "id",
                 new String[]{"repository_id", "name"},
                 new String[]{this.updateRepositoryId() + "", name});
@@ -1631,7 +1630,7 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
      * @see de.wiwie.wiutils.utils.SQLCommunicator#register(data.goldstandard.GoldStandardConfig)
      */
     @Override
-    protected int register(IGoldStandardConfig object, final boolean updateOnly) {
+    public int register(IGoldStandardConfig object, final boolean updateOnly) {
         try {
             int goldstandard_id = getObjectId(object.getGoldstandard());
 
@@ -1684,8 +1683,7 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
      *
      * @see de.wiwie.wiutils.utils.SQLCommunicator#register(data.goldstandard.GoldStandard)
      */
-    @Override
-    protected int register(IGoldStandard object, final boolean updateOnly) {
+    public int register(IGoldStandard object, final boolean updateOnly) {
         try {
             String[] columns;
             String[] values;
@@ -1795,8 +1793,7 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
      * de.wiwie.wiutils.utils.SQLCommunicator#registerClusteringQualityMeasure(java.lang.Class)
      */
     @Override
-    protected boolean registerClusteringQualityMeasureClass(
-            Class<? extends ClusteringQualityMeasure> object) {
+    protected boolean registerClusteringQualityMeasureClass(Class<? extends ClusteringQualityMeasure> object) {
         try {
             ClusteringQualityMeasure measure = object.getConstructor(
                     IRepository.class, boolean.class, long.class, File.class,
@@ -1816,20 +1813,10 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
                         measure.getAlias()});
             this.objectIds.put(measure, id);
             return true;
-        } catch (SQLException e) {
+        } catch (SQLException | IllegalArgumentException | SecurityException |
+                InstantiationException | IllegalAccessException |
+                InvocationTargetException | NoSuchMethodException e) {
 
-            e.printStackTrace();
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        } catch (SecurityException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
         return false;
@@ -2218,7 +2205,7 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
      * @see de.wiwie.wiutils.utils.SQLCommunicator#register(data.DataConfig)
      */
     @Override
-    protected int register(IDataConfig object, final boolean updateOnly) {
+    public int register(IDataConfig object, final boolean updateOnly) {
 
         try {
             int dataset_config_id = getObjectId(object.getDatasetConfig());
@@ -2734,8 +2721,8 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
         try {
             int repository_id;
             try {
-                repository_id = getRepositoryId(Repository
-                        .getRepositoryForPath(object.getAbsolutePath()).basePath);
+                RepositoryController ctrl = RepositoryController.getInstance();
+                repository_id = getRepositoryId(ctrl.getRepositoryForPath(object.getAbsolutePath()).getBasePath());
             } catch (NoRepositoryFoundException e1) {
                 e1.printStackTrace();
                 repository_id = this.updateRepositoryId();
@@ -2856,7 +2843,7 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
                 "run_results_parameter_optimizations_parameter_set_parameter_id",
                 "run_results_parameter_optimizations_parameter_set_iteration_id",
                 "value"};
-            List<String[]> values = new ArrayList<String[]>();
+            List<String[]> values = new ArrayList<>();
 
             for (int i = 0; i < iterationIds.length; i++) {
                 int iteration_id = iterationIds[i];
@@ -2887,7 +2874,7 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
                 "run_results_parameter_optimization_id",
                 "run_results_parameter_optimizations_parameter_set_iteration_id",
                 "clustering_quality_measure_id", "quality"};
-            values = new ArrayList<String[]>();
+            values = new ArrayList<>();
 
             for (int i = 0; i < iterationIds.length; i++) {
                 int iteration_id = iterationIds[i];
@@ -2898,8 +2885,7 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
                     continue;
                 }
 
-                for (ClusteringQualityMeasure measure : pair.getSecond()
-                        .keySet()) {
+                for (ClusteringEvaluation measure : pair.getSecond().keySet()) {
                     int clustering_quality_measure_id = getObjectId(measure);
                     try {
                         if (pair.getSecond().get(measure).isTerminated()
@@ -3136,8 +3122,7 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
      * .String)
      */
     @Override
-    protected int getProgramParameterTypeId(String typeName)
-            throws SQLException {
+    protected int getProgramParameterTypeId(String typeName) throws SQLException {
         return this.select(this.getTableProgramParameterType(), "id",
                 new String[]{"name"}, new String[]{typeName});
 
@@ -3162,7 +3147,7 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
     }
 
     @Override
-    protected int getDataSetFormatId(final String dataSetFormatClassSimpleName)
+    public int getDataSetFormatId(final String dataSetFormatClassSimpleName)
             throws SQLException {
         return this.select(this.getTableDataSetFormats(), "id", new String[]{
             "repository_id", "name"},
@@ -3288,8 +3273,7 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
      * (java.lang.Class)
      */
     @Override
-    protected boolean unregisterClusteringQualityMeasureClass(
-            Class<? extends ClusteringQualityMeasure> object) {
+    protected boolean unregisterClusteringQualityMeasureClass(Class<? extends ClusteringEvaluation> object) {
         try {
             this.delete(this.getTableClusteringQualityMeasures(), new String[]{
                 this.updateRepositoryId() + "", object.getSimpleName()},

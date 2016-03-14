@@ -43,7 +43,6 @@ import de.clusteval.data.randomizer.UnknownDataRandomizerException;
 import de.clusteval.data.statistics.DataStatistic;
 import de.clusteval.data.statistics.UnknownDataStatisticException;
 import de.clusteval.framework.repository.NoRepositoryFoundException;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
@@ -292,6 +291,8 @@ public class DataAnalysisRunResult extends AnalysisRunResult<DataConfig, DataSta
      * @param run
      * @param parentRepository
      * @param runResultFolder
+     * @param result
+     * @param register
      * @return The data analysis run result parsed from the given runresult
      *         folder.
      * @throws RegisterException
@@ -299,7 +300,7 @@ public class DataAnalysisRunResult extends AnalysisRunResult<DataConfig, DataSta
      *
      */
     public static DataAnalysisRunResult parseFromRunResultFolder(final DataAnalysisRun run,
-            final Repository parentRepository, final File runResultFolder, final List<RunResult> result,
+            final IRepository parentRepository, final File runResultFolder, final List<RunResult> result,
             final boolean register) throws RegisterException, RunResultParseException {
 
         DataAnalysisRunResult analysisResult = null;
