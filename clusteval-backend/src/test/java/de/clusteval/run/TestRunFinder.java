@@ -36,7 +36,7 @@ import de.clusteval.framework.repository.NoRepositoryFoundException;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
-import de.clusteval.framework.repository.StaticRepositoryEntity;
+import de.clusteval.api.repository.StaticRepositoryEntity;
 import de.clusteval.framework.repository.config.DefaultRepositoryConfig;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;

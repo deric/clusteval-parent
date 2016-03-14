@@ -15,7 +15,7 @@ package de.clusteval.framework.repository;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
 import de.clusteval.framework.ClustevalBackendServer;
-import de.clusteval.framework.RLibraryNotLoadedException;
+import de.clusteval.api.r.RLibraryNotLoadedException;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;

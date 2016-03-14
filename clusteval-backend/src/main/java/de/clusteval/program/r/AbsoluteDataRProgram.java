@@ -19,7 +19,7 @@ import de.clusteval.api.repository.RegisterException;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.AbsoluteDataSet;
 import de.clusteval.data.dataset.DataMatrix;
-import de.clusteval.framework.RLibraryNotLoadedException;
+import de.clusteval.api.r.RLibraryNotLoadedException;
 import de.clusteval.program.ProgramConfig;
 import java.io.File;
 import java.util.Map;

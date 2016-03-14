@@ -14,12 +14,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.clusteval.framework.repository;
+package de.clusteval.api.repository;
 
-import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.repository.IRepositoryObject;
-import de.clusteval.api.repository.RegisterException;
-import de.clusteval.api.repository.RepositoryReplaceEvent;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -177,7 +173,7 @@ public class StaticRepositoryEntity<T extends IRepositoryObject> extends Reposit
         }
 
         /*
-		 * replace old object by new object
+         * replace old object by new object
          */
         RepositoryReplaceEvent event = new RepositoryReplaceEvent(old, object);
         synchronized (this.objects) {
@@ -196,7 +192,8 @@ public class StaticRepositoryEntity<T extends IRepositoryObject> extends Reposit
         synchronized (this.objects) {
             this.objects.put(object, object);
             this.nameToObject.put(object.toString(), object);
-            this.repository.pathToRepositoryObject.put(object.absPath, object);
+            repository.pathToRepositoryObject.put(object.absPath, object);
+            repository.pathToRepositoryObject.put(object.absPath, object);
             if (this.printOnRegister) {
                 this.repository.info("New " + object.getClass().getSimpleName()
                         + ": " + object.toString());

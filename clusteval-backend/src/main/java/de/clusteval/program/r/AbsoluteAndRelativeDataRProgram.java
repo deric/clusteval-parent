@@ -20,7 +20,7 @@ import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.AbsoluteDataSet;
 import de.clusteval.data.dataset.DataMatrix;
 import de.clusteval.data.dataset.RelativeDataSet;
-import de.clusteval.framework.RLibraryNotLoadedException;
+import de.clusteval.api.r.RLibraryNotLoadedException;
 import de.clusteval.program.ProgramConfig;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
 import java.io.File;

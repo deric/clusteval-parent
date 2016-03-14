@@ -18,7 +18,7 @@ package de.clusteval.run.runnable;
 
 import de.clusteval.api.exceptions.RNotAvailableException;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.framework.RLibraryNotLoadedException;
+import de.clusteval.api.r.RLibraryNotLoadedException;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.framework.threading.RunSchedulerThread;
 import de.clusteval.run.Run;

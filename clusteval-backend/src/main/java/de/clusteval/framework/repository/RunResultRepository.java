@@ -12,6 +12,9 @@
  */
 package de.clusteval.framework.repository;
 
+import de.clusteval.api.repository.StaticRepositoryEntityMap;
+import de.clusteval.api.repository.DynamicRepositoryEntityMap;
+import de.clusteval.api.repository.StaticRepositoryEntity;
 import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;

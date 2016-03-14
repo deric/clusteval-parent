@@ -27,6 +27,7 @@ import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.framework.ISupervisorThread;
+import de.clusteval.api.r.RLibraryNotLoadedException;
 import de.clusteval.program.IProgramConfig;
 import java.io.File;
 import java.net.URL;
@@ -34,6 +35,7 @@ import java.net.URLClassLoader;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import javax.script.ScriptException;
 
 /**
@@ -266,7 +268,7 @@ public interface IRepository {
      *
      * <p>
      * A helper method of null null null null null null null null null null null
-     * null null null null null null null null null null null null     {@link ProgramParameter#evaluateDefaultValue(DataConfig, ProgramConfig)},
+     * null null null null null null null null null null null null null null null null     {@link ProgramParameter#evaluateDefaultValue(DataConfig, ProgramConfig)},
 	 * {@link ProgramParameter#evaluateMinValue(DataConfig, ProgramConfig)} and
      * {@link ProgramParameter#evaluateMaxValue(DataConfig, ProgramConfig)}.
      *
@@ -285,4 +287,19 @@ public interface IRepository {
      */
     boolean isInitialized();
 
+    /**
+     * This method clears the existing exceptions for missing R libraries for
+     * the given class name.
+     *
+     * @param className The class name for which we want to clear the missing
+     *                  libraries.
+     * @return The old exceptions that were present for this class.
+     */
+    Set<RLibraryNotLoadedException> clearMissingRLibraries(String className);
+
+    /**
+     * @param e The new exception to add.
+     * @return A boolean indicating, whether the exception was new.
+     */
+    boolean addMissingRLibraryException(RLibraryNotLoadedException e);
 }

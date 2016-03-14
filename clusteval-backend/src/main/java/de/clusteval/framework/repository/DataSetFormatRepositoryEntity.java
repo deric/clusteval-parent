@@ -3,6 +3,7 @@
  */
 package de.clusteval.framework.repository;
 
+import de.clusteval.api.repository.DynamicRepositoryEntity;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.data.IDataSetFormatParser;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;

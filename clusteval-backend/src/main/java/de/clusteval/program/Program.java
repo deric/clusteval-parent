@@ -18,7 +18,7 @@ import de.clusteval.api.repository.RepositoryRemoveEvent;
 import de.clusteval.context.Context;
 import de.clusteval.context.UnknownContextException;
 import de.clusteval.data.DataConfig;
-import de.clusteval.framework.RLibraryNotLoadedException;
+import de.clusteval.api.r.RLibraryNotLoadedException;
 import de.clusteval.framework.repository.RepositoryObject;
 import de.clusteval.api.repository.RepositoryReplaceEvent;
 import de.clusteval.framework.repository.RunResultRepository;

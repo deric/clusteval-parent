@@ -18,7 +18,7 @@
  * Contributors: Christian Wiwie - initial API and implementation
  *
  */
-package de.clusteval.framework;
+package de.clusteval.api.r;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

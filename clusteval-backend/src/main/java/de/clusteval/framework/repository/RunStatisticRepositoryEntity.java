@@ -3,6 +3,7 @@
  */
 package de.clusteval.framework.repository;
 
+import de.clusteval.api.repository.DynamicRepositoryEntity;
 import java.util.HashMap;
 import java.util.Map;
 

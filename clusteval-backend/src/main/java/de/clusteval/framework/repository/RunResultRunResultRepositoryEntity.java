@@ -3,6 +3,7 @@
  */
 package de.clusteval.framework.repository;
 
+import de.clusteval.api.repository.StaticRepositoryEntity;
 import de.clusteval.run.result.RunResult;
 import de.wiwie.wiutils.file.FileUtils;
 

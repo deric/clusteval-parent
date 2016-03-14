@@ -16,8 +16,6 @@
  */
 package de.clusteval.api.r;
 
-import de.clusteval.framework.RLibraryNotLoadedException;
-
 /**
  * Provides access to execution of R code
  *

@@ -19,7 +19,7 @@ import de.clusteval.data.dataset.format.AbsoluteDataSetFormat;
 import de.clusteval.data.dataset.format.DataSetFormat;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
-import de.clusteval.framework.RLibraryRequirement;
+import de.clusteval.api.r.RLibraryRequirement;
 import de.clusteval.framework.repository.MyRengine;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;

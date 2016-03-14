@@ -18,7 +18,7 @@
  * Contributors: Christian Wiwie - initial API and implementation
  *
  */
-package de.clusteval.framework;
+package de.clusteval.api.r;
 
 /**
  * This exception indicates that a certain class required an R library, which

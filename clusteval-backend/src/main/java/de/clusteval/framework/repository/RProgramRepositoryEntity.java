@@ -3,6 +3,8 @@
  */
 package de.clusteval.framework.repository;
 
+import de.clusteval.api.repository.StaticRepositoryEntity;
+import de.clusteval.api.repository.DynamicRepositoryEntity;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.ClustevalBackendServer;

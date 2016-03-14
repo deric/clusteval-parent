@@ -1,14 +1,17 @@
 /**
  *
  */
-package de.clusteval.framework.repository;
+package de.clusteval.api.repository;
 
+import de.clusteval.api.repository.RepositoryEntity;
+import de.clusteval.api.r.IRengine;
+import de.clusteval.api.r.RException;
+import de.clusteval.api.r.RLibraryNotLoadedException;
+import de.clusteval.api.r.RLibraryRequirement;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.IRepositoryObject;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.repository.RepositoryRemoveEvent;
-import de.clusteval.framework.RLibraryNotLoadedException;
-import de.clusteval.framework.RLibraryRequirement;
-import de.clusteval.utils.UnsatisfiedRLibraryException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -16,11 +19,10 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import org.rosuda.REngine.Rserve.RserveException;
 
 public class DynamicRepositoryEntity<T extends IRepositoryObject> extends RepositoryEntity<T> {
 
-    protected static Map<String, Class<? extends RepositoryObject>> loadedClasses = new HashMap<>();
+    protected static Map<String, Class<? extends IRepositoryObject>> loadedClasses = new HashMap<>();
 
     protected DynamicRepositoryEntity<T> parent;
 
@@ -30,7 +32,7 @@ public class DynamicRepositoryEntity<T extends IRepositoryObject> extends Reposi
     protected Map<String, List<T>> objects;
     protected Map<String, Class<? extends T>> classes;
 
-    public DynamicRepositoryEntity(final Repository repository,
+    public DynamicRepositoryEntity(final IRepository repository,
             final DynamicRepositoryEntity<T> parent, final String basePath) {
         super(repository, basePath);
         this.parent = parent;
@@ -284,7 +286,6 @@ public class DynamicRepositoryEntity<T extends IRepositoryObject> extends Reposi
      *                    dependencies.
      * @return True, if all R library dependencies are fulfilled.
      * @throws InterruptedException
-     * @throws UnsatisfiedRLibraryException
      */
     protected <S extends T> boolean ensureLibraries(final Class<S> classObject)
             throws InterruptedException {
@@ -293,7 +294,7 @@ public class DynamicRepositoryEntity<T extends IRepositoryObject> extends Reposi
                     RLibraryRequirement.class).requiredRLibraries();
 
             // ensure that all R libraries are available
-            MyRengine rEngine;
+            IRengine rEngine;
             try {
                 rEngine = this.repository.getRengineForCurrentThread();
 
@@ -319,7 +320,7 @@ public class DynamicRepositoryEntity<T extends IRepositoryObject> extends Reposi
                     }
                 }
                 return true;
-            } catch (RserveException e) {
+            } catch (RException e) {
                 if (this.repository
                         .addMissingRLibraryException(new RLibraryNotLoadedException(
                                 classObject.getName(), "R"))) {

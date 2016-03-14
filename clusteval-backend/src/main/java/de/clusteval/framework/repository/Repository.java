@@ -12,9 +12,14 @@
  */
 package de.clusteval.framework.repository;
 
+import de.clusteval.api.repository.StaticRepositoryEntityMap;
+import de.clusteval.api.repository.DynamicRepositoryEntityMap;
+import de.clusteval.api.repository.StaticRepositoryEntity;
+import de.clusteval.api.repository.DynamicRepositoryEntity;
 import de.clusteval.api.Database;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.data.IDataSetFormatParser;
+import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.exceptions.InternalAttributeException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.r.IRengine;
@@ -45,12 +50,11 @@ import de.clusteval.data.randomizer.DataRandomizer;
 import de.clusteval.data.statistics.DataStatistic;
 import de.clusteval.data.statistics.DataStatisticCalculator;
 import de.clusteval.framework.ClustevalBackendServer;
-import de.clusteval.framework.RLibraryNotLoadedException;
+import de.clusteval.api.r.RLibraryNotLoadedException;
 import de.clusteval.framework.repository.config.DefaultRepositoryConfig;
 import de.clusteval.framework.repository.config.RepositoryConfig;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
-import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.framework.repository.db.DefaultSQLCommunicator;
 import de.clusteval.framework.repository.db.RunResultSQLCommunicator;
 import de.clusteval.framework.repository.db.SQLCommunicator;
@@ -399,6 +403,7 @@ public class Repository implements IRepository {
      *                  libraries.
      * @return The old exceptions that were present for this class.
      */
+    @Override
     public Set<RLibraryNotLoadedException> clearMissingRLibraries(String className) {
         return this.missingRLibraries.remove(className);
     }

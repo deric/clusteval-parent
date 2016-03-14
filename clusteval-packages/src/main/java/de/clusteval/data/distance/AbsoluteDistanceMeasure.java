@@ -20,7 +20,7 @@ import org.rosuda.REngine.REngineException;
 
 import de.wiwie.wiutils.utils.ArraysExt;
 import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
-import de.clusteval.framework.RLibraryRequirement;
+import de.clusteval.api.r.RLibraryRequirement;
 import de.clusteval.framework.repository.MyRengine;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;

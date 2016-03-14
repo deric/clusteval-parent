@@ -13,7 +13,7 @@
 package de.clusteval.data.statistics;
 
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.framework.RLibraryRequirement;
+import de.clusteval.api.r.RLibraryRequirement;
 import de.clusteval.framework.repository.Repository;
 import java.io.File;
 

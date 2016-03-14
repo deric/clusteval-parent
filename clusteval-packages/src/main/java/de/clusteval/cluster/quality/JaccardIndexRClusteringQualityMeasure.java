@@ -28,7 +28,7 @@ import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.data.DataConfig;
-import de.clusteval.framework.RLibraryRequirement;
+import de.clusteval.api.r.RLibraryRequirement;
 import de.clusteval.framework.repository.MyRengine;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
