@@ -18,9 +18,6 @@ package de.clusteval.api.exceptions;
  */
 public class ClustEvalException extends Exception {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = -2371618638043608163L;
 
     /**

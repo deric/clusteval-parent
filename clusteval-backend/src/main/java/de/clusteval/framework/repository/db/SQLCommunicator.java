@@ -12,6 +12,8 @@ package de.clusteval.framework.repository.db;
 
 import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
 import de.clusteval.api.Database;
+import de.clusteval.api.exceptions.DatabaseConnectException;
+import de.clusteval.api.repository.IRepositoryObject;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
@@ -441,8 +443,8 @@ public abstract class SQLCommunicator implements Database {
             final boolean updateOnly);
 
     // TODO
-    public boolean register(final RepositoryObject object,
-            final boolean updateOnly) {
+    @Override
+    public boolean register(final IRepositoryObject object, final boolean updateOnly) {
         int result;
         if (object instanceof DataSet) {
             result = this.register((DataSet) object, updateOnly);
@@ -500,7 +502,8 @@ public abstract class SQLCommunicator implements Database {
     }
 
     // TODO
-    public boolean unregister(final RepositoryObject object) {
+    @Override
+    public boolean unregister(final IRepositoryObject object) {
         int result;
         if (object instanceof DataSet) {
             result = this.unregister((DataSet) object);
@@ -556,7 +559,8 @@ public abstract class SQLCommunicator implements Database {
     }
 
     // TODO
-    public boolean register(final Class<? extends RepositoryObject> c) {
+    @Override
+    public boolean register(final Class<? extends IRepositoryObject> c) {
         if (ClusteringQualityMeasure.class.isAssignableFrom(c)) {
             return this
                     .registerClusteringQualityMeasureClass((Class<? extends ClusteringQualityMeasure>) c);
@@ -588,7 +592,7 @@ public abstract class SQLCommunicator implements Database {
     }
 
     // TODO
-    public boolean unregister(final Class<? extends RepositoryObject> c) {
+    public boolean unregister(final Class<? extends IRepositoryObject> c) {
         if (ClusteringQualityMeasure.class.isAssignableFrom(c)) {
             return this
                     .unregisterClusteringQualityMeasureClass((Class<? extends ClusteringQualityMeasure>) c);
@@ -765,6 +769,7 @@ public abstract class SQLCommunicator implements Database {
      *
      * @throws DatabaseConnectException
      */
+    @Override
     public void initDB() throws DatabaseConnectException {
         try {
             // SQLException lastException = null;

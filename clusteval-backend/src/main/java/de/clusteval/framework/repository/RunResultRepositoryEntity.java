@@ -3,6 +3,7 @@
  */
 package de.clusteval.framework.repository;
 
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.run.result.RunResult;
 import de.wiwie.wiutils.file.FileUtils;
@@ -23,19 +24,19 @@ public class RunResultRepositoryEntity extends StaticRepositoryEntity<RunResult>
      * @param parent
      * @param basePath
      */
-    public RunResultRepositoryEntity(Repository repository,
+    public RunResultRepositoryEntity(IRepository repository,
             StaticRepositoryEntity<RunResult> parent, String basePath) {
         super(repository, parent, basePath);
         this.runResultIdentifier = new HashMap<>();
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * de.clusteval.framework.repository.RepositoryObjectEntity#registerWhenExisting
-	 * (de.clusteval.framework.repository.RepositoryObject,
-	 * de.clusteval.framework.repository.RepositoryObject)
+     * (non-Javadoc)
+     *
+     * @see
+     * de.clusteval.framework.repository.RepositoryObjectEntity#registerWhenExisting
+     * (de.clusteval.framework.repository.RepositoryObject,
+     * de.clusteval.framework.repository.RepositoryObject)
      */
     @Override
     protected <S extends RunResult> boolean registerWhenExisting(S old, S object) {
@@ -43,11 +44,11 @@ public class RunResultRepositoryEntity extends StaticRepositoryEntity<RunResult>
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.clusteval.framework.repository.RepositoryObjectEntity#
-	 * registerWithoutExisting
-	 * (de.clusteval.framework.repository.RepositoryObject)
+     * (non-Javadoc)
+     *
+     * @see de.clusteval.framework.repository.RepositoryObjectEntity#
+     * registerWithoutExisting
+     * (de.clusteval.framework.repository.RepositoryObject)
      */
     @Override
     protected <S extends RunResult> boolean registerWithoutExisting(S object) {
@@ -56,27 +57,25 @@ public class RunResultRepositoryEntity extends StaticRepositoryEntity<RunResult>
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.clusteval.framework.repository.RepositoryObjectEntity#
-	 * unregisterAfterRemove(de.clusteval.framework.repository.RepositoryObject)
+     * (non-Javadoc)
+     *
+     * @see de.clusteval.framework.repository.RepositoryObjectEntity#
+     * unregisterAfterRemove(de.clusteval.framework.repository.RepositoryObject)
      */
     @Override
     protected <S extends RunResult> void unregisterAfterRemove(S object) {
         this.runResultIdentifier.remove(object.getIdentifier());
 
         // added 07.01.2013: add unregister of sqlcommunicator
-        if (object instanceof ParameterOptimizationResult) // if the runresult folder exists, only delete the parameter
+        // if the runresult folder exists, only delete the parameter
         // optimization run result from the database
-        {
+        if (object instanceof ParameterOptimizationResult) {
+            RepositoryController ctrl = RepositoryController.getInstance();
             if (new File(object.getAbsolutePath()).getParentFile().exists()) {
-                this.repository.sqlCommunicator
-                        .unregister((ParameterOptimizationResult) object);
-            } else if (Repository.getRepositoryForExactPath(object
+                repository.getDb().unregister((ParameterOptimizationResult) object);
+            } else if (ctrl.getRepositoryForExactPath(object
                     .getRepository().getBasePath()) != null) {
-                Repository.unregister(Repository
-                        .getRepositoryForExactPath(object.getRepository()
-                                .getBasePath()));
+                ctrl.unregister(ctrl.getRepositoryForExactPath(object.getRepository().getBasePath()));
             }
         }
 
@@ -105,8 +104,8 @@ public class RunResultRepositoryEntity extends StaticRepositoryEntity<RunResult>
 
     /**
      * @return The absolute path to the directory, where for a certain runresult
-     * (identified by its unique run identifier) all analysis results are
-     * stored.
+     *         (identified by its unique run identifier) all analysis results are
+     *         stored.
      */
     public String getAnalysisResultsBasePath() {
         return FileUtils.buildPath(this.getBasePath(), "%RUNIDENTSTRING",

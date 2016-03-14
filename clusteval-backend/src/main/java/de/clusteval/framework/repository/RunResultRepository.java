@@ -12,6 +12,7 @@
  */
 package de.clusteval.framework.repository;
 
+import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.repository.IRepository;
@@ -35,7 +36,6 @@ import de.clusteval.data.randomizer.DataRandomizer;
 import de.clusteval.data.statistics.DataStatistic;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
-import de.clusteval.framework.repository.db.DatabaseConnectException;
 import de.clusteval.framework.repository.db.RunResultSQLCommunicator;
 import de.clusteval.framework.repository.db.SQLCommunicator;
 import de.clusteval.framework.repository.db.StubSQLCommunicator;
@@ -287,7 +287,7 @@ public class RunResultRepository extends Repository implements IRepository {
 	 * @see de.wiwie.wiutils.utils.Repository#log(java.lang.String)
      */
     @Override
-    protected void info(String message) {
+    public void info(String message) {
         // reduce visibility of log messages
         this.log.debug(message);
     }
@@ -298,7 +298,7 @@ public class RunResultRepository extends Repository implements IRepository {
 	 * @see framework.repository.Repository#warn(java.lang.String)
      */
     @Override
-    protected void warn(String message) {
+    public void warn(String message) {
         // reduce visibility of log messages
         this.log.debug(message);
     }

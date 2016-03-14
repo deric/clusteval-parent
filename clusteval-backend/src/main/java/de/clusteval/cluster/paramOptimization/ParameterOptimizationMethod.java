@@ -13,6 +13,8 @@
 package de.clusteval.cluster.paramOptimization;
 
 import de.clusteval.api.cluster.quality.ClusteringQualitySet;
+import de.clusteval.api.exceptions.InternalAttributeException;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.IRepositoryObject;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
@@ -30,7 +32,6 @@ import de.clusteval.run.result.ClusteringRunResult;
 import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.run.result.RunResultParseException;
 import de.clusteval.run.runnable.ExecutionRunRunnable;
-import de.clusteval.api.exceptions.InternalAttributeException;
 import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -218,7 +219,7 @@ public abstract class ParameterOptimizationMethod extends RepositoryObject imple
      * of a previous run execution or a completely new execution.
      * @throws RegisterException
      */
-    public ParameterOptimizationMethod(final Repository repository,
+    public ParameterOptimizationMethod(final IRepository repository,
             final boolean register, final long changeDate, final File absPath,
             final ParameterOptimizationRun run,
             final ProgramConfig programConfig, final DataConfig dataConfig,
@@ -561,7 +562,7 @@ public abstract class ParameterOptimizationMethod extends RepositoryObject imple
      * @throws UnknownParameterOptimizationMethodException
      */
     public static ParameterOptimizationMethod parseFromString(
-            final Repository repository,
+            final IRepository repository,
             final String parameterOptimizationMethod, final Run run,
             final ProgramConfig programConfig, final DataConfig dataConfig,
             final List<ProgramParameter<?>> params,

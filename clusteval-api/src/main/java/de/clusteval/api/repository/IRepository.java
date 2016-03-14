@@ -16,6 +16,7 @@
  */
 package de.clusteval.api.repository;
 
+import de.clusteval.api.Database;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.data.IDataSetFormatParser;
@@ -222,7 +223,14 @@ public interface IRepository {
     /**
      * @param comm The new sql communicator.
      */
-    void setSQLCommunicator(final SQLCommunicator comm);
+    void setSQLCommunicator(final Database comm);
+
+    /**
+     * Get database driver
+     *
+     * @return
+     */
+    Database getDb();
 
     /**
      * This method registers a dataset format parser.

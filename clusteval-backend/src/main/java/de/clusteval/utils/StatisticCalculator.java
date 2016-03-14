@@ -12,7 +12,20 @@
  */
 package de.clusteval.utils;
 
+import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
+import de.clusteval.api.exceptions.GoldStandardConfigurationException;
+import de.clusteval.api.exceptions.GoldStandardNotFoundException;
+import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.RNotAvailableException;
+import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
+import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
+import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
+import de.clusteval.api.r.InvalidRepositoryException;
+import de.clusteval.api.r.RepositoryAlreadyExistsException;
+import de.clusteval.api.r.UnknownRProgramException;
+import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.repository.RegisterException;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.cluster.paramOptimization.InvalidOptimizationParameterException;
 import de.clusteval.cluster.paramOptimization.UnknownParameterOptimizationMethodException;
@@ -26,24 +39,13 @@ import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.DataSetNotFoundException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.data.dataset.NoDataSetException;
-import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.data.dataset.type.UnknownDataSetTypeException;
-import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
-import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
-import de.clusteval.api.exceptions.GoldStandardConfigurationException;
-import de.clusteval.api.exceptions.GoldStandardNotFoundException;
-import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.statistics.IncompatibleDataConfigDataStatisticException;
 import de.clusteval.data.statistics.RunStatisticCalculateException;
 import de.clusteval.data.statistics.StatisticCalculateException;
 import de.clusteval.data.statistics.UnknownDataStatisticException;
-import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.framework.repository.NoRepositoryFoundException;
-import de.clusteval.api.repository.RegisterException;
-import de.clusteval.framework.repository.Repository;
-import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.framework.repository.RepositoryObject;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
@@ -51,13 +53,11 @@ import de.clusteval.program.NoOptimizableProgramParameterException;
 import de.clusteval.program.UnknownParameterType;
 import de.clusteval.program.UnknownProgramParameterException;
 import de.clusteval.program.UnknownProgramTypeException;
-import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.run.InvalidRunModeException;
 import de.clusteval.run.RunException;
 import de.clusteval.run.result.AnalysisRunResultException;
 import de.clusteval.run.result.RunResultParseException;
 import de.clusteval.run.result.format.UnknownRunResultFormatException;
-import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
 import de.clusteval.run.statistics.UnknownRunDataStatisticException;
 import de.clusteval.run.statistics.UnknownRunStatisticException;
 import java.io.File;
@@ -75,9 +75,7 @@ import org.rosuda.REngine.REngineException;
  * @param <T>
  *
  */
-public abstract class StatisticCalculator<T extends Statistic>
-        extends
-        RepositoryObject {
+public abstract class StatisticCalculator<T extends Statistic> extends RepositoryObject {
 
     /**
      * This attribute holds the statistic, after {@link #calculate()} has been
@@ -91,7 +89,7 @@ public abstract class StatisticCalculator<T extends Statistic>
      * @param absPath
      * @throws RegisterException
      */
-    public StatisticCalculator(Repository repository, long changeDate,
+    public StatisticCalculator(IRepository repository, long changeDate,
             File absPath) throws RegisterException {
         super(repository, true, changeDate, absPath);
     }
@@ -102,15 +100,14 @@ public abstract class StatisticCalculator<T extends Statistic>
      * @param other The object to clone.
      * @throws RegisterException
      */
-    public StatisticCalculator(final StatisticCalculator<T> other)
-            throws RegisterException {
+    public StatisticCalculator(final StatisticCalculator<T> other) throws RegisterException {
         super(other);
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see framework.repository.RepositoryObject#clone()
+     * (non-Javadoc)
+     *
+     * @see framework.repository.RepositoryObject#clone()
      */
     @Override
     public abstract StatisticCalculator<T> clone();
@@ -192,7 +189,7 @@ public abstract class StatisticCalculator<T extends Statistic>
 
     /**
      * @param absFolderPath The absolute path to the folder where the statistic
-     * should be written to.
+     *                      should be written to.
      * @throws REngineException
      * @throws RNotAvailableException
      * @throws InterruptedException
@@ -202,7 +199,7 @@ public abstract class StatisticCalculator<T extends Statistic>
 
     /**
      * @return The statistic calculated during the last {@link #calculate()}
-     * invocation.
+     *         invocation.
      */
     public T getStatistic() {
         return this.lastResult;

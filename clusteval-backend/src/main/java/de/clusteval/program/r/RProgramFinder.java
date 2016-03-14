@@ -13,8 +13,8 @@
 package de.clusteval.program.r;
 
 import de.clusteval.api.r.UnknownRProgramException;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.utils.JARFinder;
 import de.wiwie.wiutils.utils.ArrayIterator;
 import java.io.File;
@@ -39,14 +39,14 @@ public class RProgramFinder extends JARFinder<RProgram> {
      * @param repository the repository
      * @throws RegisterException
      */
-    public RProgramFinder(final Repository repository) throws RegisterException {
+    public RProgramFinder(final IRepository repository) throws RegisterException {
         super(repository, RProgram.class);
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.wiwie.wiutils.utils.Finder#checkFile(java.io.File)
+     * (non-Javadoc)
+     *
+     * @see de.wiwie.wiutils.utils.Finder#checkFile(java.io.File)
      */
     @Override
     protected boolean checkFile(File file) {
@@ -54,9 +54,9 @@ public class RProgramFinder extends JARFinder<RProgram> {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.wiwie.wiutils.utils.Finder#getIterator()
+     * (non-Javadoc)
+     *
+     * @see de.wiwie.wiutils.utils.Finder#getIterator()
      */
     @Override
     protected Iterator<File> getIterator() {
@@ -64,9 +64,9 @@ public class RProgramFinder extends JARFinder<RProgram> {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.wiwie.wiutils.utils.JARFinder#classNamesForJARFile(java.io.File)
+     * (non-Javadoc)
+     *
+     * @see de.wiwie.wiutils.utils.JARFinder#classNamesForJARFile(java.io.File)
      */
     @Override
     protected String[] classNamesForJARFile(File f) {
@@ -75,9 +75,9 @@ public class RProgramFinder extends JARFinder<RProgram> {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.wiwie.wiutils.utils.JARFinder#isJARLoaded(java.io.File)
+     * (non-Javadoc)
+     *
+     * @see de.wiwie.wiutils.utils.JARFinder#isJARLoaded(java.io.File)
      */
     @Override
     protected boolean isJARLoaded(File f) {
@@ -87,9 +87,9 @@ public class RProgramFinder extends JARFinder<RProgram> {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.wiwie.wiutils.utils.JARFinder#getURLClassLoader0(java.io.File)
+     * (non-Javadoc)
+     *
+     * @see de.wiwie.wiutils.utils.JARFinder#getURLClassLoader0(java.io.File)
      */
     @Override
     protected URLClassLoader getURLClassLoader0(File f, final ClassLoader parent)
@@ -115,9 +115,9 @@ class RProgramURLClassLoader extends URLClassLoader {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.ClassLoader#loadClass(java.lang.String)
+     * (non-Javadoc)
+     *
+     * @see java.lang.ClassLoader#loadClass(java.lang.String)
      */
     @Override
     public Class<?> loadClass(String name) throws ClassNotFoundException {

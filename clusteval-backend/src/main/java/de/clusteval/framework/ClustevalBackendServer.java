@@ -60,7 +60,7 @@ import de.clusteval.framework.repository.RepositoryController;
 import de.clusteval.framework.repository.RepositoryObjectDumpException;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
-import de.clusteval.framework.repository.db.DatabaseConnectException;
+import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.framework.threading.RunSchedulerThread;
 import de.clusteval.framework.threading.SupervisorThread;
 import de.clusteval.program.NoOptimizableProgramParameterException;

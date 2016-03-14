@@ -12,6 +12,7 @@
  */
 package de.clusteval.framework.repository;
 
+import de.clusteval.api.Database;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.data.IDataSetFormatParser;
 import de.clusteval.api.exceptions.InternalAttributeException;
@@ -49,7 +50,7 @@ import de.clusteval.framework.repository.config.DefaultRepositoryConfig;
 import de.clusteval.framework.repository.config.RepositoryConfig;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
-import de.clusteval.framework.repository.db.DatabaseConnectException;
+import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.framework.repository.db.DefaultSQLCommunicator;
 import de.clusteval.framework.repository.db.RunResultSQLCommunicator;
 import de.clusteval.framework.repository.db.SQLCommunicator;
@@ -136,7 +137,7 @@ public class Repository implements IRepository {
      * this attribute is set to a sql communicator, which updates the database
      * after changes of repository objects (removal, addition).
      */
-    protected SQLCommunicator sqlCommunicator;
+    protected Database sqlCommunicator;
 
     /**
      * The supervisor thread is responsible for starting and keeping alive all
@@ -1207,7 +1208,7 @@ public class Repository implements IRepository {
      *         after changes of repository objects (removal, addition), otherwise it
      *         returns a stub sql communicator.
      */
-    public SQLCommunicator getSqlCommunicator() {
+    public Database getSqlCommunicator() {
         return sqlCommunicator;
     }
 

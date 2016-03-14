@@ -13,6 +13,7 @@
  */
 package de.clusteval.framework.repository.db;
 
+import de.clusteval.api.exceptions.DatabaseConnectException;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.ResultSet;

@@ -12,6 +12,7 @@
  */
 package de.clusteval.framework.repository.db;
 
+import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.cluster.quality.ClusteringQualitySet;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;

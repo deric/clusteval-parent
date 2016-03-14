@@ -12,6 +12,7 @@
  */
 package de.clusteval.run.result;
 
+import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigurationException;
 import de.clusteval.api.exceptions.GoldStandardNotFoundException;
@@ -48,7 +49,6 @@ import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
-import de.clusteval.framework.repository.db.DatabaseConnectException;
 import de.clusteval.framework.repository.parse.Parser;
 import de.clusteval.program.NoOptimizableProgramParameterException;
 import de.clusteval.program.ParameterSet;
@@ -274,7 +274,7 @@ public class ClusteringRunResult extends ExecutionRunResult {
      * @return The parameter optimization run parsed from the runresult folder.
      * @throws RegisterException
      */
-    public static Run parseFromRunResultFolder(final ClusteringRun run, final Repository repository,
+    public static Run parseFromRunResultFolder(final ClusteringRun run, final IRepository repository,
             final File runResultFolder, final List<RunResult> result, final boolean register) throws RegisterException {
 
         File clusterFolder = new File(FileUtils.buildPath(runResultFolder.getAbsolutePath(), "clusters"));
@@ -304,7 +304,7 @@ public class ClusteringRunResult extends ExecutionRunResult {
      * runresult folder.
      * @throws RegisterException
      */
-    public static ClusteringRunResult parseFromRunResultCompleteFile(Repository repository, ClusteringRun run,
+    public static ClusteringRunResult parseFromRunResultCompleteFile(IRepository repository, ClusteringRun run,
             final DataConfig dataConfig, final ProgramConfig programConfig, final File completeFile,
             final boolean register) throws RegisterException {
         ClusteringRunResult result = null;

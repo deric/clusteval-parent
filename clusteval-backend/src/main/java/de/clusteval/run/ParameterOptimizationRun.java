@@ -14,8 +14,11 @@ package de.clusteval.run;
 
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.cluster.quality.ClusteringQualitySet;
+import de.clusteval.api.data.IDataSetFormat;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.repository.RepositoryEvent;
+import de.clusteval.api.repository.RepositoryRemoveEvent;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
@@ -23,8 +26,6 @@ import de.clusteval.context.Context;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.format.AbsoluteDataSetFormat;
 import de.clusteval.data.dataset.format.DataSetFormat;
-import de.clusteval.framework.repository.Repository;
-import de.clusteval.api.repository.RepositoryRemoveEvent;
 import de.clusteval.framework.threading.RunSchedulerThread;
 import de.clusteval.program.ParameterSet;
 import de.clusteval.program.ProgramConfig;
@@ -88,7 +89,7 @@ public class ParameterOptimizationRun extends ExecutionRun {
                 // for every datasetformat we check, whether it class is
                 // compatible
                 for (DataConfig dataConfig : dataConfigs) {
-                    Class<? extends DataSetFormat> dataSetFormatClass = dataConfig.getDatasetConfig().getDataSet()
+                    Class<? extends IDataSetFormat> dataSetFormatClass = dataConfig.getDatasetConfig().getDataSet()
                             .getDataSetFormat().getClass();
                     boolean compatible = false;
                     for (Class<? extends DataSetFormat> parentClass : method.getCompatibleDataSetFormatBaseClasses()) {
@@ -156,7 +157,7 @@ public class ParameterOptimizationRun extends ExecutionRun {
      * @param maxExecutionTimes
      * @throws RegisterException
      */
-    public ParameterOptimizationRun(final Repository repository, final Context context, final long changeDate,
+    public ParameterOptimizationRun(final IRepository repository, final Context context, final long changeDate,
             final File absPath, final List<ProgramConfig> programConfigs, final List<DataConfig> dataConfigs,
             final List<ClusteringEvaluation> qualityMeasures,
             final List<Map<ProgramParameter<?>, String>> parameterValues,
