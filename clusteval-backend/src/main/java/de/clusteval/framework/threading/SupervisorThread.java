@@ -15,6 +15,7 @@ import de.clusteval.cluster.quality.ClusteringQualityMeasureFinderThread;
 import de.clusteval.data.dataset.DataSetConfigFinderThread;
 import de.clusteval.data.dataset.format.DataSetFormatFinderThread;
 import de.clusteval.data.statistics.DataStatisticFinderThread;
+import de.clusteval.framework.ISupervisorThread;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.run.RunFinderThread;
 import de.clusteval.run.result.format.RunResultFormatFinderThread;
@@ -182,7 +183,7 @@ public abstract class SupervisorThread extends Thread {
                             Constructor<? extends ClustevalThread> constr;
                             try {
                                 constr = threadClass.getConstructor(
-                                        SupervisorThread.class,
+                                        ISupervisorThread.class,
                                         Repository.class, boolean.class);
                                 this.threads.put(threadClass, constr
                                         .newInstance(this, repository, false));

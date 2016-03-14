@@ -11,6 +11,7 @@
 package de.clusteval.data.dataset.format;
 
 import de.clusteval.api.data.ConversionConfiguration;
+import de.clusteval.api.data.IConversionInputToStandardConfiguration;
 import de.clusteval.data.distance.DistanceMeasure;
 import de.clusteval.data.preprocessing.DataPreprocessor;
 import de.wiwie.wiutils.utils.SimilarityMatrix.NUMBER_PRECISION;
@@ -21,7 +22,7 @@ import java.util.List;
  * @author Christian Wiwie
  *
  */
-public class ConversionInputToStandardConfiguration extends ConversionConfiguration {
+public class ConversionInputToStandardConfiguration extends ConversionConfiguration implements IConversionInputToStandardConfiguration {
 
     protected static List<DataPreprocessor> clonePreprocessors(
             List<DataPreprocessor> preprocessors) {

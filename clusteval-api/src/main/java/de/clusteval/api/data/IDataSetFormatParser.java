@@ -52,7 +52,7 @@ public interface IDataSetFormatParser extends IRepositoryObject {
      * @throws InterruptedException
      * @throws InvalidParameterException
      */
-    IDataSet convertToStandardFormat(IDataSet dataSet, ConversionInputToStandardConfiguration config)
+    IDataSet convertToStandardFormat(IDataSet dataSet, IConversionInputToStandardConfiguration config)
             throws IOException,
                    InvalidDataSetFormatVersionException, RegisterException,
                    UnknownDataSetFormatException, RNotAvailableException,

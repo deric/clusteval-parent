@@ -26,6 +26,7 @@ import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
+import de.clusteval.framework.ISupervisorThread;
 import de.clusteval.program.IProgramConfig;
 import java.io.File;
 import java.net.URL;
@@ -257,7 +258,7 @@ public interface IRepository {
      *         alive all threads that check the repository on the filesystem for
      *         changes.
      */
-    public SupervisorThread getSupervisorThread();
+    public ISupervisorThread getSupervisorThread();
 
     /**
      * This method is used to evaluate parameter values containing JavaScript
