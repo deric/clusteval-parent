@@ -14,6 +14,7 @@ package de.clusteval.data.dataset;
 
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetFormat;
+import de.clusteval.api.data.IDataSetType;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.RNotAvailableException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
@@ -30,10 +31,8 @@ import de.clusteval.data.dataset.format.ConversionStandardToInputConfiguration;
 import de.clusteval.data.dataset.format.DataSetFormat;
 import de.clusteval.data.dataset.format.DataSetFormatParser;
 import de.clusteval.data.dataset.format.RelativeDataSetFormat;
-import de.clusteval.data.dataset.type.DataSetType;
 import de.clusteval.data.preprocessing.DataPreprocessor;
 import de.clusteval.framework.ClustevalBackendServer;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RepositoryObject;
 import de.clusteval.utils.FormatConversionException;
 import de.clusteval.utils.NamedDoubleAttribute;
@@ -101,12 +100,12 @@ public abstract class DataSet extends RepositoryObject implements IDataSet {
      * original dataset format to the internal standard format. Then it is
      * converted to the input format required by the clustering method.
      */
-    protected DataSetFormat datasetFormat;
+    protected IDataSetFormat datasetFormat;
 
     /**
      * The type of the dataset is used to categorize the datasets.
      */
-    protected DataSetType datasetType;
+    protected IDataSetType datasetType;
 
     /**
      * When a dataset is used during a run, it first is converted to the
@@ -148,7 +147,7 @@ public abstract class DataSet extends RepositoryObject implements IDataSet {
      */
     public DataSet(final IRepository repository, final boolean register,
             final long changeDate, final File absPath, final String alias,
-            final DataSetFormat dsFormat, final DataSetType dsType,
+            final IDataSetFormat dsFormat, final IDataSetType dsType,
             final WEBSITE_VISIBILITY websiteVisibility)
             throws RegisterException {
         super(repository, false, changeDate, absPath);
@@ -249,7 +248,7 @@ public abstract class DataSet extends RepositoryObject implements IDataSet {
      * @return The type of this dataset.
      * @see #datasetType
      */
-    public DataSetType getDataSetType() {
+    public IDataSetType getDataSetType() {
         return datasetType;
     }
 
@@ -645,8 +644,7 @@ public abstract class DataSet extends RepositoryObject implements IDataSet {
         if (this.getDataSetFormat().equals(standardFormat)) {
             result = this;
         } else {
-            result = this.getDataSetFormat().convertToStandardFormat(this,
-                    configInputToStandard);
+            result = this.getDataSetFormat().convertToStandardFormat(this, configInputToStandard);
         }
         result.thisInStandardFormat = result;
         this.thisInStandardFormat = result;

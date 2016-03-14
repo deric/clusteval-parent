@@ -181,7 +181,7 @@ public abstract class DataSetFormatParser implements IDataSetFormatParser {
     protected abstract void writeToFileHelper(DataSet dataSet,
             BufferedWriter writer) throws IOException;
 
-    protected final void writeHeaderIntoFile(DataSet dataSet,
+    protected final void writeHeaderIntoFile(IDataSet dataSet,
             BufferedWriter writer) throws IOException {
         // writer header
         writer.append("// dataSetFormat = ");

@@ -3,18 +3,18 @@
  */
 package de.clusteval.data.dataset;
 
+import de.clusteval.api.data.IDataSetConfig;
+import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
 import de.clusteval.data.dataset.format.ConversionStandardToInputConfiguration;
 import de.clusteval.data.distance.DistanceMeasure;
-import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.data.goldstandard.GoldStandard;
 import de.clusteval.data.goldstandard.GoldStandardConfig;
-import de.clusteval.data.preprocessing.DataPreprocessor;
 import de.clusteval.framework.repository.RepositoryObject;
-import de.clusteval.framework.repository.RepositoryObjectDumpException;
+import de.clusteval.api.exceptions.RepositoryObjectDumpException;
 import de.wiwie.wiutils.file.FileUtils;
 import de.wiwie.wiutils.utils.SimilarityMatrix.NUMBER_PRECISION;
 import java.io.File;
@@ -62,11 +62,11 @@ public abstract class AbstractDataSetProvider extends RepositoryObject {
         // write dataset config file
         File dsConfigFile = new File(
                 FileUtils.buildPath(repository.getBasePath(DataSetConfig.class), configFileName + ".dsconfig"));
-        DataSetConfig dsConfig = new DataSetConfig(this.repository, System.currentTimeMillis(), dsConfigFile,
+        IDataSetConfig dsConfig = new DataSetConfig(this.repository, System.currentTimeMillis(), dsConfigFile,
                 newDataSet,
                 new ConversionInputToStandardConfiguration(
                         DistanceMeasure.parseFromString(repository, "EuclidianDistanceMeasure"),
-                        NUMBER_PRECISION.DOUBLE, new ArrayList<DataPreprocessor>(), new ArrayList<DataPreprocessor>()),
+                        NUMBER_PRECISION.DOUBLE, new ArrayList<>(), new ArrayList<>()),
                 new ConversionStandardToInputConfiguration());
 
         dsConfig.dumpToFile();

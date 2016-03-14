@@ -79,7 +79,8 @@ public interface IDataSet extends IRepositoryObject {
      * @throws IOException
      * @throws IllegalArgumentException
      */
-    public boolean loadIntoMemory() throws IllegalArgumentException,
-                                           IOException, InvalidDataSetFormatVersionException,
-                                           UnknownDataSetFormatException;
+    boolean loadIntoMemory() throws IllegalArgumentException,                                           IOException, InvalidDataSetFormatVersionException,
+                                    UnknownDataSetFormatException;
+
+    IDataSetType getDataSetType();
 }

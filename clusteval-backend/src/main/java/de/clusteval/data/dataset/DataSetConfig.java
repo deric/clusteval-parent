@@ -12,18 +12,18 @@
  */
 package de.clusteval.data.dataset;
 
+import de.clusteval.api.data.IDataSetConfig;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.repository.RepositoryEvent;
+import de.clusteval.api.repository.RepositoryMoveEvent;
+import de.clusteval.api.repository.RepositoryRemoveEvent;
+import de.clusteval.api.repository.RepositoryReplaceEvent;
 import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
 import de.clusteval.data.dataset.format.ConversionStandardToInputConfiguration;
 import de.clusteval.data.preprocessing.DataPreprocessor;
 import de.clusteval.framework.repository.DumpableRepositoryObject;
-import de.clusteval.framework.repository.Repository;
-import de.clusteval.api.repository.RepositoryMoveEvent;
-import de.clusteval.framework.repository.RepositoryObjectDumpException;
-import de.clusteval.api.repository.RepositoryRemoveEvent;
-import de.clusteval.api.repository.RepositoryReplaceEvent;
+import de.clusteval.api.exceptions.RepositoryObjectDumpException;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -48,7 +48,7 @@ import java.io.IOException;
  * @author Christian Wiwie
  *
  */
-public class DataSetConfig extends DumpableRepositoryObject {
+public class DataSetConfig extends DumpableRepositoryObject implements IDataSetConfig {
 
     /**
      * A dataset configuration encapsulates a dataset. This attribute stores a
@@ -73,18 +73,18 @@ public class DataSetConfig extends DumpableRepositoryObject {
     /**
      * Instantiates a new dataset configuration.
      *
-     * @param repository The repository this dataset configuration should be
-     * registered at.
-     * @param changeDate The change date of this dataset configuration is used
-     * for equality checks.
-     * @param absPath The absolute path of this dataset configuration.
-     * @param ds The encapsulated dataset.
+     * @param repository            The repository this dataset configuration should be
+     *                              registered at.
+     * @param changeDate            The change date of this dataset configuration is used
+     *                              for equality checks.
+     * @param absPath               The absolute path of this dataset configuration.
+     * @param ds                    The encapsulated dataset.
      * @param configInputToStandard The configuration needed, when
-     * {@link #dataset} is converted from its original input format to the
-     * internal standard format of the framework.
+     *                              {@link #dataset} is converted from its original input format to the
+     *                              internal standard format of the framework.
      * @param configStandardToInput The configuration needed, when
-     * {@link #dataset} is converted from the internal standard format of the
-     * framework to the input format of a program.
+     *                              {@link #dataset} is converted from the internal standard format of the
+     *                              framework to the input format of a program.
      * @throws RegisterException
      */
     public DataSetConfig(final IRepository repository, final long changeDate,
@@ -127,9 +127,9 @@ public class DataSetConfig extends DumpableRepositoryObject {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see framework.repository.RepositoryObject#clone()
+     * (non-Javadoc)
+     *
+     * @see framework.repository.RepositoryObject#clone()
      */
     @Override
     public DataSetConfig clone() {
@@ -150,9 +150,9 @@ public class DataSetConfig extends DumpableRepositoryObject {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.wiwie.wiutils.utils.RepositoryObject#notify(utils.RepositoryEvent)
+     * (non-Javadoc)
+     *
+     * @see de.wiwie.wiutils.utils.RepositoryObject#notify(utils.RepositoryEvent)
      */
     @Override
     public void notify(RepositoryEvent e) throws RegisterException {
@@ -225,7 +225,7 @@ public class DataSetConfig extends DumpableRepositoryObject {
 
     /**
      * @return The configuration for conversion from the original input format
-     * to the standard format.
+     *         to the standard format.
      * @see #configInputToStandard
      */
     public ConversionInputToStandardConfiguration getConversionInputToStandardConfiguration() {
@@ -234,7 +234,7 @@ public class DataSetConfig extends DumpableRepositoryObject {
 
     /**
      * @return The configuration for conversion from standard format to the
-     * input format of the clustering method.
+     *         input format of the clustering method.
      * @see #configStandardToInput
      */
     public ConversionStandardToInputConfiguration getConversionStandardToInputConfiguration() {
@@ -249,10 +249,10 @@ public class DataSetConfig extends DumpableRepositoryObject {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * de.clusteval.framework.repository.DumpableRepositoryObject#dumpToFile()
+     * (non-Javadoc)
+     *
+     * @see
+     * de.clusteval.framework.repository.DumpableRepositoryObject#dumpToFile()
      */
     @Override
     public void dumpToFileHelper() throws RepositoryObjectDumpException {

@@ -11,6 +11,7 @@
 package de.clusteval.data.dataset.format;
 
 import de.clusteval.api.data.ConversionConfiguration;
+import de.clusteval.api.data.IConversionInputToStandardConfiguration;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
@@ -246,11 +247,12 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
      * @throws InterruptedException
      * @throws InvalidParameterException
      */
-    public final DataSet convertToStandardFormat(DataSet dataSet,
-            ConversionInputToStandardConfiguration config) throws IOException,
-                                                                  InvalidDataSetFormatVersionException, RegisterException,
-                                                                  UnknownDataSetFormatException, RNotAvailableException,
-                                                                  InvalidParameterException, InterruptedException {
+    @Override
+    public final IDataSet convertToStandardFormat(IDataSet dataSet,
+            IConversionInputToStandardConfiguration config) throws IOException,
+                                                                   InvalidDataSetFormatVersionException, RegisterException,
+                                                                   UnknownDataSetFormatException, RNotAvailableException,
+                                                                   InvalidParameterException, InterruptedException {
         final DataSetFormatParser parser = getDataSetFormatParser();
         if (parser == null) {
             throw new IllegalArgumentException(

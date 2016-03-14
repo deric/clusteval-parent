@@ -10,12 +10,12 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset;
 
+import de.clusteval.api.data.IDataSetType;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.data.dataset.DataSet.WEBSITE_VISIBILITY;
 import de.clusteval.data.dataset.format.AbsoluteDataSetFormat;
-import de.clusteval.data.dataset.type.DataSetType;
 import de.wiwie.wiutils.utils.SimilarityMatrix.NUMBER_PRECISION;
 import java.io.File;
 import java.io.IOException;
@@ -63,7 +63,7 @@ public class AbsoluteDataSet extends DataSet {
      */
     public AbsoluteDataSet(IRepository repository, final boolean register,
             long changeDate, File absPath, final String alias,
-            AbsoluteDataSetFormat dsFormat, DataSetType dsType,
+            AbsoluteDataSetFormat dsFormat, IDataSetType dsType,
             final WEBSITE_VISIBILITY websiteVisibility)
             throws RegisterException {
         super(repository, register, changeDate, absPath, alias, dsFormat,

@@ -30,7 +30,7 @@ import de.clusteval.data.dataset.type.UnknownDataSetTypeException;
 import de.clusteval.data.goldstandard.GoldStandard;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RepositoryObject;
-import de.clusteval.framework.repository.RepositoryObjectDumpException;
+import de.clusteval.api.exceptions.RepositoryObjectDumpException;
 import de.wiwie.wiutils.file.FileUtils;
 import java.io.BufferedWriter;
 import java.io.File;

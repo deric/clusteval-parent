@@ -16,30 +16,12 @@
  */
 package de.clusteval.api.data;
 
-import de.clusteval.api.exceptions.RepositoryObjectDumpException;
 import de.clusteval.api.repository.IRepositoryObject;
 
 /**
  *
- * A dataset configuration encapsulates options and settings for a dataset.
- * During the execution of a run, when programs are applied to datasets,
- * settings are required that control the behaviour of how the dataset has to be
- * handled.
- *
  * @author deric
  */
-public interface IDataSetConfig extends IRepositoryObject {
-
-    /**
-     * @return The dataset, this configuration belongs to.
-     */
-    public IDataSet getDataSet();
-
-    public IDataSetConfig clone();
-
-    /**
-     * @throws RepositoryObjectDumpException
-     */
-    void dumpToFile() throws RepositoryObjectDumpException;
+public interface IDataSetType extends IRepositoryObject {
 
 }

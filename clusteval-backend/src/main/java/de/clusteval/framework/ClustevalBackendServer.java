@@ -61,7 +61,7 @@ import de.clusteval.framework.repository.MyRengine;
 import de.clusteval.framework.repository.NoRepositoryFoundException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RepositoryController;
-import de.clusteval.framework.repository.RepositoryObjectDumpException;
+import de.clusteval.api.exceptions.RepositoryObjectDumpException;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
 import de.clusteval.framework.threading.RunSchedulerThread;

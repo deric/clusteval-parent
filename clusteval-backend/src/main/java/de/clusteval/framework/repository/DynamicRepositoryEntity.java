@@ -136,7 +136,7 @@ public class DynamicRepositoryEntity<T extends IRepositoryObject> extends Reposi
             this.repository.info("Dynamic class registered: "
                     + object.getSimpleName());
 
-            this.repository.sqlCommunicator.register(object);
+            this.repository.getDb().register(object);
 
             return true;
         }
@@ -266,7 +266,7 @@ public class DynamicRepositoryEntity<T extends IRepositoryObject> extends Reposi
 
                 DynamicRepositoryEntity.loadedClasses.remove(c.getName());
 
-                this.repository.sqlCommunicator.unregister(c);
+                this.repository.getDb().unregister(c);
             }
         }
         return result;
@@ -281,7 +281,7 @@ public class DynamicRepositoryEntity<T extends IRepositoryObject> extends Reposi
      * repository.
      *
      * @param classObject The class for which we want to ensure R library
-     * dependencies.
+     *                    dependencies.
      * @return True, if all R library dependencies are fulfilled.
      * @throws InterruptedException
      * @throws UnsatisfiedRLibraryException

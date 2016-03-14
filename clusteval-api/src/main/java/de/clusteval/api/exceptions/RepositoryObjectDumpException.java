@@ -14,32 +14,36 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.clusteval.api.data;
-
-import de.clusteval.api.exceptions.RepositoryObjectDumpException;
-import de.clusteval.api.repository.IRepositoryObject;
+package de.clusteval.api.exceptions;
 
 /**
+ * @author Christian Wiwie
  *
- * A dataset configuration encapsulates options and settings for a dataset.
- * During the execution of a run, when programs are applied to datasets,
- * settings are required that control the behaviour of how the dataset has to be
- * handled.
- *
- * @author deric
  */
-public interface IDataSetConfig extends IRepositoryObject {
+public class RepositoryObjectDumpException extends ClustEvalException {
+
+    private static final long serialVersionUID = 7367024507267872928L;
 
     /**
-     * @return The dataset, this configuration belongs to.
+     * @param message
      */
-    public IDataSet getDataSet();
-
-    public IDataSetConfig clone();
+    public RepositoryObjectDumpException(String message) {
+        super(message);
+    }
 
     /**
-     * @throws RepositoryObjectDumpException
+     * @param cause
      */
-    void dumpToFile() throws RepositoryObjectDumpException;
+    public RepositoryObjectDumpException(Throwable cause) {
+        super(cause);
+    }
+
+    /**
+     * @param message
+     * @param cause
+     */
+    public RepositoryObjectDumpException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
 }

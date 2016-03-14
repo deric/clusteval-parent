@@ -33,13 +33,13 @@ public class RepositoryReplaceEvent implements RepositoryEvent {
     /**
      * The object, that has been replaced and unregistered from the repository.
      */
-    protected RepositoryObject old;
+    protected IRepositoryObject old;
 
     /**
      * The object, that has replaced the old object and was registered at the
      * repository.
      */
-    protected RepositoryObject replacement;
+    protected IRepositoryObject replacement;
 
     /**
      * @param old
@@ -49,8 +49,7 @@ public class RepositoryReplaceEvent implements RepositoryEvent {
      *                    The object, that has replaced the old object and was
      *                    registered at the repository.
      */
-    public RepositoryReplaceEvent(final RepositoryObject old,
-            final RepositoryObject replacement) {
+    public RepositoryReplaceEvent(final IRepositoryObject old, final IRepositoryObject replacement) {
         super();
 
         this.old = old;
@@ -62,7 +61,7 @@ public class RepositoryReplaceEvent implements RepositoryEvent {
      * @return The object, that has been replaced and unregistered from the
      *         repository.
      */
-    public RepositoryObject getOld() {
+    public IRepositoryObject getOld() {
         return this.old;
     }
 
@@ -71,7 +70,7 @@ public class RepositoryReplaceEvent implements RepositoryEvent {
      * @return The object, that has replaced the old object and was registered
      *         at the repository.
      */
-    public RepositoryObject getReplacement() {
+    public IRepositoryObject getReplacement() {
         return this.replacement;
     }
 }

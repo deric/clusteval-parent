@@ -17,9 +17,13 @@
 package de.clusteval.api.data;
 
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
+import de.clusteval.api.exceptions.RNotAvailableException;
+import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.repository.IRepositoryObject;
+import de.clusteval.api.repository.RegisterException;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
 import java.io.IOException;
+import java.security.InvalidParameterException;
 
 /**
  *
@@ -38,4 +42,31 @@ public interface IDataSetFormat extends IRepositoryObject {
      * @return True, if the dataset has been written to filesystem successfully.
      */
     boolean writeToFile(final IDataSet dataSet, final boolean withHeader);
+
+    /**
+     * Convert the given dataset with this dataset format and the given version
+     * using the passed configuration.
+     *
+     * <p>
+     * This method validates, that the passed dataset has the correct format and
+     * that the version of the format is supported.
+     *
+     * @param dataSet
+     *                The dataset to convert to the standard format.
+     * @param config
+     *                The configuration to use to convert the passed dataset.
+     * @return The converted dataset.
+     * @throws IOException
+     *                                              Signals that an I/O exception has occurred.
+     * @throws InvalidDataSetFormatVersionException
+     * @throws RegisterException
+     * @throws UnknownDataSetFormatException
+     * @throws RNotAvailableException
+     * @throws InterruptedException
+     * @throws InvalidParameterException
+     */
+    IDataSet convertToStandardFormat(IDataSet dataSet, IConversionInputToStandardConfiguration config) throws IOException,
+                                                                                                              InvalidDataSetFormatVersionException, RegisterException,
+                                                                                                              UnknownDataSetFormatException, RNotAvailableException,
+                                                                                                              InvalidParameterException, InterruptedException;
 }
