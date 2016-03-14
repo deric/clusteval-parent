@@ -1,14 +1,34 @@
-/**
+/*
+ * Copyright (C) 2016 deric
  *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package de.clusteval.run;
 
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.cluster.quality.ClusteringQualityMeasureValue;
 import de.clusteval.api.cluster.quality.ClusteringQualitySet;
+import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
+import de.clusteval.api.exceptions.GoldStandardConfigurationException;
+import de.clusteval.api.exceptions.GoldStandardNotFoundException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
+import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
+import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
+import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.cluster.Clustering;
@@ -30,19 +50,13 @@ import de.clusteval.data.dataset.DataSetNotFoundException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.data.dataset.NoDataSetException;
 import de.clusteval.data.dataset.type.UnknownDataSetTypeException;
-import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.data.goldstandard.GoldStandard;
-import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
-import de.clusteval.api.exceptions.GoldStandardConfigurationException;
-import de.clusteval.api.exceptions.GoldStandardNotFoundException;
-import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.randomizer.DataRandomizeException;
 import de.clusteval.data.randomizer.DataRandomizer;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
 import de.clusteval.data.statistics.UnknownDataStatisticException;
 import de.clusteval.framework.repository.NoRepositoryFoundException;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
 import de.clusteval.framework.threading.RunSchedulerThread;
@@ -53,14 +67,12 @@ import de.clusteval.program.ProgramParameter;
 import de.clusteval.program.UnknownParameterType;
 import de.clusteval.program.UnknownProgramParameterException;
 import de.clusteval.program.UnknownProgramTypeException;
-import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.run.result.ClusteringRunResult;
 import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.run.result.RunResult;
 import de.clusteval.run.result.RunResultParseException;
 import de.clusteval.run.result.format.UnknownRunResultFormatException;
 import de.clusteval.run.result.postprocessing.RunResultPostprocessor;
-import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
 import de.clusteval.run.runnable.ExecutionRunRunnable;
 import de.clusteval.run.runnable.RobustnessAnalysisRunRunnable;
 import de.clusteval.run.runnable.RunRunnable;
@@ -101,16 +113,16 @@ public class RobustnessAnalysisRun extends ClusteringRun {
     protected int numberOfDistortedDataSets;
 
     /**
-     * @param repository The repository this run should be registered at.
+     * @param repository           The repository this run should be registered at.
      * @param context
-     * @param changeDate The date this run was performed.
-     * @param absPath The absolute path to the file on the filesystem that
-     * corresponds to this run.
+     * @param changeDate           The date this run was performed.
+     * @param absPath              The absolute path to the file on the filesystem that
+     *                             corresponds to this run.
      * @param uniqueRunIdentifiers The list of unique run identifiers, that
-     * should be assessed during execution of the run.
+     *                             should be assessed during execution of the run.
      * @throws RegisterException
      */
-    public RobustnessAnalysisRun(Repository repository, final Context context,
+    public RobustnessAnalysisRun(IRepository repository, final Context context,
             long changeDate, File absPath, List<String> uniqueRunIdentifiers,
             List<ProgramConfig> programConfigs, List<DataConfig> dataConfigs,
             List<DataConfig> originalDataConfigs,
@@ -171,9 +183,9 @@ public class RobustnessAnalysisRun extends ClusteringRun {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.clusteval.run.ClusteringRun#clone()
+     * (non-Javadoc)
+     *
+     * @see de.clusteval.run.ClusteringRun#clone()
      */
     @Override
     public RobustnessAnalysisRun clone() {
@@ -187,9 +199,9 @@ public class RobustnessAnalysisRun extends ClusteringRun {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.clusteval.run.Run#beforeResume(java.lang.String)
+     * (non-Javadoc)
+     *
+     * @see de.clusteval.run.Run#beforeResume(java.lang.String)
      */
     @Override
     protected void beforeResume(String runIdentString)
@@ -328,9 +340,9 @@ public class RobustnessAnalysisRun extends ClusteringRun {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.clusteval.run.Run#afterResume(java.lang.String)
+     * (non-Javadoc)
+     *
+     * @see de.clusteval.run.Run#afterResume(java.lang.String)
      */
     @Override
     protected void afterResume(String runIdentString) {
@@ -402,9 +414,9 @@ public class RobustnessAnalysisRun extends ClusteringRun {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.clusteval.run.Run#beforePerform()
+     * (non-Javadoc)
+     *
+     * @see de.clusteval.run.Run#beforePerform()
      */
     @Override
     protected void beforePerform() throws IOException,
@@ -576,22 +588,22 @@ public class RobustnessAnalysisRun extends ClusteringRun {
                                                  UnknownRunResultPostprocessorException,
                                                  UnknownDataRandomizerException {
 
-        List<String> programConfigNames = new ArrayList<String>();
+        List<String> programConfigNames = new ArrayList<>();
         for (ProgramConfig programConfig : programConfigs) {
             programConfigNames.add(programConfig.getName());
         }
-        List<String> dataConfigNames = new ArrayList<String>();
+        List<String> dataConfigNames = new ArrayList<>();
         for (DataConfig dataConfig : this.originalDataConfigs) {
             dataConfigNames.add(dataConfig.getName());
         }
 
-        Map<String, Map<String, Triple<List<ParameterSet>, ClusteringQualityMeasure, ClusteringQualityMeasureValue>>> bestParams = new HashMap<String, Map<String, Triple<List<ParameterSet>, ClusteringQualityMeasure, ClusteringQualityMeasureValue>>>();
+        Map<String, Map<String, Triple<List<ParameterSet>, ClusteringEvaluation, ClusteringQualityMeasureValue>>> bestParams = new HashMap<>();
 
         // get best parameters for each pair of program and dataset
         // from run results
         for (String runIdentifier : this.uniqueRunAnalysisRunIdentifiers) {
             this.log.info("... parsing run result '" + runIdentifier + "'");
-            List<RunResult> results = new ArrayList<RunResult>();
+            List<RunResult> results = new ArrayList<>();
             RunResult.parseFromRunResultFolder(
                     repository,
                     new File(FileUtils.buildPath(
@@ -713,9 +725,9 @@ public class RobustnessAnalysisRun extends ClusteringRun {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.clusteval.run.Run#afterPerform()
+     * (non-Javadoc)
+     *
+     * @see de.clusteval.run.Run#afterPerform()
      */
     @Override
     protected void afterPerform() {
@@ -725,13 +737,13 @@ public class RobustnessAnalysisRun extends ClusteringRun {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * de.clusteval.run.ClusteringRun#createRunRunnableFor(de.clusteval.framework
-	 * .threading.RunSchedulerThread, de.clusteval.run.Run,
-	 * de.clusteval.program.ProgramConfig, de.clusteval.data.DataConfig,
-	 * java.lang.String, boolean)
+     * (non-Javadoc)
+     *
+     * @see
+     * de.clusteval.run.ClusteringRun#createRunRunnableFor(de.clusteval.framework
+     * .threading.RunSchedulerThread, de.clusteval.run.Run,
+     * de.clusteval.program.ProgramConfig, de.clusteval.data.DataConfig,
+     * java.lang.String, boolean)
      */
     @Override
     protected ExecutionRunRunnable createRunRunnableFor(
@@ -747,11 +759,11 @@ public class RobustnessAnalysisRun extends ClusteringRun {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * de.clusteval.run.ExecutionRun#createAndScheduleRunnableForResumePair(
-	 * de.clusteval.framework.threading.RunSchedulerThread, int)
+     * (non-Javadoc)
+     *
+     * @see
+     * de.clusteval.run.ExecutionRun#createAndScheduleRunnableForResumePair(
+     * de.clusteval.framework.threading.RunSchedulerThread, int)
      */
     @Override
     protected RunRunnable createAndScheduleRunnableForResumePair(

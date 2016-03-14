@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.framework.threading;
 
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethodFinderThread;
 import de.clusteval.cluster.quality.ClusteringQualityMeasureFinderThread;
 import de.clusteval.data.dataset.DataSetConfigFinderThread;
@@ -41,7 +42,7 @@ import org.slf4j.LoggerFactory;
  * @author Christian Wiwie
  *
  */
-public abstract class SupervisorThread extends Thread {
+public abstract class SupervisorThread extends Thread implements ISupervisorThread {
 
     protected boolean interrupted;
 
@@ -63,7 +64,7 @@ public abstract class SupervisorThread extends Thread {
      * The repository this supervisor belongs to and for which all threads
      * should be supervised.
      */
-    protected Repository repository;
+    protected IRepository repository;
 
     /**
      * A map containing all threads that were started by this supervisor
@@ -109,7 +110,7 @@ public abstract class SupervisorThread extends Thread {
      *                         of this class (e.g.
      *                         {@link RunResultRepositorySupervisorThread}).
      */
-    public SupervisorThread(final Repository repository,
+    public SupervisorThread(final IRepository repository,
             final List<Class<? extends ClustevalThread>> threads,
             final Map<String, Long> threadSleepTimes, final boolean checkOnce) {
         super();

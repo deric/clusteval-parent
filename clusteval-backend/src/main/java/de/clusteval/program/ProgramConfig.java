@@ -12,13 +12,13 @@
  */
 package de.clusteval.program;
 
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.repository.RepositoryEvent;
-import de.clusteval.data.dataset.format.DataSetFormat;
-import de.clusteval.framework.repository.Repository;
-import de.clusteval.framework.repository.RepositoryObject;
 import de.clusteval.api.repository.RepositoryRemoveEvent;
 import de.clusteval.api.repository.RepositoryReplaceEvent;
+import de.clusteval.data.dataset.format.DataSetFormat;
+import de.clusteval.framework.repository.RepositoryObject;
 import de.clusteval.run.ParameterOptimizationRun;
 import de.clusteval.run.result.format.RunResultFormat;
 import java.io.File;
@@ -32,7 +32,7 @@ import java.util.List;
  * <p>
  * A program configuration corresponds to and is parsed from a file on the
  * filesystem in the corresponding folder of the repository (see
- * {@link Repository#programConfigBasePath} and {@link ProgramConfigFinder}).
+ * {@link IRepository#programConfigBasePath} and {@link ProgramConfigFinder}).
  *
  * <p>
  * There are several options, that can be specified in the program configuration
@@ -49,7 +49,7 @@ public class ProgramConfig extends RepositoryObject implements IProgramConfig {
      *
      * @param programConfigs The list of program configurations to clone.
      * @return The list containing the cloned program configurations of the
-     * input list.
+     *         input list.
      */
     public static List<ProgramConfig> cloneProgramConfigurations(
             final List<ProgramConfig> programConfigs) {
@@ -174,7 +174,7 @@ public class ProgramConfig extends RepositoryObject implements IProgramConfig {
      * @throws RegisterException
      */
     public ProgramConfig(
-            final Repository repository,
+            final IRepository repository,
             final boolean register,
             final long changeDate,
             final File absPath,
@@ -265,7 +265,7 @@ public class ProgramConfig extends RepositoryObject implements IProgramConfig {
 
     /**
      * @return True, if the encapsulated program requires normalized input data,
-     * false otherwise.
+     *         false otherwise.
      * @see #expectsNormalizedDataSet
      */
     public boolean expectsNormalizedDataSet() {
@@ -302,7 +302,7 @@ public class ProgramConfig extends RepositoryObject implements IProgramConfig {
      * itself. In this case, the framework invokes the program only once.
      *
      * @return True, if the encapsulated program supports internal parameter
-     * optimization, false otherwise.
+     *         optimization, false otherwise.
      */
     public boolean supportsInternalParameterOptimization() {
         return invocationFormatParameterOptimization != null;
@@ -391,7 +391,7 @@ public class ProgramConfig extends RepositoryObject implements IProgramConfig {
 
     /**
      * @return The name of the program configuration is the name of the file
-     * without extension.
+     *         without extension.
      */
     public String getName() {
         return this.absPath.getName().replace(".config", "");

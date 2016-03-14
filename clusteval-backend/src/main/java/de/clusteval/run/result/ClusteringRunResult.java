@@ -45,7 +45,6 @@ import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
 import de.clusteval.data.statistics.UnknownDataStatisticException;
 import de.clusteval.framework.repository.NoRepositoryFoundException;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
@@ -95,12 +94,12 @@ public class ClusteringRunResult extends ExecutionRunResult {
     /**
      * Instantiates a new clustering result.
      *
-     * @param repository the repository
+     * @param repository     the repository
      * @param changeDate
-     * @param dataConfig the data config
-     * @param programConfig the program config
-     * @param resultFormat the result format
-     * @param absPath the abs file path
+     * @param dataConfig     the data config
+     * @param programConfig  the program config
+     * @param resultFormat   the result format
+     * @param absPath        the abs file path
      * @param runIdentString the run ident string
      * @param run
      * @throws RegisterException
@@ -127,9 +126,9 @@ public class ClusteringRunResult extends ExecutionRunResult {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see run.result.RunResult#clone()
+     * (non-Javadoc)
+     *
+     * @see run.result.RunResult#clone()
      */
     @Override
     public ClusteringRunResult clone() {
@@ -143,9 +142,9 @@ public class ClusteringRunResult extends ExecutionRunResult {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#toString()
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#toString()
      */
     @Override
     public String toString() {
@@ -155,14 +154,14 @@ public class ClusteringRunResult extends ExecutionRunResult {
     /**
      * Convert to.
      *
-     * @param format the format
+     * @param format         the format
      * @param internalParams Internal parameters used to produced the clustering
-     * result needed for parsing parameters.
-     * @param params Parameters used to produced the clustering result needed
-     * for parsing parameters.
+     *                       result needed for parsing parameters.
+     * @param params         Parameters used to produced the clustering result needed
+     *                       for parsing parameters.
      * @return the clustering result
      * @throws NoRunResultFormatParserException the no run result format parser
-     * exception
+     *                                          exception
      * @throws RunResultNotFoundException
      * @throws RegisterException
      */
@@ -179,12 +178,12 @@ public class ClusteringRunResult extends ExecutionRunResult {
         }
 
         /*
-		 * We already have the same format
+         * We already have the same format
          */
         if (this.getResultFormat().equals(format)) {
             /*
-			 * Just copy the result file and return the corresponding
-			 * ClusteringRunResult
+             * Just copy the result file and return the corresponding
+             * ClusteringRunResult
              */
             try {
                 org.apache.commons.io.FileUtils.copyFile(new File(this.getAbsolutePath()),
@@ -219,7 +218,7 @@ public class ClusteringRunResult extends ExecutionRunResult {
             if (e.getCause() instanceof FileNotFoundException | (e.getCause() instanceof IOException
                     && e.getCause().getMessage().startsWith("Empty file given"))) {
                 /*
-				 * Ensure, that all the files of this result are deleted
+                 * Ensure, that all the files of this result are deleted
                  */
                 FileUtils.delete(this.absPath);
                 throw new RunResultNotFoundException(e.getCause().getMessage());
@@ -227,7 +226,7 @@ public class ClusteringRunResult extends ExecutionRunResult {
             e.printStackTrace();
         } catch (IOException e) {
             /*
-			 * Ensure, that all the files of this result are deleted
+             * Ensure, that all the files of this result are deleted
              */
             FileUtils.delete(this.absPath);
             throw new RunResultNotFoundException(e.getMessage());
@@ -266,11 +265,11 @@ public class ClusteringRunResult extends ExecutionRunResult {
     }
 
     /**
-     * @param run The run corresponding to the runresult folder.
-     * @param repository The repository in which we want to register the
-     * runresult.
+     * @param run             The run corresponding to the runresult folder.
+     * @param repository      The repository in which we want to register the
+     *                        runresult.
      * @param runResultFolder A file object referencing the runresult folder.
-     * @param result The list of runresults this method fills.
+     * @param result          The list of runresults this method fills.
      * @return The parameter optimization run parsed from the runresult folder.
      * @throws RegisterException
      */
@@ -301,7 +300,7 @@ public class ClusteringRunResult extends ExecutionRunResult {
      * @param programConfig
      * @param completeFile
      * @return The parameter optimization run result parsed from the given
-     * runresult folder.
+     *         runresult folder.
      * @throws RegisterException
      */
     public static ClusteringRunResult parseFromRunResultCompleteFile(IRepository repository, ClusteringRun run,
@@ -315,7 +314,7 @@ public class ClusteringRunResult extends ExecutionRunResult {
 
             if (register) {
                 /*
-				 * Register after parsing
+                 * Register after parsing
                  */
                 result.loadIntoMemory();
                 try {
@@ -332,6 +331,7 @@ public class ClusteringRunResult extends ExecutionRunResult {
      * @param parentRepository
      * @param runResultFolder
      * @param result
+     * @param register
      * @throws IOException
      * @throws UnknownRunResultFormatException
      * @throws UnknownDataSetFormatException
@@ -362,7 +362,7 @@ public class ClusteringRunResult extends ExecutionRunResult {
      * @throws UnknownDistanceMeasureException
      * @throws UnknownRunStatisticException
      * @return The parameter optimization run result parsed from the given
-     * runresult folder.
+     *         runresult folder.
      * @throws RepositoryConfigurationException
      * @throws RepositoryConfigNotFoundException
      * @throws ConfigurationException
@@ -380,7 +380,7 @@ public class ClusteringRunResult extends ExecutionRunResult {
      * @throws UnknownRunResultPostprocessorException
      * @throws UnknownDataRandomizerException
      */
-    public static Run parseFromRunResultFolder(final Repository parentRepository, final File runResultFolder,
+    public static Run parseFromRunResultFolder(final IRepository parentRepository, final File runResultFolder,
             final List<ExecutionRunResult> result, final boolean register)
             throws IOException, UnknownRunResultFormatException, UnknownDataSetFormatException,
                    UnknownClusteringQualityMeasureException, InvalidRunModeException,
@@ -400,7 +400,7 @@ public class ClusteringRunResult extends ExecutionRunResult {
                    IncompatibleContextException, UnknownParameterType, InterruptedException,
                    UnknownRunResultPostprocessorException, UnknownDataRandomizerException {
 
-        Repository childRepository;
+        IRepository childRepository;
         try {
             childRepository = new RunResultRepository(runResultFolder.getAbsolutePath(), parentRepository);
             childRepository.initialize();
@@ -445,9 +445,9 @@ public class ClusteringRunResult extends ExecutionRunResult {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.clusteval.run.result.RunResult#loadIntoMemory()
+     * (non-Javadoc)
+     *
+     * @see de.clusteval.run.result.RunResult#loadIntoMemory()
      */
     @Override
     public void loadIntoMemory() {
@@ -468,9 +468,9 @@ public class ClusteringRunResult extends ExecutionRunResult {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.clusteval.run.result.RunResult#isInMemory()
+     * (non-Javadoc)
+     *
+     * @see de.clusteval.run.result.RunResult#isInMemory()
      */
     @Override
     public boolean isInMemory() {
@@ -478,9 +478,9 @@ public class ClusteringRunResult extends ExecutionRunResult {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.clusteval.run.result.RunResult#unloadFromMemory()
+     * (non-Javadoc)
+     *
+     * @see de.clusteval.run.result.RunResult#unloadFromMemory()
      */
     @Override
     public void unloadFromMemory() {

@@ -15,8 +15,8 @@ package de.clusteval.utils;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.IRepositoryObject;
 import de.clusteval.api.repository.RegisterException;
+import de.clusteval.framework.ISupervisorThread;
 import de.clusteval.framework.threading.ClustevalThread;
-import de.clusteval.framework.threading.SupervisorThread;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,7 +46,7 @@ public abstract class FinderThread<T extends IRepositoryObject> extends Clusteva
      * @param checkOnce
      *
      */
-    public FinderThread(final SupervisorThread supervisorThread,
+    public FinderThread(final ISupervisorThread supervisorThread,
             final IRepository repository, final Class<T> classToFind,
             boolean checkOnce) {
         this(supervisorThread, repository, classToFind, 60000, checkOnce);
@@ -60,7 +60,7 @@ public abstract class FinderThread<T extends IRepositoryObject> extends Clusteva
      * @param checkOnce
      *
      */
-    public FinderThread(final SupervisorThread supervisorThread,
+    public FinderThread(final ISupervisorThread supervisorThread,
             final IRepository repository, final Class<T> classToFind,
             final long sleepTime, boolean checkOnce) {
         super(supervisorThread);

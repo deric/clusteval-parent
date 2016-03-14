@@ -29,6 +29,14 @@ import de.clusteval.api.repository.IRepositoryObject;
 public interface IDataConfig extends IRepositoryObject {
 
     /**
+     * The name of a data configuration is the filename of the corresponding
+     * file on the filesystem, without the file extension.
+     *
+     * @return The name of this data configuration.
+     */
+    String getName();
+
+    /**
      * Use this method to check, whether this DataConfig has a goldstandard
      * configuration or not. Some clustering quality measures do not require a
      * goldstandard to evaluate a clustering (see

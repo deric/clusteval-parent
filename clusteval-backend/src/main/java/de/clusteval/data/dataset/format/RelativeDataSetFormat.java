@@ -11,9 +11,9 @@
 package de.clusteval.data.dataset.format;
 
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.data.dataset.DataSet;
-import de.clusteval.framework.repository.Repository;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
 import de.wiwie.wiutils.utils.SimilarityMatrix.NUMBER_PRECISION;
 import java.io.File;
@@ -37,7 +37,7 @@ public abstract class RelativeDataSetFormat extends DataSetFormat {
      * @throws RegisterException
      *
      */
-    public RelativeDataSetFormat(final Repository repo, final boolean register,
+    public RelativeDataSetFormat(final IRepository repo, final boolean register,
             final long changeDate, final File absPath, final int version)
             throws RegisterException {
         super(repo, register, changeDate, absPath, version);

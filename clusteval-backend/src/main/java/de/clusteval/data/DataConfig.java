@@ -14,6 +14,7 @@ package de.clusteval.data;
 
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataSetConfig;
+import de.clusteval.api.exceptions.RepositoryObjectDumpException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.repository.RepositoryEvent;
@@ -23,8 +24,6 @@ import de.clusteval.cluster.quality.ClusteringQualityMeasure;
 import de.clusteval.data.dataset.DataSetConfig;
 import de.clusteval.data.goldstandard.GoldStandardConfig;
 import de.clusteval.framework.repository.DumpableRepositoryObject;
-import de.clusteval.framework.repository.Repository;
-import de.clusteval.api.exceptions.RepositoryObjectDumpException;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -41,7 +40,7 @@ import java.util.List;
  * <p>
  * A data configuration corresponds to and is parsed from a file on the
  * filesystem in the corresponding folder of the repository (see
- * {@link Repository#dataConfigBasePath} and {@link DataConfigFinder}).
+ * {@link IRepository#dataConfigBasePath} and {@link DataConfigFinder}).
  *
  * <p>
  * There are several options, that can be specified in the data configuration
@@ -181,6 +180,7 @@ public class DataConfig extends DumpableRepositoryObject implements IDataConfig 
      * @return The goldstandard configuration of this data configuration. Is
      *         null, if there is no goldstandard configuration.
      */
+    @Override
     public GoldStandardConfig getGoldstandardConfig() {
         return goldstandardConfig;
     }
@@ -191,6 +191,7 @@ public class DataConfig extends DumpableRepositoryObject implements IDataConfig 
      *
      * @return The name of this data configuration.
      */
+    @Override
     public String getName() {
         return this.absPath.getName().replace(".dataconfig", "");
     }

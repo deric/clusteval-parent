@@ -16,11 +16,13 @@
  */
 package de.clusteval.api.data;
 
+import de.clusteval.api.repository.IRepositoryObject;
+
 /**
  *
  * @author deric
  */
-public interface IGoldStandardConfig {
+public interface IGoldStandardConfig extends IRepositoryObject {
 
     IGoldStandard getGoldstandard();
 

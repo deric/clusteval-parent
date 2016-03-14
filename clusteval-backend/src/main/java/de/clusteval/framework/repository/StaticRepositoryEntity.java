@@ -16,10 +16,10 @@
  */
 package de.clusteval.framework.repository;
 
-import de.clusteval.api.repository.RepositoryReplaceEvent;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.IRepositoryObject;
 import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.repository.RepositoryReplaceEvent;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -149,6 +149,7 @@ public class StaticRepositoryEntity<T extends IRepositoryObject> extends Reposit
      * repository, that a new object has been registered and causes him, to
      * handle the new object.
      *
+     * @param <S>
      * @param object
      * @return
      * @throws RegisterException
@@ -185,7 +186,7 @@ public class StaticRepositoryEntity<T extends IRepositoryObject> extends Reposit
             this.repository.pathToRepositoryObject.put(object.absPath, object);
             old.notify(event);
 
-            this.repository.sqlCommunicator.register(object, true);
+            this.repository.getDb().register(object, true);
 
             return true;
         }
@@ -201,7 +202,7 @@ public class StaticRepositoryEntity<T extends IRepositoryObject> extends Reposit
                         + ": " + object.toString());
             }
 
-            this.repository.sqlCommunicator.register(object, false);
+            this.repository.getDb().register(object, false);
 
             return true;
         }
@@ -239,6 +240,6 @@ public class StaticRepositoryEntity<T extends IRepositoryObject> extends Reposit
                     + " removed: " + object);
         }
 
-        this.repository.sqlCommunicator.unregister(object);
+        this.repository.getDb().unregister(object);
     }
 }

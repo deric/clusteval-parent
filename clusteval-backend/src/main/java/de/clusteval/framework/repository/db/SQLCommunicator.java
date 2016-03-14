@@ -11,8 +11,10 @@
 package de.clusteval.framework.repository.db;
 
 import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
+import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.Database;
 import de.clusteval.api.exceptions.DatabaseConnectException;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.IRepositoryObject;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
@@ -27,7 +29,6 @@ import de.clusteval.data.goldstandard.GoldStandard;
 import de.clusteval.data.goldstandard.GoldStandardConfig;
 import de.clusteval.data.statistics.DataStatistic;
 import de.clusteval.framework.repository.Repository;
-import de.clusteval.framework.repository.RepositoryObject;
 import de.clusteval.framework.repository.db.SQLConfig.DB_TYPE;
 import de.clusteval.program.DoubleProgramParameter;
 import de.clusteval.program.IntegerProgramParameter;
@@ -105,16 +106,17 @@ public abstract class SQLCommunicator implements Database {
     /*
      * One SQLCommunicator belongs to exactly one repository
      */
-    protected Repository repository;
+    protected IRepository repository;
 
     /*
      * Stores the id of the repository in the DB
      */
     private int repositoryId;
 
-    protected Map<RepositoryObject, Integer> objectIds;
+    protected Map<IRepositoryObject, Integer> objectIds;
 
-    public Map<RepositoryObject, Integer> getObjectIds() {
+    @Override
+    public Map<IRepositoryObject, Integer> getObjectIds() {
         return objectIds;
     }
 
@@ -122,7 +124,7 @@ public abstract class SQLCommunicator implements Database {
      * @param repository
      * @param sqlConfig
      */
-    public SQLCommunicator(final Repository repository,
+    public SQLCommunicator(final IRepository repository,
             final SQLConfig sqlConfig) {
         super();
 
@@ -160,7 +162,7 @@ public abstract class SQLCommunicator implements Database {
 
     protected abstract String getDBPassword();
 
-    protected int getObjectId(final RepositoryObject object) {
+    protected int getObjectId(final IRepositoryObject object) {
         if (this.objectIds.containsKey(object)) {
             return this.objectIds.get(object);
         }
@@ -593,9 +595,9 @@ public abstract class SQLCommunicator implements Database {
 
     // TODO
     public boolean unregister(final Class<? extends IRepositoryObject> c) {
-        if (ClusteringQualityMeasure.class.isAssignableFrom(c)) {
+        if (ClusteringEvaluation.class.isAssignableFrom(c)) {
             return this
-                    .unregisterClusteringQualityMeasureClass((Class<? extends ClusteringQualityMeasure>) c);
+                    .unregisterClusteringQualityMeasureClass((Class<? extends ClusteringEvaluation>) c);
         } else if (Context.class.isAssignableFrom(c)) {
             return this.unregisterContextClass((Class<? extends Context>) c);
         } else if (DataSetFormat.class.isAssignableFrom(c)) {
@@ -668,7 +670,7 @@ public abstract class SQLCommunicator implements Database {
             final Class<? extends ParameterOptimizationMethod> object);
 
     protected abstract boolean unregisterClusteringQualityMeasureClass(
-            final Class<? extends ClusteringQualityMeasure> object);
+            final Class<? extends ClusteringEvaluation> object);
 
     protected abstract boolean unregisterDataStatisticClass(
             final Class<? extends DataStatistic> object);
@@ -705,10 +707,10 @@ public abstract class SQLCommunicator implements Database {
     protected abstract int getClusterObjectId(final int clusterId,
             final String name) throws SQLException;
 
-    protected abstract int getDataSetFormatId(
+    public abstract int getDataSetFormatId(
             final String dataSetFormatClassSimpleName) throws SQLException;
 
-    protected abstract int getParameterOptimizationMethodId(final String name)
+    public abstract int getParameterOptimizationMethodId(final String name)
             throws SQLException;
 
     protected abstract int getParameterSetId(final int runResultParamOptId)

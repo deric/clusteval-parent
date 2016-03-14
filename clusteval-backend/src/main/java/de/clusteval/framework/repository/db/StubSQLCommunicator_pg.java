@@ -13,6 +13,7 @@
  */
 package de.clusteval.framework.repository.db;
 
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
@@ -25,7 +26,6 @@ import de.clusteval.data.dataset.type.DataSetType;
 import de.clusteval.data.goldstandard.GoldStandard;
 import de.clusteval.data.goldstandard.GoldStandardConfig;
 import de.clusteval.data.statistics.DataStatistic;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.program.DoubleProgramParameter;
 import de.clusteval.program.IntegerProgramParameter;
 import de.clusteval.program.Program;
@@ -65,7 +65,7 @@ public class StubSQLCommunicator_pg extends SQLCommunicator {
 	/**
 	 * @param repository
 	 */
-	public StubSQLCommunicator_pg(Repository repository) {
+    public StubSQLCommunicator_pg(IRepository repository) {
             super(repository, null);
 	}
 

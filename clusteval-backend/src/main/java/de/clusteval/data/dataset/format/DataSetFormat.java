@@ -20,7 +20,6 @@ import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.data.dataset.DataSet;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RepositoryObject;
 import de.wiwie.wiutils.file.FileUtils;
 import de.wiwie.wiutils.utils.SimilarityMatrix.NUMBER_PRECISION;
@@ -50,7 +49,7 @@ import org.slf4j.LoggerFactory;
  *
  * 1. extending the class de.clusteval.data.dataset.format.DataSetFormat with your own class MyDataSetFormat. You have to provide your own implementations for the following methods, otherwise the framework will not be able to load your dataset format.
  *
- *   * :java:ref:`DataSetFormat(Repository, boolean, long, File, int)`: The constructor of your dataset format class. This constructor has to be implemented and public, otherwise the framework will not be able to load your dataset format.
+ *   * :java:ref:`DataSetFormat(IRepository, boolean, long, File, int)`: The constructor of your dataset format class. This constructor has to be implemented and public, otherwise the framework will not be able to load your dataset format.
  *   * :java:ref:`DataSetFormat(DataSetFormat)`: The copy constructor of your class taking another instance of your class. This constructor has to be implemented and public.
  *
  * 2. extending the class de.clusteval.data.dataset.format.DataSetFormatParser with your own class MyDataSetFormatParser. You have to provide your own implementations for the following methods, otherwise the framework will not be able to load your class.
@@ -170,7 +169,7 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
      *
      * <p>
      * This is a convenience method for
-     * {@link #parseFromString(Repository, String)}.
+     * {@link #parseFromString(IRepository, String)}.
      *
      * @param repo
      *                       the repo

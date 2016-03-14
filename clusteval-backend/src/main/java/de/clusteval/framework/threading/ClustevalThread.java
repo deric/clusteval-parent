@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.framework.threading;
 
+import de.clusteval.framework.ISupervisorThread;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -23,13 +24,13 @@ public class ClustevalThread extends Thread {
      */
     private final AtomicBoolean initialized;
 
-    protected SupervisorThread supervisorThread;
+    protected ISupervisorThread supervisorThread;
 
     /**
      * @param supervisorThread
      *
      */
-    public ClustevalThread(final SupervisorThread supervisorThread) {
+    public ClustevalThread(final ISupervisorThread supervisorThread) {
         super();
         this.initialized = new AtomicBoolean(false);
         this.supervisorThread = supervisorThread;
@@ -60,7 +61,7 @@ public class ClustevalThread extends Thread {
     /**
      * @return The supervisor thread that created this thread.
      */
-    public SupervisorThread getSupervisorThread() {
+    public ISupervisorThread getSupervisorThread() {
         return this.supervisorThread;
     }
 

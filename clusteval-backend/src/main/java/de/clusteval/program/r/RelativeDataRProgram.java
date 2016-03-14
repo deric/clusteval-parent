@@ -14,11 +14,11 @@ package de.clusteval.program.r;
 
 import de.clusteval.api.exceptions.RNotAvailableException;
 import de.clusteval.api.r.RException;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.RelativeDataSet;
 import de.clusteval.framework.RLibraryNotLoadedException;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.program.ProgramConfig;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
 import java.io.File;
@@ -38,7 +38,7 @@ public abstract class RelativeDataRProgram extends RProgram {
      * @param absPath The absolute path of this program.
      * @throws RegisterException
      */
-    public RelativeDataRProgram(Repository repository, long changeDate,
+    public RelativeDataRProgram(IRepository repository, long changeDate,
             File absPath) throws RegisterException {
         super(repository, changeDate, absPath);
     }

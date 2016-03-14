@@ -266,7 +266,7 @@ public interface IRepository {
      *
      * <p>
      * A helper method of null null null null null null null null null null null
-     * null null null null null null null null null     {@link ProgramParameter#evaluateDefaultValue(DataConfig, ProgramConfig)},
+     * null null null null null null null null null null null null     {@link ProgramParameter#evaluateDefaultValue(DataConfig, ProgramConfig)},
 	 * {@link ProgramParameter#evaluateMinValue(DataConfig, ProgramConfig)} and
      * {@link ProgramParameter#evaluateMaxValue(DataConfig, ProgramConfig)}.
      *
@@ -276,5 +276,13 @@ public interface IRepository {
      * @throws ScriptException
      */
     public String evaluateJavaScript(final String script) throws ScriptException;
+
+    /**
+     * This method checks, whether this repository has been initialized. A
+     * repository is initialized, if the following invocations return true:
+     *
+     * @return True, if this repository is initialized.
+     */
+    boolean isInitialized();
 
 }

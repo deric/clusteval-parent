@@ -12,7 +12,6 @@ package de.clusteval.run.result.format;
 
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RepositoryObject;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
@@ -33,7 +32,7 @@ import java.lang.reflect.InvocationTargetException;
  *
  * 1. extending this class with your own class MyRunResultFormat. You have to provide your own implementations for the following methods, otherwise the framework will not be able to load your runresult format.
  *
- *   * :java:ref:`RunResultFormat(Repository, boolean, long, File)`: The constructor of your runresult format class. This constructor has to be implemented and public, otherwise the framework will not be able to load your runresult format.
+ *   * :java:ref:`RunResultFormat(IRepository, boolean, long, File)`: The constructor of your runresult format class. This constructor has to be implemented and public, otherwise the framework will not be able to load your runresult format.
  *   * :java:ref:`RunResultFormat(RunResultFormat)`: The copy constructor of your class taking another instance of your class. This constructor has to be implemented and public.
  *
  * 2. extending the class :java:ref:`RunResultFormatParser` with your own class MyRunResultFormatParser. You have to provide your own implementations for the following methods, otherwise the framework will not be able to load your class.
@@ -74,7 +73,7 @@ public abstract class RunResultFormat extends RepositoryObject {
                 RunResultFormat.class, "de.clusteval.run.result.format."
                 + runResultFormat);
         try {
-            return c.getConstructor(Repository.class, boolean.class,
+            return c.getConstructor(IRepository.class, boolean.class,
                     long.class, File.class).newInstance(repository, false,
                             System.currentTimeMillis(), new File(runResultFormat));
         } catch (InstantiationException | IllegalAccessException |
@@ -150,17 +149,9 @@ public abstract class RunResultFormat extends RepositoryObject {
         try {
             return this.getClass().getConstructor(this.getClass())
                     .newInstance(this);
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        } catch (SecurityException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
+        } catch (IllegalArgumentException | SecurityException |
+                InstantiationException | IllegalAccessException |
+                InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
         this.log.warn("Cloning instance of class "

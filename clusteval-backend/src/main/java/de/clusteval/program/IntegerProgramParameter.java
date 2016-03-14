@@ -12,10 +12,10 @@
  */
 package de.clusteval.program;
 
+import de.clusteval.api.exceptions.InternalAttributeException;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.data.DataConfig;
-import de.clusteval.framework.repository.Repository;
-import de.clusteval.api.exceptions.InternalAttributeException;
 import javax.script.ScriptException;
 
 /**
@@ -43,7 +43,7 @@ public class IntegerProgramParameter extends ProgramParameter<Integer> {
             final ProgramConfig programConfig, final String name,
             final String desc, final String minValue, final String maxValue,
             final String[] options, final String def) throws RegisterException {
-        final Repository repo = programConfig.getRepository();
+        final IRepository repo = programConfig.getRepository();
 
         IntegerProgramParameter result = new IntegerProgramParameter(repo,
                 false, programConfig, name, desc, minValue, maxValue, options,
@@ -75,7 +75,7 @@ public class IntegerProgramParameter extends ProgramParameter<Integer> {
      * @param def The default value of the parameter.
      * @throws RegisterException
      */
-    public IntegerProgramParameter(final Repository repository,
+    public IntegerProgramParameter(final IRepository repository,
             final boolean register, final ProgramConfig programConfig,
             final String name, final String desc, String minValue,
             String maxValue, final String[] options, String def)

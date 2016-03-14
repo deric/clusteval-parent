@@ -14,7 +14,6 @@ package de.clusteval.framework.repository.config;
 
 import de.clusteval.api.repository.IRepositoryConfig;
 import de.clusteval.framework.ClustevalBackendServer;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.db.SQLConfig;
 import de.clusteval.framework.repository.db.SQLConfig.DB_TYPE;
 import java.io.File;
@@ -30,7 +29,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * A repository configuration determines certain settings and options for a
- * {@link Repository} and also for the complete backend. This includes for
+ * {@link IRepository} and also for the complete backend. This includes for
  * example whether an sql database should be used or how often the supervising
  * threads of the repository should scan for changes.
  *

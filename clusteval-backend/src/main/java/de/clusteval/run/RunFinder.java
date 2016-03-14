@@ -12,7 +12,6 @@ package de.clusteval.run;
 
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.parse.Parser;
 import de.clusteval.utils.FileFinder;
 import de.wiwie.wiutils.utils.ArrayIterator;
@@ -21,7 +20,7 @@ import java.util.Iterator;
 
 /**
  * Objects of this class look for new run-files in the run-directory defined in
- * the corresponding repository (see {@link Repository#runBasePath}).
+ * the corresponding repository (see {@link IRepository#runBasePath}).
  *
  * @author Christian Wiwie
  *

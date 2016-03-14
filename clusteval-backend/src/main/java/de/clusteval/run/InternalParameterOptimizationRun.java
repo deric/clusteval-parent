@@ -10,16 +10,13 @@
  *     Christian Wiwie - initial API and implementation
  *****************************************************************************
  */
-/**
- *
- */
 package de.clusteval.run;
 
 import de.clusteval.api.ClusteringEvaluation;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.context.Context;
 import de.clusteval.data.DataConfig;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.threading.RunSchedulerThread;
 import de.clusteval.program.ProgramConfig;
 import de.clusteval.program.ProgramParameter;
@@ -44,20 +41,20 @@ public class InternalParameterOptimizationRun extends ExecutionRun {
     /**
      * New objects of this type are automatically registered at the repository.
      *
-     * @param repository the repository
+     * @param repository        the repository
      * @param context
-     * @param changeDate The date this run was performed.
-     * @param absPath The absolute path to the file on the filesystem that
-     * corresponds to this run.
-     * @param programConfigs The program configurations of the new run.
-     * @param dataConfigs The data configurations of the new run.
-     * @param qualityMeasures The clustering quality measures of the new run.
-     * @param parameterValues The parameter values of this run.
+     * @param changeDate        The date this run was performed.
+     * @param absPath           The absolute path to the file on the filesystem that
+     *                          corresponds to this run.
+     * @param programConfigs    The program configurations of the new run.
+     * @param dataConfigs       The data configurations of the new run.
+     * @param qualityMeasures   The clustering quality measures of the new run.
+     * @param parameterValues   The parameter values of this run.
      * @param postProcessors
      * @param maxExecutionTimes
      * @throws RegisterException
      */
-    public InternalParameterOptimizationRun(Repository repository,
+    public InternalParameterOptimizationRun(IRepository repository,
             final Context context, long changeDate, File absPath,
             List<ProgramConfig> programConfigs, List<DataConfig> dataConfigs,
             List<ClusteringEvaluation> qualityMeasures,
@@ -76,18 +73,17 @@ public class InternalParameterOptimizationRun extends ExecutionRun {
      * @param otherRun The internal parameter optimization run to be cloned.
      * @throws RegisterException
      */
-    protected InternalParameterOptimizationRun(
-            final InternalParameterOptimizationRun other)
+    protected InternalParameterOptimizationRun(final InternalParameterOptimizationRun other)
             throws RegisterException {
         super(other);
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see run.ExecutionRun#createRunRunnableFor(framework.RunScheduler,
-	 * run.Run, program.ProgramConfig, data.DataConfig, java.lang.String,
-	 * boolean)
+     * (non-Javadoc)
+     *
+     * @see run.ExecutionRun#createRunRunnableFor(framework.RunScheduler,
+     * run.Run, program.ProgramConfig, data.DataConfig, java.lang.String,
+     * boolean)
      */
     @Override
     protected ExecutionRunRunnable createRunRunnableFor(
@@ -100,9 +96,9 @@ public class InternalParameterOptimizationRun extends ExecutionRun {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see run.ExecutionRun#clone()
+     * (non-Javadoc)
+     *
+     * @see run.ExecutionRun#clone()
      */
     @Override
     public InternalParameterOptimizationRun clone() {

@@ -11,7 +11,7 @@
 package de.clusteval.framework.repository.db;
 
 import de.clusteval.api.exceptions.DatabaseConnectException;
-import de.clusteval.framework.repository.Repository;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.program.ProgramConfig;
 import de.clusteval.run.Run;
 import java.sql.DriverManager;
@@ -30,10 +30,10 @@ public class RunResultSQLCommunicator extends DefaultSQLCommunicator {
      * @param mysqlConfig
      * @throws DatabaseConnectException
      */
-    public RunResultSQLCommunicator(Repository repository,
+    public RunResultSQLCommunicator(IRepository repository,
             final SQLConfig mysqlConfig) throws DatabaseConnectException {
         super(repository, mysqlConfig);
-        this.objectIds = repository.getParent().getDb().objectIds;
+        this.objectIds = repository.getParent().getDb().getObjectIds();
     }
 
     /*
@@ -44,7 +44,7 @@ public class RunResultSQLCommunicator extends DefaultSQLCommunicator {
      * .String)
      */
     @Override
-    protected int getParameterOptimizationMethodId(String name)
+    public int getParameterOptimizationMethodId(String name)
             throws SQLException {
         return repository.getParent().getDb().getParameterOptimizationMethodId(name);
     }
@@ -55,9 +55,9 @@ public class RunResultSQLCommunicator extends DefaultSQLCommunicator {
      * @see de.wiwie.wiutils.utils.DefaultSQLCommunicator#getDataSetFormatId(java.lang.String)
      */
     @Override
-    protected int getDataSetFormatId(String dataSetFormatClassSimpleName)
+    public int getDataSetFormatId(String dataSetFormatClassSimpleName)
             throws SQLException {
-        return this.repository.getParent().getSqlCommunicator()
+        return this.repository.getParent().getDb()
                 .getDataSetFormatId(dataSetFormatClassSimpleName);
     }
 

@@ -12,15 +12,14 @@ package de.clusteval.data.goldstandard;
 
 import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.data.IGoldStandardConfig;
+import de.clusteval.api.exceptions.RepositoryObjectDumpException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.repository.RepositoryEvent;
 import de.clusteval.api.repository.RepositoryMoveEvent;
 import de.clusteval.api.repository.RepositoryRemoveEvent;
-import de.clusteval.framework.repository.DumpableRepositoryObject;
-import de.clusteval.framework.repository.Repository;
-import de.clusteval.api.exceptions.RepositoryObjectDumpException;
 import de.clusteval.api.repository.RepositoryReplaceEvent;
+import de.clusteval.framework.repository.DumpableRepositoryObject;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -35,7 +34,7 @@ import java.io.IOException;
  * <p>
  * A goldstandard configuration corresponds to and is parsed from a file on the
  * filesystem in the corresponding folder of the repository (see
- * {@link Repository#goldStandardConfigBasePath} and
+ * {@link IRepository#goldStandardConfigBasePath} and
  * {@link GoldStandardConfigFinder}).
  *
  * <p>
@@ -112,11 +111,12 @@ public class GoldStandardConfig extends DumpableRepositoryObject implements IGol
      * @return The goldstandard this configuration belongs to.
      * @see #goldStandard
      */
+    @Override
     public IGoldStandard getGoldstandard() {
         return goldStandard;
     }
 
-    public void setGoldStandard(final GoldStandard goldStandard) {
+    public void setGoldStandard(final IGoldStandard goldStandard) {
         this.goldStandard = goldStandard;
     }
 

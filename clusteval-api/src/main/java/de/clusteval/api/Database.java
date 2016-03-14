@@ -18,6 +18,8 @@ package de.clusteval.api;
 
 import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.repository.IRepositoryObject;
+import java.sql.SQLException;
+import java.util.Map;
 
 /**
  *
@@ -42,6 +44,17 @@ public interface Database {
      */
     void initDB() throws DatabaseConnectException;
 
-    public void commitDB();
+    void commitDB();
+
+    /**
+     * IDs of objects in DB
+     *
+     * @return
+     */
+    Map<IRepositoryObject, Integer> getObjectIds();
+
+    int getParameterOptimizationMethodId(final String name) throws SQLException;
+
+    int getDataSetFormatId(final String dataSetFormatClassSimpleName) throws SQLException;
 
 }

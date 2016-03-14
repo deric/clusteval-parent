@@ -12,6 +12,7 @@
  */
 package de.clusteval.data.dataset.generator;
 
+import de.clusteval.api.exceptions.RepositoryObjectDumpException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownDataSetGeneratorException;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
@@ -30,7 +31,6 @@ import de.clusteval.data.dataset.type.UnknownDataSetTypeException;
 import de.clusteval.data.goldstandard.GoldStandard;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RepositoryObject;
-import de.clusteval.api.exceptions.RepositoryObjectDumpException;
 import de.wiwie.wiutils.file.FileUtils;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -54,7 +54,7 @@ import org.apache.commons.cli.PosixParser;
  *
  * 1. extending this class with your own class MyDataSetGenerator. You have to provide your own implementations for the following methods, otherwise the framework will not be able to load your runresult format.
  *
- *   * :java:ref:`DataSetGenerator(Repository, boolean, long, File)`: The constructor of your class. This constructor has to be implemented and public, otherwise the framework will not be able to load your runresult format.
+ *   * :java:ref:`DataSetGenerator(IRepository, boolean, long, File)`: The constructor of your class. This constructor has to be implemented and public, otherwise the framework will not be able to load your runresult format.
  *   * :java:ref:`DataSetGenerator(DataSetGenerator)`: The copy constructor of your class taking another instance of your class. This constructor has to be implemented and public.
  *   * :java:ref:`generateDataSet()`: This method generates the data set, writes it to the file system and returns a DataSet wrapper object.
  *   * :java:ref:`generatesGoldStandard()`: Returns true, if this generator generates a gold standard together with each generated data set.

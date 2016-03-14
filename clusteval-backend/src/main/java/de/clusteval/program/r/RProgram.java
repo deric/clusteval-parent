@@ -10,16 +10,14 @@
  *     Christian Wiwie - initial API and implementation
  *****************************************************************************
  */
-/**
- *
- */
 package de.clusteval.program.r;
 
-import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.exceptions.RNotAvailableException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RLibraryInferior;
+import de.clusteval.api.r.UnknownRProgramException;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.data.DataConfig;
@@ -135,12 +133,12 @@ public abstract class RProgram extends Program implements RLibraryInferior {
      * corresponding RProgram in the repository and returns a new instance.
      *
      * @param repository The repository to lookup the RProgram.
-     * @param rProgram The major name (see {@link #getMajorName()}) of the
-     * RProgram to return.
+     * @param rProgram   The major name (see {@link #getMajorName()}) of the
+     *                   RProgram to return.
      * @return An instance of an RProgram corresponding to the passed string.
      * @throws UnknownRProgramException
      */
-    public static RProgram parseFromString(final Repository repository,
+    public static RProgram parseFromString(final IRepository repository,
             String rProgram) throws UnknownRProgramException {
         Class<? extends RProgram> c = repository.getRegisteredClass(
                 RProgram.class, "de.clusteval.program.r." + rProgram);
@@ -150,20 +148,11 @@ public abstract class RProgram extends Program implements RLibraryInferior {
                     .getConstructor(Repository.class);
             RProgram program = constr.newInstance(repository);
             return program;
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
+        } catch (InstantiationException | IllegalAccessException | NoSuchMethodException |
+                SecurityException | IllegalArgumentException | InvocationTargetException e) {
             e.printStackTrace();
         } catch (NullPointerException e) {
 
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (SecurityException e) {
-            e.printStackTrace();
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
         }
         throw new UnknownRProgramException("\"" + rProgram
                 + "\" is not a known RProgram.");
@@ -172,11 +161,11 @@ public abstract class RProgram extends Program implements RLibraryInferior {
     /**
      * @param repository the repository this program should be registered at.
      * @param changeDate The change date of this program is used for equality
-     * checks.
-     * @param absPath The absolute path of this program.
+     *                   checks.
+     * @param absPath    The absolute path of this program.
      * @throws RegisterException
      */
-    public RProgram(Repository repository, long changeDate, File absPath)
+    public RProgram(IRepository repository, long changeDate, File absPath)
             throws RegisterException {
         super(repository, false, changeDate, absPath);
     }
@@ -192,26 +181,17 @@ public abstract class RProgram extends Program implements RLibraryInferior {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see program.Program#clone()
+     * (non-Javadoc)
+     *
+     * @see program.Program#clone()
      */
     @Override
     public final RProgram clone() {
         try {
             return this.getClass().getConstructor(this.getClass())
                     .newInstance(this);
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        } catch (SecurityException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
+        } catch (IllegalArgumentException | SecurityException | InstantiationException |
+                IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
         this.log.warn("Cloning instance of class "
@@ -234,7 +214,7 @@ public abstract class RProgram extends Program implements RLibraryInferior {
 
     /**
      * @return A set containing dataset formats, which this r program can take
-     * as input.
+     *         as input.
      * @throws UnknownDataSetFormatException
      */
     public abstract Set<DataSetFormat> getCompatibleDataSetFormats()
@@ -242,18 +222,18 @@ public abstract class RProgram extends Program implements RLibraryInferior {
 
     /**
      * @return The runresult formats, the results of this r program will be
-     * generated in.
+     *         generated in.
      * @throws UnknownRunResultFormatException
      */
     public abstract RunResultFormat getRunResultFormat()
             throws UnknownRunResultFormatException;
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.clusteval.program.Program#exec(de.clusteval.data.DataConfig,
-	 * de.clusteval.program.ProgramConfig, java.lang.String[], java.util.Map,
-	 * java.util.Map)
+     * (non-Javadoc)
+     *
+     * @see de.clusteval.program.Program#exec(de.clusteval.data.DataConfig,
+     * de.clusteval.program.ProgramConfig, java.lang.String[], java.util.Map,
+     * java.util.Map)
      */
     @Override
     public final Process exec(final DataConfig dataConfig,
@@ -409,9 +389,9 @@ public abstract class RProgram extends Program implements RLibraryInferior {
      * default the result is stored in the R variable "result".
      *
      * @return A two dimensional float array, containing fuzzy coefficients for
-     * each object and cluster. Rows correspond to objects and columns
-     * correspond to clusters. The order of objects is the same as in
-     * {@link #ids}.
+     *         each object and cluster. Rows correspond to objects and columns
+     *         correspond to clusters. The order of objects is the same as in
+     *         {@link #ids}.
      * @throws RserveException
      * @throws REXPMismatchException
      * @throws InterruptedException
