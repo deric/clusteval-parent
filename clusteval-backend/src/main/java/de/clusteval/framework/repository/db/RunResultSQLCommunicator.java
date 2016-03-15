@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.framework.repository.db;
 
+import de.clusteval.api.SQLConfig;
 import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.program.ProgramConfig;

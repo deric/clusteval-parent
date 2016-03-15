@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.framework.repository.db;
 
+import de.clusteval.api.SQLConfig;
 import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.Database;
@@ -28,7 +29,7 @@ import de.clusteval.data.dataset.type.DataSetType;
 import de.clusteval.data.goldstandard.GoldStandard;
 import de.clusteval.data.goldstandard.GoldStandardConfig;
 import de.clusteval.data.statistics.DataStatistic;
-import de.clusteval.framework.repository.db.SQLConfig.DB_TYPE;
+import de.clusteval.api.SQLConfig.DB_TYPE;
 import de.clusteval.program.DoubleProgramParameter;
 import de.clusteval.program.IntegerProgramParameter;
 import de.clusteval.program.Program;

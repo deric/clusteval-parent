@@ -15,8 +15,8 @@ package de.clusteval.framework.repository.config;
 
 import java.util.HashMap;
 
-import de.clusteval.framework.repository.db.SQLConfig;
-import de.clusteval.framework.repository.db.SQLConfig.DB_TYPE;
+import de.clusteval.api.SQLConfig;
+import de.clusteval.api.SQLConfig.DB_TYPE;
 
 /**
  * @author Christian Wiwie

@@ -12,10 +12,10 @@
  */
 package de.clusteval.framework.repository.config;
 
+import de.clusteval.api.SQLConfig;
+import de.clusteval.api.SQLConfig.DB_TYPE;
 import de.clusteval.api.repository.IRepositoryConfig;
 import de.clusteval.framework.ClustevalBackendServer;
-import de.clusteval.framework.repository.db.SQLConfig;
-import de.clusteval.framework.repository.db.SQLConfig.DB_TYPE;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -126,7 +126,7 @@ public class RepositoryConfig implements IRepositoryConfig {
                         false);
             }
 
-            Map<String, Long> threadingSleepTimes = new HashMap<String, Long>();
+            Map<String, Long> threadingSleepTimes = new HashMap<>();
 
             if (props.getSections().contains("threading")) {
                 SubnodeConfiguration threading = props.getSection("threading");
@@ -159,7 +159,7 @@ public class RepositoryConfig implements IRepositoryConfig {
     /**
      * The configuration of the mysql connection of the repository.
      */
-    protected SQLConfig mysqlConfig;
+    protected SQLConfig dbConfig;
 
     /**
      * Creates a new repository configuration.
@@ -171,15 +171,16 @@ public class RepositoryConfig implements IRepositoryConfig {
     public RepositoryConfig(final SQLConfig mysqlConfig,
             final Map<String, Long> threadingSleepTimes) {
         super();
-        this.mysqlConfig = mysqlConfig;
+        this.dbConfig = mysqlConfig;
         this.threadingSleepingTimes = threadingSleepTimes;
     }
 
     /**
      * @return The mysql configuration of this repository.
      */
-    public SQLConfig getMysqlConfig() {
-        return this.mysqlConfig;
+    @Override
+    public SQLConfig getDbConfig() {
+        return this.dbConfig;
     }
 
     /**
@@ -187,8 +188,8 @@ public class RepositoryConfig implements IRepositoryConfig {
      *
      * @param mysqlConfig The new mysql configuration.
      */
-    public void setMysqlConfig(final SQLConfig mysqlConfig) {
-        this.mysqlConfig = mysqlConfig;
+    public void setDbConfig(final SQLConfig mysqlConfig) {
+        this.dbConfig = mysqlConfig;
     }
 
     /**

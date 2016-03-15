@@ -12,7 +12,7 @@ package de.clusteval.run.result;
 
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.framework.repository.db.SQLConfig.DB_TYPE;
+import de.clusteval.api.SQLConfig.DB_TYPE;
 import de.clusteval.framework.threading.SupervisorThread;
 import de.clusteval.utils.Finder;
 import de.clusteval.utils.FinderThread;

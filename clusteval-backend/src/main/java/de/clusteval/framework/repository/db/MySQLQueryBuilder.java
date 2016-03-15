@@ -3,6 +3,7 @@
  */
 package de.clusteval.framework.repository.db;
 
+import de.clusteval.api.SQLConfig;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;

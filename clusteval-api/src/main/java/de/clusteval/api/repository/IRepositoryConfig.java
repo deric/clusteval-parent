@@ -16,6 +16,7 @@
  */
 package de.clusteval.api.repository;
 
+import de.clusteval.api.SQLConfig;
 import java.util.Map;
 
 /**
@@ -29,5 +30,14 @@ public interface IRepositoryConfig {
      * @see #threadingSleepingTimes
      */
     Map<String, Long> getThreadSleepTimes();
+
+    SQLConfig getDbConfig();
+
+    /**
+     * Override the mysql configuration of this repository.
+     *
+     * @param mysqlConfig The new mysql configuration.
+     */
+    void setDbConfig(final SQLConfig mysqlConfig);
 
 }

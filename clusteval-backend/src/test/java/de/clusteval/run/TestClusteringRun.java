@@ -42,7 +42,7 @@ import de.clusteval.framework.repository.config.DefaultRepositoryConfig;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
 import de.clusteval.api.exceptions.DatabaseConnectException;
-import de.clusteval.framework.repository.db.SQLConfig;
+import de.clusteval.api.SQLConfig;
 import de.clusteval.framework.repository.parse.Parser;
 import de.clusteval.program.NoOptimizableProgramParameterException;
 import de.clusteval.program.UnknownParameterType;

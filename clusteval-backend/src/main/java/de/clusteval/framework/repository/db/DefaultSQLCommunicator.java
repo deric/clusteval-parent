@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.framework.repository.db;
 
+import de.clusteval.api.SQLConfig;
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.cluster.quality.ClusteringQualitySet;
 import de.clusteval.api.exceptions.DatabaseConnectException;
