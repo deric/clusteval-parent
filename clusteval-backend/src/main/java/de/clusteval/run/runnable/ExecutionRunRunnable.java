@@ -53,7 +53,7 @@ import de.clusteval.run.result.NoRunResultFormatParserException;
 import de.clusteval.run.result.format.RunResultFormat;
 import de.clusteval.run.result.format.RunResultNotFoundException;
 import de.clusteval.run.result.postprocessing.RunResultPostprocessor;
-import de.clusteval.utils.FormatConversionException;
+import de.clusteval.api.exceptions.FormatConversionException;
 import de.clusteval.utils.plot.Plotter;
 import de.wiwie.wiutils.file.FileUtils;
 import de.wiwie.wiutils.format.Formatter;

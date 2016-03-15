@@ -19,6 +19,7 @@ import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.repository.RepositoryEvent;
 import de.clusteval.api.repository.RepositoryRemoveEvent;
 import de.clusteval.api.repository.RepositoryReplaceEvent;
+import de.clusteval.api.run.IRunRunnable;
 import de.clusteval.api.run.RUN_STATUS;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
 import de.clusteval.context.Context;
@@ -223,7 +224,7 @@ public abstract class ExecutionRun extends Run {
     @Override
     public boolean terminate() {
         synchronized (this.runnables) {
-            for (RunRunnable thread : this.runnables) {
+            for (IRunRunnable thread : this.runnables) {
                 thread.terminate();
             }
             this.setStatus(RUN_STATUS.TERMINATED);

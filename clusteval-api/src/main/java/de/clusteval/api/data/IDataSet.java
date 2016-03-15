@@ -16,10 +16,15 @@
  */
 package de.clusteval.api.data;
 
+import de.clusteval.api.IContext;
+import de.clusteval.api.exceptions.FormatConversionException;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
+import de.clusteval.api.exceptions.RNotAvailableException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.repository.IRepositoryObject;
+import de.clusteval.api.repository.RegisterException;
 import java.io.IOException;
+import java.security.InvalidParameterException;
 import java.util.List;
 
 /**
@@ -120,4 +125,57 @@ public interface IDataSet extends IRepositoryObject {
     String getFullName();
 
     WEBSITE_VISIBILITY getWebsiteVisibility();
+
+    /**
+     * This method is a helper method to convert a dataset in its original
+     * format to a internal standard format directly, that means using one
+     * conversion step.
+     *
+     * @param context
+     * @param dsFormat              This is the format, the dataset is expected to be in
+     *                              after the conversion process. After the dataset is converted to the
+     *                              internal format, it is converted to the target format.
+     * @param configInputToStandard This is the configuration that is used
+     *                              during the conversion from the original format to the internal standard
+     *                              format.
+     * @return The dataset in the target format.
+     * @throws IOException                          Signals that an I/O exception has occurred.
+     * @throws InvalidDataSetFormatVersionException
+     * @throws RegisterException
+     * @throws UnknownDataSetFormatException
+     * @throws RNotAvailableException
+     * @throws InvalidParameterException
+     * @throws InterruptedException
+     */
+    IDataSet convertToStandardDirectly(final IContext context, final IConversionInputToStandardConfiguration configInputToStandard)
+            throws IOException, InvalidDataSetFormatVersionException,
+                   RegisterException, UnknownDataSetFormatException,
+                   InvalidParameterException, RNotAvailableException,
+                   InterruptedException;
+
+    /**
+     * This method is a helper method to convert a dataset in a internal
+     * standard format to a target format directly, that means using one
+     * conversion step.
+     *
+     * @param context
+     * @param targetFormat          This is the format, the dataset is expected to be in
+     *                              after the conversion process. After the dataset is converted to the
+     *                              internal format, it is converted to the target format.
+     * @param configStandardToInput This is the configuration that is used
+     *                              during the conversion from the internal standard format to the target
+     *                              format.
+     * @return The dataset in the target format.
+     * @throws IOException                          Signals that an I/O exception has occurred.
+     * @throws InvalidDataSetFormatVersionException
+     * @throws RegisterException
+     * @throws UnknownDataSetFormatException
+     * @throws FormatConversionException
+     */
+    public IDataSet convertStandardToDirectly(final IContext context,
+            final IDataSetFormat targetFormat,
+            final IConversionStandardToInputConfiguration configStandardToInput)
+            throws IOException, InvalidDataSetFormatVersionException,
+                   RegisterException, UnknownDataSetFormatException,
+                   FormatConversionException;
 }

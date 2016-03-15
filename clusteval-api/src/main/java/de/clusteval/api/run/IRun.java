@@ -16,27 +16,14 @@
  */
 package de.clusteval.api.run;
 
-import java.io.IOException;
+import de.clusteval.api.repository.IRepositoryObject;
+import java.util.List;
 
 /**
  *
  * @author deric
  */
-public interface IRunResultFormatParser {
+public interface IRun extends IRepositoryObject {
 
-    /**
-     * Convert to standard format.
-     *
-     * @throws IOException
-     *                     Signals that an I/O exception has occurred.
-     */
-    void convertToStandardFormat() throws IOException;
-
-    /**
-     * Gets the run result.
-     *
-     * @return the run result
-     */
-    IClusteringRunResult getRunResult();
-
+    List<IRunRunnable> getRunRunnables();
 }

@@ -12,6 +12,7 @@ package de.clusteval.run.result.format;
 
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.run.IRunResultFormat;
 import de.clusteval.framework.repository.RepositoryObject;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
@@ -53,7 +54,7 @@ import java.lang.reflect.InvocationTargetException;
  *
  * @author Christian Wiwie
  */
-public abstract class RunResultFormat extends RepositoryObject {
+public abstract class RunResultFormat extends RepositoryObject implements IRunResultFormat {
 
     /**
      * This method parses a runresult format from the given string, containing a
@@ -66,7 +67,7 @@ public abstract class RunResultFormat extends RepositoryObject {
      * @return The parsed runresult format.
      * @throws UnknownRunResultFormatException
      */
-    public static RunResultFormat parseFromString(final IRepository repository,
+    public static IRunResultFormat parseFromString(final IRepository repository,
             String runResultFormat) throws UnknownRunResultFormatException {
 
         Class<? extends RunResultFormat> c = repository.getRegisteredClass(
@@ -108,8 +109,7 @@ public abstract class RunResultFormat extends RepositoryObject {
      *              The object to clone.
      * @throws RegisterException
      */
-    public RunResultFormat(final RunResultFormat other)
-            throws RegisterException {
+    public RunResultFormat(final IRunResultFormat other) throws RegisterException {
         super(other);
     }
 

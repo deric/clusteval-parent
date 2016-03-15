@@ -13,6 +13,7 @@
 package de.clusteval.framework.repository;
 
 import de.clusteval.api.Database;
+import de.clusteval.api.SQLConfig;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.data.IDataSetFormatParser;
 import de.clusteval.api.exceptions.DatabaseConnectException;
@@ -1801,6 +1802,7 @@ public class Repository implements IRepository {
      * @return The change dates of the jar files that were loaded dynamically by
      *         jar finder instances.
      */
+    @Override
     public Map<String, Long> getFinderLoadedJarFileChangeDates() {
         return this.finderLoadedJarFileChangeDates;
     }
@@ -1815,7 +1817,13 @@ public class Repository implements IRepository {
         return dynamicRepositoryEntities;
     }
 
+    @Override
     public Map<File, IRepositoryObject> getPathToRepositoryObject() {
         return pathToRepositoryObject;
+    }
+
+    @Override
+    public SQLConfig getDbConfig() {
+        return repositoryConfig.getDbConfig();
     }
 }

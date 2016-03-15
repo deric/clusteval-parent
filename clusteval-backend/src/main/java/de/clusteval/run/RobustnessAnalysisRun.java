@@ -382,7 +382,7 @@ public class RobustnessAnalysisRun extends ClusteringRun {
                 result.unloadFromMemory();
 
                 ProgramConfig programConfig = result.getProgramConfig();
-                DataConfig dataConfig = result.getDataConfig();
+                IDataConfig dataConfig = result.getDataConfig();
 
                 String resultPath = FileUtils.buildPath(
                         this.repository.getBasePath(RunResult.class),
@@ -622,7 +622,7 @@ public class RobustnessAnalysisRun extends ClusteringRun {
                     ParameterOptimizationResult paramOptResult = (ParameterOptimizationResult) runResult;
                     paramOptResult.loadIntoMemory();
                     ProgramConfig pc = paramOptResult.getProgramConfig();
-                    DataConfig dc = paramOptResult.getDataConfig();
+                    IDataConfig dc = paramOptResult.getDataConfig();
                     ClusteringQualityMeasure measure = paramOptResult
                             .getMethod().getOptimizationCriterion();
                     ClusteringQualityMeasureValue min = ClusteringQualityMeasureValue

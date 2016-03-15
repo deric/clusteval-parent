@@ -81,7 +81,7 @@ import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
 import de.clusteval.run.statistics.UnknownRunDataStatisticException;
 import de.clusteval.run.statistics.UnknownRunStatisticException;
 import de.clusteval.utils.AbstractClustEvalTest;
-import de.clusteval.utils.FormatConversionException;
+import de.clusteval.api.exceptions.FormatConversionException;
 import de.clusteval.api.exceptions.RNotAvailableException;
 
 /**

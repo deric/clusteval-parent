@@ -12,10 +12,12 @@ package de.clusteval.run.result;
 
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.cluster.quality.ClusteringQualitySet;
+import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigurationException;
 import de.clusteval.api.exceptions.GoldStandardNotFoundException;
+import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
@@ -38,9 +40,7 @@ import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
-import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
-import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.data.dataset.type.UnknownDataSetTypeException;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
@@ -374,7 +374,7 @@ public class ParameterOptimizationResult extends ExecutionRunResult implements
 
     private Map<ClusteringQualityMeasure, Clustering> cloneOptimalClustering(
             Map<ClusteringQualityMeasure, Clustering> optimalClustering) {
-        final Map<ClusteringQualityMeasure, Clustering> result = new HashMap<ClusteringQualityMeasure, Clustering>();
+        final Map<ClusteringQualityMeasure, Clustering> result = new HashMap<>();
 
         for (Map.Entry<ClusteringQualityMeasure, Clustering> entry : optimalClustering.entrySet()) {
             result.put(entry.getKey().clone(), entry.getValue().clone());
@@ -385,7 +385,7 @@ public class ParameterOptimizationResult extends ExecutionRunResult implements
 
     private Map<ParameterSet, Clustering> cloneParameterSetsToClustering(
             Map<ParameterSet, Clustering> parameterSetToClustering) {
-        final Map<ParameterSet, Clustering> result = new HashMap<ParameterSet, Clustering>();
+        final Map<ParameterSet, Clustering> result = new HashMap<>();
 
         for (Map.Entry<ParameterSet, Clustering> entry : parameterSetToClustering.entrySet()) {
             result.put(entry.getKey().clone(), entry.getValue().clone());
@@ -395,7 +395,7 @@ public class ParameterOptimizationResult extends ExecutionRunResult implements
     }
 
     private List<ParameterSet> cloneParameterSets(List<ParameterSet> parameterSets) {
-        final List<ParameterSet> result = new ArrayList<ParameterSet>();
+        final List<ParameterSet> result = new ArrayList<>();
 
         for (ParameterSet paramSet : parameterSets) {
             result.add(paramSet.clone());
@@ -405,11 +405,11 @@ public class ParameterOptimizationResult extends ExecutionRunResult implements
     }
 
     private List<Long> cloneIterationNumbers(List<Long> iterationNumbers) {
-        return new ArrayList<Long>(iterationNumbers);
+        return new ArrayList<>(iterationNumbers);
     }
 
     private Map<ParameterSet, Long> cloneParameterSetToIterationNumbers(Map<ParameterSet, Long> iterationNumbers) {
-        final Map<ParameterSet, Long> result = new HashMap<ParameterSet, Long>();
+        final Map<ParameterSet, Long> result = new HashMap<>();
 
         for (Map.Entry<ParameterSet, Long> entry : iterationNumbers.entrySet()) {
             result.put(entry.getKey().clone(), entry.getValue());
@@ -420,7 +420,7 @@ public class ParameterOptimizationResult extends ExecutionRunResult implements
 
     private Map<ClusteringQualityMeasure, ParameterSet> cloneOptimalParameterSets(
             Map<ClusteringQualityMeasure, ParameterSet> optimalParameterSet) {
-        final Map<ClusteringQualityMeasure, ParameterSet> result = new HashMap<ClusteringQualityMeasure, ParameterSet>();
+        final Map<ClusteringQualityMeasure, ParameterSet> result = new HashMap<>();
 
         for (Map.Entry<ClusteringQualityMeasure, ParameterSet> entry : optimalParameterSet.entrySet()) {
             result.put(entry.getKey().clone(), entry.getValue().clone());
@@ -431,7 +431,7 @@ public class ParameterOptimizationResult extends ExecutionRunResult implements
 
     private Map<ParameterSet, ClusteringQualitySet> cloneParameterSetQualities(
             Map<ParameterSet, ClusteringQualitySet> parameterSetToQualities) {
-        final Map<ParameterSet, ClusteringQualitySet> result = new HashMap<ParameterSet, ClusteringQualitySet>();
+        final Map<ParameterSet, ClusteringQualitySet> result = new HashMap<>();
 
         for (Map.Entry<ParameterSet, ClusteringQualitySet> entry : parameterSetToQualities.entrySet()) {
             result.put(entry.getKey().clone(), entry.getValue().clone());

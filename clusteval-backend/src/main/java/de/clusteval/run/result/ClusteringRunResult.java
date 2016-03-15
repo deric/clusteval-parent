@@ -12,6 +12,7 @@
  */
 package de.clusteval.run.result;
 
+import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
@@ -106,7 +107,7 @@ public class ClusteringRunResult extends ExecutionRunResult implements IClusteri
      * @throws RegisterException
      */
     public ClusteringRunResult(final IRepository repository, final long changeDate, final File absPath,
-            final DataConfig dataConfig, final ProgramConfig programConfig, final RunResultFormat resultFormat,
+            final IDataConfig dataConfig, final ProgramConfig programConfig, final RunResultFormat resultFormat,
             final String runIdentString, final Run run) throws RegisterException {
         super(repository, changeDate, absPath, runIdentString, run, dataConfig, programConfig);
 
@@ -279,7 +280,7 @@ public class ClusteringRunResult extends ExecutionRunResult implements IClusteri
 
         File clusterFolder = new File(FileUtils.buildPath(runResultFolder.getAbsolutePath(), "clusters"));
 
-        for (final DataConfig dataConfig : run.getDataConfigs()) {
+        for (final IDataConfig dataConfig : run.getDataConfigs()) {
             for (final ProgramConfig programConfig : run.getProgramConfigs()) {
                 final File completeFile = new File(FileUtils.buildPath(clusterFolder.getAbsolutePath(),
                         programConfig.toString() + "_" + dataConfig + ".1.results.conv"));
@@ -305,7 +306,7 @@ public class ClusteringRunResult extends ExecutionRunResult implements IClusteri
      * @throws RegisterException
      */
     public static ClusteringRunResult parseFromRunResultCompleteFile(IRepository repository, ClusteringRun run,
-            final DataConfig dataConfig, final ProgramConfig programConfig, final File completeFile,
+            final IDataConfig dataConfig, final ProgramConfig programConfig, final File completeFile,
             final boolean register) throws RegisterException {
         ClusteringRunResult result = null;
         if (completeFile.exists()) {

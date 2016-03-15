@@ -10,10 +10,13 @@
  ***************************************************************************** */
 package de.clusteval.run.result;
 
+import de.clusteval.api.data.IDataConfig;
+import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigurationException;
 import de.clusteval.api.exceptions.GoldStandardNotFoundException;
+import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
@@ -34,9 +37,7 @@ import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
-import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
-import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.data.dataset.type.UnknownDataSetTypeException;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
@@ -241,9 +242,9 @@ public class DataAnalysisRunResult extends AnalysisRunResult<DataConfig, DataSta
                 analysisResult = new DataAnalysisRunResult(parentRepository, analysesFolder.lastModified(),
                         analysesFolder, analysesFolder.getParentFile().getName(), run);
 
-                for (final DataConfig dataConfig : run.getDataConfigs()) {
+                for (final IDataConfig dataConfig : run.getDataConfigs()) {
 
-                    List<DataStatistic> statistics = new ArrayList<DataStatistic>();
+                    List<DataStatistic> statistics = new ArrayList<>();
                     for (final Statistic dataStatistic : run.getStatistics()) {
                         final File completeFile = new File(FileUtils.buildPath(analysesFolder.getAbsolutePath(),
                                 dataConfig.toString() + "_" + dataStatistic.getIdentifier() + ".txt"));

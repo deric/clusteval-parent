@@ -17,6 +17,7 @@
 package de.clusteval.api.repository;
 
 import de.clusteval.api.Database;
+import de.clusteval.api.SQLConfig;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.data.IDataSetFormatParser;
@@ -27,6 +28,7 @@ import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RLibraryNotLoadedException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
+import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.ISupervisorThread;
 import de.clusteval.program.IProgramConfig;
 import java.io.File;
@@ -99,6 +101,8 @@ public interface IRepository {
      * @return The configuration of this repository.
      */
     IRepositoryConfig getRepositoryConfig();
+
+    SQLConfig getDbConfig();
 
     <T extends IRepositoryObject> T getStaticObjectWithName(final Class<T> c, final String name);
 

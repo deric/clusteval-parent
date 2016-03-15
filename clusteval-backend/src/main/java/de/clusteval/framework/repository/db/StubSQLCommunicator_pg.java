@@ -18,7 +18,7 @@ import de.clusteval.api.data.IDataSetConfig;
 import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.data.IGoldStandardConfig;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.repository.IRun;
+import de.clusteval.api.run.IRun;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
@@ -853,7 +853,7 @@ public class StubSQLCommunicator_pg extends SQLCommunicator {
      * @see de.wiwie.wiutils.utils.SQLCommunicator#updateStatusOfRun(run.Run, java.lang.String)
      */
     @Override
-    public boolean updateStatusOfRun(Run run, String runStatus) {
+    public boolean updateStatusOfRun(IRun run, String runStatus) {
         return false;
     }
 

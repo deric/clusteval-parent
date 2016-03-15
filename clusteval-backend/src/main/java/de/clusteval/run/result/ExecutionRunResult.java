@@ -8,14 +8,11 @@
  * Contributors:
  *     Christian Wiwie - initial API and implementation
  ***************************************************************************** */
-/**
- *
- */
 package de.clusteval.run.result;
 
+import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.data.DataConfig;
 import de.clusteval.program.ProgramConfig;
 import de.clusteval.run.Run;
 import java.io.File;
@@ -27,7 +24,7 @@ import java.io.File;
 public abstract class ExecutionRunResult extends RunResult {
 
     /** The data config. */
-    protected DataConfig dataConfig;
+    protected IDataConfig dataConfig;
 
     /** The program config. */
     protected ProgramConfig programConfig;
@@ -44,7 +41,7 @@ public abstract class ExecutionRunResult extends RunResult {
      */
     public ExecutionRunResult(IRepository repository, long changeDate,
             File absPath, String runIdentString, final Run run,
-            final DataConfig dataConfig, final ProgramConfig programConfig)
+            final IDataConfig dataConfig, final ProgramConfig programConfig)
             throws RegisterException {
         super(repository, changeDate, absPath, runIdentString, run);
         this.dataConfig = dataConfig;
@@ -85,7 +82,7 @@ public abstract class ExecutionRunResult extends RunResult {
      * @return The data configuration wrapping the dataset on which this
      *         runresult was produced.
      */
-    public DataConfig getDataConfig() {
+    public IDataConfig getDataConfig() {
         return this.dataConfig;
     }
 

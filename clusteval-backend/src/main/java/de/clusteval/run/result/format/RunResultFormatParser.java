@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.run.result.format;
 
+import de.clusteval.api.run.IClusteringRunResult;
 import de.clusteval.api.run.IRunResultFormatParser;
 import de.clusteval.run.result.ClusteringRunResult;
 import de.wiwie.wiutils.utils.parse.TextFileParser;
@@ -82,15 +83,7 @@ public abstract class RunResultFormatParser extends TextFileParser implements IR
      *
      * @return the run result
      */
-    public ClusteringRunResult getRunResult() {
+    public IClusteringRunResult getRunResult() {
         return this.result;
     }
-
-    /**
-     * Convert to standard format.
-     *
-     * @throws IOException
-     *                     Signals that an I/O exception has occurred.
-     */
-    public abstract void convertToStandardFormat() throws IOException;
 }

@@ -12,7 +12,6 @@
  */
 package de.clusteval.api.exceptions;
 
-
 /**
  *
  * @author Christian Wiwie

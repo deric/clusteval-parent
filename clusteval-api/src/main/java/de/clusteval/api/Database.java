@@ -19,7 +19,7 @@ package de.clusteval.api;
 import de.clusteval.api.data.IGoldStandardConfig;
 import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.repository.IRepositoryObject;
-import de.clusteval.api.repository.IRun;
+import de.clusteval.api.run.IRun;
 import java.sql.SQLException;
 import java.util.Map;
 
@@ -84,4 +84,13 @@ public interface Database {
     int getRunResultAnalysisId(int run_results_id) throws SQLException;
 
     int getRunResultRunAnalysisId(int run_results_analysis_id) throws SQLException;
+
+    /**
+     * @param run
+     *                  The run which changed its status.
+     * @param runStatus
+     *                  The new run status.
+     * @return True, if the status of the run was updated successfully.
+     */
+    boolean updateStatusOfRun(final IRun run, String runStatus);
 }

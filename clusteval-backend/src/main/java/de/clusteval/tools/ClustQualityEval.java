@@ -15,11 +15,13 @@ package de.clusteval.tools;
 import ch.qos.logback.classic.Level;
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.cluster.quality.ClusteringQualitySet;
+import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigurationException;
 import de.clusteval.api.exceptions.GoldStandardNotFoundException;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
+import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.RNotAvailableException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
@@ -45,9 +47,7 @@ import de.clusteval.data.DataConfigurationException;
 import de.clusteval.data.dataset.DataSet;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
-import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
-import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.data.dataset.type.UnknownDataSetTypeException;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
@@ -72,7 +72,7 @@ import de.clusteval.run.result.RunResultParseException;
 import de.clusteval.run.result.format.UnknownRunResultFormatException;
 import de.clusteval.run.statistics.UnknownRunDataStatisticException;
 import de.clusteval.run.statistics.UnknownRunStatisticException;
-import de.clusteval.utils.FormatConversionException;
+import de.clusteval.api.exceptions.FormatConversionException;
 import de.clusteval.utils.InvalidConfigurationFileException;
 import de.wiwie.wiutils.file.FileUtils;
 import de.wiwie.wiutils.utils.ProgressPrinter;
@@ -228,7 +228,7 @@ public class ClustQualityEval {
                                 // measure
                                 // hasn't
                                 // been evaluated
-                                List<ClusteringQualityMeasure> toEvaluate = new ArrayList<>(measures);
+                                List<ClusteringEvaluation> toEvaluate = new ArrayList<>(measures);
                                 try {
                                     if (cl.getQualities() != null) {
                                         toEvaluate.removeAll(cl.getQualities()
@@ -241,15 +241,13 @@ public class ClustQualityEval {
                                 ClusteringQualitySet quals = new ClusteringQualitySet();
                                 // evaluate the new quality measures
                                 if (!toEvaluate.isEmpty()) {
-                                    quals.putAll(cl.assessQuality(dc,
-                                            toEvaluate));
+                                    quals.putAll(cl.assessQuality(dc, toEvaluate));
                                     System.out.println(quals);
 
                                     // write the new qualities into the
                                     // results.qual
                                     // file
-                                    for (ClusteringEvaluation m : quals
-                                            .keySet()) {
+                                    for (ClusteringEvaluation m : quals.keySet()) {
                                         FileUtils
                                                 .appendStringToFile(
                                                         clusteringFile
@@ -371,9 +369,7 @@ public class ClustQualityEval {
                                     // header
                                     if (qualsMap.keySet().iterator().hasNext()) {
                                         Set<ClusteringQualityMeasure> requiredMeasures = qualsMap
-                                                .get(qualsMap.keySet()
-                                                        .iterator().next())
-                                                .keySet();
+                                                .get(qualsMap.keySet().iterator().next()).keySet();
                                         requiredMeasures.removeAll(measures);
 
                                         for (ClusteringQualityMeasure m : requiredMeasures) {

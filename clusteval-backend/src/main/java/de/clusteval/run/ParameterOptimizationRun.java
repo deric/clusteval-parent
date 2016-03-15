@@ -20,6 +20,7 @@ import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.repository.RepositoryEvent;
 import de.clusteval.api.repository.RepositoryRemoveEvent;
+import de.clusteval.api.run.IRunRunnable;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
@@ -36,7 +37,6 @@ import de.clusteval.run.result.RunResultParseException;
 import de.clusteval.run.result.postprocessing.RunResultPostprocessor;
 import de.clusteval.run.runnable.ExecutionRunRunnable;
 import de.clusteval.run.runnable.ParameterOptimizationRunRunnable;
-import de.clusteval.run.runnable.RunRunnable;
 import de.wiwie.wiutils.utils.Pair;
 import java.io.File;
 import java.util.HashMap;
@@ -84,12 +84,12 @@ public class ParameterOptimizationRun extends ExecutionRun {
      */
     public static void checkCompatibilityParameterOptimizationMethod(
             final List<ParameterOptimizationMethod> optimizationMethods, final List<ProgramConfig> programConfigs,
-            final List<DataConfig> dataConfigs) throws IncompatibleParameterOptimizationMethodException {
+            final List<IDataConfig> dataConfigs) throws IncompatibleParameterOptimizationMethodException {
         for (ParameterOptimizationMethod method : optimizationMethods) {
             if (!method.getCompatibleDataSetFormatBaseClasses().isEmpty()) {
                 // for every datasetformat we check, whether it class is
                 // compatible
-                for (DataConfig dataConfig : dataConfigs) {
+                for (IDataConfig dataConfig : dataConfigs) {
                     Class<? extends IDataSetFormat> dataSetFormatClass = dataConfig.getDatasetConfig().getDataSet()
                             .getDataSetFormat().getClass();
                     boolean compatible = false;
@@ -294,9 +294,9 @@ public class ParameterOptimizationRun extends ExecutionRun {
 
     @Override
     public Map<Pair<String, String>, Pair<Double, Map<String, Pair<Map<String, String>, String>>>> getOptimizationStatus() {
-        Map<Pair<String, String>, Pair<Double, Map<String, Pair<Map<String, String>, String>>>> result = new HashMap<Pair<String, String>, Pair<Double, Map<String, Pair<Map<String, String>, String>>>>();
+        Map<Pair<String, String>, Pair<Double, Map<String, Pair<Map<String, String>, String>>>> result = new HashMap<>();
         try {
-            for (RunRunnable t : this.runnables) {
+            for (IRunRunnable t : this.runnables) {
                 ParameterOptimizationRunRunnable thread = (ParameterOptimizationRunRunnable) t;
                 Pair<String, String> configs = Pair.getPair(thread.getProgramConfig().toString(),
                         thread.getDataConfig().toString());

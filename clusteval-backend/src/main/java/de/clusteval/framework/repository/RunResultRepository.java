@@ -12,14 +12,14 @@
  */
 package de.clusteval.framework.repository;
 
-import de.clusteval.api.repository.StaticRepositoryEntityMap;
-import de.clusteval.api.repository.DynamicRepositoryEntityMap;
-import de.clusteval.api.repository.StaticRepositoryEntity;
 import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
+import de.clusteval.api.repository.DynamicRepositoryEntityMap;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.repository.StaticRepositoryEntity;
+import de.clusteval.api.repository.StaticRepositoryEntityMap;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
@@ -103,9 +103,9 @@ public class RunResultRepository extends Repository implements IRepository {
     @Override
     protected SQLCommunicator createSQLCommunicator()
             throws DatabaseConnectException {
-        if (this.parent.repositoryConfig.getMysqlConfig().usesSql()) {
+        if (this.parent.getRepositoryConfig().getDbConfig().usesSql()) {
             return new RunResultSQLCommunicator(this,
-                    this.parent.repositoryConfig.getMysqlConfig());
+                    this.parent.getRepositoryConfig().getDbConfig());
         }
         return new StubSQLCommunicator(this);
     }

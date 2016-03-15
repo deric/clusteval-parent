@@ -12,6 +12,7 @@
  */
 package de.clusteval.data.dataset;
 
+import de.clusteval.api.IContext;
 import de.clusteval.api.data.IConversionInputToStandardConfiguration;
 import de.clusteval.api.data.IConversionStandardToInputConfiguration;
 import de.clusteval.api.data.IDataPreprocessor;
@@ -31,14 +32,12 @@ import de.clusteval.api.repository.RepositoryRemoveEvent;
 import de.clusteval.api.repository.RepositoryReplaceEvent;
 import de.clusteval.context.Context;
 import de.clusteval.data.dataset.format.AbsoluteDataSetFormat;
-import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
 import de.clusteval.data.dataset.format.ConversionStandardToInputConfiguration;
-import de.clusteval.data.dataset.format.DataSetFormat;
 import de.clusteval.data.dataset.format.DataSetFormatParser;
 import de.clusteval.data.dataset.format.RelativeDataSetFormat;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.framework.repository.RepositoryObject;
-import de.clusteval.utils.FormatConversionException;
+import de.clusteval.api.exceptions.FormatConversionException;
 import de.clusteval.utils.NamedDoubleAttribute;
 import de.clusteval.utils.NamedIntegerAttribute;
 import de.wiwie.wiutils.utils.SimilarityMatrix.NUMBER_PRECISION;
@@ -467,7 +466,7 @@ public abstract class DataSet extends RepositoryObject implements IDataSet, IRep
 
             // convert the input format to the standard format
             try {
-                DataSetFormat standardFormat = context.getStandardInputFormat();
+                IDataSetFormat standardFormat = context.getStandardInputFormat();
                 // DataSetFormat.parseFromString(
                 // repository, context.getStandardInputFormat().getClass()
                 // .getSimpleName());
@@ -545,8 +544,8 @@ public abstract class DataSet extends RepositoryObject implements IDataSet, IRep
      * @throws UnknownDataSetFormatException
      * @throws FormatConversionException
      */
-    protected IDataSet convertStandardToDirectly(final Context context,
-            final DataSetFormat targetFormat,
+    public IDataSet convertStandardToDirectly(final IContext context,
+            final IDataSetFormat targetFormat,
             final ConversionStandardToInputConfiguration configStandardToInput)
             throws IOException, InvalidDataSetFormatVersionException,
                    RegisterException, UnknownDataSetFormatException,
@@ -556,7 +555,7 @@ public abstract class DataSet extends RepositoryObject implements IDataSet, IRep
 
         // if the target format is equal to the standard format, we simply
         // return the old dataset
-        DataSetFormat standardFormat = context.getStandardInputFormat();
+        IDataSetFormat standardFormat = context.getStandardInputFormat();
         if (targetFormat.equals(standardFormat)) {
             result = this;
         } // if the target format is an absolute format, then the conversion is
@@ -608,8 +607,9 @@ public abstract class DataSet extends RepositoryObject implements IDataSet, IRep
      * @throws InvalidParameterException
      * @throws InterruptedException
      */
-    protected IDataSet convertToStandardDirectly(final Context context,
-            final ConversionInputToStandardConfiguration configInputToStandard)
+    @Override
+    public IDataSet convertToStandardDirectly(final IContext context,
+            final IConversionInputToStandardConfiguration configInputToStandard)
             throws IOException, InvalidDataSetFormatVersionException,
                    RegisterException, UnknownDataSetFormatException,
                    InvalidParameterException, RNotAvailableException,
@@ -618,7 +618,7 @@ public abstract class DataSet extends RepositoryObject implements IDataSet, IRep
 
         // if the source format is equal to the standard format, we simply
         // return the old dataset
-        DataSetFormat standardFormat = context.getStandardInputFormat();
+        IDataSetFormat standardFormat = context.getStandardInputFormat();
         if (this.getDataSetFormat().equals(standardFormat)) {
             result = this;
         } else {

@@ -12,15 +12,13 @@
  */
 package de.clusteval.context;
 
+import de.clusteval.api.IContext;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.data.dataset.format.DataSetFormat;
 import de.clusteval.framework.repository.RepositoryObject;
-import de.clusteval.run.result.format.RunResultFormat;
 import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,7 +26,7 @@ import org.slf4j.LoggerFactory;
  * @author Christian Wiwie
  *
  */
-public abstract class Context extends RepositoryObject {
+public abstract class Context extends RepositoryObject implements IContext {
 
     /**
      * @param repository
@@ -79,11 +77,11 @@ public abstract class Context extends RepositoryObject {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * de.clusteval.framework.repository.RepositoryObject#equals(java.lang.Object
-	 * )
+     * (non-Javadoc)
+     *
+     * @see
+     * de.clusteval.framework.repository.RepositoryObject#equals(java.lang.Object
+     * )
      */
     @Override
     public boolean equals(Object obj) {
@@ -106,7 +104,7 @@ public abstract class Context extends RepositoryObject {
     }
 
     @Override
-    public final RepositoryObject clone() {
+    public final Context clone() {
         try {
             return this.getClass().getConstructor(this.getClass())
                     .newInstance(this);
@@ -118,34 +116,6 @@ public abstract class Context extends RepositoryObject {
                 + this.getClass().getSimpleName() + " failed");
         return null;
     }
-
-    /**
-     * Contexts have a unique name.
-     *
-     * @return The name of this context
-     */
-    public abstract String getName();
-
-    /**
-     * @return A set with all simple names of classes this context requires.
-     */
-    public abstract Set<String> getRequiredJavaClassFullNames();
-
-    /**
-     *
-     * @return The standard input format connected to this context. Every
-     * context has its own standard format, which is used during execution of
-     * runs.
-     */
-    public abstract DataSetFormat getStandardInputFormat();
-
-    /**
-     *
-     * @return The standard output format connected to this context. Every
-     * context has its own standard format, which is used during execution of
-     * runs.
-     */
-    public abstract RunResultFormat getStandardOutputFormat();
 
     @Override
     public String toString() {

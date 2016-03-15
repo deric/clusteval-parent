@@ -14,12 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.clusteval.api.repository;
+package de.clusteval.api.run;
+
+import de.clusteval.api.repository.IRepositoryObject;
 
 /**
  *
  * @author deric
  */
-public interface IRun extends IRepositoryObject {
+public interface IRunResultFormat extends IRepositoryObject {
 
+    IRunResultFormat clone();
 }

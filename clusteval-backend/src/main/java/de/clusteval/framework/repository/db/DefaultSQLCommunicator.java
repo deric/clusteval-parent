@@ -22,7 +22,7 @@ import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.data.IGoldStandardConfig;
 import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.repository.IRun;
+import de.clusteval.api.run.IRun;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
@@ -2539,7 +2539,7 @@ public class DefaultSQLCommunicator extends SQLCommunicator implements Database 
      * java.lang.String)
      */
     @Override
-    public boolean updateStatusOfRun(final Run run, String runStatus) {
+    public boolean updateStatusOfRun(final IRun run, String runStatus) {
         try {
             int runId = this.select(
                     this.getTableRuns(),

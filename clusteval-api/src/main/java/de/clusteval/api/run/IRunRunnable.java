@@ -16,13 +16,21 @@
  */
 package de.clusteval.api.run;
 
-import de.clusteval.api.repository.IRun;
+import de.wiwie.wiutils.utils.ProgressPrinter;
 
 /**
  *
  * @author deric
  */
-public interface IRunRunnable {
+public interface IRunRunnable extends Runnable {
 
     IRun getRun();
+
+    void terminate();
+
+    /**
+     * @return The progress printer of this runnable.
+     * @see #progress
+     */
+    ProgressPrinter getProgressPrinter();
 }

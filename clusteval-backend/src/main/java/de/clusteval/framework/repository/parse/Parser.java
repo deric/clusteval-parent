@@ -18,6 +18,7 @@ package de.clusteval.framework.repository.parse;
 
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.data.IDataConfig;
+import de.clusteval.api.data.IDataPreprocessor;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetType;
 import de.clusteval.api.data.WEBSITE_VISIBILITY;
@@ -610,12 +611,12 @@ class DataSetConfigParser extends RepositoryObjectParser<DataSetConfig> {
             dataSet = this.getDataSet();
 
             // added 12.04.2013
-            List<DataPreprocessor> preprocessorBeforeDistance;
+            List<IDataPreprocessor> preprocessorBeforeDistance;
             if (getProps().containsKey("preprocessorBeforeDistance")) {
                 preprocessorBeforeDistance = DataPreprocessor.parseFromString(repo,
                         getProps().getStringArray("preprocessorBeforeDistance"));
 
-                for (DataPreprocessor proc : preprocessorBeforeDistance) {
+                for (IDataPreprocessor proc : preprocessorBeforeDistance) {
                     if (!proc.getCompatibleDataSetFormats()
                             .contains(dataSet.getDataSetFormat().getClass().getSimpleName())) {
                         throw new IncompatibleDataSetConfigPreprocessorException("The data preprocessor "
@@ -627,7 +628,7 @@ class DataSetConfigParser extends RepositoryObjectParser<DataSetConfig> {
                 preprocessorBeforeDistance = new ArrayList<>();
             }
 
-            List<DataPreprocessor> preprocessorAfterDistance;
+            List<IDataPreprocessor> preprocessorAfterDistance;
             if (getProps().containsKey("preprocessorAfterDistance")) {
                 preprocessorAfterDistance = DataPreprocessor.parseFromString(repo,
                         getProps().getStringArray("preprocessorAfterDistance"));
@@ -1147,18 +1148,18 @@ class ParameterOptimizationRunParser extends ExecutionRunParser<ParameterOptimiz
                    IncompatibleDataSetConfigPreprocessorException, UnknownDataStatisticException, UnknownRunStatisticException,
                    UnknownRunDataStatisticException, UnknownRunResultPostprocessorException, UnknownDataRandomizerException {
 
-        this.optimizationParameters = new ArrayList<List<ProgramParameter<?>>>();
+        this.optimizationParameters = new ArrayList<>();
         /*
          * The optimization methods, for every program one method.
          */
-        this.optimizationMethods = new ArrayList<ParameterOptimizationMethod>();
+        this.optimizationMethods = new ArrayList<>();
 
         super.parseFromFile(absPath);
 
-        ClusteringQualityMeasure optimizationCriterion = null;
+        ClusteringEvaluation optimizationCriterion = null;
 
         String paramOptCriterion = getProps().getString("optimizationCriterion");
-        for (ClusteringQualityMeasure m : qualityMeasures) {
+        for (ClusteringEvaluation m : qualityMeasures) {
             if (m.toString().equals(paramOptCriterion)) {
                 optimizationCriterion = m;
             }

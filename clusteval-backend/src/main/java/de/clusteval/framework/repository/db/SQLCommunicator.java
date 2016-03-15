@@ -720,16 +720,6 @@ public abstract class SQLCommunicator implements Database {
             throws SQLException;
 
     /**
-     * @param run
-     *                  The run which changed its status.
-     * @param runStatus
-     *                  The new run status.
-     * @return True, if the status of the run was updated successfully.
-     */
-    public abstract boolean updateStatusOfRun(final Run run,
-            final String runStatus);
-
-    /**
      * Initializes the database: 1) establishes a connection 2) tells the
      * database to delete this repository and all corresponding entries
      * (cascading) and recreate a new and empty repository

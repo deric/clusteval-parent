@@ -10,7 +10,7 @@ import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.run.IterationRunnable;
 import de.clusteval.data.statistics.StatisticCalculateException;
 import de.clusteval.run.statistics.RunStatistic;
-import de.clusteval.utils.FormatConversionException;
+import de.clusteval.api.exceptions.FormatConversionException;
 import de.clusteval.utils.Statistic;
 import de.clusteval.utils.StatisticCalculator;
 import de.wiwie.wiutils.file.FileUtils;

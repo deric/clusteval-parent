@@ -106,8 +106,7 @@ public abstract class RepositoryObject implements RepositoryListener, IRepositor
      *                   identification and equality checks of objects.
      * @throws RegisterException
      */
-    public RepositoryObject(final IRepository repository,
-            final boolean register, final long changeDate, final File absPath)
+    public RepositoryObject(final IRepository repository, final boolean register, final long changeDate, final File absPath)
             throws RegisterException {
         super();
         this.repository = repository;
@@ -131,10 +130,8 @@ public abstract class RepositoryObject implements RepositoryListener, IRepositor
      * @param other The object to clone.
      * @throws RegisterException
      */
-    public RepositoryObject(final RepositoryObject other)
-            throws RegisterException {
-        this(other.repository, false, other.changeDate, new File(
-                other.absPath.getAbsolutePath()));
+    public RepositoryObject(final IRepositoryObject other) throws RegisterException {
+        this(other.getRepository(), false, other.getChangeDate(), other.getAbsPath());
     }
 
     @Override
@@ -158,6 +155,7 @@ public abstract class RepositoryObject implements RepositoryListener, IRepositor
         return absPath.getAbsolutePath();
     }
 
+    @Override
     public File getAbsPath() {
         return absPath;
     }

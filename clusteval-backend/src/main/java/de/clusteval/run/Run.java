@@ -13,13 +13,15 @@
 package de.clusteval.run;
 
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.repository.IRun;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.repository.RepositoryEvent;
 import de.clusteval.api.repository.RepositoryRemoveEvent;
+import de.clusteval.api.repository.RepositoryReplaceEvent;
+import de.clusteval.api.run.IRun;
+import de.clusteval.api.run.IRunRunnable;
+import de.clusteval.api.run.RUN_STATUS;
 import de.clusteval.context.Context;
 import de.clusteval.framework.repository.RepositoryObject;
-import de.clusteval.api.repository.RepositoryReplaceEvent;
 import de.clusteval.framework.threading.RunSchedulerThread;
 import de.clusteval.program.ProgramParameter;
 import de.clusteval.run.result.ClusteringRunResult;
@@ -28,7 +30,6 @@ import de.clusteval.run.result.RunResult;
 import de.clusteval.run.result.format.RunResultFormat;
 import de.clusteval.run.runnable.RunRunnable;
 import de.clusteval.run.runnable.RunRunnableInitializationException;
-import de.clusteval.api.run.RUN_STATUS;
 import de.wiwie.wiutils.file.FileUtils;
 import de.wiwie.wiutils.format.Formatter;
 import de.wiwie.wiutils.utils.Pair;
@@ -159,7 +160,7 @@ public abstract class Run extends RepositoryObject implements IRun {
     /**
      * Contains the runnable objects created during the execution of this run.
      */
-    protected List<RunRunnable> runnables;
+    protected List<IRunRunnable> runnables;
 
     /**
      * Every run belongs to a context.
@@ -171,10 +172,10 @@ public abstract class Run extends RepositoryObject implements IRun {
      * protected, to force usage of the static method
      *
      * @param repository the repository
-     * @param context The context of this run
+     * @param context    The context of this run
      * @param changeDate The date this run was performed.
-     * @param absPath The absolute path to the file on the filesystem that
-     * corresponds to this run.
+     * @param absPath    The absolute path to the file on the filesystem that
+     *                   corresponds to this run.
      * @throws RegisterException
      */
     protected Run(final IRepository repository, final Context context,
@@ -205,9 +206,9 @@ public abstract class Run extends RepositoryObject implements IRun {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see framework.repository.RepositoryObject#clone()
+     * (non-Javadoc)
+     *
+     * @see framework.repository.RepositoryObject#clone()
      */
     @Override
     public abstract Run clone();
@@ -245,7 +246,7 @@ public abstract class Run extends RepositoryObject implements IRun {
      * everything is finished.
      *
      * @param runIdentString The unique run identifier of the results directory,
-     * corresponding to an execution of a run, that should by resumed.
+     *                       corresponding to an execution of a run, that should by resumed.
      */
     @SuppressWarnings("unused")
     protected void afterResume(final String runIdentString) {
@@ -275,19 +276,19 @@ public abstract class Run extends RepositoryObject implements IRun {
      * input files to avoid overriding files unintentionally when they would be
      * performed in the runnables asynchronously instead.
      *
+     * @throws java.io.IOException
      * @throws RunInitializationException
      */
-    protected void beforePerform() throws IOException,
-                                          RunInitializationException {
+    protected void beforePerform() throws IOException, RunInitializationException {
         log.info("Starting run \"" + this.getName() + "\"");
         log.info("Run mode is \"" + this.getClass().getSimpleName() + "\"");
         /*
-		 * Change the status of this run
+         * Change the status of this run
          */
         // this.setStatus(RUN_STATUS.RUNNING);
 
         /*
-		 * Initialize a ProgressPrinter, which keeps the progression of the run
+         * Initialize a ProgressPrinter, which keeps the progression of the run
          */
         this.progress = new ProgressPrinter(getUpperLimitProgress(), true);
 
@@ -314,15 +315,15 @@ public abstract class Run extends RepositoryObject implements IRun {
                 + this.getName()
                 + "\"" + System.getProperty("line.separator"));
         /*
-		 * All threads are stored in this list, to be able to wait for them
-		 * asynchronously later on.
+         * All threads are stored in this list, to be able to wait for them
+         * asynchronously later on.
          */
         this.runnables.clear();
 
         /*
-		 * Reset the results list
+         * Reset the results list
          */
-        this.results = new ArrayList<RunResult>();
+        this.results = new ArrayList<>();
     }
 
     /**
@@ -337,24 +338,22 @@ public abstract class Run extends RepositoryObject implements IRun {
      * performed in the runnables asynchronously instead.
      *
      * @param runIdentString The unique run identifier of the results directory,
-     * corresponding to an execution of a run, that should by resumed.
+     *                       corresponding to an execution of a run, that should by resumed.
      *
-     * @throws IOException
      * @throws RunInitializationException
      */
-    protected void beforeResume(final String runIdentString)
-            throws RunInitializationException {
+    protected void beforeResume(final String runIdentString) throws RunInitializationException {
         try {
             log.info("RESUMING run \"" + this.getName() + "\"");
             log.info("Run mode is \"" + this.getClass().getSimpleName() + "\"");
             /*
-			 * Change the status of this run
+             * Change the status of this run
              */
             // this.status = RUN_STATUS.RUNNING;
 
             /*
-			 * Initialize a ProgressPrinter, which keeps the progression of the
-			 * run
+             * Initialize a ProgressPrinter, which keeps the progression of the
+             * run
              */
             this.progress = new ProgressPrinter(getUpperLimitProgress(), true);
 
@@ -384,15 +383,15 @@ public abstract class Run extends RepositoryObject implements IRun {
                     + "\"" + System.getProperty("line.separator"));
 
             /*
-			 * All threads are stored in this list, to be able to wait for them
-			 * asynchronously later on.
+             * All threads are stored in this list, to be able to wait for them
+             * asynchronously later on.
              */
             this.runnables.clear();
 
             /*
-			 * Reset the results list
+             * Reset the results list
              */
-            this.results = new ArrayList<RunResult>();
+            this.results = new ArrayList<>();
         } catch (Exception e) {
             throw new RunInitializationException(e);
         }
@@ -407,11 +406,11 @@ public abstract class Run extends RepositoryObject implements IRun {
      * avoid overwriting of several threads in the result directory.
      *
      * @param isResume Indicates, whether the execution of this run is a
-     * resumption or not.
+     *                 resumption or not.
      */
     protected void copyConfigurationFiles(final boolean isResume) {
         /*
-		 * Copy all the configuration files for later reproducability
+         * Copy all the configuration files for later reproducability
          */
         if (!isResume) {
             File movedConfigsDir = getMovedConfigsDir();
@@ -435,11 +434,12 @@ public abstract class Run extends RepositoryObject implements IRun {
      * and to submit it to the run scheduler.
      *
      * @param runScheduler The run scheduler to which the newly created runnable
-     * should be passed.
-     * @param p The index of the runnable to be created.
+     *                     should be passed.
+     * @param p            The index of the runnable to be created.
+     * @return
      * @throws RunRunnableInitializationException
      */
-    protected abstract RunRunnable createAndScheduleRunnableForResumePair(
+    protected abstract IRunRunnable createAndScheduleRunnableForResumePair(
             RunSchedulerThread runScheduler, int p)
             throws RunRunnableInitializationException;
 
@@ -449,8 +449,8 @@ public abstract class Run extends RepositoryObject implements IRun {
      * to the run scheduler.
      *
      * @param runScheduler The run scheduler to which the newly created runnable
-     * should be passed.
-     * @param p The index of the runnable to be created.
+     *                     should be passed.
+     * @param p            The index of the runnable to be created.
      * @return
      * @throws RunRunnableInitializationException
      */
@@ -485,9 +485,9 @@ public abstract class Run extends RepositoryObject implements IRun {
      * every dataset contained in this run's configuration. For every such
      * combination the result of this will be added to the list of run results
      *
-     * @param runScheduler The run scheduler, this run should be executed by.
+     * @param runScheduler   The run scheduler, this run should be executed by.
      * @param runIdentString The unique run identifier of the results directory,
-     * corresponding to an execution of a run, that should by resumed.
+     *                       corresponding to an execution of a run, that should by resumed.
      * @throws RunRunnableInitializationException
      */
     @SuppressWarnings("unused")
@@ -496,11 +496,11 @@ public abstract class Run extends RepositoryObject implements IRun {
             throws RunRunnableInitializationException {
 
         /*
-		 * Execute every "runpair", consisting of a program (i.e. its
-		 * configuration) and a dataset (i.e. its configuration).
+         * Execute every "runpair", consisting of a program (i.e. its
+         * configuration) and a dataset (i.e. its configuration).
          */
         for (int p = 0; p < getNumberOfRunRunnables(); p++) {
-            RunRunnable r = createAndScheduleRunnableForResumePair(
+            IRunRunnable r = createAndScheduleRunnableForResumePair(
                     runScheduler, p);
             this.runnables.add(r);
         }
@@ -523,7 +523,7 @@ public abstract class Run extends RepositoryObject implements IRun {
      * then the unique run identification string is set.
      *
      * @return The path to the configuration subdirectory in the results
-     * directory of this run execution.
+     *         directory of this run execution.
      */
     protected File getMovedConfigsDir() {
         return new File(FileUtils.buildPath(new File(this.getRepository()
@@ -540,7 +540,7 @@ public abstract class Run extends RepositoryObject implements IRun {
      * then the unique run identification string is set.
      *
      * @return The path to the goldstandard subdirectory in the results
-     * directory of this run execution.
+     *         directory of this run execution.
      */
     protected File getMovedGoldStandardsDir() {
         return new File(FileUtils.buildPath(new File(this.getRepository()
@@ -557,7 +557,7 @@ public abstract class Run extends RepositoryObject implements IRun {
      * then the unique run identification string is set.
      *
      * @return The path to the dataset subdirectory in the results directory of
-     * this run execution.
+     *         this run execution.
      */
     protected File getMovedInputsDir() {
         return new File(FileUtils.buildPath(new File(this.getRepository()
@@ -580,8 +580,8 @@ public abstract class Run extends RepositoryObject implements IRun {
 
     /**
      * @return The number of run runnables this run will create. This number
-     * will be used in the {@link #doPerform(RunSchedulerThread)} method to
-     * create the correct number of runnables.
+     *         will be used in the {@link #doPerform(RunSchedulerThread)} method to
+     *         create the correct number of runnables.
      */
     protected abstract int getNumberOfRunRunnables();
 
@@ -622,7 +622,7 @@ public abstract class Run extends RepositoryObject implements IRun {
      * Gets the results.
      *
      * @return Get the list of run results that are produced by the execution of
-     * this run.
+     *         this run.
      */
     public List<RunResult> getResults() {
         return this.results;
@@ -631,7 +631,7 @@ public abstract class Run extends RepositoryObject implements IRun {
     /**
      * @see #runIdentString
      * @return The unique run identification string created when this run is
-     * executed.
+     *         executed.
      */
     public String getRunIdentificationString() {
         return this.runIdentString;
@@ -639,9 +639,9 @@ public abstract class Run extends RepositoryObject implements IRun {
 
     /**
      * @return A list containing all run runnables this run created during its
-     * execution.
+     *         execution.
      */
-    public List<RunRunnable> getRunRunnables() {
+    public List<IRunRunnable> getRunRunnables() {
         return this.runnables;
     }
 
@@ -674,9 +674,9 @@ public abstract class Run extends RepositoryObject implements IRun {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.wiwie.wiutils.utils.RepositoryObject#notify(utils.RepositoryEvent)
+     * (non-Javadoc)
+     *
+     * @see de.wiwie.wiutils.utils.RepositoryObject#notify(utils.RepositoryEvent)
      */
     @Override
     public void notify(RepositoryEvent e) throws RegisterException {
@@ -707,7 +707,7 @@ public abstract class Run extends RepositoryObject implements IRun {
      *
      * @param runScheduler The run scheduler, this run should be executed by.
      *
-     * @throws IOException Signals that an I/O exception has occurred.
+     * @throws IOException                        Signals that an I/O exception has occurred.
      * @throws RunRunnableInitializationException
      * @throws RunInitializationException
      */
@@ -725,18 +725,18 @@ public abstract class Run extends RepositoryObject implements IRun {
      * be invoked on a run, that was parsed from a runresult folder. Otherwise
      * it will show unexpected behaviour.
      *
-     * @param runScheduler The run scheduler, this run should be executed by.
+     * @param runScheduler   The run scheduler, this run should be executed by.
      * @param runIdentString The unique run identifier of the results directory,
-     * corresponding to an execution of a run, that should by resumed.
+     *                       corresponding to an execution of a run, that should by resumed.
      *
-     * @throws MissingParameterValueException If a parameter required in the
-     * invocation line of some program, is neither set in the program nor in the
-     * run configuration, an exception will be thrown.
-     * @throws IOException Signals that an I/O exception has occurred.
-     * @throws NoRunResultFormatParserException For every
-     * {@link RunResultFormat} there needs to be a parser, that converts this
-     * format into the default format of the framework for later analysis. If no
-     * such parser exists for some format, this exception will be thrown.
+     * @throws MissingParameterValueException     If a parameter required in the
+     *                                            invocation line of some program, is neither set in the program nor in the
+     *                                            run configuration, an exception will be thrown.
+     * @throws IOException                        Signals that an I/O exception has occurred.
+     * @throws NoRunResultFormatParserException   For every
+     *                                            {@link RunResultFormat} there needs to be a parser, that converts this
+     *                                            format into the default format of the framework for later analysis. If no
+     *                                            such parser exists for some format, this exception will be thrown.
      * @throws RunRunnableInitializationException
      * @throws RunInitializationException
      */
@@ -768,14 +768,14 @@ public abstract class Run extends RepositoryObject implements IRun {
      * termination of all corresponding threads.
      *
      * @return True if everything, including all corresponding threads, could be
-     * terminated, false otherwise.
+     *         terminated, false otherwise.
      */
     public abstract boolean terminate();
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#toString()
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#toString()
      */
     @Override
     public String toString() {

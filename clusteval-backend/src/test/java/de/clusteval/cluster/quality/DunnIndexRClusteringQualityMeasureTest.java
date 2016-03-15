@@ -39,7 +39,7 @@ import de.clusteval.framework.repository.NoRepositoryFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
 import de.clusteval.utils.AbstractClustEvalTest;
-import de.clusteval.utils.FormatConversionException;
+import de.clusteval.api.exceptions.FormatConversionException;
 import de.clusteval.api.r.RCalculationException;
 import de.wiwie.wiutils.utils.SimilarityMatrix.NUMBER_PRECISION;
 import java.io.File;

@@ -11,7 +11,7 @@
 package de.clusteval.framework.threading;
 
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.repository.IRun;
+import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.IScheduler;
 import de.clusteval.api.run.IterationRunnable;
 import de.clusteval.api.run.IterationWrapper;
