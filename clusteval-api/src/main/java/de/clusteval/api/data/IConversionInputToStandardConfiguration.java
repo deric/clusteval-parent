@@ -16,6 +16,9 @@
  */
 package de.clusteval.api.data;
 
+import de.clusteval.api.IDistanceMeasure;
+import java.util.List;
+
 /**
  *
  * @author deric
@@ -23,4 +26,10 @@ package de.clusteval.api.data;
 public interface IConversionInputToStandardConfiguration {
 
     IConversionInputToStandardConfiguration clone();
+
+    List<IDataPreprocessor> getPreprocessorsBeforeDistance();
+
+    IDistanceMeasure getDistanceMeasureAbsoluteToRelative();
+
+    List<IDataPreprocessor> getPreprocessorsAfterDistance();
 }

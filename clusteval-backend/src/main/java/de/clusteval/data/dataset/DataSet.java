@@ -12,6 +12,9 @@
  */
 package de.clusteval.data.dataset;
 
+import de.clusteval.api.data.IConversionInputToStandardConfiguration;
+import de.clusteval.api.data.IConversionStandardToInputConfiguration;
+import de.clusteval.api.data.IDataPreprocessor;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.data.IDataSetType;
@@ -33,7 +36,6 @@ import de.clusteval.data.dataset.format.ConversionStandardToInputConfiguration;
 import de.clusteval.data.dataset.format.DataSetFormat;
 import de.clusteval.data.dataset.format.DataSetFormatParser;
 import de.clusteval.data.dataset.format.RelativeDataSetFormat;
-import de.clusteval.data.preprocessing.DataPreprocessor;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.framework.repository.RepositoryObject;
 import de.clusteval.utils.FormatConversionException;
@@ -414,9 +416,9 @@ public abstract class DataSet extends RepositoryObject implements IDataSet, IRep
      * @throws InterruptedException
      */
     public DataSet preprocessAndConvertTo(final Context context,
-            final DataSetFormat targetFormat,
-            final ConversionInputToStandardConfiguration configInputToStandard,
-            final ConversionStandardToInputConfiguration configStandardToInput)
+            final IDataSetFormat targetFormat,
+            final IConversionInputToStandardConfiguration configInputToStandard,
+            final IConversionStandardToInputConfiguration configStandardToInput)
             throws FormatConversionException, IOException,
                    InvalidDataSetFormatVersionException, RegisterException,
                    RNotAvailableException, InterruptedException {
@@ -456,10 +458,10 @@ public abstract class DataSet extends RepositoryObject implements IDataSet, IRep
             this.log.debug("Apply preprocessors");
             // 13.04.2013: apply all data preprocessors before distance
             // conversion
-            DataSet preprocessed = this;
-            List<DataPreprocessor> preprocessors = configInputToStandard
+            IDataSet preprocessed = this;
+            List<IDataPreprocessor> preprocessors = configInputToStandard
                     .getPreprocessorsBeforeDistance();
-            for (DataPreprocessor proc : preprocessors) {
+            for (IDataPreprocessor proc : preprocessors) {
                 preprocessed = proc.preprocess(preprocessed);
             }
 
@@ -498,7 +500,7 @@ public abstract class DataSet extends RepositoryObject implements IDataSet, IRep
                 // conversion
                 this.log.debug("Apply preprocessors");
                 preprocessors = configInputToStandard.getPreprocessorsAfterDistance();
-                for (DataPreprocessor proc : preprocessors) {
+                for (IDataPreprocessor proc : preprocessors) {
                     result = proc.preprocess(result);
                 }
 

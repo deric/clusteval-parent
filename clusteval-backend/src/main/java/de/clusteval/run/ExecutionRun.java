@@ -19,10 +19,10 @@ import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.repository.RepositoryEvent;
 import de.clusteval.api.repository.RepositoryRemoveEvent;
 import de.clusteval.api.repository.RepositoryReplaceEvent;
+import de.clusteval.api.run.RUN_STATUS;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
 import de.clusteval.context.Context;
 import de.clusteval.data.DataConfig;
-import de.clusteval.api.run.RUN_STATUS;
 import de.clusteval.framework.threading.RunSchedulerThread;
 import de.clusteval.program.ProgramConfig;
 import de.clusteval.program.ProgramParameter;
@@ -622,7 +622,7 @@ public abstract class ExecutionRun extends Run {
      *                      measures and data configurations are not compatible.
      */
     public static void checkCompatibilityQualityMeasuresDataConfigs(
-            final List<DataConfig> dataConfigs,
+            final List<IDataConfig> dataConfigs,
             final List<ClusteringEvaluation> qualityMeasures)
             throws RunException {
         /*
@@ -637,8 +637,8 @@ public abstract class ExecutionRun extends Run {
             }
         }
 
-        Set<DataConfig> dataConfigsWithoutGS = new HashSet<>();
-        for (DataConfig dataConfig : dataConfigs) {
+        Set<IDataConfig> dataConfigsWithoutGS = new HashSet<>();
+        for (IDataConfig dataConfig : dataConfigs) {
             if (!dataConfig.hasGoldStandardConfig()
                     && qualityMeasuresRequireGS.size() > 0) {
                 dataConfigsWithoutGS.add(dataConfig);

@@ -10,8 +10,10 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset.format;
 
+import de.clusteval.api.IDistanceMeasure;
 import de.clusteval.api.data.ConversionConfiguration;
 import de.clusteval.api.data.IConversionInputToStandardConfiguration;
+import de.clusteval.api.data.IDataPreprocessor;
 import de.clusteval.data.distance.DistanceMeasure;
 import de.clusteval.data.preprocessing.DataPreprocessor;
 import de.wiwie.wiutils.utils.SimilarityMatrix.NUMBER_PRECISION;
@@ -24,27 +26,28 @@ import java.util.List;
  */
 public class ConversionInputToStandardConfiguration extends ConversionConfiguration implements IConversionInputToStandardConfiguration {
 
-    protected static List<DataPreprocessor> clonePreprocessors(
+    protected static List<IDataPreprocessor> clonePreprocessors(
             List<DataPreprocessor> preprocessors) {
-        List<DataPreprocessor> result = new ArrayList<>();
+        List<IDataPreprocessor> result = new ArrayList<>();
 
-        for (DataPreprocessor proc : preprocessors) {
+        for (IDataPreprocessor proc : preprocessors) {
             result.add(proc.clone());
         }
 
         return result;
     }
 
-    protected List<DataPreprocessor> preprocessorsBeforeDistance;
+    protected List<IDataPreprocessor> preprocessorsBeforeDistance;
 
-    protected DistanceMeasure distanceMeasureAbsoluteToRelative;
+    protected IDistanceMeasure distanceMeasureAbsoluteToRelative;
 
-    protected List<DataPreprocessor> preprocessorsAfterDistance;
+    protected List<IDataPreprocessor> preprocessorsAfterDistance;
 
     protected NUMBER_PRECISION similarityPrecision;
 
     /**
      * @param distanceMeasure
+     * @param similarityPrecision
      * @param preprocessorsBeforeDistance
      * @param preprocessorsAfterDistance
      *
@@ -52,8 +55,8 @@ public class ConversionInputToStandardConfiguration extends ConversionConfigurat
     public ConversionInputToStandardConfiguration(
             final DistanceMeasure distanceMeasure,
             final NUMBER_PRECISION similarityPrecision,
-            final List<DataPreprocessor> preprocessorsBeforeDistance,
-            final List<DataPreprocessor> preprocessorsAfterDistance) {
+            final List<IDataPreprocessor> preprocessorsBeforeDistance,
+            final List<IDataPreprocessor> preprocessorsAfterDistance) {
         super();
 
         this.similarityPrecision = similarityPrecision;
@@ -97,7 +100,7 @@ public class ConversionInputToStandardConfiguration extends ConversionConfigurat
      * @return The distance measure to use during the conversion of absolute to
      *         relative datasets.
      */
-    public DistanceMeasure getDistanceMeasureAbsoluteToRelative() {
+    public IDistanceMeasure getDistanceMeasureAbsoluteToRelative() {
         return this.distanceMeasureAbsoluteToRelative;
     }
 
@@ -105,7 +108,7 @@ public class ConversionInputToStandardConfiguration extends ConversionConfigurat
      * @return The preprocessors to apply to the dataset before it is converted
      *         to pairwise distances/similarities.
      */
-    public List<DataPreprocessor> getPreprocessorsBeforeDistance() {
+    public List<IDataPreprocessor> getPreprocessorsBeforeDistance() {
         return this.preprocessorsBeforeDistance;
     }
 
@@ -113,7 +116,7 @@ public class ConversionInputToStandardConfiguration extends ConversionConfigurat
      * @return The preprocessors to apply to the dataset after it is converted
      *         to pairwise distances/similarities.
      */
-    public List<DataPreprocessor> getPreprocessorsAfterDistance() {
+    public List<IDataPreprocessor> getPreprocessorsAfterDistance() {
         return this.preprocessorsAfterDistance;
     }
 

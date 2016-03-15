@@ -14,13 +14,11 @@ import de.clusteval.api.data.IDataPreprocessor;
 import de.clusteval.api.r.RLibraryInferior;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.data.dataset.DataSet;
 import de.clusteval.framework.repository.RepositoryObject;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  *
@@ -105,10 +103,10 @@ public abstract class DataPreprocessor extends RepositoryObject implements RLibr
      * @return A list containing data preprocessors.
      * @throws UnknownDataPreprocessorException
      */
-    public static List<DataPreprocessor> parseFromString(
+    public static List<IDataPreprocessor> parseFromString(
             final IRepository repository, String[] dataPreprocessors)
             throws UnknownDataPreprocessorException {
-        List<DataPreprocessor> result = new ArrayList<>();
+        List<IDataPreprocessor> result = new ArrayList<>();
 
         for (String s : dataPreprocessors) {
             result.add(parseFromString(repository, s));
@@ -127,7 +125,7 @@ public abstract class DataPreprocessor extends RepositoryObject implements RLibr
      * @return the data preprocessor
      * @throws UnknownDataPreprocessorException
      */
-    public static DataPreprocessor parseFromString(final IRepository repository,
+    public static IDataPreprocessor parseFromString(final IRepository repository,
             String dataPreprocessor) throws UnknownDataPreprocessorException {
 
         Class<? extends DataPreprocessor> c = repository.getRegisteredClass(
@@ -151,22 +149,5 @@ public abstract class DataPreprocessor extends RepositoryObject implements RLibr
                 + "\" is not a known data preprocessor.");
     }
 
-    /**
-     * @return A set with simple names of all classes, this preprocessor is
-     *         compatible to.
-     */
-    public abstract Set<String> getCompatibleDataSetFormats();
 
-    /**
-     * This method is reponsible for preprocessing the passed data and creating
-     * a new dataset object corresponding to the newly created preprocessed
-     * dataset.
-     *
-     * @param dataSet
-     *                The dataset to be preprocessed.
-     * @return The preprocessed dataset.
-     * @throws InterruptedException
-     */
-    public abstract DataSet preprocess(final DataSet dataSet)
-            throws InterruptedException;
 }

@@ -1,13 +1,31 @@
-/**
+/*
+ * Copyright (C) 2016 deric
  *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package de.clusteval.framework.repository.parse;
 
 import de.clusteval.api.ClusteringEvaluation;
+import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataSet;
+import de.clusteval.api.data.IDataSetType;
+import de.clusteval.api.data.WEBSITE_VISIBILITY;
+import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigurationException;
 import de.clusteval.api.exceptions.GoldStandardNotFoundException;
+import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
@@ -34,9 +52,7 @@ import de.clusteval.data.dataset.DataSetAttributeParser;
 import de.clusteval.data.dataset.DataSetConfig;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
-import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
-import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.data.dataset.RelativeDataSet;
 import de.clusteval.data.dataset.RunResultDataSetConfig;
 import de.clusteval.data.dataset.format.AbsoluteDataSetFormat;
@@ -281,7 +297,7 @@ class ClusteringRunParser extends ExecutionRunParser<ClusteringRun> {
 class RobustnessAnalysisRunParser extends ExecutionRunParser<RobustnessAnalysisRun> {
 
     protected List<String> uniqueRunIdentifiers;
-    protected List<DataConfig> originalDataConfigs;
+    protected List<IDataConfig> originalDataConfigs;
 
     /*
      * (non-Javadoc)
@@ -726,23 +742,29 @@ class DataSetParser extends RepositoryObjectParser<DataSet> {
                 throw new DataSetConfigurationException("No format specified for dataset " + absPath.getAbsolutePath());
             }
 
-            DataSetType dsType;
+            IDataSetType dsType;
             if (attributeValues.containsKey("dataSetType")) {
                 dsType = DataSetType.parseFromString(repo, attributeValues.get("dataSetType"));
             } else {
                 throw new DataSetConfigurationException("No type specified for dataset " + absPath.getAbsolutePath());
             }
 
-            DataSet.WEBSITE_VISIBILITY websiteVisibility = DataSet.WEBSITE_VISIBILITY.HIDE;
+            WEBSITE_VISIBILITY websiteVisibility = WEBSITE_VISIBILITY.HIDE;
             String vis = attributeValues.containsKey("websiteVisibility")
                          ? attributeValues.get("websiteVisibility")
                          : "hide";
-            if (vis.equals("hide")) {
-                websiteVisibility = DataSet.WEBSITE_VISIBILITY.HIDE;
-            } else if (vis.equals("show_always")) {
-                websiteVisibility = DataSet.WEBSITE_VISIBILITY.SHOW_ALWAYS;
-            } else if (vis.equals("show_optional")) {
-                websiteVisibility = DataSet.WEBSITE_VISIBILITY.SHOW_OPTIONAL;
+            switch (vis) {
+                case "hide":
+                    websiteVisibility = WEBSITE_VISIBILITY.HIDE;
+                    break;
+                case "show_always":
+                    websiteVisibility = WEBSITE_VISIBILITY.SHOW_ALWAYS;
+                    break;
+                case "show_optional":
+                    websiteVisibility = WEBSITE_VISIBILITY.SHOW_OPTIONAL;
+                    break;
+                default:
+                    break;
             }
 
             final long changeDate = absPath.lastModified();
@@ -796,7 +818,7 @@ class DataSetParser extends RepositoryObjectParser<DataSet> {
 class ExecutionRunParser<T extends ExecutionRun> extends RunParser<T> {
 
     protected List<ProgramConfig> programConfigs;
-    protected List<DataConfig> dataConfigs;
+    protected List<IDataConfig> dataConfigs;
     protected List<ClusteringEvaluation> qualityMeasures;
     protected List<Map<ProgramParameter<?>, String>> runParamValues;
     protected Map<ProgramParameter<?>, String> paramMap;

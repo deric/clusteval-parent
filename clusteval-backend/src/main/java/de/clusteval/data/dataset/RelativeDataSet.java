@@ -11,10 +11,10 @@
 package de.clusteval.data.dataset;
 
 import de.clusteval.api.data.IDataSetType;
+import de.clusteval.api.data.WEBSITE_VISIBILITY;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.data.dataset.DataSet.WEBSITE_VISIBILITY;
 import de.clusteval.data.dataset.format.RelativeDataSetFormat;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
 import de.wiwie.wiutils.utils.SimilarityMatrix.NUMBER_PRECISION;

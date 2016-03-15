@@ -159,8 +159,7 @@ class RunResultFormatURLClassLoader extends URLClassLoader {
                 @SuppressWarnings("unchecked")
                 Class<? extends RunResultFormatParser> runResultFormatParser = (Class<? extends RunResultFormatParser>) result;
 
-                this.parent.getRepository().registerRunResultFormatParser(
-                        runResultFormatParser);
+                this.parent.getRepository().registerRunResultFormatParser(runResultFormatParser);
 
             }
         }

@@ -11,10 +11,10 @@
 package de.clusteval.data.dataset;
 
 import de.clusteval.api.data.IDataSetType;
+import de.clusteval.api.data.WEBSITE_VISIBILITY;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.data.dataset.DataSet.WEBSITE_VISIBILITY;
 import de.clusteval.data.dataset.format.AbsoluteDataSetFormat;
 import de.wiwie.wiutils.utils.SimilarityMatrix.NUMBER_PRECISION;
 import java.io.File;
@@ -46,19 +46,20 @@ public class AbsoluteDataSet extends DataSet {
     /**
      *
      * @param repository
-     *                   the repository this dataset should be registered at.
+     *                          the repository this dataset should be registered at.
      * @param register
-     *                   Whether this dataset should be registered in the repository.
+     *                          Whether this dataset should be registered in the repository.
      * @param changeDate
-     *                   The change date of this dataset is used for equality checks.
+     *                          The change date of this dataset is used for equality checks.
      * @param alias
-     *                   A short alias name for this data set.
+     *                          A short alias name for this data set.
      * @param absPath
-     *                   The absolute path of this dataset.
+     *                          The absolute path of this dataset.
      * @param dsFormat
-     *                   The format of this dataset.
+     *                          The format of this dataset.
      * @param dsType
-     *                   The type of this dataset
+     *                          The type of this dataset
+     * @param websiteVisibility
      * @throws RegisterException
      */
     public AbsoluteDataSet(IRepository repository, final boolean register,

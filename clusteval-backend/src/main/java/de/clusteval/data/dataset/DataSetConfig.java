@@ -12,6 +12,7 @@
  */
 package de.clusteval.data.dataset;
 
+import de.clusteval.api.data.IDataPreprocessor;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetConfig;
 import de.clusteval.api.exceptions.RepositoryObjectDumpException;
@@ -23,7 +24,6 @@ import de.clusteval.api.repository.RepositoryRemoveEvent;
 import de.clusteval.api.repository.RepositoryReplaceEvent;
 import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
 import de.clusteval.data.dataset.format.ConversionStandardToInputConfiguration;
-import de.clusteval.data.preprocessing.DataPreprocessor;
 import de.clusteval.framework.repository.DumpableRepositoryObject;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -294,7 +294,7 @@ public class DataSetConfig extends DumpableRepositoryObject implements IDataSetC
             StringBuilder sb = new StringBuilder();
             if (!configInputToStandard.getPreprocessorsBeforeDistance()
                     .isEmpty()) {
-                for (DataPreprocessor pre : configInputToStandard
+                for (IDataPreprocessor pre : configInputToStandard
                         .getPreprocessorsBeforeDistance()) {
                     sb.append(pre.getClass().getSimpleName());
                     sb.append(",");
@@ -307,7 +307,7 @@ public class DataSetConfig extends DumpableRepositoryObject implements IDataSetC
             if (!configInputToStandard.getPreprocessorsAfterDistance()
                     .isEmpty()) {
                 sb = new StringBuilder();
-                for (DataPreprocessor pre : configInputToStandard
+                for (IDataPreprocessor pre : configInputToStandard
                         .getPreprocessorsAfterDistance()) {
                     sb.append(pre.getClass().getSimpleName());
                     sb.append(",");

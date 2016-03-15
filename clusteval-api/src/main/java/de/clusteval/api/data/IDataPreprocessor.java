@@ -17,6 +17,7 @@
 package de.clusteval.api.data;
 
 import de.clusteval.api.repository.IRepositoryObject;
+import java.util.Set;
 
 /**
  *
@@ -24,4 +25,23 @@ import de.clusteval.api.repository.IRepositoryObject;
  */
 public interface IDataPreprocessor extends IRepositoryObject {
 
+    /**
+     * This method is reponsible for preprocessing the passed data and creating
+     * a new dataset object corresponding to the newly created preprocessed
+     * dataset.
+     *
+     * @param dataSet
+     *                The dataset to be preprocessed.
+     * @return The preprocessed dataset.
+     * @throws InterruptedException
+     */
+    IDataSet preprocess(final IDataSet dataSet) throws InterruptedException;
+
+    IDataPreprocessor clone();
+
+    /**
+     * @return A set with simple names of all classes, this preprocessor is
+     *         compatible to.
+     */
+    Set<String> getCompatibleDataSetFormats();
 }

@@ -12,6 +12,7 @@
  */
 package de.clusteval.data.distance;
 
+import de.clusteval.api.IDistanceMeasure;
 import de.clusteval.api.exceptions.RNotAvailableException;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.r.RLibraryInferior;
@@ -53,7 +54,7 @@ import java.lang.reflect.InvocationTargetException;
  * @author Christian Wiwie
  *
  */
-public abstract class DistanceMeasure extends RepositoryObject implements RLibraryInferior {
+public abstract class DistanceMeasure extends RepositoryObject implements RLibraryInferior, IDistanceMeasure {
 
     /**
      * @param repository
