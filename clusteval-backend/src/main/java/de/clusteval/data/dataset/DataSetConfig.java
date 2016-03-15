@@ -12,7 +12,9 @@
  */
 package de.clusteval.data.dataset;
 
+import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetConfig;
+import de.clusteval.api.exceptions.RepositoryObjectDumpException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.repository.RepositoryEvent;
@@ -23,7 +25,6 @@ import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
 import de.clusteval.data.dataset.format.ConversionStandardToInputConfiguration;
 import de.clusteval.data.preprocessing.DataPreprocessor;
 import de.clusteval.framework.repository.DumpableRepositoryObject;
-import de.clusteval.api.exceptions.RepositoryObjectDumpException;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -54,7 +55,7 @@ public class DataSetConfig extends DumpableRepositoryObject implements IDataSetC
      * A dataset configuration encapsulates a dataset. This attribute stores a
      * reference to the dataset wrapper object.
      */
-    protected DataSet dataset;
+    protected IDataSet dataset;
 
     /**
      * This variable holds the configuration needed, when {@link #dataset} is
@@ -145,7 +146,8 @@ public class DataSetConfig extends DumpableRepositoryObject implements IDataSetC
     /**
      * @return The dataset, this configuration belongs to.
      */
-    public DataSet getDataSet() {
+    @Override
+    public IDataSet getDataSet() {
         return dataset;
     }
 
@@ -228,6 +230,7 @@ public class DataSetConfig extends DumpableRepositoryObject implements IDataSetC
      *         to the standard format.
      * @see #configInputToStandard
      */
+    @Override
     public ConversionInputToStandardConfiguration getConversionInputToStandardConfiguration() {
         return this.configInputToStandard;
     }
@@ -244,7 +247,7 @@ public class DataSetConfig extends DumpableRepositoryObject implements IDataSetC
     /**
      * @param dataset The new dataset
      */
-    public void setDataSet(DataSet dataset) {
+    public void setDataSet(IDataSet dataset) {
         this.dataset = dataset;
     }
 

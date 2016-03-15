@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.framework;
 
+import de.clusteval.api.run.RUN_STATUS;
 import ch.qos.logback.classic.Level;
 import de.wiwie.wiutils.utils.Pair;
 import de.wiwie.wiutils.utils.Triple;

@@ -13,6 +13,7 @@
 package de.clusteval.run;
 
 import de.clusteval.api.ClusteringEvaluation;
+import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.context.Context;
@@ -54,7 +55,7 @@ public class ClusteringRun extends ExecutionRun {
      */
     public ClusteringRun(IRepository repository, final Context context,
             long changeDate, File absPath, List<ProgramConfig> programConfigs,
-            List<DataConfig> dataConfigs,
+            List<IDataConfig> dataConfigs,
             List<ClusteringEvaluation> qualityMeasures,
             List<Map<ProgramParameter<?>, String>> parameterValues,
             final List<RunResultPostprocessor> postProcessors,
@@ -66,12 +67,12 @@ public class ClusteringRun extends ExecutionRun {
 
         if (this.register()) {
             // register this Run at all dataconfigs and programconfigs
-            for (DataConfig dataConfig : this.dataConfigs) {
+            this.dataConfigs.stream().forEach((dataConfig) -> {
                 dataConfig.addListener(this);
-            }
-            for (ProgramConfig programConfig : this.programConfigs) {
+            });
+            this.programConfigs.stream().forEach((programConfig) -> {
                 programConfig.addListener(this);
-            }
+            });
 
             for (ClusteringEvaluation measure : this.qualityMeasures) {
                 // added 21.03.2013: measures are only registered here, if this

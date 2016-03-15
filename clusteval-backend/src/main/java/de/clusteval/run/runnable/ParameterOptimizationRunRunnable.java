@@ -12,21 +12,22 @@
  */
 package de.clusteval.run.runnable;
 
+import de.clusteval.api.ClusteringEvaluation;
+import de.clusteval.api.cluster.quality.ClusteringQualityMeasureValue;
+import de.clusteval.api.cluster.quality.ClusteringQualitySet;
+import de.clusteval.api.exceptions.IncompleteGoldStandardException;
+import de.clusteval.api.exceptions.InternalAttributeException;
+import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
+import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
+import de.clusteval.api.repository.RegisterException;
 import de.clusteval.cluster.paramOptimization.IDivergingParameterOptimizationMethod;
 import de.clusteval.cluster.paramOptimization.NoParameterSetFoundException;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationException;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
 import de.clusteval.cluster.paramOptimization.ParameterSetAlreadyEvaluatedException;
-import de.clusteval.cluster.quality.ClusteringQualityMeasure;
-import de.clusteval.api.cluster.quality.ClusteringQualityMeasureValue;
-import de.clusteval.api.cluster.quality.ClusteringQualitySet;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.format.IncompatibleDataSetFormatException;
-import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
-import de.clusteval.api.exceptions.IncompleteGoldStandardException;
-import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
-import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.threading.RunSchedulerThread;
 import de.clusteval.program.ParameterSet;
 import de.clusteval.program.ProgramConfig;
@@ -35,7 +36,6 @@ import de.clusteval.run.ParameterOptimizationRun;
 import de.clusteval.run.Run;
 import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.run.result.RunResultParseException;
-import de.clusteval.api.exceptions.InternalAttributeException;
 import de.clusteval.utils.plot.Plotter;
 import de.wiwie.wiutils.file.FileUtils;
 import de.wiwie.wiutils.utils.Triple;
@@ -72,18 +72,19 @@ public class ParameterOptimizationRunRunnable extends ExecutionRunRunnable {
     protected ParameterSet lastConsumedParamSet;
 
     /**
-     * @param runScheduler The run scheduler that the newly created runnable
-     * should be passed to and executed by.
-     * @param run The run this runnable belongs to.
-     * @param runIdentString The unique identification string of the run which
-     * is used to store the results in a unique folder to avoid overwriting.
-     * @param programConfig The program configuration encapsulating the program
-     * executed by this runnable.
-     * @param dataConfig The data configuration used by this runnable.
+     * @param runScheduler       The run scheduler that the newly created runnable
+     *                           should be passed to and executed by.
+     * @param run                The run this runnable belongs to.
+     * @param runIdentString     The unique identification string of the run which
+     *                           is used to store the results in a unique folder to avoid overwriting.
+     * @param programConfig      The program configuration encapsulating the program
+     *                           executed by this runnable.
+     * @param dataConfig         The data configuration used by this runnable.
      * @param optimizationMethod The optimization method which determines the
-     * parameter sets during the optimization process and stores the results.
-     * @param isResume True, if this run is a resumption of a previous execution
-     * or a completely new execution.
+     *                           parameter sets during the optimization process and stores the results.
+     * @param isResume           True, if this run is a resumption of a previous execution
+     *                           or a completely new execution.
+     * @param runParams
      */
     public ParameterOptimizationRunRunnable(RunSchedulerThread runScheduler,
             Run run, ProgramConfig programConfig, DataConfig dataConfig,
@@ -135,11 +136,11 @@ public class ParameterOptimizationRunRunnable extends ExecutionRunRunnable {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * run.runnable.ExecutionRunRunnable#replaceRemainingParameters(java.util
-	 * .Map, java.lang.String, java.util.Map)
+     * (non-Javadoc)
+     *
+     * @see
+     * run.runnable.ExecutionRunRunnable#replaceRemainingParameters(java.util
+     * .Map, java.lang.String, java.util.Map)
      */
     @Override
     protected String[] replaceRunParameters(String[] invocation,
@@ -153,7 +154,7 @@ public class ParameterOptimizationRunRunnable extends ExecutionRunRunnable {
 
     /**
      * @return Get the optimization method of this parameter optimization run
-     * runnable.
+     *         runnable.
      * @see #optimizationMethod
      */
     public ParameterOptimizationMethod getOptimizationMethod() {
@@ -161,9 +162,9 @@ public class ParameterOptimizationRunRunnable extends ExecutionRunRunnable {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see run.runnable.ExecutionRunRunnable#beforeRun()
+     * (non-Javadoc)
+     *
+     * @see run.runnable.ExecutionRunRunnable#beforeRun()
      */
     @Override
     protected void beforeRun() throws IllegalArgumentException,
@@ -179,7 +180,7 @@ public class ParameterOptimizationRunRunnable extends ExecutionRunRunnable {
         }
 
         /*
-		 * Pass converted data configuration to optimization method
+         * Pass converted data configuration to optimization method
          */
         this.optimizationMethod.setDataConfig(this.dataConfig);
         this.optimizationMethod.setProgramConfig(this.programConfig);
@@ -193,19 +194,17 @@ public class ParameterOptimizationRunRunnable extends ExecutionRunRunnable {
                         .getTotalIterationCount() * 10000), 10000);
                 this.progress.update(iterationPercent);
             }
-        } catch (ParameterOptimizationException e) {
-            e.printStackTrace();
-        } catch (RunResultParseException e) {
+        } catch (ParameterOptimizationException | RunResultParseException e) {
             e.printStackTrace();
         }
-
+        // this.optId = this.optimizationMethod.getCurrentCount();
         // this.optId = this.optimizationMethod.getCurrentCount();
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see run.runnable.ExecutionRunRunnable#endRun()
+     * (non-Javadoc)
+     *
+     * @see run.runnable.ExecutionRunRunnable#endRun()
      */
     @Override
     protected void afterRun() throws InterruptedException {
@@ -228,7 +227,7 @@ public class ParameterOptimizationRunRunnable extends ExecutionRunRunnable {
                             .getOptimalCriterionValue());
                 }
                 /*
-				 * TODO: option, whether to plot
+                 * TODO: option, whether to plot
                  */
                 Plotter.plotParameterOptimizationResult(this.optimizationMethod
                         .getResult());
@@ -242,9 +241,9 @@ public class ParameterOptimizationRunRunnable extends ExecutionRunRunnable {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.clusteval.run.runnable.RunRunnable#hasNextIteration()
+     * (non-Javadoc)
+     *
+     * @see de.clusteval.run.runnable.RunRunnable#hasNextIteration()
      */
     @Override
     protected boolean hasNextIteration() {
@@ -252,9 +251,9 @@ public class ParameterOptimizationRunRunnable extends ExecutionRunRunnable {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.clusteval.run.runnable.RunRunnable#consumeNextIteration()
+     * (non-Javadoc)
+     *
+     * @see de.clusteval.run.runnable.RunRunnable#consumeNextIteration()
      */
     @Override
     protected int consumeNextIteration() throws RunIterationException {
@@ -314,9 +313,9 @@ public class ParameterOptimizationRunRunnable extends ExecutionRunRunnable {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see run.runnable.ExecutionRunRunnable#doRunIteration()
+     * (non-Javadoc)
+     *
+     * @see run.runnable.ExecutionRunRunnable#doRunIteration()
      */
     @Override
     protected void doRunIteration(ExecutionIterationWrapper iterationWrapper)
@@ -328,9 +327,9 @@ public class ParameterOptimizationRunRunnable extends ExecutionRunRunnable {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see run.runnable.ExecutionRunRunnable#handleMissingRunResult()
+     * (non-Javadoc)
+     *
+     * @see run.runnable.ExecutionRunRunnable#handleMissingRunResult()
      */
     @Override
     protected void handleMissingRunResult(
@@ -358,8 +357,7 @@ public class ParameterOptimizationRunRunnable extends ExecutionRunRunnable {
         super.handleMissingRunResult(iterationWrapper);
 
         ClusteringQualitySet minimalQualities = new ClusteringQualitySet();
-        for (ClusteringQualityMeasure measure : this.getRun()
-                .getQualityMeasures()) {
+        for (ClusteringEvaluation measure : this.getRun().getQualityMeasures()) {
             minimalQualities.put(measure,
                     ClusteringQualityMeasureValue.getForNotTerminated());
         }
@@ -376,10 +374,10 @@ public class ParameterOptimizationRunRunnable extends ExecutionRunRunnable {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * run.runnable.ExecutionRunRunnable#afterQualityAssessment(java.util.List)
+     * (non-Javadoc)
+     *
+     * @see
+     * run.runnable.ExecutionRunRunnable#afterQualityAssessment(java.util.List)
      */
     @Override
     // 04.04.2013: adding iteration number into complete file

@@ -14,6 +14,7 @@ package de.clusteval.data;
 
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataSetConfig;
+import de.clusteval.api.data.IGoldStandardConfig;
 import de.clusteval.api.exceptions.RepositoryObjectDumpException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
@@ -58,11 +59,11 @@ public class DataConfig extends DumpableRepositoryObject implements IDataConfig 
      * @param dataConfigs The list of data configurations to clone.
      * @return The list containing the cloned objects of the input list.
      */
-    public static List<DataConfig> cloneDataConfigurations(
-            final List<DataConfig> dataConfigs) {
-        List<DataConfig> result = new ArrayList<>();
+    public static List<IDataConfig> cloneDataConfigurations(
+            final List<IDataConfig> dataConfigs) {
+        List<IDataConfig> result = new ArrayList<>();
 
-        for (DataConfig dataConfig : dataConfigs) {
+        for (IDataConfig dataConfig : dataConfigs) {
             result.add(dataConfig.clone());
         }
 
@@ -80,14 +81,14 @@ public class DataConfig extends DumpableRepositoryObject implements IDataConfig 
      * The original dataset config. is only != null, if the corresponding
      * dataset was converted into a different format
      */
-    protected DataSetConfig standardDataSetConfig;
+    protected IDataSetConfig standardDataSetConfig;
 
     /**
      * A data configuration encapsulates a goldstandard configuration. This
      * goldstandard configuration contains options and settings how to handle
      * the encapsulated goldstandard.
      */
-    protected GoldStandardConfig goldstandardConfig;
+    protected IGoldStandardConfig goldstandardConfig;
 
     /**
      * Instantiates a new data configuration.
@@ -140,12 +141,12 @@ public class DataConfig extends DumpableRepositoryObject implements IDataConfig 
      * @param dataConfig the data config
      * @throws RegisterException
      */
-    public DataConfig(DataConfig dataConfig) throws RegisterException {
+    public DataConfig(IDataConfig dataConfig) throws RegisterException {
         super(dataConfig);
 
-        this.dataSetConfig = dataConfig.dataSetConfig.clone();
+        this.dataSetConfig = dataConfig.getDatasetConfig().clone();
         this.goldstandardConfig = dataConfig.hasGoldStandardConfig()
-                                  ? dataConfig.goldstandardConfig.clone()
+                                  ? dataConfig.getGoldstandardConfig().clone()
                                   : null;
     }
 
@@ -182,7 +183,7 @@ public class DataConfig extends DumpableRepositoryObject implements IDataConfig 
      *         null, if there is no goldstandard configuration.
      */
     @Override
-    public GoldStandardConfig getGoldstandardConfig() {
+    public IGoldStandardConfig getGoldstandardConfig() {
         return goldstandardConfig;
     }
 

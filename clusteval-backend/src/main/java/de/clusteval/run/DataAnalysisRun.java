@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.run;
 
+import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.context.Context;
@@ -42,7 +43,7 @@ public class DataAnalysisRun extends AnalysisRun<DataStatistic> {
      * A list of data configurations, that should be assessed during execution
      * of the run.
      */
-    protected List<DataConfig> dataConfigs;
+    protected List<IDataConfig> dataConfigs;
 
     /**
      * @param repository
@@ -62,14 +63,14 @@ public class DataAnalysisRun extends AnalysisRun<DataStatistic> {
      * @throws RegisterException
      */
     public DataAnalysisRun(IRepository repository, final Context context,
-            long changeDate, File absPath, List<DataConfig> dataConfigs,
+            long changeDate, File absPath, List<IDataConfig> dataConfigs,
             List<DataStatistic> statistics) throws RegisterException {
         super(repository, context, changeDate, absPath, statistics);
         this.dataConfigs = dataConfigs;
 
         if (this.register()) {
             // register this Run at all dataconfigs
-            for (DataConfig dataConfig : this.dataConfigs) {
+            for (IDataConfig dataConfig : this.dataConfigs) {
                 dataConfig.addListener(this);
             }
 
@@ -128,7 +129,7 @@ public class DataAnalysisRun extends AnalysisRun<DataStatistic> {
      * @return A list containing all data configurations to be assessed by this
      *         run.
      */
-    public List<DataConfig> getDataConfigs() {
+    public List<IDataConfig> getDataConfigs() {
         return dataConfigs;
     }
 
@@ -156,7 +157,7 @@ public class DataAnalysisRun extends AnalysisRun<DataStatistic> {
         // DataAnalysisRun runCopy = this.clone();
         DataAnalysisRun runCopy = this;
 
-        DataConfig dataConfig = this.getDataConfigs().get(p);
+        IDataConfig dataConfig = this.getDataConfigs().get(p);
 
         /*
          * Copy to results directory
@@ -266,7 +267,7 @@ public class DataAnalysisRun extends AnalysisRun<DataStatistic> {
         // DataAnalysisRun runCopy = this.clone();
         DataAnalysisRun runCopy = this;
 
-        DataConfig dataConfig = this.getDataConfigs().get(p);
+        IDataConfig dataConfig = this.getDataConfigs().get(p);
 
         /*
          * Copy to results directory

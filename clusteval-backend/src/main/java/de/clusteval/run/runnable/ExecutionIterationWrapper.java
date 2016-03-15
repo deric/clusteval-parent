@@ -3,6 +3,7 @@
  */
 package de.clusteval.run.runnable;
 
+import de.clusteval.api.run.IterationWrapper;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;

@@ -13,6 +13,7 @@
 package de.clusteval.run;
 
 import de.clusteval.api.ClusteringEvaluation;
+import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.repository.RepositoryEvent;
@@ -21,7 +22,7 @@ import de.clusteval.api.repository.RepositoryReplaceEvent;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
 import de.clusteval.context.Context;
 import de.clusteval.data.DataConfig;
-import de.clusteval.framework.RUN_STATUS;
+import de.clusteval.api.run.RUN_STATUS;
 import de.clusteval.framework.threading.RunSchedulerThread;
 import de.clusteval.program.ProgramConfig;
 import de.clusteval.program.ProgramParameter;
@@ -111,7 +112,7 @@ public abstract class ExecutionRun extends Run {
      * stored in the repository. That means the objects in this list can change
      * during runtime of the run.
      */
-    protected List<DataConfig> dataConfigs;
+    protected List<IDataConfig> dataConfigs;
 
     /**
      * The pairwise combinations of data and program configurations that are
@@ -154,7 +155,7 @@ public abstract class ExecutionRun extends Run {
     protected ExecutionRun(final IRepository repository, final Context context,
             final boolean register, final long changeDate, final File absPath,
             final List<ProgramConfig> programConfigs,
-            final List<DataConfig> dataConfigs,
+            final List<IDataConfig> dataConfigs,
             final List<ClusteringEvaluation> qualityMeasures,
             final List<Map<ProgramParameter<?>, String>> parameterValues,
             final List<RunResultPostprocessor> postProcessors,
@@ -171,7 +172,7 @@ public abstract class ExecutionRun extends Run {
 
         if (register && this.register()) {
             // register this Run at all dataconfigs and programconfigs
-            for (DataConfig dataConfig : this.dataConfigs) {
+            for (IDataConfig dataConfig : this.dataConfigs) {
                 dataConfig.addListener(this);
             }
             for (ProgramConfig programConfig : this.programConfigs) {
@@ -277,6 +278,9 @@ public abstract class ExecutionRun extends Run {
      * combination a runnable is performed and the result of this will be added
      * to the list of run results.
      *
+     * @throws de.clusteval.run.MissingParameterValueException
+     * @throws java.io.IOException
+     * @throws de.clusteval.run.result.NoRunResultFormatParserException
      * @throws RunRunnableInitializationException
      * @throws RunInitializationException
      */
@@ -597,6 +601,7 @@ public abstract class ExecutionRun extends Run {
      *                       identifies this execution of the run.
      * @param isResume       A boolean which indicates, whether the created runnable
      *                       should perform a run or resume one.
+     * @param runParams
      * @return The runnable being executed asynchronously.
      */
     protected abstract ExecutionRunRunnable createRunRunnableFor(
@@ -664,7 +669,7 @@ public abstract class ExecutionRun extends Run {
      * @throws RegisterException
      */
     protected void initRunPairs(final List<ProgramConfig> programConfigs,
-            final List<DataConfig> dataConfigs) throws RegisterException {
+            final List<IDataConfig> dataConfigs) throws RegisterException {
 
         this.programConfigs = programConfigs;
         this.dataConfigs = dataConfigs;
@@ -672,7 +677,7 @@ public abstract class ExecutionRun extends Run {
         this.runPairs = new ArrayList<>();
 
         for (ProgramConfig programConfig : this.programConfigs) {
-            for (DataConfig dataConfig : this.dataConfigs) {
+            for (IDataConfig dataConfig : this.dataConfigs) {
 
                 runPairs.add(new Pair<>(new ProgramConfig(programConfig),
                         new DataConfig(dataConfig)));
@@ -713,7 +718,7 @@ public abstract class ExecutionRun extends Run {
     /**
      * @return A list containing all data configurations of this run.
      */
-    public List<DataConfig> getDataConfigs() {
+    public List<IDataConfig> getDataConfigs() {
         return this.dataConfigs;
     }
 

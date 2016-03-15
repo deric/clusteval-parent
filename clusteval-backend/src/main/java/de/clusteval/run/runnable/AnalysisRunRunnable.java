@@ -31,11 +31,13 @@ import java.util.List;
  *
  * @author Christian Wiwie
  * @param <S>
- *            A type of statistic, that should be assessed and stored during
- *            execution of this runnable, e.g. {@link DataStatistic}.
+ *             A type of statistic, that should be assessed and stored during
+ *             execution of this runnable, e.g. {@link DataStatistic}.
  * @param <R>
- *            A type of run result, that the results of this runnable will be
- *            of.
+ *             A type of run result, that the results of this runnable will be
+ *             of.
+ * @param <IW>
+ * @param <IR>
  *
  */
 public abstract class AnalysisRunRunnable<S extends Statistic, R extends RunResult, IW extends AnalysisIterationWrapper<S>, IR extends AnalysisIterationRunnable>

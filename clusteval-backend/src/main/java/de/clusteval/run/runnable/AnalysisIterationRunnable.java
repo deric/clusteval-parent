@@ -3,6 +3,7 @@
  */
 package de.clusteval.run.runnable;
 
+import de.clusteval.api.run.IterationRunnable;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;

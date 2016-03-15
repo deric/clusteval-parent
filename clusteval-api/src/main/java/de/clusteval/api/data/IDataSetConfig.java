@@ -42,4 +42,18 @@ public interface IDataSetConfig extends IRepositoryObject {
      */
     void dumpToFile() throws RepositoryObjectDumpException;
 
+    /**
+     * @return The configuration for conversion from the original input format
+     *         to the standard format.
+     * @see #configInputToStandard
+     */
+    IConversionInputToStandardConfiguration getConversionInputToStandardConfiguration();
+
+    /**
+     * @param dataset The new dataset
+     */
+    void setDataSet(IDataSet dataset);
+
+    IConversionStandardToInputConfiguration getConversionStandardToInputConfiguration();
+
 }

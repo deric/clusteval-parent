@@ -12,6 +12,7 @@
  */
 package de.clusteval.framework;
 
+import de.clusteval.api.run.RUN_STATUS;
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.PatternLayout;
@@ -83,8 +84,8 @@ import de.clusteval.run.runnable.DataAnalysisIterationRunnable;
 import de.clusteval.run.runnable.DataAnalysisRunRunnable;
 import de.clusteval.run.runnable.ExecutionIterationRunnable;
 import de.clusteval.run.runnable.ExecutionRunRunnable;
-import de.clusteval.run.runnable.IterationRunnable;
-import de.clusteval.run.runnable.IterationWrapper;
+import de.clusteval.api.run.IterationRunnable;
+import de.clusteval.api.run.IterationWrapper;
 import de.clusteval.run.runnable.RunAnalysisIterationRunnable;
 import de.clusteval.run.runnable.RunAnalysisRunRunnable;
 import de.clusteval.run.statistics.UnknownRunDataStatisticException;

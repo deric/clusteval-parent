@@ -12,18 +12,18 @@ package de.clusteval.framework.threading;
 
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.IRun;
+import de.clusteval.api.run.IScheduler;
+import de.clusteval.api.run.IterationRunnable;
+import de.clusteval.api.run.IterationWrapper;
+import de.clusteval.api.run.RUN_STATUS;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.framework.ClustevalThread;
-import de.clusteval.framework.IScheduler;
-import de.clusteval.framework.RUN_STATUS;
 import de.clusteval.run.MissingParameterValueException;
 import de.clusteval.run.Run;
 import de.clusteval.run.RunInitializationException;
 import de.clusteval.run.result.NoRunResultFormatParserException;
 import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.run.result.RunResult;
-import de.clusteval.run.runnable.IterationRunnable;
-import de.clusteval.run.runnable.IterationWrapper;
 import de.clusteval.run.runnable.RunRunnable;
 import de.clusteval.run.runnable.RunRunnableInitializationException;
 import de.wiwie.wiutils.file.FileUtils;
@@ -611,7 +611,7 @@ public class RunSchedulerThread extends ClustevalThread implements IScheduler {
     /**
      * This method takes a {@link RunRunnable} and adds it to the thread pool of
      * this run scheduler thread. The thread pool then determines, when the
-     * runnable can and will be performed depending on the available ressources.
+     * runnable can and will be performed depending on the available resources.
      *
      * @param runRunnable
      *                    The new runnable to perform.
@@ -622,18 +622,17 @@ public class RunSchedulerThread extends ClustevalThread implements IScheduler {
         return this.threadPool.submit(runRunnable);
     }
 
-    public Future<?> registerIterationRunnable(
-            IterationRunnable iterationRunnable) {
+    public Future<?> registerIterationRunnable(IterationRunnable iterationRunnable) {
         return this.iterationThreadPool.submit(iterationRunnable);
     }
 
-    public synchronized void informOnStartedIterationRunnable(final Thread t,
-            final IterationRunnable runnable) {
+    @Override
+    public synchronized void informOnStartedIterationRunnable(final Thread t, final IterationRunnable runnable) {
         this.activeIterationRunnables.put(t, runnable);
     }
 
-    public synchronized void informOnFinishedIterationRunnable(final Thread t,
-            final IterationRunnable runnable) {
+    @Override
+    public synchronized void informOnFinishedIterationRunnable(final Thread t, final IterationRunnable runnable) {
         if (this.activeIterationRunnables.containsKey(t)
                 && this.activeIterationRunnables.get(t).equals(runnable)) {
             this.activeIterationRunnables.remove(t);

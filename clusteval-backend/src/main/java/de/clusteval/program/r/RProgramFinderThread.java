@@ -12,7 +12,7 @@ package de.clusteval.program.r;
 
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.framework.ISupervisorThread;
+import de.clusteval.api.run.ISupervisorThread;
 import de.clusteval.framework.threading.SupervisorThread;
 import de.clusteval.utils.FinderThread;
 

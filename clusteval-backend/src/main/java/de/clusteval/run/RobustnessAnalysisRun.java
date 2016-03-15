@@ -19,9 +19,12 @@ package de.clusteval.run;
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.cluster.quality.ClusteringQualityMeasureValue;
 import de.clusteval.api.cluster.quality.ClusteringQualitySet;
+import de.clusteval.api.data.IDataConfig;
+import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigurationException;
 import de.clusteval.api.exceptions.GoldStandardNotFoundException;
+import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
@@ -46,9 +49,7 @@ import de.clusteval.data.DataConfigurationException;
 import de.clusteval.data.dataset.DataSet;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
-import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
-import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.data.dataset.type.UnknownDataSetTypeException;
 import de.clusteval.data.goldstandard.GoldStandard;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
@@ -98,7 +99,7 @@ import org.apache.commons.configuration.ConfigurationException;
  */
 public class RobustnessAnalysisRun extends ClusteringRun {
 
-    protected List<DataConfig> originalDataConfigs;
+    protected List<IDataConfig> originalDataConfigs;
 
     /**
      * A list of unique run identifiers, that should be assessed during
@@ -113,20 +114,30 @@ public class RobustnessAnalysisRun extends ClusteringRun {
     protected int numberOfDistortedDataSets;
 
     /**
-     * @param repository           The repository this run should be registered at.
+     * @param repository                 The repository this run should be registered at.
      * @param context
-     * @param changeDate           The date this run was performed.
-     * @param absPath              The absolute path to the file on the filesystem that
-     *                             corresponds to this run.
-     * @param uniqueRunIdentifiers The list of unique run identifiers, that
-     *                             should be assessed during execution of the run.
+     * @param changeDate                 The date this run was performed.
+     * @param absPath                    The absolute path to the file on the filesystem that
+     *                                   corresponds to this run.
+     * @param uniqueRunIdentifiers       The list of unique run identifiers, that
+     *                                   should be assessed during execution of the run.
+     * @param programConfigs
+     * @param dataConfigs
+     * @param originalDataConfigs
+     * @param qualityMeasures
+     * @param parameterValues
+     * @param postProcessors
+     * @param randomizer
+     * @param randomizerParams
+     * @param numberOfRandomizedDataSets
+     * @param maxExecutionTimes
      * @throws RegisterException
      */
     public RobustnessAnalysisRun(IRepository repository, final Context context,
             long changeDate, File absPath, List<String> uniqueRunIdentifiers,
-            List<ProgramConfig> programConfigs, List<DataConfig> dataConfigs,
-            List<DataConfig> originalDataConfigs,
-            List<ClusteringQualityMeasure> qualityMeasures,
+            List<ProgramConfig> programConfigs, List<IDataConfig> dataConfigs,
+            List<IDataConfig> originalDataConfigs,
+            List<ClusteringEvaluation> qualityMeasures,
             List<Map<ProgramParameter<?>, String>> parameterValues,
             final List<RunResultPostprocessor> postProcessors,
             final DataRandomizer randomizer,
@@ -177,9 +188,8 @@ public class RobustnessAnalysisRun extends ClusteringRun {
             this.distortionParams.add(paramSet.clone());
         }
         this.numberOfDistortedDataSets = other.numberOfDistortedDataSets;
-        this.dataConfigs = new ArrayList<DataConfig>(other.dataConfigs);
-        this.originalDataConfigs = new ArrayList<DataConfig>(
-                other.originalDataConfigs);
+        this.dataConfigs = new ArrayList<>(other.dataConfigs);
+        this.originalDataConfigs = new ArrayList<>(other.originalDataConfigs);
     }
 
     /*
@@ -228,7 +238,7 @@ public class RobustnessAnalysisRun extends ClusteringRun {
                     goldStandardBasePath, this.getRunIdentificationString()));
             newGoldStandardDir.mkdir();
 
-            Map<DataConfig, List<DataConfig>> newDataConfigs = new HashMap<DataConfig, List<DataConfig>>();
+            Map<DataConfig, List<DataConfig>> newDataConfigs = new HashMap<>();
 
             Options options = this.randomizer.getAllOptions();
 

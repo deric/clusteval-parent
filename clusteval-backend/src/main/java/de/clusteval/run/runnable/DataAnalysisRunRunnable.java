@@ -12,6 +12,7 @@
  */
 package de.clusteval.run.runnable;
 
+import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.data.DataConfig;
@@ -37,35 +38,35 @@ public class DataAnalysisRunRunnable extends
     /**
      * The data configuration to be analysed by this runnable.
      */
-    protected DataConfig dataConfig;
+    protected IDataConfig dataConfig;
 
     protected int currentIteration = -1;
 
     /**
-     * @param runScheduler The run scheduler that the newly created runnable
-     * should be passed to and executed by.
+     * @param runScheduler   The run scheduler that the newly created runnable
+     *                       should be passed to and executed by.
      *
-     * @param run The run this runnable belongs to.
+     * @param run            The run this runnable belongs to.
      * @param runIdentString The unique identification string of the run which
-     * is used to store the results in a unique folder to avoid overwriting.
-     * @param dataConfig The data configuration to be analysed by this runnable.
-     * @param statistics The statistics that should be assessed during execution
-     * of this runnable.
-     * @param isResume True, if this run is a resumption of a previous execution
-     * or a completely new execution.
+     *                       is used to store the results in a unique folder to avoid overwriting.
+     * @param dataConfig     The data configuration to be analysed by this runnable.
+     * @param statistics     The statistics that should be assessed during execution
+     *                       of this runnable.
+     * @param isResume       True, if this run is a resumption of a previous execution
+     *                       or a completely new execution.
      */
     public DataAnalysisRunRunnable(RunSchedulerThread runScheduler, Run run,
             String runIdentString, final boolean isResume,
-            DataConfig dataConfig, List<DataStatistic> statistics) {
+            IDataConfig dataConfig, List<DataStatistic> statistics) {
         super(run, runIdentString, statistics, isResume);
         this.dataConfig = dataConfig;
         this.future = runScheduler.registerRunRunnable(this);
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see run.runnable.AnalysisRunRunnable#createRunResult()
+     * (non-Javadoc)
+     *
+     * @see run.runnable.AnalysisRunRunnable#createRunResult()
      */
     @Override
     protected DataAnalysisRunResult createRunResult() throws RegisterException {
@@ -75,9 +76,9 @@ public class DataAnalysisRunRunnable extends
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see run.runnable.AnalysisRunRunnable#afterRun()
+     * (non-Javadoc)
+     *
+     * @see run.runnable.AnalysisRunRunnable#afterRun()
      */
     @Override
     public void afterRun() {
@@ -87,9 +88,9 @@ public class DataAnalysisRunRunnable extends
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.clusteval.run.runnable.AnalysisRunRunnable#beforeRun()
+     * (non-Javadoc)
+     *
+     * @see de.clusteval.run.runnable.AnalysisRunRunnable#beforeRun()
      */
     @Override
     public void beforeRun() {
@@ -115,11 +116,11 @@ public class DataAnalysisRunRunnable extends
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * de.clusteval.run.runnable.AnalysisRunRunnable#createIterationRunnable
-	 * (de.clusteval.run.runnable.AnalysisIterationWrapper)
+     * (non-Javadoc)
+     *
+     * @see
+     * de.clusteval.run.runnable.AnalysisRunRunnable#createIterationRunnable
+     * (de.clusteval.run.runnable.AnalysisIterationWrapper)
      */
     @Override
     protected DataAnalysisIterationRunnable createIterationRunnable(
@@ -128,10 +129,10 @@ public class DataAnalysisRunRunnable extends
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * de.clusteval.run.runnable.AnalysisRunRunnable#createIterationWrapper()
+     * (non-Javadoc)
+     *
+     * @see
+     * de.clusteval.run.runnable.AnalysisRunRunnable#createIterationWrapper()
      */
     @Override
     protected DataAnalysisIterationWrapper createIterationWrapper() {
@@ -139,11 +140,11 @@ public class DataAnalysisRunRunnable extends
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * de.clusteval.run.runnable.AnalysisRunRunnable#decorateIterationWrapper
-	 * (de.clusteval.run.runnable.AnalysisIterationWrapper, int)
+     * (non-Javadoc)
+     *
+     * @see
+     * de.clusteval.run.runnable.AnalysisRunRunnable#decorateIterationWrapper
+     * (de.clusteval.run.runnable.AnalysisIterationWrapper, int)
      */
     @Override
     protected void decorateIterationWrapper(
@@ -154,9 +155,9 @@ public class DataAnalysisRunRunnable extends
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.clusteval.run.runnable.RunRunnable#hasNextIteration()
+     * (non-Javadoc)
+     *
+     * @see de.clusteval.run.runnable.RunRunnable#hasNextIteration()
      */
     @Override
     protected boolean hasNextIteration() {
@@ -164,9 +165,9 @@ public class DataAnalysisRunRunnable extends
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.clusteval.run.runnable.RunRunnable#consumeNextIteration()
+     * (non-Javadoc)
+     *
+     * @see de.clusteval.run.runnable.RunRunnable#consumeNextIteration()
      */
     @Override
     protected int consumeNextIteration() throws RunIterationException {
@@ -174,11 +175,11 @@ public class DataAnalysisRunRunnable extends
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * de.clusteval.run.runnable.RunRunnable#doRunIteration(de.clusteval.run
-	 * .runnable.IterationWrapper)
+     * (non-Javadoc)
+     *
+     * @see
+     * de.clusteval.run.runnable.RunRunnable#doRunIteration(de.clusteval.run
+     * .runnable.IterationWrapper)
      */
     @Override
     protected void doRunIteration(DataAnalysisIterationWrapper iterationWrapper)
@@ -189,7 +190,7 @@ public class DataAnalysisRunRunnable extends
         this.submitIterationRunnable(iterationRunnable);
     }
 
-    public DataConfig getDataConfig() {
+    public IDataConfig getDataConfig() {
         return this.dataConfig;
     }
 }

@@ -27,7 +27,7 @@ import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RLibraryNotLoadedException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
-import de.clusteval.framework.ISupervisorThread;
+import de.clusteval.api.run.ISupervisorThread;
 import de.clusteval.program.IProgramConfig;
 import java.io.File;
 import java.net.URL;

@@ -30,9 +30,7 @@ import java.util.List;
  * @author Christian Wiwie
  *
  */
-public class RunDataAnalysisIterationRunnable
-        extends
-        AnalysisIterationRunnable<RunDataStatistic, RunDataAnalysisIterationWrapper> {
+public class RunDataAnalysisIterationRunnable extends AnalysisIterationRunnable<RunDataStatistic, RunDataAnalysisIterationWrapper> {
 
     /**
      * @param iterationWrapper

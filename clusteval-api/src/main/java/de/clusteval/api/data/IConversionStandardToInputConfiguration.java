@@ -14,22 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.clusteval.framework;
-
-import de.clusteval.api.repository.IRun;
-import java.util.Set;
+package de.clusteval.api.data;
 
 /**
- * Runs scheduler
  *
  * @author deric
  */
-public interface IScheduler {
-
-    /**
-     *
-     * @return A collection of runs, that have been executed or resumed.
-     */
-    public Set<IRun> getRuns();
+public interface IConversionStandardToInputConfiguration {
 
 }

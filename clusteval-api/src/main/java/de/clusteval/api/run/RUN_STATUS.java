@@ -8,7 +8,7 @@
  * Contributors:
  *     Christian Wiwie - initial API and implementation
  ***************************************************************************** */
-package de.clusteval.framework;
+package de.clusteval.api.run;
 
 /**
  * During execution of a run, the corresponding object has a certain status.

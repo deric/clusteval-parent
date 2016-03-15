@@ -1,5 +1,6 @@
 package de.clusteval.run.runnable;
 
+import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.statistics.DataStatistic;
@@ -24,16 +25,16 @@ public class DataAnalysisIterationRunnable extends
         super(iterationWrapper);
     }
 
-    public DataConfig getDataConfig() {
+    public IDataConfig getDataConfig() {
         return this.iterationWrapper.getDataConfig();
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * de.clusteval.run.runnable.AnalysisIterationRunnable#beforeStatisticCalculate
-	 * ()
+     * (non-Javadoc)
+     *
+     * @see
+     * de.clusteval.run.runnable.AnalysisIterationRunnable#beforeStatisticCalculate
+     * ()
      */
     protected void beforeStatisticCalculate() {
         this.log.info("Run " + this.getRun() + " - (" + this.getDataConfig()
@@ -41,10 +42,10 @@ public class DataAnalysisIterationRunnable extends
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * run.runnable.AnalysisRunRunnable#getStatisticCalculator(java.lang.Class)
+     * (non-Javadoc)
+     *
+     * @see
+     * run.runnable.AnalysisRunRunnable#getStatisticCalculator(java.lang.Class)
      */
     @SuppressWarnings({"rawtypes", "unchecked"})
     @Override
@@ -66,9 +67,9 @@ public class DataAnalysisIterationRunnable extends
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.clusteval.run.runnable.AnalysisIterationRunnable#getOutputPath()
+     * (non-Javadoc)
+     *
+     * @see de.clusteval.run.runnable.AnalysisIterationRunnable#getOutputPath()
      */
     @Override
     protected String getOutputPath() {

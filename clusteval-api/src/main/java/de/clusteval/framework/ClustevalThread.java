@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.framework;
 
+import de.clusteval.api.run.ISupervisorThread;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**

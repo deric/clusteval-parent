@@ -39,7 +39,7 @@ import de.clusteval.framework.threading.RepositorySupervisorThread;
 import de.clusteval.framework.threading.SupervisorThread;
 import de.clusteval.run.Run;
 import de.clusteval.run.result.RunResult;
-import de.clusteval.framework.RUN_STATUS;
+import de.clusteval.api.run.RUN_STATUS;
 
 /**
  * @author Christian Wiwie

@@ -11,22 +11,20 @@
 package de.clusteval.data.dataset.format;
 
 import de.clusteval.api.data.ConversionConfiguration;
+import de.clusteval.api.data.IConversionStandardToInputConfiguration;
 
 /**
  * @author Christian Wiwie
  *
  */
-public class ConversionStandardToInputConfiguration extends ConversionConfiguration {
+public class ConversionStandardToInputConfiguration extends ConversionConfiguration implements IConversionStandardToInputConfiguration {
 
-    /**
-     *
-     */
     public ConversionStandardToInputConfiguration() {
         super();
     }
 
     /**
-     * The copy constructof of this class.
+     * The copy constructor of this class.
      *
      * @param other
      *              The object to clone.

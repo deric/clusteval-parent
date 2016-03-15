@@ -19,7 +19,6 @@ package de.clusteval.api.data;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.repository.IRepositoryObject;
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -94,11 +93,29 @@ public interface IDataSet extends IRepositoryObject {
 
     IDataSetType getDataSetType();
 
-    boolean copyTo(File copyDestination, final boolean overwrite);
-
-    boolean copyTo(File copyDestination, final boolean overwrite, final boolean updateAbsolutePath);
-
-    boolean copyToFolder(File copyFolderDestination, final boolean overwrite);
-
     IDataSet clone();
+
+    /**
+     * Gets the major name of this dataset. The major name corresponds to the
+     * folder the dataset resides in in the filesystem.
+     *
+     * @return The major name
+     */
+    String getMajorName();
+
+    /**
+     * Gets the minor name of this dataset. The minor name corresponds to the
+     * name of the file of this dataset.
+     *
+     * @return The minor name
+     */
+    String getMinorName();
+
+    /**
+     * Gets the full name of this dataset. The full name consists of the minor
+     * and the major name, separated by a slash: MAJOR/MINOR
+     *
+     * @return The full name
+     */
+    String getFullName();
 }

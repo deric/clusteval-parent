@@ -22,4 +22,5 @@ package de.clusteval.api.data;
  */
 public interface IConversionInputToStandardConfiguration {
 
+    IConversionInputToStandardConfiguration clone();
 }

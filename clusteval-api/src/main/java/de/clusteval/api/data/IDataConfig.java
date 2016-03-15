@@ -58,4 +58,6 @@ public interface IDataConfig extends IRepositoryObject {
 
     IGoldStandardConfig getGoldstandardConfig();
 
+    IDataConfig clone();
+
 }
