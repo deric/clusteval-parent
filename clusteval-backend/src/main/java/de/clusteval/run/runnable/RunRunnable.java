@@ -15,6 +15,7 @@ import de.clusteval.api.exceptions.InternalAttributeException;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
+import de.clusteval.api.repository.IRun;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.run.IRunRunnable;
 import de.clusteval.api.run.IScheduler;
@@ -440,7 +441,8 @@ public abstract class RunRunnable<IR extends IterationRunnable, IW extends Itera
     /**
      * @return The run this runnable belongs to.
      */
-    public Run getRun() {
+    @Override
+    public IRun getRun() {
         return this.run;
     }
 

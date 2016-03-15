@@ -304,4 +304,11 @@ public interface IRepository {
     boolean addMissingRLibraryException(RLibraryNotLoadedException e);
 
     Map<File, IRepositoryObject> getPathToRepositoryObject();
+
+    /**
+     * Checks whether repository has a parent repository
+     *
+     * @return
+     */
+    boolean hasParent();
 }

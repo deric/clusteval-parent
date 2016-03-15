@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.run.result.format;
 
+import de.clusteval.api.run.IRunResultFormatParser;
 import de.clusteval.run.result.ClusteringRunResult;
 import de.wiwie.wiutils.utils.parse.TextFileParser;
 import java.io.IOException;
@@ -18,7 +19,7 @@ import java.util.Map;
 /**
  * @author Christian Wiwie
  */
-public abstract class RunResultFormatParser extends TextFileParser {
+public abstract class RunResultFormatParser extends TextFileParser implements IRunResultFormatParser {
 
     /** The params. */
     protected Map<String, String> params;

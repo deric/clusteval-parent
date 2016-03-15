@@ -100,7 +100,7 @@ public abstract class IterationRunnable<IW extends IterationWrapper> implements 
         this.startTime = System.currentTimeMillis();
 
         IRepository repo = getRun().getRepository();
-        if (repo instanceof RunResultRepository) {
+        if (repo.hasParent()) {
             repo = repo.getParent();
         }
         IScheduler scheduler = repo.getSupervisorThread().getRunScheduler();
@@ -111,7 +111,7 @@ public abstract class IterationRunnable<IW extends IterationWrapper> implements 
 
     protected void afterRun() {
         IRepository repo = getRun().getRepository();
-        if (repo instanceof RunResultRepository) {
+        if (repo.hasParent()) {
             repo = repo.getParent();
         }
         IScheduler scheduler = repo.getSupervisorThread().getRunScheduler();
