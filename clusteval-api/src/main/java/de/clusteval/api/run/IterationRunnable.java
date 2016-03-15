@@ -19,10 +19,7 @@ package de.clusteval.api.run;
 import de.clusteval.api.exceptions.RNotAvailableException;
 import de.clusteval.api.r.RLibraryNotLoadedException;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.framework.repository.RunResultRepository;
-import de.clusteval.framework.threading.RunSchedulerThread;
-import de.clusteval.run.Run;
-import de.clusteval.run.runnable.RunRunnable;
+import de.clusteval.api.repository.IRun;
 import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -75,11 +72,11 @@ public abstract class IterationRunnable<IW extends IterationWrapper> implements 
         return interruptedException;
     }
 
-    public RunRunnable getParentRunnable() {
+    public IRunRunnable getParentRunnable() {
         return this.iterationWrapper.getRunnable();
     }
 
-    public Run getRun() {
+    public IRun getRun() {
         return this.iterationWrapper.getRunnable().getRun();
     }
 
@@ -117,7 +114,7 @@ public abstract class IterationRunnable<IW extends IterationWrapper> implements 
         if (repo instanceof RunResultRepository) {
             repo = repo.getParent();
         }
-        RunSchedulerThread scheduler = repo.getSupervisorThread().getRunScheduler();
+        IScheduler scheduler = repo.getSupervisorThread().getRunScheduler();
         scheduler.informOnFinishedIterationRunnable(Thread.currentThread(),
                 this);
     }

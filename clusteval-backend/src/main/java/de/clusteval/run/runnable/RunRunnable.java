@@ -10,14 +10,15 @@
  ***************************************************************************** */
 package de.clusteval.run.runnable;
 
-import de.clusteval.api.run.IterationRunnable;
 import de.clusteval.api.exceptions.IncompleteGoldStandardException;
 import de.clusteval.api.exceptions.InternalAttributeException;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.run.IRunRunnable;
 import de.clusteval.api.run.IScheduler;
+import de.clusteval.api.run.IterationRunnable;
 import de.clusteval.api.run.IterationWrapper;
 import de.clusteval.api.run.RUN_STATUS;
 import de.clusteval.data.dataset.format.IncompatibleDataSetFormatException;
@@ -61,7 +62,7 @@ import org.slf4j.LoggerFactory;
  * @param <IR>
  * @param <IW>
  */
-public abstract class RunRunnable<IR extends IterationRunnable, IW extends IterationWrapper> implements Runnable {
+public abstract class RunRunnable<IR extends IterationRunnable, IW extends IterationWrapper> implements Runnable, IRunRunnable {
 
     /**
      * The run this runnable object was created by.

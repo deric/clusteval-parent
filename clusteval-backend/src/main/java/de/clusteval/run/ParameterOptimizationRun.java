@@ -14,6 +14,7 @@ package de.clusteval.run;
 
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.cluster.quality.ClusteringQualitySet;
+import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
@@ -158,7 +159,7 @@ public class ParameterOptimizationRun extends ExecutionRun {
      * @throws RegisterException
      */
     public ParameterOptimizationRun(final IRepository repository, final Context context, final long changeDate,
-            final File absPath, final List<ProgramConfig> programConfigs, final List<DataConfig> dataConfigs,
+            final File absPath, final List<ProgramConfig> programConfigs, final List<IDataConfig> dataConfigs,
             final List<ClusteringEvaluation> qualityMeasures,
             final List<Map<ProgramParameter<?>, String>> parameterValues,
             final List<List<ProgramParameter<?>>> optimizationParameters,
@@ -173,7 +174,7 @@ public class ParameterOptimizationRun extends ExecutionRun {
 
         if (this.register()) {
             // register this Run at all dataconfigs and programconfigs
-            for (DataConfig dataConfig : this.dataConfigs) {
+            for (IDataConfig dataConfig : this.dataConfigs) {
                 dataConfig.addListener(this);
             }
             for (ProgramConfig programConfig : this.programConfigs) {

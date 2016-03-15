@@ -110,7 +110,7 @@ public class GoldStandard extends RepositoryObject implements IGoldStandard {
      * @throws GoldStandardNotFoundException
      * @throws RegisterException
      */
-    public static GoldStandard parseFromFile(final File absGoldStandardPath)
+    public static IGoldStandard parseFromFile(final File absGoldStandardPath)
             throws NoRepositoryFoundException, GoldStandardNotFoundException,
                    RegisterException {
 

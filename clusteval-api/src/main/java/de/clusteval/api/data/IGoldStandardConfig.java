@@ -28,4 +28,6 @@ public interface IGoldStandardConfig extends IRepositoryObject {
 
     IGoldStandardConfig clone();
 
+    void setGoldStandard(final IGoldStandard goldStandard);
+
 }

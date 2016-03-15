@@ -13,6 +13,7 @@
 package de.clusteval.run;
 
 import de.clusteval.api.ClusteringEvaluation;
+import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.context.Context;
@@ -56,7 +57,7 @@ public class InternalParameterOptimizationRun extends ExecutionRun {
      */
     public InternalParameterOptimizationRun(IRepository repository,
             final Context context, long changeDate, File absPath,
-            List<ProgramConfig> programConfigs, List<DataConfig> dataConfigs,
+            List<ProgramConfig> programConfigs, List<IDataConfig> dataConfigs,
             List<ClusteringEvaluation> qualityMeasures,
             List<Map<ProgramParameter<?>, String>> parameterValues,
             final List<RunResultPostprocessor> postProcessors,
@@ -70,11 +71,10 @@ public class InternalParameterOptimizationRun extends ExecutionRun {
     /**
      * Copy constructor of internal parameter optimization runs.
      *
-     * @param otherRun The internal parameter optimization run to be cloned.
+     * @param other The internal parameter optimization run to be cloned.
      * @throws RegisterException
      */
-    protected InternalParameterOptimizationRun(final InternalParameterOptimizationRun other)
-            throws RegisterException {
+    protected InternalParameterOptimizationRun(final InternalParameterOptimizationRun other) throws RegisterException {
         super(other);
     }
 

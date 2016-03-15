@@ -27,7 +27,7 @@ public class IterationWrapper {
      */
     protected File logfile;
 
-    protected RunRunnable runnable;
+    protected IRunRunnable runnable;
 
     protected IDataConfig dataConfig;
 
@@ -61,11 +61,11 @@ public class IterationWrapper {
         this.dataConfig = dataConfig;
     }
 
-    public RunRunnable getRunnable() {
+    public IRunRunnable getRunnable() {
         return runnable;
     }
 
-    public void setRunnable(RunRunnable runnable) {
+    public void setRunnable(IRunRunnable runnable) {
         this.runnable = runnable;
     }
 }

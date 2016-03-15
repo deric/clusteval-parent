@@ -238,19 +238,19 @@ public class RobustnessAnalysisRun extends ClusteringRun {
                     goldStandardBasePath, this.getRunIdentificationString()));
             newGoldStandardDir.mkdir();
 
-            Map<DataConfig, List<DataConfig>> newDataConfigs = new HashMap<>();
+            Map<IDataConfig, List<DataConfig>> newDataConfigs = new HashMap<>();
 
             Options options = this.randomizer.getAllOptions();
 
             // generate those randomized data sets which are not generated yet
-            for (DataConfig dataConfig : this.dataConfigs) {
+            for (IDataConfig dataConfig : this.dataConfigs) {
                 this.log.info("... for data config '" + dataConfig.getName()
                         + "'");
-                newDataConfigs.put(dataConfig, new ArrayList<DataConfig>());
+                newDataConfigs.put(dataConfig, new ArrayList<>());
                 for (ParameterSet paramSet : this.distortionParams) {
 
                     for (int i = 1; i <= this.numberOfDistortedDataSets; i++) {
-                        List<String> params = new ArrayList<String>();
+                        List<String> params = new ArrayList<>();
                         for (String param : paramSet.keySet()) {
                             if (options.hasOption(param)) {
                                 params.add("-" + param);
@@ -312,9 +312,7 @@ public class RobustnessAnalysisRun extends ClusteringRun {
                                 // newDataConfig.getDatasetConfig().dumpToFile();
                                 newDataConfig
                                         .getGoldstandardConfig()
-                                        .setGoldStandard(
-                                                GoldStandard
-                                                .parseFromFile(targetGoldStandardFile));
+                                        .setGoldStandard(GoldStandard.parseFromFile(targetGoldStandardFile));
                                 // newDataConfig.getGoldstandardConfig()
                                 // .dumpToFile();
                                 newDataConfigs
@@ -335,8 +333,8 @@ public class RobustnessAnalysisRun extends ClusteringRun {
             }
 
             this.originalDataConfigs = this.dataConfigs;
-            this.dataConfigs = new ArrayList<DataConfig>();
-            for (DataConfig dc : this.originalDataConfigs) {
+            this.dataConfigs = new ArrayList<>();
+            for (IDataConfig dc : this.originalDataConfigs) {
                 this.dataConfigs.addAll(newDataConfigs.get(dc));
             }
 
@@ -453,19 +451,18 @@ public class RobustnessAnalysisRun extends ClusteringRun {
                     goldStandardBasePath, this.getRunIdentificationString()));
             newGoldStandardDir.mkdir();
 
-            Map<DataConfig, List<DataConfig>> newDataConfigs = new HashMap<DataConfig, List<DataConfig>>();
+            Map<IDataConfig, List<IDataConfig>> newDataConfigs = new HashMap<>();
 
             Options options = this.randomizer.getAllOptions();
 
             // generate randomized data sets
-            for (DataConfig dataConfig : this.dataConfigs) {
-                this.log.info("... for data config '" + dataConfig.getName()
-                        + "'");
-                newDataConfigs.put(dataConfig, new ArrayList<DataConfig>());
+            for (IDataConfig dataConfig : this.dataConfigs) {
+                this.log.info("... for data config '" + dataConfig.getName() + "'");
+                newDataConfigs.put(dataConfig, new ArrayList<>());
                 for (ParameterSet paramSet : this.distortionParams) {
 
                     for (int i = 1; i <= this.numberOfDistortedDataSets; i++) {
-                        List<String> params = new ArrayList<String>();
+                        List<String> params = new ArrayList<>();
                         for (String param : paramSet.keySet()) {
                             if (options.hasOption(param)) {
                                 params.add("-" + param);
@@ -508,8 +505,8 @@ public class RobustnessAnalysisRun extends ClusteringRun {
             }
 
             this.originalDataConfigs = this.dataConfigs;
-            this.dataConfigs = new ArrayList<DataConfig>();
-            for (DataConfig dc : this.originalDataConfigs) {
+            this.dataConfigs = new ArrayList<>();
+            for (IDataConfig dc : this.originalDataConfigs) {
                 this.dataConfigs.addAll(newDataConfigs.get(dc));
             }
 
@@ -603,7 +600,7 @@ public class RobustnessAnalysisRun extends ClusteringRun {
             programConfigNames.add(programConfig.getName());
         }
         List<String> dataConfigNames = new ArrayList<>();
-        for (DataConfig dataConfig : this.originalDataConfigs) {
+        for (IDataConfig dataConfig : this.originalDataConfigs) {
             dataConfigNames.add(dataConfig.getName());
         }
 
@@ -649,8 +646,7 @@ public class RobustnessAnalysisRun extends ClusteringRun {
                             bestParams
                                     .get(pc.getName())
                                     .put(dc.getName(),
-                                            new Triple<List<ParameterSet>, ClusteringQualityMeasure, ClusteringQualityMeasureValue>(
-                                                    new ArrayList<ParameterSet>(),
+                                            new Triple<>(new ArrayList<>(),
                                                     measure, def));
                         }
 
@@ -706,13 +702,13 @@ public class RobustnessAnalysisRun extends ClusteringRun {
         // TODO: for numerical parameter ranges, take the mean
         // for string parameters, just take any one
         for (ProgramConfig pc : programConfigs) {
-            for (DataConfig dc : originalDataConfigs) {
+            for (IDataConfig dc : originalDataConfigs) {
                 Map<ProgramParameter<? extends Object>, String> m = new HashMap<>();
 
                 if (bestParams.containsKey(pc.getName())
                         && bestParams.get(pc.getName()).containsKey(
                         dc.getName())) {
-                    Triple<List<ParameterSet>, ClusteringQualityMeasure, ClusteringQualityMeasureValue> params = bestParams
+                    Triple<List<ParameterSet>, ClusteringEvaluation, ClusteringQualityMeasureValue> params = bestParams
                             .get(pc.getName()).get(dc.getName());
 
                     if (params.getFirst().size() > 0) {
@@ -796,7 +792,7 @@ public class RobustnessAnalysisRun extends ClusteringRun {
         return this.parameterValues.get(p);
     }
 
-    public void setOriginalDataConfigurations(final List<DataConfig> dataConfigs) {
+    public void setOriginalDataConfigurations(final List<IDataConfig> dataConfigs) {
         this.originalDataConfigs = dataConfigs;
     }
 }

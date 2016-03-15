@@ -116,6 +116,7 @@ public class GoldStandardConfig extends DumpableRepositoryObject implements IGol
         return goldStandard;
     }
 
+    @Override
     public void setGoldStandard(final IGoldStandard goldStandard) {
         this.goldStandard = goldStandard;
     }

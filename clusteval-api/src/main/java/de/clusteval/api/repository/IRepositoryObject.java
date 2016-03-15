@@ -132,6 +132,42 @@ public interface IRepositoryObject {
      *                              the destination folder should be overwritten.
      * @return True, if the copy operation was successful.
      */
-    public boolean copyToFolder(final File copyFolderDestination, final boolean overwrite);
+    boolean copyToFolder(final File copyFolderDestination, final boolean overwrite);
+
+    /**
+     * A convenience method for {@link #moveTo(File, boolean)}, with overwriting
+     * enabled.
+     *
+     * @param moveDestination The absolute path to the destination file.
+     * @return True, if the move operation was successful.
+     */
+    boolean moveTo(final File moveDestination);
+
+    /**
+     * This method moves the file corresponding to this repository object to the
+     * destination.
+     *
+     * <p>
+     * <b>Hint:</b> Use the wait parameter with caution: It might increase the
+     * ressource load of this method considerably. Also the wait operation might
+     * not terminate, if source and target filesystem use different encodings
+     * and the equality checks return false.
+     *
+     * @param moveDest  The absolute path to the destination file.
+     * @param overwrite Whether the possibly already existing target file should
+     *                  be overwritten.
+     * @return True, if the move operation was successful.
+     */
+    boolean moveTo(final File moveDest, final boolean overwrite);
+
+    /**
+     * A convenience method for {@link #moveToFolder(File, boolean)}, with
+     * overwriting enabled.
+     *
+     * @param moveFolderDestination The folder into which this file should be
+     *                              move
+     * @return True, if the move operation was successful.
+     */
+    boolean moveToFolder(final File moveFolderDestination);
 
 }
