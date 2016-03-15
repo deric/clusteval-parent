@@ -13,8 +13,8 @@ package de.clusteval.framework.repository.db;
 import de.clusteval.api.SQLConfig;
 import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.repository.IRun;
 import de.clusteval.program.ProgramConfig;
-import de.clusteval.run.Run;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -45,8 +45,7 @@ public class RunResultSQLCommunicator_pg extends DefaultSQLCommunicator {
      * .String)
      */
     @Override
-    public int getParameterOptimizationMethodId(String name)
-            throws SQLException {
+    public int getParameterOptimizationMethodId(String name) throws SQLException {
         return repository.getParent().getDb()
                 .getParameterOptimizationMethodId(name);
     }
@@ -144,7 +143,7 @@ public class RunResultSQLCommunicator_pg extends DefaultSQLCommunicator {
      * @see de.wiwie.wiutils.utils.DefaultSQLCommunicator#getRunAnalysisId(int)
      */
     @Override
-    protected int getRunAnalysisId(int runId) throws SQLException {
+    public int getRunAnalysisId(int runId) throws SQLException {
         try {
             return super.getRunAnalysisId(runId);
         } catch (SQLException e) {
@@ -159,7 +158,7 @@ public class RunResultSQLCommunicator_pg extends DefaultSQLCommunicator {
      * @see de.wiwie.wiutils.utils.DefaultSQLCommunicator#getRunExecutionId(int)
      */
     @Override
-    protected int getRunExecutionId(int runId) throws SQLException {
+    public int getRunExecutionId(int runId) throws SQLException {
         try {
             return super.getRunExecutionId(runId);
         } catch (SQLException e) {
@@ -174,7 +173,7 @@ public class RunResultSQLCommunicator_pg extends DefaultSQLCommunicator {
      * @see de.wiwie.wiutils.utils.DefaultSQLCommunicator#getRunId(java.lang.String)
      */
     @Override
-    protected int getRunId(final Run run) throws SQLException {
+    public int getRunId(final IRun run) throws SQLException {
         try {
             return super.getRunId(run);
         } catch (SQLException e) {
@@ -189,7 +188,7 @@ public class RunResultSQLCommunicator_pg extends DefaultSQLCommunicator {
      * @see de.wiwie.wiutils.utils.DefaultSQLCommunicator#getRunResultExecutionId(int)
      */
     @Override
-    protected int getRunResultExecutionId(int runResultId) throws SQLException {
+    public int getRunResultExecutionId(int runResultId) throws SQLException {
         return this.repository.getParent().getDb()
                 .getRunResultExecutionId(runResultId);
     }
@@ -200,8 +199,7 @@ public class RunResultSQLCommunicator_pg extends DefaultSQLCommunicator {
      * @see de.wiwie.wiutils.utils.DefaultSQLCommunicator#getRunResultFormatId(java.lang.String)
      */
     @Override
-    protected int getRunResultFormatId(String runResultFormatSimpleName)
-            throws SQLException {
+    public int getRunResultFormatId(String runResultFormatSimpleName) throws SQLException {
         return this.repository.getParent().getDb()
                 .getRunResultFormatId(runResultFormatSimpleName);
     }
@@ -212,8 +210,7 @@ public class RunResultSQLCommunicator_pg extends DefaultSQLCommunicator {
      * @see de.wiwie.wiutils.utils.DefaultSQLCommunicator#getRunResultId(java.lang.String)
      */
     @Override
-    protected int getRunResultId(String uniqueRunIdentifier)
-            throws SQLException {
+    public int getRunResultId(String uniqueRunIdentifier) throws SQLException {
         return this.repository.getParent().getDb()
                 .getRunResultId(uniqueRunIdentifier);
     }
@@ -224,9 +221,8 @@ public class RunResultSQLCommunicator_pg extends DefaultSQLCommunicator {
      * @see de.wiwie.wiutils.utils.DefaultSQLCommunicator#getRunTypeId(java.lang.String)
      */
     @Override
-    protected int getRunTypeId(String name) throws SQLException {
-        return this.repository.getParent().getDb()
-                .getRunTypeId(name);
+    public int getRunTypeId(String name) throws SQLException {
+        return this.repository.getParent().getDb().getRunTypeId(name);
     }
 
     /*
@@ -235,7 +231,7 @@ public class RunResultSQLCommunicator_pg extends DefaultSQLCommunicator {
      * @see de.wiwie.wiutils.utils.DefaultSQLCommunicator#getStatisticId(java.lang.String)
      */
     @Override
-    protected int getStatisticId(String statisticsName) throws SQLException {
+    public int getStatisticId(String statisticsName) throws SQLException {
         return this.repository.getParent().getDb()
                 .getStatisticId(statisticsName);
     }
@@ -246,8 +242,7 @@ public class RunResultSQLCommunicator_pg extends DefaultSQLCommunicator {
      * @see de.wiwie.wiutils.utils.DefaultSQLCommunicator#getDataSetFormatId(java.lang.String)
      */
     @Override
-    protected int getDataSetTypeId(String dataSetTypeClassSimpleName)
-            throws SQLException {
+    public int getDataSetTypeId(String dataSetTypeClassSimpleName) throws SQLException {
         return this.repository.getParent().getDb()
                 .getDataSetTypeId(dataSetTypeClassSimpleName);
     }

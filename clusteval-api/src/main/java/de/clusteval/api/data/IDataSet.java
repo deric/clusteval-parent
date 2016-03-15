@@ -118,4 +118,6 @@ public interface IDataSet extends IRepositoryObject {
      * @return The full name
      */
     String getFullName();
+
+    WEBSITE_VISIBILITY getWebsiteVisibility();
 }

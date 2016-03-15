@@ -10,11 +10,19 @@
  ***************************************************************************** */
 package de.clusteval.framework.repository.db;
 
-import de.clusteval.api.SQLConfig;
 import de.clusteval.api.ClusteringEvaluation;
+import de.clusteval.api.Database;
+import de.clusteval.api.SQLConfig;
+import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.cluster.quality.ClusteringQualitySet;
+import de.clusteval.api.data.IDataConfig;
+import de.clusteval.api.data.IDataSet;
+import de.clusteval.api.data.IDataSetConfig;
+import de.clusteval.api.data.IGoldStandard;
+import de.clusteval.api.data.IGoldStandardConfig;
 import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.repository.IRun;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
@@ -83,7 +91,7 @@ import java.util.Map;
  *
  */
 @SuppressWarnings({"unchecked", "rawtypes"})
-public class DefaultSQLCommunicator extends SQLCommunicator {
+public class DefaultSQLCommunicator extends SQLCommunicator implements Database {
 
     /**
      * @param repository
@@ -845,7 +853,7 @@ public class DefaultSQLCommunicator extends SQLCommunicator {
 
             DataAnalysisRun dataAnalysis = object;
 
-            for (DataConfig dataConfig : dataAnalysis.getDataConfigs()) {
+            for (IDataConfig dataConfig : dataAnalysis.getDataConfigs()) {
                 insert(this.getTableRunsAnalysisDataDataIdentifiers(),
                         new String[]{"repository_id", "run_data_analysis_id",
                             "data_config_id"},
@@ -973,7 +981,7 @@ public class DefaultSQLCommunicator extends SQLCommunicator {
             ExecutionRun execRun = object;
 
             // insert dataConfigs into DB
-            for (DataConfig dataConfig : execRun.getDataConfigs()) {
+            for (IDataConfig dataConfig : execRun.getDataConfigs()) {
                 int data_config_id = this.getObjectId(dataConfig);
 
                 try {
@@ -1396,7 +1404,7 @@ public class DefaultSQLCommunicator extends SQLCommunicator {
      * @see de.wiwie.wiutils.utils.SQLCommunicator#getRunId(java.lang.String)
      */
     @Override
-    protected int getRunId(final Run run) throws SQLException {
+    public int getRunId(final IRun run) throws SQLException {
         return this
                 .select(this.getTableRuns(),
                         "id",
@@ -1450,7 +1458,7 @@ public class DefaultSQLCommunicator extends SQLCommunicator {
     }
 
     @Override
-    protected int getDataSetTypeId(final String dataSetTypeClassSimpleName)
+    public int getDataSetTypeId(final String dataSetTypeClassSimpleName)
             throws SQLException {
         return this.select(this.getTableDataSetTypes(), "id", new String[]{
             "repository_id", "name"},
@@ -1537,7 +1545,7 @@ public class DefaultSQLCommunicator extends SQLCommunicator {
      * @see de.wiwie.wiutils.utils.SQLCommunicator#getRunTypeId(java.lang.String)
      */
     @Override
-    protected int getRunTypeId(String name) throws SQLException {
+    public int getRunTypeId(String name) throws SQLException {
         return this.select(this.getTableRunTypes(), "id", new String[]{"name"},
                 new String[]{name});
     }
@@ -1548,35 +1556,33 @@ public class DefaultSQLCommunicator extends SQLCommunicator {
      * @see de.wiwie.wiutils.utils.SQLCommunicator#getRepositoryId(java.lang.String)
      */
     @Override
-    protected int getRepositoryId(String absPath) throws SQLException {
+    public int getRepositoryId(String absPath) throws SQLException {
         return this.select(this.getTableRepositories(), "id",
                 new String[]{"base_path"}, new String[]{absPath});
     }
 
     @Override
-    protected int getRunAnalysisId(final int run_id) throws SQLException {
+    public int getRunAnalysisId(final int run_id) throws SQLException {
         return this.select(this.getTableRunsAnalysis(), "id",
                 new String[]{"run_id"}, new String[]{run_id + ""});
     }
 
     @Override
-    protected int getRunExecutionId(final int run_id) throws SQLException {
+    public int getRunExecutionId(final int run_id) throws SQLException {
         return this.select(this.getTableRunsExecution(), "id", new String[]{
             "repository_id", "run_id"},
                 new String[]{this.updateRepositoryId() + "", run_id + ""});
     }
 
     @Override
-    protected int getRunResultExecutionId(final int run_results_id)
-            throws SQLException {
+    public int getRunResultExecutionId(final int run_results_id) throws SQLException {
         return this.select(this.getTableRunResultsExecution(), "id",
                 new String[]{"repository_id", "run_result_id"}, new String[]{
                     this.updateRepositoryId() + "", run_results_id + ""});
     }
 
     @Override
-    protected int getRunResultFormatId(final String runResultFormatSimpleName)
-            throws SQLException {
+    public int getRunResultFormatId(final String runResultFormatSimpleName) throws SQLException {
         return this.select(this.getTableRunResultFormats(), "id", new String[]{
             "repository_id", "name"},
                 new String[]{this.updateRepositoryId() + "",
@@ -1584,8 +1590,7 @@ public class DefaultSQLCommunicator extends SQLCommunicator {
     }
 
     @Override
-    protected int getRunResultId(final String uniqueRunIdentifier)
-            throws SQLException {
+    public int getRunResultId(final String uniqueRunIdentifier) throws SQLException {
         return this.select(this.getTableRunResults(), "id", new String[]{
             "repository_id", "unique_run_identifier"},
                 new String[]{this.updateRepositoryId() + "",
@@ -1593,8 +1598,7 @@ public class DefaultSQLCommunicator extends SQLCommunicator {
     }
 
     @Override
-    protected int getStatisticId(final String statisticsName)
-            throws SQLException {
+    public int getStatisticId(final String statisticsName) throws SQLException {
         return this.select(this.getTableStatistics(), "id", new String[]{
             "repository_id", "name"},
                 new String[]{this.updateRepositoryId() + "", statisticsName});
@@ -1632,7 +1636,7 @@ public class DefaultSQLCommunicator extends SQLCommunicator {
      * @see de.wiwie.wiutils.utils.SQLCommunicator#register(data.goldstandard.GoldStandardConfig)
      */
     @Override
-    protected int register(GoldStandardConfig object, final boolean updateOnly) {
+    public int register(IGoldStandardConfig object, final boolean updateOnly) {
         try {
             int goldstandard_id = getObjectId(object.getGoldstandard());
 
@@ -1686,7 +1690,7 @@ public class DefaultSQLCommunicator extends SQLCommunicator {
      * @see de.wiwie.wiutils.utils.SQLCommunicator#register(data.goldstandard.GoldStandard)
      */
     @Override
-    protected int register(GoldStandard object, final boolean updateOnly) {
+    public int register(IGoldStandard object, final boolean updateOnly) {
         try {
             String[] columns;
             String[] values;
@@ -1821,17 +1825,8 @@ public class DefaultSQLCommunicator extends SQLCommunicator {
         } catch (SQLException e) {
             this.exceptionHandler.handleException(e);
             e.printStackTrace();
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        } catch (SecurityException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
+        } catch (IllegalArgumentException | SecurityException | InstantiationException |
+                IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
         return false;
@@ -1862,8 +1857,7 @@ public class DefaultSQLCommunicator extends SQLCommunicator {
     }
 
     @Override
-    protected boolean registerDataStatisticClass(
-            Class<? extends DataStatistic> object) {
+    protected boolean registerDataStatisticClass(Class<? extends DataStatistic> object) {
 
         try {
             int statisticId;
@@ -1887,17 +1881,9 @@ public class DefaultSQLCommunicator extends SQLCommunicator {
                 this.exceptionHandler.handleException(e);
                 e.printStackTrace();
                 statisticId = getStatisticId(object.getSimpleName());
-            } catch (IllegalArgumentException e) {
-                e.printStackTrace();
-            } catch (SecurityException e) {
-                e.printStackTrace();
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            } catch (NoSuchMethodException e) {
+            } catch (IllegalArgumentException | SecurityException |
+                    InstantiationException | IllegalAccessException |
+                    InvocationTargetException | NoSuchMethodException e) {
                 e.printStackTrace();
             }
             return true;
@@ -1939,17 +1925,9 @@ public class DefaultSQLCommunicator extends SQLCommunicator {
                 this.exceptionHandler.handleException(e);
                 e.printStackTrace();
                 statisticId = getStatisticId(object.getSimpleName());
-            } catch (IllegalArgumentException e) {
-                e.printStackTrace();
-            } catch (SecurityException e) {
-                e.printStackTrace();
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            } catch (NoSuchMethodException e) {
+            } catch (IllegalArgumentException | SecurityException |
+                    InstantiationException | IllegalAccessException |
+                    InvocationTargetException | NoSuchMethodException e) {
                 e.printStackTrace();
             }
             return true;
@@ -1989,17 +1967,8 @@ public class DefaultSQLCommunicator extends SQLCommunicator {
                 this.exceptionHandler.handleException(e);
                 e.printStackTrace();
                 statisticId = getStatisticId(object.getSimpleName());
-            } catch (IllegalArgumentException e) {
-                e.printStackTrace();
-            } catch (SecurityException e) {
-                e.printStackTrace();
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            } catch (NoSuchMethodException e) {
+            } catch (IllegalArgumentException | SecurityException | InstantiationException |
+                    IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
                 e.printStackTrace();
             }
             return true;
@@ -2129,7 +2098,7 @@ public class DefaultSQLCommunicator extends SQLCommunicator {
      * @see de.wiwie.wiutils.utils.SQLCommunicator#register(data.dataset.DataSet)
      */
     @Override
-    protected int register(DataSet object, final boolean updateOnly) {
+    protected int register(IDataSet object, final boolean updateOnly) {
 
         try {
             int dataset_format_id = getDataSetFormatId(object
@@ -2193,7 +2162,7 @@ public class DefaultSQLCommunicator extends SQLCommunicator {
      * .cluster.Clustering)
      */
     @Override
-    protected int register(Clustering object) {
+    protected int register(IClustering object) {
 
         try {
             String[] columns;
@@ -2237,7 +2206,7 @@ public class DefaultSQLCommunicator extends SQLCommunicator {
      * @see de.wiwie.wiutils.utils.SQLCommunicator#register(data.DataConfig)
      */
     @Override
-    protected int register(DataConfig object, final boolean updateOnly) {
+    protected int register(IDataConfig object, final boolean updateOnly) {
 
         try {
             int dataset_config_id = getObjectId(object.getDatasetConfig());
@@ -2328,7 +2297,7 @@ public class DefaultSQLCommunicator extends SQLCommunicator {
      * @see de.wiwie.wiutils.utils.SQLCommunicator#register(data.dataset.DataSetConfig)
      */
     @Override
-    protected int register(DataSetConfig object, final boolean updateOnly) {
+    protected int register(IDataSetConfig object, final boolean updateOnly) {
 
         try {
             int dataset_id = getObjectId(object.getDataSet());
@@ -3069,8 +3038,7 @@ public class DefaultSQLCommunicator extends SQLCommunicator {
      * @see framework.repository.SQLCommunicator#getRunResultAnalysisId(int)
      */
     @Override
-    protected int getRunResultAnalysisId(int run_results_id)
-            throws SQLException {
+    public int getRunResultAnalysisId(int run_results_id) throws SQLException {
         return this.select(this.getTableRunResultsAnalysis(), "id",
                 new String[]{"repository_id", "run_result_id"}, new String[]{
                     this.updateRepositoryId() + "", run_results_id + ""});
@@ -3082,8 +3050,7 @@ public class DefaultSQLCommunicator extends SQLCommunicator {
      * @see framework.repository.SQLCommunicator#getRunResultRunAnalysisId(int)
      */
     @Override
-    protected int getRunResultRunAnalysisId(int run_results_analysis_id)
-            throws SQLException {
+    public int getRunResultRunAnalysisId(int run_results_analysis_id) throws SQLException {
         return this.select(this.getTableRunResultsRunAnalysis(), "id",
                 new String[]{"repository_id", "run_results_analysis_id"},
                 new String[]{this.updateRepositoryId() + "",

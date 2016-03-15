@@ -15,10 +15,12 @@ package de.clusteval.data.dataset;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.data.IDataSetType;
+import de.clusteval.api.data.WEBSITE_VISIBILITY;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.RNotAvailableException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.repository.IRepositoryObject;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.repository.RepositoryEvent;
 import de.clusteval.api.repository.RepositoryMoveEvent;
@@ -60,29 +62,7 @@ import java.util.Map;
  * @author Christian Wiwie
  *
  */
-public abstract class DataSet extends RepositoryObject implements IDataSet {
-
-    /**
-     * This enum describes the visibility of a dataset on the website.
-     *
-     * @author Christian Wiwie
-     */
-    public enum WEBSITE_VISIBILITY {
-        /**
-         * This dataset is not visible on the website at all. It is not even
-         * listed in the list of all datasets.
-         */
-        HIDE, /**
-         * The dataset is listed under all datasets, but not selected by
-         * default.
-         */
-        SHOW_OPTIONAL,
-        /**
-         * This dataset is listed and also selected to be shown by default on
-         * the website.
-         */
-        SHOW_ALWAYS
-    }
+public abstract class DataSet extends RepositoryObject implements IDataSet, IRepositoryObject {
 
     /**
      * Every data set needs an alias, that is used to represent the data set as
@@ -770,6 +750,7 @@ public abstract class DataSet extends RepositoryObject implements IDataSet {
      */
     public abstract List<String> getIds();
 
+    @Override
     public WEBSITE_VISIBILITY getWebsiteVisibility() {
         return this.websiteVisibility;
     }

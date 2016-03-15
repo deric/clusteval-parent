@@ -16,8 +16,10 @@
  */
 package de.clusteval.api;
 
+import de.clusteval.api.data.IGoldStandardConfig;
 import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.repository.IRepositoryObject;
+import de.clusteval.api.repository.IRun;
 import java.sql.SQLException;
 import java.util.Map;
 
@@ -57,4 +59,29 @@ public interface Database {
 
     int getDataSetFormatId(final String dataSetFormatClassSimpleName) throws SQLException;
 
+    int getRunAnalysisId(final int run_id) throws SQLException;
+
+    int getRunExecutionId(final int run_id) throws SQLException;
+
+    int register(IGoldStandardConfig object, final boolean updateOnly);
+
+    int getRunId(final IRun run) throws SQLException;
+
+    int getRunResultExecutionId(int runResultId) throws SQLException;
+
+    int getRunResultFormatId(String runResultFormatSimpleName) throws SQLException;
+
+    int getRunResultId(String uniqueRunIdentifier) throws SQLException;
+
+    int getRunTypeId(String name) throws SQLException;
+
+    int getStatisticId(String statisticsName) throws SQLException;
+
+    int getDataSetTypeId(String dataSetTypeClassSimpleName) throws SQLException;
+
+    int getRepositoryId(String absPath) throws SQLException;
+
+    int getRunResultAnalysisId(int run_results_id) throws SQLException;
+
+    int getRunResultRunAnalysisId(int run_results_analysis_id) throws SQLException;
 }

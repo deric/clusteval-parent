@@ -10,10 +10,17 @@
  ***************************************************************************** */
 package de.clusteval.framework.repository.db;
 
-import de.clusteval.api.SQLConfig;
 import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.Database;
+import de.clusteval.api.SQLConfig;
+import de.clusteval.api.SQLConfig.DB_TYPE;
+import de.clusteval.api.cluster.IClustering;
+import de.clusteval.api.data.IDataConfig;
+import de.clusteval.api.data.IDataSet;
+import de.clusteval.api.data.IDataSetConfig;
+import de.clusteval.api.data.IGoldStandard;
+import de.clusteval.api.data.IGoldStandardConfig;
 import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.IRepositoryObject;
@@ -29,7 +36,6 @@ import de.clusteval.data.dataset.type.DataSetType;
 import de.clusteval.data.goldstandard.GoldStandard;
 import de.clusteval.data.goldstandard.GoldStandardConfig;
 import de.clusteval.data.statistics.DataStatistic;
-import de.clusteval.api.SQLConfig.DB_TYPE;
 import de.clusteval.program.DoubleProgramParameter;
 import de.clusteval.program.IntegerProgramParameter;
 import de.clusteval.program.Program;
@@ -625,11 +631,9 @@ public abstract class SQLCommunicator implements Database {
         return false;
     }
 
-    protected abstract int register(final GoldStandardConfig object,
-            final boolean updateOnly);
+    public abstract int register(final IGoldStandardConfig object, final boolean updateOnly);
 
-    protected abstract int register(final GoldStandard object,
-            final boolean updateOnly);
+    protected abstract int register(final IGoldStandard object, final boolean updateOnly);
 
     protected abstract int register(final DoubleProgramParameter object);
 
@@ -637,16 +641,13 @@ public abstract class SQLCommunicator implements Database {
 
     protected abstract int register(final StringProgramParameter object);
 
-    protected abstract int register(final DataSet object,
-            final boolean updateOnly);
+    protected abstract int register(final IDataSet object, final boolean updateOnly);
 
-    protected abstract int register(final DataConfig object,
-            final boolean updateOnly);
+    protected abstract int register(final IDataConfig object, final boolean updateOnly);
 
-    protected abstract int register(final DataSetConfig object,
-            final boolean updateOnly);
+    protected abstract int register(final IDataSetConfig object, final boolean updateOnly);
 
-    protected abstract int register(final Clustering object);
+    protected abstract int register(final IClustering object);
 
     protected abstract boolean unregisterRunResultFormat(
             final Class<? extends RunResultFormat> object);
@@ -696,8 +697,6 @@ public abstract class SQLCommunicator implements Database {
 
     protected abstract int unregister(final DataSetConfig object);
 
-    protected abstract int getRunId(final Run run) throws SQLException;
-
     protected abstract int getClusteringId(final String name)
             throws SQLException;
 
@@ -706,12 +705,6 @@ public abstract class SQLCommunicator implements Database {
 
     protected abstract int getClusterObjectId(final int clusterId,
             final String name) throws SQLException;
-
-    public abstract int getDataSetFormatId(
-            final String dataSetFormatClassSimpleName) throws SQLException;
-
-    public abstract int getParameterOptimizationMethodId(final String name)
-            throws SQLException;
 
     protected abstract int getParameterSetId(final int runResultParamOptId)
             throws SQLException;
@@ -724,34 +717,6 @@ public abstract class SQLCommunicator implements Database {
             throws SQLException;
 
     protected abstract int getProgramParameterTypeId(final String typeName)
-            throws SQLException;
-
-    protected abstract int getRunAnalysisId(final int runId)
-            throws SQLException;
-
-    protected abstract int getRunExecutionId(final int runId)
-            throws SQLException;
-
-    protected abstract int getRunResultExecutionId(final int runResultId)
-            throws SQLException;
-
-    protected abstract int getRunResultAnalysisId(final int runResultId)
-            throws SQLException;
-
-    protected abstract int getRunResultFormatId(
-            final String runResultFormatSimpleName) throws SQLException;
-
-    protected abstract int getRunResultId(final String uniqueRunIdentifier)
-            throws SQLException;
-
-    protected abstract int getRunResultRunAnalysisId(int runResultAnalysisId)
-            throws SQLException;
-
-    protected abstract int getRunTypeId(final String name) throws SQLException;
-
-    protected abstract int getRepositoryId(String absPath) throws SQLException;
-
-    protected abstract int getStatisticId(final String statisticsName)
             throws SQLException;
 
     /**
@@ -1050,8 +1015,6 @@ public abstract class SQLCommunicator implements Database {
     protected abstract boolean registerDataSetTypeClass(
             Class<? extends DataSetType> object);
 
-    protected abstract int getDataSetTypeId(
-            final String dataSetTypeClassSimpleName) throws SQLException;
 
     protected abstract String getTableDataSetFormats();
 

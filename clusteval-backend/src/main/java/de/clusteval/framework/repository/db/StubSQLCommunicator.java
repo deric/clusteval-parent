@@ -8,14 +8,18 @@
  * Contributors:
  *     Christian Wiwie - initial API and implementation
  ***************************************************************************** */
-/**
- *
- */
 package de.clusteval.framework.repository.db;
 
-import de.clusteval.api.SQLConfig;
 import de.clusteval.api.ClusteringEvaluation;
+import de.clusteval.api.SQLConfig;
+import de.clusteval.api.cluster.IClustering;
+import de.clusteval.api.data.IDataConfig;
+import de.clusteval.api.data.IDataSet;
+import de.clusteval.api.data.IDataSetConfig;
+import de.clusteval.api.data.IGoldStandard;
+import de.clusteval.api.data.IGoldStandardConfig;
 import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.repository.IRun;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
@@ -576,7 +580,7 @@ public class StubSQLCommunicator extends SQLCommunicator {
      * @see de.wiwie.wiutils.utils.SQLCommunicator#register(data.goldstandard.GoldStandardConfig)
      */
     @Override
-    protected int register(GoldStandardConfig object, final boolean updateOnly) {
+    public int register(IGoldStandardConfig object, final boolean updateOnly) {
         return -1;
     }
 
@@ -586,7 +590,7 @@ public class StubSQLCommunicator extends SQLCommunicator {
      * @see de.wiwie.wiutils.utils.SQLCommunicator#register(data.goldstandard.GoldStandard)
      */
     @Override
-    protected int register(GoldStandard object, final boolean updateOnly) {
+    public int register(IGoldStandard object, final boolean updateOnly) {
         return -1;
     }
 
@@ -626,7 +630,7 @@ public class StubSQLCommunicator extends SQLCommunicator {
      * @see de.wiwie.wiutils.utils.SQLCommunicator#register(data.dataset.DataSet)
      */
     @Override
-    protected int register(DataSet object, final boolean updateOnly) {
+    protected int register(IDataSet object, final boolean updateOnly) {
         return -1;
     }
 
@@ -636,7 +640,7 @@ public class StubSQLCommunicator extends SQLCommunicator {
      * @see de.wiwie.wiutils.utils.SQLCommunicator#register(data.DataConfig)
      */
     @Override
-    protected int register(DataConfig object, final boolean updateOnly) {
+    protected int register(IDataConfig object, final boolean updateOnly) {
         return -1;
     }
 
@@ -646,7 +650,7 @@ public class StubSQLCommunicator extends SQLCommunicator {
      * @see de.wiwie.wiutils.utils.SQLCommunicator#register(data.dataset.DataSetConfig)
      */
     @Override
-    protected int register(DataSetConfig object, final boolean updateOnly) {
+    protected int register(IDataSetConfig object, final boolean updateOnly) {
         return -1;
     }
 
@@ -656,8 +660,7 @@ public class StubSQLCommunicator extends SQLCommunicator {
      * @see de.wiwie.wiutils.utils.SQLCommunicator#unregisterRunResultFormat(java.lang.Class)
      */
     @Override
-    protected boolean unregisterRunResultFormat(
-            Class<? extends RunResultFormat> object) {
+    protected boolean unregisterRunResultFormat(Class<? extends RunResultFormat> object) {
         return false;
     }
 
@@ -770,7 +773,7 @@ public class StubSQLCommunicator extends SQLCommunicator {
      * @see de.wiwie.wiutils.utils.SQLCommunicator#getRunAnalysisId(int)
      */
     @Override
-    protected int getRunAnalysisId(int runId) throws SQLException {
+    public int getRunAnalysisId(int runId) throws SQLException {
         return 0;
     }
 
@@ -780,7 +783,7 @@ public class StubSQLCommunicator extends SQLCommunicator {
      * @see de.wiwie.wiutils.utils.SQLCommunicator#getRunExecutionId(int)
      */
     @Override
-    protected int getRunExecutionId(int runId) throws SQLException {
+    public int getRunExecutionId(int runId) throws SQLException {
         return 0;
     }
 
@@ -790,7 +793,7 @@ public class StubSQLCommunicator extends SQLCommunicator {
      * @see de.wiwie.wiutils.utils.SQLCommunicator#getRunResultExecutionId(int)
      */
     @Override
-    protected int getRunResultExecutionId(int runResultId) throws SQLException {
+    public int getRunResultExecutionId(int runResultId) throws SQLException {
         return 0;
     }
 
@@ -800,8 +803,7 @@ public class StubSQLCommunicator extends SQLCommunicator {
      * @see de.wiwie.wiutils.utils.SQLCommunicator#getRunResultFormatId(java.lang.String)
      */
     @Override
-    protected int getRunResultFormatId(String runResultFormatSimpleName)
-            throws SQLException {
+    public int getRunResultFormatId(String runResultFormatSimpleName) throws SQLException {
         return 0;
     }
 
@@ -811,8 +813,7 @@ public class StubSQLCommunicator extends SQLCommunicator {
      * @see de.wiwie.wiutils.utils.SQLCommunicator#getRunResultId(java.lang.String)
      */
     @Override
-    protected int getRunResultId(String uniqueRunIdentifier)
-            throws SQLException {
+    public int getRunResultId(String uniqueRunIdentifier) throws SQLException {
         return 0;
     }
 
@@ -822,7 +823,7 @@ public class StubSQLCommunicator extends SQLCommunicator {
      * @see de.wiwie.wiutils.utils.SQLCommunicator#getRunTypeId(java.lang.String)
      */
     @Override
-    protected int getRunTypeId(String name) throws SQLException {
+    public int getRunTypeId(String name) throws SQLException {
         return 0;
     }
 
@@ -832,7 +833,7 @@ public class StubSQLCommunicator extends SQLCommunicator {
      * @see de.wiwie.wiutils.utils.SQLCommunicator#getStatisticId(java.lang.String)
      */
     @Override
-    protected int getStatisticId(String statisticsName) throws SQLException {
+    public int getStatisticId(String statisticsName) throws SQLException {
         return 0;
     }
 
@@ -947,7 +948,7 @@ public class StubSQLCommunicator extends SQLCommunicator {
      * @see framework.repository.SQLCommunicator#getRunResultAnalysisId(int)
      */
     @Override
-    protected int getRunResultAnalysisId(int runResultId) throws SQLException {
+    public int getRunResultAnalysisId(int runResultId) throws SQLException {
         return 0;
     }
 
@@ -980,8 +981,7 @@ public class StubSQLCommunicator extends SQLCommunicator {
      * @see framework.repository.SQLCommunicator#getRunResultRunAnalysisId(int)
      */
     @Override
-    protected int getRunResultRunAnalysisId(int runResultAnalysisId)
-            throws SQLException {
+    public int getRunResultRunAnalysisId(int runResultAnalysisId) throws SQLException {
         return 0;
     }
 
@@ -1186,7 +1186,7 @@ public class StubSQLCommunicator extends SQLCommunicator {
      * framework.repository.SQLCommunicator#getRepositoryId(java.lang.String)
      */
     @Override
-    protected int getRepositoryId(String absPath) throws SQLException {
+    public int getRepositoryId(String absPath) throws SQLException {
         return 0;
     }
 
@@ -1230,7 +1230,7 @@ public class StubSQLCommunicator extends SQLCommunicator {
      * @see framework.repository.SQLCommunicator#getRunId(run.Run)
      */
     @Override
-    protected int getRunId(Run run) throws SQLException {
+    public int getRunId(IRun run) throws SQLException {
         return 0;
     }
 
@@ -1348,8 +1348,7 @@ public class StubSQLCommunicator extends SQLCommunicator {
      * framework.repository.SQLCommunicator#getDataSetTypeId(java.lang.String)
      */
     @Override
-    protected int getDataSetTypeId(String dataSetTypeClassSimpleName)
-            throws SQLException {
+    public int getDataSetTypeId(String dataSetTypeClassSimpleName) throws SQLException {
         return 0;
     }
 
@@ -1630,7 +1629,7 @@ public class StubSQLCommunicator extends SQLCommunicator {
      * .cluster.Clustering)
      */
     @Override
-    protected int register(Clustering object) {
+    public int register(IClustering object) {
         return -1;
     }
 
