@@ -17,20 +17,10 @@
 package de.clusteval.api.r;
 
 /**
+ * Represent result of R operation
  *
  * @author deric
  */
-public class ROperationNotSupported extends RException {
+public interface RExpr {
 
-    public ROperationNotSupported(IRengine engine, Throwable cause) {
-        super(engine, cause);
-    }
-
-    public ROperationNotSupported(IRengine engine, String message) {
-        super(engine, message);
-    }
-
-    public ROperationNotSupported(String message, Throwable cause) {
-        super(message, cause);
-    }
 }

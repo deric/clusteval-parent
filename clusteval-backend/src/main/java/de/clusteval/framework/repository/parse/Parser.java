@@ -29,6 +29,7 @@ import de.clusteval.api.exceptions.GoldStandardNotFoundException;
 import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
+import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
 import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.IRepository;
@@ -76,6 +77,7 @@ import de.clusteval.framework.repository.NoRepositoryFoundException;
 import de.clusteval.framework.repository.RepositoryController;
 import de.clusteval.framework.repository.RepositoryObject;
 import de.clusteval.framework.repository.RunResultRepository;
+import de.clusteval.program.IProgramConfig;
 import de.clusteval.program.NoOptimizableProgramParameterException;
 import de.clusteval.program.ParameterSet;
 import de.clusteval.program.Program;
@@ -99,7 +101,6 @@ import de.clusteval.run.RunAnalysisRun;
 import de.clusteval.run.RunDataAnalysisRun;
 import de.clusteval.run.RunException;
 import de.clusteval.run.result.format.RunResultFormat;
-import de.clusteval.run.result.format.UnknownRunResultFormatException;
 import de.clusteval.run.result.postprocessing.RunResultPostprocessor;
 import de.clusteval.run.result.postprocessing.RunResultPostprocessorParameters;
 import de.clusteval.run.statistics.RunDataStatistic;
@@ -459,7 +460,7 @@ class DataAnalysisRunParser extends AnalysisRunParser<DataAnalysisRun> {
         /**
          * An analysis run consists of a set of dataconfigs
          */
-        List<DataConfig> dataConfigs = new LinkedList<>();
+        List<IDataConfig> dataConfigs = new LinkedList<>();
 
         List<DataStatistic> dataStatistics = new LinkedList<>();
 
@@ -818,7 +819,7 @@ class DataSetParser extends RepositoryObjectParser<DataSet> {
 
 class ExecutionRunParser<T extends ExecutionRun> extends RunParser<T> {
 
-    protected List<ProgramConfig> programConfigs;
+    protected List<IProgramConfig> programConfigs;
     protected List<IDataConfig> dataConfigs;
     protected List<ClusteringEvaluation> qualityMeasures;
     protected List<Map<ProgramParameter<?>, String>> runParamValues;
@@ -1539,7 +1540,7 @@ class ProgramConfigParser extends RepositoryObjectParser<ProgramConfig> {
                 continue;
             }
 
-            final Map<String, String> paramValues = new HashMap<String, String>();
+            final Map<String, String> paramValues = new HashMap<>();
             paramValues.put("name", pa);
 
             ProgramParameter<?> param = ProgramParameter.parseFromConfiguration(result, pa, getProps().getSection(pa));

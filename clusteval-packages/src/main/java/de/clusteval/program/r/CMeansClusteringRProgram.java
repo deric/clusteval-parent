@@ -31,7 +31,7 @@ import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.program.Program;
 import de.clusteval.run.result.format.RunResultFormat;
-import de.clusteval.run.result.format.UnknownRunResultFormatException;
+import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.wiwie.wiutils.file.FileUtils;
 
 /**

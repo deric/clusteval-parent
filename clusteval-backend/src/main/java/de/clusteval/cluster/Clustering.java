@@ -232,6 +232,7 @@ public class Clustering extends RepositoryObject implements Iterable<Cluster>, I
      * @return A map containing all clusters together with fuzzy coefficients,
      *         in which the given item is contained.
      */
+    @Override
     public Map<Cluster, Float> getClusterForItem(ClusterItem item) {
         return this.itemToCluster.get(item);
     }
@@ -240,6 +241,7 @@ public class Clustering extends RepositoryObject implements Iterable<Cluster>, I
      * @param id The id of the cluster.
      * @return The cluster with the given id.
      */
+    @Override
     public Cluster getClusterWithId(final String id) {
         return this.clusterIdToCluster.get(id);
     }
@@ -247,6 +249,7 @@ public class Clustering extends RepositoryObject implements Iterable<Cluster>, I
     /**
      * @return A set with all clusters of this clustering.
      */
+    @Override
     public Set<Cluster> getClusters() {
         return this.clusters;
     }
@@ -254,6 +257,7 @@ public class Clustering extends RepositoryObject implements Iterable<Cluster>, I
     /**
      * @param qualitySet Set the qualities of this clustering.
      */
+    @Override
     public void setQualities(final ClusteringQualitySet qualitySet) {
         this.qualities = qualitySet;
     }
@@ -262,6 +266,7 @@ public class Clustering extends RepositoryObject implements Iterable<Cluster>, I
      * @return Returns the qualities of this clustering.
      * @see Clustering#qualities
      */
+    @Override
     public ClusteringQualitySet getQualities() {
         return this.qualities;
     }

@@ -14,11 +14,6 @@ package de.clusteval.cluster.quality;
 
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.cluster.quality.ClusteringQualityMeasureValue;
-import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
-import de.clusteval.api.r.RNotAvailableException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
-import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
-import de.clusteval.api.r.RCalculationException;
 import de.clusteval.api.r.RLibraryInferior;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
@@ -26,7 +21,6 @@ import de.clusteval.cluster.Clustering;
 import de.clusteval.data.DataConfig;
 import de.clusteval.framework.repository.RepositoryObject;
 import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
@@ -113,43 +107,11 @@ public abstract class ClusteringQualityMeasure extends RepositoryObject implemen
     }
 
     /**
-     * Gets the quality of clustering.
-     *
-     * @param clustering   the clustering
-     * @param goldStandard The expected goldstandard.
-     * @param dataConfig   the data config
-     * @return the quality of clustering
-     * @throws UnknownGoldStandardFormatException   the unknown gold standard
-     *                                              format exception
-     * @throws UnknownDataSetFormatException
-     * @throws InvalidDataSetFormatVersionException
-     * @throws IOException
-     * @throws RNotAvailableException
-     * @throws RCalculationException
-     * @throws InterruptedException
-     */
-    public abstract ClusteringQualityMeasureValue getQualityOfClustering(
-            Clustering clustering, Clustering goldStandard,
-            DataConfig dataConfig) throws UnknownGoldStandardFormatException,
-                                          UnknownDataSetFormatException, IOException,
-                                          InvalidDataSetFormatVersionException, RNotAvailableException,
-                                          RCalculationException, InterruptedException;
-
-    /**
-     * This method has to be implemented in subclasses to indiciate, whether a
-     * quality measure supports validating fuzzy clusterings.
-     *
-     * @return True, if this measure supports fuzzy clusterings, false
-     *         otherwise.
-     */
-    public abstract boolean supportsFuzzyClusterings();
-
-    /**
      * This is a helper method for cloning a list of clustering quality
      * measures.
      *
      * @param qualityMeasures The quality measures to be cloned.
-     * @return A list containining cloned objects of the given quality measures.
+     * @return A list containing cloned objects of the given quality measures.
      */
     public static List<ClusteringEvaluation> cloneQualityMeasures(
             final List<ClusteringEvaluation> qualityMeasures) {
@@ -221,7 +183,8 @@ public abstract class ClusteringQualityMeasure extends RepositoryObject implemen
         try {
             return this.getClass().getConstructor(this.getClass())
                     .newInstance(this);
-        } catch (IllegalArgumentException | SecurityException | InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+        } catch (IllegalArgumentException | SecurityException | InstantiationException |
+                IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
         this.log.warn("Cloning instance of class "
@@ -279,37 +242,4 @@ public abstract class ClusteringQualityMeasure extends RepositoryObject implemen
         return isBetterThanHelper(quality1, quality2);
     }
 
-    @Override
-    public abstract boolean isBetterThanHelper(
-            ClusteringQualityMeasureValue quality1,
-            ClusteringQualityMeasureValue quality2);
-
-    /**
-     * @return The minimal value of the range of possible values of this quality
-     *         measure.
-     */
-    public abstract double getMinimum();
-
-    /**
-     * @return The maximal value of the range of possible values of this quality
-     *         measure.
-     */
-    public abstract double getMaximum();
-
-    /**
-     * Override this method to indicate, whether the quality measure of your
-     * subclass needs a goldstandard to be able to be computed.
-     *
-     * @return True, if this clustering quality measure requires a goldstandard
-     *         to be able to assess the quality of a clustering.
-     */
-    public abstract boolean requiresGoldstandard();
-
-    /**
-     * This alias is used whenever this clustering quality measure is visually
-     * represented and a readable name is needed.
-     *
-     * @return The alias of this clustering quality measure.
-     */
-    public abstract String getAlias();
 }

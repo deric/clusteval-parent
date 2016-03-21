@@ -12,24 +12,21 @@
  */
 package de.clusteval.program.r;
 
-import de.clusteval.api.r.RNotAvailableException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.r.IRProgram;
+import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RLibraryInferior;
+import de.clusteval.api.r.RLibraryNotLoadedException;
+import de.clusteval.api.r.RLibraryRequirement;
+import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.data.DataConfig;
-import de.clusteval.data.dataset.format.DataSetFormat;
-import de.clusteval.api.r.RLibraryNotLoadedException;
-import de.clusteval.api.r.RLibraryRequirement;
-import de.clusteval.framework.repository.MyRengine;
 import de.clusteval.program.Program;
 import de.clusteval.program.ProgramConfig;
 import de.clusteval.program.ProgramParameter;
-import de.clusteval.run.result.format.RunResultFormat;
-import de.clusteval.run.result.format.UnknownRunResultFormatException;
 import de.wiwie.wiutils.utils.StringExt;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -38,7 +35,6 @@ import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
-import java.util.Set;
 import org.rosuda.REngine.REXPMismatchException;
 import org.rosuda.REngine.REngineException;
 import org.rosuda.REngine.Rserve.RserveException;
@@ -102,13 +98,13 @@ import org.rosuda.REngine.Rserve.RserveException;
  * @author Christian Wiwie
  *
  */
-public abstract class RProgram extends Program implements RLibraryInferior {
+public abstract class RProgram extends Program implements RLibraryInferior, IRProgram {
 
     /**
      * Attribute used to store an rengine instance during execution of this
      * program.
      */
-    protected MyRengine rEngine;
+    protected IRengine rEngine;
 
     /**
      * Attribute used to store the dataset content during execution of this
@@ -206,26 +202,6 @@ public abstract class RProgram extends Program implements RLibraryInferior {
         return this.getClass().getSimpleName();
     }
 
-    /**
-     * @return The format of the invocation line of this RProgram.
-     */
-    public abstract String getInvocationFormat();
-
-    /**
-     * @return A set containing dataset formats, which this r program can take
-     *         as input.
-     * @throws UnknownDataSetFormatException
-     */
-    public abstract Set<DataSetFormat> getCompatibleDataSetFormats()
-            throws UnknownDataSetFormatException;
-
-    /**
-     * @return The runresult formats, the results of this r program will be
-     *         generated in.
-     * @throws UnknownRunResultFormatException
-     */
-    public abstract RunResultFormat getRunResultFormat()
-            throws UnknownRunResultFormatException;
 
     /*
      * (non-Javadoc)
@@ -257,7 +233,7 @@ public abstract class RProgram extends Program implements RLibraryInferior {
     /**
      * @return The r engine corresponding to this rprogram.
      */
-    public MyRengine getRengine() {
+    public IRengine getRengine() {
         return this.rEngine;
     }
 
@@ -306,8 +282,7 @@ public abstract class RProgram extends Program implements RLibraryInferior {
     @SuppressWarnings("unused")
     protected void doExec(DataConfig dataConfig, ProgramConfig programConfig,
             final String[] invocationLine, Map<String, String> effectiveParams,
-            Map<String, String> internalParams) throws RserveException,
-                                                       InterruptedException {
+            Map<String, String> internalParams) throws InterruptedException, RException {
         rEngine.eval("result <- " + StringExt.paste(" ", invocationLine));
 
         // try {

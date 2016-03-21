@@ -12,6 +12,7 @@
  */
 package de.clusteval.cluster.quality;
 
+import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.cluster.quality.ClusteringQualityMeasureValue;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
@@ -22,14 +23,8 @@ import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.cluster.Clustering;
-import de.clusteval.data.DataConfig;
-import de.clusteval.framework.repository.MyRengine;
 import java.io.File;
 import java.io.IOException;
-import org.rosuda.REngine.REXPMismatchException;
-import org.rosuda.REngine.REngineException;
-import org.rosuda.REngine.Rserve.RserveException;
 
 /**
  * This type of clustering quality measure uses the R framework to calculate
@@ -67,37 +62,30 @@ public abstract class ClusteringQualityMeasureR extends ClusteringQualityMeasure
      * @param other The quality measure to clone.
      * @throws RegisterException
      */
-    public ClusteringQualityMeasureR(final ClusteringQualityMeasureR other)
-            throws RegisterException {
+    public ClusteringQualityMeasureR(final ClusteringQualityMeasureR other) throws RegisterException {
         super(other);
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * de.clusteval.cluster.quality.ClusteringQualityMeasure#getQualityOfClustering
-	 * (de.clusteval.cluster.Clustering, de.clusteval.cluster.Clustering,
-	 * de.clusteval.data.DataConfig)
+     * (non-Javadoc)
+     *
+     * @see
+     * de.clusteval.cluster.quality.ClusteringQualityMeasure#getQualityOfClustering
+     * (de.clusteval.cluster.Clustering, de.clusteval.cluster.Clustering,
+     * de.clusteval.data.DataConfig)
      */
     @Override
     public final ClusteringQualityMeasureValue getQualityOfClustering(
-            Clustering clustering, Clustering goldStandard,
-            DataConfig dataConfig) throws UnknownGoldStandardFormatException,
-                                          UnknownDataSetFormatException, IOException,
-                                          InvalidDataSetFormatVersionException, RNotAvailableException,
-                                          InterruptedException {
+            IClustering clustering, IClustering goldStandard,
+            IDataConfig dataConfig) throws UnknownGoldStandardFormatException,
+                                           UnknownDataSetFormatException, IOException,
+                                           InvalidDataSetFormatVersionException, RNotAvailableException,
+                                           InterruptedException {
         try {
             IRengine rEngine = repository.getRengineForCurrentThread();
             try {
-                try {
-                    return getQualityOfClusteringHelper(clustering,
-                            goldStandard, dataConfig, rEngine);
-                } catch (REXPMismatchException e) {
-                    // handle this type of exception as an REngineException
-                    throw new RException(rEngine, e.getMessage());
-                }
-            } catch (REngineException e) {
+                return getQualityOfClusteringHelper(clustering, goldStandard, dataConfig, rEngine);
+            } catch (RException e) {
                 this.log.warn("R-framework (" + this.getClass().getSimpleName()
                         + "): " + rEngine.getLastError());
                 ClusteringQualityMeasureValue min = ClusteringQualityMeasureValue
@@ -108,19 +96,14 @@ public abstract class ClusteringQualityMeasureR extends ClusteringQualityMeasure
                     return min;
                 }
                 return max;
+            } catch (IllegalArgumentException ex) {
+                log.error(ex.getMessage(), ex);
             } finally {
                 rEngine.clear();
             }
-        } catch (RserveException e) {
+        } catch (RException e) {
             throw new RNotAvailableException(e.getMessage());
         }
+        return null;
     }
-
-    protected abstract ClusteringQualityMeasureValue getQualityOfClusteringHelper(
-            Clustering clustering, Clustering goldStandard,
-            IDataConfig dataConfig, final MyRengine rEngine)
-            throws UnknownGoldStandardFormatException,
-                   UnknownDataSetFormatException, IOException,
-                   InvalidDataSetFormatVersionException, REngineException,
-                   IllegalArgumentException, InterruptedException;
 }

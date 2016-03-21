@@ -16,8 +16,10 @@
  */
 package de.clusteval.api.cluster;
 
+import de.clusteval.api.cluster.quality.ClusteringQualitySet;
 import de.clusteval.api.repository.IRepositoryObject;
 import java.util.Map;
+import java.util.Set;
 
 /**
  *
@@ -26,5 +28,34 @@ import java.util.Map;
 public interface IClustering extends IRepositoryObject {
 
     Map<Cluster, Float> getClusterForItem(ClusterItem item);
+
+    IClustering clone();
+
+    /**
+     * @param id The id of the cluster.
+     * @return The cluster with the given id.
+     */
+    Cluster getClusterWithId(final String id);
+
+    /**
+     * @return A set with all clusters of this clustering.
+     */
+    Set<Cluster> getClusters();
+
+    /**
+     * @param qualitySet Set the qualities of this clustering.
+     */
+    void setQualities(final ClusteringQualitySet qualitySet);
+
+    /**
+     * @return Returns the qualities of this clustering.
+     * @see Clustering#qualities
+     */
+    ClusteringQualitySet getQualities();
+
+    /**
+     * @return A set with all cluster items contained in this clustering.
+     */
+    Set<ClusterItem> getClusterItems();
 
 }

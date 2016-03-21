@@ -17,7 +17,10 @@
 package de.clusteval.api;
 
 import de.clusteval.api.data.IConversionInputToStandardConfiguration;
+import de.clusteval.api.r.IRengine;
+import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RNotAvailableException;
+import de.clusteval.api.r.ROperationNotSupported;
 import de.clusteval.api.repository.IRepositoryObject;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
 
@@ -71,4 +74,11 @@ public interface IDistanceMeasure extends IRepositoryObject {
             throws RNotAvailableException, InterruptedException;
 
     IDistanceMeasure clone();
+
+    double getDistanceHelper(double[] point1, double[] point2, final IRengine rEngine)
+            throws RException, ROperationNotSupported, InterruptedException;
+
+    double[][] getDistancesHelper(IConversionInputToStandardConfiguration config, double[][] matrix,
+            final IRengine rEngine, int firstRow, int lastRow)
+            throws RException, ROperationNotSupported, InterruptedException;
 }

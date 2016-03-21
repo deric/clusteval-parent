@@ -53,7 +53,7 @@ import de.clusteval.run.InvalidRunModeException;
 import de.clusteval.run.Run;
 import de.clusteval.run.RunAnalysisRun;
 import de.clusteval.run.RunException;
-import de.clusteval.run.result.format.UnknownRunResultFormatException;
+import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.run.statistics.RunStatistic;
 import de.clusteval.run.statistics.UnknownRunDataStatisticException;
 import de.clusteval.run.statistics.UnknownRunStatisticException;

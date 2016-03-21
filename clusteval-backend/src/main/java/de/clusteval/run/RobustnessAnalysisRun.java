@@ -72,7 +72,7 @@ import de.clusteval.run.result.ClusteringRunResult;
 import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.run.result.RunResult;
 import de.clusteval.run.result.RunResultParseException;
-import de.clusteval.run.result.format.UnknownRunResultFormatException;
+import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.run.result.postprocessing.RunResultPostprocessor;
 import de.clusteval.run.runnable.ExecutionRunRunnable;
 import de.clusteval.run.runnable.RobustnessAnalysisRunRunnable;

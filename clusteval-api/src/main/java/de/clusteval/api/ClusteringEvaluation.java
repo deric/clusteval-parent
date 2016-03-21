@@ -20,10 +20,13 @@ import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.cluster.quality.ClusteringQualityMeasureValue;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
-import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
+import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RCalculationException;
+import de.clusteval.api.r.RException;
+import de.clusteval.api.r.RNotAvailableException;
+import de.clusteval.api.r.ROperationNotSupported;
 import de.clusteval.api.repository.IRepositoryObject;
 import java.io.IOException;
 
@@ -101,5 +104,14 @@ public interface ClusteringEvaluation extends IRepositoryObject {
                                            UnknownDataSetFormatException, IOException,
                                            InvalidDataSetFormatVersionException, RNotAvailableException,
                                            RCalculationException, InterruptedException;
+
+    ClusteringQualityMeasureValue getQualityOfClusteringHelper(
+            IClustering clustering, IClustering goldStandard,
+            IDataConfig dataConfig, final IRengine rEngine)
+            throws UnknownGoldStandardFormatException,
+                   UnknownDataSetFormatException, IOException,
+                   InvalidDataSetFormatVersionException,
+                   IllegalArgumentException, InterruptedException, RException,
+                   ROperationNotSupported;
 
 }

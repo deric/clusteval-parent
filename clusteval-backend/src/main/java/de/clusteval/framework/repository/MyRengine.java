@@ -14,13 +14,13 @@ package de.clusteval.framework.repository;
 
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
+import de.clusteval.api.r.RExpr;
 import de.clusteval.api.r.RLibraryNotLoadedException;
 import de.clusteval.api.r.ROperationNotSupported;
 import de.clusteval.framework.ClustevalBackendServer;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.logging.Level;
 import org.rosuda.REngine.REXP;
 import org.rosuda.REngine.REXPMismatchException;
 import org.rosuda.REngine.REngineException;
@@ -75,7 +75,7 @@ public class MyRengine implements IRengine {
             this.log = LoggerFactory.getLogger(this.getClass());
             this.loadedLibraries = new HashSet<>();
         } catch (RserveException ex) {
-            java.util.logging.Logger.getLogger(MyRengine.class.getName()).log(Level.SEVERE, null, ex);
+            log.error(ex.getMessage(), ex);
             throw new RException(this, string);
         }
     }
@@ -87,10 +87,10 @@ public class MyRengine implements IRengine {
      * If the library could not be loaded, this method throws a
      * {@link RLibraryNotLoadedException}.
      *
-     * @param name The name of the library.
+     * @param name            The name of the library.
      * @param requiredByClass The name of the class that requires the library.
      * @return True, if the library was loaded successfully or was loaded
-     * before.
+     *         before.
      * @throws RLibraryNotLoadedException
      * @throws InterruptedException
      */
@@ -109,8 +109,8 @@ public class MyRengine implements IRengine {
             this.loadedLibraries.add(name);
             this.log.debug("R library '" + name + "' loaded successfully");
             return true;
-        } catch (RserveException e) {
-            this.log.debug("R library '" + name + "' loading failed");
+        } catch (RException e) {
+            this.log.error("R library '" + name + "' loading failed");
             throw new RLibraryNotLoadedException(requiredByClass, name);
         }
     }
@@ -125,11 +125,7 @@ public class MyRengine implements IRengine {
         if (interrupted) {
             throw new InterruptedException();
         }
-        try {
-            this.eval("rm(list=ls(all=TRUE))");
-        } catch (RserveException ex) {
-            throw new RException(this, ex.getMessage(), ex);
-        }
+        this.eval("rm(list=ls(all=TRUE))");
     }
 
     /**
@@ -137,9 +133,9 @@ public class MyRengine implements IRengine {
      *
      * @param arg0 The variable name in R.
      * @param arg1 A two-dimensional double array which is assigned to the new
-     * variable.
+     *             variable.
      * @throws de.clusteval.api.r.RException
-
+     *
      * @throws InterruptedException
      */
     @Override
@@ -167,24 +163,32 @@ public class MyRengine implements IRengine {
      *
      * @param arg0 The variable name in R.
      * @param arg1 A two-dimensional integer array which is assigned to the new
-     * variable.
-     * @throws REngineException
+     *             variable.
+     * @throws RException
      * @throws InterruptedException
      */
-    public void assign(String arg0, int[][] arg1) throws REngineException, InterruptedException {
-        if (interrupted) {
-            throw new InterruptedException();
+    @Override
+    public void assign(String arg0, int[][] arg1) throws RException, InterruptedException {
+        try {
+            if (interrupted) {
+                throw new InterruptedException();
+            }
+            int x = arg1.length;
+            int y = x > 0 ? arg1[0].length : 0;
+            int[] oneDim = new int[x * y];
+            for (int i = 0; i < x; i++) {
+                System.arraycopy(arg1[i], 0, oneDim, i * y, y);
+            }
+            this.eval(arg0 + " <- c()");
+            this.connection.assign(arg0, oneDim);
+            this.eval(arg0 + " <- matrix(" + arg0 + ",nrow=" + x + ",ncol=" + y
+                    + ",byrow=T)");
+        } catch (RserveException ex) {
+            log.error(ex.getMessage(), ex);
+        } catch (REngineException ex) {
+            log.error(ex.getMessage(), ex);
+            throw new RException(this, ex);
         }
-        int x = arg1.length;
-        int y = x > 0 ? arg1[0].length : 0;
-        int[] oneDim = new int[x * y];
-        for (int i = 0; i < x; i++) {
-            System.arraycopy(arg1[i], 0, oneDim, i * y, y);
-        }
-        this.eval(arg0 + " <- c()");
-        this.connection.assign(arg0, oneDim);
-        this.eval(arg0 + " <- matrix(" + arg0 + ",nrow=" + x + ",ncol=" + y
-                + ",byrow=T)");
     }
 
     /**
@@ -192,32 +196,22 @@ public class MyRengine implements IRengine {
      *
      * @param cmd
      * @return
-     * @throws org.rosuda.REngine.Rserve.RserveException
+     * @throws de.clusteval.api.r.RException
      * @throws java.lang.InterruptedException
      * @see org.rosuda.REngine.Rserve.RConnection#eval(java.lang.String)
      */
-    public REXP eval(String cmd) throws RserveException, InterruptedException {
+    @Override
+    public RExpr eval(String cmd) throws RException, InterruptedException {
         if (interrupted) {
             throw new InterruptedException();
         }
         try {
             this.connection.assign(".tmp.", cmd);
-            REXP r = this.connection
-                    .eval("try(eval(parse(text=.tmp.)),silent=TRUE)");
-            if (r == null) {
-                throw new RserveException(this.connection, "Evaluation error");
-            } else if (r.inherits("try-error")) {
-                try {
-                    throw new RserveException(this.connection, r.asString()
-                            .replace("\n", " - "));
-                } catch (REXPMismatchException e) {
-                    throw new RserveException(this.connection,
-                            "Evaluation error");
-                }
-            }
-            return r;
+            REXP r = this.connection.eval("try(eval(parse(text=.tmp.)),silent=TRUE)");
+            RExpr res = new RosExpr(r, this);
+            return res;
         } catch (REngineException e) {
-            throw new RserveException(this.connection, e.getMessage());
+            throw new RException(this, e.getMessage());
         } catch (NullPointerException e) {
             System.out.format("%s - %s%n", Thread.currentThread(), this);
             throw e;
@@ -230,6 +224,7 @@ public class MyRengine implements IRengine {
      *
      * @throws InterruptedException
      */
+    @Override
     public void printLastError() throws InterruptedException {
         if (this.interrupted) {
             throw new InterruptedException();
@@ -237,23 +232,34 @@ public class MyRengine implements IRengine {
         log.error("R error: " + this.connection.getLastError());
     }
 
-    public void assign(String arg0, int[] arg1) throws REngineException,
-                                                       InterruptedException {
+    @Override
+    public void assign(String arg0, int[] arg1) throws RException, InterruptedException {
         if (interrupted) {
             throw new InterruptedException();
         }
 
-        this.connection.assign(arg0, arg1);
+        try {
+            this.connection.assign(arg0, arg1);
+        } catch (REngineException ex) {
+            log.error(ex.getMessage(), ex);
+            throw new RException(this, ex);
+        }
     }
 
-    public void assign(String arg0, double[] arg1) throws REngineException,
-                                                          InterruptedException {
+    @Override
+    public void assign(String arg0, double[] arg1) throws RException, InterruptedException {
         if (interrupted) {
             throw new InterruptedException();
         }
-        this.connection.assign(arg0, arg1);
+        try {
+            this.connection.assign(arg0, arg1);
+        } catch (REngineException ex) {
+            log.error(ex.getMessage(), ex);
+            throw new RException(this, ex);
+        }
     }
 
+    @Override
     public String getLastError() throws InterruptedException {
         if (this.interrupted) {
             throw new InterruptedException();
@@ -282,7 +288,8 @@ public class MyRengine implements IRengine {
         return true;
     }
 
-    protected boolean shutdown() {
+    @Override
+    public boolean shutdown() {
         try {
             this.connection.shutdown();
             return true;
@@ -291,11 +298,15 @@ public class MyRengine implements IRengine {
         }
     }
 
-    public void assign(String arg0, String[] arg1) throws REngineException,
-                                                          InterruptedException {
+    public void assign(String arg0, String[] arg1) throws RException, InterruptedException {
         if (interrupted) {
             throw new InterruptedException();
         }
-        this.connection.assign(arg0, arg1);
+        try {
+            this.connection.assign(arg0, arg1);
+        } catch (REngineException ex) {
+            log.error(ex.getMessage(), ex);
+            throw new RException(this, ex);
+        }
     }
 }

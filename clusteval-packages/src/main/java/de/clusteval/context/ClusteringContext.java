@@ -20,7 +20,7 @@ import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.run.result.format.RunResultFormat;
-import de.clusteval.run.result.format.UnknownRunResultFormatException;
+import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 
 /**
  * This is the default context of the framework, concerning clustering tasks.

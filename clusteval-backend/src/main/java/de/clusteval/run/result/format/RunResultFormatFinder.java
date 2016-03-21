@@ -12,6 +12,7 @@ package de.clusteval.run.result.format;
 
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.run.IRunResultFormatParser;
 import de.clusteval.utils.JARFinder;
 import de.clusteval.utils.RecursiveSubDirectoryIterator;
 import java.io.File;
@@ -157,7 +158,7 @@ class RunResultFormatURLClassLoader extends URLClassLoader {
 
             } else if (name.endsWith("RunResultFormatParser")) {
                 @SuppressWarnings("unchecked")
-                Class<? extends RunResultFormatParser> runResultFormatParser = (Class<? extends RunResultFormatParser>) result;
+                Class<? extends IRunResultFormatParser> runResultFormatParser = (Class<? extends IRunResultFormatParser>) result;
 
                 this.parent.getRepository().registerRunResultFormatParser(runResultFormatParser);
 

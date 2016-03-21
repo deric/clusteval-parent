@@ -78,7 +78,7 @@ import de.clusteval.run.RunException;
 import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.run.result.RunResult;
 import de.clusteval.run.result.RunResultParseException;
-import de.clusteval.run.result.format.UnknownRunResultFormatException;
+import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.run.runnable.AnalysisIterationRunnable;
 import de.clusteval.run.runnable.DataAnalysisIterationRunnable;
 import de.clusteval.run.runnable.DataAnalysisRunRunnable;

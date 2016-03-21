@@ -30,10 +30,10 @@ public interface IRengine {
      * If the library could not be loaded, this method throws a
      * {@link RLibraryNotLoadedException}.
      *
-     * @param name The name of the library.
+     * @param name            The name of the library.
      * @param requiredByClass The name of the class that requires the library.
      * @return True, if the library was loaded successfully or was loaded
-     * before.
+     *         before.
      * @throws RLibraryNotLoadedException
      * @throws InterruptedException
      */
@@ -54,11 +54,28 @@ public interface IRengine {
      *
      * @param arg0 The variable name in R.
      * @param arg1 A two-dimensional double array which is assigned to the new
-     * variable.
+     *             variable.
      * @throws de.clusteval.api.r.RException
      * @throws InterruptedException
      */
     void assign(String arg0, double[][] arg1) throws RException, InterruptedException;
+
+    /**
+     * This method allows to assign a two-dimensional integer array.
+     *
+     * @param arg0 The variable name in R.
+     * @param arg1 A two-dimensional integer array which is assigned to the new
+     *             variable.
+     * @throws de.clusteval.api.r.RException
+     * @throws InterruptedException
+     */
+    void assign(String arg0, int[][] arg1) throws RException, InterruptedException;
+
+    void assign(String arg0, int[] arg1) throws RException, InterruptedException;
+
+    void assign(String arg0, double[] arg1) throws RException, InterruptedException;
+
+    RExpr eval(String cmd) throws RException, InterruptedException;
 
     /**
      * TODO: use this instead of printStackTrace() This method logs the last
@@ -69,5 +86,14 @@ public interface IRengine {
     void printLastError() throws InterruptedException;
 
     boolean interrupt();
+
+    String getLastError() throws InterruptedException;
+
+    /**
+     * Shutdown backend engine
+     *
+     * @return
+     */
+    boolean shutdown();
 
 }

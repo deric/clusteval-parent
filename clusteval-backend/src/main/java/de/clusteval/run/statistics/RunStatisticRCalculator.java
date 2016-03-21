@@ -49,7 +49,7 @@ import de.clusteval.run.InvalidRunModeException;
 import de.clusteval.run.RunException;
 import de.clusteval.run.result.AnalysisRunResultException;
 import de.clusteval.run.result.RunResultParseException;
-import de.clusteval.run.result.format.UnknownRunResultFormatException;
+import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.utils.InvalidConfigurationFileException;
 import java.io.File;
 import java.io.IOException;
