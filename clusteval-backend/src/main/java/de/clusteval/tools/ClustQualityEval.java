@@ -15,19 +15,29 @@ package de.clusteval.tools;
 import ch.qos.logback.classic.Level;
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.cluster.quality.ClusteringQualitySet;
+import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.api.exceptions.DatabaseConnectException;
+import de.clusteval.api.exceptions.FormatConversionException;
 import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigurationException;
 import de.clusteval.api.exceptions.GoldStandardNotFoundException;
+import de.clusteval.api.exceptions.IncompatibleContextException;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.NoDataSetException;
-import de.clusteval.api.r.RNotAvailableException;
+import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
+import de.clusteval.api.exceptions.RunResultParseException;
+import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
+import de.clusteval.api.exceptions.UnknownParameterType;
+import de.clusteval.api.exceptions.UnknownProgramParameterException;
+import de.clusteval.api.exceptions.UnknownProgramTypeException;
+import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
 import de.clusteval.api.r.InvalidRepositoryException;
+import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.IRepository;
@@ -39,8 +49,6 @@ import de.clusteval.cluster.paramOptimization.UnknownParameterOptimizationMethod
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
 import de.clusteval.cluster.quality.ClusteringQualityMeasureParameters;
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
-import de.clusteval.api.exceptions.IncompatibleContextException;
-import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
@@ -59,20 +67,13 @@ import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
 import de.clusteval.framework.repository.parse.Parser;
-import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.program.ProgramConfig;
-import de.clusteval.api.exceptions.UnknownParameterType;
-import de.clusteval.api.exceptions.UnknownProgramParameterException;
-import de.clusteval.api.exceptions.UnknownProgramTypeException;
 import de.clusteval.run.InvalidRunModeException;
 import de.clusteval.run.ParameterOptimizationRun;
 import de.clusteval.run.RunException;
 import de.clusteval.run.result.ParameterOptimizationResult;
-import de.clusteval.api.exceptions.RunResultParseException;
-import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.run.statistics.UnknownRunDataStatisticException;
 import de.clusteval.run.statistics.UnknownRunStatisticException;
-import de.clusteval.api.exceptions.FormatConversionException;
 import de.clusteval.utils.InvalidConfigurationFileException;
 import de.wiwie.wiutils.file.FileUtils;
 import de.wiwie.wiutils.utils.ProgressPrinter;
@@ -191,7 +192,7 @@ public class ClustQualityEval {
                             .getDatasetConfig().getDataSet()
                             .getMinorName())));
             // get dataset in standard format
-            final DataSet ds = dsIn.preprocessAndConvertTo(run.getContext(),
+            final IDataSet ds = dsIn.preprocessAndConvertTo(run.getContext(),
                     run.getContext().getStandardInputFormat(), dataConfig
                     .getDatasetConfig()
                     .getConversionInputToStandardConfiguration(),
@@ -316,7 +317,7 @@ public class ClustQualityEval {
                                                 pc.toString(), dc.toString())),
                                 OUTPUT_MODE.STREAM) {
 
-                            protected List<ClusteringQualityMeasure> measures;
+                            protected List<ClusteringEvaluation> measures;
 
                             /*
                              * (non-Javadoc)
@@ -368,11 +369,11 @@ public class ClustQualityEval {
                                     // file
                                     // header
                                     if (qualsMap.keySet().iterator().hasNext()) {
-                                        Set<ClusteringQualityMeasure> requiredMeasures = qualsMap
+                                        Set<ClusteringEvaluation> requiredMeasures = qualsMap
                                                 .get(qualsMap.keySet().iterator().next()).keySet();
                                         requiredMeasures.removeAll(measures);
 
-                                        for (ClusteringQualityMeasure m : requiredMeasures) {
+                                        for (ClusteringEvaluation m : requiredMeasures) {
                                             sb.append(outSplit);
                                             sb.append(m.toString());
                                         }

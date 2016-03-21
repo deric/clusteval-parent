@@ -10,19 +10,28 @@
  ***************************************************************************** */
 package de.clusteval.run.statistics;
 
+import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigurationException;
 import de.clusteval.api.exceptions.GoldStandardNotFoundException;
 import de.clusteval.api.exceptions.InternalAttributeException;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
-import de.clusteval.api.r.RNotAvailableException;
+import de.clusteval.api.exceptions.NoDataSetException;
+import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
+import de.clusteval.api.exceptions.RunResultParseException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
+import de.clusteval.api.exceptions.UnknownProgramParameterException;
+import de.clusteval.api.exceptions.UnknownProgramTypeException;
+import de.clusteval.api.exceptions.UnknownRunResultFormatException;
+import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RException;
+import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.r.UnknownRProgramException;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.cluster.paramOptimization.InvalidOptimizationParameterException;
@@ -32,24 +41,16 @@ import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
-import de.clusteval.api.exceptions.DataSetNotFoundException;
-import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.data.dataset.type.UnknownDataSetTypeException;
 import de.clusteval.data.statistics.IncompatibleDataConfigDataStatisticException;
 import de.clusteval.data.statistics.RunStatisticCalculateException;
 import de.clusteval.data.statistics.UnknownDataStatisticException;
-import de.clusteval.framework.repository.MyRengine;
 import de.clusteval.framework.repository.NoRepositoryFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
-import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
-import de.clusteval.api.exceptions.UnknownProgramParameterException;
-import de.clusteval.api.exceptions.UnknownProgramTypeException;
 import de.clusteval.run.InvalidRunModeException;
 import de.clusteval.run.RunException;
 import de.clusteval.run.result.AnalysisRunResultException;
-import de.clusteval.api.exceptions.RunResultParseException;
-import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.utils.InvalidConfigurationFileException;
 import java.io.File;
 import java.io.IOException;
@@ -63,9 +64,7 @@ import org.rosuda.REngine.Rserve.RserveException;
  * @param <T>
  *
  */
-public abstract class RunStatisticRCalculator<T extends RunStatistic>
-        extends
-        RunStatisticCalculator<T> {
+public abstract class RunStatisticRCalculator<T extends RunStatistic> extends RunStatisticCalculator<T> {
 
     /**
      * @param repository
@@ -102,7 +101,7 @@ public abstract class RunStatisticRCalculator<T extends RunStatistic>
     protected final T calculateResult() throws RunStatisticCalculateException {
         try {
             try {
-                MyRengine rEngine = repository.getRengineForCurrentThread();
+                IRengine rEngine = repository.getRengineForCurrentThread();
                 try {
                     try {
                         return calculateResultHelper(rEngine);
@@ -126,7 +125,7 @@ public abstract class RunStatisticRCalculator<T extends RunStatistic>
         }
     }
 
-    protected abstract T calculateResultHelper(final MyRengine rEngine)
+    protected abstract T calculateResultHelper(final IRengine rEngine)
             throws IncompatibleDataConfigDataStatisticException,
                    UnknownGoldStandardFormatException, UnknownDataSetFormatException,
                    IllegalArgumentException, IOException,

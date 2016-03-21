@@ -278,8 +278,7 @@ public class RunSchedulerThread extends ClustevalThread implements IScheduler {
      * @return True, if successful. That means, a run result with the given id
      *         must exist and the run has not been scheduled already.
      */
-    public boolean scheduleResume(String clientId,
-            String uniqueRunResultIdentifier) {
+    public boolean scheduleResume(String clientId, String uniqueRunResultIdentifier) {
         final Triple<String, String, Boolean> newTriple = Triple.getTriple(
                 clientId, uniqueRunResultIdentifier, true);
         if (!new File(FileUtils.buildPath(
@@ -345,8 +344,7 @@ public class RunSchedulerThread extends ClustevalThread implements IScheduler {
         return result;
     }
 
-    protected boolean terminate(final String clientId, final String runId,
-            final boolean isResume) {
+    protected boolean terminate(final String clientId, final String runId, final boolean isResume) {
         final Triple<String, String, Boolean> triple = Triple.getTriple(
                 clientId, runId, isResume);
         /*

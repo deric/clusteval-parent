@@ -16,6 +16,7 @@
  */
 package de.clusteval.api.run;
 
+import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.Future;
 
@@ -51,5 +52,56 @@ public interface IScheduler {
     void updateThreadPoolSize(final int numberThreads);
 
     Future<?> registerIterationRunnable(IterationRunnable iterationRunnable);
+
+    /**
+     * This method is invoked by
+     * {@link ClustevalBackendServer#performRun(String, String)} and schedules a
+     * run. As soon as ressources are available this run is then performed in an
+     * asynchronous way in its own thread.
+     *
+     * @param clientId
+     *                 The id of the client that wants to schedule this run.
+     * @param runId
+     *                 The id of the run that should be scheduled
+     * @return True, if successful. That means, a run with the given id must
+     *         exist and the run has not been scheduled already.
+     */
+    boolean schedule(final String clientId, final String runId);
+
+    /**
+     * This method is invoked by
+     * {@link ClustevalBackendServer#resumeRun(String, String)} and schedules a
+     * resume of a run. As soon as ressources are available this resume is then
+     * performed in an asynchronous way in its own thread.
+     *
+     * @param clientId
+     *                                  The id of the client that wants to schedule this run.
+     * @param uniqueRunResultIdentifier
+     *                                  The unique identifier of the run result that should be
+     *                                  resumed.
+     * @return True, if successful. That means, a run result with the given id
+     *         must exist and the run has not been scheduled already.
+     */
+    boolean scheduleResume(String clientId, String uniqueRunResultIdentifier);
+
+    /**
+     * This method is invoked by
+     * {@link ClustevalBackendServer#terminateRun(String, String)} and
+     * terminates a run that is currently being executed.
+     *
+     * @param clientId
+     *                 The id of the client that wants to terminate this run.
+     * @param runId
+     *                 The id of the run that should be terminated
+     * @return True, if successful. That means, a run with the given id must
+     *         exist and it is currently being executed.
+     */
+    boolean terminate(final String clientId, final String runId);
+
+    /**
+     * @return A collection containing names of all enqueued runs and run
+     *         resumes.
+     */
+    public Queue<String> getQueue();
 
 }
