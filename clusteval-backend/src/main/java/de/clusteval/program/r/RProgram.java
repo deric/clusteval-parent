@@ -12,6 +12,7 @@
  */
 package de.clusteval.program.r;
 
+import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.r.IRProgram;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
@@ -24,9 +25,10 @@ import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.data.DataConfig;
+import de.clusteval.api.program.IProgramConfig;
+import de.clusteval.api.program.IProgramParameter;
 import de.clusteval.program.Program;
 import de.clusteval.program.ProgramConfig;
-import de.clusteval.program.ProgramParameter;
 import de.wiwie.wiutils.utils.StringExt;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -139,8 +141,7 @@ public abstract class RProgram extends Program implements RLibraryInferior, IRPr
                 RProgram.class, "de.clusteval.program.r." + rProgram);
 
         try {
-            Constructor<? extends RProgram> constr = c
-                    .getConstructor(IRepository.class);
+            Constructor<? extends RProgram> constr = c.getConstructor(IRepository.class);
             RProgram program = constr.newInstance(repository);
             return program;
         } catch (InstantiationException | IllegalAccessException | NoSuchMethodException |
@@ -183,8 +184,7 @@ public abstract class RProgram extends Program implements RLibraryInferior, IRPr
     @Override
     public final RProgram clone() {
         try {
-            return this.getClass().getConstructor(this.getClass())
-                    .newInstance(this);
+            return this.getClass().getConstructor(this.getClass()).newInstance(this);
         } catch (IllegalArgumentException | SecurityException | InstantiationException |
                 IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
@@ -211,10 +211,10 @@ public abstract class RProgram extends Program implements RLibraryInferior, IRPr
      * java.util.Map)
      */
     @Override
-    public final Process exec(final DataConfig dataConfig,
-            final ProgramConfig programConfig, final String[] invocationLine,
+    public final Process exec(final IDataConfig dataConfig,
+            final IProgramConfig programConfig, final String[] invocationLine,
             final Map<String, String> effectiveParams,
-            final Map<String, String> internalParams) throws REngineException {
+            final Map<String, String> internalParams) throws RException {
         try {
             // 06.07.2014: execute r command in a thread.
             // then this thread can check for interrupt signal and forward it to
@@ -222,8 +222,7 @@ public abstract class RProgram extends Program implements RLibraryInferior, IRPr
             // rengine.
 
             RProgramThread t = new RProgramThread(Thread.currentThread(), this,
-                    dataConfig, programConfig, invocationLine, effectiveParams,
-                    internalParams);
+                    dataConfig, programConfig, invocationLine, effectiveParams, internalParams);
             t.start();
             return new RProcess(t);
         } finally {
@@ -340,14 +339,14 @@ public abstract class RProgram extends Program implements RLibraryInferior, IRPr
 
         StringBuilder sb = new StringBuilder();
         // TODO: changed 31.01.2014
-        for (ProgramParameter<?> p : programConfig.getParams()) {
+        for (IProgramParameter<?> p : programConfig.getParams()) {
             sb.append(p.getName());
             sb.append(",");
         }
         sb.deleteCharAt(sb.length() - 1);
         sb.append("\tClustering\n");
 
-        for (ProgramParameter<?> p : programConfig.getParams()) {
+        for (IProgramParameter<?> p : programConfig.getParams()) {
             sb.append(effectiveParams.get(p.getName()));
             sb.append(",");
         }

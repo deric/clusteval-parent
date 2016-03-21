@@ -14,6 +14,9 @@ package de.clusteval.cluster.paramOptimization;
 
 import de.clusteval.api.cluster.quality.ClusteringQualitySet;
 import de.clusteval.api.exceptions.InternalAttributeException;
+import de.clusteval.api.exceptions.RunResultParseException;
+import de.clusteval.api.program.IProgramParameter;
+import de.clusteval.api.program.ParameterSet;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.IRepositoryObject;
 import de.clusteval.api.repository.RegisterException;
@@ -22,14 +25,12 @@ import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.format.DataSetFormat;
 import de.clusteval.framework.repository.RepositoryObject;
 import de.clusteval.framework.repository.parse.Parser;
-import de.clusteval.program.ParameterSet;
 import de.clusteval.program.ProgramConfig;
 import de.clusteval.program.ProgramParameter;
 import de.clusteval.run.ParameterOptimizationRun;
 import de.clusteval.run.Run;
 import de.clusteval.run.result.ClusteringRunResult;
 import de.clusteval.run.result.ParameterOptimizationResult;
-import de.clusteval.api.exceptions.RunResultParseException;
 import de.clusteval.run.runnable.ExecutionRunRunnable;
 import java.io.File;
 import java.lang.reflect.Constructor;
@@ -173,7 +174,7 @@ public abstract class ParameterOptimizationMethod extends RepositoryObject imple
      * The parameters of the program encapsulated by the program configuration
      * that are to be optimized.
      */
-    protected List<ProgramParameter<?>> params;
+    protected List<IProgramParameter<?>> params;
 
     /**
      * During a parameter optimization run for each calculated clustering
@@ -222,7 +223,7 @@ public abstract class ParameterOptimizationMethod extends RepositoryObject imple
             final boolean register, final long changeDate, final File absPath,
             final ParameterOptimizationRun run,
             final ProgramConfig programConfig, final DataConfig dataConfig,
-            final List<ProgramParameter<?>> params,
+            final List<IProgramParameter<?>> params,
             final ClusteringQualityMeasure optimizationCriterion,
             final int totalIterationCount, final boolean isResume)
             throws RegisterException {
@@ -310,7 +311,7 @@ public abstract class ParameterOptimizationMethod extends RepositoryObject imple
      * @return This list holds the program parameters that are to be optimized
      *         by the parameter optimization run.
      */
-    public List<ProgramParameter<?>> getOptimizationParameter() {
+    public List<IProgramParameter<?>> getOptimizationParameter() {
         return this.params;
     }
 
@@ -774,7 +775,7 @@ public abstract class ParameterOptimizationMethod extends RepositoryObject imple
      * @return The optimization parameter, that should be used as the axis
      *         variable to plot the results.
      */
-    public ProgramParameter<?> getPlotDensityParameter() {
+    public IProgramParameter<?> getPlotDensityParameter() {
         return this.params.get(0);
     }
 

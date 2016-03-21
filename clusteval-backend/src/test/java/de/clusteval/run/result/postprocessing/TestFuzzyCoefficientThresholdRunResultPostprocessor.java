@@ -57,7 +57,7 @@ import de.clusteval.framework.repository.config.RepositoryConfigNotFoundExceptio
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
 import de.clusteval.framework.repository.parse.Parser;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
-import de.clusteval.program.ParameterSet;
+import de.clusteval.api.program.ParameterSet;
 import de.clusteval.api.exceptions.UnknownParameterType;
 import de.clusteval.api.exceptions.UnknownProgramParameterException;
 import de.clusteval.api.exceptions.UnknownProgramTypeException;

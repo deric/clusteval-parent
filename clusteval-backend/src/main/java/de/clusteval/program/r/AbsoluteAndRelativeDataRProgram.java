@@ -12,21 +12,20 @@
  */
 package de.clusteval.program.r;
 
-import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.r.RException;
+import de.clusteval.api.r.RLibraryNotLoadedException;
+import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.AbsoluteDataSet;
 import de.clusteval.data.dataset.DataMatrix;
 import de.clusteval.data.dataset.RelativeDataSet;
-import de.clusteval.api.r.RLibraryNotLoadedException;
 import de.clusteval.program.ProgramConfig;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
 import java.io.File;
 import java.util.Map;
 import org.rosuda.REngine.REngineException;
-import org.rosuda.REngine.Rserve.RserveException;
 
 /**
  * This class represents R programs, which are compatible to relative and
@@ -60,11 +59,11 @@ public abstract class AbsoluteAndRelativeDataRProgram extends RProgram {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * de.clusteval.program.r.RProgram#extractDataSetContent(de.clusteval.data
-	 * .DataConfig)
+     * (non-Javadoc)
+     *
+     * @see
+     * de.clusteval.program.r.RProgram#extractDataSetContent(de.clusteval.data
+     * .DataConfig)
      */
     @Override
     protected Object extractDataSetContent(DataConfig dataConfig) {
@@ -91,12 +90,12 @@ public abstract class AbsoluteAndRelativeDataRProgram extends RProgram {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * de.clusteval.program.r.RProgram#beforeExec(de.clusteval.data.DataConfig,
-	 * de.clusteval.program.ProgramConfig, java.lang.String[], java.util.Map,
-	 * java.util.Map)
+     * (non-Javadoc)
+     *
+     * @see
+     * de.clusteval.program.r.RProgram#beforeExec(de.clusteval.data.DataConfig,
+     * de.clusteval.program.ProgramConfig, java.lang.String[], java.util.Map,
+     * java.util.Map)
      */
     @Override
     protected void beforeExec(DataConfig dataConfig,
@@ -120,8 +119,7 @@ public abstract class AbsoluteAndRelativeDataRProgram extends RProgram {
         }
     }
 
-    protected void convertDistancesToAppropriateDatastructure()
-            throws RserveException, InterruptedException {
+    protected void convertDistancesToAppropriateDatastructure() throws RException, InterruptedException {
         rEngine.eval("x <- as.dist(x)");
     }
 }

@@ -12,6 +12,9 @@
  */
 package de.clusteval.program;
 
+import de.clusteval.api.program.IProgramConfig;
+import de.clusteval.api.program.IProgram;
+import de.clusteval.api.program.IProgramParameter;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.exceptions.UnknownProgramParameterException;
 import de.clusteval.api.repository.IRepository;
@@ -23,7 +26,6 @@ import de.clusteval.api.run.IRunResultFormat;
 import de.clusteval.data.dataset.format.DataSetFormat;
 import de.clusteval.framework.repository.RepositoryObject;
 import de.clusteval.run.ParameterOptimizationRun;
-import de.clusteval.run.result.format.RunResultFormat;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -214,7 +216,7 @@ public class ProgramConfig extends RepositoryObject implements IProgramConfig {
             this.program.register();
             this.program.addListener(this);
 
-            for (DataSetFormat dsFormat : this.compatibleDataSetFormats) {
+            for (IDataSetFormat dsFormat : this.compatibleDataSetFormats) {
                 dsFormat.register();
                 dsFormat.addListener(this);
             }
@@ -282,6 +284,7 @@ public class ProgramConfig extends RepositoryObject implements IProgramConfig {
         return this.maxExecutionTimeMinutes;
     }
 
+    @Override
     public void setMaxExecutionTimeMinutes(final int maxExecutionTimeMinutes) {
         this.maxExecutionTimeMinutes = maxExecutionTimeMinutes;
     }
@@ -357,10 +360,10 @@ public class ProgramConfig extends RepositoryObject implements IProgramConfig {
      * @throws UnknownProgramParameterException
      * @return The program parameter with the appropriate name
      */
-    public ProgramParameter<?> getParamWithId(final String id)
+    public IProgramParameter<?> getParamWithId(final String id)
             throws UnknownProgramParameterException {
-        for (ProgramParameter<?> param : this.params) {
-            if (param.name.equals(id)) {
+        for (IProgramParameter<?> param : this.params) {
+            if (param.getName().equals(id)) {
                 return param;
             }
         }
@@ -382,7 +385,7 @@ public class ProgramConfig extends RepositoryObject implements IProgramConfig {
      * @return The compatible dataset input formats of the encapsulated program.
      * @see #compatibleDataSetFormats
      */
-    public List<DataSetFormat> getCompatibleDataSetFormats() {
+    public List<IDataSetFormat> getCompatibleDataSetFormats() {
         return compatibleDataSetFormats;
     }
 
@@ -391,7 +394,7 @@ public class ProgramConfig extends RepositoryObject implements IProgramConfig {
      * @return The output format of the encapsulated program.
      * @see #outputFormat
      */
-    public RunResultFormat getOutputFormat() {
+    public IRunResultFormat getOutputFormat() {
         return this.outputFormat;
     }
 
@@ -425,7 +428,7 @@ public class ProgramConfig extends RepositoryObject implements IProgramConfig {
             if (event.getOld().equals(this)) {
                 super.notify(event);
 
-                for (ProgramParameter<?> param : params) {
+                for (IProgramParameter<?> param : params) {
                     param.unregister();
                 }
             } else if (event.getOld().equals(program)) {
@@ -442,7 +445,7 @@ public class ProgramConfig extends RepositoryObject implements IProgramConfig {
             if (event.getRemovedObject().equals(this)) {
                 super.notify(event);
 
-                for (ProgramParameter<?> param : params) {
+                for (IProgramParameter<?> param : params) {
                     param.unregister();
                 }
             } else if (event.getRemovedObject().equals(program)) {
@@ -485,11 +488,11 @@ public class ProgramConfig extends RepositoryObject implements IProgramConfig {
      * @param name the name
      * @return the parameter for name
      */
-    public ProgramParameter<?> getParameterForName(final String name) {
-        ProgramParameter<?> pa = null;
+    public IProgramParameter<?> getParameterForName(final String name) {
+        IProgramParameter<?> pa = null;
         for (int i = 0; i < this.getParams().size(); i++) {
             pa = this.getParams().get(i);
-            if (pa.toString().equals(name) || pa.name.equals(name)) {
+            if (pa.toString().equals(name) || pa.getName().equals(name)) {
                 return pa;
             }
         }

@@ -30,7 +30,7 @@ import de.clusteval.cluster.paramOptimization.ParameterSetAlreadyEvaluatedExcept
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.format.IncompatibleDataSetFormatException;
 import de.clusteval.framework.threading.RunSchedulerThread;
-import de.clusteval.program.ParameterSet;
+import de.clusteval.api.program.ParameterSet;
 import de.clusteval.program.ProgramConfig;
 import de.clusteval.program.ProgramParameter;
 import de.clusteval.run.ParameterOptimizationRun;

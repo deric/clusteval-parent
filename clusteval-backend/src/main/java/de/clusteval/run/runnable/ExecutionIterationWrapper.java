@@ -8,7 +8,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import de.clusteval.program.ParameterSet;
+import de.clusteval.api.program.ParameterSet;
 import de.clusteval.program.ProgramConfig;
 import de.clusteval.run.result.ClusteringRunResult;
 

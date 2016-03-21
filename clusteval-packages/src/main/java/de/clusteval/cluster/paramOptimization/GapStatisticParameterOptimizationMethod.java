@@ -23,7 +23,7 @@ import de.clusteval.api.r.RLibraryRequirement;
 import de.clusteval.framework.repository.MyRengine;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
-import de.clusteval.program.ParameterSet;
+import de.clusteval.api.program.ParameterSet;
 import de.clusteval.program.ProgramConfig;
 import de.clusteval.program.ProgramParameter;
 import de.clusteval.run.ParameterOptimizationRun;

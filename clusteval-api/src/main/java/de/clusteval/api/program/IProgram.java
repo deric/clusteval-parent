@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.clusteval.program;
+package de.clusteval.api.program;
 
 import de.clusteval.api.IContext;
 import de.clusteval.api.data.IDataConfig;
@@ -32,8 +32,6 @@ import java.util.Map;
  * @author deric
  */
 public interface IProgram extends IRepositoryObject {
-
-    IProgram clone();
 
     /**
      * Gets the absolute path of the executable.

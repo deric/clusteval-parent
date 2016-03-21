@@ -20,7 +20,7 @@ import de.clusteval.cluster.quality.ClusteringQualityMeasureParameters;
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
 import de.clusteval.framework.repository.NoRepositoryFoundException;
 import de.clusteval.framework.repository.RepositoryController;
-import de.clusteval.program.ParameterSet;
+import de.clusteval.api.program.ParameterSet;
 import de.wiwie.wiutils.utils.Pair;
 import de.wiwie.wiutils.utils.parse.TextFileParser;
 import de.wiwie.wiutils.utils.text.TextFileMapParser;

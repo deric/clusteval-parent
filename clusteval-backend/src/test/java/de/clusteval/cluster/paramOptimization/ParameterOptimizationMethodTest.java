@@ -37,7 +37,7 @@ import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
-import de.clusteval.program.ParameterSet;
+import de.clusteval.api.program.ParameterSet;
 import de.clusteval.program.ProgramConfig;
 import de.clusteval.run.Run;
 import de.clusteval.api.exceptions.RunResultParseException;

@@ -10,10 +10,11 @@
  ***************************************************************************** */
 package de.clusteval.program;
 
+import de.clusteval.api.program.IProgramConfig;
+import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.context.Context;
-import de.clusteval.data.DataConfig;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -91,7 +92,7 @@ public class StandaloneProgram extends Program {
             throws RegisterException {
         super(program);
         this.alias = program.alias;
-        this.envVars = new HashMap<String, String>(program.envVars);
+        this.envVars = new HashMap<>(program.envVars);
     }
 
     /*
@@ -118,8 +119,8 @@ public class StandaloneProgram extends Program {
      */
     @SuppressWarnings("unused")
     @Override
-    public Process exec(final DataConfig dataConfig,
-            final ProgramConfig programConfig, final String[] invocationLine,
+    public Process exec(final IDataConfig dataConfig,
+            final IProgramConfig programConfig, final String[] invocationLine,
             Map<String, String> effectiveParams,
             Map<String, String> internalParams) throws IOException {
         String[] envVarsArray = new String[this.envVars.size() + 1];

@@ -3,9 +3,15 @@
  */
 package de.clusteval.program.r;
 
+import de.clusteval.api.r.RException;
+import de.clusteval.api.r.RLibraryNotLoadedException;
+import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.data.DataConfig;
 import de.clusteval.program.ProgramConfig;
+import java.io.IOException;
 import java.util.Map;
+import org.rosuda.REngine.REXPMismatchException;
+import org.rosuda.REngine.REngineException;
 import org.rosuda.REngine.Rserve.RserveException;
 
 /**
@@ -52,36 +58,30 @@ public class RProgramThread extends Thread {
 
     @Override
     public void run() {
-        // we initialize the rEngine here and take the one from the thread pool
-        // thread
+        this.rProgram.rEngine = this.rProgram.getRepository().getRengine(this.poolThread);
         try {
-            this.rProgram.rEngine = this.rProgram.getRepository().getRengine(
-                    this.poolThread);
-            try {
-                this.rProgram.beforeExec(dataConfig, programConfig,
-                        invocationLine, effectiveParams, internalParams);
-                if (this.isInterrupted()) {
-                    throw new InterruptedException();
-                }
-                this.rProgram.doExec(dataConfig, programConfig, invocationLine,
-                        effectiveParams, internalParams);
-                if (this.isInterrupted()) {
-                    throw new InterruptedException();
-                }
-                this.rProgram.afterExec(dataConfig, programConfig,
-                        invocationLine, effectiveParams, internalParams);
-            } catch (Exception e) {
-                ex = e;
+            this.rProgram.beforeExec(dataConfig, programConfig,
+                    invocationLine, effectiveParams, internalParams);
+            if (this.isInterrupted()) {
+                throw new InterruptedException();
             }
-        } catch (RserveException e) {
-            e.printStackTrace();
+            this.rProgram.doExec(dataConfig, programConfig, invocationLine,
+                    effectiveParams, internalParams);
+            if (this.isInterrupted()) {
+                throw new InterruptedException();
+            }
+            this.rProgram.afterExec(dataConfig, programConfig,
+                    invocationLine, effectiveParams, internalParams);
+        } catch (REngineException | RException | RLibraryNotLoadedException |
+                RNotAvailableException | InterruptedException | REXPMismatchException | IOException e) {
+            ex = e;
         }
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Thread#interrupt()
+     * (non-Javadoc)
+     *
+     * @see java.lang.Thread#interrupt()
      */
     @Override
     public void interrupt() {

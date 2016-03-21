@@ -10,8 +10,9 @@
  ***************************************************************************** */
 package de.clusteval.program;
 
-import de.clusteval.api.exceptions.UnknownParameterType;
+import de.clusteval.api.program.IProgramParameter;
 import de.clusteval.api.exceptions.InternalAttributeException;
+import de.clusteval.api.exceptions.UnknownParameterType;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.data.DataConfig;
@@ -73,11 +74,11 @@ public abstract class ProgramParameter<T> extends RepositoryObject implements IP
      *                          The optimization parameters to clone.
      * @return The list of cloned optimization parameters.
      */
-    public static List<ProgramParameter<?>> cloneParameterList(
-            List<ProgramParameter<?>> programParameters) {
-        List<ProgramParameter<?>> result = new ArrayList<>();
+    public static List<IProgramParameter<?>> cloneParameterList(
+            List<IProgramParameter<?>> programParameters) {
+        List<IProgramParameter<?>> result = new ArrayList<>();
 
-        for (ProgramParameter<?> param : programParameters) {
+        for (IProgramParameter<?> param : programParameters) {
             result.add(param.clone());
         }
 
@@ -224,40 +225,6 @@ public abstract class ProgramParameter<T> extends RepositoryObject implements IP
     public String getMinValue() {
         return this.minValue;
     }
-
-    /**
-     * This method evaluates the string representation of the minimal value
-     * {@link #minValue} to a value corresponding to the dynamic type of this
-     * object, e.g. in case this parameter is a double parameter, it is
-     * evaluated to a double value.
-     *
-     * <p>
-     * The method requires a data and program configuration, since the string
-     * representation can contain a placeholder of a internal variable which is
-     * replaced by looking it up during runtime. $(meanSimilarity) for example
-     * is evaluated by looking into the data and calculating the mean similarity
-     * of the input.
-     *
-     * @param dataConfig
-     *                      The data configuration which might be needed to evaluate
-     *                      certain placeholder variables.
-     * @param programConfig
-     *                      The program configuration which might be needed to evaluate
-     *                      certain placeholder variables.
-     * @return The evaluated value of the {@link #minValue} variable.
-     * @throws InternalAttributeException
-     */
-    public abstract T evaluateMinValue(final DataConfig dataConfig,
-            final ProgramConfig programConfig)
-            throws InternalAttributeException;
-
-    /**
-     * This method checks, whether the {@link #minValue} variable has been set
-     * to a correct not-null value.
-     *
-     * @return True, if the variable has been set correctly, false otherwise.
-     */
-    public abstract boolean isMinValueSet();
 
     /**
      * Sets the maximal value.

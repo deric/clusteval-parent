@@ -84,11 +84,10 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
      *                       The list of dataset formats to clone.
      * @return The cloned list of dataset formats.
      */
-    public static List<DataSetFormat> cloneDataSetFormats(
-            final List<DataSetFormat> dataSetFormats) {
-        List<DataSetFormat> result = new ArrayList<>();
+    public static List<IDataSetFormat> cloneDataSetFormats(final List<IDataSetFormat> dataSetFormats) {
+        List<IDataSetFormat> result = new ArrayList<>();
 
-        for (DataSetFormat dataSetFormat : dataSetFormats) {
+        for (IDataSetFormat dataSetFormat : dataSetFormats) {
             result.add(dataSetFormat.clone());
         }
 

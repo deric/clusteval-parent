@@ -13,6 +13,8 @@
  */
 package de.clusteval.program;
 
+import de.clusteval.api.program.IProgramConfig;
+import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.exceptions.InternalAttributeException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
@@ -146,8 +148,8 @@ public class StringProgramParameter extends ProgramParameter<String> {
      * @see program.ProgramParameter#evaluateMinValue()
      */
     @Override
-    public String evaluateMinValue(final DataConfig dataConfig,
-            final ProgramConfig programConfig)
+    public String evaluateMinValue(final IDataConfig dataConfig,
+            final IProgramConfig programConfig)
             throws InternalAttributeException {
 
         /*

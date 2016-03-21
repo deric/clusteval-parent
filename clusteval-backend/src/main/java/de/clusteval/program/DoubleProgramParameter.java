@@ -10,15 +10,14 @@
  *     Christian Wiwie - initial API and implementation
  *****************************************************************************
  */
-/**
- *
- */
 package de.clusteval.program;
 
+import de.clusteval.api.program.IProgramConfig;
+import de.clusteval.api.data.IDataConfig;
+import de.clusteval.api.exceptions.InternalAttributeException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.data.DataConfig;
-import de.clusteval.api.exceptions.InternalAttributeException;
 import javax.script.ScriptException;
 
 /**
@@ -133,7 +132,7 @@ public class DoubleProgramParameter extends ProgramParameter<Double> {
 	 * @see program.ProgramParameter#evaluateMinValue()
      */
     @Override
-    public Double evaluateMinValue(final DataConfig dataConfig, final ProgramConfig programConfig)
+    public Double evaluateMinValue(final IDataConfig dataConfig, final IProgramConfig programConfig)
             throws InternalAttributeException {
 
         /*

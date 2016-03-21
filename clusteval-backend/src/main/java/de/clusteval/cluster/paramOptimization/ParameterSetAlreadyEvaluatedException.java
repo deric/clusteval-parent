@@ -3,7 +3,7 @@
  */
 package de.clusteval.cluster.paramOptimization;
 
-import de.clusteval.program.ParameterSet;
+import de.clusteval.api.program.ParameterSet;
 
 /**
  * @author Christian Wiwie

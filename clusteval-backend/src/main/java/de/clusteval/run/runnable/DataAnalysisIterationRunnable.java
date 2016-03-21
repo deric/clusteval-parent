@@ -36,6 +36,7 @@ public class DataAnalysisIterationRunnable extends
      * de.clusteval.run.runnable.AnalysisIterationRunnable#beforeStatisticCalculate
      * ()
      */
+    @Override
     protected void beforeStatisticCalculate() {
         this.log.info("Run " + this.getRun() + " - (" + this.getDataConfig()
                 + ") Analysing " + getStatistic().getIdentifier());

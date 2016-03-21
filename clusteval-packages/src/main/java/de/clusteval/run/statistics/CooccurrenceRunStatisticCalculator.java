@@ -24,7 +24,7 @@ import de.clusteval.data.statistics.RunStatisticCalculateException;
 import de.clusteval.framework.repository.MyRengine;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
-import de.clusteval.program.ParameterSet;
+import de.clusteval.api.program.ParameterSet;
 import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.run.result.RunResult;
 import de.wiwie.wiutils.file.FileUtils;

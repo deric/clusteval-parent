@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.clusteval.program;
+package de.clusteval.api.program;
 
 import de.clusteval.api.repository.IRepositoryObject;
 import java.util.List;
@@ -29,7 +29,7 @@ public interface IProgramConfig extends IRepositoryObject {
 
     /**
      * @return True, if the encapsulated program requires normalized input data,
-     * false otherwise.
+     *         false otherwise.
      * @see #expectsNormalizedDataSet
      */
     boolean expectsNormalizedDataSet();
@@ -44,5 +44,30 @@ public interface IProgramConfig extends IRepositoryObject {
      * @see #optimizableParameters
      */
     List<IProgramParameter<?>> getOptimizableParams();
+
+    /**
+     * This method returns the invocation line format for non
+     * parameter-optimization runs.
+     *
+     * @param withoutGoldStandard This boolean indicates, whether this method
+     *                            returns the invocation format for the case with- or without goldstandard.
+     *
+     * @return The invocation line format
+     */
+    String getInvocationFormat(boolean withoutGoldStandard);
+
+    /**
+     *
+     * @return The list of parameters of the encapsulated program.
+     * @see #params
+     */
+    List<IProgramParameter<?>> getParams();
+
+    /**
+     *
+     * @return The encapsulated program.
+     * @see #program
+     */
+    IProgram getProgram();
 
 }

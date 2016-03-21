@@ -30,7 +30,7 @@ import de.clusteval.api.r.RLibraryNotLoadedException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.ISupervisorThread;
-import de.clusteval.program.IProgramConfig;
+import de.clusteval.api.program.IProgramConfig;
 import java.io.File;
 import java.net.URL;
 import java.net.URLClassLoader;

@@ -10,7 +10,7 @@
  *     Christian Wiwie - initial API and implementation
  *****************************************************************************
  */
-package de.clusteval.program;
+package de.clusteval.api.program;
 
 import java.util.HashMap;
 

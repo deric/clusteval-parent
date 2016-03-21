@@ -10,12 +10,12 @@
  ***************************************************************************** */
 package de.clusteval.program.r;
 
+import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.data.dataset.format.DataSetFormat;
+import de.clusteval.api.program.IProgramParameter;
 import de.clusteval.program.Program;
 import de.clusteval.program.ProgramConfig;
-import de.clusteval.program.ProgramParameter;
 import de.clusteval.run.result.format.RunResultFormat;
 import java.io.File;
 import java.util.List;
@@ -65,9 +65,9 @@ public class RProgramConfig extends ProgramConfig {
     public RProgramConfig(IRepository repository, final boolean register,
             long changeDate, File absPath, Program program,
             RunResultFormat outputFormat,
-            List<DataSetFormat> compatibleDataSetFormats,
-            List<ProgramParameter<?>> params,
-            List<ProgramParameter<?>> optimizableParameters,
+            List<IDataSetFormat> compatibleDataSetFormats,
+            List<IProgramParameter<?>> params,
+            List<IProgramParameter<?>> optimizableParameters,
             boolean expectsNormalizedDataSet, int maxExecutionTimeMinutes)
             throws RegisterException {
         super(
