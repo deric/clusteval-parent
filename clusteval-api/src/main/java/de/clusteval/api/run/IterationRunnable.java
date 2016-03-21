@@ -16,7 +16,7 @@
  */
 package de.clusteval.api.run;
 
-import de.clusteval.api.exceptions.RNotAvailableException;
+import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.r.RLibraryNotLoadedException;
 import de.clusteval.api.repository.IRepository;
 import java.io.IOException;

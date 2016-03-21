@@ -17,8 +17,8 @@
 package de.clusteval.api.data;
 
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
-import de.clusteval.api.exceptions.RNotAvailableException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.repository.IRepositoryObject;
 import de.clusteval.api.repository.RegisterException;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
@@ -105,7 +105,7 @@ public interface IDataSetFormat extends IRepositoryObject {
      *                              file.
      * @return True, if the copy operation was successful.
      */
-    public boolean copyDataSetToFolder(final IDataSet dataSet, final File copyFolderDestination, final boolean overwrite);
+    boolean copyDataSetToFolder(final IDataSet dataSet, final File copyFolderDestination, final boolean overwrite);
 
     /**
      * This method copies the given dataset to the given target file, assuming
@@ -120,7 +120,7 @@ public interface IDataSetFormat extends IRepositoryObject {
      *                        file.
      * @return True, if the copy operation was successful.
      */
-    public boolean moveDataSetTo(final IDataSet dataSet, final File moveDestination, final boolean overwrite);
+    boolean moveDataSetTo(final IDataSet dataSet, final File moveDestination, final boolean overwrite);
 
     /**
      * @return The version number of the dataset format.
@@ -137,4 +137,8 @@ public interface IDataSetFormat extends IRepositoryObject {
      * @return Whether this dataset is normalized.
      */
     boolean getNormalized();
+
+    IDataSet convertToThisFormat(IDataSet dataSet, IDataSetFormat dataSetFormat, IConversionConfiguration config)
+            throws IOException, InvalidDataSetFormatVersionException,
+                   RegisterException, UnknownDataSetFormatException;
 }

@@ -13,7 +13,7 @@
  */
 package de.clusteval.data.dataset.format;
 
-import de.clusteval.api.data.ConversionConfiguration;
+import de.clusteval.api.data.IConversionConfiguration;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -93,7 +93,7 @@ public class SimMatrixDataSetFormatParser extends DataSetFormatParser {
 	@SuppressWarnings("unused")
 	@Override
 	protected DataSet convertToThisFormat(DataSet dataSet,
-			DataSetFormat dataSetFormat, ConversionConfiguration config)
+			DataSetFormat dataSetFormat, IConversionConfiguration config)
 			throws IOException, InvalidDataSetFormatVersionException,
 			RegisterException {
 		return null;

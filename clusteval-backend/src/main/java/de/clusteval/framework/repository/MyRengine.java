@@ -14,11 +14,13 @@ package de.clusteval.framework.repository;
 
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
-import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.api.r.RLibraryNotLoadedException;
+import de.clusteval.api.r.ROperationNotSupported;
+import de.clusteval.framework.ClustevalBackendServer;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Level;
 import org.rosuda.REngine.REXP;
 import org.rosuda.REngine.REXPMismatchException;
 import org.rosuda.REngine.REngineException;
@@ -52,25 +54,30 @@ public class MyRengine implements IRengine {
 
     /**
      * @param string The parameter string.
-     * @throws RserveException
+     * @throws de.clusteval.api.r.RException
+     * @throws de.clusteval.api.r.ROperationNotSupported
      */
-    public MyRengine(String string) throws RserveException {
+    public MyRengine(String string) throws RException, ROperationNotSupported {
         super();
 
-        this.connection = new RConnection(ClustevalBackendServer
-                .getBackendServerConfiguration().getRserveHost(),
-                ClustevalBackendServer.getBackendServerConfiguration()
-                .getRservePort());
         try {
-            this.pid = this.connection.eval("Sys.getpid()").asInteger();
-        } catch (REXPMismatchException e) {
-            e.printStackTrace();
-            // should not happen
+            this.connection = new RConnection(ClustevalBackendServer
+                    .getBackendServerConfiguration().getRserveHost(),
+                    ClustevalBackendServer.getBackendServerConfiguration()
+                    .getRservePort());
+            try {
+                this.pid = this.connection.eval("Sys.getpid()").asInteger();
+            } catch (REXPMismatchException e) {
+                throw new ROperationNotSupported(e.getMessage(), e);
+            }
+            // set buffer size to 100MB
+            // this.connection.setSendBufferSize(1024l * 1024 * 1024 * 100);
+            this.log = LoggerFactory.getLogger(this.getClass());
+            this.loadedLibraries = new HashSet<>();
+        } catch (RserveException ex) {
+            java.util.logging.Logger.getLogger(MyRengine.class.getName()).log(Level.SEVERE, null, ex);
+            throw new RException(this, string);
         }
-        // set buffer size to 100MB
-        // this.connection.setSendBufferSize(1024l * 1024 * 1024 * 100);
-        this.log = LoggerFactory.getLogger(this.getClass());
-        this.loadedLibraries = new HashSet<>();
     }
 
     /**
@@ -164,8 +171,7 @@ public class MyRengine implements IRengine {
      * @throws REngineException
      * @throws InterruptedException
      */
-    public void assign(String arg0, int[][] arg1) throws REngineException,
-                                                         InterruptedException {
+    public void assign(String arg0, int[][] arg1) throws REngineException, InterruptedException {
         if (interrupted) {
             throw new InterruptedException();
         }

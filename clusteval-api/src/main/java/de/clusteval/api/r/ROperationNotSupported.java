@@ -14,22 +14,22 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.clusteval.api.data;
+package de.clusteval.api.r;
 
-import de.clusteval.api.IDistanceMeasure;
-import java.util.List;
+import de.clusteval.api.exceptions.ClustEvalException;
 
 /**
  *
  * @author deric
  */
-public interface IConversionInputToStandardConfiguration extends IConversionConfiguration {
+public class ROperationNotSupported extends ClustEvalException {
 
-    IConversionInputToStandardConfiguration clone();
+    public ROperationNotSupported(String message) {
+        super(message);
+    }
 
-    List<IDataPreprocessor> getPreprocessorsBeforeDistance();
+    public ROperationNotSupported(String message, Throwable cause) {
+        super(message, cause);
+    }
 
-    IDistanceMeasure getDistanceMeasureAbsoluteToRelative();
-
-    List<IDataPreprocessor> getPreprocessorsAfterDistance();
 }

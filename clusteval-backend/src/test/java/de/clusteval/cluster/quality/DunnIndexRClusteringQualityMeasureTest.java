@@ -16,7 +16,7 @@
 package de.clusteval.cluster.quality;
 
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
-import de.clusteval.api.exceptions.RNotAvailableException;
+import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;

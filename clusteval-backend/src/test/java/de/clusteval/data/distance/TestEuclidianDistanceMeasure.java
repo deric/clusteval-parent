@@ -6,7 +6,7 @@ package de.clusteval.data.distance;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
 import de.clusteval.utils.AbstractClustEvalTest;
-import de.clusteval.api.exceptions.RNotAvailableException;
+import de.clusteval.api.r.RNotAvailableException;
 import de.wiwie.wiutils.utils.SimilarityMatrix.NUMBER_PRECISION;
 import java.util.ArrayList;
 import java.util.Arrays;

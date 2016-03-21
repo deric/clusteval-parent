@@ -10,14 +10,13 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset.format;
 
-import de.clusteval.api.data.ConversionConfiguration;
 import de.clusteval.api.data.IConversionStandardToInputConfiguration;
 
 /**
  * @author Christian Wiwie
  *
  */
-public class ConversionStandardToInputConfiguration extends ConversionConfiguration implements IConversionStandardToInputConfiguration {
+public class ConversionStandardToInputConfiguration implements IConversionStandardToInputConfiguration {
 
     public ConversionStandardToInputConfiguration() {
         super();

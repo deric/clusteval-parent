@@ -17,10 +17,6 @@ package de.clusteval.api.data;
  * @author Christian Wiwie
  *
  */
-public abstract class ConversionConfiguration {
-
-    public ConversionConfiguration() {
-        super();
-    }
+public interface IConversionConfiguration {
 
 }

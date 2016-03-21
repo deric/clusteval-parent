@@ -13,16 +13,17 @@
 package de.clusteval.data.dataset;
 
 import de.clusteval.api.IContext;
+import de.clusteval.api.data.IConversionConfiguration;
 import de.clusteval.api.data.IConversionInputToStandardConfiguration;
-import de.clusteval.api.data.IConversionStandardToInputConfiguration;
 import de.clusteval.api.data.IDataPreprocessor;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.data.IDataSetType;
 import de.clusteval.api.data.WEBSITE_VISIBILITY;
+import de.clusteval.api.exceptions.FormatConversionException;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
-import de.clusteval.api.exceptions.RNotAvailableException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.IRepositoryObject;
 import de.clusteval.api.repository.RegisterException;
@@ -32,12 +33,10 @@ import de.clusteval.api.repository.RepositoryRemoveEvent;
 import de.clusteval.api.repository.RepositoryReplaceEvent;
 import de.clusteval.context.Context;
 import de.clusteval.data.dataset.format.AbsoluteDataSetFormat;
-import de.clusteval.data.dataset.format.ConversionStandardToInputConfiguration;
 import de.clusteval.data.dataset.format.DataSetFormatParser;
 import de.clusteval.data.dataset.format.RelativeDataSetFormat;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.framework.repository.RepositoryObject;
-import de.clusteval.api.exceptions.FormatConversionException;
 import de.clusteval.utils.NamedDoubleAttribute;
 import de.clusteval.utils.NamedIntegerAttribute;
 import de.wiwie.wiutils.utils.SimilarityMatrix.NUMBER_PRECISION;
@@ -414,10 +413,10 @@ public abstract class DataSet extends RepositoryObject implements IDataSet, IRep
      * @throws RNotAvailableException
      * @throws InterruptedException
      */
-    public DataSet preprocessAndConvertTo(final Context context,
+    public IDataSet preprocessAndConvertTo(final Context context,
             final IDataSetFormat targetFormat,
             final IConversionInputToStandardConfiguration configInputToStandard,
-            final IConversionStandardToInputConfiguration configStandardToInput)
+            final IConversionConfiguration configStandardToInput)
             throws FormatConversionException, IOException,
                    InvalidDataSetFormatVersionException, RegisterException,
                    RNotAvailableException, InterruptedException {
@@ -546,7 +545,7 @@ public abstract class DataSet extends RepositoryObject implements IDataSet, IRep
      */
     public IDataSet convertStandardToDirectly(final IContext context,
             final IDataSetFormat targetFormat,
-            final ConversionStandardToInputConfiguration configStandardToInput)
+            final IConversionConfiguration configStandardToInput)
             throws IOException, InvalidDataSetFormatVersionException,
                    RegisterException, UnknownDataSetFormatException,
                    FormatConversionException {
@@ -579,8 +578,7 @@ public abstract class DataSet extends RepositoryObject implements IDataSet, IRep
                         "No conversion from relative to absolute dataset format possible.");
             }
         } else {
-            result = targetFormat.convertToThisFormat(this, targetFormat,
-                    configStandardToInput);
+            result = targetFormat.convertToThisFormat(this, targetFormat, configStandardToInput);
         }
         result.setStandard(this);
         return result;

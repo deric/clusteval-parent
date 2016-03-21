@@ -17,7 +17,7 @@
 package de.clusteval.api;
 
 import de.clusteval.api.data.IConversionInputToStandardConfiguration;
-import de.clusteval.api.exceptions.RNotAvailableException;
+import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.repository.IRepositoryObject;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
 

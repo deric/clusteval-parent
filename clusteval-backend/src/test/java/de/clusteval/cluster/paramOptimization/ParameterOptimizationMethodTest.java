@@ -44,7 +44,7 @@ import de.clusteval.run.result.RunResultParseException;
 import de.clusteval.utils.AbstractClustEvalTest;
 import de.clusteval.api.exceptions.FormatConversionException;
 import de.clusteval.api.exceptions.InternalAttributeException;
-import de.clusteval.api.exceptions.RNotAvailableException;
+import de.clusteval.api.r.RNotAvailableException;
 import de.wiwie.wiutils.utils.SimilarityMatrix.NUMBER_PRECISION;
 import java.io.File;
 import java.io.IOException;

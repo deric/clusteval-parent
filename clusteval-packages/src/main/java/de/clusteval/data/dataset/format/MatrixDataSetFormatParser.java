@@ -13,7 +13,7 @@
  */
 package de.clusteval.data.dataset.format;
 
-import de.clusteval.api.data.ConversionConfiguration;
+import de.clusteval.api.data.IConversionConfiguration;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import java.io.BufferedWriter;
@@ -36,7 +36,7 @@ import de.clusteval.data.dataset.DataSet.WEBSITE_VISIBILITY;
 import de.clusteval.data.distance.DistanceMeasure;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.FormatVersion;
-import de.clusteval.api.exceptions.RNotAvailableException;
+import de.clusteval.api.r.RNotAvailableException;
 
 /**
  * @author Christian Wiwie
@@ -138,7 +138,7 @@ public class MatrixDataSetFormatParser extends DataSetFormatParser {
 	@SuppressWarnings("unused")
 	@Override
 	protected DataSet convertToThisFormat(DataSet dataSet,
-			DataSetFormat dataSetFormat, ConversionConfiguration config)
+			DataSetFormat dataSetFormat, IConversionConfiguration config)
 			throws InvalidDataSetFormatVersionException {
 		throw new InvalidDataSetFormatVersionException(
 				"Cannot convert to this format");

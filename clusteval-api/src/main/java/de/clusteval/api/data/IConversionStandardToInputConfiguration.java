@@ -20,6 +20,6 @@ package de.clusteval.api.data;
  *
  * @author deric
  */
-public interface IConversionStandardToInputConfiguration {
+public interface IConversionStandardToInputConfiguration extends IConversionConfiguration {
 
 }

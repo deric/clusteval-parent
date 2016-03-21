@@ -15,11 +15,11 @@ package de.clusteval.cluster.quality;
 import de.clusteval.api.cluster.quality.ClusteringQualityMeasureValue;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
-import de.clusteval.api.exceptions.RNotAvailableException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
+import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.cluster.Clustering;
@@ -122,6 +122,5 @@ public abstract class ClusteringQualityMeasureR extends ClusteringQualityMeasure
             throws UnknownGoldStandardFormatException,
                    UnknownDataSetFormatException, IOException,
                    InvalidDataSetFormatVersionException, REngineException,
-                   IllegalArgumentException, REXPMismatchException,
-                   InterruptedException;
+                   IllegalArgumentException, InterruptedException;
 }

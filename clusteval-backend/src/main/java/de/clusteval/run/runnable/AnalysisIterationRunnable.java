@@ -4,7 +4,7 @@
 package de.clusteval.run.runnable;
 
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
-import de.clusteval.api.exceptions.RNotAvailableException;
+import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.run.IterationRunnable;

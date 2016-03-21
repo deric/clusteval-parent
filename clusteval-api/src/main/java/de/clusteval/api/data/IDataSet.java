@@ -19,8 +19,8 @@ package de.clusteval.api.data;
 import de.clusteval.api.IContext;
 import de.clusteval.api.exceptions.FormatConversionException;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
-import de.clusteval.api.exceptions.RNotAvailableException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.repository.IRepositoryObject;
 import de.clusteval.api.repository.RegisterException;
 import java.io.IOException;
@@ -174,7 +174,7 @@ public interface IDataSet extends IRepositoryObject {
      */
     public IDataSet convertStandardToDirectly(final IContext context,
             final IDataSetFormat targetFormat,
-            final IConversionStandardToInputConfiguration configStandardToInput)
+            final IConversionConfiguration configStandardToInput)
             throws IOException, InvalidDataSetFormatVersionException,
                    RegisterException, UnknownDataSetFormatException,
                    FormatConversionException;

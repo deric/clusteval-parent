@@ -11,11 +11,9 @@
 package de.clusteval.data.dataset.format;
 
 import de.clusteval.api.IDistanceMeasure;
-import de.clusteval.api.data.ConversionConfiguration;
 import de.clusteval.api.data.IConversionInputToStandardConfiguration;
 import de.clusteval.api.data.IDataPreprocessor;
 import de.clusteval.data.distance.DistanceMeasure;
-import de.clusteval.data.preprocessing.DataPreprocessor;
 import de.wiwie.wiutils.utils.SimilarityMatrix.NUMBER_PRECISION;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,10 +22,9 @@ import java.util.List;
  * @author Christian Wiwie
  *
  */
-public class ConversionInputToStandardConfiguration extends ConversionConfiguration implements IConversionInputToStandardConfiguration {
+public class ConversionInputToStandardConfiguration implements IConversionInputToStandardConfiguration {
 
-    protected static List<IDataPreprocessor> clonePreprocessors(
-            List<DataPreprocessor> preprocessors) {
+    protected static List<IDataPreprocessor> clonePreprocessors(List<IDataPreprocessor> preprocessors) {
         List<IDataPreprocessor> result = new ArrayList<>();
 
         for (IDataPreprocessor proc : preprocessors) {
@@ -68,11 +65,9 @@ public class ConversionInputToStandardConfiguration extends ConversionConfigurat
     /**
      * The copy constructor for this class.
      *
-     * @param other
-     *              The object to clone.
+     * @param other The object to clone.
      */
-    public ConversionInputToStandardConfiguration(
-            final ConversionInputToStandardConfiguration other) {
+    public ConversionInputToStandardConfiguration(final ConversionInputToStandardConfiguration other) {
         super();
 
         this.similarityPrecision = other.similarityPrecision;

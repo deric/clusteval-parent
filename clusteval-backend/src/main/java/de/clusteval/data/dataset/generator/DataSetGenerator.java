@@ -12,6 +12,7 @@
  */
 package de.clusteval.data.dataset.generator;
 
+import de.clusteval.api.data.WEBSITE_VISIBILITY;
 import de.clusteval.api.exceptions.RepositoryObjectDumpException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownDataSetGeneratorException;
@@ -23,7 +24,6 @@ import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.AbsoluteDataSet;
 import de.clusteval.data.dataset.AbstractDataSetProvider;
 import de.clusteval.data.dataset.DataSet;
-import de.clusteval.data.dataset.DataSet.WEBSITE_VISIBILITY;
 import de.clusteval.data.dataset.format.AbsoluteDataSetFormat;
 import de.clusteval.data.dataset.format.DataSetFormat;
 import de.clusteval.data.dataset.type.DataSetType;
@@ -231,7 +231,7 @@ public abstract class DataSetGenerator extends AbstractDataSetProvider implement
                     this.getFolderName(), this.getFileName()));
 
             dataSet = writeCoordsToFile(dataSetFile);
-        } catch (Exception e) {
+        } catch (IOException | UnknownDataSetFormatException | RegisterException | UnknownDataSetTypeException e) {
             throw new DataSetGenerationException("The dataset could not be generated!");
         }
 
@@ -353,20 +353,11 @@ public abstract class DataSetGenerator extends AbstractDataSetProvider implement
                     .newInstance(repository, false, System.currentTimeMillis(), new File(dataSetGenerator));
             return generator;
 
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
+        } catch (InstantiationException | IllegalAccessException | IllegalArgumentException |
+                SecurityException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         } catch (NullPointerException e) {
 
-        } catch (IllegalArgumentException e1) {
-            e1.printStackTrace();
-        } catch (SecurityException e1) {
-            e1.printStackTrace();
-        } catch (InvocationTargetException e1) {
-            e1.printStackTrace();
-        } catch (NoSuchMethodException e1) {
-            e1.printStackTrace();
         }
         throw new UnknownDataSetGeneratorException("\"" + dataSetGenerator + "\" is not a known dataset generator.");
     }
@@ -382,29 +373,30 @@ public abstract class DataSetGenerator extends AbstractDataSetProvider implement
      */
     protected DataSet writeCoordsToFile(final File dataSetFile)
             throws IOException, UnknownDataSetFormatException, RegisterException, UnknownDataSetTypeException {
-        // dataset file
-        BufferedWriter writer = new BufferedWriter(new FileWriter(dataSetFile));
         // writer header
-        writer.append("// alias = " + getAlias());
-        writer.newLine();
-        writer.append("// dataSetFormat = MatrixDataSetFormat");
-        writer.newLine();
-        writer.append("// dataSetType = SyntheticDataSetType");
-        writer.newLine();
-        writer.append("// dataSetFormatVersion = 1");
-        writer.newLine();
-        for (int row = 0; row < coords.length; row++) {
-            StringBuilder sb = new StringBuilder();
-            sb.append((row + 1));
-            sb.append("\t");
-            for (int i = 0; i < coords[row].length; i++) {
-                sb.append(coords[row][i] + "\t");
-            }
-            sb.deleteCharAt(sb.length() - 1);
-            writer.append(sb.toString());
+        try ( // dataset file
+                BufferedWriter writer = new BufferedWriter(new FileWriter(dataSetFile))) {
+            // writer header
+            writer.append("// alias = " + getAlias());
             writer.newLine();
+            writer.append("// dataSetFormat = MatrixDataSetFormat");
+            writer.newLine();
+            writer.append("// dataSetType = SyntheticDataSetType");
+            writer.newLine();
+            writer.append("// dataSetFormatVersion = 1");
+            writer.newLine();
+            for (int row = 0; row < coords.length; row++) {
+                StringBuilder sb = new StringBuilder();
+                sb.append((row + 1));
+                sb.append("\t");
+                for (int i = 0; i < coords[row].length; i++) {
+                    sb.append(coords[row][i]).append("\t");
+                }
+                sb.deleteCharAt(sb.length() - 1);
+                writer.append(sb.toString());
+                writer.newLine();
+            }
         }
-        writer.close();
 
         return new AbsoluteDataSet(this.repository, true, dataSetFile.lastModified(), dataSetFile, getAlias(),
                 (AbsoluteDataSetFormat) DataSetFormat.parseFromString(repository, "MatrixDataSetFormat"),

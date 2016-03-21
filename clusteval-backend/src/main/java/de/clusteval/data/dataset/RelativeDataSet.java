@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset;
 
+import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetType;
 import de.clusteval.api.data.WEBSITE_VISIBILITY;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
@@ -32,7 +33,7 @@ import java.util.List;
  * @author Christian Wiwie
  *
  */
-public class RelativeDataSet extends DataSet {
+public class RelativeDataSet extends DataSet implements IDataSet {
 
     private SimilarityMatrix similarities;
 
@@ -172,4 +173,5 @@ public class RelativeDataSet extends DataSet {
         }
         return Arrays.asList(result);
     }
+
 }

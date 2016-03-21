@@ -10,12 +10,12 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset.format;
 
-import de.clusteval.api.data.ConversionConfiguration;
+import de.clusteval.api.data.IConversionConfiguration;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.data.IDataSetFormatParser;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
-import de.clusteval.api.exceptions.RNotAvailableException;
+import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.data.dataset.DataSet;
@@ -119,7 +119,7 @@ public abstract class DataSetFormatParser implements IDataSetFormatParser {
      * @throws UnknownDataSetFormatException
      */
     protected abstract DataSet convertToThisFormat(IDataSet dataSet,
-            IDataSetFormat dataSetFormat, ConversionConfiguration config)
+            IDataSetFormat dataSetFormat, IConversionConfiguration config)
             throws IOException, InvalidDataSetFormatVersionException,
                    RegisterException, UnknownDataSetFormatException;
 

@@ -12,7 +12,7 @@
  */
 package de.clusteval.program.r;
 
-import de.clusteval.api.exceptions.RNotAvailableException;
+import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;

@@ -13,7 +13,7 @@
  */
 package de.clusteval.data.dataset.format;
 
-import de.clusteval.api.data.ConversionConfiguration;
+import de.clusteval.api.data.IConversionConfiguration;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import java.io.BufferedWriter;
@@ -57,7 +57,7 @@ public class APRowSimDataSetFormatParser extends DataSetFormatParser {
 
 	@Override
 	protected DataSet convertToThisFormat(DataSet dataSet,
-			DataSetFormat dataSetFormat, ConversionConfiguration config)
+			DataSetFormat dataSetFormat, IConversionConfiguration config)
 			throws IOException, InvalidDataSetFormatVersionException,
 			RegisterException, UnknownDataSetFormatException {
 		switch (dataSetFormat.getVersion()) {
@@ -73,7 +73,7 @@ public class APRowSimDataSetFormatParser extends DataSetFormatParser {
 
 	@SuppressWarnings("unused")
 	protected DataSet convertToThisFormat_v1(DataSet dataSet,
-			DataSetFormat dataSetFormat, ConversionConfiguration config)
+			DataSetFormat dataSetFormat, IConversionConfiguration config)
 			throws IOException, RegisterException,
 			UnknownDataSetFormatException {
 
