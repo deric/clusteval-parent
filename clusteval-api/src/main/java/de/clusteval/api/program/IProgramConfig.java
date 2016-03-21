@@ -17,6 +17,7 @@
 package de.clusteval.api.program;
 
 import de.clusteval.api.data.IDataSetFormat;
+import de.clusteval.api.exceptions.UnknownProgramParameterException;
 import de.clusteval.api.repository.IRepositoryObject;
 import de.clusteval.api.run.IRunResultFormat;
 import java.util.List;
@@ -99,5 +100,15 @@ public interface IProgramConfig extends IRepositoryObject {
      * @return the parameter for name
      */
     IProgramParameter<?> getParameterForName(final String name);
+
+    /**
+     * This method returns the program parameter with the given id and throws an
+     * exception, of none such parameter exists.
+     *
+     * @param id The name the parameter should have.
+     * @throws UnknownProgramParameterException
+     * @return The program parameter with the appropriate name
+     */
+    IProgramParameter<?> getParamWithId(final String id) throws UnknownProgramParameterException;
 
 }

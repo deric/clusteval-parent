@@ -326,8 +326,7 @@ public class ProgramConfig extends RepositoryObject implements IProgramConfig {
      *
      * @return The invocation line format
      */
-    public String getInvocationFormatParameterOptimization(
-            boolean withoutGoldStandard) {
+    public String getInvocationFormatParameterOptimization(boolean withoutGoldStandard) {
         if (withoutGoldStandard) {
             return invocationFormatParameterOptimizationWithoutGoldStandard;
         }
@@ -339,6 +338,7 @@ public class ProgramConfig extends RepositoryObject implements IProgramConfig {
      * @return The list of parameters of the encapsulated program.
      * @see #params
      */
+    @Override
     public List<IProgramParameter<?>> getParams() {
         return params;
     }
@@ -348,6 +348,7 @@ public class ProgramConfig extends RepositoryObject implements IProgramConfig {
      * @return The list of optimizable parameters of the encapsulated program.
      * @see #optimizableParameters
      */
+    @Override
     public List<IProgramParameter<?>> getOptimizableParams() {
         return optimizableParameters;
     }

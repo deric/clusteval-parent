@@ -436,8 +436,8 @@ public class Repository implements IRepository {
      * @throws DatabaseConnectException
      */
     protected SQLCommunicator createSQLCommunicator() throws DatabaseConnectException {
-        if (this.repositoryConfig.getMysqlConfig().usesSql()) {
-            return new DefaultSQLCommunicator(this, this.repositoryConfig.getMysqlConfig());
+        if (this.repositoryConfig.getDbConfig().usesSql()) {
+            return new DefaultSQLCommunicator(this, this.repositoryConfig.getDbConfig());
         }
 
         return new StubSQLCommunicator(this);

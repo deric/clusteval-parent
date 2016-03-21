@@ -19,9 +19,12 @@ import de.clusteval.api.cluster.quality.ClusteringQualitySet;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetConfig;
+import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.data.IGoldStandardConfig;
 import de.clusteval.api.exceptions.DatabaseConnectException;
+import de.clusteval.api.program.IProgramParameter;
+import de.clusteval.api.program.ParameterSet;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.IRun;
 import de.clusteval.cluster.Clustering;
@@ -42,7 +45,6 @@ import de.clusteval.framework.repository.RepositoryController;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.program.DoubleProgramParameter;
 import de.clusteval.program.IntegerProgramParameter;
-import de.clusteval.api.program.ParameterSet;
 import de.clusteval.program.Program;
 import de.clusteval.program.ProgramConfig;
 import de.clusteval.program.ProgramParameter;
@@ -1364,7 +1366,7 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
                 rowId = insert(this.getTableProgramConfigs(), columns, values);
             }
 
-            for (DataSetFormat dsFormat : object.getCompatibleDataSetFormats()) {
+            for (IDataSetFormat dsFormat : object.getCompatibleDataSetFormats()) {
                 int dataset_format_id = getDataSetFormatId(dsFormat.getClass()
                         .getSimpleName());
 
@@ -1375,7 +1377,7 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
                             "" + dataset_format_id});
             }
 
-            for (ProgramParameter<?> param : object.getOptimizableParams()) {
+            for (IProgramParameter<?> param : object.getOptimizableParams()) {
                 int program_config_id = getObjectId(object);
                 int program_parameter_id = getObjectId(param);
 
@@ -2370,7 +2372,7 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
         try {
             int program_id = getObjectId(object.getProgram());
 
-            for (ProgramParameter<?> param : object.getOptimizableParams()) {
+            for (IProgramParameter<?> param : object.getOptimizableParams()) {
                 int program_config_id = getObjectId(object);
                 int program_parameter_id = getObjectId(param);
 
@@ -2757,8 +2759,7 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
              * Insert parameters
              */
             int paramNo = 0;
-            for (ProgramParameter<?> optParam : object.getMethod()
-                    .getOptimizationParameter()) {
+            for (IProgramParameter<?> optParam : object.getMethod().getOptimizationParameter()) {
                 int program_parameter_id = getObjectId(optParam);
                 parameterIds[paramNo] = insert(
                         this.getTableParameterSetParameters(),
@@ -2847,8 +2848,7 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
                         paramSets.get(i), object.get(paramSets.get(i)));
 
                 paramNo = 0;
-                for (ProgramParameter<?> optParam : object.getMethod()
-                        .getOptimizationParameter()) {
+                for (IProgramParameter<?> optParam : object.getMethod().getOptimizationParameter()) {
                     int run_results_parameter_optimizations_parameter_sets_parameter_id = parameterIds[paramNo];
                     values.add(new String[]{
                         "" + repository_id,

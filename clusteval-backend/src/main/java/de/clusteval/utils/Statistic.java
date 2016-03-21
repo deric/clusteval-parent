@@ -12,6 +12,7 @@
  */
 package de.clusteval.utils;
 
+import de.clusteval.api.r.IStatistics;
 import de.clusteval.api.r.RLibraryInferior;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
@@ -25,7 +26,7 @@ import java.io.File;
  * @author Christian Wiwie
  *
  */
-public abstract class Statistic extends RepositoryObject implements RLibraryInferior {
+public abstract class Statistic extends RepositoryObject implements RLibraryInferior, IStatistics {
 
     /**
      * @param repository
@@ -50,9 +51,9 @@ public abstract class Statistic extends RepositoryObject implements RLibraryInfe
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#clone()
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#clone()
      */
     @Override
     public abstract Statistic clone();
@@ -67,17 +68,6 @@ public abstract class Statistic extends RepositoryObject implements RLibraryInfe
         return this.getClass().getSimpleName();
     }
 
-    /**
-     * Parses the values of a statistic from a string and stores them in the
-     * local attributes of this object.
-     *
-     * @param contents The string to parse the values from.
-     *
-     */
-    public abstract void parseFromString(final String contents);
-
-    @Override
-    public abstract String toString();
 
     /**
      * This alias is used whenever this statistic is visually represented and a
@@ -89,7 +79,7 @@ public abstract class Statistic extends RepositoryObject implements RLibraryInfe
 
     /**
      * @return The context of this statistic. A statistic can only be assessed
-     * for runs of the right context.
+     *         for runs of the right context.
      */
     // TODO
     // public abstract Context getContext();

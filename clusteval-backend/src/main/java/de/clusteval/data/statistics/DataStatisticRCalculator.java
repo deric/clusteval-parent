@@ -11,11 +11,11 @@
 package de.clusteval.data.statistics;
 
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
-import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
+import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.data.DataConfig;
@@ -95,7 +95,7 @@ public abstract class DataStatisticRCalculator<T extends DataStatistic> extends 
         }
     }
 
-    protected abstract T calculateResultHelper(final MyRengine rEngine)
+    protected abstract T calculateResultHelper(final IRengine rEngine)
             throws IncompatibleDataConfigDataStatisticException,
                    UnknownGoldStandardFormatException, UnknownDataSetFormatException,
                    IllegalArgumentException, IOException,
