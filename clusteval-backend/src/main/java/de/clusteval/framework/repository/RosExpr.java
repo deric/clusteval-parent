@@ -22,6 +22,8 @@ import de.clusteval.api.r.RExpr;
 import de.clusteval.api.r.ROperationNotSupported;
 import org.rosuda.REngine.REXP;
 import org.rosuda.REngine.REXPMismatchException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Wrapper around Rosuda expression
@@ -30,6 +32,7 @@ import org.rosuda.REngine.REXPMismatchException;
  */
 public class RosExpr implements RExpr {
 
+    private Logger log = LoggerFactory.getLogger(getClass());
     private REXP r;
 
     public RosExpr(REXP r, IRengine engine) throws RException {
@@ -44,5 +47,15 @@ public class RosExpr implements RExpr {
                 throw new ROperationNotSupported(engine, "Evaluation error");
             }
         }
+    }
+
+    @Override
+    public double asDouble() {
+        try {
+            return r.asDouble();
+        } catch (REXPMismatchException ex) {
+            log.error(ex.getMessage(), ex);
+        }
+        return Double.NaN;
     }
 }

@@ -12,18 +12,17 @@
  */
 package de.clusteval.program.r;
 
+import de.clusteval.api.data.IDataConfig;
+import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.RelativeDataSet;
 import de.clusteval.api.r.RLibraryNotLoadedException;
-import de.clusteval.program.ProgramConfig;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
 import java.io.File;
 import java.util.Map;
-import org.rosuda.REngine.REngineException;
 
 /**
  * @author Christian Wiwie
@@ -63,10 +62,10 @@ public abstract class RelativeDataRProgram extends RProgram {
      * java.util.Map)
      */
     @Override
-    protected void beforeExec(DataConfig dataConfig,
-            ProgramConfig programConfig, String[] invocationLine,
+    public void beforeExec(IDataConfig dataConfig,
+            IProgramConfig programConfig, String[] invocationLine,
             Map<String, String> effectiveParams,
-            Map<String, String> internalParams) throws REngineException, RException, RLibraryNotLoadedException, RNotAvailableException,
+            Map<String, String> internalParams) throws RException, RLibraryNotLoadedException, RNotAvailableException,
                                                        InterruptedException {
         super.beforeExec(dataConfig, programConfig, invocationLine,
                 effectiveParams, internalParams);
@@ -84,7 +83,7 @@ public abstract class RelativeDataRProgram extends RProgram {
      * .DataConfig)
      */
     @Override
-    protected SimilarityMatrix extractDataSetContent(DataConfig dataConfig) {
+    public SimilarityMatrix extractDataSetContent(IDataConfig dataConfig) {
         RelativeDataSet dataSet = (RelativeDataSet) (dataConfig
                 .getDatasetConfig().getDataSet().getInStandardFormat());
         SimilarityMatrix simMatrix = dataSet.getDataSetContent();

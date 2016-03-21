@@ -18,6 +18,7 @@ package de.clusteval.api.run;
 
 import de.clusteval.api.exceptions.RunIterationException;
 import de.wiwie.wiutils.utils.ProgressPrinter;
+import java.util.concurrent.ExecutionException;
 
 /**
  *
@@ -42,4 +43,17 @@ public interface IRunRunnable<IR extends IterationRunnable, IW extends Iteration
     int consumeNextIteration() throws RunIterationException;
 
     void doRunIteration(IW iterationWrapper) throws RunIterationException;
+
+    /**
+     * This method causes the caller to wait for this runnable's thread to
+     * finish its execution.
+     *
+     * <p>
+     * This method also waits in case this runnable has not yet been started
+     * (the future object has not yet been initialized).
+     *
+     * @throws InterruptedException
+     * @throws ExecutionException
+     */
+    void waitFor() throws InterruptedException, ExecutionException;
 }

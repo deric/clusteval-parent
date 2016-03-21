@@ -26,11 +26,20 @@ import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigurationException;
 import de.clusteval.api.exceptions.GoldStandardNotFoundException;
+import de.clusteval.api.exceptions.IncompatibleContextException;
 import de.clusteval.api.exceptions.NoDataSetException;
+import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
+import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
+import de.clusteval.api.exceptions.UnknownParameterType;
+import de.clusteval.api.exceptions.UnknownProgramParameterException;
+import de.clusteval.api.exceptions.UnknownProgramTypeException;
 import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
+import de.clusteval.api.program.IProgramConfig;
+import de.clusteval.api.program.IProgramParameter;
+import de.clusteval.api.program.ParameterSet;
 import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.IRepositoryObject;
@@ -43,8 +52,6 @@ import de.clusteval.cluster.quality.ClusteringQualityMeasure;
 import de.clusteval.cluster.quality.ClusteringQualityMeasureParameters;
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
 import de.clusteval.context.Context;
-import de.clusteval.api.exceptions.IncompatibleContextException;
-import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
@@ -77,16 +84,10 @@ import de.clusteval.framework.repository.NoRepositoryFoundException;
 import de.clusteval.framework.repository.RepositoryController;
 import de.clusteval.framework.repository.RepositoryObject;
 import de.clusteval.framework.repository.RunResultRepository;
-import de.clusteval.api.program.IProgramConfig;
-import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
-import de.clusteval.api.program.ParameterSet;
 import de.clusteval.program.Program;
 import de.clusteval.program.ProgramConfig;
 import de.clusteval.program.ProgramParameter;
 import de.clusteval.program.StandaloneProgram;
-import de.clusteval.api.exceptions.UnknownParameterType;
-import de.clusteval.api.exceptions.UnknownProgramParameterException;
-import de.clusteval.api.exceptions.UnknownProgramTypeException;
 import de.clusteval.program.r.RProgram;
 import de.clusteval.program.r.RProgramConfig;
 import de.clusteval.run.AnalysisRun;
@@ -823,7 +824,7 @@ class ExecutionRunParser<T extends ExecutionRun> extends RunParser<T> {
     protected List<IDataConfig> dataConfigs;
     protected List<ClusteringEvaluation> qualityMeasures;
     protected List<Map<ProgramParameter<?>, String>> runParamValues;
-    protected Map<ProgramParameter<?>, String> paramMap;
+    protected Map<IProgramParameter<?>, String> paramMap;
     protected List<RunResultPostprocessor> postprocessor;
     protected Map<String, Integer> maxExecutionTimes;
 
@@ -984,11 +985,11 @@ class ExecutionRunParser<T extends ExecutionRun> extends RunParser<T> {
         }
     }
 
-    protected void parseProgramConfigParams(final ProgramConfig programConfig)
+    protected void parseProgramConfigParams(final IProgramConfig programConfig)
             throws NoOptimizableProgramParameterException, UnknownProgramParameterException, RunException,
                    ConfigurationException {
 
-        paramMap = new HashMap<ProgramParameter<?>, String>();
+        paramMap = new HashMap<>();
 
         if (getProps().getSections().contains(programConfig.getName())) {
             /*
@@ -1002,7 +1003,7 @@ class ExecutionRunParser<T extends ExecutionRun> extends RunParser<T> {
                             Integer.parseInt(getProps().getSection(programConfig.getName()).getString(param)));
                 } else if (isParamConfigurationEntry(param)) {
                     try {
-                        ProgramParameter<?> p = programConfig.getParamWithId(param);
+                        IProgramParameter<?> p = programConfig.getParamWithId(param);
 
                         if (checkParamValueToMap(param)) {
                             paramMap.put(p, getProps().getSection(programConfig.getName()).getString(param));
@@ -1019,7 +1020,7 @@ class ExecutionRunParser<T extends ExecutionRun> extends RunParser<T> {
 
     protected void parsePostprocessor() throws UnknownRunResultPostprocessorException, ConfigurationException {
 
-        postprocessor = new ArrayList<RunResultPostprocessor>();
+        postprocessor = new ArrayList<>();
 
         if (!getProps().containsKey("postprocessor")) {
             return;
@@ -1027,7 +1028,7 @@ class ExecutionRunParser<T extends ExecutionRun> extends RunParser<T> {
 
         String[] list = getProps().getStringArray("postprocessor");
         // 10.07.2014: remove duplicates.
-        list = new ArrayList<String>(new HashSet<String>(Arrays.asList(list))).toArray(new String[0]);
+        list = new ArrayList<>(new HashSet<>(Arrays.asList(list))).toArray(new String[0]);
         for (String postprocessor : list) {
 
             // parse parameters

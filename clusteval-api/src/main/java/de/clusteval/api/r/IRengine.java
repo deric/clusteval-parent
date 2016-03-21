@@ -75,6 +75,8 @@ public interface IRengine {
 
     void assign(String arg0, double[] arg1) throws RException, InterruptedException;
 
+    void assign(String arg0, String[] arg1) throws RException, InterruptedException;
+
     RExpr eval(String cmd) throws RException, InterruptedException;
 
     /**

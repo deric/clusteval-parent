@@ -172,10 +172,67 @@ public interface IDataSet extends IRepositoryObject {
      * @throws UnknownDataSetFormatException
      * @throws FormatConversionException
      */
-    public IDataSet convertStandardToDirectly(final IContext context,
+    IDataSet convertStandardToDirectly(final IContext context,
             final IDataSetFormat targetFormat,
             final IConversionConfiguration configStandardToInput)
             throws IOException, InvalidDataSetFormatVersionException,
                    RegisterException, UnknownDataSetFormatException,
                    FormatConversionException;
+
+    /**
+     * This method converts this dataset to a target format:
+     * <p>
+     * First this dataset is converted to a internal standard format (depending
+     * on the type of the Run). Then it is converted to the target format.
+     *
+     * @param context
+     * @param targetFormat          This is the format, the dataset is expected to be in
+     *                              after the conversion process. After the dataset is converted to the
+     *                              internal format, it is converted to the target format.
+     * @param configInputToStandard This is the configuration that is used
+     *                              during the conversion from the original format to the internal standard
+     *                              format.
+     * @param configStandardToInput This is the configuration that is used
+     *                              during the conversion from the internal standard format to the target
+     *                              format.
+     * @return The dataset in the target format.
+     * @throws FormatConversionException
+     * @throws IOException
+     * @throws InvalidDataSetFormatVersionException
+     * @throws RegisterException
+     * @throws RNotAvailableException
+     * @throws InterruptedException
+     */
+    public IDataSet preprocessAndConvertTo(final IContext context,
+            final IDataSetFormat targetFormat,
+            final IConversionInputToStandardConfiguration configInputToStandard,
+            final IConversionConfiguration configStandardToInput)
+            throws FormatConversionException, IOException,
+                   InvalidDataSetFormatVersionException, RegisterException,
+                   RNotAvailableException, InterruptedException;
+
+    /**
+     * This method does not load the content of the dataset into memory, it just
+     * assumes that it has been loaded before and returns the reference.
+     *
+     * @return The content of this dataset.
+     */
+    Object getDataSetContent();
+
+    /**
+     * This method sets the content of this dataset in memory to a new object.
+     * Contents on file system are not refreshed.
+     *
+     * @param newContent The new content of this dataset.
+     * @return True, if the content of this dataset has been updated to the new
+     *         object.
+     */
+    boolean setDataSetContent(Object newContent);
+
+    /**
+     * Unload the contents of this dataset from memory.
+     *
+     * @return true, if successful
+     */
+    boolean unloadFromMemory();
 }

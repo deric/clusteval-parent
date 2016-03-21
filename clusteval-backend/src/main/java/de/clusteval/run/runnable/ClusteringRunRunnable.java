@@ -10,19 +10,19 @@
  ***************************************************************************** */
 package de.clusteval.run.runnable;
 
+import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.exceptions.IncompleteGoldStandardException;
 import de.clusteval.api.exceptions.InternalAttributeException;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.RunIterationException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
-import de.clusteval.api.repository.RegisterException;
-import de.clusteval.api.run.IRun;
-import de.clusteval.data.DataConfig;
-import de.clusteval.data.dataset.format.IncompatibleDataSetFormatException;
-import de.clusteval.framework.threading.RunSchedulerThread;
 import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.IProgramParameter;
+import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.run.IRun;
+import de.clusteval.data.dataset.format.IncompatibleDataSetFormatException;
+import de.clusteval.framework.threading.RunSchedulerThread;
 import de.clusteval.run.ClusteringRun;
 import de.clusteval.run.result.ClusteringRunResult;
 import java.io.BufferedReader;
@@ -63,9 +63,10 @@ public class ClusteringRunRunnable extends ExecutionRunRunnable {
      * @param isResume
      *                       True, if this run is a resumption of a previous execution or a
      *                       completely new execution.
+     * @param runParams
      */
     public ClusteringRunRunnable(RunSchedulerThread runScheduler, IRun run,
-            IProgramConfig programConfig, DataConfig dataConfig,
+            IProgramConfig programConfig, IDataConfig dataConfig,
             String runIdentString, boolean isResume,
             Map<IProgramParameter<?>, String> runParams) {
         super(run, programConfig, dataConfig, runIdentString, isResume,

@@ -13,6 +13,8 @@
 package de.clusteval.program.r;
 
 import de.clusteval.api.data.IDataConfig;
+import de.clusteval.api.program.IProgramConfig;
+import de.clusteval.api.program.IProgramParameter;
 import de.clusteval.api.r.IRProgram;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
@@ -20,15 +22,12 @@ import de.clusteval.api.r.RLibraryInferior;
 import de.clusteval.api.r.RLibraryNotLoadedException;
 import de.clusteval.api.r.RLibraryRequirement;
 import de.clusteval.api.r.RNotAvailableException;
+import de.clusteval.api.r.ROperationNotSupported;
 import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.cluster.Clustering;
-import de.clusteval.data.DataConfig;
-import de.clusteval.api.program.IProgramConfig;
-import de.clusteval.api.program.IProgramParameter;
 import de.clusteval.program.Program;
-import de.clusteval.program.ProgramConfig;
 import de.wiwie.wiutils.utils.StringExt;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -37,7 +36,6 @@ import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
-import org.rosuda.REngine.REXPMismatchException;
 import org.rosuda.REngine.REngineException;
 import org.rosuda.REngine.Rserve.RserveException;
 
@@ -196,6 +194,8 @@ public abstract class RProgram extends Program implements RLibraryInferior, IRPr
 
     /**
      * The major name of a RProgram corresponds to the simple name of its class.
+     *
+     * @return
      */
     @Override
     public String getMajorName() {
@@ -221,8 +221,13 @@ public abstract class RProgram extends Program implements RLibraryInferior, IRPr
             // the
             // rengine.
 
-            RProgramThread t = new RProgramThread(Thread.currentThread(), this,
-                    dataConfig, programConfig, invocationLine, effectiveParams, internalParams);
+            RProgramThread t;
+            try {
+                t = new RProgramThread(Thread.currentThread(), this,
+                        dataConfig, programConfig, invocationLine, effectiveParams, internalParams);
+            } catch (RserveException ex) {
+                throw new RException(ex.getMessage(), ex);
+            }
             t.start();
             return new RProcess(t);
         } finally {
@@ -236,11 +241,11 @@ public abstract class RProgram extends Program implements RLibraryInferior, IRPr
         return this.rEngine;
     }
 
-    @SuppressWarnings("unused")
-    protected void beforeExec(DataConfig dataConfig,
-            ProgramConfig programConfig, String[] invocationLine,
+    @Override
+    public void beforeExec(IDataConfig dataConfig,
+            IProgramConfig programConfig, String[] invocationLine,
             Map<String, String> effectiveParams,
-            Map<String, String> internalParams) throws REngineException, RException,
+            Map<String, String> internalParams) throws RException,
                                                        RLibraryNotLoadedException, RNotAvailableException,
                                                        InterruptedException {
 
@@ -267,19 +272,7 @@ public abstract class RProgram extends Program implements RLibraryInferior, IRPr
         rEngine.assign("ids", ids);
     }
 
-    /**
-     * This method is required to initialize the attributes
-     * {@link #dataSetContent}, {@link #ids} and all other attributes of the
-     * data, which are needed in
-     * {@link #doExec(DataConfig, ProgramConfig, String[], Map, Map)}.
-     *
-     * @param dataConfig
-     * @return
-     */
-    protected abstract Object extractDataSetContent(DataConfig dataConfig);
-
-    @SuppressWarnings("unused")
-    protected void doExec(DataConfig dataConfig, ProgramConfig programConfig,
+    public void doExec(IDataConfig dataConfig, IProgramConfig programConfig,
             final String[] invocationLine, Map<String, String> effectiveParams,
             Map<String, String> internalParams) throws InterruptedException, RException {
         rEngine.eval("result <- " + StringExt.paste(" ", invocationLine));
@@ -297,11 +290,11 @@ public abstract class RProgram extends Program implements RLibraryInferior, IRPr
         // }
     }
 
-    protected void afterExec(DataConfig dataConfig,
-            ProgramConfig programConfig, String[] invocationLine,
+    @Override
+    public void afterExec(IDataConfig dataConfig,
+            IProgramConfig programConfig, String[] invocationLine,
             Map<String, String> effectiveParams,
-            Map<String, String> internalParams) throws REXPMismatchException,
-                                                       REngineException, IOException, InterruptedException {
+            Map<String, String> internalParams) throws RException, IOException, InterruptedException, ROperationNotSupported {
         // try {
         try {
             final String resultAsString = execResultToString(dataConfig,
@@ -310,14 +303,14 @@ public abstract class RProgram extends Program implements RLibraryInferior, IRPr
 
             File output = new File(internalParams.get("o"));
 
-            BufferedWriter bw = new BufferedWriter(new FileWriter(output));
-            bw.append(resultAsString);
-            bw.close();
+            try (BufferedWriter bw = new BufferedWriter(new FileWriter(output))) {
+                bw.append(resultAsString);
+            }
         } catch (StringIndexOutOfBoundsException e) {
             REngineException e2 = new REngineException(null,
                     "The R program returned an empty clustering");
             e2.initCause(e);
-            throw e2;
+            throw new RException(e2.getMessage(), e2);
         }
         // } finally {
         // rEngine.close();
@@ -327,12 +320,11 @@ public abstract class RProgram extends Program implements RLibraryInferior, IRPr
         this.ids = null;
     }
 
-    @SuppressWarnings("unused")
-    protected String execResultToString(DataConfig dataConfig,
-            ProgramConfig programConfig, String[] invocationLine,
+    public String execResultToString(IDataConfig dataConfig,
+            IProgramConfig programConfig, String[] invocationLine,
             Map<String, String> effectiveParams,
-            Map<String, String> internalParams) throws RserveException,
-                                                       REXPMismatchException, InterruptedException {
+            Map<String, String> internalParams) throws RException,
+                                                       ROperationNotSupported, InterruptedException {
         Clustering resultClustering = Clustering.parseFromFuzzyCoeffMatrix(
                 dataConfig.getRepository(), new File(internalParams.get("o")),
                 ids, getFuzzyCoeffMatrixFromExecResult());
@@ -355,20 +347,4 @@ public abstract class RProgram extends Program implements RLibraryInferior, IRPr
         sb.append(resultClustering.toFormattedString());
         return sb.toString();
     }
-
-    /**
-     * This method extracts the results after executing
-     * {@link #doExec(DataConfig, ProgramConfig, String[], Map, Map)}. By
-     * default the result is stored in the R variable "result".
-     *
-     * @return A two dimensional float array, containing fuzzy coefficients for
-     *         each object and cluster. Rows correspond to objects and columns
-     *         correspond to clusters. The order of objects is the same as in
-     *         {@link #ids}.
-     * @throws RserveException
-     * @throws REXPMismatchException
-     * @throws InterruptedException
-     */
-    protected abstract float[][] getFuzzyCoeffMatrixFromExecResult()
-            throws RserveException, REXPMismatchException, InterruptedException;
 }

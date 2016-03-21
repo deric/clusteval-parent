@@ -122,7 +122,7 @@ public class ClusteringRun extends ExecutionRun {
             RunSchedulerThread runScheduler, Run run,
             ProgramConfig programConfig, DataConfig dataConfig,
             String runIdentString, boolean isResume,
-            Map<ProgramParameter<?>, String> runParams) {
+            Map<IProgramParameter<?>, String> runParams) {
         ClusteringRunRunnable r = new ClusteringRunRunnable(runScheduler, run,
                 programConfig, dataConfig, runIdentString, isResume, runParams);
         run.progress.addSubProgress(r.getProgressPrinter(), 10000);

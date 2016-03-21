@@ -757,15 +757,6 @@ public abstract class Run extends RepositoryObject implements IRun {
         this.getRepository().updateStatusOfRun(this, status.toString());
     }
 
-    /**
-     * This method terminates the execution of this run. It waits for the
-     * termination of all corresponding threads.
-     *
-     * @return True if everything, including all corresponding threads, could be
-     *         terminated, false otherwise.
-     */
-    public abstract boolean terminate();
-
     /*
      * (non-Javadoc)
      *
@@ -820,7 +811,7 @@ public abstract class Run extends RepositoryObject implements IRun {
      *
      * @return The context of this run.
      */
-    public Context getContext() {
+    public IContext getContext() {
         return this.context;
     }
 }

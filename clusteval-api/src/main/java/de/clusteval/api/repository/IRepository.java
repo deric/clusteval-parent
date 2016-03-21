@@ -23,6 +23,7 @@ import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.data.IDataSetFormatParser;
 import de.clusteval.api.exceptions.InternalAttributeException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RException;
@@ -30,7 +31,6 @@ import de.clusteval.api.r.RLibraryNotLoadedException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.ISupervisorThread;
-import de.clusteval.api.program.IProgramConfig;
 import java.io.File;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -272,7 +272,7 @@ public interface IRepository {
      *
      * <p>
      * A helper method of null null null null null null null null null null null
-     * null null null null null null null null null null null null null null null null     {@link ProgramParameter#evaluateDefaultValue(DataConfig, ProgramConfig)},
+     * null null null null null null null null null null null null null null null null null null     {@link ProgramParameter#evaluateDefaultValue(DataConfig, ProgramConfig)},
 	 * {@link ProgramParameter#evaluateMinValue(DataConfig, ProgramConfig)} and
      * {@link ProgramParameter#evaluateMaxValue(DataConfig, ProgramConfig)}.
      *
@@ -315,4 +315,10 @@ public interface IRepository {
      * @return
      */
     boolean hasParent();
+
+    IRengine getRengine(final Thread thread) throws RException;
+
+    void clearRengineForCurrentThread();
+
+    void clearRengine(final Thread thread);
 }

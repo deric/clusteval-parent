@@ -12,11 +12,11 @@
  */
 package de.clusteval.program;
 
-import de.clusteval.api.program.IProgramConfig;
-import de.clusteval.api.program.IProgram;
-import de.clusteval.api.program.IProgramParameter;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.exceptions.UnknownProgramParameterException;
+import de.clusteval.api.program.IProgram;
+import de.clusteval.api.program.IProgramConfig;
+import de.clusteval.api.program.IProgramParameter;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.repository.RepositoryEvent;
@@ -402,6 +402,7 @@ public class ProgramConfig extends RepositoryObject implements IProgramConfig {
      * @return The name of the program configuration is the name of the file
      *         without extension.
      */
+    @Override
     public String getName() {
         return this.absPath.getName().replace(".config", "");
     }
@@ -488,6 +489,7 @@ public class ProgramConfig extends RepositoryObject implements IProgramConfig {
      * @param name the name
      * @return the parameter for name
      */
+    @Override
     public IProgramParameter<?> getParameterForName(final String name) {
         IProgramParameter<?> pa = null;
         for (int i = 0; i < this.getParams().size(); i++) {

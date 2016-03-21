@@ -12,18 +12,17 @@
  */
 package de.clusteval.program.r;
 
-import de.clusteval.api.r.RNotAvailableException;
+import de.clusteval.api.data.IDataConfig;
+import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.r.RException;
+import de.clusteval.api.r.RLibraryNotLoadedException;
+import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.AbsoluteDataSet;
 import de.clusteval.data.dataset.DataMatrix;
-import de.clusteval.api.r.RLibraryNotLoadedException;
-import de.clusteval.program.ProgramConfig;
 import java.io.File;
 import java.util.Map;
-import org.rosuda.REngine.REngineException;
 
 /**
  * @author Christian Wiwie
@@ -34,8 +33,8 @@ public abstract class AbsoluteDataRProgram extends RProgram {
     /**
      * @param repository the repository this program should be registered at.
      * @param changeDate The change date of this program is used for equality
-     * checks.
-     * @param absPath The absolute path of this program.
+     *                   checks.
+     * @param absPath    The absolute path of this program.
      * @throws RegisterException
      */
     public AbsoluteDataRProgram(IRepository repository, long changeDate,
@@ -55,18 +54,18 @@ public abstract class AbsoluteDataRProgram extends RProgram {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * de.clusteval.program.r.RProgram#beforeExec(de.clusteval.data.DataConfig,
-	 * de.clusteval.program.ProgramConfig, java.lang.String[], java.util.Map,
-	 * java.util.Map)
+     * (non-Javadoc)
+     *
+     * @see
+     * de.clusteval.program.r.RProgram#beforeExec(de.clusteval.data.DataConfig,
+     * de.clusteval.program.ProgramConfig, java.lang.String[], java.util.Map,
+     * java.util.Map)
      */
     @Override
-    protected void beforeExec(DataConfig dataConfig,
-            ProgramConfig programConfig, String[] invocationLine,
+    public void beforeExec(IDataConfig dataConfig,
+            IProgramConfig programConfig, String[] invocationLine,
             Map<String, String> effectiveParams,
-            Map<String, String> internalParams) throws REngineException, RException,
+            Map<String, String> internalParams) throws RException,
                                                        RLibraryNotLoadedException, RNotAvailableException,
                                                        InterruptedException {
         super.beforeExec(dataConfig, programConfig, invocationLine,
@@ -77,14 +76,14 @@ public abstract class AbsoluteDataRProgram extends RProgram {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * de.clusteval.program.r.RProgram#extractDataSetContent(de.clusteval.data
-	 * .DataConfig)
+     * (non-Javadoc)
+     *
+     * @see
+     * de.clusteval.program.r.RProgram#extractDataSetContent(de.clusteval.data
+     * .DataConfig)
      */
     @Override
-    protected DataMatrix extractDataSetContent(DataConfig dataConfig) {
+    public DataMatrix extractDataSetContent(IDataConfig dataConfig) {
         AbsoluteDataSet dataSet = (AbsoluteDataSet) (dataConfig
                 .getDatasetConfig().getDataSet().getOriginalDataSet());
         DataMatrix dataMatrix = dataSet.getDataSetContent();

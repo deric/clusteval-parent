@@ -31,7 +31,6 @@ import de.clusteval.api.repository.RepositoryEvent;
 import de.clusteval.api.repository.RepositoryMoveEvent;
 import de.clusteval.api.repository.RepositoryRemoveEvent;
 import de.clusteval.api.repository.RepositoryReplaceEvent;
-import de.clusteval.context.Context;
 import de.clusteval.data.dataset.format.AbsoluteDataSetFormat;
 import de.clusteval.data.dataset.format.DataSetFormatParser;
 import de.clusteval.data.dataset.format.RelativeDataSetFormat;
@@ -365,31 +364,6 @@ public abstract class DataSet extends RepositoryObject implements IDataSet, IRep
     }
 
     /**
-     * This method does not load the content of the dataset into memory, it just
-     * assumes that it has been loaded before and returns the reference.
-     *
-     * @return The content of this dataset.
-     */
-    public abstract Object getDataSetContent();
-
-    /**
-     * This method sets the content of this dataset in memory to a new object.
-     * Contents on file system are not refreshed.
-     *
-     * @param newContent The new content of this dataset.
-     * @return True, if the content of this dataset has been updated to the new
-     *         object.
-     */
-    public abstract boolean setDataSetContent(Object newContent);
-
-    /**
-     * Unload the contents of this dataset from memory.
-     *
-     * @return true, if successful
-     */
-    public abstract boolean unloadFromMemory();
-
-    /**
      * This method converts this dataset to a target format:
      * <p>
      * First this dataset is converted to a internal standard format (depending
@@ -413,7 +387,8 @@ public abstract class DataSet extends RepositoryObject implements IDataSet, IRep
      * @throws RNotAvailableException
      * @throws InterruptedException
      */
-    public IDataSet preprocessAndConvertTo(final Context context,
+    @Override
+    public IDataSet preprocessAndConvertTo(final IContext context,
             final IDataSetFormat targetFormat,
             final IConversionInputToStandardConfiguration configInputToStandard,
             final IConversionConfiguration configStandardToInput)
@@ -489,7 +464,9 @@ public abstract class DataSet extends RepositoryObject implements IDataSet, IRep
                 try {
                     result = preprocessed.convertToStandardDirectly(context,
                             configInputToStandard);
-                } catch (Exception e) {
+                } catch (IOException | InvalidDataSetFormatVersionException |
+                        RegisterException | UnknownDataSetFormatException |
+                        InvalidParameterException | RNotAvailableException | InterruptedException e) {
                     e.printStackTrace();
                     // throw e;
                 }

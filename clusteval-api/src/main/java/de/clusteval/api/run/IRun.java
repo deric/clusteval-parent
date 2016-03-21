@@ -16,6 +16,7 @@
  */
 package de.clusteval.api.run;
 
+import de.clusteval.api.IContext;
 import de.clusteval.api.repository.IRepositoryObject;
 import java.util.List;
 
@@ -76,4 +77,22 @@ public interface IRun extends IRepositoryObject {
      *         this run.
      */
     List<IRunResult> getResults();
+
+    /**
+     * Sets the status of this run.
+     *
+     * @param status
+     */
+    void setStatus(RUN_STATUS status);
+
+    /**
+     * This method terminates the execution of this run. It waits for the
+     * termination of all corresponding threads.
+     *
+     * @return True if everything, including all corresponding threads, could be
+     *         terminated, false otherwise.
+     */
+    boolean terminate();
+
+    IContext getContext();
 }

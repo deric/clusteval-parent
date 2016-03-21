@@ -7,7 +7,6 @@ import de.clusteval.api.repository.DynamicRepositoryEntity;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.data.IDataSetFormatParser;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
-import de.clusteval.data.dataset.format.DataSetFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -117,7 +116,7 @@ public class DataSetFormatRepositoryEntity extends DynamicRepositoryEntity<IData
      * @return True, if the parser has been registered.
      */
     public boolean isRegisteredForDataSetFormat(
-            final Class<? extends DataSetFormat> dsFormat) {
+            final Class<? extends IDataSetFormat> dsFormat) {
         return this.dataSetFormatParser.containsKey(dsFormat.getName())
                 || (this.parent != null && ((DataSetFormatRepositoryEntity) this.parent)
                 .isRegisteredForDataSetFormat(dsFormat));

@@ -16,7 +16,9 @@
  */
 package de.clusteval.api.program;
 
+import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.repository.IRepositoryObject;
+import de.clusteval.api.run.IRunResultFormat;
 import java.util.List;
 
 /**
@@ -69,5 +71,33 @@ public interface IProgramConfig extends IRepositoryObject {
      * @see #program
      */
     IProgram getProgram();
+
+    /**
+     *
+     * @return The compatible dataset input formats of the encapsulated program.
+     * @see #compatibleDataSetFormats
+     */
+    List<IDataSetFormat> getCompatibleDataSetFormats();
+
+    /**
+     *
+     * @return The output format of the encapsulated program.
+     * @see #outputFormat
+     */
+    IRunResultFormat getOutputFormat();
+
+    /**
+     * @return The name of the program configuration is the name of the file
+     *         without extension.
+     */
+    String getName();
+
+    /**
+     * TODO: merge this and {@link #getParamWithId(String)}
+     *
+     * @param name the name
+     * @return the parameter for name
+     */
+    IProgramParameter<?> getParameterForName(final String name);
 
 }

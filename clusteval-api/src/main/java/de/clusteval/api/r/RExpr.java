@@ -23,4 +23,5 @@ package de.clusteval.api.r;
  */
 public interface RExpr {
 
+    double asDouble();
 }

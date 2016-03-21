@@ -69,7 +69,7 @@ public abstract class RunRunnable<IR extends IterationRunnable, IW extends Itera
     /**
      * The run this runnable object was created by.
      */
-    protected Run run;
+    protected IRun run;
 
     /**
      * If exceptions are thrown during the execution it is stored in the
@@ -163,7 +163,7 @@ public abstract class RunRunnable<IR extends IterationRunnable, IW extends Itera
      *                       True, if this run is a resumption of a previous execution or a
      *                       completely new execution.
      */
-    public RunRunnable(final Run run, final String runIdentString, final boolean isResume) {
+    public RunRunnable(final IRun run, final String runIdentString, final boolean isResume) {
         super();
         this.run = run;
         this.isResume = isResume;

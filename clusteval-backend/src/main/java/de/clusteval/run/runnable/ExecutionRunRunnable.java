@@ -14,7 +14,10 @@ import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.api.cluster.quality.ClusteringQualityMeasureValue;
 import de.clusteval.api.cluster.quality.ClusteringQualitySet;
+import de.clusteval.api.data.IConversionInputToStandardConfiguration;
+import de.clusteval.api.data.IConversionStandardToInputConfiguration;
 import de.clusteval.api.data.IDataConfig;
+import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.exceptions.FormatConversionException;
 import de.clusteval.api.exceptions.IncompleteGoldStandardException;
@@ -23,10 +26,14 @@ import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.RunIterationException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
+import de.clusteval.api.program.IProgramConfig;
+import de.clusteval.api.program.IProgramParameter;
+import de.clusteval.api.program.ParameterSet;
 import de.clusteval.api.r.RLibraryNotLoadedException;
 import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.run.IRun;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.NoParameterSetFoundException;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
@@ -35,24 +42,17 @@ import de.clusteval.data.dataset.AbsoluteDataSet;
 import de.clusteval.data.dataset.DataSet;
 import de.clusteval.data.dataset.DataSetConfig;
 import de.clusteval.data.dataset.RelativeDataSet;
-import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
-import de.clusteval.data.dataset.format.ConversionStandardToInputConfiguration;
-import de.clusteval.data.dataset.format.DataSetFormat;
 import de.clusteval.data.dataset.format.IncompatibleDataSetFormatException;
 import de.clusteval.data.goldstandard.GoldStandardConfig;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.framework.threading.RunSchedulerThread;
-import de.clusteval.api.program.IProgramConfig;
-import de.clusteval.api.program.IProgramParameter;
-import de.clusteval.api.program.ParameterSet;
 import de.clusteval.program.ProgramConfig;
 import de.clusteval.program.ProgramParameter;
 import de.clusteval.program.r.RProcess;
 import de.clusteval.program.r.RProgram;
 import de.clusteval.run.ExecutionRun;
 import de.clusteval.run.MissingParameterValueException;
-import de.clusteval.run.Run;
 import de.clusteval.run.result.ClusteringRunResult;
 import de.clusteval.run.result.NoRunResultFormatParserException;
 import de.clusteval.run.result.format.RunResultFormat;
@@ -134,7 +134,7 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
      *                       completely new execution.
      * @param runParams
      */
-    public ExecutionRunRunnable(Run run, IProgramConfig programConfig, IDataConfig dataConfig, String runIdentString,
+    public ExecutionRunRunnable(IRun run, IProgramConfig programConfig, IDataConfig dataConfig, String runIdentString,
             boolean isResume, Map<IProgramParameter<?>, String> runParams) {
         super(run, runIdentString, isResume);
 
@@ -197,9 +197,9 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
     protected boolean preprocessAndCheckCompatibleDataSetFormat()
             throws IOException, RegisterException, InterruptedException {
 
-        ConversionInputToStandardConfiguration configInputToStandard = dataConfig.getDatasetConfig()
+        IConversionInputToStandardConfiguration configInputToStandard = dataConfig.getDatasetConfig()
                 .getConversionInputToStandardConfiguration();
-        ConversionStandardToInputConfiguration configStandardToInput = dataConfig.getDatasetConfig()
+        IConversionStandardToInputConfiguration configStandardToInput = dataConfig.getDatasetConfig()
                 .getConversionStandardToInputConfiguration();
 
         /*
@@ -214,12 +214,12 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
              * either they are directly compatible or the dataset can be
              * converted to another compatible DataSetFormat.
              */
-            List<DataSetFormat> compatibleDsFormats = programConfig.getCompatibleDataSetFormats();
+            List<IDataSetFormat> compatibleDsFormats = programConfig.getCompatibleDataSetFormats();
             boolean found = false;
             // try to find a compatible format we can use and convert
-            for (DataSetFormat compFormat : compatibleDsFormats) {
+            for (IDataSetFormat compFormat : compatibleDsFormats) {
                 try {
-                    DataSet ds = dataConfig.getDatasetConfig().getDataSet().preprocessAndConvertTo(
+                    IDataSet ds = dataConfig.getDatasetConfig().getDataSet().preprocessAndConvertTo(
                             this.run.getContext(), compFormat, configInputToStandard, configStandardToInput);
 
                     // added 23.01.2013: rename the new dataset, unique for the

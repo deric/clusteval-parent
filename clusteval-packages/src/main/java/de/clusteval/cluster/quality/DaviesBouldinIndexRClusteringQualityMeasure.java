@@ -17,6 +17,7 @@ import de.clusteval.api.cluster.quality.ClusteringQualityMeasureValue;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
+import de.clusteval.api.r.RExpr;
 import de.clusteval.api.r.RLibraryRequirement;
 import de.clusteval.api.r.ROperationNotSupported;
 import de.clusteval.api.repository.RegisterException;
@@ -28,7 +29,6 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import org.rosuda.REngine.REXP;
 
 /**
  * @author Christian Wiwie
@@ -133,7 +133,7 @@ public class DaviesBouldinIndexRClusteringQualityMeasure extends ClusteringQuali
         rEngine.eval("library(clv)");
         rEngine.eval("diss <- cls.scatt.diss.mx(sim, clusterIds)");
         rEngine.eval("db <- clv.Davies.Bouldin(diss,'average','average')");
-        REXP exp = rEngine.eval("db");
+        RExpr exp = rEngine.eval("db");
         if (exp != null) {
             result = exp.asDouble();
         } else {

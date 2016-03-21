@@ -100,7 +100,6 @@ import java.util.regex.Pattern;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
-import org.rosuda.REngine.Rserve.RserveException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -587,7 +586,7 @@ public class Repository implements IRepository {
      *
      * <p>
      * A helper method of null null null null null null null null null null null
-     * null null null null null null     {@link ProgramParameter#evaluateDefaultValue(DataConfig, ProgramConfig)},
+     * null null null null null null null null     {@link ProgramParameter#evaluateDefaultValue(DataConfig, ProgramConfig)},
 	 * {@link ProgramParameter#evaluateMinValue(DataConfig, ProgramConfig)} and
      * {@link ProgramParameter#evaluateMaxValue(DataConfig, ProgramConfig)}.
      *
@@ -1613,18 +1612,14 @@ public class Repository implements IRepository {
     public IRengine getRengineForCurrentThread() throws RException {
         Thread currentThread = Thread.currentThread();
         synchronized (this.rEngines) {
-            try {
-                if (!this.rEngines.containsKey(currentThread)) {
-                    this.rEngines.put(currentThread, new MyRengine(""));
-                }
-                return this.rEngines.get(currentThread);
-            } catch (RserveException ex) {
-                throw new RException(ex.getMessage(), ex);
+            if (!this.rEngines.containsKey(currentThread)) {
+                this.rEngines.put(currentThread, new MyRengine(""));
             }
+            return this.rEngines.get(currentThread);
         }
     }
 
-    public MyRengine getRengine(final Thread thread) throws RserveException {
+    public IRengine getRengine(final Thread thread) throws RException {
         synchronized (this.rEngines) {
             if (!this.rEngines.containsKey(thread)) {
                 this.rEngines.put(thread, new MyRengine(""));

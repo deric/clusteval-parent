@@ -92,4 +92,5 @@ public interface IProgram extends IRepositoryObject {
      */
     IContext getContext() throws UnknownContextException;
 
+    IProgram clone();
 }

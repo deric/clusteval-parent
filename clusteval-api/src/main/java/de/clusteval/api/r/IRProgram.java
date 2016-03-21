@@ -16,11 +16,15 @@
  */
 package de.clusteval.api.r;
 
+import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownRunResultFormatException;
+import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.repository.IRepositoryObject;
 import de.clusteval.api.run.IRunResultFormat;
+import java.io.IOException;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -49,4 +53,49 @@ public interface IRProgram extends IRepositoryObject {
     IRunResultFormat getRunResultFormat() throws UnknownRunResultFormatException;
 
     IRProgram clone();
+
+    void setEngine(IRengine engine);
+
+    IRengine getEngine();
+
+    /**
+     * This method is required to initialize the attributes
+     * {@link #dataSetContent}, {@link #ids} and all other attributes of the
+     * data, which are needed in
+     * {@link #doExec(DataConfig, ProgramConfig, String[], Map, Map)}.
+     *
+     * @param dataConfig
+     * @return
+     */
+    Object extractDataSetContent(IDataConfig dataConfig);
+
+    void beforeExec(IDataConfig dataConfig, IProgramConfig programConfig, String[] invocationLine,
+            Map<String, String> effectiveParams, Map<String, String> internalParams) throws RException,
+                                                                                            RLibraryNotLoadedException, RNotAvailableException,
+                                                                                            InterruptedException;
+
+    void doExec(IDataConfig dataConfig, IProgramConfig programConfig,
+            final String[] invocationLine, Map<String, String> effectiveParams,
+            Map<String, String> internalParams) throws InterruptedException, RException;
+
+    void afterExec(IDataConfig dataConfig,
+            IProgramConfig programConfig, String[] invocationLine,
+            Map<String, String> effectiveParams,
+            Map<String, String> internalParams) throws RException, IOException, InterruptedException, ROperationNotSupported;
+
+    /**
+     * This method extracts the results after executing
+     * {@link #doExec(DataConfig, ProgramConfig, String[], Map, Map)}. By
+     * default the result is stored in the R variable "result".
+     *
+     * @return A two dimensional float array, containing fuzzy coefficients for
+     *         each object and cluster. Rows correspond to objects and columns
+     *         correspond to clusters. The order of objects is the same as in
+     *         {@link #ids}.
+     * @throws de.clusteval.api.r.RException
+     * @throws de.clusteval.api.r.ROperationNotSupported
+     * @throws InterruptedException
+     */
+    float[][] getFuzzyCoeffMatrixFromExecResult()
+            throws RException, ROperationNotSupported, InterruptedException;
 }

@@ -91,8 +91,7 @@ public class ClusteringQualityMeasureValue {
         if (stringValue.equals("NT")) {
             return ClusteringQualityMeasureValue.getForNotTerminated();
         }
-        return ClusteringQualityMeasureValue.getForDouble(Double
-                .valueOf(stringValue));
+        return ClusteringQualityMeasureValue.getForDouble(Double.valueOf(stringValue));
     }
 
     /**
