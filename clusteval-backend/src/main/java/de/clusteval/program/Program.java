@@ -10,23 +10,16 @@
  ***************************************************************************** */
 package de.clusteval.program;
 
-import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.repository.RepositoryEvent;
 import de.clusteval.api.repository.RepositoryRemoveEvent;
-import de.clusteval.context.Context;
-import de.clusteval.context.UnknownContextException;
-import de.clusteval.data.DataConfig;
-import de.clusteval.api.r.RLibraryNotLoadedException;
-import de.clusteval.framework.repository.RepositoryObject;
 import de.clusteval.api.repository.RepositoryReplaceEvent;
+import de.clusteval.data.DataConfig;
+import de.clusteval.framework.repository.RepositoryObject;
 import de.clusteval.framework.repository.RunResultRepository;
 import java.io.File;
-import java.io.IOException;
 import java.util.Map;
-import org.rosuda.REngine.REXPMismatchException;
-import org.rosuda.REngine.REngineException;
 
 /**
  * A wrapper class for programs used by this framework.
@@ -41,7 +34,7 @@ import org.rosuda.REngine.REngineException;
  * @author Christian Wiwie
  *
  */
-public abstract class Program extends RepositoryObject {
+public abstract class Program extends RepositoryObject implements IProgram {
 
     /**
      * Instantiates a new program.
@@ -78,8 +71,6 @@ public abstract class Program extends RepositoryObject {
         super(program);
     }
 
-    @Override
-    public abstract Program clone();
 
     /**
      * Gets the absolute path of the executable.
@@ -159,55 +150,4 @@ public abstract class Program extends RepositoryObject {
         }
     }
 
-    /**
-     * This method executes this program on the data defined in the data
-     * configuration.
-     *
-     * <p>
-     * The complete invocation line is also passed. It is taken from the program
-     * configuration used by the run. All parameter placeholders contained in
-     * this invocation line are already replaced by their actual values.
-     *
-     * <p>
-     * Additionally all parameter values are passed in the two map parameters.
-     *
-     * @param dataConfig
-     *                        This configuration encapsulates the data, this program should
-     *                        be applied to.
-     * @param programConfig
-     *                        This parameter contains some additional configuration for this
-     *                        program.
-     * @param invocationLine
-     *                        This is the complete invocation line, were all parameter
-     *                        placeholders are already replaced by their actual values.
-     * @param effectiveParams
-     *                        This map contains only the program parameters defined in the
-     *                        program configuration together with their actual values.
-     * @param internalParams
-     *                        This map contains parameters, that are not program specific,
-     *                        but related and necessary for the execution of the program,
-     *                        e.g. the path to the output or log files created by the
-     *                        program.
-     * @return A Process object which can be used to get the status of or to
-     *         control the execution of this program.
-     * @throws IOException
-     * @throws RNotAvailableException
-     * @throws RLibraryNotLoadedException
-     * @throws REngineException
-     * @throws REXPMismatchException
-     * @throws InterruptedException
-     */
-    public abstract Process exec(final DataConfig dataConfig,
-            final ProgramConfig programConfig, final String[] invocationLine,
-            final Map<String, String> effectiveParams,
-            final Map<String, String> internalParams) throws IOException,
-                                                             RNotAvailableException, RLibraryNotLoadedException,
-                                                             REngineException, REXPMismatchException, InterruptedException;
-
-    /**
-     * @return The context of this program. A run can only perform this program,
-     *         if it has the same context.
-     * @throws UnknownContextException
-     */
-    public abstract Context getContext() throws UnknownContextException;
 }

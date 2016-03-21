@@ -12,6 +12,7 @@
  */
 package de.clusteval.run.runnable;
 
+import de.clusteval.api.exceptions.RunIterationException;
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.cluster.quality.ClusteringQualityMeasureValue;
 import de.clusteval.api.cluster.quality.ClusteringQualitySet;
@@ -35,7 +36,7 @@ import de.clusteval.program.ProgramParameter;
 import de.clusteval.run.ParameterOptimizationRun;
 import de.clusteval.run.Run;
 import de.clusteval.run.result.ParameterOptimizationResult;
-import de.clusteval.run.result.RunResultParseException;
+import de.clusteval.api.exceptions.RunResultParseException;
 import de.clusteval.utils.plot.Plotter;
 import de.wiwie.wiutils.file.FileUtils;
 import de.wiwie.wiutils.utils.Triple;

@@ -18,6 +18,7 @@ import de.clusteval.api.repository.RepositoryEvent;
 import de.clusteval.api.repository.RepositoryRemoveEvent;
 import de.clusteval.api.repository.RepositoryReplaceEvent;
 import de.clusteval.api.run.IRun;
+import de.clusteval.api.run.IRunResult;
 import de.clusteval.api.run.IRunRunnable;
 import de.clusteval.api.run.RUN_STATUS;
 import de.clusteval.context.Context;
@@ -26,7 +27,6 @@ import de.clusteval.framework.threading.RunSchedulerThread;
 import de.clusteval.program.ProgramParameter;
 import de.clusteval.run.result.ClusteringRunResult;
 import de.clusteval.run.result.NoRunResultFormatParserException;
-import de.clusteval.run.result.RunResult;
 import de.clusteval.run.result.format.RunResultFormat;
 import de.clusteval.run.runnable.RunRunnable;
 import de.clusteval.run.runnable.RunRunnableInitializationException;
@@ -120,7 +120,7 @@ public abstract class Run extends RepositoryObject implements IRun {
      * contains one {@link ClusteringRunResult} object for every executed
      * combination of program and dataset.
      */
-    protected List<RunResult> results;
+    protected List<IRunResult> results;
 
     /**
      * The path to the log file in the results-directory of the execution of
@@ -579,13 +579,6 @@ public abstract class Run extends RepositoryObject implements IRun {
     }
 
     /**
-     * @return The number of run runnables this run will create. This number
-     *         will be used in the {@link #doPerform(RunSchedulerThread)} method to
-     *         create the correct number of runnables.
-     */
-    protected abstract int getNumberOfRunRunnables();
-
-    /**
      * Returns the current status of this run execution in terms of finished
      * percentage. Depending on the current status of the run, this method
      * returns different values:
@@ -624,7 +617,7 @@ public abstract class Run extends RepositoryObject implements IRun {
      * @return Get the list of run results that are produced by the execution of
      *         this run.
      */
-    public List<RunResult> getResults() {
+    public List<IRunResult> getResults() {
         return this.results;
     }
 
@@ -641,6 +634,7 @@ public abstract class Run extends RepositoryObject implements IRun {
      * @return A list containing all run runnables this run created during its
      *         execution.
      */
+    @Override
     public List<IRunRunnable> getRunRunnables() {
         return this.runnables;
     }
@@ -809,8 +803,8 @@ public abstract class Run extends RepositoryObject implements IRun {
      */
     protected void waitForRunnablesToFinish() {
         this.log.info("Run " + this + " - Waiting for runs to finish...");
-        for (RunRunnable r : runnables) {
-            RunRunnable t = r;
+        for (IRunRunnable r : runnables) {
+            IRunRunnable t = r;
             try {
                 try {
                     t.waitFor();

@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.program;
 
+import de.clusteval.api.exceptions.UnknownParameterType;
 import de.clusteval.api.exceptions.InternalAttributeException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
@@ -39,7 +40,7 @@ import org.apache.commons.configuration.SubnodeConfiguration;
  * @param <T>
  *
  */
-public abstract class ProgramParameter<T> extends RepositoryObject {
+public abstract class ProgramParameter<T> extends RepositoryObject implements IProgramParameter<T> {
 
     /**
      * A helper method for cloning a list of parameters.

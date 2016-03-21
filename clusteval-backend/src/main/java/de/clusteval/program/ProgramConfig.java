@@ -12,11 +12,14 @@
  */
 package de.clusteval.program;
 
+import de.clusteval.api.data.IDataSetFormat;
+import de.clusteval.api.exceptions.UnknownProgramParameterException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.repository.RepositoryEvent;
 import de.clusteval.api.repository.RepositoryRemoveEvent;
 import de.clusteval.api.repository.RepositoryReplaceEvent;
+import de.clusteval.api.run.IRunResultFormat;
 import de.clusteval.data.dataset.format.DataSetFormat;
 import de.clusteval.framework.repository.RepositoryObject;
 import de.clusteval.run.ParameterOptimizationRun;
@@ -65,7 +68,7 @@ public class ProgramConfig extends RepositoryObject implements IProgramConfig {
     /**
      * The program this configuration belongs to.
      */
-    protected Program program;
+    protected IProgram program;
 
     /**
      * This is the default invocation line used to invoke the program, when this
@@ -111,24 +114,24 @@ public class ProgramConfig extends RepositoryObject implements IProgramConfig {
      * This list holds all dataset formats that are compatible with the
      * encapsulated program, i.e. input formats this program is able to read.
      */
-    protected List<DataSetFormat> compatibleDataSetFormats;
+    protected List<IDataSetFormat> compatibleDataSetFormats;
 
     /**
      * The output format of the program
      */
-    protected RunResultFormat outputFormat;
+    protected IRunResultFormat outputFormat;
 
     /**
      * A list holding all parameters of the program.
      */
-    protected List<ProgramParameter<?>> params;
+    protected List<IProgramParameter<?>> params;
 
     /**
      * A list holding all optimizable parameter of the program. Optimizable
      * parameters are those parameters, that can in principle be optimized in
      * parameter optimization runs (see {@link ParameterOptimizationRun}).
      */
-    protected List<ProgramParameter<?>> optimizableParameters;
+    protected List<IProgramParameter<?>> optimizableParameters;
 
     /**
      * This boolean indicates, whether the encapsulated program requires a
@@ -171,6 +174,7 @@ public class ProgramConfig extends RepositoryObject implements IProgramConfig {
      *                                                                 optimized.
      * @param expectsNormalizedDataSet                                 Whether the encapsulated program requires
      *                                                                 normalized input.
+     * @param maxExecutionTimeMinutes
      * @throws RegisterException
      */
     public ProgramConfig(
@@ -178,15 +182,15 @@ public class ProgramConfig extends RepositoryObject implements IProgramConfig {
             final boolean register,
             final long changeDate,
             final File absPath,
-            final Program program,
-            final RunResultFormat outputFormat,
-            final List<DataSetFormat> compatibleDataSetFormats,
+            final IProgram program,
+            final IRunResultFormat outputFormat,
+            final List<IDataSetFormat> compatibleDataSetFormats,
             final String invocationFormat,
             final String invocationFormatWithoutGoldStandard,
             final String invocationFormatParameterOptimization,
             final String invocationFormatParameterOptimizationWithoutGoldStandard,
-            final List<ProgramParameter<?>> params,
-            final List<ProgramParameter<?>> optimizableParameters,
+            final List<IProgramParameter<?>> params,
+            final List<IProgramParameter<?>> optimizableParameters,
             final boolean expectsNormalizedDataSet,
             final int maxExecutionTimeMinutes) throws RegisterException {
         super(repository, false, changeDate, absPath);
@@ -268,10 +272,12 @@ public class ProgramConfig extends RepositoryObject implements IProgramConfig {
      *         false otherwise.
      * @see #expectsNormalizedDataSet
      */
+    @Override
     public boolean expectsNormalizedDataSet() {
         return this.expectsNormalizedDataSet;
     }
 
+    @Override
     public int getMaxExecutionTimeMinutes() {
         return this.maxExecutionTimeMinutes;
     }
@@ -330,7 +336,7 @@ public class ProgramConfig extends RepositoryObject implements IProgramConfig {
      * @return The list of parameters of the encapsulated program.
      * @see #params
      */
-    public List<ProgramParameter<?>> getParams() {
+    public List<IProgramParameter<?>> getParams() {
         return params;
     }
 
@@ -339,7 +345,7 @@ public class ProgramConfig extends RepositoryObject implements IProgramConfig {
      * @return The list of optimizable parameters of the encapsulated program.
      * @see #optimizableParameters
      */
-    public List<ProgramParameter<?>> getOptimizableParams() {
+    public List<IProgramParameter<?>> getOptimizableParams() {
         return optimizableParameters;
     }
 
@@ -367,7 +373,7 @@ public class ProgramConfig extends RepositoryObject implements IProgramConfig {
      * @return The encapsulated program.
      * @see #program
      */
-    public Program getProgram() {
+    public IProgram getProgram() {
         return program;
     }
 

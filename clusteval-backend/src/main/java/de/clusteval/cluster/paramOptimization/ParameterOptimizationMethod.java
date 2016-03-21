@@ -29,7 +29,7 @@ import de.clusteval.run.ParameterOptimizationRun;
 import de.clusteval.run.Run;
 import de.clusteval.run.result.ClusteringRunResult;
 import de.clusteval.run.result.ParameterOptimizationResult;
-import de.clusteval.run.result.RunResultParseException;
+import de.clusteval.api.exceptions.RunResultParseException;
 import de.clusteval.run.runnable.ExecutionRunRunnable;
 import java.io.File;
 import java.lang.reflect.Constructor;

@@ -26,7 +26,7 @@ import de.clusteval.program.ParameterSet;
 import de.clusteval.program.ProgramConfig;
 import de.clusteval.program.ProgramParameter;
 import de.clusteval.run.ParameterOptimizationRun;
-import de.clusteval.run.result.RunResultParseException;
+import de.clusteval.api.exceptions.RunResultParseException;
 import de.clusteval.api.exceptions.InternalAttributeException;
 
 /**

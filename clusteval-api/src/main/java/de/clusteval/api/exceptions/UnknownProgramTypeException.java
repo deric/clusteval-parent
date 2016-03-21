@@ -11,27 +11,23 @@
 /**
  * 
  */
-package de.clusteval.program;
+package de.clusteval.api.exceptions;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class UnknownProgramParameterException.
- *
  * @author Christian Wiwie
+ * 
  */
-public class UnknownProgramParameterException extends Exception {
+public class UnknownProgramTypeException extends Exception {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -5049198796095370629L;
+	private static final long serialVersionUID = -3026418652642380239L;
 
 	/**
-	 * Instantiates a new unknown program parameter exception.
-	 *
-	 * @param message the message
+	 * @param message
 	 */
-	public UnknownProgramParameterException(final String message) {
+	public UnknownProgramTypeException(final String message) {
 		super(message);
 	}
 }

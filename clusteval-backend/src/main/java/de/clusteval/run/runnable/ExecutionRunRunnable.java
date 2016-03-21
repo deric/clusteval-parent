@@ -14,13 +14,17 @@ import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.api.cluster.quality.ClusteringQualityMeasureValue;
 import de.clusteval.api.cluster.quality.ClusteringQualitySet;
+import de.clusteval.api.data.IDataConfig;
+import de.clusteval.api.data.IGoldStandard;
+import de.clusteval.api.exceptions.FormatConversionException;
 import de.clusteval.api.exceptions.IncompleteGoldStandardException;
 import de.clusteval.api.exceptions.InternalAttributeException;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
-import de.clusteval.api.r.RNotAvailableException;
+import de.clusteval.api.exceptions.RunIterationException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.r.RLibraryNotLoadedException;
+import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.cluster.Clustering;
@@ -35,11 +39,12 @@ import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
 import de.clusteval.data.dataset.format.ConversionStandardToInputConfiguration;
 import de.clusteval.data.dataset.format.DataSetFormat;
 import de.clusteval.data.dataset.format.IncompatibleDataSetFormatException;
-import de.clusteval.data.goldstandard.GoldStandard;
 import de.clusteval.data.goldstandard.GoldStandardConfig;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.framework.threading.RunSchedulerThread;
+import de.clusteval.program.IProgramConfig;
+import de.clusteval.program.IProgramParameter;
 import de.clusteval.program.ParameterSet;
 import de.clusteval.program.ProgramConfig;
 import de.clusteval.program.ProgramParameter;
@@ -53,7 +58,6 @@ import de.clusteval.run.result.NoRunResultFormatParserException;
 import de.clusteval.run.result.format.RunResultFormat;
 import de.clusteval.run.result.format.RunResultNotFoundException;
 import de.clusteval.run.result.postprocessing.RunResultPostprocessor;
-import de.clusteval.api.exceptions.FormatConversionException;
 import de.clusteval.utils.plot.Plotter;
 import de.wiwie.wiutils.file.FileUtils;
 import de.wiwie.wiutils.format.Formatter;
@@ -90,12 +94,12 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
     /**
      * The program configuration this thread combines with a data configuration.
      */
-    protected ProgramConfig programConfig;
+    protected IProgramConfig programConfig;
 
     /**
      * The data configuration this thread combines with a program configuration.
      */
-    protected DataConfig dataConfig;
+    protected IDataConfig dataConfig;
 
     /**
      * This is the run result format of the program that is being executed by
@@ -106,7 +110,7 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
     /**
      * A map containing all the parameter values set in the run.
      */
-    protected Map<ProgramParameter<?>, String> runParams;
+    protected Map<IProgramParameter<?>, String> runParams;
 
     /**
      * A temporary variable holding the absolute path to the current complete
@@ -130,8 +134,8 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
      *                       completely new execution.
      * @param runParams
      */
-    public ExecutionRunRunnable(Run run, ProgramConfig programConfig, DataConfig dataConfig, String runIdentString,
-            boolean isResume, Map<ProgramParameter<?>, String> runParams) {
+    public ExecutionRunRunnable(Run run, IProgramConfig programConfig, IDataConfig dataConfig, String runIdentString,
+            boolean isResume, Map<IProgramParameter<?>, String> runParams) {
         super(run, runIdentString, isResume);
 
         this.programConfig = programConfig;
@@ -164,7 +168,7 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
         // 04.04.2013: adding iteration numbers into complete file
         sb.append("iteration\t");
         for (int p = 0; p < programConfig.getOptimizableParams().size(); p++) {
-            ProgramParameter<?> param = programConfig.getOptimizableParams().get(p);
+            IProgramParameter<?> param = programConfig.getOptimizableParams().get(p);
             if (p > 0) {
                 sb.append(",");
             }
@@ -271,10 +275,10 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
             GoldStandardConfig goldStandardConfig) throws UnknownGoldStandardFormatException,
                                                           IncompleteGoldStandardException, IllegalArgumentException {
         this.log.debug("Checking compatibility of goldstandard and dataset ...");
-        DataSet dataSet = dataSetConfig.getDataSet().getInStandardFormat();
+        IDataSet dataSet = dataSetConfig.getDataSet().getInStandardFormat();
         File dataSetFile = ClustevalBackendServer.getCommonFile(new File(dataSet.getAbsolutePath()));
         synchronized (dataSetFile) {
-            GoldStandard goldStandard = goldStandardConfig.getGoldstandard();
+            IGoldStandard goldStandard = goldStandardConfig.getGoldstandard();
             File goldStandardFile = ClustevalBackendServer.getCommonFile(new File(goldStandard.getAbsolutePath()));
             synchronized (goldStandardFile) {
 
@@ -287,7 +291,7 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
 
                 final Set<String> ids = new HashSet<String>(dataSet.getIds());
                 final Set<ClusterItem> gsItems = goldStandard.getClustering().getClusterItems();
-                final Set<String> gsIds = new HashSet<String>();
+                final Set<String> gsIds = new HashSet<>();
                 for (ClusterItem item : gsItems) {
                     gsIds.add(item.getId());
                 }
@@ -303,14 +307,14 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
     /**
      * @return The program configuration of this runnable.
      */
-    public ProgramConfig getProgramConfig() {
+    public IProgramConfig getProgramConfig() {
         return this.programConfig;
     }
 
     /**
      * @return The data configuration of this runnable.
      */
-    public DataConfig getDataConfig() {
+    public IDataConfig getDataConfig() {
         return this.dataConfig;
     }
 

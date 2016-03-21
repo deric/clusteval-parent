@@ -12,32 +12,35 @@
  */
 package de.clusteval.run.result;
 
+import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigurationException;
 import de.clusteval.api.exceptions.GoldStandardNotFoundException;
+import de.clusteval.api.exceptions.NoDataSetException;
+import de.clusteval.api.exceptions.RunResultParseException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
+import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.run.IRunResult;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.cluster.paramOptimization.InvalidOptimizationParameterException;
 import de.clusteval.cluster.paramOptimization.UnknownParameterOptimizationMethodException;
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
-import de.clusteval.context.IncompatibleContextException;
-import de.clusteval.context.UnknownContextException;
+import de.clusteval.api.exceptions.IncompatibleContextException;
+import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
-import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
-import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.data.dataset.type.UnknownDataSetTypeException;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
@@ -49,10 +52,10 @@ import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
 import de.clusteval.framework.repository.parse.Parser;
-import de.clusteval.program.NoOptimizableProgramParameterException;
-import de.clusteval.program.UnknownParameterType;
-import de.clusteval.program.UnknownProgramParameterException;
-import de.clusteval.program.UnknownProgramTypeException;
+import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
+import de.clusteval.api.exceptions.UnknownParameterType;
+import de.clusteval.api.exceptions.UnknownProgramParameterException;
+import de.clusteval.api.exceptions.UnknownProgramTypeException;
 import de.clusteval.run.ClusteringRun;
 import de.clusteval.run.DataAnalysisRun;
 import de.clusteval.run.InvalidRunModeException;
@@ -61,7 +64,6 @@ import de.clusteval.run.Run;
 import de.clusteval.run.RunAnalysisRun;
 import de.clusteval.run.RunDataAnalysisRun;
 import de.clusteval.run.RunException;
-import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.run.statistics.UnknownRunDataStatisticException;
 import de.clusteval.run.statistics.UnknownRunStatisticException;
 import de.clusteval.utils.InvalidConfigurationFileException;
@@ -79,7 +81,7 @@ import org.slf4j.LoggerFactory;
  * @author Christian Wiwie
  *
  */
-public abstract class RunResult extends RepositoryObject {
+public abstract class RunResult extends RepositoryObject implements IRunResult {
 
     /**
      * @param parentRepository
@@ -275,34 +277,6 @@ public abstract class RunResult extends RepositoryObject {
     public Run getRun() {
         return this.run;
     }
-
-    /**
-     * Checks, whether this run result is currently held in memory.
-     *
-     * @return True, if this run result is currently held in memory. False
-     *         otherwise.
-     */
-    public abstract boolean isInMemory();
-
-    /**
-     * This method loads the contents of this run result into the memory by
-     * parsing the files on the filesystem.
-     *
-     * <p>
-     * The run result might consume a lot of memory afterwards. Only invoke this
-     * method, if you really need access to the run results contents and
-     * afterwards free the contents by invoking {@link #unloadFromMemory()}.
-     *
-     * @throws RunResultParseException
-     */
-    public abstract void loadIntoMemory() throws RunResultParseException;
-
-    /**
-     * This method unloads the contents of this run result from the memory and
-     * releases the reserved memory. This can be helpful especially for large
-     * parameter optimization run results.
-     */
-    public abstract void unloadFromMemory();
 
     public boolean hasChangedSinceLastRegister() {
         return this.changedSinceLastRegister;

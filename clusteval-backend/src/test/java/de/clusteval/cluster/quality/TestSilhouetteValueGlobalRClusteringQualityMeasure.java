@@ -28,7 +28,7 @@ import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.context.Context;
-import de.clusteval.context.UnknownContextException;
+import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.DataSet;
 import de.clusteval.data.dataset.DataSetConfig;

@@ -12,6 +12,7 @@
  */
 package de.clusteval.run.runnable;
 
+import de.clusteval.api.exceptions.RunIterationException;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.threading.RunSchedulerThread;
 import de.clusteval.run.Run;
@@ -28,8 +29,7 @@ import java.util.List;
  * @author Christian Wiwie
  *
  */
-public class RunAnalysisRunRunnable
-        extends
+public class RunAnalysisRunRunnable extends
         AnalysisRunRunnable<RunStatistic, RunAnalysisRunResult, RunAnalysisIterationWrapper, RunAnalysisIterationRunnable> {
 
     /**

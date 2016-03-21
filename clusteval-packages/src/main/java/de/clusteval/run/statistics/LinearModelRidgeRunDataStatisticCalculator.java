@@ -26,7 +26,7 @@ import de.clusteval.program.Program;
 import de.clusteval.run.result.DataAnalysisRunResult;
 import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.run.result.RunResult;
-import de.clusteval.run.result.RunResultParseException;
+import de.clusteval.api.exceptions.RunResultParseException;
 import de.wiwie.wiutils.file.FileUtils;
 import de.wiwie.wiutils.utils.Pair;
 import java.io.File;

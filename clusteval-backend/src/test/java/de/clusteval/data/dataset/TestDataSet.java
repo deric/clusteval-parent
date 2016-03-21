@@ -35,8 +35,8 @@ import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationM
 import de.clusteval.cluster.paramOptimization.InvalidOptimizationParameterException;
 import de.clusteval.cluster.paramOptimization.UnknownParameterOptimizationMethodException;
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
-import de.clusteval.context.IncompatibleContextException;
-import de.clusteval.context.UnknownContextException;
+import de.clusteval.api.exceptions.IncompatibleContextException;
+import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
@@ -70,10 +70,10 @@ import de.clusteval.framework.repository.config.RepositoryConfigurationException
 import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.framework.repository.db.StubSQLCommunicator;
 import de.clusteval.framework.repository.parse.Parser;
-import de.clusteval.program.NoOptimizableProgramParameterException;
-import de.clusteval.program.UnknownParameterType;
-import de.clusteval.program.UnknownProgramParameterException;
-import de.clusteval.program.UnknownProgramTypeException;
+import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
+import de.clusteval.api.exceptions.UnknownParameterType;
+import de.clusteval.api.exceptions.UnknownProgramParameterException;
+import de.clusteval.api.exceptions.UnknownProgramTypeException;
 import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.run.RunException;
 import de.clusteval.api.exceptions.UnknownRunResultFormatException;

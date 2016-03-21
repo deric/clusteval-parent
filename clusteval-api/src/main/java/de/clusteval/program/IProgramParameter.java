@@ -17,32 +17,12 @@
 package de.clusteval.program;
 
 import de.clusteval.api.repository.IRepositoryObject;
-import java.util.List;
 
 /**
- * A program configuration encapsulates a program together with options and
- * settings.
  *
  * @author deric
+ * @param <T>
  */
-public interface IProgramConfig extends IRepositoryObject {
-
-    /**
-     * @return True, if the encapsulated program requires normalized input data,
-     * false otherwise.
-     * @see #expectsNormalizedDataSet
-     */
-    boolean expectsNormalizedDataSet();
-
-    int getMaxExecutionTimeMinutes();
-
-    void setMaxExecutionTimeMinutes(final int maxExecutionTimeMinutes);
-
-    /**
-     *
-     * @return The list of optimizable parameters of the encapsulated program.
-     * @see #optimizableParameters
-     */
-    List<IProgramParameter<?>> getOptimizableParams();
+public interface IProgramParameter<T> extends IRepositoryObject {
 
 }

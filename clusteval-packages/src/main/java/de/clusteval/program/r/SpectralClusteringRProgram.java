@@ -25,7 +25,7 @@ import org.rosuda.REngine.Rserve.RserveException;
 
 import de.clusteval.cluster.Clustering;
 import de.clusteval.context.Context;
-import de.clusteval.context.UnknownContextException;
+import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.format.DataSetFormat;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;

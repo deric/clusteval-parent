@@ -14,32 +14,24 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.clusteval.api.run;
-
-import de.clusteval.api.exceptions.RunIterationException;
-import de.wiwie.wiutils.utils.ProgressPrinter;
+package de.clusteval.api.exceptions;
 
 /**
+ * @author Christian Wiwie
  *
- * @author deric
- * @param <IR>
- * @param <IW>
  */
-public interface IRunRunnable<IR extends IterationRunnable, IW extends IterationWrapper> extends Runnable {
+public class RunIterationException extends ClustEvalException {
 
-    IRun getRun();
-
-    void terminate();
+    public RunIterationException(Throwable cause) {
+        super(cause);
+    }
 
     /**
-     * @return The progress printer of this runnable.
-     * @see #progress
+     * @param message
+     * @param cause
      */
-    ProgressPrinter getProgressPrinter();
+    public RunIterationException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
-    boolean hasNextIteration();
-
-    int consumeNextIteration() throws RunIterationException;
-
-    void doRunIteration(IW iterationWrapper) throws RunIterationException;
 }

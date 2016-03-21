@@ -11,25 +11,27 @@
 /**
  * 
  */
-package de.clusteval.run.result;
+package de.clusteval.api.exceptions;
 
-import de.clusteval.api.exceptions.ClustEvalException;
-
+// TODO: Auto-generated Javadoc
 /**
+ * The Class UnknownProgramParameterException.
+ *
  * @author Christian Wiwie
- * 
  */
-public class RunResultException extends ClustEvalException {
+public class UnknownProgramParameterException extends Exception {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -6291009591323030110L;
+	private static final long serialVersionUID = -5049198796095370629L;
 
 	/**
-	 * @param message
+	 * Instantiates a new unknown program parameter exception.
+	 *
+	 * @param message the message
 	 */
-	public RunResultException(String message) {
+	public UnknownProgramParameterException(final String message) {
 		super(message);
 	}
 }

@@ -23,7 +23,7 @@ import org.rosuda.REngine.Rserve.RserveException;
 
 import de.wiwie.wiutils.utils.ArraysExt;
 import de.clusteval.context.Context;
-import de.clusteval.context.UnknownContextException;
+import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.data.dataset.format.DataSetFormat;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.r.RLibraryRequirement;

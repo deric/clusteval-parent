@@ -13,6 +13,7 @@ package de.clusteval.run.runnable;
 import de.clusteval.api.exceptions.IncompleteGoldStandardException;
 import de.clusteval.api.exceptions.InternalAttributeException;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
+import de.clusteval.api.exceptions.RunIterationException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.repository.RegisterException;
@@ -63,7 +64,7 @@ import org.slf4j.LoggerFactory;
  * @param <IR>
  * @param <IW>
  */
-public abstract class RunRunnable<IR extends IterationRunnable, IW extends IterationWrapper> implements Runnable, IRunRunnable {
+public abstract class RunRunnable<IR extends IterationRunnable, IW extends IterationWrapper> implements Runnable, IRunRunnable<IR, IW> {
 
     /**
      * The run this runnable object was created by.
@@ -262,6 +263,8 @@ public abstract class RunRunnable<IR extends IterationRunnable, IW extends Itera
      * This method is invoked by {@link #run()} after {@link #beforeRun()} has
      * finished and is responsible for the operation and execution of the
      * runnable itself.
+     *
+     * @throws de.clusteval.api.exceptions.RunIterationException
      */
     protected void doRun() throws RunIterationException {
         while (this.hasNextIteration()) {
@@ -274,13 +277,6 @@ public abstract class RunRunnable<IR extends IterationRunnable, IW extends Itera
             this.doRunIteration(iterationWrapper);
         }
     }
-
-    protected abstract boolean hasNextIteration();
-
-    protected abstract int consumeNextIteration() throws RunIterationException;
-
-    protected abstract void doRunIteration(IW iterationWrapper)
-            throws RunIterationException;
 
     /**
      * This method is invoked by {@link #run()} after {@link #doRun()} has

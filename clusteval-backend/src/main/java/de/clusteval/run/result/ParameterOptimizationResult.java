@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.run.result;
 
+import de.clusteval.api.exceptions.RunResultParseException;
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.cluster.quality.ClusteringQualitySet;
 import de.clusteval.api.exceptions.DataSetNotFoundException;
@@ -34,8 +35,8 @@ import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
 import de.clusteval.cluster.paramOptimization.UnknownParameterOptimizationMethodException;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
-import de.clusteval.context.IncompatibleContextException;
-import de.clusteval.context.UnknownContextException;
+import de.clusteval.api.exceptions.IncompatibleContextException;
+import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
@@ -50,11 +51,11 @@ import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
 import de.clusteval.framework.repository.parse.Parser;
-import de.clusteval.program.NoOptimizableProgramParameterException;
+import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.program.ParameterSet;
-import de.clusteval.program.UnknownParameterType;
-import de.clusteval.program.UnknownProgramParameterException;
-import de.clusteval.program.UnknownProgramTypeException;
+import de.clusteval.api.exceptions.UnknownParameterType;
+import de.clusteval.api.exceptions.UnknownProgramParameterException;
+import de.clusteval.api.exceptions.UnknownProgramTypeException;
 import de.clusteval.run.InvalidRunModeException;
 import de.clusteval.run.ParameterOptimizationRun;
 import de.clusteval.run.Run;

@@ -20,9 +20,6 @@ import java.util.HashMap;
  */
 public class ParameterSet extends HashMap<String, String> {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = 405272229276934252L;
 
     /*

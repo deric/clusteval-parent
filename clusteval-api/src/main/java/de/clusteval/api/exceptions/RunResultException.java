@@ -12,18 +12,16 @@ package de.clusteval.api.exceptions;
 
 /**
  * @author Christian Wiwie
+ *
  */
-public class UnknownDataSetGeneratorException extends Exception {
+public class RunResultException extends ClustEvalException {
 
-    private static final long serialVersionUID = 433568096995882002L;
+    private static final long serialVersionUID = -6291009591323030110L;
 
     /**
-     * Instantiates a new unknown dataset generator exception.
-     *
-     * @param string
-     *               the string
+     * @param message
      */
-    public UnknownDataSetGeneratorException(String string) {
-        super(string);
+    public RunResultException(String message) {
+        super(message);
     }
 }

@@ -12,6 +12,7 @@
  */
 package de.clusteval.run.runnable;
 
+import de.clusteval.api.exceptions.RunIterationException;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.repository.RegisterException;

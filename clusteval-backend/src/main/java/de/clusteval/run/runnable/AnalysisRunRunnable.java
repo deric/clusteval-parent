@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.run.runnable;
 
+import de.clusteval.api.exceptions.RunIterationException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.data.statistics.DataStatistic;

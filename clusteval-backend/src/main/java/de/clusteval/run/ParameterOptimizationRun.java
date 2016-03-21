@@ -33,7 +33,7 @@ import de.clusteval.program.ParameterSet;
 import de.clusteval.program.ProgramConfig;
 import de.clusteval.program.ProgramParameter;
 import de.clusteval.run.result.ParameterOptimizationResult;
-import de.clusteval.run.result.RunResultParseException;
+import de.clusteval.api.exceptions.RunResultParseException;
 import de.clusteval.run.result.postprocessing.RunResultPostprocessor;
 import de.clusteval.run.runnable.ExecutionRunRunnable;
 import de.clusteval.run.runnable.ParameterOptimizationRunRunnable;

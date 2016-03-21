@@ -21,7 +21,7 @@ import de.clusteval.cluster.quality.ClusteringQualityMeasureParameters;
 import de.clusteval.api.cluster.quality.ClusteringQualityMeasureValue;
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
 import de.clusteval.context.Context;
-import de.clusteval.context.UnknownContextException;
+import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.DataSet;
 import de.clusteval.data.dataset.RelativeDataSet;
@@ -40,7 +40,7 @@ import de.clusteval.framework.repository.config.RepositoryConfigurationException
 import de.clusteval.program.ParameterSet;
 import de.clusteval.program.ProgramConfig;
 import de.clusteval.run.Run;
-import de.clusteval.run.result.RunResultParseException;
+import de.clusteval.api.exceptions.RunResultParseException;
 import de.clusteval.utils.AbstractClustEvalTest;
 import de.clusteval.api.exceptions.FormatConversionException;
 import de.clusteval.api.exceptions.InternalAttributeException;
