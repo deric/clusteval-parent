@@ -407,4 +407,6 @@ public interface IRepository {
      * @param instance
      */
     void lookupRemove(Object instance);
+
+    boolean register(final INamedAttribute<Number> object);
 }

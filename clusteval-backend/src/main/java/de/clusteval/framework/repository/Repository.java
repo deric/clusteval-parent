@@ -85,12 +85,15 @@ import de.clusteval.run.statistics.RunDataStatisticCalculator;
 import de.clusteval.run.statistics.RunStatistic;
 import de.clusteval.run.statistics.RunStatisticCalculator;
 import de.clusteval.utils.Finder;
+import de.clusteval.utils.NamedAttribute;
 import de.clusteval.utils.NamedDoubleAttribute;
 import de.clusteval.utils.NamedIntegerAttribute;
 import de.clusteval.utils.NamedStringAttribute;
 import de.wiwie.wiutils.file.FileUtils;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Collection;
@@ -251,7 +254,7 @@ public class Repository implements IRepository {
      * by any kind of configuration file as a option value, which is not
      * available before starting of a run.
      */
-    protected Map<String, NamedDoubleAttribute> internalDoubleAttributes;
+    protected Map<String, NamedAttribute<Double>> internalDoubleAttributes;
 
     /**
      * This map holds all available internal string attributes, which can be
@@ -600,7 +603,7 @@ public class Repository implements IRepository {
      *
      * <p>
      * A helper method of null null null null null null null null null null null
-     * null null null null null null null null null null null null     {@link ProgramParameter#evaluateDefaultValue(DataConfig, ProgramConfig)},
+     * null null null null null null null null null null null null null null null null null null null     {@link ProgramParameter#evaluateDefaultValue(DataConfig, ProgramConfig)},
 	 * {@link ProgramParameter#evaluateMinValue(DataConfig, ProgramConfig)} and
      * {@link ProgramParameter#evaluateMaxValue(DataConfig, ProgramConfig)}.
      *
@@ -883,12 +886,6 @@ public class Repository implements IRepository {
             Class<? extends DataStatisticCalculator<? extends DataStatistic>> dataStatisticCalculator) {
         return ((DataStatisticRepositoryEntity) this.dynamicRepositoryEntities.get(DataStatistic.class))
                 .registerDataStatisticCalculator(dataStatisticCalculator);
-    }
-
-    public boolean registerRunDataStatisticCalculator(
-            Class<? extends RunDataStatisticCalculator<? extends RunDataStatistic>> runDataStatisticCalculator) {
-        return ((RunDataStatisticRepositoryEntity) this.dynamicRepositoryEntities.get(RunDataStatistic.class))
-                .registerRunDataStatisticCalculator(runDataStatisticCalculator);
     }
 
     public boolean registerRunStatisticCalculator(
@@ -1579,12 +1576,24 @@ public class Repository implements IRepository {
      * @param object The new object to register.
      * @return True, if the new object has been registered.
      */
-    public boolean register(final NamedDoubleAttribute object) {
+    @Override
+    public boolean register(final INamedAttribute<Number> object) {
+
+        Type sooper = object.getClass().getGenericSuperclass();
+        Type t = ((ParameterizedType) sooper).getActualTypeArguments()[0];
+        switch (t.getTypeName()) {
+            case "Double":
+                this.internalDoubleAttributes.put(object.getName(), object);
+                this.pathToRepositoryObject.put(object.absPath, object);
+                break;
+            default:
+                throw new RuntimeException("unsupported type " + t.getTypeName());
+        }
+
         if (this.getRegisteredObject(object) != null) {
             return false;
         }
-        this.internalDoubleAttributes.put(object.getName(), object);
-        this.pathToRepositoryObject.put(object.absPath, object);
+
         return true;
     }
 

@@ -77,8 +77,7 @@ public class RunDataAnalysisIterationRunnable extends AnalysisIterationRunnable<
                 .getRepository().getRunDataStatisticCalculator(
                         this.getStatistic().getClass().getName());
         Constructor<? extends RunDataStatisticCalculator> constr = calcClass
-                .getConstructor(IRepository.class, long.class, File.class,
-                        List.class, List.class);
+                .getConstructor(IRepository.class, long.class, File.class, List.class, List.class);
         RunDataStatisticCalculator calc = constr.newInstance(this.getRun()
                 .getRepository(), calcFile.lastModified(), calcFile,
                 this.iterationWrapper.getRunIdentifier(), this.iterationWrapper

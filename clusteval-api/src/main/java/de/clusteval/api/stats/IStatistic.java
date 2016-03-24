@@ -35,4 +35,20 @@ public interface IStatistic extends IRepositoryObject {
 
     String toString();
 
+    /**
+     * The string returned by this method is used to represent this type of
+     * statistic throughout the framework (e.g. in the configuration files)
+     *
+     * @return A string representing this statistic class.
+     */
+    String getIdentifier();
+
+    /**
+     * This alias is used whenever this statistic is visually represented and a
+     * readable name is needed.
+     *
+     * @return The alias of this statistic.
+     */
+    String getAlias();
+
 }

@@ -19,6 +19,7 @@ import de.clusteval.api.exceptions.GoldStandardNotFoundException;
 import de.clusteval.api.exceptions.IncompatibleContextException;
 import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
+import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.exceptions.RunResultParseException;
 import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
@@ -37,6 +38,7 @@ import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.IRunResult;
 import de.clusteval.api.stats.IDataStatistic;
+import de.clusteval.api.stats.IStatistic;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.cluster.paramOptimization.InvalidOptimizationParameterException;
 import de.clusteval.cluster.paramOptimization.UnknownParameterOptimizationMethodException;
@@ -52,7 +54,6 @@ import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
 import de.clusteval.data.statistics.DataStatistic;
 import de.clusteval.data.statistics.UnknownDataStatisticException;
-import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
@@ -64,7 +65,6 @@ import de.clusteval.run.RunException;
 import de.clusteval.run.statistics.UnknownRunDataStatisticException;
 import de.clusteval.run.statistics.UnknownRunStatisticException;
 import de.clusteval.utils.InvalidConfigurationFileException;
-import de.clusteval.utils.Statistic;
 import de.wiwie.wiutils.file.FileUtils;
 import java.io.File;
 import java.io.IOException;
@@ -249,7 +249,7 @@ public class DataAnalysisRunResult extends AnalysisRunResult<IDataConfig, IDataS
                 for (final IDataConfig dataConfig : run.getDataConfigs()) {
 
                     List<IDataStatistic> statistics = new ArrayList<>();
-                    for (final Statistic dataStatistic : run.getStatistics()) {
+                    for (final IStatistic dataStatistic : run.getStatistics()) {
                         final File completeFile = new File(FileUtils.buildPath(analysesFolder.getAbsolutePath(),
                                 dataConfig.toString() + "_" + dataStatistic.getIdentifier() + ".txt"));
                         if (!completeFile.exists()) {
@@ -338,7 +338,7 @@ public class DataAnalysisRunResult extends AnalysisRunResult<IDataConfig, IDataS
         for (final IDataConfig dataConfig : getRun().getDataConfigs()) {
 
             List<IDataStatistic> stats = new ArrayList<>();
-            for (final Statistic dataStatistic : getRun().getStatistics()) {
+            for (final IStatistic dataStatistic : getRun().getStatistics()) {
                 final File completeFile = new File(FileUtils.buildPath(absPath.getAbsolutePath(),
                         dataConfig.toString() + "_" + dataStatistic.getIdentifier() + ".txt"));
                 if (!completeFile.exists()) {

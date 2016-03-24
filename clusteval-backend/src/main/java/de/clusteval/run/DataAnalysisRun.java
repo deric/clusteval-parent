@@ -13,9 +13,9 @@ package de.clusteval.run;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.stats.IDataStatistic;
 import de.clusteval.context.Context;
 import de.clusteval.data.DataConfig;
-import de.clusteval.data.statistics.DataStatistic;
 import de.clusteval.framework.threading.RunSchedulerThread;
 import de.clusteval.run.runnable.DataAnalysisRunRunnable;
 import de.clusteval.run.runnable.RunRunnable;
@@ -37,7 +37,7 @@ import java.util.List;
  * @author Christian Wiwie
  *
  */
-public class DataAnalysisRun extends AnalysisRun<DataStatistic> {
+public class DataAnalysisRun extends AnalysisRun<IDataStatistic> {
 
     /**
      * A list of data configurations, that should be assessed during execution
@@ -64,7 +64,7 @@ public class DataAnalysisRun extends AnalysisRun<DataStatistic> {
      */
     public DataAnalysisRun(IRepository repository, final Context context,
             long changeDate, File absPath, List<IDataConfig> dataConfigs,
-            List<DataStatistic> statistics) throws RegisterException {
+            List<IDataStatistic> statistics) throws RegisterException {
         super(repository, context, changeDate, absPath, statistics);
         this.dataConfigs = dataConfigs;
 
@@ -74,7 +74,7 @@ public class DataAnalysisRun extends AnalysisRun<DataStatistic> {
                 dataConfig.addListener(this);
             }
 
-            for (DataStatistic statistic : this.statistics) {
+            for (IDataStatistic statistic : this.statistics) {
                 // added 21.03.2013
                 statistic.register();
                 statistic.addListener(this);
@@ -100,10 +100,10 @@ public class DataAnalysisRun extends AnalysisRun<DataStatistic> {
      * @see run.AnalysisRun#cloneStatistics(java.util.List)
      */
     @Override
-    protected List<DataStatistic> cloneStatistics(List<DataStatistic> statistics) {
-        final List<DataStatistic> result = new ArrayList<>();
+    protected List<IDataStatistic> cloneStatistics(List<IDataStatistic> statistics) {
+        final List<IDataStatistic> result = new ArrayList<>();
 
-        for (DataStatistic st : statistics) {
+        for (IDataStatistic st : statistics) {
             result.add(st.clone());
         }
 

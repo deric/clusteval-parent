@@ -15,9 +15,9 @@ package de.clusteval.utils;
 import de.clusteval.api.r.RLibraryInferior;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.stats.IStatistic;
 import de.clusteval.framework.repository.RepositoryObject;
 import java.io.File;
-import de.clusteval.api.stats.IStatistic;
 
 /**
  * An abstract class representing a property of some object, that can be
@@ -67,15 +67,6 @@ public abstract class Statistic extends RepositoryObject implements RLibraryInfe
     public final String getIdentifier() {
         return this.getClass().getSimpleName();
     }
-
-
-    /**
-     * This alias is used whenever this statistic is visually represented and a
-     * readable name is needed.
-     *
-     * @return The alias of this statistic.
-     */
-    public abstract String getAlias();
 
     /**
      * @return The context of this statistic. A statistic can only be assessed

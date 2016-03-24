@@ -30,6 +30,7 @@ import de.clusteval.api.exceptions.GoldStandardNotFoundException;
 import de.clusteval.api.exceptions.IncompatibleContextException;
 import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
+import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
@@ -46,6 +47,7 @@ import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.IRepositoryObject;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.run.IRunResultFormat;
+import de.clusteval.api.stats.IDataStatistic;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.cluster.paramOptimization.InvalidOptimizationParameterException;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
@@ -82,7 +84,6 @@ import de.clusteval.data.randomizer.DataRandomizer;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
 import de.clusteval.data.statistics.DataStatistic;
 import de.clusteval.data.statistics.UnknownDataStatisticException;
-import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.framework.repository.RepositoryController;
 import de.clusteval.framework.repository.RepositoryObject;
 import de.clusteval.framework.repository.RunResultRepository;
@@ -465,7 +466,7 @@ class DataAnalysisRunParser extends AnalysisRunParser<DataAnalysisRun> {
          */
         List<IDataConfig> dataConfigs = new LinkedList<>();
 
-        List<DataStatistic> dataStatistics = new LinkedList<>();
+        List<IDataStatistic> dataStatistics = new LinkedList<>();
 
         for (String dataConfig : list) {
             dataConfigs.add(repo.getRegisteredObject(Parser.parseFromFile(DataConfig.class,

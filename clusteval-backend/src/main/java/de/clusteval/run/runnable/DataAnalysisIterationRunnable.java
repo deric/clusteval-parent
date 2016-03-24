@@ -2,8 +2,8 @@ package de.clusteval.run.runnable;
 
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.stats.IDataStatistic;
 import de.clusteval.data.DataConfig;
-import de.clusteval.data.statistics.DataStatistic;
 import de.clusteval.data.statistics.DataStatisticCalculator;
 import de.clusteval.utils.StatisticCalculator;
 import de.wiwie.wiutils.file.FileUtils;
@@ -15,8 +15,7 @@ import java.lang.reflect.InvocationTargetException;
  * @author Christian Wiwie
  *
  */
-public class DataAnalysisIterationRunnable extends
-        AnalysisIterationRunnable<DataStatistic, DataAnalysisIterationWrapper> {
+public class DataAnalysisIterationRunnable extends AnalysisIterationRunnable<IDataStatistic, DataAnalysisIterationWrapper> {
 
     /**
      * @param iterationWrapper
@@ -50,14 +49,13 @@ public class DataAnalysisIterationRunnable extends
      */
     @SuppressWarnings({"rawtypes", "unchecked"})
     @Override
-    protected StatisticCalculator<DataStatistic> getStatisticCalculator()
+    protected StatisticCalculator<IDataStatistic> getStatisticCalculator()
             throws SecurityException, NoSuchMethodException,
                    IllegalArgumentException, InstantiationException,
                    IllegalAccessException, InvocationTargetException {
 
         Class<? extends DataStatisticCalculator> calcClass = getRun()
-                .getRepository().getDataStatisticCalculator(
-                        getStatistic().getClass().getName());
+                .getRepository().getDataStatisticCalculator(getStatistic().getClass().getName());
         Constructor<? extends DataStatisticCalculator> constr = calcClass
                 .getConstructor(IRepository.class, long.class, File.class,
                         DataConfig.class);

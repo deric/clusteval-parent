@@ -3,15 +3,15 @@
  */
 package de.clusteval.run.runnable;
 
+import de.clusteval.api.exceptions.FormatConversionException;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
-import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.run.IterationRunnable;
+import de.clusteval.api.stats.IStatistic;
 import de.clusteval.data.statistics.StatisticCalculateException;
 import de.clusteval.run.statistics.RunStatistic;
-import de.clusteval.api.exceptions.FormatConversionException;
-import de.clusteval.utils.Statistic;
 import de.clusteval.utils.StatisticCalculator;
 import de.wiwie.wiutils.file.FileUtils;
 import java.io.BufferedWriter;
@@ -23,11 +23,11 @@ import org.rosuda.REngine.REngineException;
 
 /**
  * @author Christian Wiwie
+ * @param <S>
+ * @param <IW>
  *
  */
-public abstract class AnalysisIterationRunnable<S extends Statistic, IW extends AnalysisIterationWrapper<S>>
-        extends
-        IterationRunnable<IW> {
+public abstract class AnalysisIterationRunnable<S extends IStatistic, IW extends AnalysisIterationWrapper<S>> extends IterationRunnable<IW> {
 
     /**
      * A temporary variable needed during execution of this runnable.
@@ -101,7 +101,7 @@ public abstract class AnalysisIterationRunnable<S extends Statistic, IW extends 
     @Override
     public void doRun() throws InterruptedException {
         try {
-            Statistic statistic = iterationWrapper.getStatistic();
+            IStatistic statistic = iterationWrapper.getStatistic();
             String output = getOutputPath();
 
             final File outputFile = new File(output);
@@ -124,33 +124,11 @@ public abstract class AnalysisIterationRunnable<S extends Statistic, IW extends 
             bw.close();
 
             calc.writeOutputTo(new File(output));
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (SecurityException e) {
-            e.printStackTrace();
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (StatisticCalculateException e) {
-            e.printStackTrace();
-        } catch (RNotAvailableException e) {
-            e.printStackTrace();
-        } catch (REngineException e) {
-            e.printStackTrace();
-        } catch (InvalidDataSetFormatVersionException e) {
-            e.printStackTrace();
-        } catch (UnknownDataSetFormatException e) {
-            e.printStackTrace();
-        } catch (RegisterException e) {
-            e.printStackTrace();
-        } catch (FormatConversionException e) {
+        } catch (IOException | SecurityException | IllegalArgumentException | NoSuchMethodException |
+                InstantiationException | IllegalAccessException | InvocationTargetException |
+                StatisticCalculateException | RNotAvailableException | REngineException |
+                InvalidDataSetFormatVersionException | UnknownDataSetFormatException |
+                RegisterException | FormatConversionException e) {
             e.printStackTrace();
         } finally {
             // TODO

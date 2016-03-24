@@ -50,6 +50,7 @@ public class RunAnalysisIterationRunnable extends AnalysisIterationRunnable<RunS
      * de.clusteval.run.runnable.AnalysisIterationRunnable#beforeStatisticCalculate
      * ()
      */
+    @Override
     protected void beforeStatisticCalculate() {
         this.log.info("Run " + this.getRun() + " - (" + this.getRunIdentifier()
                 + ") Analysing " + getStatistic().getIdentifier());

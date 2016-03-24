@@ -148,8 +148,8 @@ class RunDataStatisticURLClassLoader extends URLClassLoader {
                     && !name.equals("de.clusteval.run.statistics.RunDataStatisticRCalculator")) {
                 @SuppressWarnings("unchecked")
                 Class<? extends RunDataStatisticCalculator<? extends RunDataStatistic>> runStatisticCalculator = (Class<? extends RunDataStatisticCalculator<? extends RunDataStatistic>>) result;
-                this.parent.getRepository().registerRunDataStatisticCalculator(
-                        runStatisticCalculator);
+                //this.parent.getRepository().registerRunDataStatisticCalculator(runStatisticCalculator);
+                this.parent.getRepository().lookupAdd(runStatisticCalculator);
             }
         }
         return result;
