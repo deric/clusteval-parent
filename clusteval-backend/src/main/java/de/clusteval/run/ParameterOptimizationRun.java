@@ -17,19 +17,21 @@ import de.clusteval.api.cluster.quality.ClusteringQualitySet;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.exceptions.RunResultParseException;
+import de.clusteval.api.program.IProgramConfig;
+import de.clusteval.api.program.IProgramParameter;
 import de.clusteval.api.program.ParameterSet;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.repository.RepositoryEvent;
 import de.clusteval.api.repository.RepositoryRemoveEvent;
+import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.IRunRunnable;
+import de.clusteval.api.run.IScheduler;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
 import de.clusteval.context.Context;
-import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.format.AbsoluteDataSetFormat;
 import de.clusteval.data.dataset.format.DataSetFormat;
-import de.clusteval.framework.threading.RunSchedulerThread;
 import de.clusteval.program.ProgramConfig;
 import de.clusteval.program.ProgramParameter;
 import de.clusteval.run.result.ParameterOptimizationResult;
@@ -128,7 +130,7 @@ public class ParameterOptimizationRun extends ExecutionRun {
      * configuration. These optimization parameters are to be optimized by this
      * run.
      */
-    protected List<List<ProgramParameter<?>>> optimizationParameters;
+    protected List<List<IProgramParameter<?>>> optimizationParameters;
 
     /**
      * This list holds the parameter optimization methods for every pair of
@@ -158,10 +160,10 @@ public class ParameterOptimizationRun extends ExecutionRun {
      * @throws RegisterException
      */
     public ParameterOptimizationRun(final IRepository repository, final Context context, final long changeDate,
-            final File absPath, final List<ProgramConfig> programConfigs, final List<IDataConfig> dataConfigs,
+            final File absPath, final List<IProgramConfig> programConfigs, final List<IDataConfig> dataConfigs,
             final List<ClusteringEvaluation> qualityMeasures,
-            final List<Map<ProgramParameter<?>, String>> parameterValues,
-            final List<List<ProgramParameter<?>>> optimizationParameters,
+            final List<Map<IProgramParameter<?>, String>> parameterValues,
+            final List<List<IProgramParameter<?>>> optimizationParameters,
             final List<ParameterOptimizationMethod> optimizationMethods,
             final List<RunResultPostprocessor> postProcessors, final Map<String, Integer> maxExecutionTimes)
             throws RegisterException {
@@ -176,7 +178,7 @@ public class ParameterOptimizationRun extends ExecutionRun {
             for (IDataConfig dataConfig : this.dataConfigs) {
                 dataConfig.addListener(this);
             }
-            for (ProgramConfig programConfig : this.programConfigs) {
+            for (IProgramConfig programConfig : this.programConfigs) {
                 programConfig.addListener(this);
             }
             for (ParameterOptimizationMethod method : this.optimizationMethods) {
@@ -212,16 +214,16 @@ public class ParameterOptimizationRun extends ExecutionRun {
 	 * boolean)
      */
     @Override
-    protected ExecutionRunRunnable createRunRunnableFor(RunSchedulerThread runScheduler, Run run,
-            ProgramConfig programConfig, DataConfig dataConfig, String runIdentString, boolean isResume,
-            Map<ProgramParameter<?>, String> runParams) {
+    protected ExecutionRunRunnable createRunRunnableFor(IScheduler runScheduler, IRun run,
+            IProgramConfig programConfig, IDataConfig dataConfig, String runIdentString, boolean isResume,
+            Map<IProgramParameter<?>, String> runParams) {
 
         // 06.04.2013: changed from indexOf to this manual search, because at
         // this point the passed programConfig and dataConfig are moved clones
         // of the originals in #runPairs
         int p = -1;
         for (int i = 0; i < ((ParameterOptimizationRun) run).getRunPairs().size(); i++) {
-            Pair<ProgramConfig, DataConfig> pair = ((ParameterOptimizationRun) run).getRunPairs().get(i);
+            Pair<IProgramConfig, IDataConfig> pair = ((ParameterOptimizationRun) run).getRunPairs().get(i);
             if (pair.getFirst().getName().equals(programConfig.getName())
                     && pair.getSecond().getName().equals(dataConfig.getName())) {
                 p = i;
@@ -279,7 +281,7 @@ public class ParameterOptimizationRun extends ExecutionRun {
      * are to be optimized.
      * @see #optimizationParameters
      */
-    public List<List<ProgramParameter<?>>> getOptimizationParameters() {
+    public List<List<IProgramParameter<?>>> getOptimizationParameters() {
         return this.optimizationParameters;
     }
 

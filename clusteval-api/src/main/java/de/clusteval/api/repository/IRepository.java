@@ -333,4 +333,6 @@ public interface IRepository {
      *         or null if it does not exist.
      */
     Class<? extends IRunResultFormatParser> getRunResultFormatParser(final String runResultFormatName);
+
+    String getClusterResultsQualityBasePath();
 }

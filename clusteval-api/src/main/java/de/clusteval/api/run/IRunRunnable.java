@@ -17,7 +17,6 @@
 package de.clusteval.api.run;
 
 import de.clusteval.api.exceptions.RunIterationException;
-import de.wiwie.wiutils.utils.ProgressPrinter;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -36,7 +35,7 @@ public interface IRunRunnable<IR extends IterationRunnable, IW extends Iteration
      * @return The progress printer of this runnable.
      * @see #progress
      */
-    ProgressPrinter getProgressPrinter();
+    IProgress getProgressPrinter();
 
     boolean hasNextIteration();
 

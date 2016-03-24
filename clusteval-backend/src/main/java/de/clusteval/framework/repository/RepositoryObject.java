@@ -134,9 +134,6 @@ public abstract class RepositoryObject implements RepositoryListener, IRepositor
         this(other.getRepository(), false, other.getChangeDate(), other.getAbsPath());
     }
 
-    @Override
-    public abstract RepositoryObject clone();
-
     /**
      * @return The repository this object is registered in.
      * @see #repository

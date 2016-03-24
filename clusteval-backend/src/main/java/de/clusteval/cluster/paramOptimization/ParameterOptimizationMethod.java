@@ -224,7 +224,7 @@ public abstract class ParameterOptimizationMethod extends RepositoryObject imple
     public ParameterOptimizationMethod(final IRepository repository,
             final boolean register, final long changeDate, final File absPath,
             final ParameterOptimizationRun run,
-            final ProgramConfig programConfig, final DataConfig dataConfig,
+            final IProgramConfig programConfig, final DataConfig dataConfig,
             final List<IProgramParameter<?>> params,
             final ClusteringQualityMeasure optimizationCriterion,
             final int totalIterationCount, final boolean isResume)

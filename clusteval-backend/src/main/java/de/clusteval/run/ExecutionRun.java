@@ -21,7 +21,9 @@ import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.repository.RepositoryEvent;
 import de.clusteval.api.repository.RepositoryRemoveEvent;
 import de.clusteval.api.repository.RepositoryReplaceEvent;
+import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.IRunRunnable;
+import de.clusteval.api.run.IScheduler;
 import de.clusteval.api.run.RUN_STATUS;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
 import de.clusteval.context.Context;
@@ -102,7 +104,7 @@ public abstract class ExecutionRun extends Run {
      * those stored in the repository. That means the objects in this list can
      * change during runtime of the run.
      */
-    protected List<ProgramConfig> programConfigs;
+    protected List<IProgramConfig> programConfigs;
 
     protected Map<String, Integer> maxExecutionTimes;
 
@@ -120,7 +122,7 @@ public abstract class ExecutionRun extends Run {
      * The pairwise combinations of data and program configurations that are
      * used to create the runnables.
      */
-    protected List<Pair<ProgramConfig, DataConfig>> runPairs;
+    protected List<Pair<IProgramConfig, IDataConfig>> runPairs;
 
     /**
      * During execution of this run for every clustering that is calculated a
@@ -156,7 +158,7 @@ public abstract class ExecutionRun extends Run {
      */
     protected ExecutionRun(final IRepository repository, final Context context,
             final boolean register, final long changeDate, final File absPath,
-            final List<ProgramConfig> programConfigs,
+            final List<IProgramConfig> programConfigs,
             final List<IDataConfig> dataConfigs,
             final List<ClusteringEvaluation> qualityMeasures,
             final List<Map<IProgramParameter<?>, String>> parameterValues,
@@ -177,7 +179,7 @@ public abstract class ExecutionRun extends Run {
             for (IDataConfig dataConfig : this.dataConfigs) {
                 dataConfig.addListener(this);
             }
-            for (ProgramConfig programConfig : this.programConfigs) {
+            for (IProgramConfig programConfig : this.programConfigs) {
                 programConfig.addListener(this);
             }
 
@@ -333,10 +335,10 @@ public abstract class ExecutionRun extends Run {
         // ExecutionRun runCopy = this.clone();
         ExecutionRun runCopy = this;
 
-        final Pair<ProgramConfig, DataConfig> pair = runCopy.getRunPairs().get(p);
+        final Pair<IProgramConfig, IDataConfig> pair = runCopy.getRunPairs().get(p);
 
-        ProgramConfig programConfig = pair.getFirst();
-        DataConfig dataConfig = pair.getSecond();
+        IProgramConfig programConfig = pair.getFirst();
+        IDataConfig dataConfig = pair.getSecond();
 
         /**
          * Copy to results directory
@@ -420,7 +422,7 @@ public abstract class ExecutionRun extends Run {
          * inconsistent behaviour when accessing internal attributes, because
          * all threads were operating on the same objects.
          */
-        DataConfig newDataConfig = dataConfig.clone();
+        IDataConfig newDataConfig = dataConfig.clone();
         newDataConfig.setAbsolutePath(copiedDataConfig);
         newDataConfig.getDatasetConfig().setAbsolutePath(copiedDataSetConfig);
         newDataConfig.getDatasetConfig().getDataSet()
@@ -431,7 +433,7 @@ public abstract class ExecutionRun extends Run {
             newDataConfig.getGoldstandardConfig().getGoldstandard()
                     .setAbsolutePath(new File(movedGoldStandard));
         }
-        ProgramConfig newProgramConfig = programConfig.clone();
+        IProgramConfig newProgramConfig = programConfig.clone();
         newProgramConfig.setAbsolutePath(copiedProgramConfig);
 
         /*
@@ -459,11 +461,10 @@ public abstract class ExecutionRun extends Run {
         // ExecutionRun runCopy = this.clone();
         ExecutionRun runCopy = this;
 
-        final Pair<ProgramConfig, DataConfig> pair = runCopy.getRunPairs().get(
-                p);
+        final Pair<IProgramConfig, IDataConfig> pair = runCopy.getRunPairs().get(p);
 
-        ProgramConfig programConfig = pair.getFirst();
-        DataConfig dataConfig = pair.getSecond();
+        IProgramConfig programConfig = pair.getFirst();
+        IDataConfig dataConfig = pair.getSecond();
 
         /*
          * Copy to results directory
@@ -550,7 +551,7 @@ public abstract class ExecutionRun extends Run {
          * inconsistent behaviour when accessing internal attributes, because
          * all threads were operating on the same objects.
          */
-        DataConfig newDataConfig = dataConfig.clone();
+        IDataConfig newDataConfig = dataConfig.clone();
         newDataConfig.setAbsolutePath(copiedDataConfig);
         newDataConfig.getDatasetConfig().setAbsolutePath(copiedDataSetConfig);
 
@@ -562,7 +563,7 @@ public abstract class ExecutionRun extends Run {
             newDataConfig.getGoldstandardConfig().getGoldstandard()
                     .setAbsolutePath(new File(movedGoldStandard));
         }
-        ProgramConfig newProgramConfig = programConfig.clone();
+        IProgramConfig newProgramConfig = programConfig.clone();
         newProgramConfig.setAbsolutePath(copiedProgramConfig);
 
         /*
@@ -605,8 +606,8 @@ public abstract class ExecutionRun extends Run {
      * @return The runnable being executed asynchronously.
      */
     protected abstract ExecutionRunRunnable createRunRunnableFor(
-            RunSchedulerThread runScheduler, Run run,
-            ProgramConfig programConfig, DataConfig dataConfig,
+            IScheduler runScheduler, IRun run,
+            IProgramConfig programConfig, IDataConfig dataConfig,
             String runIdentString, boolean isResume,
             Map<IProgramParameter<?>, String> runParams);
 
@@ -668,7 +669,7 @@ public abstract class ExecutionRun extends Run {
      * @param dataConfigs    The list of data configurations of this run.
      * @throws RegisterException
      */
-    protected void initRunPairs(final List<ProgramConfig> programConfigs,
+    protected void initRunPairs(final List<IProgramConfig> programConfigs,
             final List<IDataConfig> dataConfigs) throws RegisterException {
 
         this.programConfigs = programConfigs;
@@ -676,7 +677,7 @@ public abstract class ExecutionRun extends Run {
 
         this.runPairs = new ArrayList<>();
 
-        for (ProgramConfig programConfig : this.programConfigs) {
+        for (IProgramConfig programConfig : this.programConfigs) {
             for (IDataConfig dataConfig : this.dataConfigs) {
 
                 runPairs.add(new Pair<>(new ProgramConfig(programConfig),
@@ -689,7 +690,7 @@ public abstract class ExecutionRun extends Run {
      * @return The list of runpairs consisting of program and data
      *         configurations each.
      */
-    public List<Pair<ProgramConfig, DataConfig>> getRunPairs() {
+    public List<Pair<IProgramConfig, IDataConfig>> getRunPairs() {
         return this.runPairs;
     }
 
@@ -711,7 +712,7 @@ public abstract class ExecutionRun extends Run {
     /**
      * @return A list containing all program configurations of this run.
      */
-    public List<ProgramConfig> getProgramConfigs() {
+    public List<IProgramConfig> getProgramConfigs() {
         return this.programConfigs;
     }
 

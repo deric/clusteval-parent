@@ -13,11 +13,11 @@ package de.clusteval.run.runnable;
 import de.clusteval.api.exceptions.RunIterationException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.stats.IStatistic;
 import de.clusteval.data.statistics.DataStatistic;
 import de.clusteval.run.AnalysisRun;
 import de.clusteval.run.Run;
 import de.clusteval.run.result.RunResult;
-import de.clusteval.utils.Statistic;
 import de.wiwie.wiutils.file.FileUtils;
 import de.wiwie.wiutils.utils.ProgressPrinter;
 import java.io.File;
@@ -41,7 +41,7 @@ import java.util.List;
  * @param <IR>
  *
  */
-public abstract class AnalysisRunRunnable<S extends Statistic, R extends RunResult, IW extends AnalysisIterationWrapper<S>, IR extends AnalysisIterationRunnable>
+public abstract class AnalysisRunRunnable<S extends IStatistic, R extends RunResult, IW extends AnalysisIterationWrapper<S>, IR extends AnalysisIterationRunnable>
         extends RunRunnable<IR, IW> {
 
     /**

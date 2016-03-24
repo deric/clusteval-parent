@@ -13,12 +13,11 @@
  */
 package de.clusteval.program;
 
-import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.exceptions.InternalAttributeException;
+import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.data.DataConfig;
 import javax.script.ScriptException;
 
 /**
@@ -175,8 +174,7 @@ public class StringProgramParameter extends ProgramParameter<String> {
      * @see program.ProgramParameter#evaluateMaxValue()
      */
     @Override
-    public String evaluateMaxValue(final DataConfig dataConfig,
-            final ProgramConfig programConfig)
+    public String evaluateMaxValue(final IDataConfig dataConfig, final IProgramConfig programConfig)
             throws InternalAttributeException {
 
         /*
@@ -202,8 +200,7 @@ public class StringProgramParameter extends ProgramParameter<String> {
      * @see program.ProgramParameter#evaluateDefaultValue()
      */
     @Override
-    public String evaluateDefaultValue(final DataConfig dataConfig,
-            final ProgramConfig programConfig)
+    public String evaluateDefaultValue(final IDataConfig dataConfig, final IProgramConfig programConfig)
             throws InternalAttributeException {
 
         /*
@@ -223,8 +220,7 @@ public class StringProgramParameter extends ProgramParameter<String> {
      * .DataConfig, de.clusteval.program.ProgramConfig)
      */
     @Override
-    public String[] evaluateOptions(DataConfig dataConfig,
-            ProgramConfig programConfig) throws InternalAttributeException {
+    public String[] evaluateOptions(IDataConfig dataConfig, IProgramConfig programConfig) throws InternalAttributeException {
         /*
          * Parse options
          */

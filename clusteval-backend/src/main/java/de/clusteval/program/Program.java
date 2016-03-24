@@ -68,7 +68,7 @@ public abstract class Program extends RepositoryObject implements IProgram {
      *                The program to clone.
      * @throws RegisterException
      */
-    protected Program(final Program program) throws RegisterException {
+    protected Program(final IProgram program) throws RegisterException {
         super(program);
     }
 

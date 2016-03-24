@@ -56,11 +56,11 @@ public class ProgramConfig extends RepositoryObject implements IProgramConfig {
      * @return The list containing the cloned program configurations of the
      *         input list.
      */
-    public static List<ProgramConfig> cloneProgramConfigurations(
-            final List<ProgramConfig> programConfigs) {
-        List<ProgramConfig> result = new ArrayList<>();
+    public static List<IProgramConfig> cloneProgramConfigurations(
+            final List<IProgramConfig> programConfigs) {
+        List<IProgramConfig> result = new ArrayList<>();
 
-        for (ProgramConfig programConfig : programConfigs) {
+        for (IProgramConfig programConfig : programConfigs) {
             result.add(programConfig.clone());
         }
 
@@ -232,25 +232,25 @@ public class ProgramConfig extends RepositoryObject implements IProgramConfig {
      * @param programConfig The program configuration to be cloned.
      * @throws RegisterException
      */
-    public ProgramConfig(ProgramConfig programConfig) throws RegisterException {
+    public ProgramConfig(IProgramConfig programConfig) throws RegisterException {
         super(programConfig);
 
-        this.program = programConfig.program.clone();
-        this.outputFormat = programConfig.outputFormat.clone();
+        this.program = programConfig.getProgram().clone();
+        this.outputFormat = programConfig.getOutputFormat().clone();
         this.compatibleDataSetFormats = DataSetFormat
-                .cloneDataSetFormats(programConfig.compatibleDataSetFormats);
+                .cloneDataSetFormats(programConfig.getCompatibleDataSetFormats());
 
-        this.invocationFormat = programConfig.invocationFormat;
-        this.invocationFormatWithoutGoldStandard = programConfig.invocationFormatWithoutGoldStandard;
-        this.invocationFormatParameterOptimization = programConfig.invocationFormatParameterOptimization;
-        this.invocationFormatParameterOptimizationWithoutGoldStandard = programConfig.invocationFormatParameterOptimizationWithoutGoldStandard;
+        this.invocationFormat = programConfig.getInvocationFormat(false);
+        this.invocationFormatWithoutGoldStandard = programConfig.getInvocationFormat(true);
+        this.invocationFormatParameterOptimization = programConfig.getInvocationFormatParameterOptimization(false);
+        this.invocationFormatParameterOptimizationWithoutGoldStandard = programConfig.getInvocationFormatParameterOptimization(true);
 
-        this.params = ProgramParameter.cloneParameterList(programConfig.params);
+        this.params = ProgramParameter.cloneParameterList(programConfig.getParams());
         this.optimizableParameters = ProgramParameter
-                .cloneParameterList(programConfig.optimizableParameters);
+                .cloneParameterList(programConfig.getOptimizableParams());
 
-        this.expectsNormalizedDataSet = programConfig.expectsNormalizedDataSet;
-        this.maxExecutionTimeMinutes = programConfig.maxExecutionTimeMinutes;
+        this.expectsNormalizedDataSet = programConfig.expectsNormalizedDataSet();
+        this.maxExecutionTimeMinutes = programConfig.getMaxExecutionTimeMinutes();
     }
 
     /*

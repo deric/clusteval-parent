@@ -32,6 +32,7 @@ import de.clusteval.api.repository.IRepositoryObject;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.repository.StaticRepositoryEntity;
 import de.clusteval.api.repository.StaticRepositoryEntityMap;
+import de.clusteval.api.run.IRunResultFormatParser;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
@@ -859,6 +860,7 @@ public class Repository implements IRepository {
                 .getClusterResultsBasePath();
     }
 
+    @Override
     public String getClusterResultsQualityBasePath() {
         return ((RunResultRepositoryEntity) this.staticRepositoryEntities.get(RunResult.class))
                 .getClusterResultsQualityBasePath();
@@ -1155,7 +1157,7 @@ public class Repository implements IRepository {
      * @return The runresult format parser for the given runresult format name,
      *         or null if it does not exist.
      */
-    public Class<? extends RunResultFormatParser> getRunResultFormatParser(final String runResultFormatName) {
+    public Class<? extends IRunResultFormatParser> getRunResultFormatParser(final String runResultFormatName) {
         return ((RunResultFormatRepositoryEntity) this.dynamicRepositoryEntities.get(RunResultFormat.class))
                 .getRunResultFormatParser(runResultFormatName);
     }

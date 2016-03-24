@@ -1,8 +1,14 @@
 /**
- * 
+ *
  */
 package de.wiwie.wiutils.statistics;
 
+import de.wiwie.wiutils.utils.ArraysExt;
+import de.wiwie.wiutils.utils.FilterFactory;
+import de.wiwie.wiutils.utils.FilterFactory.FILTER_TYPE;
+import de.wiwie.wiutils.utils.Log;
+import de.wiwie.wiutils.utils.Pair;
+import de.wiwie.wiutils.utils.ProgressPrinter;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,16 +17,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import de.wiwie.wiutils.utils.ArraysExt;
-import de.wiwie.wiutils.utils.FilterFactory;
-import de.wiwie.wiutils.utils.FilterFactory.FILTER_TYPE;
-import de.wiwie.wiutils.utils.Log;
-import de.wiwie.wiutils.utils.Pair;
-import de.wiwie.wiutils.utils.ProgressPrinter;
-
 /**
  * @author Christian Wiwie
- * 
+ *
  */
 public class DistributionParameterEstimation {
 

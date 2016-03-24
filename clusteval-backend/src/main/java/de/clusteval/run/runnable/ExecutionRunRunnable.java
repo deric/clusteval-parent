@@ -42,7 +42,7 @@ import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.AbsoluteDataSet;
 import de.clusteval.data.dataset.DataSet;
 import de.clusteval.data.dataset.RelativeDataSet;
-import de.clusteval.data.dataset.format.IncompatibleDataSetFormatException;
+import de.clusteval.api.exceptions.IncompatibleDataSetFormatException;
 import de.clusteval.data.goldstandard.GoldStandardConfig;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.framework.repository.RunResultRepository;
@@ -1022,6 +1022,9 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
      * A wrapper method for the conversion of the run result, which handles
      * logging and adding the converted result to the results of the run.
      *
+     * @param result
+     * @param effectiveParams
+     * @param internalParams
      * @return The result of the last iteration converted to the standard
      *         format.
      * @throws NoRunResultFormatParserException
@@ -1063,6 +1066,8 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
      * This method also initializes the file object attribute variables that are
      * used throughout the process: {@link #logFile},
      * {@link #clusteringResultFile} and {@link #resultQualityFile}.
+     *
+     * @param iterationWrapper
      */
     protected void initAndEnsureIterationFilesAndFolders(final ExecutionIterationWrapper iterationWrapper) {
 

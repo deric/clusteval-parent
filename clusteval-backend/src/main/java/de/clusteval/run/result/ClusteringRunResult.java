@@ -171,7 +171,7 @@ public class ClusteringRunResult extends ExecutionRunResult implements IClusteri
      * @throws RegisterException
      */
     @SuppressWarnings("unused")
-    public ClusteringRunResult convertTo(final RunResultFormat format, final Map<String, String> internalParams,
+    public ClusteringRunResult convertTo(final IRunResultFormat format, final Map<String, String> internalParams,
             final Map<String, String> params)
             throws NoRunResultFormatParserException, RunResultNotFoundException, RegisterException {
         ClusteringRunResult result = null;

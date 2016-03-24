@@ -20,8 +20,8 @@ import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.IProgramParameter;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.data.dataset.format.IncompatibleDataSetFormatException;
-import de.clusteval.framework.threading.RunSchedulerThread;
+import de.clusteval.api.run.IScheduler;
+import de.clusteval.api.exceptions.IncompatibleDataSetFormatException;
 import de.clusteval.run.Run;
 import java.io.File;
 import java.io.IOException;
@@ -45,7 +45,7 @@ public class InternalParameterOptimizationRunRunnable extends ExecutionRunRunnab
      * @param runParams
      */
     public InternalParameterOptimizationRunRunnable(
-            RunSchedulerThread runScheduler, Run run,
+            IScheduler runScheduler, Run run,
             IProgramConfig programConfig, IDataConfig dataConfig,
             String runIdentString, boolean isResume,
             Map<IProgramParameter<?>, String> runParams) {

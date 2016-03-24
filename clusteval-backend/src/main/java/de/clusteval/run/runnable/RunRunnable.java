@@ -23,7 +23,7 @@ import de.clusteval.api.run.IScheduler;
 import de.clusteval.api.run.IterationRunnable;
 import de.clusteval.api.run.IterationWrapper;
 import de.clusteval.api.run.RUN_STATUS;
-import de.clusteval.data.dataset.format.IncompatibleDataSetFormatException;
+import de.clusteval.api.exceptions.IncompatibleDataSetFormatException;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.framework.threading.RunSchedulerThread;
 import de.clusteval.run.Run;

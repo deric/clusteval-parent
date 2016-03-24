@@ -104,4 +104,16 @@ public interface IScheduler {
      */
     public Queue<String> getQueue();
 
+    /**
+     * This method takes a {@link RunRunnable} and adds it to the thread pool of
+     * this run scheduler thread. The thread pool then determines, when the
+     * runnable can and will be performed depending on the available resources.
+     *
+     * @param runRunnable
+     *                    The new runnable to perform.
+     * @return A future object, that allows to retrieve the current status of
+     *         the execution of the runnable.
+     */
+    Future<?> registerRunRunnable(IRunRunnable runRunnable);
+
 }

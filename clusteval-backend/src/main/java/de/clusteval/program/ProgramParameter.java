@@ -49,14 +49,14 @@ public abstract class ProgramParameter<T> extends RepositoryObject implements IP
      *                          The optimization parameters to clone.
      * @return The list of cloned optimization parameters.
      */
-    public static List<List<ProgramParameter<?>>> cloneParameterListList(
-            List<List<ProgramParameter<?>>> programParameters) {
-        List<List<ProgramParameter<?>>> result = new ArrayList<>();
+    public static List<List<IProgramParameter<?>>> cloneParameterListList(
+            List<List<IProgramParameter<?>>> programParameters) {
+        List<List<IProgramParameter<?>>> result = new ArrayList<>();
 
-        for (List<ProgramParameter<?>> list : programParameters) {
-            List<ProgramParameter<?>> copyList = new ArrayList<>();
+        for (List<IProgramParameter<?>> list : programParameters) {
+            List<IProgramParameter<?>> copyList = new ArrayList<>();
 
-            for (ProgramParameter<?> param : list) {
+            for (IProgramParameter<?> param : list) {
                 copyList.add(param.clone());
             }
 

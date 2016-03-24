@@ -155,8 +155,7 @@ public class RunDataAnalysisRunRunnable
      * .runnable.IterationWrapper)
      */
     @Override
-    protected void doRunIteration(
-            RunDataAnalysisIterationWrapper iterationWrapper)
+    public void doRunIteration(RunDataAnalysisIterationWrapper iterationWrapper)
             throws RunIterationException {
         RunDataAnalysisIterationRunnable iterationRunnable = this
                 .createIterationRunnable(iterationWrapper);

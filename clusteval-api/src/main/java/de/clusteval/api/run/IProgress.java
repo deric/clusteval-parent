@@ -14,34 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.clusteval.run.runnable;
-
-import de.clusteval.api.run.IterationWrapper;
-import de.clusteval.api.stats.IStatistic;
+package de.clusteval.api.run;
 
 /**
- * @author Christian Wiwie
- * @param <S>
  *
+ * @author deric
  */
-public class AnalysisIterationWrapper<S extends IStatistic> extends IterationWrapper {
+public interface IProgress {
 
-    protected S statistic;
-    protected String analysesFolder;
-
-    public String getAnalysesFolder() {
-        return analysesFolder;
-    }
-
-    public void setAnalysesFolder(final String analysesFolder) {
-        this.analysesFolder = analysesFolder;
-    }
-
-    public S getStatistic() {
-        return statistic;
-    }
-
-    public void setStatistic(S statistic) {
-        this.statistic = statistic;
-    }
 }

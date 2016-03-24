@@ -97,4 +97,6 @@ public interface IRun extends IRepositoryObject {
     IContext getContext();
 
     IRun clone();
+
+    void addSubProgress(IProgress progress, long partOfSubProgress);
 }

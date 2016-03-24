@@ -19,8 +19,8 @@ package de.clusteval.run.runnable;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.IProgramParameter;
-import de.clusteval.framework.threading.RunSchedulerThread;
-import de.clusteval.run.Run;
+import de.clusteval.api.run.IRun;
+import de.clusteval.api.run.IScheduler;
 import java.util.Map;
 
 /**
@@ -38,8 +38,8 @@ public class RobustnessAnalysisRunRunnable extends ClusteringRunRunnable {
      * @param isResume
      * @param runParams
      */
-    public RobustnessAnalysisRunRunnable(RunSchedulerThread runScheduler,
-            Run run, IProgramConfig programConfig, IDataConfig dataConfig,
+    public RobustnessAnalysisRunRunnable(IScheduler runScheduler,
+            IRun run, IProgramConfig programConfig, IDataConfig dataConfig,
             String runIdentString, boolean isResume,
             Map<IProgramParameter<?>, String> runParams) {
         super(runScheduler, run, programConfig, dataConfig, runIdentString,

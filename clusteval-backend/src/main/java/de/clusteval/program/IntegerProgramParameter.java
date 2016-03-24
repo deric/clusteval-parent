@@ -12,12 +12,11 @@
  */
 package de.clusteval.program;
 
-import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.exceptions.InternalAttributeException;
+import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.data.DataConfig;
 import javax.script.ScriptException;
 
 /**
@@ -166,8 +165,7 @@ public class IntegerProgramParameter extends ProgramParameter<Integer> {
      * @see program.ProgramParameter#evaluateMaxValue()
      */
     @Override
-    public Integer evaluateMaxValue(final DataConfig dataConfig,
-            final ProgramConfig programConfig)
+    public Integer evaluateMaxValue(final IDataConfig dataConfig, final IProgramConfig programConfig)
             throws InternalAttributeException {
 
         /*
@@ -193,8 +191,7 @@ public class IntegerProgramParameter extends ProgramParameter<Integer> {
      * @see program.ProgramParameter#evaluateDefaultValue()
      */
     @Override
-    public Integer evaluateDefaultValue(final DataConfig dataConfig,
-            final ProgramConfig programConfig)
+    public Integer evaluateDefaultValue(final IDataConfig dataConfig, final IProgramConfig programConfig)
             throws InternalAttributeException {
 
         /*
@@ -223,8 +220,7 @@ public class IntegerProgramParameter extends ProgramParameter<Integer> {
      * .DataConfig, de.clusteval.program.ProgramConfig)
      */
     @Override
-    public Integer[] evaluateOptions(DataConfig dataConfig,
-            ProgramConfig programConfig) throws InternalAttributeException {
+    public Integer[] evaluateOptions(IDataConfig dataConfig, IProgramConfig programConfig) throws InternalAttributeException {
         return new Integer[0];
     }
 

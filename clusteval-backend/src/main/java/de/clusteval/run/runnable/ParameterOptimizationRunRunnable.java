@@ -33,9 +33,8 @@ import de.clusteval.cluster.paramOptimization.NoParameterSetFoundException;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationException;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
 import de.clusteval.cluster.paramOptimization.ParameterSetAlreadyEvaluatedException;
-import de.clusteval.data.dataset.format.IncompatibleDataSetFormatException;
-import de.clusteval.framework.threading.RunSchedulerThread;
-import de.clusteval.program.ProgramParameter;
+import de.clusteval.api.exceptions.IncompatibleDataSetFormatException;
+import de.clusteval.api.run.IScheduler;
 import de.clusteval.run.ParameterOptimizationRun;
 import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.utils.plot.Plotter;
@@ -88,7 +87,7 @@ public class ParameterOptimizationRunRunnable extends ExecutionRunRunnable {
      *                           or a completely new execution.
      * @param runParams
      */
-    public ParameterOptimizationRunRunnable(RunSchedulerThread runScheduler,
+    public ParameterOptimizationRunRunnable(IScheduler runScheduler,
             IRun run, IProgramConfig programConfig, IDataConfig dataConfig,
             ParameterOptimizationMethod optimizationMethod,
             String runIdentString, boolean isResume,
@@ -247,7 +246,7 @@ public class ParameterOptimizationRunRunnable extends ExecutionRunRunnable {
      * @see de.clusteval.run.runnable.RunRunnable#hasNextIteration()
      */
     @Override
-    protected boolean hasNextIteration() {
+    public boolean hasNextIteration() {
         return this.optimizationMethod.hasNext();
     }
 
@@ -257,7 +256,7 @@ public class ParameterOptimizationRunRunnable extends ExecutionRunRunnable {
      * @see de.clusteval.run.runnable.RunRunnable#consumeNextIteration()
      */
     @Override
-    protected int consumeNextIteration() throws RunIterationException {
+    public int consumeNextIteration() throws RunIterationException {
         try {
             this.lastConsumedParamSet = this.optimizationMethod.next();
         } catch (ParameterSetAlreadyEvaluatedException e) {
@@ -319,7 +318,7 @@ public class ParameterOptimizationRunRunnable extends ExecutionRunRunnable {
      * @see run.runnable.ExecutionRunRunnable#doRunIteration()
      */
     @Override
-    protected void doRunIteration(ExecutionIterationWrapper iterationWrapper)
+    public void doRunIteration(ExecutionIterationWrapper iterationWrapper)
             throws RunIterationException {
         try {
             super.doRunIteration(iterationWrapper);
@@ -391,7 +390,7 @@ public class ParameterOptimizationRunRunnable extends ExecutionRunRunnable {
         // the optimization method. We therefore have to adapt the parameter set
         // accordingly.
         ParameterSet paramSet = new ParameterSet();
-        for (ProgramParameter<?> param : optimizationMethod
+        for (IProgramParameter<?> param : optimizationMethod
                 .getOptimizationParameter()) {
             paramSet.put(param.getName(),
                     qualities.get(0).getFirst().get(param.getName()));

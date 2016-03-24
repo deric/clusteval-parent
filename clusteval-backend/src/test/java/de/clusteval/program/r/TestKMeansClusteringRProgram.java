@@ -15,7 +15,7 @@
  */
 package de.clusteval.program.r;
 
-import de.clusteval.data.dataset.format.IncompatibleDataSetFormatException;
+import de.clusteval.api.exceptions.IncompatibleDataSetFormatException;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;

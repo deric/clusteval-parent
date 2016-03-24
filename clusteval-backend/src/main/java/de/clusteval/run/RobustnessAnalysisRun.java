@@ -45,6 +45,7 @@ import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.IRunResult;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
@@ -753,8 +754,8 @@ public class RobustnessAnalysisRun extends ClusteringRun {
      * java.lang.String, boolean)
      */
     @Override
-    protected ExecutionRunRunnable createRunRunnableFor(
-            RunSchedulerThread runScheduler, Run run,
+    public ExecutionRunRunnable createRunRunnableFor(
+            RunSchedulerThread runScheduler, IRun run,
             IProgramConfig programConfig, IDataConfig dataConfig,
             String runIdentString, boolean isResume,
             Map<IProgramParameter<?>, String> runParams) {

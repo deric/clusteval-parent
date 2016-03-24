@@ -21,8 +21,8 @@ import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.IProgramParameter;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.run.IRun;
-import de.clusteval.data.dataset.format.IncompatibleDataSetFormatException;
-import de.clusteval.framework.threading.RunSchedulerThread;
+import de.clusteval.api.run.IScheduler;
+import de.clusteval.api.exceptions.IncompatibleDataSetFormatException;
 import de.clusteval.run.ClusteringRun;
 import de.clusteval.run.result.ClusteringRunResult;
 import java.io.BufferedReader;
@@ -65,7 +65,7 @@ public class ClusteringRunRunnable extends ExecutionRunRunnable {
      *                       completely new execution.
      * @param runParams
      */
-    public ClusteringRunRunnable(RunSchedulerThread runScheduler, IRun run,
+    public ClusteringRunRunnable(IScheduler runScheduler, IRun run,
             IProgramConfig programConfig, IDataConfig dataConfig,
             String runIdentString, boolean isResume,
             Map<IProgramParameter<?>, String> runParams) {

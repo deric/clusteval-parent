@@ -14,14 +14,12 @@ package de.clusteval.run;
 
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.data.IDataConfig;
+import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.IProgramParameter;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.run.IScheduler;
 import de.clusteval.context.Context;
-import de.clusteval.data.DataConfig;
-import de.clusteval.framework.threading.RunSchedulerThread;
-import de.clusteval.program.ProgramConfig;
-import de.clusteval.program.ProgramParameter;
 import de.clusteval.run.result.postprocessing.RunResultPostprocessor;
 import de.clusteval.run.runnable.ExecutionRunRunnable;
 import de.clusteval.run.runnable.InternalParameterOptimizationRunRunnable;
@@ -58,9 +56,9 @@ public class InternalParameterOptimizationRun extends ExecutionRun {
      */
     public InternalParameterOptimizationRun(IRepository repository,
             final Context context, long changeDate, File absPath,
-            List<ProgramConfig> programConfigs, List<IDataConfig> dataConfigs,
+            List<IProgramConfig> programConfigs, List<IDataConfig> dataConfigs,
             List<ClusteringEvaluation> qualityMeasures,
-            List<Map<ProgramParameter<?>, String>> parameterValues,
+            List<Map<IProgramParameter<?>, String>> parameterValues,
             final List<RunResultPostprocessor> postProcessors,
             final Map<String, Integer> maxExecutionTimes)
             throws RegisterException {
@@ -88,8 +86,8 @@ public class InternalParameterOptimizationRun extends ExecutionRun {
      */
     @Override
     protected ExecutionRunRunnable createRunRunnableFor(
-            RunSchedulerThread runScheduler, Run run,
-            ProgramConfig programConfig, DataConfig dataConfig,
+            IScheduler runScheduler, Run run,
+            IProgramConfig programConfig, IDataConfig dataConfig,
             String runIdentString, boolean isResume,
             Map<IProgramParameter<?>, String> runParams) {
         return new InternalParameterOptimizationRunRunnable(runScheduler, run,

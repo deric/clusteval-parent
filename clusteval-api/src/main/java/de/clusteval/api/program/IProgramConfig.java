@@ -113,4 +113,15 @@ public interface IProgramConfig extends IRepositoryObject {
 
     IProgramConfig clone();
 
+    /**
+     * This method returns the invocation line format for parameter-optimization
+     * runs.
+     *
+     * @param withoutGoldStandard This boolean indicates, whether this method
+     *                            returns the invocation format for the case with- or without goldstandard.
+     *
+     * @return The invocation line format
+     */
+    String getInvocationFormatParameterOptimization(boolean withoutGoldStandard);
+
 }

@@ -23,6 +23,7 @@ import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.data.IGoldStandardConfig;
 import de.clusteval.api.exceptions.DatabaseConnectException;
+import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.IProgramParameter;
 import de.clusteval.api.program.ParameterSet;
 import de.clusteval.api.repository.IRepository;
@@ -1019,8 +1020,7 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
 
             // insert programConfigs and parameter values into DB
             for (int i = 0; i < execRun.getProgramConfigs().size(); i++) {
-                ProgramConfig programConfig = execRun.getProgramConfigs()
-                        .get(i);
+                IProgramConfig programConfig = execRun.getProgramConfigs().get(i);
 
                 int program_config_id = this.getObjectId(programConfig);
                 try {
@@ -1034,10 +1034,9 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
                     e.printStackTrace();
                 }
 
-                Map<ProgramParameter<?>, String> paramValues = execRun
-                        .getParameterValues().get(i);
+                Map<IProgramParameter<?>, String> paramValues = execRun.getParameterValues().get(i);
 
-                for (ProgramParameter<?> param : paramValues.keySet()) {
+                for (IProgramParameter<?> param : paramValues.keySet()) {
 
                     int paramId = this.getObjectId(param);
 
@@ -1157,9 +1156,7 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
                             "" + methodId,
                             "" + clustering_quality_measure_id});
 
-                for (ProgramParameter<?> param : paramOpt
-                        .getOptimizationParameters().get(i)) {
-
+                for (IProgramParameter<?> param : paramOpt.getOptimizationParameters().get(i)) {
                     int paramId = this.getObjectId(param);
 
                     insert(this.getTableRunsParameterOptimizationParameters(),
@@ -1990,7 +1987,7 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
     @Override
     protected int register(DoubleProgramParameter object) {
 
-        ProgramConfig programConfig = object.getProgramConfig();
+        IProgramConfig programConfig = object.getProgramConfig();
         int program_config_id = -1;
         try {
 
@@ -2027,8 +2024,7 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
      */
     @Override
     protected int register(IntegerProgramParameter object) {
-
-        ProgramConfig programConfig = object.getProgramConfig();
+        IProgramConfig programConfig = object.getProgramConfig();
 
         try {
             int program_config_id = getObjectId(programConfig);
@@ -2064,8 +2060,7 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
      */
     @Override
     protected int register(StringProgramParameter object) {
-
-        ProgramConfig programConfig = object.getProgramConfig();
+        IProgramConfig programConfig = object.getProgramConfig();
 
         try {
             int program_config_id = getObjectId(programConfig);
@@ -2088,7 +2083,6 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
                         "" + parameterTypeId});
             return paramId;
         } catch (SQLException e) {
-
             e.printStackTrace();
         }
         return -1;

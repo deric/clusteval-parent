@@ -12,9 +12,9 @@
  */
 package de.clusteval.run.runnable;
 
-import de.clusteval.api.exceptions.RunIterationException;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataSet;
+import de.clusteval.api.exceptions.RunIterationException;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.DataSet;
@@ -161,7 +161,7 @@ public class DataAnalysisRunRunnable extends
      * @see de.clusteval.run.runnable.RunRunnable#hasNextIteration()
      */
     @Override
-    protected boolean hasNextIteration() {
+    public boolean hasNextIteration() {
         return currentIteration < this.statistics.size();
     }
 
@@ -171,7 +171,7 @@ public class DataAnalysisRunRunnable extends
      * @see de.clusteval.run.runnable.RunRunnable#consumeNextIteration()
      */
     @Override
-    protected int consumeNextIteration() throws RunIterationException {
+    public int consumeNextIteration() throws RunIterationException {
         return ++currentIteration;
     }
 
@@ -183,7 +183,7 @@ public class DataAnalysisRunRunnable extends
      * .runnable.IterationWrapper)
      */
     @Override
-    protected void doRunIteration(DataAnalysisIterationWrapper iterationWrapper)
+    public void doRunIteration(DataAnalysisIterationWrapper iterationWrapper)
             throws RunIterationException {
         DataAnalysisIterationRunnable iterationRunnable = this
                 .createIterationRunnable(iterationWrapper);

@@ -1127,11 +1127,11 @@ class InternalParameterOptimizationRunParser extends ExecutionRunParser<Internal
 
 class ParameterOptimizationRunParser extends ExecutionRunParser<ParameterOptimizationRun> {
 
-    protected List<Map<ProgramParameter<?>, String>> parameterValues;
-    protected List<List<ProgramParameter<?>>> optimizationParameters;
+    protected List<Map<IProgramParameter<?>, String>> parameterValues;
+    protected List<List<IProgramParameter<?>>> optimizationParameters;
     protected List<ParameterOptimizationMethod> optimizationMethods;
     protected String[] optimizationParas;
-    protected List<ProgramParameter<?>> optParaList;
+    protected List<IProgramParameter<?>> optParaList;
     protected String paramOptMethod;
     protected List<String> paramOptMethods;
 
@@ -1286,10 +1286,10 @@ class ParameterOptimizationRunParser extends ExecutionRunParser<ParameterOptimiz
      * java.util.Map)
      */
     @Override
-    protected void parseProgramConfigParams(ProgramConfig programConfig) throws NoOptimizableProgramParameterException,
-                                                                                UnknownProgramParameterException, RunException, ConfigurationException {
+    protected void parseProgramConfigParams(IProgramConfig programConfig) throws NoOptimizableProgramParameterException,
+                                                                                 UnknownProgramParameterException, RunException, ConfigurationException {
 
-        optParaList = new ArrayList<ProgramParameter<?>>();
+        optParaList = new ArrayList<>();
 
         if (getProps().getSections().contains(programConfig.getName())) {
 
@@ -1306,7 +1306,7 @@ class ParameterOptimizationRunParser extends ExecutionRunParser<ParameterOptimiz
              */
             for (String optPa : optimizationParas) {
                 try {
-                    ProgramParameter<?> p = programConfig.getParamWithId(optPa);
+                    IProgramParameter<?> p = programConfig.getParamWithId(optPa);
                     if (!programConfig.getOptimizableParams().contains(p)) {
                         throw new NoOptimizableProgramParameterException("The run config " + absPath.getName()
                                 + " contained invalid optimization parameters: " + optPa

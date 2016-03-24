@@ -26,8 +26,7 @@ import java.util.List;
  * @param <T>
  *
  */
-public abstract class RunDataStatisticCalculator<T extends RunDataStatistic> extends
-        StatisticCalculator<T> {
+public abstract class RunDataStatisticCalculator<T extends RunDataStatistic> extends StatisticCalculator<T> {
 
     /**
      * This method parses a string and maps it to a subclass of

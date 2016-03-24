@@ -40,18 +40,18 @@ public class RunAnalysisRunRunnable extends
     protected int currentIteration = -1;
 
     /**
-     * @param runScheduler The run scheduler that the newly created runnable
-     * should be passed to and executed by.
+     * @param runScheduler        The run scheduler that the newly created runnable
+     *                            should be passed to and executed by.
      *
-     * @param run The run this runnable belongs to.
-     * @param runIdentString The unique identification string of the run which
-     * is used to store the results in a unique folder to avoid overwriting.
+     * @param run                 The run this runnable belongs to.
+     * @param runIdentString      The unique identification string of the run which
+     *                            is used to store the results in a unique folder to avoid overwriting.
      * @param uniqueRunIdentifier The unique identifier of a run result run
-     * identifier.
-     * @param statistics The statistics that should be assessed during execution
-     * of this runnable.
-     * @param isResume True, if this run is a resumption of a previous execution
-     * or a completely new execution.
+     *                            identifier.
+     * @param statistics          The statistics that should be assessed during execution
+     *                            of this runnable.
+     * @param isResume            True, if this run is a resumption of a previous execution
+     *                            or a completely new execution.
      */
     public RunAnalysisRunRunnable(RunSchedulerThread runScheduler, Run run,
             String runIdentString, final boolean isResume,
@@ -62,9 +62,9 @@ public class RunAnalysisRunRunnable extends
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see run.runnable.AnalysisRunRunnable#createRunResult()
+     * (non-Javadoc)
+     *
+     * @see run.runnable.AnalysisRunRunnable#createRunResult()
      */
     @Override
     protected RunAnalysisRunResult createRunResult() throws RegisterException {
@@ -74,9 +74,9 @@ public class RunAnalysisRunRunnable extends
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see run.runnable.AnalysisRunRunnable#afterRun()
+     * (non-Javadoc)
+     *
+     * @see run.runnable.AnalysisRunRunnable#afterRun()
      */
     @Override
     public void afterRun() {
@@ -86,30 +86,30 @@ public class RunAnalysisRunRunnable extends
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.clusteval.run.runnable.RunRunnable#hasNextIteration()
+     * (non-Javadoc)
+     *
+     * @see de.clusteval.run.runnable.RunRunnable#hasNextIteration()
      */
     @Override
-    protected boolean hasNextIteration() {
+    public boolean hasNextIteration() {
         return this.currentIteration < this.statistics.size();
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.clusteval.run.runnable.RunRunnable#consumeNextIteration()
+     * (non-Javadoc)
+     *
+     * @see de.clusteval.run.runnable.RunRunnable#consumeNextIteration()
      */
     @Override
-    protected int consumeNextIteration() throws RunIterationException {
+    public int consumeNextIteration() throws RunIterationException {
         return ++currentIteration;
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * de.clusteval.run.runnable.AnalysisRunRunnable#createIterationWrapper()
+     * (non-Javadoc)
+     *
+     * @see
+     * de.clusteval.run.runnable.AnalysisRunRunnable#createIterationWrapper()
      */
     @Override
     protected RunAnalysisIterationWrapper createIterationWrapper() {
@@ -117,11 +117,11 @@ public class RunAnalysisRunRunnable extends
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * de.clusteval.run.runnable.RunRunnable#createIterationRunnable(de.clusteval
-	 * .run.runnable.IterationWrapper)
+     * (non-Javadoc)
+     *
+     * @see
+     * de.clusteval.run.runnable.RunRunnable#createIterationRunnable(de.clusteval
+     * .run.runnable.IterationWrapper)
      */
     @Override
     protected RunAnalysisIterationRunnable createIterationRunnable(
@@ -130,14 +130,14 @@ public class RunAnalysisRunRunnable extends
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * de.clusteval.run.runnable.RunRunnable#doRunIteration(de.clusteval.run
-	 * .runnable.IterationWrapper)
+     * (non-Javadoc)
+     *
+     * @see
+     * de.clusteval.run.runnable.RunRunnable#doRunIteration(de.clusteval.run
+     * .runnable.IterationWrapper)
      */
     @Override
-    protected void doRunIteration(RunAnalysisIterationWrapper iterationWrapper)
+    public void doRunIteration(RunAnalysisIterationWrapper iterationWrapper)
             throws RunIterationException {
         RunAnalysisIterationRunnable iterationRunnable = this
                 .createIterationRunnable(iterationWrapper);

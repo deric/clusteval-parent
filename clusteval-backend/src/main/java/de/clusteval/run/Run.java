@@ -575,6 +575,7 @@ public abstract class Run extends RepositoryObject implements IRun {
      *
      * @return the name
      */
+    @Override
     public String getName() {
         return absPath.getName().replace(".run", "");
     }
@@ -812,6 +813,7 @@ public abstract class Run extends RepositoryObject implements IRun {
      *
      * @return The context of this run.
      */
+    @Override
     public IContext getContext() {
         return this.context;
     }

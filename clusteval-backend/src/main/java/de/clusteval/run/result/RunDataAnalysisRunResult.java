@@ -33,6 +33,7 @@ import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.IRunResult;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.cluster.paramOptimization.InvalidOptimizationParameterException;
@@ -87,7 +88,7 @@ public class RunDataAnalysisRunResult extends AnalysisRunResult<Pair<List<String
      * @throws RegisterException
      */
     public RunDataAnalysisRunResult(IRepository repository, long changeDate, File absPath, String runIdentString,
-            final Run run) throws RegisterException {
+            final IRun run) throws RegisterException {
         super(repository, changeDate, absPath, runIdentString, run);
     }
 
