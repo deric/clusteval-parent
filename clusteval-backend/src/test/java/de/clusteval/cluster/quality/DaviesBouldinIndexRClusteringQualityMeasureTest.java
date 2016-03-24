@@ -10,35 +10,31 @@
  *     Christian Wiwie - initial API and implementation
  *****************************************************************************
  */
-/**
- *
- */
 package de.clusteval.cluster.quality;
 
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
+import de.clusteval.api.data.IDataSet;
+import de.clusteval.api.data.IDataSetConfig;
+import de.clusteval.api.exceptions.FormatConversionException;
+import de.clusteval.api.exceptions.NoRepositoryFoundException;
+import de.clusteval.api.exceptions.UnknownContextException;
+import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
+import de.clusteval.api.r.InvalidRepositoryException;
+import de.clusteval.api.r.RCalculationException;
+import de.clusteval.api.r.RNotAvailableException;
+import de.clusteval.api.r.RepositoryAlreadyExistsException;
+import de.clusteval.api.repository.RegisterException;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.context.Context;
-import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.data.DataConfig;
-import de.clusteval.data.dataset.DataSet;
-import de.clusteval.data.dataset.DataSetConfig;
 import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
 import de.clusteval.data.dataset.format.ConversionStandardToInputConfiguration;
 import de.clusteval.data.dataset.format.DataSetFormat;
 import de.clusteval.data.distance.DistanceMeasure;
-import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
-import de.clusteval.data.preprocessing.DataPreprocessor;
-import de.clusteval.api.r.InvalidRepositoryException;
-import de.clusteval.api.exceptions.NoRepositoryFoundException;
-import de.clusteval.api.repository.RegisterException;
-import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
 import de.clusteval.utils.AbstractClustEvalTest;
-import de.clusteval.api.exceptions.FormatConversionException;
-import de.clusteval.api.r.RCalculationException;
-import de.clusteval.api.r.RNotAvailableException;
 import de.wiwie.wiutils.utils.SimilarityMatrix.NUMBER_PRECISION;
 import java.io.File;
 import java.security.NoSuchAlgorithmException;
@@ -51,7 +47,7 @@ import org.junit.Test;
  * @author Christian Wiwie
  *
  */
-public class TestDaviesBouldinIndexRClusteringQualityMeasure extends AbstractClustEvalTest {
+public class DaviesBouldinIndexRClusteringQualityMeasureTest extends AbstractClustEvalTest {
 
     private static final double DELTA = 1e-9;
 
@@ -81,8 +77,8 @@ public class TestDaviesBouldinIndexRClusteringQualityMeasure extends AbstractClu
 
             DataConfig dc = this.getRepository().getStaticObjectWithName(
                     DataConfig.class, "dunnIndexMatrixTest");
-            DataSetConfig dsc = dc.getDatasetConfig();
-            DataSet ds = dsc.getDataSet();
+            IDataSetConfig dsc = dc.getDatasetConfig();
+            IDataSet ds = dsc.getDataSet();
             ds.preprocessAndConvertTo(
                     context,
                     DataSetFormat.parseFromString(this.getRepository(),
@@ -91,8 +87,8 @@ public class TestDaviesBouldinIndexRClusteringQualityMeasure extends AbstractClu
                             .parseFromString(getRepository(),
                                     "EuclidianDistanceMeasure"),
                             NUMBER_PRECISION.DOUBLE,
-                            new ArrayList<DataPreprocessor>(),
-                            new ArrayList<DataPreprocessor>()),
+                            new ArrayList<>(),
+                            new ArrayList<>()),
                     new ConversionStandardToInputConfiguration());
             ds.getInStandardFormat().loadIntoMemory();
             ClusteringQualityMeasure measure = ClusteringQualityMeasure

@@ -8,13 +8,12 @@
  * Contributors:
  *     Christian Wiwie - initial API and implementation
  ***************************************************************************** */
-/**
- *
- */
 package de.clusteval.data.dataset;
 
 import ch.qos.logback.classic.Level;
+import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetFormat;
+import de.clusteval.api.data.WEBSITE_VISIBILITY;
 import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.exceptions.FormatConversionException;
@@ -25,6 +24,7 @@ import de.clusteval.api.exceptions.IncompatibleContextException;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
+import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
@@ -45,7 +45,6 @@ import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
-import de.clusteval.data.dataset.DataSet.WEBSITE_VISIBILITY;
 import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
 import de.clusteval.data.dataset.format.ConversionStandardToInputConfiguration;
 import de.clusteval.data.dataset.format.DataSetFormat;
@@ -58,7 +57,6 @@ import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
 import de.clusteval.data.statistics.UnknownDataStatisticException;
 import de.clusteval.framework.ClustevalBackendServer;
-import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
@@ -86,7 +84,7 @@ import org.junit.Test;
  * @author Christian Wiwie
  *
  */
-public class TestDataSet extends AbstractClustEvalTest {
+public class DataSetTest extends AbstractClustEvalTest {
 
     /**
      * Test method for {@link data.dataset.DataSet#register()}.
@@ -957,7 +955,7 @@ public class TestDataSet extends AbstractClustEvalTest {
                                 "testCaseRepository/data/datasets/DS1/Zachary_karate_club_similarities.txt")
                         .getAbsoluteFile());
 
-        DataSet standard = ((DataSet) this.repositoryObject)
+        IDataSet standard = ((DataSet) this.repositoryObject)
                 .preprocessAndConvertTo(
                         context,
                         DataSetFormat.parseFromString(getRepository(),
@@ -967,8 +965,8 @@ public class TestDataSet extends AbstractClustEvalTest {
                                         getRepository(),
                                         "EuclidianDistanceMeasure"),
                                 NUMBER_PRECISION.DOUBLE,
-                                new ArrayList<DataPreprocessor>(),
-                                new ArrayList<DataPreprocessor>()),
+                                new ArrayList<>(),
+                                new ArrayList<>()),
                         new ConversionStandardToInputConfiguration());
         Assert.assertFalse(standard.isInMemory());
         standard.loadIntoMemory();
@@ -1061,8 +1059,8 @@ public class TestDataSet extends AbstractClustEvalTest {
                                         getRepository(),
                                         "EuclidianDistanceMeasure"),
                                 NUMBER_PRECISION.DOUBLE,
-                                new ArrayList<DataPreprocessor>(),
-                                new ArrayList<DataPreprocessor>()),
+                                new ArrayList<>(),
+                                new ArrayList<>()),
                         new ConversionStandardToInputConfiguration());
         standard.loadIntoMemory();
         SimilarityMatrix simMatrix = standard.getDataSetContent();
@@ -1150,7 +1148,7 @@ public class TestDataSet extends AbstractClustEvalTest {
                         new File(
                                 "testCaseRepository/data/datasets/DS1/Zachary_karate_club_similarities.txt")
                         .getAbsoluteFile());
-        DataSet standard = ((DataSet) this.repositoryObject)
+        IDataSet standard = ((DataSet) this.repositoryObject)
                 .preprocessAndConvertTo(
                         context,
                         DataSetFormat.parseFromString(getRepository(),
@@ -1160,8 +1158,8 @@ public class TestDataSet extends AbstractClustEvalTest {
                                         getRepository(),
                                         "EuclidianDistanceMeasure"),
                                 NUMBER_PRECISION.DOUBLE,
-                                new ArrayList<DataPreprocessor>(),
-                                new ArrayList<DataPreprocessor>()),
+                                new ArrayList<>(),
+                                new ArrayList<>()),
                         new ConversionStandardToInputConfiguration());
         standard.loadIntoMemory();
         Assert.assertTrue(standard.isInMemory());
@@ -1211,7 +1209,7 @@ public class TestDataSet extends AbstractClustEvalTest {
                 .getRepository()
                 .getStaticObjectWithName(DataSet.class,
                         "nora_cancer/all_expression_spearman.txt").clone();
-        DataSet newDataSet = ((DataSet) this.repositoryObject)
+        IDataSet newDataSet = ((DataSet) this.repositoryObject)
                 .preprocessAndConvertTo(
                         context,
                         DataSetFormat.parseFromString(getRepository(),
@@ -1221,8 +1219,8 @@ public class TestDataSet extends AbstractClustEvalTest {
                                         getRepository(),
                                         "EuclidianDistanceMeasure"),
                                 NUMBER_PRECISION.DOUBLE,
-                                new ArrayList<DataPreprocessor>(),
-                                new ArrayList<DataPreprocessor>()),
+                                new ArrayList<>(),
+                                new ArrayList<>()),
                         new ConversionStandardToInputConfiguration());
         Assert.assertEquals(this.repositoryObject.getAbsolutePath(),
                 newDataSet.getAbsolutePath());
@@ -1241,8 +1239,8 @@ public class TestDataSet extends AbstractClustEvalTest {
                         .parseFromString(getRepository(),
                                 "EuclidianDistanceMeasure"),
                         NUMBER_PRECISION.DOUBLE,
-                        new ArrayList<DataPreprocessor>(),
-                        new ArrayList<DataPreprocessor>()),
+                        new ArrayList<>(),
+                        new ArrayList<>()),
                 new ConversionStandardToInputConfiguration());
 
         /*
@@ -1260,8 +1258,8 @@ public class TestDataSet extends AbstractClustEvalTest {
                         .parseFromString(getRepository(),
                                 "EuclidianDistanceMeasure"),
                         NUMBER_PRECISION.DOUBLE,
-                        new ArrayList<DataPreprocessor>(),
-                        new ArrayList<DataPreprocessor>()),
+                        new ArrayList<>(),
+                        new ArrayList<>()),
                 new ConversionStandardToInputConfiguration());
         Assert.assertTrue(new File(
                 "testCaseRepository/data/datasets/rowSimTest/rowSimTestFile.sim.strip.SimMatrix")
@@ -1282,8 +1280,8 @@ public class TestDataSet extends AbstractClustEvalTest {
                         .parseFromString(getRepository(),
                                 "EuclidianDistanceMeasure"),
                         NUMBER_PRECISION.DOUBLE,
-                        new ArrayList<DataPreprocessor>(),
-                        new ArrayList<DataPreprocessor>()),
+                        new ArrayList<>(),
+                        new ArrayList<>()),
                 new ConversionStandardToInputConfiguration());
         Assert.assertTrue(new File(
                 "testCaseRepository/data/datasets/rowSimTest/rowSimTestFile.sim.strip.APRowSim")
@@ -1346,8 +1344,8 @@ public class TestDataSet extends AbstractClustEvalTest {
                         .parseFromString(getRepository(),
                                 "EuclidianDistanceMeasure"),
                         NUMBER_PRECISION.DOUBLE,
-                        new ArrayList<DataPreprocessor>(),
-                        new ArrayList<DataPreprocessor>()),
+                        new ArrayList<>(),
+                        new ArrayList<>()),
                 new ConversionStandardToInputConfiguration());
     }
 
@@ -1446,8 +1444,8 @@ public class TestDataSet extends AbstractClustEvalTest {
                         .parseFromString(getRepository(),
                                 "EuclidianDistanceMeasure"),
                         NUMBER_PRECISION.DOUBLE,
-                        new ArrayList<DataPreprocessor>(),
-                        new ArrayList<DataPreprocessor>()));
+                        new ArrayList<>(),
+                        new ArrayList<>()));
         Assert.assertTrue(targetFile.exists());
 
         targetFile.delete();
@@ -1540,10 +1538,9 @@ public class TestDataSet extends AbstractClustEvalTest {
                         .parseFromString(getRepository(),
                                 "EuclidianDistanceMeasure"),
                         NUMBER_PRECISION.DOUBLE,
-                        new ArrayList<DataPreprocessor>(),
-                        new ArrayList<DataPreprocessor>()));
-        DataSet standard = ((DataSet) this.repositoryObject)
-                .getInStandardFormat();
+                        new ArrayList<>(),
+                        new ArrayList<>()));
+        IDataSet standard = ((DataSet) this.repositoryObject).getInStandardFormat();
         Assert.assertEquals(DataSetFormat.parseFromString(getRepository(),
                 "SimMatrixDataSetFormat"), standard.getDataSetFormat());
     }

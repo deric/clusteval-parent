@@ -71,7 +71,7 @@ import de.clusteval.utils.StubRepositoryObject;
  * @author Christian Wiwie
  * 
  */
-public class TestDataSetConfig extends AbstractClustEvalTest {
+public class DataSetConfigTest extends AbstractClustEvalTest {
 
 	/**
 	 * Test method for {@link data.dataset.DataSetConfig#register()}.

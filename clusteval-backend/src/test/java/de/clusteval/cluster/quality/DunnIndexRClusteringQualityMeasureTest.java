@@ -14,6 +14,8 @@ package de.clusteval.cluster.quality;
 
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
+import de.clusteval.api.data.IDataSet;
+import de.clusteval.api.data.IDataSetConfig;
 import de.clusteval.api.exceptions.FormatConversionException;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.UnknownContextException;
@@ -28,8 +30,6 @@ import de.clusteval.api.repository.RegisterException;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.context.Context;
 import de.clusteval.data.DataConfig;
-import de.clusteval.data.dataset.DataSet;
-import de.clusteval.data.dataset.DataSetConfig;
 import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
 import de.clusteval.data.dataset.format.ConversionStandardToInputConfiguration;
 import de.clusteval.data.dataset.format.DataSetFormat;
@@ -78,8 +78,8 @@ public class DunnIndexRClusteringQualityMeasureTest extends AbstractClustEvalTes
 
             DataConfig dc = this.getRepository().getStaticObjectWithName(
                     DataConfig.class, "dunnIndexMatrixTest");
-            DataSetConfig dsc = dc.getDatasetConfig();
-            DataSet ds = dsc.getDataSet();
+            IDataSetConfig dsc = dc.getDatasetConfig();
+            IDataSet ds = dsc.getDataSet();
             ds.preprocessAndConvertTo(
                     context,
                     DataSetFormat.parseFromString(this.getRepository(),

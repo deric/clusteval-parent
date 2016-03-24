@@ -13,38 +13,38 @@
 package de.clusteval.cluster.paramOptimization;
 
 import ch.qos.logback.classic.Level;
+import de.clusteval.api.cluster.quality.ClusteringQualityMeasureValue;
 import de.clusteval.api.cluster.quality.ClusteringQualitySet;
+import de.clusteval.api.data.IDataSet;
+import de.clusteval.api.data.IDataSetFormat;
+import de.clusteval.api.exceptions.FormatConversionException;
+import de.clusteval.api.exceptions.InternalAttributeException;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
+import de.clusteval.api.exceptions.RunResultParseException;
+import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
+import de.clusteval.api.program.ParameterSet;
+import de.clusteval.api.r.InvalidRepositoryException;
+import de.clusteval.api.r.RNotAvailableException;
+import de.clusteval.api.r.RepositoryAlreadyExistsException;
+import de.clusteval.api.repository.RegisterException;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
 import de.clusteval.cluster.quality.ClusteringQualityMeasureParameters;
-import de.clusteval.api.cluster.quality.ClusteringQualityMeasureValue;
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
 import de.clusteval.context.Context;
-import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.data.DataConfig;
-import de.clusteval.data.dataset.DataSet;
 import de.clusteval.data.dataset.RelativeDataSet;
 import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
 import de.clusteval.data.dataset.format.ConversionStandardToInputConfiguration;
 import de.clusteval.data.dataset.format.DataSetFormat;
 import de.clusteval.data.distance.DistanceMeasure;
-import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
-import de.clusteval.data.preprocessing.DataPreprocessor;
 import de.clusteval.framework.ClustevalBackendServer;
-import de.clusteval.api.r.InvalidRepositoryException;
-import de.clusteval.api.repository.RegisterException;
-import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
-import de.clusteval.api.program.ParameterSet;
 import de.clusteval.program.ProgramConfig;
 import de.clusteval.run.Run;
-import de.clusteval.api.exceptions.RunResultParseException;
 import de.clusteval.utils.AbstractClustEvalTest;
-import de.clusteval.api.exceptions.FormatConversionException;
-import de.clusteval.api.exceptions.InternalAttributeException;
-import de.clusteval.api.r.RNotAvailableException;
 import de.wiwie.wiutils.utils.SimilarityMatrix.NUMBER_PRECISION;
 import java.io.File;
 import java.io.IOException;
@@ -84,8 +84,8 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
 
         DataConfig dataConfig = getRepository().getStaticObjectWithName(
                 DataConfig.class, "synthetic_cassini250");
-        DataSet ds = dataConfig.getDatasetConfig().getDataSet();
-        DataSetFormat internal = DataSetFormat.parseFromString(getRepository(),
+        IDataSet ds = dataConfig.getDatasetConfig().getDataSet();
+        IDataSetFormat internal = DataSetFormat.parseFromString(getRepository(),
                 "SimMatrixDataSetFormat");
         ds = ds.preprocessAndConvertTo(
                 context,
@@ -94,8 +94,8 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
                         .parseFromString(getRepository(),
                                 "EuclidianDistanceMeasure"),
                         NUMBER_PRECISION.DOUBLE,
-                        new ArrayList<DataPreprocessor>(),
-                        new ArrayList<DataPreprocessor>()),
+                        new ArrayList<>(),
+                        new ArrayList<>()),
                 new ConversionStandardToInputConfiguration());
         ds.loadIntoMemory();
         if (ds instanceof RelativeDataSet) {
@@ -223,8 +223,8 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
 
         DataConfig dataConfig = getRepository().getStaticObjectWithName(
                 DataConfig.class, "synthetic_cassini250");
-        DataSet ds = dataConfig.getDatasetConfig().getDataSet();
-        DataSetFormat internal = DataSetFormat.parseFromString(getRepository(),
+        IDataSet ds = dataConfig.getDatasetConfig().getDataSet();
+        IDataSetFormat internal = DataSetFormat.parseFromString(getRepository(),
                 "SimMatrixDataSetFormat");
         ds = ds.preprocessAndConvertTo(
                 context,
@@ -233,8 +233,8 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
                         .parseFromString(getRepository(),
                                 "EuclidianDistanceMeasure"),
                         NUMBER_PRECISION.DOUBLE,
-                        new ArrayList<DataPreprocessor>(),
-                        new ArrayList<DataPreprocessor>()),
+                        new ArrayList<>(),
+                        new ArrayList<>()),
                 new ConversionStandardToInputConfiguration());
         ds.loadIntoMemory();
         if (ds instanceof RelativeDataSet) {
@@ -292,7 +292,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
                         1001, true);
         method.reset(new File(
                 "testCaseRepository/results/04_05_2013-12_16_32_paper_run_synthetic/clusters/TransClust_2_synthetic_cassini250.results.qual.complete.test"));
-        List<ClusteringQualitySet> qualitySets = new ArrayList<ClusteringQualitySet>();
+        List<ClusteringQualitySet> qualitySets = new ArrayList<>();
 
         List<Integer> iterationNumbers = Arrays.asList(33);
         double[] f2s = new double[]{0.5238095238095238};
@@ -303,7 +303,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
             qualitySets.add(qualitySet);
         }
 
-        List<ParameterSet> expectedParameterSets = new ArrayList<ParameterSet>();
+        List<ParameterSet> expectedParameterSets = new ArrayList<>();
         double[] thresholds = new double[]{0.9158869161844035};
         for (double T : thresholds) {
             ParameterSet paramSet = new ParameterSet();
@@ -345,8 +345,8 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
 
         DataConfig dataConfig = getRepository().getStaticObjectWithName(
                 DataConfig.class, "synthetic_cassini250");
-        DataSet ds = dataConfig.getDatasetConfig().getDataSet();
-        DataSetFormat internal = DataSetFormat.parseFromString(getRepository(),
+        IDataSet ds = dataConfig.getDatasetConfig().getDataSet();
+        IDataSetFormat internal = DataSetFormat.parseFromString(getRepository(),
                 "SimMatrixDataSetFormat");
         ds = ds.preprocessAndConvertTo(
                 context,
@@ -355,8 +355,8 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
                         .parseFromString(getRepository(),
                                 "EuclidianDistanceMeasure"),
                         NUMBER_PRECISION.DOUBLE,
-                        new ArrayList<DataPreprocessor>(),
-                        new ArrayList<DataPreprocessor>()),
+                        new ArrayList<>(),
+                        new ArrayList<>()),
                 new ConversionStandardToInputConfiguration());
         ds.loadIntoMemory();
         if (ds instanceof RelativeDataSet) {
@@ -440,8 +440,8 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
 
         DataConfig dataConfig = getRepository().getStaticObjectWithName(
                 DataConfig.class, "baechler2003");
-        DataSet ds = dataConfig.getDatasetConfig().getDataSet();
-        DataSetFormat internal = DataSetFormat.parseFromString(getRepository(),
+        IDataSet ds = dataConfig.getDatasetConfig().getDataSet();
+        IDataSetFormat internal = DataSetFormat.parseFromString(getRepository(),
                 "SimMatrixDataSetFormat");
         ds = ds.preprocessAndConvertTo(
                 context,
@@ -450,8 +450,8 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
                         .parseFromString(getRepository(),
                                 "SpearmanCorrelationRDistanceMeasure"),
                         NUMBER_PRECISION.DOUBLE,
-                        new ArrayList<DataPreprocessor>(),
-                        new ArrayList<DataPreprocessor>()),
+                        new ArrayList<>(),
+                        new ArrayList<>()),
                 new ConversionStandardToInputConfiguration());
         ds.loadIntoMemory();
         if (ds instanceof RelativeDataSet) {
@@ -508,7 +508,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
                         programConfig.getOptimizableParams(), f2, 1001, true);
         method.reset(new File(
                 "testCaseRepository/results/04_15_2013-16_39_59_baechler2003/clusters/TransClust_2_baechler2003.results.qual.complete.test"));
-        List<ClusteringQualitySet> qualitySets = new ArrayList<ClusteringQualitySet>();
+        List<ClusteringQualitySet> qualitySets = new ArrayList<>();
 
         List<Integer> iterationNumbers = Arrays.asList(34);
         double[] f2s = new double[]{0.8337456704601682};
@@ -519,7 +519,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
             qualitySets.add(qualitySet);
         }
 
-        List<ParameterSet> expectedParameterSets = new ArrayList<ParameterSet>();
+        List<ParameterSet> expectedParameterSets = new ArrayList<>();
         double[] thresholds = new double[]{0.005706059388063329};
         for (double T : thresholds) {
             ParameterSet paramSet = new ParameterSet();
