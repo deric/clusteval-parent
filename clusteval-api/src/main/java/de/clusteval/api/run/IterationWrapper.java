@@ -45,19 +45,19 @@ public class IterationWrapper {
         super();
     }
 
-    protected File getLogfile() {
+    public File getLogfile() {
         return logfile;
     }
 
-    protected void setLogfile(File logfile) {
+    public void setLogfile(File logfile) {
         this.logfile = logfile;
     }
 
-    protected IDataConfig getDataConfig() {
+    public IDataConfig getDataConfig() {
         return dataConfig;
     }
 
-    protected void setDataConfig(IDataConfig dataConfig) {
+    public void setDataConfig(IDataConfig dataConfig) {
         this.dataConfig = dataConfig;
     }
 

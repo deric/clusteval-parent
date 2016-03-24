@@ -12,12 +12,12 @@
  */
 package de.clusteval.utils;
 
-import de.clusteval.api.r.IStatistics;
 import de.clusteval.api.r.RLibraryInferior;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.RepositoryObject;
 import java.io.File;
+import de.clusteval.api.stats.IStatistic;
 
 /**
  * An abstract class representing a property of some object, that can be
@@ -26,7 +26,7 @@ import java.io.File;
  * @author Christian Wiwie
  *
  */
-public abstract class Statistic extends RepositoryObject implements RLibraryInferior, IStatistics {
+public abstract class Statistic extends RepositoryObject implements RLibraryInferior, IStatistic {
 
     /**
      * @param repository

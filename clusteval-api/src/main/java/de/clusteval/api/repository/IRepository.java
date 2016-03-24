@@ -30,6 +30,7 @@ import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RLibraryNotLoadedException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.run.IRun;
+import de.clusteval.api.run.IRunResultFormatParser;
 import de.clusteval.api.run.ISupervisorThread;
 import java.io.File;
 import java.net.URL;
@@ -272,7 +273,7 @@ public interface IRepository {
      *
      * <p>
      * A helper method of null null null null null null null null null null null
-     * null null null null null null null null null null null null null null null null null null     {@link ProgramParameter#evaluateDefaultValue(DataConfig, ProgramConfig)},
+     * null null null null null null null null null null null null null null null null null null null null     {@link ProgramParameter#evaluateDefaultValue(DataConfig, ProgramConfig)},
 	 * {@link ProgramParameter#evaluateMinValue(DataConfig, ProgramConfig)} and
      * {@link ProgramParameter#evaluateMaxValue(DataConfig, ProgramConfig)}.
      *
@@ -321,4 +322,15 @@ public interface IRepository {
     void clearRengineForCurrentThread();
 
     void clearRengine(final Thread thread);
+
+    /**
+     * This method looks up and returns (if it exists) the class of the
+     * runresult format parser corresponding to the runresult format with the
+     * given name.
+     *
+     * @param runResultFormatName The runresult format name.
+     * @return The runresult format parser for the given runresult format name,
+     *         or null if it does not exist.
+     */
+    Class<? extends IRunResultFormatParser> getRunResultFormatParser(final String runResultFormatName);
 }

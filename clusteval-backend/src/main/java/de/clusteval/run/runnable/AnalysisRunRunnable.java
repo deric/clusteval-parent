@@ -42,8 +42,7 @@ import java.util.List;
  *
  */
 public abstract class AnalysisRunRunnable<S extends Statistic, R extends RunResult, IW extends AnalysisIterationWrapper<S>, IR extends AnalysisIterationRunnable>
-        extends
-        RunRunnable<IR, IW> {
+        extends RunRunnable<IR, IW> {
 
     /**
      * A list of all statistic-classes that should be assessed during execution

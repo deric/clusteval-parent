@@ -14,6 +14,7 @@ package de.clusteval.run;
 
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.data.IDataConfig;
+import de.clusteval.api.program.IProgramParameter;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.context.Context;
@@ -90,7 +91,7 @@ public class InternalParameterOptimizationRun extends ExecutionRun {
             RunSchedulerThread runScheduler, Run run,
             ProgramConfig programConfig, DataConfig dataConfig,
             String runIdentString, boolean isResume,
-            Map<ProgramParameter<?>, String> runParams) {
+            Map<IProgramParameter<?>, String> runParams) {
         return new InternalParameterOptimizationRunRunnable(runScheduler, run,
                 programConfig, dataConfig, runIdentString, isResume, runParams);
     }

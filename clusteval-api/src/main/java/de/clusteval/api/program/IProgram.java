@@ -93,4 +93,37 @@ public interface IProgram extends IRepositoryObject {
     IContext getContext() throws UnknownContextException;
 
     IProgram clone();
+
+    /**
+     * This method returns the major name of this program. The major name of the
+     * program is defined as the foldername its executable lies in.
+     *
+     * @return The major name of this program.
+     */
+    String getMajorName();
+
+    /**
+     * This method returns the minor name of this program. The minor name
+     * corresponds to the name of the executable of this program.
+     *
+     * @return The minor name.
+     */
+    String getMinorName();
+
+    /**
+     * This method returns the full name of this program. The full name
+     * corresponds to the concatenated major and minor name separated by a
+     * slash: MAJOR/MINOR
+     *
+     * @return The full name.
+     */
+    String getFullName();
+
+    /**
+     * This alias is used whenever this program is visually represented and a
+     * readable name is needed.
+     *
+     * @return The alias of this program.
+     */
+    String getAlias();
 }

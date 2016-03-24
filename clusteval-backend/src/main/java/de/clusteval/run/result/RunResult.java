@@ -17,11 +17,17 @@ import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigurationException;
 import de.clusteval.api.exceptions.GoldStandardNotFoundException;
+import de.clusteval.api.exceptions.IncompatibleContextException;
 import de.clusteval.api.exceptions.NoDataSetException;
+import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.api.exceptions.RunResultParseException;
+import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
+import de.clusteval.api.exceptions.UnknownParameterType;
+import de.clusteval.api.exceptions.UnknownProgramParameterException;
+import de.clusteval.api.exceptions.UnknownProgramTypeException;
 import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
 import de.clusteval.api.r.InvalidRepositoryException;
@@ -29,13 +35,12 @@ import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.IRunResult;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.cluster.paramOptimization.InvalidOptimizationParameterException;
 import de.clusteval.cluster.paramOptimization.UnknownParameterOptimizationMethodException;
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
-import de.clusteval.api.exceptions.IncompatibleContextException;
-import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
@@ -52,10 +57,6 @@ import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
 import de.clusteval.framework.repository.parse.Parser;
-import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
-import de.clusteval.api.exceptions.UnknownParameterType;
-import de.clusteval.api.exceptions.UnknownProgramParameterException;
-import de.clusteval.api.exceptions.UnknownProgramTypeException;
 import de.clusteval.run.ClusteringRun;
 import de.clusteval.run.DataAnalysisRun;
 import de.clusteval.run.InvalidRunModeException;
@@ -145,7 +146,7 @@ public abstract class RunResult extends RepositoryObject implements IRunResult {
     // ParameterOptimizationRunResult class, such that it contains all results
     // of the folder in one object.
     public static Run parseFromRunResultFolder(final IRepository parentRepository, final File runResultFolder,
-            final List<RunResult> result, final boolean parseClusterings, final boolean storeClusterings,
+            final List<IRunResult> result, final boolean parseClusterings, final boolean storeClusterings,
             final boolean register) throws IOException, UnknownRunResultFormatException, UnknownDataSetFormatException,
                                            UnknownClusteringQualityMeasureException, InvalidRunModeException,
                                            UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
@@ -224,7 +225,7 @@ public abstract class RunResult extends RepositoryObject implements IRunResult {
      */
     protected String runIdentString;
 
-    protected Run run;
+    protected IRun run;
 
     protected boolean changedSinceLastRegister;
 
@@ -236,7 +237,7 @@ public abstract class RunResult extends RepositoryObject implements IRunResult {
      * @param run
      * @throws RegisterException
      */
-    public RunResult(IRepository repository, long changeDate, File absPath, final String runIdentString, final Run run)
+    public RunResult(IRepository repository, long changeDate, File absPath, final String runIdentString, final IRun run)
             throws RegisterException {
         super(repository, false, changeDate, absPath);
         this.runIdentString = runIdentString;
@@ -274,7 +275,7 @@ public abstract class RunResult extends RepositoryObject implements IRunResult {
     /**
      * @return The run this runresult belongs to.
      */
-    public Run getRun() {
+    public IRun getRun() {
         return this.run;
     }
 

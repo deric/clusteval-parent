@@ -12,12 +12,11 @@
  */
 package de.clusteval.program;
 
-import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.exceptions.InternalAttributeException;
+import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.data.DataConfig;
 import javax.script.ScriptException;
 
 /**
@@ -30,12 +29,12 @@ public class DoubleProgramParameter extends ProgramParameter<Double> {
      * Parse a double program parameter from strings.
      *
      * @param programConfig The program configuration defining this parameter.
-     * @param name The name of the parameter.
-     * @param desc The description of the parameter.
-     * @param minValue The minimal value of the parameter.
-     * @param maxValue The maximal value of the parameter.
+     * @param name          The name of the parameter.
+     * @param desc          The description of the parameter.
+     * @param minValue      The minimal value of the parameter.
+     * @param maxValue      The maximal value of the parameter.
      * @param options
-     * @param def The default value of the parameter.
+     * @param def           The default value of the parameter.
      * @return The parsed double program parameter.
      * @throws RegisterException
      */
@@ -61,16 +60,16 @@ public class DoubleProgramParameter extends ProgramParameter<Double> {
     /**
      * The constructor for double program parameters.
      *
-     * @param repository The repository to register the new parameter.
-     * @param register Whether to register the new parameter.
+     * @param repository    The repository to register the new parameter.
+     * @param register      Whether to register the new parameter.
      *
      * @param programConfig The program configuration defining this parameter.
-     * @param name The name of the parameter.
-     * @param desc The description of the parameter.
-     * @param minValue The minimal value of the parameter.
-     * @param maxValue The maximal value of the parameter.
+     * @param name          The name of the parameter.
+     * @param desc          The description of the parameter.
+     * @param minValue      The minimal value of the parameter.
+     * @param maxValue      The maximal value of the parameter.
      * @param options
-     * @param def The default value of the parameter.
+     * @param def           The default value of the parameter.
      * @throws RegisterException
      */
     protected DoubleProgramParameter(final IRepository repository, final boolean register,
@@ -91,9 +90,9 @@ public class DoubleProgramParameter extends ProgramParameter<Double> {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see program.ProgramParameter#clone(program.ProgramParameter)
+     * (non-Javadoc)
+     *
+     * @see program.ProgramParameter#clone(program.ProgramParameter)
      */
     @Override
     public DoubleProgramParameter clone() {
@@ -107,9 +106,9 @@ public class DoubleProgramParameter extends ProgramParameter<Double> {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see program.ProgramParameter#isMinValueSet()
+     * (non-Javadoc)
+     *
+     * @see program.ProgramParameter#isMinValueSet()
      */
     @Override
     public boolean isMinValueSet() {
@@ -117,9 +116,9 @@ public class DoubleProgramParameter extends ProgramParameter<Double> {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see program.ProgramParameter#isMaxValueSet()
+     * (non-Javadoc)
+     *
+     * @see program.ProgramParameter#isMaxValueSet()
      */
     @Override
     public boolean isMaxValueSet() {
@@ -127,9 +126,9 @@ public class DoubleProgramParameter extends ProgramParameter<Double> {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see program.ProgramParameter#evaluateMinValue()
+     * (non-Javadoc)
+     *
+     * @see program.ProgramParameter#evaluateMinValue()
      */
     @Override
     public Double evaluateMinValue(final IDataConfig dataConfig, final IProgramConfig programConfig)
@@ -151,16 +150,16 @@ public class DoubleProgramParameter extends ProgramParameter<Double> {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see program.ProgramParameter#evaluateMaxValue()
+     * (non-Javadoc)
+     *
+     * @see program.ProgramParameter#evaluateMaxValue()
      */
     @Override
-    public Double evaluateMaxValue(final DataConfig dataConfig, final ProgramConfig programConfig)
+    public Double evaluateMaxValue(final IDataConfig dataConfig, final IProgramConfig programConfig)
             throws InternalAttributeException {
 
         /*
-		 * Parse maxValue
+         * Parse maxValue
          */
         String newMaxValue = this.repository.evaluateInternalAttributes(maxValue, dataConfig, programConfig);
 
@@ -175,16 +174,16 @@ public class DoubleProgramParameter extends ProgramParameter<Double> {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see program.ProgramParameter#evaluateDefaultValue()
+     * (non-Javadoc)
+     *
+     * @see program.ProgramParameter#evaluateDefaultValue()
      */
     @Override
-    public Double evaluateDefaultValue(final DataConfig dataConfig, final ProgramConfig programConfig)
+    public Double evaluateDefaultValue(final IDataConfig dataConfig, final IProgramConfig programConfig)
             throws InternalAttributeException {
 
         /*
-		 * Parse default
+         * Parse default
          */
         String newDefaultValue = this.repository.evaluateInternalAttributes(def, dataConfig, programConfig);
 
@@ -199,22 +198,21 @@ public class DoubleProgramParameter extends ProgramParameter<Double> {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * de.clusteval.program.ProgramParameter#evaluateOptions(de.clusteval.data
-	 * .DataConfig, de.clusteval.program.ProgramConfig)
+     * (non-Javadoc)
+     *
+     * @see
+     * de.clusteval.program.ProgramParameter#evaluateOptions(de.clusteval.data
+     * .DataConfig, de.clusteval.program.ProgramConfig)
      */
     @Override
-    public Double[] evaluateOptions(DataConfig dataConfig, ProgramConfig programConfig)
-            throws InternalAttributeException {
+    public Double[] evaluateOptions(IDataConfig dataConfig, IProgramConfig programConfig) throws InternalAttributeException {
         return new Double[0];
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.clusteval.program.ProgramParameter#isOptionsSet()
+     * (non-Javadoc)
+     *
+     * @see de.clusteval.program.ProgramParameter#isOptionsSet()
      */
     @Override
     public boolean isOptionsSet() {

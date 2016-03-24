@@ -17,6 +17,8 @@ import de.clusteval.api.cluster.quality.ClusteringQualitySet;
 import de.clusteval.api.data.IConversionInputToStandardConfiguration;
 import de.clusteval.api.data.IConversionStandardToInputConfiguration;
 import de.clusteval.api.data.IDataConfig;
+import de.clusteval.api.data.IDataSet;
+import de.clusteval.api.data.IDataSetConfig;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.exceptions.FormatConversionException;
@@ -36,18 +38,15 @@ import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.run.IRun;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.NoParameterSetFoundException;
-import de.clusteval.cluster.quality.ClusteringQualityMeasure;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.AbsoluteDataSet;
 import de.clusteval.data.dataset.DataSet;
-import de.clusteval.data.dataset.DataSetConfig;
 import de.clusteval.data.dataset.RelativeDataSet;
 import de.clusteval.data.dataset.format.IncompatibleDataSetFormatException;
 import de.clusteval.data.goldstandard.GoldStandardConfig;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.framework.threading.RunSchedulerThread;
-import de.clusteval.program.ProgramConfig;
 import de.clusteval.program.ProgramParameter;
 import de.clusteval.program.r.RProcess;
 import de.clusteval.program.r.RProgram;
@@ -77,8 +76,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
-import org.rosuda.REngine.REXPMismatchException;
-import org.rosuda.REngine.REngineException;
 import org.slf4j.LoggerFactory;
 
 /**
@@ -271,7 +268,7 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
      * @throws InvalidDataSetFormatVersionException
      * @throws IllegalArgumentException
      */
-    protected void checkCompatibilityDataSetGoldStandard(DataSetConfig dataSetConfig,
+    protected void checkCompatibilityDataSetGoldStandard(IDataSetConfig dataSetConfig,
             GoldStandardConfig goldStandardConfig) throws UnknownGoldStandardFormatException,
                                                           IncompleteGoldStandardException, IllegalArgumentException {
         this.log.debug("Checking compatibility of goldstandard and dataset ...");
@@ -289,7 +286,7 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
                 // dataSet.loadIntoMemory();
                 goldStandard.loadIntoMemory();
 
-                final Set<String> ids = new HashSet<String>(dataSet.getIds());
+                final Set<String> ids = new HashSet<>(dataSet.getIds());
                 final Set<ClusterItem> gsItems = goldStandard.getClustering().getClusterItems();
                 final Set<String> gsIds = new HashSet<>();
                 for (ClusterItem item : gsItems) {
@@ -423,11 +420,12 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
      * Replace the output parameter %o% in the invocation line by the absolute
      * path to the output file.
      *
+     * @param clusteringOutput
      * @param invocation
-     *                       The invocation line without replaced output parameter.
+     *                         The invocation line without replaced output parameter.
      * @param internalParams
-     *                       The map containing all internal parameters, e.g. the output
-     *                       file path.
+     *                         The map containing all internal parameters, e.g. the output
+     *                         file path.
      * @return The invocation line with replaced output parameter.
      */
     protected String[] parseOutput(final String clusteringOutput, final String qualityOutput, final String[] invocation,
@@ -530,6 +528,7 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
      * Throw an exception if no value is set for a certain parameter-string.
      *
      * @param invocation
+     * @param effectiveParams
      * @return The invocation line with all parameters replaced.
      * @throws MissingParameterValueException
      * @throws InternalAttributeException
@@ -547,7 +546,7 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
                 }
 
                 String param = parsed[i].substring(pos + 1, endPos);
-                ProgramParameter<?> pa = programConfig.getParameterForName(param);
+                IProgramParameter<?> pa = programConfig.getParameterForName(param);
                 int arrPos = programConfig.getParams().indexOf(pa);
                 if (arrPos < 0) {
                     throw new MissingParameterValueException("No value for parameter \"" + param + "\" given");
@@ -572,6 +571,7 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
      * {@link #replaceRunParameters(String)}.
      *
      * @param invocation
+     * @param effectiveParams
      * @return The invocation line with replaced run parameters.
      * @throws InternalAttributeException
      * @throws RegisterException
@@ -588,7 +588,7 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
 
         String[] parsed = invocation.clone();
         for (int i = 0; i < parsed.length; i++) {
-            for (ProgramParameter<?> param : runParams.keySet()) {
+            for (IProgramParameter<?> param : runParams.keySet()) {
                 parsed[i] = parsed[i].replace("%" + param.getName() + "%", runParams.get(param));
                 effectiveParams.put(param.getName(), runParams.get(param));
             }
@@ -677,9 +677,11 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
      * {@link #handleMissingRunResult()} is responsible for performing actions
      * ensuring, that the next iterations can be executed without problems.
      *
+     * @param iterationWrapper
+     * @throws de.clusteval.api.exceptions.RunIterationException
      */
     @Override
-    protected void doRunIteration(final ExecutionIterationWrapper iterationWrapper) throws RunIterationException {
+    public void doRunIteration(final ExecutionIterationWrapper iterationWrapper) throws RunIterationException {
         try {
             if (this.isPaused()) {
                 log.info("Pausing...");
@@ -750,8 +752,8 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
                             return;
                         }
 
-                        ProgramConfig programConfig = iterationWrapper.getProgramConfig();
-                        DataConfig dataConfig = iterationWrapper.getDataConfig();
+                        IProgramConfig programConfig = iterationWrapper.getProgramConfig();
+                        IDataConfig dataConfig = iterationWrapper.getDataConfig();
 
                         this.log.info(String.format("%s (%s,%s, Iteration %d) %s", getRun(), programConfig, dataConfig,
                                 iterationWrapper.getOptId(), iterationWrapper.getEffectiveParams()));
@@ -813,7 +815,7 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
                                         + ") Finished converting result files");
 
                                 // execute runresult postprocessors
-                                ExecutionRun run = (ExecutionRun) this.iterationWrapper.runnable.run;
+                                ExecutionRun run = (ExecutionRun) this.iterationWrapper.getRunnable().getRun();
                                 ClusteringRunResult tmpResult = iterationWrapper.getConvertedClusteringRunResult();
                                 for (RunResultPostprocessor postprocessor : run.getPostProcessors()) {
                                     try {
@@ -843,13 +845,13 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
                                             }
                                         ;
                                         };
-										p.process();
+					p.process();
 
                                         tmpResult = new ClusteringRunResult(tmpResult.getRepository(),
                                                 System.currentTimeMillis(), new File(targetFile),
                                                 tmpResult.getDataConfig(), tmpResult.getProgramConfig(), format,
                                                 tmpResult.getIdentifier(), run);
-                                    } catch (Exception e) {
+                                    } catch (IOException | RegisterException e) {
                                         throw new RunResultConversionException(
                                                 "An error occurred when applying postprocessor " + postprocessor);
                                     }
@@ -875,7 +877,7 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
                                 synchronized (completeQualityOutput) {
                                     // 04.04.2013: adding iteration number to
                                     // qualities
-                                    List<Triple<ParameterSet, ClusteringQualitySet, Long>> qualitiesWithIterations = new ArrayList<Triple<ParameterSet, ClusteringQualitySet, Long>>();
+                                    List<Triple<ParameterSet, ClusteringQualitySet, Long>> qualitiesWithIterations = new ArrayList<>();
                                     for (Pair<ParameterSet, ClusteringQualitySet> pair : qualities) {
                                         qualitiesWithIterations.add(Triple.getTriple(pair.getFirst(), pair.getSecond(),
                                                 new Long(iterationWrapper.getOptId())));
@@ -903,13 +905,7 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
                                 // result
                                 getRun().getResults().add(iterationWrapper.getConvertedClusteringRunResult());
                             }
-                        } catch (RunResultNotFoundException e) {
-                            handleMissingRunResult(iterationWrapper);
-                        } catch (RunResultConversionException e) {
-                            handleMissingRunResult(iterationWrapper);
-                        } catch (REngineException e1) {
-                            handleMissingRunResult(iterationWrapper);
-                        } catch (REXPMismatchException e1) {
+                        } catch (RunResultNotFoundException | RunResultConversionException e) {
                             handleMissingRunResult(iterationWrapper);
                         } finally {
                             if (programConfig.getProgram() instanceof RProgram) {
@@ -960,7 +956,7 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
             final Map<String, String> internalParams) throws RunResultNotFoundException {
         this.log.debug(this.getRun() + " (" + this.programConfig + "," + this.dataConfig
                 + ") Assessing quality of results...");
-        List<Pair<ParameterSet, ClusteringQualitySet>> qualities = new ArrayList<Pair<ParameterSet, ClusteringQualitySet>>();
+        List<Pair<ParameterSet, ClusteringQualitySet>> qualities = new ArrayList<>();
         try {
             final String qualityFile = internalParams.get("q");
             convertedResult.loadIntoMemory();
@@ -969,7 +965,7 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
                 ClusteringQualitySet quals = pair.getSecond().assessQuality(dataConfig,
                         this.getRun().getQualityMeasures());
                 qualities.add(Pair.getPair(pair.getFirst(), quals));
-                for (ClusteringQualityMeasure qualityMeasure : quals.keySet()) {
+                for (ClusteringEvaluation qualityMeasure : quals.keySet()) {
                     FileUtils.appendStringToFile(qualityFile,
                             qualityMeasure.getClass().getSimpleName() + "\t" + quals.get(qualityMeasure) + "\n");
                 }
@@ -1004,14 +1000,14 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
             sb.append(clustSet.getThird());
             sb.append("\t");
             for (int p = 0; p < programConfig.getOptimizableParams().size(); p++) {
-                ProgramParameter<?> param = programConfig.getOptimizableParams().get(p);
+                IProgramParameter<?> param = programConfig.getOptimizableParams().get(p);
                 if (p > 0) {
                     sb.append(",");
                 }
                 sb.append(clustSet.getFirst().get(param.getName()));
             }
             sb.append("\t");
-            for (ClusteringQualityMeasure measure : this.getRun().getQualityMeasures()) {
+            for (ClusteringEvaluation measure : this.getRun().getQualityMeasures()) {
                 sb.append(clustSet.getSecond().get(measure));
                 sb.append("\t");
             }

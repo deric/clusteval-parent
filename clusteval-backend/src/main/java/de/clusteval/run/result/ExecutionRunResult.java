@@ -11,10 +11,10 @@
 package de.clusteval.run.result;
 
 import de.clusteval.api.data.IDataConfig;
+import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.program.ProgramConfig;
-import de.clusteval.run.Run;
+import de.clusteval.api.run.IRun;
 import java.io.File;
 
 /**
@@ -27,7 +27,7 @@ public abstract class ExecutionRunResult extends RunResult {
     protected IDataConfig dataConfig;
 
     /** The program config. */
-    protected ProgramConfig programConfig;
+    protected IProgramConfig programConfig;
 
     /**
      * @param repository
@@ -40,8 +40,8 @@ public abstract class ExecutionRunResult extends RunResult {
      * @throws RegisterException
      */
     public ExecutionRunResult(IRepository repository, long changeDate,
-            File absPath, String runIdentString, final Run run,
-            final IDataConfig dataConfig, final ProgramConfig programConfig)
+            File absPath, String runIdentString, final IRun run,
+            final IDataConfig dataConfig, final IProgramConfig programConfig)
             throws RegisterException {
         super(repository, changeDate, absPath, runIdentString, run);
         this.dataConfig = dataConfig;
@@ -74,7 +74,7 @@ public abstract class ExecutionRunResult extends RunResult {
      * @return The program configuration wrapping the program that produced this
      *         runresult.
      */
-    public ProgramConfig getProgramConfig() {
+    public IProgramConfig getProgramConfig() {
         return this.programConfig;
     }
 

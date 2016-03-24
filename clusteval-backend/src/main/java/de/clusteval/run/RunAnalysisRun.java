@@ -173,7 +173,7 @@ public class RunAnalysisRun extends AnalysisRun<RunStatistic> {
      * @see run.Run#getNumberOfRunRunnables()
      */
     @Override
-    protected int getNumberOfRunRunnables() {
+    public int getNumberOfRunRunnables() {
         return this.getUniqueRunAnalysisRunIdentifiers().size();
     }
 

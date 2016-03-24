@@ -14,15 +14,25 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.clusteval.api.r;
+package de.clusteval.api.stats;
 
 import de.clusteval.api.repository.IRepositoryObject;
 
 /**
  *
  * @author deric
- * @param <T>
  */
-public interface IStatisticCalculator<T extends IStatistics> extends IRepositoryObject {
+public interface IStatistic extends IRepositoryObject {
+
+    /**
+     * Parses the values of a statistic from a string and stores them in the
+     * local attributes of this object.
+     *
+     * @param contents The string to parse the values from.
+     *
+     */
+    void parseFromString(final String contents);
+
+    String toString();
 
 }

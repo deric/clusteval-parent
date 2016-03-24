@@ -18,24 +18,34 @@ import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigurationException;
 import de.clusteval.api.exceptions.GoldStandardNotFoundException;
+import de.clusteval.api.exceptions.IncompatibleContextException;
 import de.clusteval.api.exceptions.NoDataSetException;
+import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
+import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
+import de.clusteval.api.exceptions.UnknownParameterType;
+import de.clusteval.api.exceptions.UnknownProgramParameterException;
+import de.clusteval.api.exceptions.UnknownProgramTypeException;
+import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
+import de.clusteval.api.program.IProgramConfig;
+import de.clusteval.api.program.ParameterSet;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.run.IClusteringRunResult;
+import de.clusteval.api.run.IRun;
+import de.clusteval.api.run.IRunResult;
+import de.clusteval.api.run.IRunResultFormat;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.cluster.paramOptimization.InvalidOptimizationParameterException;
 import de.clusteval.cluster.paramOptimization.UnknownParameterOptimizationMethodException;
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
-import de.clusteval.api.exceptions.IncompatibleContextException;
-import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
@@ -50,12 +60,7 @@ import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
 import de.clusteval.framework.repository.parse.Parser;
-import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
-import de.clusteval.api.program.ParameterSet;
 import de.clusteval.program.ProgramConfig;
-import de.clusteval.api.exceptions.UnknownParameterType;
-import de.clusteval.api.exceptions.UnknownProgramParameterException;
-import de.clusteval.api.exceptions.UnknownProgramTypeException;
 import de.clusteval.run.ClusteringRun;
 import de.clusteval.run.InvalidRunModeException;
 import de.clusteval.run.Run;
@@ -63,7 +68,6 @@ import de.clusteval.run.RunException;
 import de.clusteval.run.result.format.RunResultFormat;
 import de.clusteval.run.result.format.RunResultFormatParser;
 import de.clusteval.run.result.format.RunResultNotFoundException;
-import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.run.statistics.UnknownRunDataStatisticException;
 import de.clusteval.run.statistics.UnknownRunStatisticException;
 import de.clusteval.utils.InvalidConfigurationFileException;
@@ -88,7 +92,7 @@ public class ClusteringRunResult extends ExecutionRunResult implements IClusteri
     /**
      * The result format.
      */
-    protected RunResultFormat resultFormat;
+    protected IRunResultFormat resultFormat;
 
     protected Pair<ParameterSet, Clustering> clustering;
 
@@ -106,8 +110,8 @@ public class ClusteringRunResult extends ExecutionRunResult implements IClusteri
      * @throws RegisterException
      */
     public ClusteringRunResult(final IRepository repository, final long changeDate, final File absPath,
-            final IDataConfig dataConfig, final ProgramConfig programConfig, final RunResultFormat resultFormat,
-            final String runIdentString, final Run run) throws RegisterException {
+            final IDataConfig dataConfig, final IProgramConfig programConfig, final IRunResultFormat resultFormat,
+            final String runIdentString, final IRun run) throws RegisterException {
         super(repository, changeDate, absPath, runIdentString, run, dataConfig, programConfig);
 
         this.resultFormat = resultFormat;
@@ -252,7 +256,7 @@ public class ClusteringRunResult extends ExecutionRunResult implements IClusteri
      *
      * @return the result format
      */
-    public RunResultFormat getResultFormat() {
+    public IRunResultFormat getResultFormat() {
         return resultFormat;
     }
 
@@ -271,11 +275,12 @@ public class ClusteringRunResult extends ExecutionRunResult implements IClusteri
      *                        runresult.
      * @param runResultFolder A file object referencing the runresult folder.
      * @param result          The list of runresults this method fills.
+     * @param register
      * @return The parameter optimization run parsed from the runresult folder.
      * @throws RegisterException
      */
     public static Run parseFromRunResultFolder(final ClusteringRun run, final IRepository repository,
-            final File runResultFolder, final List<RunResult> result, final boolean register) throws RegisterException {
+            final File runResultFolder, final List<IRunResult> result, final boolean register) throws RegisterException {
 
         File clusterFolder = new File(FileUtils.buildPath(runResultFolder.getAbsolutePath(), "clusters"));
 
@@ -300,12 +305,13 @@ public class ClusteringRunResult extends ExecutionRunResult implements IClusteri
      * @param dataConfig
      * @param programConfig
      * @param completeFile
+     * @param register
      * @return The parameter optimization run result parsed from the given
      *         runresult folder.
      * @throws RegisterException
      */
     public static ClusteringRunResult parseFromRunResultCompleteFile(IRepository repository, ClusteringRun run,
-            final IDataConfig dataConfig, final ProgramConfig programConfig, final File completeFile,
+            final IDataConfig dataConfig, final IProgramConfig programConfig, final File completeFile,
             final boolean register) throws RegisterException {
         ClusteringRunResult result = null;
         if (completeFile.exists()) {

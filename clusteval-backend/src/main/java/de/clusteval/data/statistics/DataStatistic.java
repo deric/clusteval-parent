@@ -12,6 +12,7 @@
  */
 package de.clusteval.data.statistics;
 
+import de.clusteval.api.stats.IDataStatistic;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.run.DataAnalysisRun;
@@ -61,7 +62,7 @@ import java.util.List;
  * @author Christian Wiwie
  *
  */
-public abstract class DataStatistic extends Statistic {
+public abstract class DataStatistic extends Statistic implements IDataStatistic {
 
     /**
      * @param repository

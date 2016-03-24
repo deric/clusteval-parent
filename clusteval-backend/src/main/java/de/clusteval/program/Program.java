@@ -98,6 +98,7 @@ public abstract class Program extends RepositoryObject implements IProgram {
      *
      * @return The major name of this program.
      */
+    @Override
     public String getMajorName() {
         return this.absPath.getParentFile().getName();
     }
@@ -122,14 +123,6 @@ public abstract class Program extends RepositoryObject implements IProgram {
     public String getFullName() {
         return getMajorName() + "/" + getMinorName();
     }
-
-    /**
-     * This alias is used whenever this program is visually represented and a
-     * readable name is needed.
-     *
-     * @return The alias of this program.
-     */
-    public abstract String getAlias();
 
     /*
      * (non-Javadoc)

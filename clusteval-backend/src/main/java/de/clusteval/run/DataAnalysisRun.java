@@ -243,7 +243,7 @@ public class DataAnalysisRun extends AnalysisRun<DataStatistic> {
      * @see run.Run#getNumberOfRunRunnables()
      */
     @Override
-    protected int getNumberOfRunRunnables() {
+    public int getNumberOfRunRunnables() {
         return this.getDataConfigs().size();
     }
 

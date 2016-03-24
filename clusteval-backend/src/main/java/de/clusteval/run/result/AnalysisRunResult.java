@@ -12,8 +12,8 @@ package de.clusteval.run.result;
 
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.run.Run;
-import de.clusteval.utils.Statistic;
+import de.clusteval.api.run.IRun;
+import de.clusteval.api.stats.IStatistic;
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
@@ -27,7 +27,7 @@ import java.util.Map;
  *            Type of the Statistics
  *
  */
-public abstract class AnalysisRunResult<S extends Object, T extends Statistic> extends RunResult {
+public abstract class AnalysisRunResult<S extends Object, T extends IStatistic> extends RunResult {
 
     protected Map<S, List<T>> statistics;
 
@@ -40,7 +40,7 @@ public abstract class AnalysisRunResult<S extends Object, T extends Statistic> e
      * @throws RegisterException
      */
     public AnalysisRunResult(IRepository repository, long changeDate,
-            File absPath, String runIdentString, final Run run)
+            File absPath, String runIdentString, final IRun run)
             throws RegisterException {
         super(repository, changeDate, absPath, runIdentString, run);
         this.statistics = new HashMap<>();

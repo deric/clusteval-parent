@@ -16,6 +16,8 @@ import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.cluster.quality.ClusteringQualitySet;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataSetFormat;
+import de.clusteval.api.exceptions.RunResultParseException;
+import de.clusteval.api.program.ParameterSet;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.repository.RepositoryEvent;
@@ -23,17 +25,14 @@ import de.clusteval.api.repository.RepositoryRemoveEvent;
 import de.clusteval.api.run.IRunRunnable;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
-import de.clusteval.cluster.quality.ClusteringQualityMeasure;
 import de.clusteval.context.Context;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.format.AbsoluteDataSetFormat;
 import de.clusteval.data.dataset.format.DataSetFormat;
 import de.clusteval.framework.threading.RunSchedulerThread;
-import de.clusteval.api.program.ParameterSet;
 import de.clusteval.program.ProgramConfig;
 import de.clusteval.program.ProgramParameter;
 import de.clusteval.run.result.ParameterOptimizationResult;
-import de.clusteval.api.exceptions.RunResultParseException;
 import de.clusteval.run.result.postprocessing.RunResultPostprocessor;
 import de.clusteval.run.runnable.ExecutionRunRunnable;
 import de.clusteval.run.runnable.ParameterOptimizationRunRunnable;
@@ -324,12 +323,12 @@ public class ParameterOptimizationRun extends ExecutionRun {
                         ClusteringQualitySet bestQuals = thread.getOptimizationMethod().getResult()
                                 .getOptimalCriterionValue();
                         // get the optimal parameter values
-                        Map<ClusteringQualityMeasure, ParameterSet> bestParams = thread.getOptimizationMethod()
+                        Map<ClusteringEvaluation, ParameterSet> bestParams = thread.getOptimizationMethod()
                                 .getResult().getOptimalParameterSets();
 
                         // measure -> best parameters
-                        Map<ClusteringQualityMeasure, Map<String, String>> bestParamsMap = new HashMap<>();
-                        for (ClusteringQualityMeasure measure : bestParams.keySet()) {
+                        Map<ClusteringEvaluation, Map<String, String>> bestParamsMap = new HashMap<>();
+                        for (ClusteringEvaluation measure : bestParams.keySet()) {
                             ParameterSet pSet = bestParams.get(measure);
                             Map<String, String> tmp = new HashMap<>();
                             for (String p : pSet.keySet()) {

@@ -10,33 +10,39 @@
  ***************************************************************************** */
 package de.clusteval.run.result;
 
-import de.clusteval.api.exceptions.RunResultParseException;
+import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigurationException;
 import de.clusteval.api.exceptions.GoldStandardNotFoundException;
+import de.clusteval.api.exceptions.IncompatibleContextException;
+import de.clusteval.api.exceptions.NoDataSetException;
+import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
+import de.clusteval.api.exceptions.RunResultParseException;
+import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
+import de.clusteval.api.exceptions.UnknownParameterType;
+import de.clusteval.api.exceptions.UnknownProgramParameterException;
+import de.clusteval.api.exceptions.UnknownProgramTypeException;
+import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.run.IRunResult;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.cluster.paramOptimization.InvalidOptimizationParameterException;
 import de.clusteval.cluster.paramOptimization.UnknownParameterOptimizationMethodException;
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
-import de.clusteval.api.exceptions.IncompatibleContextException;
-import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
-import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
-import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.data.dataset.type.UnknownDataSetTypeException;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
@@ -46,15 +52,10 @@ import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
 import de.clusteval.framework.repository.parse.Parser;
-import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
-import de.clusteval.api.exceptions.UnknownParameterType;
-import de.clusteval.api.exceptions.UnknownProgramParameterException;
-import de.clusteval.api.exceptions.UnknownProgramTypeException;
 import de.clusteval.run.InvalidRunModeException;
 import de.clusteval.run.Run;
 import de.clusteval.run.RunAnalysisRun;
 import de.clusteval.run.RunException;
-import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.run.statistics.RunStatistic;
 import de.clusteval.run.statistics.UnknownRunDataStatisticException;
 import de.clusteval.run.statistics.UnknownRunStatisticException;
@@ -347,6 +348,8 @@ public class RunAnalysisRunResult extends AnalysisRunResult<String, RunStatistic
      *                        runresult.
      * @param runResultFolder
      *                        A file object referencing the runresult folder.
+     * @param result
+     * @param register
      * @return The run analysis runresult parsed from the given runresult
      *         folder.
      * @throws RunResultParseException
@@ -354,7 +357,7 @@ public class RunAnalysisRunResult extends AnalysisRunResult<String, RunStatistic
      *
      */
     public static RunAnalysisRunResult parseFromRunResultFolder(final RunAnalysisRun run, final IRepository repository,
-            final File runResultFolder, final List<RunResult> result, final boolean register)
+            final File runResultFolder, final List<IRunResult> result, final boolean register)
             throws RunResultParseException, RegisterException {
 
         RunAnalysisRunResult analysisResult = null;
@@ -366,7 +369,7 @@ public class RunAnalysisRunResult extends AnalysisRunResult<String, RunStatistic
 
         for (final String uniqueRunIdentifier : run.getUniqueRunAnalysisRunIdentifiers()) {
 
-            List<RunStatistic> statistics = new ArrayList<RunStatistic>();
+            List<RunStatistic> statistics = new ArrayList<>();
             for (final Statistic runStatistic : run.getStatistics()) {
                 final File completeFile = new File(FileUtils.buildPath(analysesFolder.getAbsolutePath(),
                         uniqueRunIdentifier + "_" + runStatistic.getIdentifier() + ".txt"));

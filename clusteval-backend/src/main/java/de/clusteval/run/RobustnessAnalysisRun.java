@@ -24,16 +24,28 @@ import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigurationException;
 import de.clusteval.api.exceptions.GoldStandardNotFoundException;
+import de.clusteval.api.exceptions.IncompatibleContextException;
 import de.clusteval.api.exceptions.NoDataSetException;
+import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
+import de.clusteval.api.exceptions.RunResultParseException;
+import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
+import de.clusteval.api.exceptions.UnknownParameterType;
+import de.clusteval.api.exceptions.UnknownProgramParameterException;
+import de.clusteval.api.exceptions.UnknownProgramTypeException;
+import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
+import de.clusteval.api.program.IProgramConfig;
+import de.clusteval.api.program.IProgramParameter;
+import de.clusteval.api.program.ParameterSet;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.run.IRunResult;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.cluster.paramOptimization.InvalidOptimizationParameterException;
@@ -41,8 +53,6 @@ import de.clusteval.cluster.paramOptimization.UnknownParameterOptimizationMethod
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
 import de.clusteval.context.Context;
-import de.clusteval.api.exceptions.IncompatibleContextException;
-import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
@@ -61,18 +71,10 @@ import de.clusteval.framework.repository.NoRepositoryFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
 import de.clusteval.framework.threading.RunSchedulerThread;
-import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
-import de.clusteval.api.program.ParameterSet;
 import de.clusteval.program.ProgramConfig;
-import de.clusteval.program.ProgramParameter;
-import de.clusteval.api.exceptions.UnknownParameterType;
-import de.clusteval.api.exceptions.UnknownProgramParameterException;
-import de.clusteval.api.exceptions.UnknownProgramTypeException;
 import de.clusteval.run.result.ClusteringRunResult;
 import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.run.result.RunResult;
-import de.clusteval.api.exceptions.RunResultParseException;
-import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.run.result.postprocessing.RunResultPostprocessor;
 import de.clusteval.run.runnable.ExecutionRunRunnable;
 import de.clusteval.run.runnable.RobustnessAnalysisRunRunnable;
@@ -135,10 +137,10 @@ public class RobustnessAnalysisRun extends ClusteringRun {
      */
     public RobustnessAnalysisRun(IRepository repository, final Context context,
             long changeDate, File absPath, List<String> uniqueRunIdentifiers,
-            List<ProgramConfig> programConfigs, List<IDataConfig> dataConfigs,
+            List<IProgramConfig> programConfigs, List<IDataConfig> dataConfigs,
             List<IDataConfig> originalDataConfigs,
             List<ClusteringEvaluation> qualityMeasures,
-            List<Map<ProgramParameter<?>, String>> parameterValues,
+            List<Map<IProgramParameter<?>, String>> parameterValues,
             final List<RunResultPostprocessor> postProcessors,
             final DataRandomizer randomizer,
             final List<ParameterSet> randomizerParams,
@@ -381,7 +383,7 @@ public class RobustnessAnalysisRun extends ClusteringRun {
                         .getQualities();
                 result.unloadFromMemory();
 
-                ProgramConfig programConfig = result.getProgramConfig();
+                IProgramConfig programConfig = result.getProgramConfig();
                 IDataConfig dataConfig = result.getDataConfig();
 
                 String resultPath = FileUtils.buildPath(
@@ -518,6 +520,7 @@ public class RobustnessAnalysisRun extends ClusteringRun {
     }
 
     /**
+     * @param repository
      * @throws UnknownDataRandomizerException
      * @throws UnknownRunResultPostprocessorException
      * @throws InterruptedException
@@ -610,18 +613,18 @@ public class RobustnessAnalysisRun extends ClusteringRun {
         // from run results
         for (String runIdentifier : this.uniqueRunAnalysisRunIdentifiers) {
             this.log.info("... parsing run result '" + runIdentifier + "'");
-            List<RunResult> results = new ArrayList<>();
+            List<IRunResult> results = new ArrayList<>();
             RunResult.parseFromRunResultFolder(
                     repository,
                     new File(FileUtils.buildPath(
                             repository.getBasePath(RunResult.class),
                             runIdentifier)), results, false, false, false);
-            for (RunResult runResult : results) {
+            for (IRunResult runResult : results) {
                 if (runResult instanceof ParameterOptimizationResult) {
                     this.log.info("...... " + runResult.getAbsolutePath());
                     ParameterOptimizationResult paramOptResult = (ParameterOptimizationResult) runResult;
                     paramOptResult.loadIntoMemory();
-                    ProgramConfig pc = paramOptResult.getProgramConfig();
+                    IProgramConfig pc = paramOptResult.getProgramConfig();
                     IDataConfig dc = paramOptResult.getDataConfig();
                     ClusteringQualityMeasure measure = paramOptResult
                             .getMethod().getOptimizationCriterion();
@@ -646,13 +649,12 @@ public class RobustnessAnalysisRun extends ClusteringRun {
                             bestParams
                                     .get(pc.getName())
                                     .put(dc.getName(),
-                                            new Triple<>(new ArrayList<>(),
-                                                    measure, def));
+                                            new Triple<>(new ArrayList<>(), measure, def));
                         }
 
                         ClusteringQualityMeasureValue currentOpt = bestParams
                                 .get(pc.getName()).get(dc.getName()).getThird();
-                        Map<ClusteringQualityMeasure, ParameterSet> optParams = paramOptResult
+                        Map<ClusteringEvaluation, ParameterSet> optParams = paramOptResult
                                 .getOptimalParameterSets();
                         ParameterSet bestParamSet = optParams.get(measure);
                         Clustering cl = paramOptResult
@@ -703,7 +705,7 @@ public class RobustnessAnalysisRun extends ClusteringRun {
         // for string parameters, just take any one
         for (ProgramConfig pc : programConfigs) {
             for (IDataConfig dc : originalDataConfigs) {
-                Map<ProgramParameter<? extends Object>, String> m = new HashMap<>();
+                Map<IProgramParameter<? extends Object>, String> m = new HashMap<>();
 
                 if (bestParams.containsKey(pc.getName())
                         && bestParams.get(pc.getName()).containsKey(
@@ -722,8 +724,7 @@ public class RobustnessAnalysisRun extends ClusteringRun {
                 // per data config
                 for (int i = 0; i < this.numberOfDistortedDataSets; i++) {
                     for (int j = 0; j < this.distortionParams.size(); j++) {
-                        this.parameterValues
-                                .add(new HashMap<>(m));
+                        this.parameterValues.add(new HashMap<>(m));
                     }
                 }
             }
@@ -754,9 +755,9 @@ public class RobustnessAnalysisRun extends ClusteringRun {
     @Override
     protected ExecutionRunRunnable createRunRunnableFor(
             RunSchedulerThread runScheduler, Run run,
-            ProgramConfig programConfig, DataConfig dataConfig,
+            IProgramConfig programConfig, IDataConfig dataConfig,
             String runIdentString, boolean isResume,
-            Map<ProgramParameter<?>, String> runParams) {
+            Map<IProgramParameter<?>, String> runParams) {
         RobustnessAnalysisRunRunnable r = new RobustnessAnalysisRunRunnable(
                 runScheduler, run, programConfig, dataConfig, runIdentString,
                 isResume, runParams);
@@ -786,7 +787,7 @@ public class RobustnessAnalysisRun extends ClusteringRun {
      * @see de.clusteval.run.ExecutionRun#getRunParameterForRunPair(int)
      */
     @Override
-    protected Map<ProgramParameter<? extends Object>, String> getRunParameterForRunPair(
+    protected Map<IProgramParameter<? extends Object>, String> getRunParameterForRunPair(
             int p) {
         // we have one parameter set for each run pair
         return this.parameterValues.get(p);

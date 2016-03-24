@@ -13,8 +13,10 @@
 package de.clusteval.cluster.paramOptimization;
 
 import de.clusteval.api.cluster.quality.ClusteringQualitySet;
+import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.exceptions.InternalAttributeException;
 import de.clusteval.api.exceptions.RunResultParseException;
+import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.IProgramParameter;
 import de.clusteval.api.program.ParameterSet;
 import de.clusteval.api.repository.IRepository;
@@ -137,12 +139,12 @@ public abstract class ParameterOptimizationMethod extends RepositoryObject imple
     /**
      * The program configuration this method was created for.
      */
-    protected ProgramConfig programConfig;
+    protected IProgramConfig programConfig;
 
     /**
      * The data configuration this method was created for.
      */
-    protected DataConfig dataConfig;
+    protected IDataConfig dataConfig;
 
     /**
      * The number of iterations that has been performed so far.
@@ -728,7 +730,7 @@ public abstract class ParameterOptimizationMethod extends RepositoryObject imple
     /**
      * @return The program configuration this method was created for.
      */
-    public ProgramConfig getProgramConfig() {
+    public IProgramConfig getProgramConfig() {
         return this.programConfig;
     }
 
@@ -751,7 +753,7 @@ public abstract class ParameterOptimizationMethod extends RepositoryObject imple
     /**
      * @return The data configuration this method was created for.
      */
-    public DataConfig getDataConfig() {
+    public IDataConfig getDataConfig() {
         return this.dataConfig;
     }
 
@@ -832,7 +834,7 @@ public abstract class ParameterOptimizationMethod extends RepositoryObject imple
      *
      * @param dataConfig The new data configuration of this run.
      */
-    public void setDataConfig(DataConfig dataConfig) {
+    public void setDataConfig(IDataConfig dataConfig) {
         this.dataConfig = dataConfig;
     }
 
@@ -843,7 +845,7 @@ public abstract class ParameterOptimizationMethod extends RepositoryObject imple
      *
      * @param programConfig The new program configuration of this run.
      */
-    public void setProgramConfig(ProgramConfig programConfig) {
+    public void setProgramConfig(IProgramConfig programConfig) {
         this.programConfig = programConfig;
     }
 }

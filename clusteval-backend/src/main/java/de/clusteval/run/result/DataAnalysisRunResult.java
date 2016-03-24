@@ -10,29 +10,37 @@
  ***************************************************************************** */
 package de.clusteval.run.result;
 
-import de.clusteval.api.exceptions.RunResultParseException;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigurationException;
 import de.clusteval.api.exceptions.GoldStandardNotFoundException;
+import de.clusteval.api.exceptions.IncompatibleContextException;
 import de.clusteval.api.exceptions.NoDataSetException;
+import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
+import de.clusteval.api.exceptions.RunResultParseException;
+import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
+import de.clusteval.api.exceptions.UnknownParameterType;
+import de.clusteval.api.exceptions.UnknownProgramParameterException;
+import de.clusteval.api.exceptions.UnknownProgramTypeException;
+import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.run.IRun;
+import de.clusteval.api.run.IRunResult;
+import de.clusteval.api.stats.IDataStatistic;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.cluster.paramOptimization.InvalidOptimizationParameterException;
 import de.clusteval.cluster.paramOptimization.UnknownParameterOptimizationMethodException;
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
-import de.clusteval.api.exceptions.IncompatibleContextException;
-import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
@@ -49,15 +57,10 @@ import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
 import de.clusteval.framework.repository.parse.Parser;
-import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
-import de.clusteval.api.exceptions.UnknownParameterType;
-import de.clusteval.api.exceptions.UnknownProgramParameterException;
-import de.clusteval.api.exceptions.UnknownProgramTypeException;
 import de.clusteval.run.DataAnalysisRun;
 import de.clusteval.run.InvalidRunModeException;
 import de.clusteval.run.Run;
 import de.clusteval.run.RunException;
-import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.run.statistics.UnknownRunDataStatisticException;
 import de.clusteval.run.statistics.UnknownRunStatisticException;
 import de.clusteval.utils.InvalidConfigurationFileException;
@@ -76,7 +79,7 @@ import org.apache.commons.configuration.ConfigurationException;
  * @author Christian Wiwie
  *
  */
-public class DataAnalysisRunResult extends AnalysisRunResult<DataConfig, DataStatistic> {
+public class DataAnalysisRunResult extends AnalysisRunResult<IDataConfig, IDataStatistic> {
 
     /**
      * @param repository
@@ -87,7 +90,7 @@ public class DataAnalysisRunResult extends AnalysisRunResult<DataConfig, DataSta
      * @throws RegisterException
      */
     public DataAnalysisRunResult(IRepository repository, long changeDate, File absPath, String runIdentString,
-            final Run run) throws RegisterException {
+            final IRun run) throws RegisterException {
         super(repository, changeDate, absPath, runIdentString, run);
     }
 
@@ -108,13 +111,13 @@ public class DataAnalysisRunResult extends AnalysisRunResult<DataConfig, DataSta
      * @see run.result.AnalysisRunResult#cloneStatistics(java.util.Map)
      */
     @Override
-    protected Map<DataConfig, List<DataStatistic>> cloneStatistics(Map<DataConfig, List<DataStatistic>> statistics) {
-        final Map<DataConfig, List<DataStatistic>> result = new HashMap<>();
+    protected Map<IDataConfig, List<IDataStatistic>> cloneStatistics(Map<IDataConfig, List<IDataStatistic>> statistics) {
+        final Map<IDataConfig, List<IDataStatistic>> result = new HashMap<>();
 
-        for (Map.Entry<DataConfig, List<DataStatistic>> entry : statistics.entrySet()) {
-            List<DataStatistic> newList = new ArrayList<>();
+        for (Map.Entry<IDataConfig, List<IDataStatistic>> entry : statistics.entrySet()) {
+            List<IDataStatistic> newList = new ArrayList<>();
 
-            for (DataStatistic elem : entry.getValue()) {
+            for (IDataStatistic elem : entry.getValue()) {
                 newList.add(elem.clone());
             }
 
@@ -245,7 +248,7 @@ public class DataAnalysisRunResult extends AnalysisRunResult<DataConfig, DataSta
 
                 for (final IDataConfig dataConfig : run.getDataConfigs()) {
 
-                    List<DataStatistic> statistics = new ArrayList<>();
+                    List<IDataStatistic> statistics = new ArrayList<>();
                     for (final Statistic dataStatistic : run.getStatistics()) {
                         final File completeFile = new File(FileUtils.buildPath(analysesFolder.getAbsolutePath(),
                                 dataConfig.toString() + "_" + dataStatistic.getIdentifier() + ".txt"));
@@ -256,7 +259,7 @@ public class DataAnalysisRunResult extends AnalysisRunResult<DataConfig, DataSta
                         final String fileContents = FileUtils.readStringFromFile(completeFile.getAbsolutePath());
 
                         dataStatistic.parseFromString(fileContents);
-                        statistics.add((DataStatistic) dataStatistic);
+                        statistics.add((IDataStatistic) dataStatistic);
 
                     }
                     analysisResult.put(dataConfig, statistics);
@@ -274,7 +277,7 @@ public class DataAnalysisRunResult extends AnalysisRunResult<DataConfig, DataSta
      * @return The data configurations encapsulating the datasets that were
      *         analysed.
      */
-    public Set<DataConfig> getDataConfigs() {
+    public Set<IDataConfig> getDataConfigs() {
         return this.statistics.keySet();
     }
 
@@ -285,7 +288,7 @@ public class DataAnalysisRunResult extends AnalysisRunResult<DataConfig, DataSta
      * @return The data statistics that were assessed for the given data
      *         configuration.
      */
-    public List<DataStatistic> getDataStatistics(final DataConfig dataConfig) {
+    public List<IDataStatistic> getDataStatistics(final DataConfig dataConfig) {
         return this.statistics.get(dataConfig);
     }
 
@@ -302,7 +305,7 @@ public class DataAnalysisRunResult extends AnalysisRunResult<DataConfig, DataSta
      *
      */
     public static DataAnalysisRunResult parseFromRunResultFolder(final DataAnalysisRun run,
-            final IRepository parentRepository, final File runResultFolder, final List<RunResult> result,
+            final IRepository parentRepository, final File runResultFolder, final List<IRunResult> result,
             final boolean register) throws RegisterException, RunResultParseException {
 
         DataAnalysisRunResult analysisResult = null;
@@ -332,9 +335,9 @@ public class DataAnalysisRunResult extends AnalysisRunResult<DataConfig, DataSta
     @Override
     public void loadIntoMemory() throws RunResultParseException {
 
-        for (final DataConfig dataConfig : getRun().getDataConfigs()) {
+        for (final IDataConfig dataConfig : getRun().getDataConfigs()) {
 
-            List<DataStatistic> statistics = new ArrayList<DataStatistic>();
+            List<IDataStatistic> stats = new ArrayList<>();
             for (final Statistic dataStatistic : getRun().getStatistics()) {
                 final File completeFile = new File(FileUtils.buildPath(absPath.getAbsolutePath(),
                         dataConfig.toString() + "_" + dataStatistic.getIdentifier() + ".txt"));
@@ -346,13 +349,13 @@ public class DataAnalysisRunResult extends AnalysisRunResult<DataConfig, DataSta
 
                 try {
                     dataStatistic.parseFromString(fileContents);
-                    statistics.add((DataStatistic) dataStatistic);
+                    stats.add((DataStatistic) dataStatistic);
                 } catch (Exception e) {
 
                 }
 
             }
-            this.put(dataConfig, statistics);
+            this.put(dataConfig, stats);
         }
     }
 

@@ -10,7 +10,6 @@
  ***************************************************************************** */
 package de.clusteval.run.result;
 
-import de.clusteval.api.exceptions.RunResultParseException;
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.cluster.quality.ClusteringQualitySet;
 import de.clusteval.api.exceptions.DataSetNotFoundException;
@@ -18,25 +17,32 @@ import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigurationException;
 import de.clusteval.api.exceptions.GoldStandardNotFoundException;
+import de.clusteval.api.exceptions.IncompatibleContextException;
 import de.clusteval.api.exceptions.NoDataSetException;
+import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
+import de.clusteval.api.exceptions.RunResultParseException;
+import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
+import de.clusteval.api.exceptions.UnknownParameterType;
+import de.clusteval.api.exceptions.UnknownProgramParameterException;
+import de.clusteval.api.exceptions.UnknownProgramTypeException;
+import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
+import de.clusteval.api.program.ParameterSet;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.run.IRunResult;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.cluster.paramOptimization.InvalidOptimizationParameterException;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
 import de.clusteval.cluster.paramOptimization.UnknownParameterOptimizationMethodException;
-import de.clusteval.cluster.quality.ClusteringQualityMeasure;
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
-import de.clusteval.api.exceptions.IncompatibleContextException;
-import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
@@ -51,16 +57,10 @@ import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
 import de.clusteval.framework.repository.parse.Parser;
-import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
-import de.clusteval.api.program.ParameterSet;
-import de.clusteval.api.exceptions.UnknownParameterType;
-import de.clusteval.api.exceptions.UnknownProgramParameterException;
-import de.clusteval.api.exceptions.UnknownProgramTypeException;
 import de.clusteval.run.InvalidRunModeException;
 import de.clusteval.run.ParameterOptimizationRun;
 import de.clusteval.run.Run;
 import de.clusteval.run.RunException;
-import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.run.statistics.UnknownRunDataStatisticException;
 import de.clusteval.run.statistics.UnknownRunStatisticException;
 import de.clusteval.utils.InvalidConfigurationFileException;
@@ -373,11 +373,11 @@ public class ParameterOptimizationResult extends ExecutionRunResult implements
         this.optimalClustering = cloneOptimalClustering(other.optimalClustering);
     }
 
-    private Map<ClusteringQualityMeasure, Clustering> cloneOptimalClustering(
-            Map<ClusteringQualityMeasure, Clustering> optimalClustering) {
-        final Map<ClusteringQualityMeasure, Clustering> result = new HashMap<>();
+    private Map<ClusteringEvaluation, Clustering> cloneOptimalClustering(
+            Map<ClusteringEvaluation, Clustering> optimalClustering) {
+        final Map<ClusteringEvaluation, Clustering> result = new HashMap<>();
 
-        for (Map.Entry<ClusteringQualityMeasure, Clustering> entry : optimalClustering.entrySet()) {
+        for (Map.Entry<ClusteringEvaluation, Clustering> entry : optimalClustering.entrySet()) {
             result.put(entry.getKey().clone(), entry.getValue().clone());
         }
 
@@ -419,11 +419,11 @@ public class ParameterOptimizationResult extends ExecutionRunResult implements
         return result;
     }
 
-    private Map<ClusteringQualityMeasure, ParameterSet> cloneOptimalParameterSets(
-            Map<ClusteringQualityMeasure, ParameterSet> optimalParameterSet) {
-        final Map<ClusteringQualityMeasure, ParameterSet> result = new HashMap<>();
+    private Map<ClusteringEvaluation, ParameterSet> cloneOptimalParameterSets(
+            Map<ClusteringEvaluation, ParameterSet> optimalParameterSet) {
+        final Map<ClusteringEvaluation, ParameterSet> result = new HashMap<>();
 
-        for (Map.Entry<ClusteringQualityMeasure, ParameterSet> entry : optimalParameterSet.entrySet()) {
+        for (Map.Entry<ClusteringEvaluation, ParameterSet> entry : optimalParameterSet.entrySet()) {
             result.put(entry.getKey().clone(), entry.getValue().clone());
         }
 
@@ -539,7 +539,7 @@ public class ParameterOptimizationResult extends ExecutionRunResult implements
      * @return A map with the optimal parameter sets for every clustering
      *         quality measure.
      */
-    public Map<ClusteringQualityMeasure, ParameterSet> getOptimalParameterSets() {
+    public Map<ClusteringEvaluation, ParameterSet> getOptimalParameterSets() {
         return this.optimalParameterSet;
     }
 
@@ -568,7 +568,7 @@ public class ParameterOptimizationResult extends ExecutionRunResult implements
      *         clusterings which achieved the highest quality values for each of
      *         those.
      */
-    public Map<ClusteringQualityMeasure, Clustering> getOptimalClusterings() {
+    public Map<ClusteringEvaluation, Clustering> getOptimalClusterings() {
         return this.optimalClustering;
     }
 
@@ -578,7 +578,7 @@ public class ParameterOptimizationResult extends ExecutionRunResult implements
      *         quality sets.
      */
     public List<Pair<ParameterSet, ClusteringQualitySet>> getOptimizationQualities() {
-        List<Pair<ParameterSet, ClusteringQualitySet>> result = new ArrayList<Pair<ParameterSet, ClusteringQualitySet>>();
+        List<Pair<ParameterSet, ClusteringQualitySet>> result = new ArrayList<>();
         for (ParameterSet paramSet : this.parameterSets) {
             result.add(Pair.getPair(paramSet, this.parameterSetToQualities.get(paramSet)));
         }
@@ -619,7 +619,7 @@ public class ParameterOptimizationResult extends ExecutionRunResult implements
      *         clusterings.
      */
     public List<Pair<ParameterSet, Clustering>> getOptimizationClusterings() {
-        List<Pair<ParameterSet, Clustering>> result = new ArrayList<Pair<ParameterSet, Clustering>>();
+        List<Pair<ParameterSet, Clustering>> result = new ArrayList<>();
         for (ParameterSet paramSet : this.parameterSets) {
             result.add(Pair.getPair(paramSet, this.parameterSetToClustering.get(paramSet)));
         }
@@ -770,7 +770,7 @@ public class ParameterOptimizationResult extends ExecutionRunResult implements
      * @throws RunResultParseException
      */
     public static Run parseFromRunResultFolder(final ParameterOptimizationRun run, final IRepository repository,
-            final File runResultFolder, final List<RunResult> result, final boolean parseClusterings,
+            final File runResultFolder, final List<IRunResult> result, final boolean parseClusterings,
             final boolean storeClusterings, final boolean register) throws RegisterException, RunResultParseException {
 
         File clusterFolder = new File(FileUtils.buildPath(runResultFolder.getAbsolutePath(), "clusters"));

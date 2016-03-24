@@ -12,31 +12,32 @@
  */
 package de.clusteval.run.runnable;
 
-import de.clusteval.api.exceptions.RunIterationException;
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.cluster.quality.ClusteringQualityMeasureValue;
 import de.clusteval.api.cluster.quality.ClusteringQualitySet;
+import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.exceptions.IncompleteGoldStandardException;
 import de.clusteval.api.exceptions.InternalAttributeException;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
+import de.clusteval.api.exceptions.RunIterationException;
+import de.clusteval.api.exceptions.RunResultParseException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
+import de.clusteval.api.program.IProgramConfig;
+import de.clusteval.api.program.IProgramParameter;
+import de.clusteval.api.program.ParameterSet;
 import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.run.IRun;
 import de.clusteval.cluster.paramOptimization.IDivergingParameterOptimizationMethod;
 import de.clusteval.cluster.paramOptimization.NoParameterSetFoundException;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationException;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
 import de.clusteval.cluster.paramOptimization.ParameterSetAlreadyEvaluatedException;
-import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.format.IncompatibleDataSetFormatException;
 import de.clusteval.framework.threading.RunSchedulerThread;
-import de.clusteval.api.program.ParameterSet;
-import de.clusteval.program.ProgramConfig;
 import de.clusteval.program.ProgramParameter;
 import de.clusteval.run.ParameterOptimizationRun;
-import de.clusteval.run.Run;
 import de.clusteval.run.result.ParameterOptimizationResult;
-import de.clusteval.api.exceptions.RunResultParseException;
 import de.clusteval.utils.plot.Plotter;
 import de.wiwie.wiutils.file.FileUtils;
 import de.wiwie.wiutils.utils.Triple;
@@ -88,12 +89,11 @@ public class ParameterOptimizationRunRunnable extends ExecutionRunRunnable {
      * @param runParams
      */
     public ParameterOptimizationRunRunnable(RunSchedulerThread runScheduler,
-            Run run, ProgramConfig programConfig, DataConfig dataConfig,
+            IRun run, IProgramConfig programConfig, IDataConfig dataConfig,
             ParameterOptimizationMethod optimizationMethod,
             String runIdentString, boolean isResume,
-            Map<ProgramParameter<?>, String> runParams) {
-        super(run, programConfig, dataConfig, runIdentString, isResume,
-                runParams);
+            Map<IProgramParameter<?>, String> runParams) {
+        super(run, programConfig, dataConfig, runIdentString, isResume, runParams);
 
         this.optimizationMethod = optimizationMethod;
         if (optimizationMethod != null) {

@@ -111,4 +111,6 @@ public interface IProgramConfig extends IRepositoryObject {
      */
     IProgramParameter<?> getParamWithId(final String id) throws UnknownProgramParameterException;
 
+    IProgramConfig clone();
+
 }

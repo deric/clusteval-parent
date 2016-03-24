@@ -16,10 +16,10 @@ import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.cluster.quality.ClusteringQualityMeasureValue;
 import de.clusteval.api.cluster.quality.ClusteringQualitySet;
 import de.clusteval.api.exceptions.ClusteringParseException;
+import de.clusteval.api.program.IProgramParameter;
+import de.clusteval.api.program.ParameterSet;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
-import de.clusteval.api.program.ParameterSet;
-import de.clusteval.program.ProgramParameter;
 import de.clusteval.run.ParameterOptimizationRun;
 import de.clusteval.run.result.postprocessing.RunResultPostprocessor;
 import de.wiwie.wiutils.utils.StringExt;
@@ -35,7 +35,7 @@ import java.util.List;
  */
 public class ParameterOptimizationResultParser extends TextFileParser {
 
-    protected List<ProgramParameter<?>> parameters = new ArrayList<>();
+    protected List<IProgramParameter<?>> parameters = new ArrayList<>();
     protected List<ClusteringEvaluation> qualityMeasures = new ArrayList<>();
     protected ParameterOptimizationMethod method;
     protected ParameterOptimizationRun run;
@@ -121,7 +121,7 @@ public class ParameterOptimizationResultParser extends TextFileParser {
                 ParameterSet paramSet = new ParameterSet();
                 String[] paramSplit = StringExt.split(value[1], ",");
                 for (int pos = 0; pos < paramSplit.length; pos++) {
-                    ProgramParameter<?> p = this.parameters.get(pos);
+                    IProgramParameter<?> p = this.parameters.get(pos);
                     paramSet.put(p.getName(), paramSplit[pos]);
                 }
 

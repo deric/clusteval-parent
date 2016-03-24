@@ -80,12 +80,11 @@ public class ClusteringRunRunnable extends ExecutionRunRunnable {
      * @see run.runnable.ExecutionRunRunnable#beforeClustering()
      */
     @Override
-    protected void beforeRun() throws IllegalArgumentException,
-                                      UnknownDataSetFormatException, IOException,
-                                      InvalidDataSetFormatVersionException, RegisterException,
-                                      InternalAttributeException, IncompatibleDataSetFormatException,
-                                      UnknownGoldStandardFormatException,
-                                      IncompleteGoldStandardException, InterruptedException {
+    public void beforeRun() throws IllegalArgumentException, UnknownDataSetFormatException, IOException,
+                                   InvalidDataSetFormatVersionException, RegisterException,
+                                   InternalAttributeException, IncompatibleDataSetFormatException,
+                                   UnknownGoldStandardFormatException,
+                                   IncompleteGoldStandardException, InterruptedException {
         super.beforeRun();
 
         if (!new File(completeQualityOutput).exists() || !isResume) {

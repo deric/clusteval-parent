@@ -13,6 +13,7 @@
 package de.clusteval.run;
 
 import de.clusteval.api.IContext;
+import de.clusteval.api.program.IProgramParameter;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.repository.RepositoryEvent;
@@ -25,7 +26,6 @@ import de.clusteval.api.run.RUN_STATUS;
 import de.clusteval.context.Context;
 import de.clusteval.framework.repository.RepositoryObject;
 import de.clusteval.framework.threading.RunSchedulerThread;
-import de.clusteval.program.ProgramParameter;
 import de.clusteval.run.result.ClusteringRunResult;
 import de.clusteval.run.result.NoRunResultFormatParserException;
 import de.clusteval.run.result.format.RunResultFormat;
@@ -84,12 +84,12 @@ public abstract class Run extends RepositoryObject implements IRun {
      * @param parameterValues
      * @return
      */
-    protected static List<Map<ProgramParameter<?>, String>> cloneParameterValues(
-            List<Map<ProgramParameter<?>, String>> parameterValues) {
-        List<Map<ProgramParameter<?>, String>> result = new ArrayList<>();
+    protected static List<Map<IProgramParameter<?>, String>> cloneParameterValues(
+            List<Map<IProgramParameter<?>, String>> parameterValues) {
+        List<Map<IProgramParameter<?>, String>> result = new ArrayList<>();
 
         parameterValues.stream().map((map) -> {
-            Map<ProgramParameter<?>, String> copyMap = new HashMap<>();
+            Map<IProgramParameter<?>, String> copyMap = new HashMap<>();
             map.entrySet().stream().forEach((entry) -> {
                 copyMap.put(entry.getKey().clone(), entry.getValue() + "");
             });
@@ -815,4 +815,5 @@ public abstract class Run extends RepositoryObject implements IRun {
     public IContext getContext() {
         return this.context;
     }
+
 }

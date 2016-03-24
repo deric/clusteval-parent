@@ -377,6 +377,7 @@ public class ProgramConfig extends RepositoryObject implements IProgramConfig {
      * @return The encapsulated program.
      * @see #program
      */
+    @Override
     public IProgram getProgram() {
         return program;
     }
@@ -386,6 +387,7 @@ public class ProgramConfig extends RepositoryObject implements IProgramConfig {
      * @return The compatible dataset input formats of the encapsulated program.
      * @see #compatibleDataSetFormats
      */
+    @Override
     public List<IDataSetFormat> getCompatibleDataSetFormats() {
         return compatibleDataSetFormats;
     }
@@ -395,6 +397,7 @@ public class ProgramConfig extends RepositoryObject implements IProgramConfig {
      * @return The output format of the encapsulated program.
      * @see #outputFormat
      */
+    @Override
     public IRunResultFormat getOutputFormat() {
         return this.outputFormat;
     }

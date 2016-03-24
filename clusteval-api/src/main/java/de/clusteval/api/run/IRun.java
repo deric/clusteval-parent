@@ -95,4 +95,6 @@ public interface IRun extends IRepositoryObject {
     boolean terminate();
 
     IContext getContext();
+
+    IRun clone();
 }

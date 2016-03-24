@@ -134,10 +134,10 @@ import org.slf4j.LoggerFactory;
  * @param <P>
  *
  */
-public abstract class Parser<P extends RepositoryObject> {
+public abstract class Parser<P extends IRepositoryObject> {
 
     @SuppressWarnings("unchecked")
-    protected static <T extends RepositoryObject> Parser<T> getParserForClass(final Class<T> c) {
+    protected static <T extends IRepositoryObject> Parser<T> getParserForClass(final Class<T> c) {
         if (c.equals(ClusteringRun.class)) {
             return (Parser<T>) new ClusteringRunParser();
         } else if (c.equals(ParameterOptimizationRun.class)) {
@@ -163,7 +163,7 @@ public abstract class Parser<P extends RepositoryObject> {
         } else if (c.equals(ProgramConfig.class)) {
             return (Parser<T>) new ProgramConfigParser();
         } else if (c.equals(Run.class)) {
-            return (Parser<T>) new RunParser<Run>();
+            return (Parser<T>) new RunParser<>();
         } else if (c.equals(DataConfig.class)) {
             return (Parser<T>) new DataConfigParser();
         }
@@ -823,7 +823,7 @@ class ExecutionRunParser<T extends ExecutionRun> extends RunParser<T> {
     protected List<IProgramConfig> programConfigs;
     protected List<IDataConfig> dataConfigs;
     protected List<ClusteringEvaluation> qualityMeasures;
-    protected List<Map<ProgramParameter<?>, String>> runParamValues;
+    protected List<Map<IProgramParameter<?>, String>> runParamValues;
     protected Map<IProgramParameter<?>, String> paramMap;
     protected List<RunResultPostprocessor> postprocessor;
     protected Map<String, Integer> maxExecutionTimes;

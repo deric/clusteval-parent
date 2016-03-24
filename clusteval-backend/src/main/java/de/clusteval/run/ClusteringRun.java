@@ -14,14 +14,15 @@ package de.clusteval.run;
 
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.data.IDataConfig;
+import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.IProgramParameter;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.run.IRun;
 import de.clusteval.context.Context;
 import de.clusteval.data.DataConfig;
 import de.clusteval.framework.threading.RunSchedulerThread;
 import de.clusteval.program.ProgramConfig;
-import de.clusteval.program.ProgramParameter;
 import de.clusteval.run.result.postprocessing.RunResultPostprocessor;
 import de.clusteval.run.runnable.ClusteringRunRunnable;
 import de.clusteval.run.runnable.ExecutionRunRunnable;
@@ -55,10 +56,10 @@ public class ClusteringRun extends ExecutionRun {
      * @throws RegisterException
      */
     public ClusteringRun(IRepository repository, final Context context,
-            long changeDate, File absPath, List<ProgramConfig> programConfigs,
+            long changeDate, File absPath, List<IProgramConfig> programConfigs,
             List<IDataConfig> dataConfigs,
             List<ClusteringEvaluation> qualityMeasures,
-            List<Map<ProgramParameter<?>, String>> parameterValues,
+            List<Map<IProgramParameter<?>, String>> parameterValues,
             final List<RunResultPostprocessor> postProcessors,
             final Map<String, Integer> maxExecutionTimes)
             throws RegisterException {
@@ -120,7 +121,7 @@ public class ClusteringRun extends ExecutionRun {
      */
     @Override
     protected ExecutionRunRunnable createRunRunnableFor(
-            RunSchedulerThread runScheduler, Run run,
+            RunSchedulerThread runScheduler, IRun run,
             ProgramConfig programConfig, DataConfig dataConfig,
             String runIdentString, boolean isResume,
             Map<IProgramParameter<?>, String> runParams) {

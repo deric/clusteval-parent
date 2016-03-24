@@ -14,6 +14,8 @@ package de.clusteval.run;
 
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.data.IDataConfig;
+import de.clusteval.api.program.IProgramConfig;
+import de.clusteval.api.program.IProgramParameter;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.repository.RepositoryEvent;
@@ -26,7 +28,6 @@ import de.clusteval.context.Context;
 import de.clusteval.data.DataConfig;
 import de.clusteval.framework.threading.RunSchedulerThread;
 import de.clusteval.program.ProgramConfig;
-import de.clusteval.program.ProgramParameter;
 import de.clusteval.run.result.NoRunResultFormatParserException;
 import de.clusteval.run.result.postprocessing.RunResultPostprocessor;
 import de.clusteval.run.runnable.ExecutionRunRunnable;
@@ -65,14 +66,14 @@ import java.util.Set;
  */
 public abstract class ExecutionRun extends Run {
 
-    protected static List<Map<ProgramParameter<?>, String>> cloneParameterValues(
-            final List<Map<ProgramParameter<?>, String>> parameterValues) {
-        List<Map<ProgramParameter<?>, String>> result = new ArrayList<>();
+    protected static List<Map<IProgramParameter<?>, String>> cloneParameterValues(
+            final List<Map<IProgramParameter<?>, String>> parameterValues) {
+        List<Map<IProgramParameter<?>, String>> result = new ArrayList<>();
 
-        for (Map<ProgramParameter<?>, String> map : parameterValues) {
-            Map<ProgramParameter<?>, String> newMap = new HashMap<>();
+        for (Map<IProgramParameter<?>, String> map : parameterValues) {
+            Map<IProgramParameter<?>, String> newMap = new HashMap<>();
 
-            for (Map.Entry<ProgramParameter<?>, String> entry : map.entrySet()) {
+            for (Map.Entry<IProgramParameter<?>, String> entry : map.entrySet()) {
                 newMap.put(entry.getKey().clone(), entry.getValue() + "");
             }
 
@@ -130,7 +131,7 @@ public abstract class ExecutionRun extends Run {
     /**
      * The parameter values for every pair of program and data configuration.
      */
-    protected List<Map<ProgramParameter<?>, String>> parameterValues;
+    protected List<Map<IProgramParameter<?>, String>> parameterValues;
 
     protected List<RunResultPostprocessor> postProcessors;
 
@@ -158,7 +159,7 @@ public abstract class ExecutionRun extends Run {
             final List<ProgramConfig> programConfigs,
             final List<IDataConfig> dataConfigs,
             final List<ClusteringEvaluation> qualityMeasures,
-            final List<Map<ProgramParameter<?>, String>> parameterValues,
+            final List<Map<IProgramParameter<?>, String>> parameterValues,
             final List<RunResultPostprocessor> postProcessors,
             final Map<String, Integer> maxExecutionTimes)
             throws RegisterException {
@@ -576,10 +577,8 @@ public abstract class ExecutionRun extends Run {
 
     }
 
-    protected Map<ProgramParameter<? extends Object>, String> getRunParameterForRunPair(
-            final int p) {
-        return this.parameterValues.get((int) Math.round(Math.floor(p
-                / (double) this.dataConfigs.size())));
+    protected Map<IProgramParameter<? extends Object>, String> getRunParameterForRunPair(final int p) {
+        return this.parameterValues.get((int) Math.round(Math.floor(p / (double) this.dataConfigs.size())));
     }
 
     /**
@@ -609,7 +608,7 @@ public abstract class ExecutionRun extends Run {
             RunSchedulerThread runScheduler, Run run,
             ProgramConfig programConfig, DataConfig dataConfig,
             String runIdentString, boolean isResume,
-            Map<ProgramParameter<?>, String> runParams);
+            Map<IProgramParameter<?>, String> runParams);
 
     /**
      * This method verifies that all quality measures can be calculated for
@@ -698,7 +697,7 @@ public abstract class ExecutionRun extends Run {
      * @return A list of maps containing parameter values. Every entry of the
      *         list corresponds to one runpair.
      */
-    public List<Map<ProgramParameter<?>, String>> getParameterValues() {
+    public List<Map<IProgramParameter<?>, String>> getParameterValues() {
         return parameterValues;
     }
 
@@ -805,11 +804,11 @@ public abstract class ExecutionRun extends Run {
         }
     }
 
-    public boolean hasMaxExecutionTime(final ProgramConfig pc) {
+    public boolean hasMaxExecutionTime(final IProgramConfig pc) {
         return this.maxExecutionTimes.containsKey(pc.getName());
     }
 
-    public int getMaxExecutionTime(final ProgramConfig pc) {
+    public int getMaxExecutionTime(final IProgramConfig pc) {
         return this.maxExecutionTimes.get(pc.getName());
     }
 }

@@ -14,8 +14,8 @@ import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.repository.RepositoryEvent;
 import de.clusteval.api.repository.RepositoryRemoveEvent;
+import de.clusteval.api.stats.IStatistic;
 import de.clusteval.context.Context;
-import de.clusteval.utils.Statistic;
 import java.io.File;
 import java.util.List;
 
@@ -31,7 +31,7 @@ import java.util.List;
  * @param <S>
  *
  */
-public abstract class AnalysisRun<S extends Statistic> extends Run {
+public abstract class AnalysisRun<S extends IStatistic> extends Run {
 
     /**
      * The statistics that should be assessed for the objects of analysis.

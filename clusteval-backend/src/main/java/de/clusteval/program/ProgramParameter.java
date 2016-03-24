@@ -10,12 +10,11 @@
  ***************************************************************************** */
 package de.clusteval.program;
 
-import de.clusteval.api.program.IProgramParameter;
-import de.clusteval.api.exceptions.InternalAttributeException;
 import de.clusteval.api.exceptions.UnknownParameterType;
+import de.clusteval.api.program.IProgramConfig;
+import de.clusteval.api.program.IProgramParameter;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.data.DataConfig;
 import de.clusteval.framework.repository.RepositoryObject;
 import java.io.File;
 import java.util.ArrayList;
@@ -244,40 +243,6 @@ public abstract class ProgramParameter<T> extends RepositoryObject implements IP
     }
 
     /**
-     * This method evaluates the string representation of the maximal value
-     * {@link #maxValue} to a value corresponding to the dynamic type of this
-     * object, e.g. in case this parameter is a double parameter, it is
-     * evaluated to a double value.
-     *
-     * <p>
-     * The method requires a data and program configuration, since the string
-     * representation can contain a placeholder of a internal variable which is
-     * replaced by looking it up during runtime. $(meanSimilarity) for example
-     * is evaluated by looking into the data and calculating the mean similarity
-     * of the input.
-     *
-     * @param dataConfig
-     *                      The data configuration which might be needed to evaluate
-     *                      certain placeholder variables.
-     * @param programConfig
-     *                      The program configuration which might be needed to evaluate
-     *                      certain placeholder variables.
-     * @return The evaluated value of the {@link #maxValue} variable.
-     * @throws InternalAttributeException
-     */
-    public abstract T evaluateMaxValue(final DataConfig dataConfig,
-            final ProgramConfig programConfig)
-            throws InternalAttributeException;
-
-    /**
-     * This method checks, whether the {@link #maxValue} variable has been set
-     * to a correct not-null value.
-     *
-     * @return True, if the variable has been set correctly, false otherwise.
-     */
-    public abstract boolean isMaxValueSet();
-
-    /**
      * Sets the minimal value.
      *
      * @param options
@@ -295,40 +260,6 @@ public abstract class ProgramParameter<T> extends RepositoryObject implements IP
     }
 
     /**
-     * This method evaluates the string representation of the options
-     * {@link #options} to a value corresponding to the dynamic type of this
-     * object, e.g. in case this parameter is a double parameter, it is
-     * evaluated to a double value.
-     *
-     * <p>
-     * The method requires a data and program configuration, since the string
-     * representation can contain a placeholder of a internal variable which is
-     * replaced by looking it up during runtime. $(meanSimilarity) for example
-     * is evaluated by looking into the data and calculating the mean similarity
-     * of the input.
-     *
-     * @param dataConfig
-     *                      The data configuration which might be needed to evaluate
-     *                      certain placeholder variables.
-     * @param programConfig
-     *                      The program configuration which might be needed to evaluate
-     *                      certain placeholder variables.
-     * @return The evaluated value of the {@link #minValue} variable.
-     * @throws InternalAttributeException
-     */
-    public abstract T[] evaluateOptions(final DataConfig dataConfig,
-            final ProgramConfig programConfig)
-            throws InternalAttributeException;
-
-    /**
-     * This method checks, whether the {@link #options} variable has been set to
-     * a correct not-null value.
-     *
-     * @return True, if the variable has been set correctly, false otherwise.
-     */
-    public abstract boolean isOptionsSet();
-
-    /**
      * @return The name of this parameter.
      */
     public String getName() {
@@ -338,7 +269,7 @@ public abstract class ProgramParameter<T> extends RepositoryObject implements IP
     /**
      * @return The program configuration which defined this parameter.
      */
-    public ProgramConfig getProgramConfig() {
+    public IProgramConfig getProgramConfig() {
         return this.programConfig;
     }
 
@@ -388,32 +319,6 @@ public abstract class ProgramParameter<T> extends RepositoryObject implements IP
     }
 
     /**
-     * This method evaluates the string representation of the default value
-     * {@link #def} to a value corresponding to the dynamic type of this object,
-     * e.g. in case this parameter is a double parameter, it is evaluated to a
-     * double value.
-     *
-     * <p>
-     * The method requires a data and program configuration, since the string
-     * representation can contain a placeholder of a internal variable which is
-     * replaced by looking it up during runtime. $(meanSimilarity) for example
-     * is evaluated by looking into the data and calculating the mean similarity
-     * of the input.
-     *
-     * @param dataConfig
-     *                      The data configuration which might be needed to evaluate
-     *                      certain placeholder variables.
-     * @param programConfig
-     *                      The program configuration which might be needed to evaluate
-     *                      certain placeholder variables.
-     * @return The evaluated value of the {@link #def} variable.
-     * @throws InternalAttributeException
-     */
-    public abstract T evaluateDefaultValue(final DataConfig dataConfig,
-            final ProgramConfig programConfig)
-            throws InternalAttributeException;
-
-    /**
      * Sets the default value of this parameter.
      *
      * @param def
@@ -450,7 +355,7 @@ public abstract class ProgramParameter<T> extends RepositoryObject implements IP
             final ProgramConfig programConfig, final String name,
             final SubnodeConfiguration config) throws RegisterException,
                                                       UnknownParameterType {
-        Map<String, String> paramValues = new HashMap<String, String>();
+        Map<String, String> paramValues = new HashMap<>();
         paramValues.put("name", name);
 
         Iterator<String> itSubParams = config.getKeys();
@@ -478,15 +383,21 @@ public abstract class ProgramParameter<T> extends RepositoryObject implements IP
             minValue = "";
             maxValue = "";
         }
-        if (type.equals(ParameterType.FLOAT)) {
-            param = DoubleProgramParameter.parseFromStrings(programConfig, na,
-                    description, minValue, maxValue, options, def);
-        } else if (type.equals(ParameterType.INTEGER)) {
-            param = IntegerProgramParameter.parseFromStrings(programConfig, na,
-                    description, minValue, maxValue, options, def);
-        } else if (type.equals(ParameterType.STRING)) {
-            param = StringProgramParameter.parseFromStrings(programConfig, na,
-                    description, options, def);
+        switch (type) {
+            case FLOAT:
+                param = DoubleProgramParameter.parseFromStrings(programConfig, na,
+                        description, minValue, maxValue, options, def);
+                break;
+            case INTEGER:
+                param = IntegerProgramParameter.parseFromStrings(programConfig, na,
+                        description, minValue, maxValue, options, def);
+                break;
+            case STRING:
+                param = StringProgramParameter.parseFromStrings(programConfig, na,
+                        description, options, def);
+                break;
+            default:
+                break;
         }
         return param;
     }
