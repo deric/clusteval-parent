@@ -233,7 +233,7 @@ public class DataAnalysisRun extends AnalysisRun<DataStatistic> {
      * @see run.Run#getUpperLimitProgress()
      */
     @Override
-    protected long getUpperLimitProgress() {
+    public long getUpperLimitProgress() {
         return this.statistics.size() * 100;
     }
 

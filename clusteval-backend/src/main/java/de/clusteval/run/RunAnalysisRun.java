@@ -139,7 +139,7 @@ public class RunAnalysisRun extends AnalysisRun<RunStatistic> {
      * @see run.Run#getUpperLimitProgress()
      */
     @Override
-    protected long getUpperLimitProgress() {
+    public long getUpperLimitProgress() {
         return this.statistics.size() * 100;
     }
 

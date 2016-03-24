@@ -32,7 +32,6 @@ import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
 import de.clusteval.context.Context;
 import de.clusteval.data.dataset.format.AbsoluteDataSetFormat;
 import de.clusteval.data.dataset.format.DataSetFormat;
-import de.clusteval.program.ProgramConfig;
 import de.clusteval.program.ProgramParameter;
 import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.run.result.postprocessing.RunResultPostprocessor;
@@ -112,7 +111,7 @@ public class ParameterOptimizationRun extends ExecutionRun {
             if (!method.getCompatibleProgramNames().isEmpty()) {
                 // for every program we check, whether it class is
                 // compatible
-                for (ProgramConfig programConfig : programConfigs) {
+                for (IProgramConfig programConfig : programConfigs) {
                     String programName = programConfig.getProgram().getMajorName();
                     boolean compatible = method.getCompatibleProgramNames().contains(programName);
                     if (!compatible) {
@@ -346,7 +345,7 @@ public class ParameterOptimizationRun extends ExecutionRun {
                         }
                     }
 
-                    result.put(configs, new Pair<>((double) t.getProgressPrinter().getPercent(), qualities));
+                    result.put(configs, new Pair<>((double) t.getProgress().getPercent(), qualities));
                 } finally {
                     if (!isInMemory) {
                         paramOptRes.unloadFromMemory();

@@ -52,7 +52,6 @@ import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.cluster.paramOptimization.InvalidOptimizationParameterException;
 import de.clusteval.cluster.paramOptimization.UnknownParameterOptimizationMethodException;
-import de.clusteval.cluster.quality.ClusteringQualityMeasure;
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
 import de.clusteval.context.Context;
 import de.clusteval.data.DataConfig;
@@ -627,8 +626,7 @@ public class RobustnessAnalysisRun extends ClusteringRun {
                     paramOptResult.loadIntoMemory();
                     IProgramConfig pc = paramOptResult.getProgramConfig();
                     IDataConfig dc = paramOptResult.getDataConfig();
-                    ClusteringQualityMeasure measure = paramOptResult
-                            .getMethod().getOptimizationCriterion();
+                    ClusteringEvaluation measure = paramOptResult.getMethod().getOptimizationCriterion();
                     ClusteringQualityMeasureValue min = ClusteringQualityMeasureValue
                             .getForDouble(measure.getMinimum());
                     ClusteringQualityMeasureValue max = ClusteringQualityMeasureValue

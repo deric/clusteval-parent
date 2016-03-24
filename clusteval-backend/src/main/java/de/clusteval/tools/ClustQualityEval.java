@@ -75,6 +75,7 @@ import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.run.statistics.UnknownRunDataStatisticException;
 import de.clusteval.run.statistics.UnknownRunStatisticException;
 import de.clusteval.utils.InvalidConfigurationFileException;
+import de.clusteval.utils.ProgressPrinter;
 import de.wiwie.wiutils.file.FileUtils;
 import de.wiwie.wiutils.utils.parse.TextFileParser;
 import de.wiwie.wiutils.utils.parse.TextFileParser.OUTPUT_MODE;

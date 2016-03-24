@@ -241,7 +241,7 @@ public abstract class ExecutionRun extends Run {
      * @see run.Run#getUpperLimitProgress()
      */
     @Override
-    protected long getUpperLimitProgress() {
+    public long getUpperLimitProgress() {
         // we set the number of steps of this run to 100% for every run pair.
         return getRunPairs().size() * 10000;
     }
