@@ -12,15 +12,16 @@
  */
 package de.clusteval.data.dataset.format;
 
+import de.clusteval.api.FormatVersion;
 import de.clusteval.api.data.IConversionConfiguration;
+import de.clusteval.api.data.IDataSet;
+import de.clusteval.api.data.WEBSITE_VISIBILITY;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.repository.RegisterException;
 import de.clusteval.data.dataset.DataSet;
-import de.clusteval.data.dataset.DataSet.WEBSITE_VISIBILITY;
 import de.clusteval.data.dataset.DataSetAttributeFilterer;
 import de.clusteval.data.dataset.RelativeDataSet;
-import de.clusteval.api.repository.RegisterException;
-import de.clusteval.api.FormatVersion;
 import de.costmatrixcreation.main.Args;
 import de.costmatrixcreation.main.Config;
 import de.costmatrixcreation.main.Creator;
@@ -161,15 +162,15 @@ public class BLASTDataSetFormatParser extends DataSetFormatParser {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * data.dataset.format.DataSetFormatParser#convertToThisFormat(data.dataset
-	 * .DataSet)
+     * (non-Javadoc)
+     *
+     * @see
+     * data.dataset.format.DataSetFormatParser#convertToThisFormat(data.dataset
+     * .DataSet)
      */
     @SuppressWarnings("unused")
     @Override
-    protected DataSet convertToThisFormat(DataSet dataSet,
+    protected IDataSet convertToThisFormat(DataSet dataSet,
             DataSetFormat dataSetFormat, IConversionConfiguration config) {
         return null;
     }
@@ -281,8 +282,8 @@ public class BLASTDataSetFormatParser extends DataSetFormatParser {
             NUMBER_PRECISION precision) throws IOException {
 
         /*
-		 * Remove dataset attributes from file and write the result to
-		 * dataSet.getAbsolutePath() + ".strip"
+         * Remove dataset attributes from file and write the result to
+         * dataSet.getAbsolutePath() + ".strip"
          */
         if (!new File(dataSet.getAbsolutePath() + ".strip").exists()) {
             DataSetAttributeFilterer filterer = new DataSetAttributeFilterer(
