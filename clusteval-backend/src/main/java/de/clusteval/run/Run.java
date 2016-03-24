@@ -34,7 +34,7 @@ import de.clusteval.run.runnable.RunRunnableInitializationException;
 import de.wiwie.wiutils.file.FileUtils;
 import de.wiwie.wiutils.format.Formatter;
 import de.wiwie.wiutils.utils.Pair;
-import de.wiwie.wiutils.utils.ProgressPrinter;
+import de.clusteval.utils.ProgressPrinter;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;

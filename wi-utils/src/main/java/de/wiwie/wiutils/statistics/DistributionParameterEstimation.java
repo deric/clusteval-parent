@@ -8,7 +8,7 @@ import de.wiwie.wiutils.utils.FilterFactory;
 import de.wiwie.wiutils.utils.FilterFactory.FILTER_TYPE;
 import de.wiwie.wiutils.utils.Log;
 import de.wiwie.wiutils.utils.Pair;
-import de.wiwie.wiutils.utils.ProgressPrinter;
+import de.clusteval.utils.ProgressPrinter;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;

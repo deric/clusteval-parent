@@ -1,7 +1,7 @@
 package de.wiwie.wiutils.utils.parse;
 
 import de.wiwie.wiutils.file.FileUtils;
-import de.wiwie.wiutils.utils.ProgressPrinter;
+import de.clusteval.utils.ProgressPrinter;
 import de.wiwie.wiutils.utils.StringExt;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

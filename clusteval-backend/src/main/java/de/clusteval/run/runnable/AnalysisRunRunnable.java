@@ -19,7 +19,7 @@ import de.clusteval.run.AnalysisRun;
 import de.clusteval.run.Run;
 import de.clusteval.run.result.RunResult;
 import de.wiwie.wiutils.file.FileUtils;
-import de.wiwie.wiutils.utils.ProgressPrinter;
+import de.clusteval.utils.ProgressPrinter;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;

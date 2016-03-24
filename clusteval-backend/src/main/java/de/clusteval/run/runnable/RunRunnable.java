@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.run.runnable;
 
+import de.clusteval.api.exceptions.IncompatibleDataSetFormatException;
 import de.clusteval.api.exceptions.IncompleteGoldStandardException;
 import de.clusteval.api.exceptions.InternalAttributeException;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
@@ -17,17 +18,17 @@ import de.clusteval.api.exceptions.RunIterationException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.run.IProgress;
 import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.IRunRunnable;
 import de.clusteval.api.run.IScheduler;
 import de.clusteval.api.run.IterationRunnable;
 import de.clusteval.api.run.IterationWrapper;
 import de.clusteval.api.run.RUN_STATUS;
-import de.clusteval.api.exceptions.IncompatibleDataSetFormatException;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.framework.threading.RunSchedulerThread;
 import de.clusteval.run.Run;
-import de.wiwie.wiutils.utils.ProgressPrinter;
+import de.clusteval.utils.ProgressPrinter;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -85,7 +86,7 @@ public abstract class RunRunnable<IR extends IterationRunnable, IW extends Itera
      * optimization mode, it will increase by one after every percent reached of
      * the parameter sets to evaluate.
      */
-    protected ProgressPrinter progress;
+    protected IProgress progress;
 
     /**
      * This attribute indicates, whether this run is a resumption of a previous
@@ -430,7 +431,7 @@ public abstract class RunRunnable<IR extends IterationRunnable, IW extends Itera
      * @return The progress printer of this runnable.
      * @see #progress
      */
-    public ProgressPrinter getProgressPrinter() {
+    public IProgress getProgress() {
         return this.progress;
     }
 

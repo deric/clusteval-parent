@@ -22,4 +22,13 @@ package de.clusteval.api.run;
  */
 public interface IProgress {
 
+    /**
+     * Invoke this method from outside to update the status of this progress
+     * printer and set the number of the current step.
+     *
+     * @param newCurrent
+     *                   The new status as a absolute number.
+     */
+    void update(final long newCurrent);
+
 }

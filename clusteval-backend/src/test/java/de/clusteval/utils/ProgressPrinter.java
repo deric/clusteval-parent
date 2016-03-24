@@ -1,5 +1,6 @@
-package de.wiwie.wiutils.utils;
+package de.clusteval.utils;
 
+import de.clusteval.api.run.IProgress;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * @author Christian Wiwie
  *
  */
-public class ProgressPrinter implements ChangeListener {
+public class ProgressPrinter implements ChangeListener, IProgress {
 
     /**
      * A factory method to initialize the attributes of the first progress
