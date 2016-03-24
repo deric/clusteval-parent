@@ -13,7 +13,7 @@ package de.clusteval.utils;
 import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
-import de.clusteval.framework.repository.NoRepositoryFoundException;
+import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RepositoryController;
 import de.clusteval.framework.repository.RunResultRepository;

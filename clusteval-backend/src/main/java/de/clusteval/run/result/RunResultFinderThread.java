@@ -13,6 +13,7 @@ package de.clusteval.run.result;
 import de.clusteval.api.SQLConfig.DB_TYPE;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.run.IRunResult;
 import de.clusteval.framework.threading.SupervisorThread;
 import de.clusteval.utils.Finder;
 import de.clusteval.utils.FinderThread;
@@ -21,7 +22,7 @@ import de.clusteval.utils.FinderThread;
  * @author Christian Wiwie
  *
  */
-public class RunResultFinderThread extends FinderThread<RunResult> {
+public class RunResultFinderThread extends FinderThread<IRunResult> {
 
     /**
      * @param supervisorThread
@@ -33,7 +34,7 @@ public class RunResultFinderThread extends FinderThread<RunResult> {
      */
     public RunResultFinderThread(final SupervisorThread supervisorThread,
             IRepository repository, final boolean checkOnce) {
-        super(supervisorThread, repository, RunResult.class, 30000, checkOnce);
+        super(supervisorThread, repository, IRunResult.class, 30000, checkOnce);
     }
 
     /**
@@ -48,7 +49,7 @@ public class RunResultFinderThread extends FinderThread<RunResult> {
      */
     public RunResultFinderThread(final SupervisorThread supervisorThread,
             IRepository repository, long sleepTime, final boolean checkOnce) {
-        super(supervisorThread, repository, RunResult.class, sleepTime,
+        super(supervisorThread, repository, IRunResult.class, sleepTime,
                 checkOnce);
     }
 
@@ -92,7 +93,7 @@ public class RunResultFinderThread extends FinderThread<RunResult> {
      * @see de.wiwie.wiutils.utils.FinderThread#getFinder()
      */
     @Override
-    protected Finder<RunResult> getFinder() throws RegisterException {
+    protected Finder<IRunResult> getFinder() throws RegisterException {
         return new RunResultFinder(repository);
     }
 }

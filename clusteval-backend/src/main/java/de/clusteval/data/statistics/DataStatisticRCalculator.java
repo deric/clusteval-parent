@@ -19,7 +19,6 @@ import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.data.DataConfig;
-import de.clusteval.framework.repository.MyRengine;
 import java.io.File;
 import java.io.IOException;
 import org.rosuda.REngine.REXPMismatchException;
@@ -114,12 +113,7 @@ public abstract class DataStatisticRCalculator<T extends DataStatistic> extends 
         try {
             IRengine rEngine = repository.getRengineForCurrentThread();
             try {
-                try {
-                    writeOutputToHelper(absFolderPath, rEngine);
-                } catch (REXPMismatchException e) {
-                    // handle this type of exception as an REngineException
-                    throw new RException(rEngine, e.getMessage());
-                }
+                writeOutputToHelper(absFolderPath, rEngine);
             } catch (REngineException e) {
                 this.log.warn("R-framework (" + this.getClass().getSimpleName()
                         + "): " + rEngine.getLastError());
@@ -127,12 +121,11 @@ public abstract class DataStatisticRCalculator<T extends DataStatistic> extends 
             } finally {
                 rEngine.clear();
             }
-        } catch (RserveException e) {
+        } catch (RException e) {
             throw new RNotAvailableException(e.getMessage());
         }
     }
 
     protected abstract void writeOutputToHelper(File absFolderPath,
-            final MyRengine rEngine) throws REngineException,
-                                            REXPMismatchException, InterruptedException;
+            final IRengine rEngine) throws REngineException, InterruptedException;
 }

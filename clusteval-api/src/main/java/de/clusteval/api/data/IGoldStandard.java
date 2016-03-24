@@ -31,6 +31,13 @@ public interface IGoldStandard extends IRepositoryObject {
     boolean loadIntoMemory() throws UnknownGoldStandardFormatException;
 
     /**
+     * Unload the contents of this dataset from memory.
+     *
+     * @return true, if successful
+     */
+    boolean unloadFromMemory();
+
+    /**
      * This method returns a reference to the clustering object representing the
      * contents of the goldstandard file.
      *
@@ -64,6 +71,5 @@ public interface IGoldStandard extends IRepositoryObject {
      *
      * @return The minor name
      */
-    public String getMinorName();
-
+    String getMinorName();
 }

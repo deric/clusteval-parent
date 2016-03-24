@@ -29,7 +29,7 @@ import java.util.List;
  * @author Christian Wiwie
  *
  */
-public class RunResultFinder extends FileFinder<RunResult> {
+public class RunResultFinder extends FileFinder<IRunResult> {
 
     // the iterator to have access to the parsed runresult objects
     protected RunResultIterator iter;
@@ -42,7 +42,7 @@ public class RunResultFinder extends FileFinder<RunResult> {
      * @throws RegisterException
      */
     public RunResultFinder(IRepository repository) throws RegisterException {
-        super(repository, RunResult.class);
+        super(repository, IRunResult.class);
     }
 
     /*
@@ -51,7 +51,7 @@ public class RunResultFinder extends FileFinder<RunResult> {
      * @see de.wiwie.wiutils.utils.FileFinder#parseObjectFromFile(java.io.File)
      */
     @Override
-    protected RunResult parseObjectFromFile(File file) throws Exception {
+    protected IRunResult parseObjectFromFile(File file) throws Exception {
         iter.getRunResult().loadIntoMemory();
         try {
             iter.getRunResult().register();

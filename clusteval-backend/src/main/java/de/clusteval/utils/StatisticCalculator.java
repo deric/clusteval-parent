@@ -45,7 +45,7 @@ import de.clusteval.data.statistics.IncompatibleDataConfigDataStatisticException
 import de.clusteval.data.statistics.RunStatisticCalculateException;
 import de.clusteval.data.statistics.StatisticCalculateException;
 import de.clusteval.data.statistics.UnknownDataStatisticException;
-import de.clusteval.framework.repository.NoRepositoryFoundException;
+import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.framework.repository.RepositoryObject;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;

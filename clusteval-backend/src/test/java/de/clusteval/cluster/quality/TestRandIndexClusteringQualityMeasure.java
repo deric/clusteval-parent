@@ -29,7 +29,7 @@ import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.api.r.InvalidRepositoryException;
-import de.clusteval.framework.repository.NoRepositoryFoundException;
+import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;

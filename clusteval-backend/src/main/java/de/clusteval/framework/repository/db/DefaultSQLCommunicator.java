@@ -40,7 +40,7 @@ import de.clusteval.data.dataset.type.DataSetType;
 import de.clusteval.data.goldstandard.GoldStandard;
 import de.clusteval.data.goldstandard.GoldStandardConfig;
 import de.clusteval.data.statistics.DataStatistic;
-import de.clusteval.framework.repository.NoRepositoryFoundException;
+import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.framework.repository.RepositoryController;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.program.DoubleProgramParameter;

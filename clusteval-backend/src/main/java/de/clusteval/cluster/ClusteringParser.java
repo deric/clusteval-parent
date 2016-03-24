@@ -18,7 +18,7 @@ import de.clusteval.api.repository.IRepository;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
 import de.clusteval.cluster.quality.ClusteringQualityMeasureParameters;
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
-import de.clusteval.framework.repository.NoRepositoryFoundException;
+import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.framework.repository.RepositoryController;
 import de.clusteval.api.program.ParameterSet;
 import de.wiwie.wiutils.utils.Pair;

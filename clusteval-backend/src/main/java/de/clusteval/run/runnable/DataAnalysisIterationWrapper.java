@@ -17,13 +17,13 @@
 package de.clusteval.run.runnable;
 
 import de.clusteval.api.data.IDataConfig;
-import de.clusteval.data.statistics.DataStatistic;
+import de.clusteval.api.stats.IDataStatistic;
 
 /**
  * @author Christian Wiwie
  *
  */
-public class DataAnalysisIterationWrapper extends AnalysisIterationWrapper<DataStatistic> {
+public class DataAnalysisIterationWrapper extends AnalysisIterationWrapper<IDataStatistic> {
 
     protected IDataConfig dataConfig;
 

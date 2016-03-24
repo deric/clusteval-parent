@@ -21,7 +21,7 @@ import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.r.InvalidRepositoryException;
-import de.clusteval.framework.repository.NoRepositoryFoundException;
+import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;

@@ -16,6 +16,7 @@
  */
 package de.clusteval.framework.repository;
 
+import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.repository.IRepository;

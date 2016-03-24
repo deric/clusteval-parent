@@ -32,7 +32,7 @@ import org.junit.rules.TestName;
 import ch.qos.logback.classic.Level;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.api.r.InvalidRepositoryException;
-import de.clusteval.framework.repository.NoRepositoryFoundException;
+import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;

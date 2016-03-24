@@ -43,7 +43,6 @@ import de.clusteval.api.run.IScheduler;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.NoParameterSetFoundException;
 import de.clusteval.data.dataset.AbsoluteDataSet;
-import de.clusteval.data.dataset.DataSet;
 import de.clusteval.data.dataset.RelativeDataSet;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.framework.repository.RunResultRepository;
@@ -1459,7 +1458,7 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
             super.afterRun();
         } finally {
             // unload the dataset from memory
-            DataSet dataSet = this.dataConfig.getDatasetConfig().getDataSet().getInStandardFormat();
+            IDataSet dataSet = this.dataConfig.getDatasetConfig().getDataSet().getInStandardFormat();
             if (dataSet != null) {
                 dataSet.unloadFromMemory();
             }

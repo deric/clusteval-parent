@@ -36,6 +36,7 @@ import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.repository.StaticRepositoryEntity;
 import de.clusteval.api.repository.StaticRepositoryEntityMap;
 import de.clusteval.api.run.IRun;
+import de.clusteval.api.run.IRunResultFormat;
 import de.clusteval.api.run.IRunResultFormatParser;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
@@ -696,7 +697,6 @@ public class Repository implements IRepository {
         return this.dynamicRepositoryEntities.get(c).getBasePath();
     }
 
-    @Override
     public <T extends IRepositoryObject> T getCollectionStaticEntities(final Class<T> c) {
         return (T) this.staticRepositoryEntities.get(c).asCollection();
     }
@@ -827,6 +827,7 @@ public class Repository implements IRepository {
         return this.registerClass(c, c);
     }
 
+    @Override
     public <T extends IRepositoryObject, S extends T> boolean registerClass(final Class<T> base, final Class<S> c) {
         if (!this.dynamicRepositoryEntities.containsKey(base) && base.getSuperclass() != null
                 && RepositoryObject.class.isAssignableFrom(base.getSuperclass())) {
@@ -928,7 +929,7 @@ public class Repository implements IRepository {
      */
     @Override
     public int getCurrentDataSetFormatVersion(final String formatClass) throws UnknownDataSetFormatException {
-        return ((DataSetFormatRepositoryEntity) this.dynamicRepositoryEntities.get(DataSetFormat.class))
+        return ((DataSetFormatRepositoryEntity) this.dynamicRepositoryEntities.get(IDataSetFormat.class))
                 .getCurrentDataSetFormatVersion(formatClass);
     }
 
@@ -939,7 +940,7 @@ public class Repository implements IRepository {
      */
     @Override
     public void putCurrentDataSetFormatVersion(final String formatClass, final int version) {
-        ((DataSetFormatRepositoryEntity) this.dynamicRepositoryEntities.get(DataSetFormat.class))
+        ((DataSetFormatRepositoryEntity) this.dynamicRepositoryEntities.get(IDataSetFormat.class))
                 .putCurrentDataSetFormatVersion(formatClass, version);
     }
 
@@ -1694,8 +1695,8 @@ public class Repository implements IRepository {
      * @param runResultFormatParser The new class to register.
      * @return True, if the new class replaced an old one.
      */
-    public boolean registerRunResultFormatParser(final Class<? extends RunResultFormatParser> runResultFormatParser) {
-        return ((RunResultFormatRepositoryEntity) this.dynamicRepositoryEntities.get(RunResultFormat.class))
+    public boolean registerRunResultFormatParser(final Class<? extends IRunResultFormatParser> runResultFormatParser) {
+        return ((RunResultFormatRepositoryEntity) this.dynamicRepositoryEntities.get(IRunResultFormat.class))
                 .registerRunResultFormatParser(runResultFormatParser);
     }
 
