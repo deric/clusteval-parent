@@ -41,6 +41,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.script.ScriptException;
+import org.openide.util.Lookup;
 
 /**
  *
@@ -274,7 +275,7 @@ public interface IRepository {
      *
      * <p>
      * A helper method of null null null null null null null null null null null
-     * null null null null null null null null null null null null null null null null null null null null null null null null null null null null null null     {@link ProgramParameter#evaluateDefaultValue(DataConfig, ProgramConfig)},
+     * null null null null null null null null null null null null null null null null null null null null null null null null null null null null null null null null     {@link ProgramParameter#evaluateDefaultValue(DataConfig, ProgramConfig)},
 	 * {@link ProgramParameter#evaluateMinValue(DataConfig, ProgramConfig)} and
      * {@link ProgramParameter#evaluateMaxValue(DataConfig, ProgramConfig)}.
      *
@@ -384,4 +385,26 @@ public interface IRepository {
      *         slow if many run result folders are present).
      */
     Collection<String> getRunResultIdentifier();
+
+    /**
+     * Lookup is used for retrieving objects associated with this clustering
+     * result
+     *
+     * @return lookup instance for accessing related objects
+     */
+    Lookup getLookup();
+
+    /**
+     * Add object to lookup
+     *
+     * @param instance
+     */
+    void lookupAdd(Object instance);
+
+    /**
+     * Removes object from lookup
+     *
+     * @param instance
+     */
+    void lookupRemove(Object instance);
 }

@@ -493,4 +493,9 @@ public class ClusteringRunResult extends ExecutionRunResult implements IClusteri
         this.clustering.getSecond().unloadFromMemory();
         this.clustering = null;
     }
+
+    @Override
+    public void convertToStandardFormat() throws IOException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

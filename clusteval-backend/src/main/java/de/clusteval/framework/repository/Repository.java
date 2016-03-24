@@ -14,12 +14,14 @@ package de.clusteval.framework.repository;
 
 import de.clusteval.api.Database;
 import de.clusteval.api.SQLConfig;
+import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.data.IDataSetFormatParser;
 import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.exceptions.InternalAttributeException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.program.INamedAttribute;
+import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RException;
@@ -33,6 +35,7 @@ import de.clusteval.api.repository.IRepositoryObject;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.repository.StaticRepositoryEntity;
 import de.clusteval.api.repository.StaticRepositoryEntityMap;
+import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.IRunResultFormatParser;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
@@ -101,6 +104,9 @@ import java.util.regex.Pattern;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
+import org.openide.util.Lookup;
+import org.openide.util.lookup.AbstractLookup;
+import org.openide.util.lookup.InstanceContent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -302,6 +308,9 @@ public class Repository implements IRepository {
 
     private Map<Thread, MyRengine> rEngines;
 
+    private final transient InstanceContent instanceContent;
+    private final transient AbstractLookup lookup;
+
     /**
      * Instantiates a new repository.
      *
@@ -382,6 +391,9 @@ public class Repository implements IRepository {
         // this.rEngineException = e;
         // }
         this.rEngines = new HashMap<>();
+
+        instanceContent = new InstanceContent();
+        lookup = new AbstractLookup(instanceContent);
     }
 
     /**
@@ -587,7 +599,7 @@ public class Repository implements IRepository {
      *
      * <p>
      * A helper method of null null null null null null null null null null null
-     * null null null null null null null null     {@link ProgramParameter#evaluateDefaultValue(DataConfig, ProgramConfig)},
+     * null null null null null null null null null null null null     {@link ProgramParameter#evaluateDefaultValue(DataConfig, ProgramConfig)},
 	 * {@link ProgramParameter#evaluateMinValue(DataConfig, ProgramConfig)} and
      * {@link ProgramParameter#evaluateMaxValue(DataConfig, ProgramConfig)}.
      *
@@ -1825,5 +1837,55 @@ public class Repository implements IRepository {
     @Override
     public SQLConfig getDbConfig() {
         return repositoryConfig.getDbConfig();
+    }
+
+    @Override
+    public IRepository register(IRepository repository) throws RepositoryAlreadyExistsException, InvalidRepositoryException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean updateStatusOfRun(IRun run, String newStatus) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String evaluateInternalAttributes(String old, IDataConfig dataConfig, IProgramConfig programConfig) throws InternalAttributeException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public <T extends IRepositoryObject, S extends T> boolean unregister(S object) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setSQLCommunicator(Database comm) {
+        this.sqlCommunicator = comm;
+    }
+
+    @Override
+    public Database getDb() {
+        return sqlCommunicator;
+    }
+
+    @Override
+    public boolean hasParent() {
+        return parent != null;
+    }
+
+    @Override
+    public Lookup getLookup() {
+        return lookup;
+    }
+
+    @Override
+    public void lookupAdd(Object instance) {
+        instanceContent.add(instance);
+    }
+
+    @Override
+    public void lookupRemove(Object instance) {
+        instanceContent.remove(instance);
     }
 }
