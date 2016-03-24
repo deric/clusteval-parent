@@ -31,4 +31,10 @@ public interface IProgress {
      */
     void update(final long newCurrent);
 
+    /**
+     * @return The current percentage of this progress.
+     * @see #percent
+     */
+    int getPercent();
+
 }

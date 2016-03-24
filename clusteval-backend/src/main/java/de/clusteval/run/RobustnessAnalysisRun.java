@@ -47,6 +47,7 @@ import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.IRunResult;
+import de.clusteval.api.run.IScheduler;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.cluster.paramOptimization.InvalidOptimizationParameterException;
@@ -72,7 +73,6 @@ import de.clusteval.framework.repository.NoRepositoryFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
 import de.clusteval.framework.threading.RunSchedulerThread;
-import de.clusteval.program.ProgramConfig;
 import de.clusteval.run.result.ClusteringRunResult;
 import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.run.result.RunResult;
@@ -373,7 +373,7 @@ public class RobustnessAnalysisRun extends ClusteringRun {
                 this.repository.getBasePath(RunResult.class),
                 this.getRunIdentificationString(), "analyses")).mkdir();
 
-        Set<String> paths = new HashSet<String>();
+        Set<String> paths = new HashSet<>();
 
         for (int i = 0; i < this.results.size(); i++) {
             ClusteringRunResult result = (ClusteringRunResult) this.results
@@ -600,7 +600,7 @@ public class RobustnessAnalysisRun extends ClusteringRun {
                                                  UnknownDataRandomizerException {
 
         List<String> programConfigNames = new ArrayList<>();
-        for (ProgramConfig programConfig : programConfigs) {
+        for (IProgramConfig programConfig : programConfigs) {
             programConfigNames.add(programConfig.getName());
         }
         List<String> dataConfigNames = new ArrayList<>();
@@ -704,7 +704,7 @@ public class RobustnessAnalysisRun extends ClusteringRun {
         this.parameterValues.clear();
         // TODO: for numerical parameter ranges, take the mean
         // for string parameters, just take any one
-        for (ProgramConfig pc : programConfigs) {
+        for (IProgramConfig pc : programConfigs) {
             for (IDataConfig dc : originalDataConfigs) {
                 Map<IProgramParameter<? extends Object>, String> m = new HashMap<>();
 
@@ -755,14 +755,14 @@ public class RobustnessAnalysisRun extends ClusteringRun {
      */
     @Override
     public ExecutionRunRunnable createRunRunnableFor(
-            RunSchedulerThread runScheduler, IRun run,
+            IScheduler runScheduler, IRun run,
             IProgramConfig programConfig, IDataConfig dataConfig,
             String runIdentString, boolean isResume,
             Map<IProgramParameter<?>, String> runParams) {
         RobustnessAnalysisRunRunnable r = new RobustnessAnalysisRunRunnable(
                 runScheduler, run, programConfig, dataConfig, runIdentString,
                 isResume, runParams);
-        run.progress.addSubProgress(r.getProgressPrinter(), 10000);
+        run.addSubProgress(r.getProgress(), 10000);
         return r;
     }
 

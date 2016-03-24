@@ -87,6 +87,7 @@ public class ConversionInputToStandardConfiguration implements IConversionInputT
         return new ConversionInputToStandardConfiguration(this);
     }
 
+    @Override
     public NUMBER_PRECISION getSimilarityPrecision() {
         return this.similarityPrecision;
     }
@@ -95,6 +96,7 @@ public class ConversionInputToStandardConfiguration implements IConversionInputT
      * @return The distance measure to use during the conversion of absolute to
      *         relative datasets.
      */
+    @Override
     public IDistanceMeasure getDistanceMeasureAbsoluteToRelative() {
         return this.distanceMeasureAbsoluteToRelative;
     }

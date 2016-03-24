@@ -22,6 +22,7 @@ import de.clusteval.api.data.IDataSetConfig;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.exceptions.FormatConversionException;
+import de.clusteval.api.exceptions.IncompatibleDataSetFormatException;
 import de.clusteval.api.exceptions.IncompleteGoldStandardException;
 import de.clusteval.api.exceptions.InternalAttributeException;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
@@ -36,25 +37,23 @@ import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.run.IRun;
+import de.clusteval.api.run.IRunResultFormat;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.NoParameterSetFoundException;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.AbsoluteDataSet;
 import de.clusteval.data.dataset.DataSet;
 import de.clusteval.data.dataset.RelativeDataSet;
-import de.clusteval.api.exceptions.IncompatibleDataSetFormatException;
 import de.clusteval.data.goldstandard.GoldStandardConfig;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.framework.threading.RunSchedulerThread;
-import de.clusteval.program.ProgramParameter;
 import de.clusteval.program.r.RProcess;
 import de.clusteval.program.r.RProgram;
 import de.clusteval.run.ExecutionRun;
 import de.clusteval.run.MissingParameterValueException;
 import de.clusteval.run.result.ClusteringRunResult;
 import de.clusteval.run.result.NoRunResultFormatParserException;
-import de.clusteval.run.result.format.RunResultFormat;
 import de.clusteval.run.result.format.RunResultNotFoundException;
 import de.clusteval.run.result.postprocessing.RunResultPostprocessor;
 import de.clusteval.utils.plot.Plotter;
@@ -102,7 +101,7 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
      * This is the run result format of the program that is being executed by
      * this runnable.
      */
-    protected RunResultFormat format;
+    protected IRunResultFormat format;
 
     /**
      * A map containing all the parameter values set in the run.
@@ -1157,7 +1156,7 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
         sb.append(optId);
         sb.append("\t");
         for (int p = 0; p < programConfig.getOptimizableParams().size(); p++) {
-            ProgramParameter<?> param = programConfig.getOptimizableParams().get(p);
+            IProgramParameter<?> param = programConfig.getOptimizableParams().get(p);
             if (p > 0) {
                 sb.append(",");
             }
@@ -1215,7 +1214,7 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
     protected void setInternalAttributes() throws IllegalArgumentException {
         // TODO; make use of inheritance! (relative and absolute datasets)
         // TODO: move to place, where dataset is loaded?
-        DataSet ds = this.dataConfig.getDatasetConfig().getDataSet().getInStandardFormat();
+        IDataSet ds = this.dataConfig.getDatasetConfig().getDataSet().getInStandardFormat();
 
         if (ds instanceof RelativeDataSet) {
             RelativeDataSet dataSet = (RelativeDataSet) ds;
@@ -1287,7 +1286,7 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
         try {
             this.log.debug("Loading the input similarities into memory ...");
             // Load the dataset into memory
-            DataSet dataSet = this.dataConfig.getDatasetConfig().getDataSet().getInStandardFormat();
+            IDataSet dataSet = this.dataConfig.getDatasetConfig().getDataSet().getInStandardFormat();
             dataSet.loadIntoMemory(this.dataConfig.getDatasetConfig().getConversionInputToStandardConfiguration()
                     .getSimilarityPrecision());
             // if the original dataset is an absolute dataset, load it into

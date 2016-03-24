@@ -125,7 +125,7 @@ public class ClusteringRun extends ExecutionRun {
             Map<IProgramParameter<?>, String> runParams) {
         ClusteringRunRunnable r = new ClusteringRunRunnable(runScheduler, run,
                 programConfig, dataConfig, runIdentString, isResume, runParams);
-        run.addSubProgress(r.getProgressPrinter(), 10000);
+        run.addSubProgress(r.getProgress(), 10000);
         return r;
     }
 }

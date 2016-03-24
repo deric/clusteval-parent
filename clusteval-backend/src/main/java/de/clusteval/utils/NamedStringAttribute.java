@@ -51,7 +51,7 @@ public class NamedStringAttribute extends NamedAttribute<String> {
      */
     @Override
     public String cloneValue(String value) {
-        return new String(value);
+        return value;
     }
 
     /*

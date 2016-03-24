@@ -51,7 +51,7 @@ public class NamedIntegerAttribute extends NamedAttribute<Integer> {
      */
     @Override
     public Integer cloneValue(Integer value) {
-        return new Integer(value);
+        return value;
     }
 
     /*

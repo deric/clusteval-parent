@@ -19,6 +19,7 @@ import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.repository.RepositoryEvent;
 import de.clusteval.api.repository.RepositoryRemoveEvent;
 import de.clusteval.api.repository.RepositoryReplaceEvent;
+import de.clusteval.api.run.IProgress;
 import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.IRunResult;
 import de.clusteval.api.run.IRunRunnable;
@@ -31,10 +32,10 @@ import de.clusteval.run.result.NoRunResultFormatParserException;
 import de.clusteval.run.result.format.RunResultFormat;
 import de.clusteval.run.runnable.RunRunnable;
 import de.clusteval.run.runnable.RunRunnableInitializationException;
+import de.clusteval.utils.ProgressPrinter;
 import de.wiwie.wiutils.file.FileUtils;
 import de.wiwie.wiutils.format.Formatter;
 import de.wiwie.wiutils.utils.Pair;
-import de.clusteval.utils.ProgressPrinter;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -816,6 +817,11 @@ public abstract class Run extends RepositoryObject implements IRun {
     @Override
     public IContext getContext() {
         return this.context;
+    }
+
+    @Override
+    public void addSubProgress(IProgress prog, long partOfSubProgress) {
+        progress.addSubProgress(progress, partOfSubProgress);
     }
 
 }

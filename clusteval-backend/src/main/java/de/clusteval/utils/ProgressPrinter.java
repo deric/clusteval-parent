@@ -211,6 +211,7 @@ public class ProgressPrinter implements ChangeListener, IProgress {
      * @return The current percentage of this progress.
      * @see #percent
      */
+    @Override
     public int getPercent() {
         return this.percent;
     }

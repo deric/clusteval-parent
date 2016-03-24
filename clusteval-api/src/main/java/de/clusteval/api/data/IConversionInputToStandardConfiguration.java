@@ -17,6 +17,7 @@
 package de.clusteval.api.data;
 
 import de.clusteval.api.IDistanceMeasure;
+import de.wiwie.wiutils.utils.SimilarityMatrix;
 import java.util.List;
 
 /**
@@ -32,4 +33,6 @@ public interface IConversionInputToStandardConfiguration extends IConversionConf
     IDistanceMeasure getDistanceMeasureAbsoluteToRelative();
 
     List<IDataPreprocessor> getPreprocessorsAfterDistance();
+
+    SimilarityMatrix.NUMBER_PRECISION getSimilarityPrecision();
 }

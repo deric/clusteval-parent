@@ -60,7 +60,6 @@ import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
 import de.clusteval.framework.repository.parse.Parser;
-import de.clusteval.program.ProgramConfig;
 import de.clusteval.run.ClusteringRun;
 import de.clusteval.run.InvalidRunModeException;
 import de.clusteval.run.Run;
@@ -285,7 +284,7 @@ public class ClusteringRunResult extends ExecutionRunResult implements IClusteri
         File clusterFolder = new File(FileUtils.buildPath(runResultFolder.getAbsolutePath(), "clusters"));
 
         for (final IDataConfig dataConfig : run.getDataConfigs()) {
-            for (final ProgramConfig programConfig : run.getProgramConfigs()) {
+            for (final IProgramConfig programConfig : run.getProgramConfigs()) {
                 final File completeFile = new File(FileUtils.buildPath(clusterFolder.getAbsolutePath(),
                         programConfig.toString() + "_" + dataConfig + ".1.results.conv"));
                 final ClusteringRunResult tmpResult = parseFromRunResultCompleteFile(repository, run, dataConfig,
@@ -433,7 +432,7 @@ public class ClusteringRunResult extends ExecutionRunResult implements IClusteri
 
                 File clusterFolder = new File(FileUtils.buildPath(runResultFolder.getAbsolutePath(), "clusters"));
                 for (final IDataConfig dataConfig : paramRun.getDataConfigs()) {
-                    for (final ProgramConfig programConfig : paramRun.getProgramConfigs()) {
+                    for (final IProgramConfig programConfig : paramRun.getProgramConfigs()) {
                         final File completeFile = new File(FileUtils.buildPath(clusterFolder.getAbsolutePath(),
                                 programConfig.toString() + "_" + dataConfig + ".results.qual.complete"));
                         final ClusteringRunResult tmpResult = parseFromRunResultCompleteFile(parentRepository, paramRun,

@@ -235,7 +235,7 @@ public class ParameterOptimizationRun extends ExecutionRun {
                 .get(p);
         ParameterOptimizationRunRunnable t = new ParameterOptimizationRunRunnable(runScheduler, run, programConfig,
                 dataConfig, optimizationMethod, runIdentString, isResume, runParams);
-        run.progress.addSubProgress(t.getProgressPrinter(), 10000);
+        run.addSubProgress(t.getProgress(), 10000);
         return t;
     }
 

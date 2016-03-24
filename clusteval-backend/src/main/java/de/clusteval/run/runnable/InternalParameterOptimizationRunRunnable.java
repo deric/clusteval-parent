@@ -11,6 +11,7 @@
 package de.clusteval.run.runnable;
 
 import de.clusteval.api.data.IDataConfig;
+import de.clusteval.api.exceptions.IncompatibleDataSetFormatException;
 import de.clusteval.api.exceptions.IncompleteGoldStandardException;
 import de.clusteval.api.exceptions.InternalAttributeException;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
@@ -20,9 +21,8 @@ import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.IProgramParameter;
 import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.IScheduler;
-import de.clusteval.api.exceptions.IncompatibleDataSetFormatException;
-import de.clusteval.run.Run;
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
@@ -45,7 +45,7 @@ public class InternalParameterOptimizationRunRunnable extends ExecutionRunRunnab
      * @param runParams
      */
     public InternalParameterOptimizationRunRunnable(
-            IScheduler runScheduler, Run run,
+            IScheduler runScheduler, IRun run,
             IProgramConfig programConfig, IDataConfig dataConfig,
             String runIdentString, boolean isResume,
             Map<IProgramParameter<?>, String> runParams) {
@@ -119,7 +119,7 @@ public class InternalParameterOptimizationRunRunnable extends ExecutionRunRunnab
      * @see de.clusteval.run.runnable.RunRunnable#hasNextIteration()
      */
     @Override
-    protected boolean hasNextIteration() {
+    public boolean hasNextIteration() {
         return this.hasNext;
     }
 
@@ -129,7 +129,7 @@ public class InternalParameterOptimizationRunRunnable extends ExecutionRunRunnab
      * @see de.clusteval.run.runnable.RunRunnable#consumeNextIteration()
      */
     @Override
-    protected int consumeNextIteration() throws RunIterationException {
+    public int consumeNextIteration() throws RunIterationException {
         this.hasNext = false;
         return 1;
     }

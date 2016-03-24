@@ -18,6 +18,7 @@ import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.IProgramParameter;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.IScheduler;
 import de.clusteval.context.Context;
 import de.clusteval.run.result.postprocessing.RunResultPostprocessor;
@@ -86,7 +87,7 @@ public class InternalParameterOptimizationRun extends ExecutionRun {
      */
     @Override
     protected ExecutionRunRunnable createRunRunnableFor(
-            IScheduler runScheduler, Run run,
+            IScheduler runScheduler, IRun run,
             IProgramConfig programConfig, IDataConfig dataConfig,
             String runIdentString, boolean isResume,
             Map<IProgramParameter<?>, String> runParams) {
