@@ -35,7 +35,7 @@ public interface IRunRunnable<IR extends IterationRunnable, IW extends Iteration
      * @return The progress printer of this runnable.
      * @see #progress
      */
-    IProgress getProgressPrinter();
+    IProgress getProgress();
 
     boolean hasNextIteration();
 

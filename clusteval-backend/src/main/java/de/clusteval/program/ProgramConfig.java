@@ -235,7 +235,7 @@ public class ProgramConfig extends RepositoryObject implements IProgramConfig {
     public ProgramConfig(IProgramConfig programConfig) throws RegisterException {
         super(programConfig);
 
-        this.program = programConfig.getProgram().clone();
+        this.program = programConfig.getProgram().duplicate();
         this.outputFormat = programConfig.getOutputFormat().clone();
         this.compatibleDataSetFormats = DataSetFormat
                 .cloneDataSetFormats(programConfig.getCompatibleDataSetFormats());

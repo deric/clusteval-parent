@@ -12,7 +12,6 @@
  */
 package de.clusteval.framework;
 
-import de.clusteval.api.run.RUN_STATUS;
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.PatternLayout;
@@ -20,30 +19,42 @@ import ch.qos.logback.classic.encoder.PatternLayoutEncoder;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.ConsoleAppender;
 import ch.qos.logback.core.FileAppender;
+import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigurationException;
 import de.clusteval.api.exceptions.GoldStandardNotFoundException;
+import de.clusteval.api.exceptions.IncompatibleContextException;
 import de.clusteval.api.exceptions.NoDataSetException;
+import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.api.exceptions.RepositoryObjectDumpException;
+import de.clusteval.api.exceptions.RunResultParseException;
+import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownDataSetGeneratorException;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
+import de.clusteval.api.exceptions.UnknownParameterType;
+import de.clusteval.api.exceptions.UnknownProgramParameterException;
+import de.clusteval.api.exceptions.UnknownProgramTypeException;
+import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
+import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.InvalidRepositoryException;
+import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.run.IScheduler;
+import de.clusteval.api.run.IterationRunnable;
+import de.clusteval.api.run.IterationWrapper;
+import de.clusteval.api.run.RUN_STATUS;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.cluster.paramOptimization.InvalidOptimizationParameterException;
 import de.clusteval.cluster.paramOptimization.UnknownParameterOptimizationMethodException;
-import de.clusteval.cluster.quality.ClusteringQualityMeasure;
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
-import de.clusteval.api.exceptions.IncompatibleContextException;
-import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
 import de.clusteval.data.dataset.DataSet;
@@ -65,29 +76,18 @@ import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RepositoryController;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
-import de.clusteval.framework.threading.RunSchedulerThread;
 import de.clusteval.framework.threading.SupervisorThread;
-import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.program.Program;
-import de.clusteval.api.exceptions.UnknownParameterType;
-import de.clusteval.api.exceptions.UnknownProgramParameterException;
-import de.clusteval.api.exceptions.UnknownProgramTypeException;
 import de.clusteval.run.InvalidRunModeException;
 import de.clusteval.run.Run;
 import de.clusteval.run.RunException;
 import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.run.result.RunResult;
-import de.clusteval.api.exceptions.RunResultParseException;
-import de.clusteval.api.exceptions.UnknownRunResultFormatException;
-import de.clusteval.api.r.IRengine;
-import de.clusteval.api.r.RException;
 import de.clusteval.run.runnable.AnalysisIterationRunnable;
 import de.clusteval.run.runnable.DataAnalysisIterationRunnable;
 import de.clusteval.run.runnable.DataAnalysisRunRunnable;
 import de.clusteval.run.runnable.ExecutionIterationRunnable;
 import de.clusteval.run.runnable.ExecutionRunRunnable;
-import de.clusteval.api.run.IterationRunnable;
-import de.clusteval.api.run.IterationWrapper;
 import de.clusteval.run.runnable.RunAnalysisIterationRunnable;
 import de.clusteval.run.runnable.RunAnalysisRunRunnable;
 import de.clusteval.run.statistics.UnknownRunDataStatisticException;
@@ -711,7 +711,7 @@ public class ClustevalBackendServer implements IBackendServer {
      */
     @Override
     public Collection<String> getRuns() {
-        Collection<String> result = new HashSet<String>();
+        Collection<String> result = new HashSet<>();
         for (Run run : this.repository.getCollectionStaticEntities(Run.class)) {
             result.add(run.getName());
         }
@@ -725,7 +725,7 @@ public class ClustevalBackendServer implements IBackendServer {
      */
     @Override
     public Collection<String> getDataSets() {
-        Collection<String> result = new HashSet<String>();
+        Collection<String> result = new HashSet<>();
         for (DataSet dataSet : this.repository.getCollectionStaticEntities(DataSet.class)) {
             result.add(dataSet.getFullName());
         }
@@ -805,8 +805,8 @@ public class ClustevalBackendServer implements IBackendServer {
             for (ParameterOptimizationResult r : list) {
                 String dataConfig = r.getMethod().getDataConfig().getName();
                 String programConfig = r.getMethod().getProgramConfig().getName();
-                Map<String, Double> measureToOptimalQuality = new HashMap<String, Double>();
-                for (ClusteringQualityMeasure measure : r.getOptimalParameterSets().keySet()) {
+                Map<String, Double> measureToOptimalQuality = new HashMap<>();
+                for (ClusteringEvaluation measure : r.getOptimalParameterSets().keySet()) {
                     measureToOptimalQuality.put(measure.getClass().getSimpleName(),
                             r.get(r.getOptimalParameterSets().get(measure)).get(measure).getValue());
                 }
@@ -1040,15 +1040,15 @@ public class ClustevalBackendServer implements IBackendServer {
      */
     @Override
     public Map<String, Triple<String, String, Long>> getActiveThreads() throws RemoteException {
-        Map<String, Triple<String, String, Long>> result = new HashMap<String, Triple<String, String, Long>>();
+        Map<String, Triple<String, String, Long>> result = new HashMap<>();
 
-        RunSchedulerThread scheduler = this.getRepository().getSupervisorThread().getRunScheduler();
+        IScheduler scheduler = this.getRepository().getSupervisorThread().getRunScheduler();
         Map<Thread, IterationRunnable<? extends IterationWrapper>> map = scheduler.getActiveIterationRunnables();
         for (Map.Entry<Thread, IterationRunnable<? extends IterationWrapper>> e : map.entrySet()) {
             long startTime = e.getValue().getStartTime();
 
             String name = "";
-            String status = "";
+            String status;
             if (e.getValue() instanceof ExecutionIterationRunnable) {
                 ExecutionRunRunnable r = (ExecutionRunRunnable) (e.getValue().getParentRunnable());
                 status = ((ExecutionIterationRunnable) e.getValue()).getIterationNumber() + "";

@@ -646,19 +646,10 @@ public abstract class Run extends RepositoryObject implements IRun {
      * @see #status
      * @return the status
      */
+    @Override
     public RUN_STATUS getStatus() {
         return this.status;
     }
-
-    /**
-     * Implement this method in subclasses to provide the number of steps this
-     * run performs before it is finished. This method is then later on used by
-     * the method {@link #getPercentFinished()} to calculate the finished
-     * percentage.
-     *
-     * @return
-     */
-    protected abstract long getUpperLimitProgress();
 
     /**
      * This method sets the unique run identification string of this run when it

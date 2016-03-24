@@ -12,8 +12,9 @@ package de.clusteval.run.result;
 
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.IRepositoryObject;
-import de.clusteval.api.run.IRun;
 import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.run.IRun;
+import de.clusteval.api.run.IRunResult;
 import de.clusteval.api.run.IScheduler;
 import de.clusteval.api.run.RUN_STATUS;
 import de.clusteval.utils.FileFinder;
@@ -113,9 +114,9 @@ class RunResultIterator implements Iterator<File> {
 
     protected ArrayIterator<File> basePath;
 
-    protected List<RunResult> parsedResults;
+    protected List<IRunResult> parsedResults;
 
-    protected RunResult lastReturnedResult;
+    protected IRunResult lastReturnedResult;
 
     public RunResultIterator(final IRepository repo, final File basePath) {
         this.repo = repo;
@@ -140,7 +141,7 @@ class RunResultIterator implements Iterator<File> {
         while ((exception || this.parsedResults.isEmpty())
                 && basePath.hasNext()) {
             try {
-                List<RunResult> newResults = new ArrayList<>();
+                List<IRunResult> newResults = new ArrayList<>();
                 RunResult.parseFromRunResultFolder(repo, basePath.next(),
                         newResults, false, false, false);
                 this.parsedResults.addAll(newResults);
@@ -166,7 +167,7 @@ class RunResultIterator implements Iterator<File> {
         return new File(lastReturnedResult.getAbsolutePath());
     }
 
-    public RunResult getRunResult() {
+    public IRunResult getRunResult() {
         return this.lastReturnedResult;
     }
 

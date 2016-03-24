@@ -93,4 +93,6 @@ public interface Database {
      * @return True, if the status of the run was updated successfully.
      */
     boolean updateStatusOfRun(final IRun run, String runStatus);
+
+    boolean refreshMaterializedViews();
 }

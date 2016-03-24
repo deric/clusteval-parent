@@ -21,6 +21,7 @@ import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetConfig;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.data.IGoldStandard;
+import de.clusteval.api.data.IGoldStandardConfig;
 import de.clusteval.api.exceptions.FormatConversionException;
 import de.clusteval.api.exceptions.IncompatibleDataSetFormatException;
 import de.clusteval.api.exceptions.IncompleteGoldStandardException;
@@ -38,16 +39,14 @@ import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.IRunResultFormat;
+import de.clusteval.api.run.IScheduler;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.NoParameterSetFoundException;
-import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.AbsoluteDataSet;
 import de.clusteval.data.dataset.DataSet;
 import de.clusteval.data.dataset.RelativeDataSet;
-import de.clusteval.data.goldstandard.GoldStandardConfig;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.framework.repository.RunResultRepository;
-import de.clusteval.framework.threading.RunSchedulerThread;
 import de.clusteval.program.r.RProcess;
 import de.clusteval.program.r.RProgram;
 import de.clusteval.run.ExecutionRun;
@@ -268,8 +267,8 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
      * @throws IllegalArgumentException
      */
     protected void checkCompatibilityDataSetGoldStandard(IDataSetConfig dataSetConfig,
-            GoldStandardConfig goldStandardConfig) throws UnknownGoldStandardFormatException,
-                                                          IncompleteGoldStandardException, IllegalArgumentException {
+            IGoldStandardConfig goldStandardConfig) throws UnknownGoldStandardFormatException,
+                                                           IncompleteGoldStandardException, IllegalArgumentException {
         this.log.debug("Checking compatibility of goldstandard and dataset ...");
         IDataSet dataSet = dataSetConfig.getDataSet().getInStandardFormat();
         File dataSetFile = ClustevalBackendServer.getCommonFile(new File(dataSet.getAbsolutePath()));
@@ -1330,7 +1329,7 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
         }
 
         // 30.06.2014: performing isoMDS calculations in parallel
-        final DataConfig dcMDS = this.dataConfig;
+        final IDataConfig dcMDS = this.dataConfig;
 
         ExecutionIterationWrapper wrapper = new ExecutionIterationWrapper();
         wrapper.setDataConfig(dcMDS);
@@ -1342,7 +1341,7 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
 
             @Override
             public void doRun() {
-                RunSchedulerThread scheduler = null;
+                IScheduler scheduler;
                 IRepository repo = getRun().getRepository();
                 if (repo instanceof RunResultRepository) {
                     repo = repo.getParent();
@@ -1368,7 +1367,7 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
         }
 
         // 30.06.2014: performing isoMDS calculations in parallel
-        final DataConfig dcPCA = this.dataConfig;
+        final IDataConfig dcPCA = this.dataConfig;
 
         wrapper = new ExecutionIterationWrapper();
         wrapper.setDataConfig(dcPCA);
@@ -1380,7 +1379,7 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
 
             @Override
             public void doRun() {
-                RunSchedulerThread scheduler = null;
+                IScheduler scheduler;
                 IRepository repo = getRun().getRepository();
                 if (repo instanceof RunResultRepository) {
                     repo = repo.getParent();

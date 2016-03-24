@@ -12,6 +12,8 @@
  */
 package de.clusteval.utils.plot;
 
+import de.clusteval.api.data.IDataConfig;
+import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.r.IRengine;
@@ -19,9 +21,7 @@ import de.clusteval.api.r.RException;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.AbsoluteDataSet;
 import de.clusteval.data.dataset.DataMatrix;
-import de.clusteval.data.dataset.DataSet;
 import de.clusteval.data.dataset.RelativeDataSet;
-import de.clusteval.framework.repository.MyRengine;
 import de.clusteval.run.result.ParameterOptimizationResult;
 import de.wiwie.wiutils.utils.ArraysExt;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
@@ -107,10 +107,9 @@ public abstract class Plotter {
                                                 IOException, REngineException, InterruptedException {
 
         try {
-            MyRengine rEngine = dataConfig.getRepository()
-                    .getRengineForCurrentThread();
+            IRengine rEngine = dataConfig.getRepository().getRengineForCurrentThread();
             try {
-                DataSet absStandard = dataConfig.getDatasetConfig()
+                IDataSet absStandard = dataConfig.getDatasetConfig()
                         .getDataSet().getInStandardFormat();
 
                 String newPath = dataConfig.getDatasetConfig().getDataSet()
@@ -189,20 +188,19 @@ public abstract class Plotter {
      * @throws UnknownDataSetFormatException
      * @throws InterruptedException
      */
-    public static void assessAndWritePCACoordinates(final DataConfig dataConfig)
+    public static void assessAndWritePCACoordinates(final IDataConfig dataConfig)
             throws InvalidDataSetFormatVersionException,
                    IllegalArgumentException, IOException, REngineException,
                    UnknownDataSetFormatException, InterruptedException {
 
         try {
-            MyRengine rEngine = dataConfig.getRepository()
-                    .getRengineForCurrentThread();
+            IRengine rEngine = dataConfig.getRepository().getRengineForCurrentThread();
             try {
 
                 double[][] x;
                 String[] ids;
 
-                DataSet standard = dataConfig.getDatasetConfig().getDataSet()
+                IDataSet standard = dataConfig.getDatasetConfig().getDataSet()
                         .getOriginalDataSet();
                 String newPath = standard.getAbsolutePath() + ".PCA";
                 if (new File(newPath).exists()) {

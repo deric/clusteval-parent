@@ -10,9 +10,9 @@
  ***************************************************************************** */
 package de.clusteval.run.result;
 
+import de.clusteval.api.SQLConfig.DB_TYPE;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.api.SQLConfig.DB_TYPE;
 import de.clusteval.framework.threading.SupervisorThread;
 import de.clusteval.utils.Finder;
 import de.clusteval.utils.FinderThread;
@@ -80,7 +80,7 @@ public class RunResultFinderThread extends FinderThread<RunResult> {
         // we refresh materialized views in case we found new stuff and we are
         // using postgresql
         if (this.currentFinder.foundInLastRun()
-                && this.repository.getRepositoryConfig().getMysqlConfig()
+                && this.repository.getRepositoryConfig().getDbConfig()
                 .getDatabaseType().equals(DB_TYPE.POSTGRESQL)) {
             this.repository.getDb().refreshMaterializedViews();
         }

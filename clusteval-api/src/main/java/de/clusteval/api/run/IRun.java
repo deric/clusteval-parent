@@ -99,4 +99,20 @@ public interface IRun extends IRepositoryObject {
     IRun clone();
 
     void addSubProgress(IProgress progress, long partOfSubProgress);
+
+    /**
+     * @see #status
+     * @return the status
+     */
+    RUN_STATUS getStatus();
+
+    /**
+     * Implement this method in subclasses to provide the number of steps this
+     * run performs before it is finished. This method is then later on used by
+     * the method {@link #getPercentFinished()} to calculate the finished
+     * percentage.
+     *
+     * @return
+     */
+    long getUpperLimitProgress();
 }

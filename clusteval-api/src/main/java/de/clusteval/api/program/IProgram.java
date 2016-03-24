@@ -92,7 +92,7 @@ public interface IProgram extends IRepositoryObject {
      */
     IContext getContext() throws UnknownContextException;
 
-    IProgram clone();
+    public IProgram duplicate();
 
     /**
      * This method returns the major name of this program. The major name of the

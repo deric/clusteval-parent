@@ -41,6 +41,7 @@ import de.clusteval.api.run.IClusteringRunResult;
 import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.IRunResult;
 import de.clusteval.api.run.IRunResultFormat;
+import de.clusteval.api.run.IRunResultFormatParser;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.cluster.paramOptimization.InvalidOptimizationParameterException;
@@ -65,7 +66,6 @@ import de.clusteval.run.InvalidRunModeException;
 import de.clusteval.run.Run;
 import de.clusteval.run.RunException;
 import de.clusteval.run.result.format.RunResultFormat;
-import de.clusteval.run.result.format.RunResultFormatParser;
 import de.clusteval.run.result.format.RunResultNotFoundException;
 import de.clusteval.run.statistics.UnknownRunDataStatisticException;
 import de.clusteval.run.statistics.UnknownRunStatisticException;
@@ -174,7 +174,7 @@ public class ClusteringRunResult extends ExecutionRunResult implements IClusteri
             final Map<String, String> params)
             throws NoRunResultFormatParserException, RunResultNotFoundException, RegisterException {
         ClusteringRunResult result = null;
-        RunResultFormatParser p = null;
+        IRunResultFormatParser p = null;
 
         if (!new File(this.absPath.getAbsolutePath()).exists()) {
             throw new RunResultNotFoundException(

@@ -274,7 +274,7 @@ public interface IRepository {
      *
      * <p>
      * A helper method of null null null null null null null null null null null
-     * null null null null null null null null null null null null null null null null null null null null null null null null null null     {@link ProgramParameter#evaluateDefaultValue(DataConfig, ProgramConfig)},
+     * null null null null null null null null null null null null null null null null null null null null null null null null null null null null null null     {@link ProgramParameter#evaluateDefaultValue(DataConfig, ProgramConfig)},
 	 * {@link ProgramParameter#evaluateMinValue(DataConfig, ProgramConfig)} and
      * {@link ProgramParameter#evaluateMaxValue(DataConfig, ProgramConfig)}.
      *
@@ -369,4 +369,19 @@ public interface IRepository {
      *         there is no attribute with the given name
      */
     INamedAttribute<String> getInternalStringAttribute(final String value);
+
+    /**
+     * @return A collection with the names of all run result directories
+     *         contained in the repository of this server. Those run result directories
+     *         can be resumed, if they were terminated before.
+     */
+    Collection<String> getRunResumes();
+
+    /**
+     * @return A collection with the names of those runresult directories
+     *         contained in the repository of this server, that contain a clusters
+     *         subfolder and at least one *.complete file containing results (can be
+     *         slow if many run result folders are present).
+     */
+    Collection<String> getRunResultIdentifier();
 }
