@@ -12,6 +12,7 @@ package de.clusteval.framework.threading;
 
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.IRun;
+import de.clusteval.api.run.IRunRunnable;
 import de.clusteval.api.run.IScheduler;
 import de.clusteval.api.run.IterationRunnable;
 import de.clusteval.api.run.IterationWrapper;
@@ -443,9 +444,10 @@ public class RunSchedulerThread extends ClustevalThread implements IScheduler {
      * @return A map containing the id of the runs and run resumes together with
      *         their current status and percentage (if currently executing).
      */
+    @Override
     public Map<String, Pair<RUN_STATUS, Float>> getRunStatusForClientId(
             String clientId) {
-        Map<String, Pair<RUN_STATUS, Float>> result = new HashMap<String, Pair<RUN_STATUS, Float>>();
+        Map<String, Pair<RUN_STATUS, Float>> result = new HashMap<>();
 
         // iterate over all scheduled runs and run resumes
         for (Triple<String, String, Boolean> triple : this.runQueue) {
@@ -616,10 +618,12 @@ public class RunSchedulerThread extends ClustevalThread implements IScheduler {
      * @return A future object, that allows to retrieve the current status of
      *         the execution of the runnable.
      */
-    public Future<?> registerRunRunnable(RunRunnable runRunnable) {
+    @Override
+    public Future<?> registerRunRunnable(IRunRunnable runRunnable) {
         return this.threadPool.submit(runRunnable);
     }
 
+    @Override
     public Future<?> registerIterationRunnable(IterationRunnable iterationRunnable) {
         return this.iterationThreadPool.submit(iterationRunnable);
     }

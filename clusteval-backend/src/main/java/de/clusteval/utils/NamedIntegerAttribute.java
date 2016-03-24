@@ -50,7 +50,7 @@ public class NamedIntegerAttribute extends NamedAttribute<Integer> {
 	 * @see de.wiwie.wiutils.utils.NamedAttribute#cloneValue(java.lang.Object)
      */
     @Override
-    protected Integer cloneValue(Integer value) {
+    public Integer cloneValue(Integer value) {
         return new Integer(value);
     }
 

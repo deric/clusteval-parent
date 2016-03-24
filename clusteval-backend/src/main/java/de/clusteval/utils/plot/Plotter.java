@@ -14,6 +14,8 @@ package de.clusteval.utils.plot;
 
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.r.IRengine;
+import de.clusteval.api.r.RException;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.AbsoluteDataSet;
 import de.clusteval.data.dataset.DataMatrix;
@@ -46,13 +48,13 @@ public abstract class Plotter {
             final ParameterOptimizationResult result)
             throws InterruptedException {
 
-        MyRengine rEngine;
+        IRengine rEngine;
         try {
             rEngine = result.getRepository().getRengineForCurrentThread();
             try {
                 rEngine.eval("Sys.setlocale(category='LC_NUMERIC',locale='C')");
                 /*
-				 * Define functions
+                 * Define functions
                  */
                 rEngine.eval("getDensity <- function(x) {"
                         + "	return (c(strsplit(x=as.character(x[1]),split=',')[[1]][1],x[-1]))}");
@@ -81,7 +83,8 @@ public abstract class Plotter {
             } finally {
                 rEngine.clear();
             }
-        } catch (RserveException e) {
+        } catch (RException e) {
+
         }
 
     }

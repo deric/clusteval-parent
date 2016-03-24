@@ -36,6 +36,7 @@ import de.clusteval.api.exceptions.UnknownProgramParameterException;
 import de.clusteval.api.exceptions.UnknownProgramTypeException;
 import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
+import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
@@ -67,7 +68,6 @@ import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
 import de.clusteval.framework.repository.parse.Parser;
-import de.clusteval.program.ProgramConfig;
 import de.clusteval.run.InvalidRunModeException;
 import de.clusteval.run.ParameterOptimizationRun;
 import de.clusteval.run.RunException;
@@ -76,7 +76,6 @@ import de.clusteval.run.statistics.UnknownRunDataStatisticException;
 import de.clusteval.run.statistics.UnknownRunStatisticException;
 import de.clusteval.utils.InvalidConfigurationFileException;
 import de.wiwie.wiutils.file.FileUtils;
-import de.clusteval.utils.ProgressPrinter;
 import de.wiwie.wiutils.utils.parse.TextFileParser;
 import de.wiwie.wiutils.utils.parse.TextFileParser.OUTPUT_MODE;
 import java.io.File;
@@ -181,7 +180,7 @@ public class ClustQualityEval {
         Set<Thread> threads = new HashSet<>();
         System.out.println("Program configurations:");
         System.out.println(run.getProgramConfigs());
-        for (final ProgramConfig pc : run.getProgramConfigs()) {
+        for (final IProgramConfig pc : run.getProgramConfigs()) {
             // get the dataset for this program config
             DataSet dsIn = Parser.parseFromFile(
                     DataSet.class,

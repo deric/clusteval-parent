@@ -79,6 +79,8 @@ import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.run.result.RunResult;
 import de.clusteval.api.exceptions.RunResultParseException;
 import de.clusteval.api.exceptions.UnknownRunResultFormatException;
+import de.clusteval.api.r.IRengine;
+import de.clusteval.api.r.RException;
 import de.clusteval.run.runnable.AnalysisIterationRunnable;
 import de.clusteval.run.runnable.DataAnalysisIterationRunnable;
 import de.clusteval.run.runnable.DataAnalysisRunRunnable;
@@ -124,7 +126,6 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
 import org.apache.commons.configuration.ConfigurationException;
-import org.rosuda.REngine.Rserve.RserveException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -463,10 +464,10 @@ public class ClustevalBackendServer implements IBackendServer {
                 // try to establish a connection to R
                 log.info("Attempting connection to Rserve on " + config.rServeHost + ":" + config.rServePort);
                 @SuppressWarnings("unused")
-                MyRengine myRengine = new MyRengine("");
+                IRengine myRengine = new MyRengine("");
                 log.info("Success");
                 isRAvailable = true;
-            } catch (RserveException e) {
+            } catch (RException e) {
                 log.error("Connection to Rserve could not be established, "
                         + "please ensure that your Rserve instance is " + "running before starting this framework.");
                 log.error("Functionality that requires R will not be available" + " until Rserve has been started.");

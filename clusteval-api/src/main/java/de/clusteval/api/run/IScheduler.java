@@ -16,6 +16,8 @@
  */
 package de.clusteval.api.run;
 
+import de.wiwie.wiutils.utils.Pair;
+import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.Future;
@@ -115,5 +117,20 @@ public interface IScheduler {
      *         the execution of the runnable.
      */
     Future<?> registerRunRunnable(IRunRunnable runRunnable);
+
+    /**
+     *
+     * This method is invoked by
+     * {@link ClustevalBackendServer#getRunStatusForClientId(String)} and gets
+     * the status of all runs and run resumes scheduled and executed by the user
+     * with the given id.
+     *
+     * @param clientId
+     *                 The id of the client for which we want to know the status of
+     *                 its scheduled and executed runs and run resumes.
+     * @return A map containing the id of the runs and run resumes together with
+     *         their current status and percentage (if currently executing).
+     */
+    public Map<String, Pair<RUN_STATUS, Float>> getRunStatusForClientId(String clientId);
 
 }

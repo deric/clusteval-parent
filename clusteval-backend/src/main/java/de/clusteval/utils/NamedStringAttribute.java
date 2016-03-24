@@ -50,7 +50,7 @@ public class NamedStringAttribute extends NamedAttribute<String> {
 	 * @see de.wiwie.wiutils.utils.NamedAttribute#cloneValue(java.lang.Object)
      */
     @Override
-    protected String cloneValue(String value) {
+    public String cloneValue(String value) {
         return new String(value);
     }
 

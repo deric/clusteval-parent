@@ -19,6 +19,7 @@ import de.clusteval.api.data.IDataSetFormatParser;
 import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.exceptions.InternalAttributeException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.program.INamedAttribute;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RException;
@@ -41,7 +42,6 @@ import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.DataSet;
 import de.clusteval.data.dataset.DataSetConfig;
 import de.clusteval.data.dataset.format.DataSetFormat;
-import de.clusteval.data.dataset.format.DataSetFormatParser;
 import de.clusteval.data.dataset.generator.DataSetGenerator;
 import de.clusteval.data.dataset.type.DataSetType;
 import de.clusteval.data.distance.DistanceMeasure;
@@ -939,8 +939,8 @@ public class Repository implements IRepository {
      * @return The class of the dataset format parser with the given name or
      *         null, if it does not exist.
      */
-    public Class<? extends DataSetFormatParser> getDataSetFormatParser(final String dataSetFormatName) {
-        return ((DataSetFormatRepositoryEntity) this.dynamicRepositoryEntities.get(DataSetFormat.class))
+    public Class<? extends IDataSetFormatParser> getDataSetFormatParser(final String dataSetFormatName) {
+        return ((DataSetFormatRepositoryEntity) this.dynamicRepositoryEntities.get(IDataSetFormat.class))
                 .getDataSetFormatParser(dataSetFormatName);
     }
 
@@ -953,11 +953,12 @@ public class Repository implements IRepository {
      * @return The internal double attribute with the given name or null, if
      *         there is no attribute with the given name
      */
-    public NamedDoubleAttribute getInternalDoubleAttribute(final String value) {
+    @Override
+    public INamedAttribute<Double> getInternalDoubleAttribute(final String value) {
         if (!isInternalAttribute(value)) {
             return null;
         }
-        NamedDoubleAttribute result = this.internalDoubleAttributes.get(value.substring(2, value.length() - 1));
+        INamedAttribute<Double> result = this.internalDoubleAttributes.get(value.substring(2, value.length() - 1));
         if (result == null && parent != null) {
             result = parent.getInternalDoubleAttribute(value);
         }
@@ -973,11 +974,12 @@ public class Repository implements IRepository {
      * @return The internal integer attribute with the given name or null, if
      *         there is no attribute with the given name
      */
-    public NamedIntegerAttribute getInternalIntegerAttribute(final String value) {
+    @Override
+    public INamedAttribute<Integer> getInternalIntegerAttribute(final String value) {
         if (!isInternalAttribute(value)) {
             return null;
         }
-        NamedIntegerAttribute result = this.internalIntegerAttributes.get(value.substring(2, value.length() - 1));
+        INamedAttribute<Integer> result = this.internalIntegerAttributes.get(value.substring(2, value.length() - 1));
         if (result == null && parent != null) {
             result = parent.getInternalIntegerAttribute(value);
         }
@@ -993,11 +995,12 @@ public class Repository implements IRepository {
      * @return The internal string attribute with the given name or null, if
      *         there is no attribute with the given name
      */
-    public NamedStringAttribute getInternalStringAttribute(final String value) {
+    @Override
+    public INamedAttribute<String> getInternalStringAttribute(final String value) {
         if (!isInternalAttribute(value)) {
             return null;
         }
-        NamedStringAttribute result = this.internalStringAttributes.get(value.substring(2, value.length() - 1));
+        INamedAttribute<String> result = this.internalStringAttributes.get(value.substring(2, value.length() - 1));
         if (result == null && parent != null) {
             result = parent.getInternalStringAttribute(value);
         }

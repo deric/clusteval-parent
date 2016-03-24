@@ -12,6 +12,7 @@
  */
 package de.clusteval.utils;
 
+import de.clusteval.api.program.INamedAttribute;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.RepositoryObject;
@@ -25,7 +26,7 @@ import java.io.File;
  * @param <T>
  *
  */
-public abstract class NamedAttribute<T> extends RepositoryObject {
+public abstract class NamedAttribute<T> extends RepositoryObject implements INamedAttribute<T> {
 
     protected String name;
     protected T value;
@@ -57,8 +58,6 @@ public abstract class NamedAttribute<T> extends RepositoryObject {
         this.name = other.name;
         this.value = cloneValue(other.value);
     }
-
-    protected abstract T cloneValue(final T value);
 
     /*
      * (non-Javadoc)

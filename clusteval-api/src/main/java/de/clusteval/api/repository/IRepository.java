@@ -23,6 +23,7 @@ import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.data.IDataSetFormatParser;
 import de.clusteval.api.exceptions.InternalAttributeException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.program.INamedAttribute;
 import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.InvalidRepositoryException;
@@ -273,7 +274,7 @@ public interface IRepository {
      *
      * <p>
      * A helper method of null null null null null null null null null null null
-     * null null null null null null null null null null null null null null null null null null null null     {@link ProgramParameter#evaluateDefaultValue(DataConfig, ProgramConfig)},
+     * null null null null null null null null null null null null null null null null null null null null null null null null null null     {@link ProgramParameter#evaluateDefaultValue(DataConfig, ProgramConfig)},
 	 * {@link ProgramParameter#evaluateMinValue(DataConfig, ProgramConfig)} and
      * {@link ProgramParameter#evaluateMaxValue(DataConfig, ProgramConfig)}.
      *
@@ -335,4 +336,37 @@ public interface IRepository {
     Class<? extends IRunResultFormatParser> getRunResultFormatParser(final String runResultFormatName);
 
     String getClusterResultsQualityBasePath();
+
+    /**
+     * This method checks whether the given string is a valid and internal
+     * double attribute by invoking {@link #isInternalAttribute(String)}. Then
+     * the internal double attribute is looked up and returned if it exists.
+     *
+     * @param value The name of the internal double attribute.
+     * @return The internal double attribute with the given name or null, if
+     *         there is no attribute with the given name
+     */
+    INamedAttribute<Double> getInternalDoubleAttribute(final String value);
+
+    /**
+     * This method checks whether the given string is a valid and internal
+     * integer attribute by invoking {@link #isInternalAttribute(String)}. Then
+     * the internal integer attribute is looked up and returned if it exists.
+     *
+     * @param value The name of the internal integer attribute.
+     * @return The internal integer attribute with the given name or null, if
+     *         there is no attribute with the given name
+     */
+    INamedAttribute<Integer> getInternalIntegerAttribute(final String value);
+
+    /**
+     * This method checks whether the given string is a valid and internal
+     * string attribute by invoking {@link #isInternalAttribute(String)}. Then
+     * the internal string attribute is looked up and returned if it exists.
+     *
+     * @param value The name of the internal string attribute.
+     * @return The internal string attribute with the given name or null, if
+     *         there is no attribute with the given name
+     */
+    INamedAttribute<String> getInternalStringAttribute(final String value);
 }
