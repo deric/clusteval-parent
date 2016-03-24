@@ -30,9 +30,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Map;
-import org.rosuda.REngine.REXPMismatchException;
 import org.rosuda.REngine.REngineException;
-import org.rosuda.REngine.Rserve.RserveException;
 
 /**
  * @author Christian Wiwie
@@ -169,12 +167,10 @@ public abstract class Plotter {
                 BufferedWriter bw = new BufferedWriter(new FileWriter(newPath));
                 bw.append(sb.toString());
                 bw.close();
-            } catch (REXPMismatchException e) {
-                e.printStackTrace();
             } finally {
                 rEngine.clear();
             }
-        } catch (RserveException e) {
+        } catch (RException e) {
             e.printStackTrace();
         }
     }
@@ -270,12 +266,10 @@ public abstract class Plotter {
                 BufferedWriter bw = new BufferedWriter(new FileWriter(newPath));
                 bw.append(sb.toString());
                 bw.close();
-            } catch (REXPMismatchException e) {
-                e.printStackTrace();
             } finally {
                 rEngine.clear();
             }
-        } catch (RserveException e) {
+        } catch (RException e) {
             e.printStackTrace();
         }
     }

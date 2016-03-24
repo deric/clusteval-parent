@@ -58,4 +58,14 @@ public class RosExpr implements RExpr {
         }
         return Double.NaN;
     }
+
+    @Override
+    public double[][] asDoubleMatrix() {
+        try {
+            return r.asDoubleMatrix();
+        } catch (REXPMismatchException ex) {
+            log.error(ex.getMessage(), ex);
+            throw new RuntimeException(ex.getMessage());
+        }
+    }
 }
