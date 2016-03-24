@@ -157,7 +157,7 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
      * @return The parsed dataset format.
      * @throws UnknownDataSetFormatException
      */
-    public static DataSetFormat parseFromString(final IRepository repository,
+    public static IDataSetFormat parseFromString(final IRepository repository,
             String datasetFormat) throws UnknownDataSetFormatException {
         return parseFromString(repository, datasetFormat,
                 repository.getCurrentDataSetFormatVersion(datasetFormat));
@@ -178,9 +178,9 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
      * @throws UnknownDataSetFormatException
      *                                       the unknown data set format exception
      */
-    public static List<DataSetFormat> parseFromString(final IRepository repo,
+    public static List<IDataSetFormat> parseFromString(final IRepository repo,
             String[] datasetFormats) throws UnknownDataSetFormatException {
-        List<DataSetFormat> result = new LinkedList<>();
+        List<IDataSetFormat> result = new LinkedList<>();
         for (String dsFormat : datasetFormats) {
             result.add(parseFromString(repo, dsFormat));
         }

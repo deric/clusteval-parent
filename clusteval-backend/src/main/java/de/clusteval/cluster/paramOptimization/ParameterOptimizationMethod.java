@@ -12,6 +12,7 @@
  */
 package de.clusteval.cluster.paramOptimization;
 
+import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.cluster.quality.ClusteringQualitySet;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.exceptions.InternalAttributeException;
@@ -22,6 +23,7 @@ import de.clusteval.api.program.ParameterSet;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.IRepositoryObject;
 import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.run.IRun;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.format.DataSetFormat;
@@ -30,7 +32,6 @@ import de.clusteval.framework.repository.parse.Parser;
 import de.clusteval.program.ProgramConfig;
 import de.clusteval.program.ProgramParameter;
 import de.clusteval.run.ParameterOptimizationRun;
-import de.clusteval.run.Run;
 import de.clusteval.run.result.ClusteringRunResult;
 import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.run.runnable.ExecutionRunRunnable;
@@ -185,7 +186,7 @@ public abstract class ParameterOptimizationMethod extends RepositoryObject imple
      * best. This quality measure is called the optimization criterion and is
      * stored in this attribute.
      */
-    protected ClusteringQualityMeasure optimizationCriterion;
+    protected ClusteringEvaluation optimizationCriterion;
 
     /**
      * This object holds the results that are calculated throughout execution of
@@ -224,9 +225,9 @@ public abstract class ParameterOptimizationMethod extends RepositoryObject imple
     public ParameterOptimizationMethod(final IRepository repository,
             final boolean register, final long changeDate, final File absPath,
             final ParameterOptimizationRun run,
-            final IProgramConfig programConfig, final DataConfig dataConfig,
+            final IProgramConfig programConfig, final IDataConfig dataConfig,
             final List<IProgramParameter<?>> params,
-            final ClusteringQualityMeasure optimizationCriterion,
+            final ClusteringEvaluation optimizationCriterion,
             final int totalIterationCount, final boolean isResume)
             throws RegisterException {
         super(repository, false, changeDate, absPath);
@@ -321,7 +322,7 @@ public abstract class ParameterOptimizationMethod extends RepositoryObject imple
      * @return The quality measure used as the optimization criterion (see
      *         {@link #optimizationCriterion}).
      */
-    public final ClusteringQualityMeasure getOptimizationCriterion() {
+    public final ClusteringEvaluation getOptimizationCriterion() {
         return this.optimizationCriterion;
     }
 
@@ -565,10 +566,10 @@ public abstract class ParameterOptimizationMethod extends RepositoryObject imple
      */
     public static ParameterOptimizationMethod parseFromString(
             final IRepository repository,
-            final String parameterOptimizationMethod, final Run run,
-            final ProgramConfig programConfig, final DataConfig dataConfig,
-            final List<ProgramParameter<?>> params,
-            final ClusteringQualityMeasure optimizationCriterion,
+            final String parameterOptimizationMethod, final IRun run,
+            final IProgramConfig programConfig, final IDataConfig dataConfig,
+            final List<IProgramParameter<?>> params,
+            final ClusteringEvaluation optimizationCriterion,
             final int totalIterationCount, final boolean isResume)
             throws UnknownParameterOptimizationMethodException {
 

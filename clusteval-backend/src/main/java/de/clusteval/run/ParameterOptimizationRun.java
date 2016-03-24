@@ -84,7 +84,7 @@ public class ParameterOptimizationRun extends ExecutionRun {
      *
      */
     public static void checkCompatibilityParameterOptimizationMethod(
-            final List<ParameterOptimizationMethod> optimizationMethods, final List<ProgramConfig> programConfigs,
+            final List<ParameterOptimizationMethod> optimizationMethods, final List<IProgramConfig> programConfigs,
             final List<IDataConfig> dataConfigs) throws IncompatibleParameterOptimizationMethodException {
         for (ParameterOptimizationMethod method : optimizationMethods) {
             if (!method.getCompatibleDataSetFormatBaseClasses().isEmpty()) {

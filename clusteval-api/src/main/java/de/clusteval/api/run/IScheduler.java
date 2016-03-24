@@ -131,6 +131,9 @@ public interface IScheduler {
      * @return A map containing the id of the runs and run resumes together with
      *         their current status and percentage (if currently executing).
      */
-    public Map<String, Pair<RUN_STATUS, Float>> getRunStatusForClientId(String clientId);
+    Map<String, Pair<RUN_STATUS, Float>> getRunStatusForClientId(String clientId);
+
+    Map<String, Pair<Pair<RUN_STATUS, Float>, Map<Pair<String, String>, Pair<Double, Map<String, Pair<Map<String, String>, String>>>>>> getOptimizationRunStatusForClientId(
+            String clientId);
 
 }

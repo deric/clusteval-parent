@@ -20,6 +20,7 @@ import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataPreprocessor;
 import de.clusteval.api.data.IDataSet;
+import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.data.IDataSetType;
 import de.clusteval.api.data.WEBSITE_VISIBILITY;
 import de.clusteval.api.exceptions.DataSetNotFoundException;
@@ -44,6 +45,7 @@ import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.IRepositoryObject;
 import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.run.IRunResultFormat;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.cluster.paramOptimization.InvalidOptimizationParameterException;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
@@ -733,7 +735,7 @@ class DataSetParser extends RepositoryObjectParser<DataSet> {
                 }
             }
 
-            DataSetFormat dsFormat;
+            IDataSetFormat dsFormat;
             if (attributeValues.containsKey("dataSetFormat")) {
                 if (attributeValues.containsKey("dataSetFormatVersion")) {
                     dsFormat = DataSetFormat.parseFromString(repo, attributeValues.get("dataSetFormat"),
@@ -1400,8 +1402,8 @@ class ProgramConfigParser extends RepositoryObjectParser<ProgramConfig> {
         // initialize compatible dataset formats
         String[] compatibleDataSetFormatsStr;
 
-        RunResultFormat runresultFormat;
-        List<DataSetFormat> compatibleDataSetFormats;
+        IRunResultFormat runresultFormat;
+        List<IDataSetFormat> compatibleDataSetFormats;
         boolean expectsNormalizedDataSet = false;
         if (type.equals("standalone")) {
             String program = FileUtils.buildPath(repo.getBasePath(Program.class), getProps().getString("program"));
@@ -1426,7 +1428,7 @@ class ProgramConfigParser extends RepositoryObjectParser<ProgramConfig> {
                 expectsNormalizedDataSet = false;
             }
 
-            for (DataSetFormat format : compatibleDataSetFormats) {
+            for (IDataSetFormat format : compatibleDataSetFormats) {
                 format.setNormalized(expectsNormalizedDataSet);
             }
 
@@ -1454,8 +1456,8 @@ class ProgramConfigParser extends RepositoryObjectParser<ProgramConfig> {
 
         List<String> paras = Arrays.asList(getProps().getStringArray("parameters"));
 
-        List<ProgramParameter<?>> params = new ArrayList<>();
-        List<ProgramParameter<?>> optimizableParameters = new ArrayList<>();
+        List<IProgramParameter<?>> params = new ArrayList<>();
+        List<IProgramParameter<?>> optimizableParameters = new ArrayList<>();
 
         changeDate = absPath.lastModified();
 
