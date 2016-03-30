@@ -17,7 +17,9 @@
 package de.clusteval.api.run;
 
 import de.clusteval.api.exceptions.RunIterationException;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 /**
  *
@@ -55,4 +57,20 @@ public interface IRunRunnable<IR extends IterationRunnable, IW extends Iteration
      * @throws ExecutionException
      */
     void waitFor() throws InterruptedException, ExecutionException;
+
+    /**
+     * @return A list with all exceptions thrown during execution of this
+     *         runnable.
+     * @see #exceptions
+     */
+    List<Throwable> getExceptions();
+
+    /**
+     * The future object of a runnable is only initialized, when it has been
+     * started.
+     *
+     * @return The future object of this runnable.
+     * @see #future
+     */
+    Future<?> getFuture();
 }

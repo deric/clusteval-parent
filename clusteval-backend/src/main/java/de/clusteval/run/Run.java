@@ -23,6 +23,7 @@ import de.clusteval.api.run.IProgress;
 import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.IRunResult;
 import de.clusteval.api.run.IRunRunnable;
+import de.clusteval.api.run.IScheduler;
 import de.clusteval.api.run.RUN_STATUS;
 import de.clusteval.context.Context;
 import de.clusteval.framework.repository.RepositoryObject;
@@ -456,8 +457,7 @@ public abstract class Run extends RepositoryObject implements IRun {
      * @return
      * @throws RunRunnableInitializationException
      */
-    protected abstract RunRunnable createAndScheduleRunnableForRunPair(
-            RunSchedulerThread runScheduler, int p)
+    protected abstract RunRunnable createAndScheduleRunnableForRunPair(IScheduler runScheduler, int p)
             throws RunRunnableInitializationException;
 
     /**
@@ -473,7 +473,7 @@ public abstract class Run extends RepositoryObject implements IRun {
      * @param runScheduler The run scheduler, this run should be executed by.
      * @throws RunRunnableInitializationException
      */
-    public void doPerform(final RunSchedulerThread runScheduler)
+    public void doPerform(final IScheduler runScheduler)
             throws RunRunnableInitializationException {
 
         for (int p = 0; p < getNumberOfRunRunnables(); p++) {
@@ -699,7 +699,7 @@ public abstract class Run extends RepositoryObject implements IRun {
      * @throws RunRunnableInitializationException
      * @throws RunInitializationException
      */
-    public void perform(final RunSchedulerThread runScheduler)
+    public void perform(final IScheduler runScheduler)
             throws IOException, RunRunnableInitializationException,
                    RunInitializationException {
         beforePerform();

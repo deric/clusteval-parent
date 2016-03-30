@@ -10,22 +10,19 @@
  *     Christian Wiwie - initial API and implementation
  *****************************************************************************
  */
-/**
- *
- */
 package de.clusteval.program.r;
 
 import de.clusteval.api.exceptions.IncompatibleDataSetFormatException;
-import de.clusteval.data.randomizer.UnknownDataRandomizerException;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
+import de.clusteval.api.run.IRunRunnable;
+import de.clusteval.api.run.IScheduler;
+import de.clusteval.data.randomizer.UnknownDataRandomizerException;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
-import de.clusteval.framework.threading.RunSchedulerThread;
 import de.clusteval.run.Run;
 import de.clusteval.run.RunInitializationException;
 import de.clusteval.run.result.RunResult;
-import de.clusteval.run.runnable.RunRunnable;
 import de.clusteval.run.runnable.RunRunnableInitializationException;
 import de.clusteval.utils.AbstractClustEvalTest;
 import de.wiwie.wiutils.file.FileUtils;
@@ -39,7 +36,7 @@ import org.junit.Test;
  * @author Christian Wiwie
  *
  */
-public class TestKMeansClusteringRProgram extends AbstractClustEvalTest {
+public class KMeansClusteringRProgramTest extends AbstractClustEvalTest {
 
     /**
      * @throws RepositoryAlreadyExistsException
@@ -57,15 +54,15 @@ public class TestKMeansClusteringRProgram extends AbstractClustEvalTest {
             throws RepositoryAlreadyExistsException, InvalidRepositoryException, RepositoryConfigNotFoundException,
                    RepositoryConfigurationException, IOException, RunRunnableInitializationException, InterruptedException,
                    UnknownDataRandomizerException, RunInitializationException {
-        RunSchedulerThread scheduler = this.getRepository().getSupervisorThread().getRunScheduler();
+        IScheduler scheduler = this.getRepository().getSupervisorThread().getRunScheduler();
 
         Run run = this.getRepository().getStaticObjectWithName(Run.class, "test_kmeans_sfld_layered_f2");
         try {
             run.perform(scheduler);
 
-            List<RunRunnable> runnables = run.getRunRunnables();
+            List<IRunRunnable> runnables = run.getRunRunnables();
             assertEquals(1, runnables.size());
-            RunRunnable runnable = runnables.get(0);
+            IRunRunnable runnable = runnables.get(0);
             List<Throwable> exceptions = runnable.getExceptions();
             assertEquals(1, exceptions.size());
 

@@ -12,13 +12,13 @@
  */
 package de.clusteval.program.r;
 
-import de.clusteval.data.dataset.format.DataSetFormat;
+import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
+import de.clusteval.api.run.IRunResultFormat;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
 import de.clusteval.program.ProgramConfig;
-import de.clusteval.run.result.format.RunResultFormat;
 import de.clusteval.utils.AbstractClustEvalTest;
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -30,7 +30,7 @@ import org.junit.Test;
  * @author Christian Wiwie
  *
  */
-public class TestRProgramConfig extends AbstractClustEvalTest {
+public class RProgramConfigTest extends AbstractClustEvalTest {
 
     @Test
     public void testKMeansCompatibleDataSetFormats()
@@ -40,9 +40,9 @@ public class TestRProgramConfig extends AbstractClustEvalTest {
         ProgramConfig programConfig = this.getRepository().getStaticObjectWithName(ProgramConfig.class,
                 "KMeans_Clustering");
         assertNotNull("failed to load KMeans_Clustering config", programConfig);
-        List<DataSetFormat> dataSetFormats = programConfig.getCompatibleDataSetFormats();
+        List<IDataSetFormat> dataSetFormats = programConfig.getCompatibleDataSetFormats();
         assertEquals(1, dataSetFormats.size());
-        DataSetFormat format = dataSetFormats.get(0);
+        IDataSetFormat format = dataSetFormats.get(0);
         assertEquals("MatrixDataSetFormat", format.getClass().getSimpleName());
     }
 
@@ -54,7 +54,7 @@ public class TestRProgramConfig extends AbstractClustEvalTest {
         ProgramConfig programConfig = this.getRepository().getStaticObjectWithName(ProgramConfig.class,
                 "KMeans_Clustering");
         assertNotNull("failed to load KMeans_Clustering config", programConfig);
-        RunResultFormat format = programConfig.getOutputFormat();
+        IRunResultFormat format = programConfig.getOutputFormat();
         assertEquals("TabSeparatedRunResultFormat", format.getClass().getSimpleName());
     }
 }
