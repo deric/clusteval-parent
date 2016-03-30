@@ -457,7 +457,7 @@ public abstract class Run extends RepositoryObject implements IRun {
      * @return
      * @throws RunRunnableInitializationException
      */
-    protected abstract RunRunnable createAndScheduleRunnableForRunPair(IScheduler runScheduler, int p)
+    protected abstract IRunRunnable createAndScheduleRunnableForRunPair(IScheduler runScheduler, int p)
             throws RunRunnableInitializationException;
 
     /**
@@ -477,7 +477,7 @@ public abstract class Run extends RepositoryObject implements IRun {
             throws RunRunnableInitializationException {
 
         for (int p = 0; p < getNumberOfRunRunnables(); p++) {
-            RunRunnable r = createAndScheduleRunnableForRunPair(runScheduler, p);
+            IRunRunnable r = createAndScheduleRunnableForRunPair(runScheduler, p);
             this.runnables.add(r);
         }
     }

@@ -21,8 +21,6 @@ import de.clusteval.data.dataset.DataSetConfig;
 import de.clusteval.data.dataset.RunResultDataSetConfigFinderThread;
 import de.clusteval.data.goldstandard.GoldStandardConfig;
 import de.clusteval.data.goldstandard.GoldStandardConfigFinderThread;
-import de.clusteval.data.statistics.DataStatistic;
-import de.clusteval.data.statistics.DataStatisticFinderThread;
 import de.clusteval.framework.threading.SupervisorThread;
 import de.clusteval.program.ProgramConfig;
 import de.clusteval.program.ProgramConfigFinderThread;
@@ -90,11 +88,6 @@ public class RunResultRunFinderThread extends RunFinderThread {
 
         if (!this.repository.isInitialized(ProgramConfig.class)) {
             this.supervisorThread.getThread(ProgramConfigFinderThread.class)
-                    .waitFor();
-        }
-
-        if (!this.repository.isInitialized(DataStatistic.class)) {
-            this.supervisorThread.getThread(DataStatisticFinderThread.class)
                     .waitFor();
         }
 

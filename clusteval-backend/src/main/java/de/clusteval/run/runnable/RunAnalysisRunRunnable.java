@@ -14,7 +14,7 @@ package de.clusteval.run.runnable;
 
 import de.clusteval.api.exceptions.RunIterationException;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.framework.threading.RunSchedulerThread;
+import de.clusteval.api.run.IScheduler;
 import de.clusteval.run.Run;
 import de.clusteval.run.RunAnalysisRun;
 import de.clusteval.run.result.RunAnalysisRunResult;
@@ -53,7 +53,7 @@ public class RunAnalysisRunRunnable extends
      * @param isResume            True, if this run is a resumption of a previous execution
      *                            or a completely new execution.
      */
-    public RunAnalysisRunRunnable(RunSchedulerThread runScheduler, Run run,
+    public RunAnalysisRunRunnable(IScheduler runScheduler, Run run,
             String runIdentString, final boolean isResume,
             String uniqueRunIdentifier, List<RunStatistic> statistics) {
         super(run, runIdentString, statistics, isResume);

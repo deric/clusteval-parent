@@ -12,6 +12,8 @@ package de.clusteval.run;
 
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.run.IRunRunnable;
+import de.clusteval.api.run.IScheduler;
 import de.clusteval.context.Context;
 import de.clusteval.framework.threading.RunSchedulerThread;
 import de.clusteval.run.runnable.RunDataAnalysisRunRunnable;
@@ -101,12 +103,12 @@ public class RunDataAnalysisRun extends AnalysisRun<RunDataStatistic> {
             throws RegisterException {
         super(other);
 
-        this.uniqueRunAnalysisRunIdentifiers = new ArrayList<String>();
+        this.uniqueRunAnalysisRunIdentifiers = new ArrayList<>();
         for (String s : other.uniqueRunAnalysisRunIdentifiers) {
             this.uniqueRunAnalysisRunIdentifiers.add(s);
         }
 
-        this.uniqueDataAnalysisRunIdentifiers = new ArrayList<String>();
+        this.uniqueDataAnalysisRunIdentifiers = new ArrayList<>();
         for (String s : other.uniqueDataAnalysisRunIdentifiers) {
             this.uniqueDataAnalysisRunIdentifiers.add(s);
         }
@@ -120,7 +122,7 @@ public class RunDataAnalysisRun extends AnalysisRun<RunDataStatistic> {
     @Override
     protected List<RunDataStatistic> cloneStatistics(
             List<RunDataStatistic> statistics) {
-        final List<RunDataStatistic> result = new ArrayList<RunDataStatistic>();
+        final List<RunDataStatistic> result = new ArrayList<>();
 
         for (RunDataStatistic st : statistics) {
             result.add(st.clone());
@@ -191,8 +193,7 @@ public class RunDataAnalysisRun extends AnalysisRun<RunDataStatistic> {
     }
 
     @Override
-    protected RunRunnable createAndScheduleRunnableForRunPair(
-            RunSchedulerThread runScheduler, @SuppressWarnings("unused") int p) {
+    protected IRunRunnable createAndScheduleRunnableForRunPair(IScheduler runScheduler, @SuppressWarnings("unused") int p) {
 
         /*
          * We only operate on this copy, in order to avoid multithreading

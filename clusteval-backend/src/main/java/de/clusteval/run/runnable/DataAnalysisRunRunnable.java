@@ -16,9 +16,9 @@ import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.exceptions.RunIterationException;
 import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.run.IScheduler;
 import de.clusteval.api.stats.IDataStatistic;
 import de.clusteval.data.DataConfig;
-import de.clusteval.framework.threading.RunSchedulerThread;
 import de.clusteval.run.DataAnalysisRun;
 import de.clusteval.run.Run;
 import de.clusteval.run.result.DataAnalysisRunResult;
@@ -55,7 +55,7 @@ public class DataAnalysisRunRunnable extends
      * @param isResume       True, if this run is a resumption of a previous execution
      *                       or a completely new execution.
      */
-    public DataAnalysisRunRunnable(RunSchedulerThread runScheduler, Run run,
+    public DataAnalysisRunRunnable(IScheduler runScheduler, Run run,
             String runIdentString, final boolean isResume,
             IDataConfig dataConfig, List<IDataStatistic> statistics) {
         super(run, runIdentString, statistics, isResume);

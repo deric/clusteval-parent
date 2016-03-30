@@ -45,9 +45,9 @@ public class NamedStringAttribute extends NamedAttribute<String> {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.wiwie.wiutils.utils.NamedAttribute#cloneValue(java.lang.Object)
+     * (non-Javadoc)
+     *
+     * @see de.wiwie.wiutils.utils.NamedAttribute#cloneValue(java.lang.Object)
      */
     @Override
     public String cloneValue(String value) {
@@ -55,9 +55,9 @@ public class NamedStringAttribute extends NamedAttribute<String> {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see framework.repository.RepositoryObject#clone()
+     * (non-Javadoc)
+     *
+     * @see framework.repository.RepositoryObject#clone()
      */
     @Override
     public NamedStringAttribute clone() {
@@ -72,7 +72,7 @@ public class NamedStringAttribute extends NamedAttribute<String> {
 
 
     /* (non-Javadoc)
-	 * @see de.clusteval.framework.repository.RepositoryObject#register()
+     * @see de.clusteval.framework.repository.RepositoryObject#register()
      */
     @Override
     public boolean register() throws RegisterException {
@@ -80,7 +80,7 @@ public class NamedStringAttribute extends NamedAttribute<String> {
     }
 
     /* (non-Javadoc)
-	 * @see de.clusteval.framework.repository.RepositoryObject#unregister()
+     * @see de.clusteval.framework.repository.RepositoryObject#unregister()
      */
     @Override
     public boolean unregister() {

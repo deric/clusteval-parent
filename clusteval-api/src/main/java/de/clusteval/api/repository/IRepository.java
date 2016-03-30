@@ -275,7 +275,7 @@ public interface IRepository {
      *
      * <p>
      * A helper method of null null null null null null null null null null null
-     * null null null null null null null null null null null null null null null null null null null null null null null null null null null null null null null null     {@link ProgramParameter#evaluateDefaultValue(DataConfig, ProgramConfig)},
+     * null null null null null null null null null null null null null null null null null null null null null null null null null null null null null null null null null null     {@link ProgramParameter#evaluateDefaultValue(DataConfig, ProgramConfig)},
 	 * {@link ProgramParameter#evaluateMinValue(DataConfig, ProgramConfig)} and
      * {@link ProgramParameter#evaluateMaxValue(DataConfig, ProgramConfig)}.
      *
@@ -409,4 +409,6 @@ public interface IRepository {
     void lookupRemove(Object instance);
 
     boolean register(final INamedAttribute<Number> object);
+
+    void terminateSupervisorThread(final boolean closeRengines) throws InterruptedException;
 }

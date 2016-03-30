@@ -12,6 +12,8 @@ package de.clusteval.run;
 
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.run.IRunRunnable;
+import de.clusteval.api.run.IScheduler;
 import de.clusteval.context.Context;
 import de.clusteval.framework.threading.RunSchedulerThread;
 import de.clusteval.run.runnable.RunAnalysisRunRunnable;
@@ -144,9 +146,7 @@ public class RunAnalysisRun extends AnalysisRun<RunStatistic> {
     }
 
     @Override
-    protected RunRunnable createAndScheduleRunnableForRunPair(
-            RunSchedulerThread runScheduler, int p) {
-
+    protected IRunRunnable createAndScheduleRunnableForRunPair(IScheduler runScheduler, int p) {
         /*
          * We only operate on this copy, in order to avoid multithreading
          * problems.

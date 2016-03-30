@@ -230,7 +230,7 @@ public class GoldStandard extends RepositoryObject implements IGoldStandard {
      *
      * @return the float
      */
-    public float fuzzySize() {
+    public double fuzzySize() {
         return this.clustering.fuzzySize();
     }
 

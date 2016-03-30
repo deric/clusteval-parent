@@ -1551,7 +1551,7 @@ public class Repository implements IRepository {
      * @return True, if the parser has been registered.
      */
     public boolean isRegisteredForRunResultFormat(final Class<? extends RunResultFormat> runResultFormat) {
-        return ((RunResultFormatRepositoryEntity) this.dynamicRepositoryEntities.get(RunResultFormat.class))
+        return ((RunResultFormatRepositoryEntity) this.dynamicRepositoryEntities.get(IRunResultFormat.class))
                 .isRegisteredForRunResultFormat(runResultFormat);
     }
 
@@ -1564,7 +1564,7 @@ public class Repository implements IRepository {
      * @return True, if the parser has been registered.
      */
     public boolean isRegisteredForRunResultFormat(final String runResultFormatName) {
-        return ((RunResultFormatRepositoryEntity) this.dynamicRepositoryEntities.get(RunResultFormat.class))
+        return ((RunResultFormatRepositoryEntity) this.dynamicRepositoryEntities.get(IRunResultFormat.class))
                 .isRegisteredForRunResultFormat(runResultFormatName);
     }
 

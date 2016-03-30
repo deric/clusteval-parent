@@ -13,6 +13,7 @@
 package de.clusteval.utils;
 
 import ch.qos.logback.classic.Level;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.IRepositoryObject;
 import de.clusteval.context.Context;
 import de.clusteval.framework.ClustevalBackendServer;
@@ -123,7 +124,7 @@ public abstract class AbstractClustEvalTest {
         RepositoryController.getInstance().unregister(getRepository());
     }
 
-    protected Repository getRepository() {
+    protected IRepository getRepository() {
         return repository;
     }
 }

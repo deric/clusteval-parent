@@ -12,7 +12,7 @@ package de.clusteval.run.runnable;
 
 import de.clusteval.api.exceptions.RunIterationException;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.framework.threading.RunSchedulerThread;
+import de.clusteval.api.run.IScheduler;
 import de.clusteval.run.Run;
 import de.clusteval.run.RunDataAnalysisRun;
 import de.clusteval.run.result.RunDataAnalysisRunResult;
@@ -29,8 +29,7 @@ import java.util.List;
  * @author Christian Wiwie
  *
  */
-public class RunDataAnalysisRunRunnable
-        extends
+public class RunDataAnalysisRunRunnable extends
         AnalysisRunRunnable<RunDataStatistic, RunDataAnalysisRunResult, RunDataAnalysisIterationWrapper, RunDataAnalysisIterationRunnable> {
 
     /**
@@ -66,7 +65,7 @@ public class RunDataAnalysisRunRunnable
      *                                        True, if this run is a resumption of a previous execution or a
      *                                        completely new execution.
      */
-    public RunDataAnalysisRunRunnable(RunSchedulerThread runScheduler, Run run,
+    public RunDataAnalysisRunRunnable(IScheduler runScheduler, Run run,
             String runIdentString, final boolean isResume,
             List<String> uniqueRunAnalysisRunIdentifier,
             final List<String> uniqueDataAnalysisRunIdentifier,

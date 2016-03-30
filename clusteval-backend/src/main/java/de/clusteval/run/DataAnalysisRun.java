@@ -13,6 +13,8 @@ package de.clusteval.run;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.run.IRunRunnable;
+import de.clusteval.api.run.IScheduler;
 import de.clusteval.api.stats.IDataStatistic;
 import de.clusteval.context.Context;
 import de.clusteval.data.DataConfig;
@@ -144,8 +146,7 @@ public class DataAnalysisRun extends AnalysisRun<IDataStatistic> {
     }
 
     @Override
-    protected RunRunnable createAndScheduleRunnableForRunPair(
-            RunSchedulerThread runScheduler, int p) {
+    protected IRunRunnable createAndScheduleRunnableForRunPair(IScheduler runScheduler, int p) {
 
         File movedConfigsDir = getMovedConfigsDir();
 
@@ -221,7 +222,7 @@ public class DataAnalysisRun extends AnalysisRun<IDataStatistic> {
          * The RunThread redirects all the output of the program into the
          * logFile.
          */
-        final RunRunnable t = new DataAnalysisRunRunnable(runScheduler,
+        final IRunRunnable t = new DataAnalysisRunRunnable(runScheduler,
                 runCopy, runIdentString, false, dataConfig,
                 runCopy.getStatistics());
         return t;

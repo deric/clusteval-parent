@@ -256,9 +256,8 @@ public abstract class ExecutionRun extends Run {
      * @throws RunInitializationException
      */
     @Override
-    public void perform(final RunSchedulerThread runScheduler)
-            throws IOException, RunRunnableInitializationException,
-                   RunInitializationException {
+    public void perform(final IScheduler runScheduler) throws IOException, RunRunnableInitializationException,
+                                                              RunInitializationException {
         /**
          * Before we start we check, whether this run has been terminated by
          * invoking terminate(). This is also the reason, why we have to
@@ -322,8 +321,7 @@ public abstract class ExecutionRun extends Run {
     }
 
     @Override
-    protected RunRunnable createAndScheduleRunnableForRunPair(
-            RunSchedulerThread runScheduler, int p) {
+    protected RunRunnable createAndScheduleRunnableForRunPair(IScheduler runScheduler, int p) {
 
         File movedConfigsDir = getMovedConfigsDir();
 
