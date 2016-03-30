@@ -1,4 +1,5 @@
-/** *****************************************************************************
+/**
+ * *****************************************************************************
  * Copyright (c) 2013 Christian Wiwie.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Public License v3.0
@@ -7,7 +8,8 @@
  *
  * Contributors:
  *     Christian Wiwie - initial API and implementation
- ***************************************************************************** */
+ *****************************************************************************
+ */
 package de.clusteval.framework.threading;
 
 import de.clusteval.framework.ClustevalThread;
@@ -16,7 +18,6 @@ import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethodFinderT
 import de.clusteval.cluster.quality.ClusteringQualityMeasureFinderThread;
 import de.clusteval.data.dataset.DataSetConfigFinderThread;
 import de.clusteval.data.dataset.format.DataSetFormatFinderThread;
-import de.clusteval.data.statistics.DataStatisticFinderThread;
 import de.clusteval.api.run.IScheduler;
 import de.clusteval.api.run.ISupervisorThread;
 import de.clusteval.run.RunFinderThread;
@@ -50,7 +51,7 @@ public abstract class SupervisorThread extends Thread implements ISupervisorThre
 
     /**
      * @param classes
-     *                The clusteval thread classes to add to a list.
+     * The clusteval thread classes to add to a list.
      * @return A list of clusteval thread classes.
      */
     public static List<Class<? extends ClustevalThread>> createList(
@@ -96,19 +97,19 @@ public abstract class SupervisorThread extends Thread implements ISupervisorThre
      * Constructor of abstract supervisor threads.
      *
      * @param repository
-     *                         The repository this supervisor belongs to and for which all
-     *                         threads should be supervised.
+     * The repository this supervisor belongs to and for which all
+     * threads should be supervised.
      * @param threads
-     *                         A list containing all threads this supervisor thread should
-     *                         start and keep alive.
+     * A list containing all threads this supervisor thread should
+     * start and keep alive.
      * @param threadSleepTimes
-     *                         A map containing sleep times for threads (must not be
-     *                         complete).
+     * A map containing sleep times for threads (must not be
+     * complete).
      * @param checkOnce
-     *                         A boolean indicating, whether this thread only should check
-     *                         once and then terminate. This can be useful in some subclasses
-     *                         of this class (e.g.
-     *                         {@link RunResultRepositorySupervisorThread}).
+     * A boolean indicating, whether this thread only should check
+     * once and then terminate. This can be useful in some subclasses
+     * of this class (e.g.
+     * {@link RunResultRepositorySupervisorThread}).
      */
     public SupervisorThread(final IRepository repository,
             final List<Class<? extends ClustevalThread>> threads,
@@ -155,7 +156,7 @@ public abstract class SupervisorThread extends Thread implements ISupervisorThre
                                     .newInstance(this, repository,
                                             checkOnce));
                 } catch (IllegalArgumentException | SecurityException | InstantiationException |
-                        IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                         IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
                     e.printStackTrace();
                 }
             }
@@ -189,8 +190,8 @@ public abstract class SupervisorThread extends Thread implements ISupervisorThre
                                 this.threads.put(threadClass, constr
                                         .newInstance(this, repository, false));
                             } catch (NoSuchMethodException | SecurityException |
-                                    InstantiationException | IllegalAccessException |
-                                    IllegalArgumentException | InvocationTargetException e) {
+                                     InstantiationException | IllegalAccessException |
+                                     IllegalArgumentException | InvocationTargetException e) {
                                 e.printStackTrace();
                             }
                         }
@@ -267,14 +268,6 @@ public abstract class SupervisorThread extends Thread implements ISupervisorThre
     }
 
     /**
-     * @return The thread which finds data statistics.
-     */
-    public DataStatisticFinderThread getDataStatisticFinderThread() {
-        return (DataStatisticFinderThread) this.threads
-                .get(DataStatisticFinderThread.class);
-    }
-
-    /**
      * @return The thread which finds run statistics.
      */
     public RunStatisticFinderThread getRunStatisticFinderThread() {
@@ -308,7 +301,7 @@ public abstract class SupervisorThread extends Thread implements ISupervisorThre
 
     /**
      * @param clazz
-     *              The class for which we want the thread instance
+     * The class for which we want the thread instance
      * @return The thread instance of the passed class.
      */
     public ClustevalThread getThread(Class<? extends ClustevalThread> clazz) {

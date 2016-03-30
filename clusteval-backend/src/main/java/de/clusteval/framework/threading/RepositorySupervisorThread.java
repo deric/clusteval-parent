@@ -1,4 +1,5 @@
-/** *****************************************************************************
+/**
+ * *****************************************************************************
  * Copyright (c) 2013 Christian Wiwie.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Public License v3.0
@@ -7,7 +8,8 @@
  *
  * Contributors:
  *     Christian Wiwie - initial API and implementation
- ***************************************************************************** */
+ *****************************************************************************
+ */
 package de.clusteval.framework.threading;
 
 import de.clusteval.api.repository.IRepository;
@@ -34,7 +36,6 @@ import de.clusteval.data.goldstandard.GoldStandardConfigFinderThread;
 import de.clusteval.data.preprocessing.DataPreprocessorFinderThread;
 import de.clusteval.data.randomizer.DataRandomizerFinderThread;
 import de.clusteval.data.statistics.DataStatistic;
-import de.clusteval.data.statistics.DataStatisticFinderThread;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.program.ProgramConfig;
 import de.clusteval.program.ProgramConfigFinderThread;
@@ -98,7 +99,8 @@ import java.util.Map;
  * {@link IRepository#dataConfigBasePath} for new data configurations (see
  * {@link DataConfig}).</li>
  * <li><b>RProgramFinderThread</b>: A thread which checks
- * {@link IRepository#programBasePath} for new RPrograms (see {@link RProgram}).</li>
+ * {@link IRepository#programBasePath} for new RPrograms (see
+ * {@link RProgram}).</li>
  * <li><b>ProgramConfigFinderThread</b>: A thread which checks
  * {@link IRepository#programConfigBasePath} for new program configurations (see
  * {@link ProgramConfig}).</li>
@@ -130,15 +132,15 @@ public class RepositorySupervisorThread extends SupervisorThread {
 
     /**
      * @param repository
-     *                           The repository this thread belongs to.
+     * The repository this thread belongs to.
      * @param threadSleepTimes
-     *                           The sleep times of the created threads.
+     * The sleep times of the created threads.
      * @param checkOnce
-     *                           A boolean indicating, whether this thread should only check
-     *                           once and terminate afterwards.
+     * A boolean indicating, whether this thread should only check
+     * once and terminate afterwards.
      * @param checkForRunResults
-     *                           Whether this thread should check for run results in the
-     *                           repository.
+     * Whether this thread should check for run results in the
+     * repository.
      */
     @SuppressWarnings({"unchecked"})
     public RepositorySupervisorThread(final IRepository repository,
@@ -153,7 +155,7 @@ public class RepositorySupervisorThread extends SupervisorThread {
                         DataPreprocessorFinderThread.class,
                         RunResultPostprocessorFinderThread.class,
                         DistanceMeasureFinderThread.class,
-                        DataStatisticFinderThread.class,
+                        //DataStatisticFinderThread.class,
                         RunStatisticFinderThread.class,
                         RunDataStatisticFinderThread.class,
                         ClusteringQualityMeasureFinderThread.class,
@@ -175,7 +177,7 @@ public class RepositorySupervisorThread extends SupervisorThread {
                         DataPreprocessorFinderThread.class,
                         RunResultPostprocessorFinderThread.class,
                         DistanceMeasureFinderThread.class,
-                        DataStatisticFinderThread.class,
+                        // DataStatisticFinderThread.class,
                         RunStatisticFinderThread.class,
                         RunDataStatisticFinderThread.class,
                         ClusteringQualityMeasureFinderThread.class,

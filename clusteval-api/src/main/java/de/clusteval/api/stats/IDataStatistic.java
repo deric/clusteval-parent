@@ -22,5 +22,18 @@ package de.clusteval.api.stats;
  */
 public interface IDataStatistic extends IStatistic {
 
+    /**
+     * An unique statistic identifier
+     *
+     * @return
+     */
+    String getName();
+
+    /**
+     * @return True, if this data statistic requires a goldstandard to be
+     * assessed.
+     */
+    boolean requiresGoldStandard();
+
     IDataStatistic clone();
 }

@@ -155,9 +155,4 @@ public abstract class DataStatistic extends Statistic implements IDataStatistic 
         return result;
     }
 
-    /**
-     * @return True, if this data statistic requires a goldstandard to be
-     * assessed.
-     */
-    public abstract boolean requiresGoldStandard();
 }

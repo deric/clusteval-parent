@@ -75,7 +75,9 @@ public class NamedDoubleAttribute extends NamedAttribute<Double> {
      */
     @Override
     public boolean register() throws RegisterException {
-        return this.repository.register(this);
+        this.repository.lookupAdd(this);
+        return true;
+        //return this.repository.register(this);
     }
 
     /* (non-Javadoc)
