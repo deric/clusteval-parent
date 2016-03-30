@@ -23,10 +23,10 @@ import de.clusteval.api.exceptions.ClusteringParseException;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
+import de.clusteval.api.program.ParameterSet;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.RepositoryObject;
-import de.clusteval.api.program.ParameterSet;
 import de.wiwie.wiutils.utils.Pair;
 import de.wiwie.wiutils.utils.parse.TextFileParser;
 import java.io.File;
@@ -360,7 +360,8 @@ public class Clustering extends RepositoryObject implements Iterable<Cluster>, I
      * @return The fuzzy size of this clustering.
      * @see #fuzzySize
      */
-    public float fuzzySize() {
+    @Override
+    public double fuzzySize() {
         return this.fuzzySize;
     }
 
@@ -368,6 +369,7 @@ public class Clustering extends RepositoryObject implements Iterable<Cluster>, I
      * @return The number of items in this clustering. In case of fuzzy
      *         clusterings this may differ from the fuzzy size.
      */
+    @Override
     public int size() {
         return this.itemToCluster.keySet().size();
     }

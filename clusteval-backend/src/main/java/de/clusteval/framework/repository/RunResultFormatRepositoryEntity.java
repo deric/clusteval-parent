@@ -4,6 +4,8 @@
 package de.clusteval.framework.repository;
 
 import de.clusteval.api.repository.DynamicRepositoryEntity;
+import de.clusteval.api.run.IRunResultFormat;
+import de.clusteval.api.run.IRunResultFormatParser;
 import de.clusteval.run.result.format.RunResultFormat;
 import de.clusteval.run.result.format.RunResultFormatParser;
 import java.util.HashMap;
@@ -13,7 +15,7 @@ import java.util.Map;
  * @author Christian Wiwie
  *
  */
-public class RunResultFormatRepositoryEntity extends DynamicRepositoryEntity<RunResultFormat> {
+public class RunResultFormatRepositoryEntity extends DynamicRepositoryEntity<IRunResultFormat> {
 
     /**
      * A map containing all runresult format parsers registered in this
@@ -27,7 +29,7 @@ public class RunResultFormatRepositoryEntity extends DynamicRepositoryEntity<Run
      * @param basePath
      */
     public RunResultFormatRepositoryEntity(Repository repository,
-            DynamicRepositoryEntity<RunResultFormat> parent, String basePath) {
+            DynamicRepositoryEntity<IRunResultFormat> parent, String basePath) {
         super(repository, parent, basePath);
         this.runResultFormatParser = new HashMap<>();
     }
@@ -42,9 +44,9 @@ public class RunResultFormatRepositoryEntity extends DynamicRepositoryEntity<Run
      * @return The runresult format parser for the given runresult format name,
      *         or null if it does not exist.
      */
-    public Class<? extends RunResultFormatParser> getRunResultFormatParser(
+    public Class<? extends IRunResultFormatParser> getRunResultFormatParser(
             final String runResultFormatName) {
-        Class<? extends RunResultFormatParser> result = this.runResultFormatParser
+        Class<? extends IRunResultFormatParser> result = this.runResultFormatParser
                 .get(runResultFormatName);
         if (result == null && parent != null) {
             result = ((RunResultFormatRepositoryEntity) parent)

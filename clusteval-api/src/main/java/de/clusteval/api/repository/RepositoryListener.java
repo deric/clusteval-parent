@@ -27,5 +27,5 @@ public interface RepositoryListener {
      * @param event
      * @throws RegisterException
      */
-    public void notify(RepositoryEvent event) throws RegisterException;
+    void notify(RepositoryEvent event) throws RegisterException;
 }

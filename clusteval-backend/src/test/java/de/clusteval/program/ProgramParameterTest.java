@@ -1,21 +1,28 @@
-/**
+/** *****************************************************************************
+ * Copyright (c) 2013 Christian Wiwie.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the GNU Public License v3.0
+ * which accompanies this distribution, and is available at
+ * http://www.gnu.org/licenses/gpl.html
  *
- */
+ * Contributors:
+ *     Christian Wiwie - initial API and implementation
+ ***************************************************************************** */
 package de.clusteval.program;
 
 import de.clusteval.api.exceptions.UnknownProgramParameterException;
 import de.clusteval.api.program.IProgramParameter;
 import de.clusteval.utils.AbstractClustEvalTest;
 import java.io.File;
-import junit.framework.Assert;
 import junitx.framework.ArrayAssert;
+import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 /**
  * @author Christian Wiwie
  *
  */
-public class TestProgramParameter extends AbstractClustEvalTest {
+public class ProgramParameterTest extends AbstractClustEvalTest {
 
     @Test
     public void testOptionsString() throws UnknownProgramParameterException {
@@ -26,10 +33,9 @@ public class TestProgramParameter extends AbstractClustEvalTest {
                                 "testCaseRepository/programs/configs/testOptionsString.config")
                         .getAbsoluteFile());
         IProgramParameter<?> param = pc.getParamWithId("method");
-        Assert.assertEquals("", param.minValue);
-        Assert.assertEquals("", param.maxValue);
-        ArrayAssert.assertEquals(new String[]{"ward", "single", "complete"},
-                param.options);
+        assertEquals("", param.getMinValue());
+        assertEquals("", param.getMaxValue());
+        ArrayAssert.assertEquals(new String[]{"ward", "single", "complete"}, param.getOptions());
     }
 
     @Test
@@ -41,10 +47,9 @@ public class TestProgramParameter extends AbstractClustEvalTest {
                                 "testCaseRepository/programs/configs/testOptionsFloat.config")
                         .getAbsoluteFile());
         IProgramParameter<?> param = pc.getParamWithId("method");
-        Assert.assertEquals("", param.minValue);
-        Assert.assertEquals("", param.maxValue);
-        ArrayAssert.assertEquals(new String[]{"0.0", "0.5", "1.0"},
-                param.options);
+        assertEquals("", param.getMinValue());
+        assertEquals("", param.getMaxValue());
+        ArrayAssert.assertEquals(new String[]{"0.0", "0.5", "1.0"}, param.getOptions());
     }
 
     @Test
@@ -56,9 +61,9 @@ public class TestProgramParameter extends AbstractClustEvalTest {
                                 "testCaseRepository/programs/configs/testOptionsInteger.config")
                         .getAbsoluteFile());
         IProgramParameter<?> param = pc.getParamWithId("method");
-        Assert.assertEquals("", param.minValue);
-        Assert.assertEquals("", param.maxValue);
-        ArrayAssert.assertEquals(new String[]{"0", "1", "2"}, param.options);
+        assertEquals("", param.getMinValue());
+        assertEquals("", param.getMaxValue());
+        ArrayAssert.assertEquals(new String[]{"0", "1", "2"}, param.getOptions());
     }
 
 }

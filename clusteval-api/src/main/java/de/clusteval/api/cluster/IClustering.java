@@ -58,4 +58,16 @@ public interface IClustering extends IRepositoryObject {
      */
     Set<ClusterItem> getClusterItems();
 
+    /**
+     * @return The number of items in this clustering. In case of fuzzy
+     *         clusterings this may differ from the fuzzy size.
+     */
+    int size();
+
+    /**
+     * @return The fuzzy size of this clustering.
+     * @see #fuzzySize
+     */
+    double fuzzySize();
+
 }

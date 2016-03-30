@@ -79,8 +79,8 @@ public class RunResultRepository extends Repository implements IRepository {
     // TODO: check, whether all those are needed for a RunResultRepository
     /**
      * @param basePath The absolute path of the root directory of this
-     * repository.
-     * @param parent The parent repository.
+     *                 repository.
+     * @param parent   The parent repository.
      * @throws FileNotFoundException
      * @throws RepositoryAlreadyExistsException
      * @throws InvalidRepositoryException
@@ -96,9 +96,9 @@ public class RunResultRepository extends Repository implements IRepository {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.wiwie.wiutils.utils.Repository#createSQLCommunicator()
+     * (non-Javadoc)
+     *
+     * @see de.wiwie.wiutils.utils.Repository#createSQLCommunicator()
      */
     @Override
     protected SQLCommunicator createSQLCommunicator()
@@ -111,9 +111,9 @@ public class RunResultRepository extends Repository implements IRepository {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.wiwie.wiutils.utils.Repository#initAttributes()
+     * (non-Javadoc)
+     *
+     * @see de.wiwie.wiutils.utils.Repository#initAttributes()
      */
     @Override
     protected void initAttributes() {
@@ -136,7 +136,7 @@ public class RunResultRepository extends Repository implements IRepository {
                 DataSet.class,
                 new RunResultRepositoryDataSetObjectEntity(this,
                         this.parent != null
-                        ? this.parent.staticRepositoryEntities
+                        ? this.parent.getStaticEntities()
                                 .get(DataSet.class) : null, FileUtils
                         .buildPath(this.basePath, "inputs")));
 
@@ -144,14 +144,14 @@ public class RunResultRepository extends Repository implements IRepository {
                 GoldStandard.class,
                 new RunResultRepositoryGoldStandardObjectEntity(this,
                         this.parent != null
-                        ? this.parent.staticRepositoryEntities
+                        ? this.parent.getStaticEntities()
                                 .get(GoldStandard.class) : null,
                         FileUtils.buildPath(this.basePath, "goldstandards")));
 
         this.staticRepositoryEntities.put(Program.class,
-                this.parent.staticRepositoryEntities.get(Program.class));
+                this.parent.getStaticEntities().get(Program.class));
         this.staticRepositoryEntities.put(Clustering.class,
-                this.parent.staticRepositoryEntities.get(Clustering.class));
+                this.parent.getStaticEntities().get(Clustering.class));
 
         // this.staticRepositoryEntities.put(
         // RunResult.class,
@@ -159,10 +159,10 @@ public class RunResultRepository extends Repository implements IRepository {
         // this.parent.staticRepositoryEntities
         // .get(RunResult.class), this.getBasePath()));
         this.staticRepositoryEntities.put(RunResult.class,
-                this.parent.staticRepositoryEntities.get(RunResult.class));
+                this.parent.getStaticEntities().get(RunResult.class));
 
         this.staticRepositoryEntities.put(Finder.class,
-                this.parent.staticRepositoryEntities.get(Finder.class));
+                this.parent.getStaticEntities().get(Finder.class));
 
         // this.staticRepositoryEntities.put(DoubleProgramParameter.class,
         // this.parent.staticRepositoryEntities
@@ -179,77 +179,77 @@ public class RunResultRepository extends Repository implements IRepository {
                 DoubleProgramParameter.class,
                 new ProgramParameterRepositoryEntity<DoubleProgramParameter>(
                         this, this.parent != null
-                              ? this.parent.staticRepositoryEntities
+                              ? this.parent.getStaticEntities()
                                 .get(DoubleProgramParameter.class)
                               : null, null));
         this.staticRepositoryEntities.put(
                 IntegerProgramParameter.class,
                 new ProgramParameterRepositoryEntity<IntegerProgramParameter>(
                         this, this.parent != null
-                              ? this.parent.staticRepositoryEntities
+                              ? this.parent.getStaticEntities()
                                 .get(IntegerProgramParameter.class)
                               : null, null));
         this.staticRepositoryEntities.put(
                 StringProgramParameter.class,
                 new ProgramParameterRepositoryEntity<StringProgramParameter>(
                         this, this.parent != null
-                              ? this.parent.staticRepositoryEntities
+                              ? this.parent.getStaticEntities()
                                 .get(StringProgramParameter.class)
                               : null, null));
 
         this.dynamicRepositoryEntities.put(DistanceMeasure.class,
-                this.parent.dynamicRepositoryEntities
+                this.parent.getDynamicEntities()
                 .get(DistanceMeasure.class));
 
         this.dynamicRepositoryEntities.put(DataSetGenerator.class,
-                this.parent.dynamicRepositoryEntities
+                this.parent.getDynamicEntities()
                 .get(DataSetGenerator.class));
 
         this.dynamicRepositoryEntities
                 .put(DataRandomizer.class,
-                        this.parent.dynamicRepositoryEntities
+                        this.parent.getDynamicEntities()
                         .get(DataRandomizer.class));
 
         this.dynamicRepositoryEntities.put(DataPreprocessor.class,
-                this.parent.dynamicRepositoryEntities
+                this.parent.getDynamicEntities()
                 .get(DataPreprocessor.class));
 
         this.dynamicRepositoryEntities.put(RunResultPostprocessor.class,
-                this.parent.dynamicRepositoryEntities
+                this.parent.getDynamicEntities()
                 .get(RunResultPostprocessor.class));
 
         this.dynamicRepositoryEntities.put(DataStatistic.class,
-                this.parent.dynamicRepositoryEntities.get(DataStatistic.class));
+                this.parent.getDynamicEntities().get(DataStatistic.class));
 
         this.dynamicRepositoryEntities.put(RunStatistic.class,
-                this.parent.dynamicRepositoryEntities.get(RunStatistic.class));
+                this.parent.getDynamicEntities().get(RunStatistic.class));
 
         this.dynamicRepositoryEntities.put(RunDataStatistic.class,
-                this.parent.dynamicRepositoryEntities
+                this.parent.getDynamicEntities()
                 .get(RunDataStatistic.class));
 
         this.dynamicRepositoryEntities.put(ClusteringQualityMeasure.class,
-                this.parent.dynamicRepositoryEntities
+                this.parent.getDynamicEntities()
                 .get(ClusteringQualityMeasure.class));
 
         this.dynamicRepositoryEntities.put(RProgram.class,
-                this.parent.dynamicRepositoryEntities.get(RProgram.class));
+                this.parent.getDynamicEntities().get(RProgram.class));
 
         this.dynamicRepositoryEntities.put(Context.class,
-                this.parent.dynamicRepositoryEntities.get(Context.class));
+                this.parent.getDynamicEntities().get(Context.class));
 
         this.dynamicRepositoryEntities.put(ParameterOptimizationMethod.class,
-                this.parent.dynamicRepositoryEntities
+                this.parent.getDynamicEntities()
                 .get(ParameterOptimizationMethod.class));
 
         this.dynamicRepositoryEntities.put(DataSetType.class,
-                this.parent.dynamicRepositoryEntities.get(DataSetType.class));
+                this.parent.getDynamicEntities().get(DataSetType.class));
 
         this.dynamicRepositoryEntities.put(DataSetFormat.class,
-                this.parent.dynamicRepositoryEntities.get(DataSetFormat.class));
+                this.parent.getDynamicEntities().get(DataSetFormat.class));
 
         this.dynamicRepositoryEntities.put(RunResultFormat.class,
-                this.parent.dynamicRepositoryEntities
+                this.parent.getDynamicEntities()
                 .get(RunResultFormat.class));
 
         this.goldStandardFormats = new ConcurrentHashMap<>();
@@ -266,9 +266,9 @@ public class RunResultRepository extends Repository implements IRepository {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.wiwie.wiutils.utils.Repository#initializePaths()
+     * (non-Javadoc)
+     *
+     * @see de.wiwie.wiutils.utils.Repository#initializePaths()
      */
     @Override
     protected void initializePaths() throws InvalidRepositoryException {
@@ -285,9 +285,9 @@ public class RunResultRepository extends Repository implements IRepository {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.wiwie.wiutils.utils.Repository#log(java.lang.String)
+     * (non-Javadoc)
+     *
+     * @see de.wiwie.wiutils.utils.Repository#log(java.lang.String)
      */
     @Override
     public void info(String message) {
@@ -296,9 +296,9 @@ public class RunResultRepository extends Repository implements IRepository {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see framework.repository.Repository#warn(java.lang.String)
+     * (non-Javadoc)
+     *
+     * @see framework.repository.Repository#warn(java.lang.String)
      */
     @Override
     public void warn(String message) {
@@ -307,9 +307,9 @@ public class RunResultRepository extends Repository implements IRepository {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.wiwie.wiutils.utils.Repository#createSupervisorThread()
+     * (non-Javadoc)
+     *
+     * @see de.wiwie.wiutils.utils.Repository#createSupervisorThread()
      */
     @Override
     protected SupervisorThread createSupervisorThread() {
@@ -333,11 +333,11 @@ class RunResultRepositoryDataSetObjectEntity
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * de.clusteval.framework.repository.RepositoryObjectEntity#register(de.
-	 * clusteval.framework.repository.RepositoryObject)
+     * (non-Javadoc)
+     *
+     * @see
+     * de.clusteval.framework.repository.RepositoryObjectEntity#register(de.
+     * clusteval.framework.repository.RepositoryObject)
      */
     @Override
     public boolean register(DataSet object) throws RegisterException {
@@ -367,11 +367,11 @@ class RunResultRepositoryGoldStandardObjectEntity
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * de.clusteval.framework.repository.RepositoryObjectEntity#register(de.
-	 * clusteval.framework.repository.RepositoryObject)
+     * (non-Javadoc)
+     *
+     * @see
+     * de.clusteval.framework.repository.RepositoryObjectEntity#register(de.
+     * clusteval.framework.repository.RepositoryObject)
      */
     @Override
     public boolean register(GoldStandard object) throws RegisterException {

@@ -22,7 +22,7 @@ import java.io.File;
  *
  * @author deric
  */
-public interface IRepositoryObject {
+public interface IRepositoryObject extends RepositoryListener {
 
     /**
      * Any subclass needs to implement this method. It will be responsible to

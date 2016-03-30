@@ -165,4 +165,9 @@ public interface IProgramParameter<T> extends IRepositoryObject {
      */
     String getMaxValue();
 
+    /**
+     * @return The possible values of this parameter.
+     */
+    String[] getOptions();
+
 }

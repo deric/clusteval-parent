@@ -10,25 +10,25 @@
  *     Christian Wiwie - initial API and implementation
  *****************************************************************************
  */
-/**
- *
- */
 package de.clusteval.data.goldstandard;
 
-import de.clusteval.api.exceptions.GoldStandardNotFoundException;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
-import de.clusteval.cluster.Clustering;
+import de.clusteval.api.cluster.IClustering;
+import de.clusteval.api.data.IGoldStandard;
+import de.clusteval.api.exceptions.DatabaseConnectException;
+import de.clusteval.api.exceptions.GoldStandardNotFoundException;
+import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.r.InvalidRepositoryException;
-import de.clusteval.api.exceptions.NoRepositoryFoundException;
-import de.clusteval.api.repository.RegisterException;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
+import de.clusteval.api.repository.RegisterException;
+import de.clusteval.cluster.Clustering;
+import de.clusteval.framework.repository.Repository;
+import de.clusteval.framework.repository.RepositoryObject;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
-import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.framework.repository.db.StubSQLCommunicator;
 import de.clusteval.utils.AbstractClustEvalTest;
 import java.io.File;
@@ -43,7 +43,7 @@ import org.junit.Test;
  * @author Christian Wiwie
  *
  */
-public class TestGoldStandard extends AbstractClustEvalTest {
+public class GoldStandardTest extends AbstractClustEvalTest {
 
     /**
      * @throws NoRepositoryFoundException
@@ -53,7 +53,7 @@ public class TestGoldStandard extends AbstractClustEvalTest {
     @Test
     public void testParseFromFile() throws NoRepositoryFoundException,
                                            GoldStandardNotFoundException, RegisterException {
-        GoldStandard newObject = GoldStandard
+        IGoldStandard newObject = GoldStandard
                 .parseFromFile(new File(
                         "testCaseRepository/data/goldstandards/DS1/Zachary_karate_club_gold_standard.txt")
                         .getAbsoluteFile());
@@ -127,13 +127,13 @@ public class TestGoldStandard extends AbstractClustEvalTest {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see utils.TestRepositoryObject#testHashCode()
+     * (non-Javadoc)
+     *
+     * @see utils.TestRepositoryObject#testHashCode()
      */
     public void testHashCode() throws NoRepositoryFoundException,
                                       GoldStandardNotFoundException, RegisterException {
-        this.repositoryObject = GoldStandard
+        this.repositoryObject = (RepositoryObject) GoldStandard
                 .parseFromFile(new File(
                         "testCaseRepository/data/goldstandards/DS1/Zachary_karate_club_gold_standard.txt")
                         .getAbsoluteFile());
@@ -146,24 +146,23 @@ public class TestGoldStandard extends AbstractClustEvalTest {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see utils.TestRepositoryObject#testGetRepository()
+     * (non-Javadoc)
+     *
+     * @see utils.TestRepositoryObject#testGetRepository()
      */
     public void testGetRepository() throws NoRepositoryFoundException,
                                            GoldStandardNotFoundException, RegisterException {
-        this.repositoryObject = GoldStandard
-                .parseFromFile(new File(
-                        "testCaseRepository/data/goldstandards/DS1/Zachary_karate_club_gold_standard.txt")
-                        .getAbsoluteFile());
+        this.repositoryObject = GoldStandard.parseFromFile(
+                new File("testCaseRepository/data/goldstandards/DS1/Zachary_karate_club_gold_standard.txt")
+                .getAbsoluteFile());
         assertEquals(this.getRepository(),
                 this.repositoryObject.getRepository());
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see utils.TestRepositoryObject#testRegister()
+     * (non-Javadoc)
+     *
+     * @see utils.TestRepositoryObject#testRegister()
      */
     public void testRegister() throws NoRepositoryFoundException,
                                       GoldStandardNotFoundException, RegisterException {
@@ -187,9 +186,9 @@ public class TestGoldStandard extends AbstractClustEvalTest {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see utils.TestRepositoryObject#testRegister()
+     * (non-Javadoc)
+     *
+     * @see utils.TestRepositoryObject#testRegister()
      */
     public void testUnregister() throws NoRepositoryFoundException,
                                         GoldStandardNotFoundException, RegisterException {
@@ -206,9 +205,9 @@ public class TestGoldStandard extends AbstractClustEvalTest {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see utils.TestRepositoryObject#testEqualsObject()
+     * (non-Javadoc)
+     *
+     * @see utils.TestRepositoryObject#testEqualsObject()
      */
     @Test
     public void testEqualsObject() throws RegisterException {
@@ -246,8 +245,7 @@ public class TestGoldStandard extends AbstractClustEvalTest {
                 .loadIntoMemory();
         assertTrue(success);
 
-        Clustering clustering = ((GoldStandard) this.repositoryObject)
-                .getClustering();
+        IClustering clustering = ((IGoldStandard) repositoryObject).getClustering();
 
         assertTrue(((GoldStandard) this.repositoryObject).isInMemory());
 
@@ -365,7 +363,7 @@ public class TestGoldStandard extends AbstractClustEvalTest {
         this.repositoryObject = GoldStandard.parseFromFile(f);
         ((GoldStandard) this.repositoryObject).loadIntoMemory();
 
-        Clustering clustering = ((GoldStandard) this.repositoryObject)
+        IClustering clustering = ((IGoldStandard) this.repositoryObject)
                 .getClustering();
 
         assertEquals(34, clustering.size());
@@ -388,8 +386,7 @@ public class TestGoldStandard extends AbstractClustEvalTest {
         this.repositoryObject = GoldStandard.parseFromFile(f);
         ((GoldStandard) this.repositoryObject).loadIntoMemory();
 
-        Clustering clustering = ((GoldStandard) this.repositoryObject)
-                .getClustering();
+        IClustering clustering = ((IGoldStandard) this.repositoryObject).getClustering();
 
         assertEquals(34f, clustering.fuzzySize(), 1e-5);
     }

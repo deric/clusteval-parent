@@ -17,11 +17,11 @@ import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.exceptions.GoldStandardNotFoundException;
+import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.cluster.Clustering;
-import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.framework.repository.RepositoryController;
 import de.clusteval.framework.repository.RepositoryObject;
 import de.wiwie.wiutils.utils.text.TextFileMapParser;
@@ -72,10 +72,10 @@ public class GoldStandard extends RepositoryObject implements IGoldStandard {
      * @param goldStandard The goldstandard to be cloned.
      * @throws RegisterException
      */
-    public GoldStandard(final GoldStandard goldStandard)
+    public GoldStandard(final IGoldStandard goldStandard)
             throws RegisterException {
         super(goldStandard);
-        this.absPath = new File(goldStandard.absPath.getAbsolutePath());
+        this.absPath = goldStandard.getAbsPath();
     }
 
     /*

@@ -85,7 +85,6 @@ import de.clusteval.run.statistics.RunDataStatisticCalculator;
 import de.clusteval.run.statistics.RunStatistic;
 import de.clusteval.run.statistics.RunStatisticCalculator;
 import de.clusteval.utils.Finder;
-import de.clusteval.utils.NamedAttribute;
 import de.clusteval.utils.NamedDoubleAttribute;
 import de.clusteval.utils.NamedIntegerAttribute;
 import de.clusteval.utils.NamedStringAttribute;
@@ -254,7 +253,7 @@ public class Repository implements IRepository {
      * by any kind of configuration file as a option value, which is not
      * available before starting of a run.
      */
-    protected Map<String, NamedAttribute<Double>> internalDoubleAttributes;
+    protected Map<String, NamedDoubleAttribute> internalDoubleAttributes;
 
     /**
      * This map holds all available internal string attributes, which can be
@@ -1276,18 +1275,19 @@ public class Repository implements IRepository {
      *
      * @param message The message to log.
      */
+    @Override
     public void info(final String message) {
         this.log.info(message);
     }
 
     protected <T extends RepositoryObject> void createAndAddStaticEntity(final Class<T> c, final String basePath) {
         this.staticRepositoryEntities.put(c, new StaticRepositoryEntity<T>(this,
-                this.parent != null ? this.parent.staticRepositoryEntities.get(c) : null, basePath));
+                this.parent != null ? this.parent.getStaticEntities().get(c) : null, basePath));
     }
 
     protected <T extends RepositoryObject> void createAndAddDynamicEntity(final Class<T> c, final String basePath) {
         this.dynamicRepositoryEntities.put(c, new DynamicRepositoryEntity<T>(this,
-                this.parent != null ? this.parent.dynamicRepositoryEntities.get(c) : null, basePath));
+                this.parent != null ? this.parent.getDynamicEntities().get(c) : null, basePath));
     }
 
     /**
@@ -1320,35 +1320,35 @@ public class Repository implements IRepository {
 
         this.staticRepositoryEntities.put(Clustering.class,
                 new ClusteringRepositoryEntity(this,
-                        this.parent != null ? this.parent.staticRepositoryEntities.get(Clustering.class) : null,
+                        this.parent != null ? this.parent.getStaticEntities().get(Clustering.class) : null,
                         FileUtils.buildPath(this.basePath, "results")));
 
         this.staticRepositoryEntities.put(RunResult.class,
                 new RunResultRepositoryEntity(this,
-                        this.parent != null ? this.parent.staticRepositoryEntities.get(RunResult.class) : null,
+                        this.parent != null ? this.parent.getStaticEntities().get(RunResult.class) : null,
                         FileUtils.buildPath(this.basePath, "results")));
 
         this.staticRepositoryEntities.put(Finder.class, new FinderRepositoryEntity(this,
-                this.parent != null ? this.parent.staticRepositoryEntities.get(Finder.class) : null, null));
+                this.parent != null ? this.parent.getStaticEntities().get(Finder.class) : null, null));
 
         this.staticRepositoryEntities
                 .put(DoubleProgramParameter.class,
                         new ProgramParameterRepositoryEntity<DoubleProgramParameter>(this,
                                 this.parent != null
-                                ? this.parent.staticRepositoryEntities.get(DoubleProgramParameter.class)
+                                ? this.parent.getStaticEntities().get(DoubleProgramParameter.class)
                                 : null,
                                 null));
         this.staticRepositoryEntities.put(IntegerProgramParameter.class,
                 new ProgramParameterRepositoryEntity<IntegerProgramParameter>(this,
                         this.parent != null
-                        ? this.parent.staticRepositoryEntities.get(IntegerProgramParameter.class)
+                        ? this.parent.getStaticEntities().get(IntegerProgramParameter.class)
                         : null,
                         null));
         this.staticRepositoryEntities
                 .put(StringProgramParameter.class,
                         new ProgramParameterRepositoryEntity<StringProgramParameter>(this,
                                 this.parent != null
-                                ? this.parent.staticRepositoryEntities.get(StringProgramParameter.class)
+                                ? this.parent.getStaticEntities().get(StringProgramParameter.class)
                                 : null,
                                 null));
 
@@ -1357,18 +1357,18 @@ public class Repository implements IRepository {
 
         this.dynamicRepositoryEntities.put(DataStatistic.class,
                 new DataStatisticRepositoryEntity(this, this.parent != null
-                                                        ? (DataStatisticRepositoryEntity) this.parent.dynamicRepositoryEntities.get(DataStatistic.class)
+                                                        ? (DataStatisticRepositoryEntity) this.parent.getDynamicEntities().get(DataStatistic.class)
                                                         : null, FileUtils.buildPath(this.supplementaryBasePath, "statistics", "data")));
 
         this.dynamicRepositoryEntities.put(RunStatistic.class,
                 new RunStatisticRepositoryEntity(this, this.parent != null
-                                                       ? (RunStatisticRepositoryEntity) this.parent.dynamicRepositoryEntities.get(RunStatistic.class)
+                                                       ? (RunStatisticRepositoryEntity) this.parent.getDynamicEntities().get(RunStatistic.class)
                                                        : null, FileUtils.buildPath(this.supplementaryBasePath, "statistics", "run")));
 
         this.dynamicRepositoryEntities.put(RunDataStatistic.class,
                 new RunDataStatisticRepositoryEntity(this,
                         this.parent != null
-                        ? (RunDataStatisticRepositoryEntity) this.parent.dynamicRepositoryEntities
+                        ? (RunDataStatisticRepositoryEntity) this.parent.getDynamicEntities()
                                 .get(RunDataStatistic.class)
                         : null,
                         FileUtils.buildPath(this.supplementaryBasePath, "statistics", "rundata")));
@@ -1383,7 +1383,7 @@ public class Repository implements IRepository {
         this.dynamicRepositoryEntities.put(RProgram.class,
                 new RProgramRepositoryEntity(this, this.staticRepositoryEntities.get(Program.class),
                         this.parent != null
-                        ? (RProgramRepositoryEntity) this.parent.dynamicRepositoryEntities.get(RProgram.class)
+                        ? (RProgramRepositoryEntity) this.parent.getDynamicEntities().get(RProgram.class)
                         : null,
                         this.getBasePath(Program.class)));
 
@@ -1397,15 +1397,15 @@ public class Repository implements IRepository {
 
         this.createAndAddDynamicEntity(DataSetType.class, FileUtils.buildPath(this.typesBasePath, "dataset"));
 
-        this.dynamicRepositoryEntities.put(DataSetFormat.class,
+        this.dynamicRepositoryEntities.put(IDataSetFormat.class,
                 new DataSetFormatRepositoryEntity(this, this.parent != null
-                                                        ? (DataSetFormatRepositoryEntity) this.parent.dynamicRepositoryEntities.get(DataSetFormat.class)
+                                                        ? (DataSetFormatRepositoryEntity) this.parent.getDynamicEntities().get(IDataSetFormat.class)
                                                         : null, FileUtils.buildPath(this.formatsBasePath, "dataset")));
 
         this.dynamicRepositoryEntities.put(RunResultFormat.class,
                 new RunResultFormatRepositoryEntity(this,
                         this.parent != null
-                        ? (RunResultFormatRepositoryEntity) this.parent.dynamicRepositoryEntities
+                        ? (RunResultFormatRepositoryEntity) this.parent.getDynamicEntities()
                                 .get(RunResultFormat.class)
                         : null,
                         FileUtils.buildPath(this.formatsBasePath, "runresult")));
@@ -1706,7 +1706,7 @@ public class Repository implements IRepository {
      */
     public boolean registerRunResultFormatParser(final Class<? extends IRunResultFormatParser> runResultFormatParser) {
         return ((RunResultFormatRepositoryEntity) this.dynamicRepositoryEntities.get(IRunResultFormat.class))
-                .registerRunResultFormatParser(runResultFormatParser);
+                .registerRunResultFormatParser((Class<? extends RunResultFormatParser>) runResultFormatParser);
     }
 
     /**
@@ -1763,7 +1763,7 @@ public class Repository implements IRepository {
      * @return True, if the object was remved successfully
      */
     public boolean unregisterRunResultFormatParser(final Class<? extends RunResultFormatParser> object) {
-        return ((RunResultFormatRepositoryEntity) this.dynamicRepositoryEntities.get(RunResultFormat.class))
+        return ((RunResultFormatRepositoryEntity) this.dynamicRepositoryEntities.get(IRunResultFormat.class))
                 .unregisterRunResultFormatParser(object);
     }
 
