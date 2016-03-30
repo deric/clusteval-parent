@@ -271,14 +271,14 @@ public class RunResultRepository extends Repository implements IRepository {
      * @see de.wiwie.wiutils.utils.Repository#initializePaths()
      */
     @Override
-    protected void initializePaths() throws InvalidRepositoryException {
+    public void initializePaths() throws InvalidRepositoryException {
         if (this.parent == null) {
             throw new InvalidRepositoryException(
                     "A RunResultRepository needs a valid parent repository");
         }
 
-        this.supplementaryBasePath = this.parent.supplementaryBasePath;
-        this.suppClusteringBasePath = this.parent.suppClusteringBasePath;
+        this.supplementaryBasePath = this.parent.getSupplementaryBasePath();
+        this.suppClusteringBasePath = this.parent.getSupplementaryClusteringBasePath();
         this.formatsBasePath = this.parent.formatsBasePath;
         this.generatorBasePath = this.parent.generatorBasePath;
         this.typesBasePath = this.parent.typesBasePath;

@@ -275,7 +275,7 @@ public interface IRepository {
      *
      * <p>
      * A helper method of null null null null null null null null null null null
-     * null null null null null null null null null null null null null null null null null null null null null null null null null null null null null null null null null null     {@link ProgramParameter#evaluateDefaultValue(DataConfig, ProgramConfig)},
+     * null null null null null null null null null null null null null null null null null null null null null null null null null null null null null null null null null null null null null null     {@link ProgramParameter#evaluateDefaultValue(DataConfig, ProgramConfig)},
 	 * {@link ProgramParameter#evaluateMinValue(DataConfig, ProgramConfig)} and
      * {@link ProgramParameter#evaluateMaxValue(DataConfig, ProgramConfig)}.
      *
@@ -411,4 +411,16 @@ public interface IRepository {
     boolean register(final INamedAttribute<Number> object);
 
     void terminateSupervisorThread(final boolean closeRengines) throws InterruptedException;
+
+    /**
+     * @return The absolute path to the directory within this repository, where
+     *         all supplementary materials are stored.
+     */
+    String getSupplementaryBasePath();
+
+    /**
+     * @return The absolute path to the directory within this repository, where
+     *         all supplementary materials related to clustering are stored.
+     */
+    String getSupplementaryClusteringBasePath();
 }

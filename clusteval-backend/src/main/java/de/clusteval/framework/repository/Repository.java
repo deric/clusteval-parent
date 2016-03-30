@@ -1170,7 +1170,7 @@ public class Repository implements IRepository {
      *         or null if it does not exist.
      */
     public Class<? extends IRunResultFormatParser> getRunResultFormatParser(final String runResultFormatName) {
-        return ((RunResultFormatRepositoryEntity) this.dynamicRepositoryEntities.get(RunResultFormat.class))
+        return ((RunResultFormatRepositoryEntity) this.dynamicRepositoryEntities.get(IRunResultFormat.class))
                 .getRunResultFormatParser(runResultFormatName);
     }
 
@@ -1406,7 +1406,7 @@ public class Repository implements IRepository {
                 new RunResultFormatRepositoryEntity(this,
                         this.parent != null
                         ? (RunResultFormatRepositoryEntity) this.parent.getDynamicEntities()
-                                .get(RunResultFormat.class)
+                                .get(IRunResultFormat.class)
                         : null,
                         FileUtils.buildPath(this.formatsBasePath, "runresult")));
 
@@ -1494,8 +1494,7 @@ public class Repository implements IRepository {
      * @throws InvalidRepositoryException
      *
      */
-    @SuppressWarnings("unused")
-    private void initializePaths() throws InvalidRepositoryException {
+    public void initializePaths() throws InvalidRepositoryException {
         this.supplementaryBasePath = FileUtils.buildPath(this.basePath, "supp");
         this.suppClusteringBasePath = FileUtils.buildPath(this.supplementaryBasePath, "clustering");
         this.formatsBasePath = FileUtils.buildPath(this.supplementaryBasePath, "formats");
@@ -1584,17 +1583,13 @@ public class Repository implements IRepository {
         switch (t.getTypeName()) {
             case "Double":
                 this.internalDoubleAttributes.put(object.getName(), object);
-                this.pathToRepositoryObject.put(object.absPath, object);
+                this.pathToRepositoryObject.put(object.getAbsPath(), object);
                 break;
             default:
                 throw new RuntimeException("unsupported type " + t.getTypeName());
         }
 
-        if (this.getRegisteredObject(object) != null) {
-            return false;
-        }
-
-        return true;
+        return this.getRegisteredObject(object) == null;
     }
 
     /**
