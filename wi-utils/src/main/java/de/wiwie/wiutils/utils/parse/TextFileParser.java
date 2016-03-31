@@ -1,7 +1,6 @@
 package de.wiwie.wiutils.utils.parse;
 
 import de.wiwie.wiutils.file.FileUtils;
-import de.clusteval.utils.ProgressPrinter;
 import de.wiwie.wiutils.utils.StringExt;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -58,9 +57,6 @@ public abstract class TextFileParser {
 
     protected long parsedLines = 0;
 
-    /** The progress. */
-    protected ProgressPrinter progress;
-
     /** The value columns. */
     protected int[] keyColumns, valueColumns;
     // if this is set to false, values[0] will contain the whole line
@@ -100,7 +96,7 @@ public abstract class TextFileParser {
      * @param absFilePath
      *                    the abs file path
      * @throws IOException
-     *                     Signals that an I/O exception has occurred.
+     * Signals that an I/O exception has occurred.
      */
     public TextFileParser(final String absFilePath) throws IOException {
         this(absFilePath, null, null);
@@ -116,7 +112,7 @@ public abstract class TextFileParser {
      * @param valueColumnIds
      *                       the value column ids
      * @throws IOException
-     *                     Signals that an I/O exception has occurred.
+     * Signals that an I/O exception has occurred.
      */
     public TextFileParser(final String absFilePath, final int[] keyColumnIds,
             final int[] valueColumnIds) throws IOException {
@@ -134,7 +130,7 @@ public abstract class TextFileParser {
      *                       the value column ids
      * @param splitLines
      * @throws IOException
-     *                     Signals that an I/O exception has occurred.
+     * Signals that an I/O exception has occurred.
      */
     public TextFileParser(final String absFilePath, final int[] keyColumnIds,
             final int[] valueColumnIds, final boolean splitLines)
@@ -155,7 +151,7 @@ public abstract class TextFileParser {
      * @param splitLines
      * @param splitChar
      * @throws IOException
-     *                     Signals that an I/O exception has occurred.
+     * Signals that an I/O exception has occurred.
      */
     public TextFileParser(final String absFilePath, final int[] keyColumnIds,
             final int[] valueColumnIds, final boolean splitLines,
@@ -178,7 +174,7 @@ public abstract class TextFileParser {
      * @param outputMode
      *                       the output mode
      * @throws IOException
-     *                     Signals that an I/O exception has occurred.
+     * Signals that an I/O exception has occurred.
      */
     public TextFileParser(final String absFilePath, final int[] keyColumnIds,
             final int[] valueColumnIds, final String outputFile,
@@ -204,7 +200,7 @@ public abstract class TextFileParser {
      * @param outputMode
      *                       the output mode
      * @throws IOException
-     *                     Signals that an I/O exception has occurred.
+     * Signals that an I/O exception has occurred.
      */
     public TextFileParser(final String absFilePath, final int[] keyColumnIds,
             final int[] valueColumnIds, final boolean splitLines,
@@ -242,7 +238,6 @@ public abstract class TextFileParser {
             this.valueColumns = valueColumnIds;
         }
         // this.totalLineCount = this.getTotalLineCount();
-        this.progress = new ProgressPrinter(this.totalLineCount, true, "");
     }
 
     /**
@@ -253,7 +248,7 @@ public abstract class TextFileParser {
      * @param value
      *              the value
      * @throws IOException
-     *                     Signals that an I/O exception has occurred.
+     * Signals that an I/O exception has occurred.
      */
     private void checkForOutput(final String[] key, final String[] value)
             throws IOException {
@@ -268,7 +263,7 @@ public abstract class TextFileParser {
      * Close streams.
      *
      * @throws IOException
-     *                     Signals that an I/O exception has occurred.
+     * Signals that an I/O exception has occurred.
      */
     protected void closeStreams() throws IOException {
         if (this.fileReader != null) {
@@ -306,7 +301,7 @@ public abstract class TextFileParser {
      *
      * @return the long
      * @throws IOException
-     *                     Signals that an I/O exception has occurred.
+     * Signals that an I/O exception has occurred.
      */
     protected long countLines() throws IOException {
         this.resetReader();
@@ -339,7 +334,6 @@ public abstract class TextFileParser {
             } catch (IOException e) {
             }
         }
-        this.progress = new ProgressPrinter(this.totalLineCount, true, "");
         return this.totalLineCount;
     }
 
@@ -363,7 +357,7 @@ public abstract class TextFileParser {
      *
      * @return the int
      * @throws IOException
-     *                     Signals that an I/O exception has occurred.
+     * Signals that an I/O exception has occurred.
      */
     private int countColumnsInFile() throws IOException {
         this.resetReader();
@@ -514,7 +508,7 @@ public abstract class TextFileParser {
      * Inits the process.
      *
      * @throws IOException
-     *                     Signals that an I/O exception has occurred.
+     * Signals that an I/O exception has occurred.
      */
     public void initProcess() throws IOException {
         // TODO: replaced lock-file by common files that are synchronized
@@ -554,7 +548,7 @@ public abstract class TextFileParser {
      *
      * @return the text file parser
      * @throws IOException
-     *                     Signals that an I/O exception has occurred.
+     * Signals that an I/O exception has occurred.
      */
     public TextFileParser process() throws IOException {
         this.initProcess();
@@ -607,9 +601,6 @@ public abstract class TextFileParser {
                         this.checkForOutput(this.key, this.value);
                     }
 
-                    if (this.progress.getUpperLimit() > -1L) {
-                        this.progress.update(lineNumber + 1);
-                    }
                     lineNumber++;
                 } catch (IndexOutOfBoundsException e) {
                     log.error("Error while parsing line " + currentLine
@@ -647,7 +638,7 @@ public abstract class TextFileParser {
      * Process burst output.
      *
      * @throws IOException
-     *                     Signals that an I/O exception has occurred.
+     * Signals that an I/O exception has occurred.
      */
     private void checkForBurstOutput() throws IOException {
         String output = null;
@@ -666,7 +657,7 @@ public abstract class TextFileParser {
      *
      * @return the string
      * @throws IOException
-     *                     Signals that an I/O exception has occurred.
+     * Signals that an I/O exception has occurred.
      */
     public String readLine() throws IOException {
         return this.fileReader.readLine();
@@ -676,7 +667,7 @@ public abstract class TextFileParser {
      * Reset reader.
      *
      * @throws IOException
-     *                     Signals that an I/O exception has occurred.
+     * Signals that an I/O exception has occurred.
      */
     protected void resetReader() throws IOException {
         if (this.fileReader != null) {
@@ -739,7 +730,7 @@ public abstract class TextFileParser {
      * @param absFilePath
      *                    the new file
      * @throws IOException
-     *                     Signals that an I/O exception has occurred.
+     * Signals that an I/O exception has occurred.
      */
     public void setFile(final String absFilePath) throws IOException {
         this.absoluteFilePath = absFilePath;
@@ -794,7 +785,7 @@ public abstract class TextFileParser {
      * Try find split.
      *
      * @throws IOException
-     *                     Signals that an I/O exception has occurred.
+     * Signals that an I/O exception has occurred.
      */
     public void tryFindSplit() throws IOException {
         this.parsingComments = true;
