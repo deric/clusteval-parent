@@ -55,7 +55,7 @@ public interface IRepository {
      * {@link #isInitialized()} returns true.
      *
      * @throws InterruptedException Is thrown, if the current thread is
-     *                              interrupted while waiting for finishing the initialization process.
+     * interrupted while waiting for finishing the initialization process.
      */
     void initialize() throws InterruptedException;
 
@@ -69,6 +69,8 @@ public interface IRepository {
      * @throws InvalidRepositoryException
      */
     IRepository register(IRepository repository) throws RepositoryAlreadyExistsException, InvalidRepositoryException;
+
+    <T extends IRepositoryObject, S extends T> boolean register(final S object) throws RegisterException;
 
     /**
      *
@@ -274,9 +276,8 @@ public interface IRepository {
      * arithmetic operations.
      *
      * <p>
-     * A helper method of null null null null null null null null null null null
-     * null null null null null null null null null null null null null null null null null null null null null null null null null null null null null null null null null null null null null null     {@link ProgramParameter#evaluateDefaultValue(DataConfig, ProgramConfig)},
-	 * {@link ProgramParameter#evaluateMinValue(DataConfig, ProgramConfig)} and
+     * A helper method of {@link ProgramParameter#evaluateDefaultValue(DataConfig, ProgramConfig)},
+     * {@link ProgramParameter#evaluateMinValue(DataConfig, ProgramConfig)} and
      * {@link ProgramParameter#evaluateMaxValue(DataConfig, ProgramConfig)}.
      *
      * @param script The parameter value containing javascript arithmetic
@@ -423,4 +424,16 @@ public interface IRepository {
      *         all supplementary materials related to clustering are stored.
      */
     String getSupplementaryClusteringBasePath();
+
+    String getFormatsBasePath();
+
+    String getGeneratorBasePath();
+
+    String getTypesBasePath();
+
+    Map<String, ? extends INamedAttribute<Double>> getDoubleAttributes();
+
+    Map<String, ? extends INamedAttribute<String>> getStringAttributes();
+
+    Map<String, ? extends INamedAttribute<Integer>> getIntegerAttributes();
 }

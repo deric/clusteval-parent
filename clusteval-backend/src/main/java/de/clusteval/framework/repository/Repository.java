@@ -328,7 +328,7 @@ public class Repository implements IRepository {
      */
     public Repository(final String basePath, final IRepository parent)
             throws FileNotFoundException, RepositoryAlreadyExistsException, InvalidRepositoryException,
-                   RepositoryConfigNotFoundException, RepositoryConfigurationException, DatabaseConnectException {
+            RepositoryConfigNotFoundException, RepositoryConfigurationException, DatabaseConnectException {
         this(basePath, parent, null);
     }
 
@@ -348,7 +348,7 @@ public class Repository implements IRepository {
      */
     public Repository(final String basePath, final IRepository parent, final RepositoryConfig overrideConfig)
             throws FileNotFoundException, RepositoryAlreadyExistsException, InvalidRepositoryException,
-                   RepositoryConfigNotFoundException, RepositoryConfigurationException, DatabaseConnectException {
+            RepositoryConfigNotFoundException, RepositoryConfigurationException, DatabaseConnectException {
         super();
 
         this.log = LoggerFactory.getLogger(this.getClass());
@@ -602,7 +602,8 @@ public class Repository implements IRepository {
      *
      * <p>
      * A helper method of null null null null null null null null null null null
-     * null null null null null null null null null null null null null null null null null null null     {@link ProgramParameter#evaluateDefaultValue(DataConfig, ProgramConfig)},
+     * null null null null null null null null null null null null null null
+     * null null null null null null null null null null null null null null     {@link ProgramParameter#evaluateDefaultValue(DataConfig, ProgramConfig)},
 	 * {@link ProgramParameter#evaluateMinValue(DataConfig, ProgramConfig)} and
      * {@link ProgramParameter#evaluateMaxValue(DataConfig, ProgramConfig)}.
      *
@@ -770,7 +771,6 @@ public class Repository implements IRepository {
         return false;
     }
 
-    @SuppressWarnings("unchecked")
     public <T extends RepositoryObject, S extends T> boolean register(final S object) throws RegisterException {
         Class<S> c = (Class<S>) object.getClass();
         return this.register(c, object);
@@ -779,7 +779,7 @@ public class Repository implements IRepository {
     @SuppressWarnings("unchecked")
     public <T extends RepositoryObject, S extends T> boolean register(final Class<T> c, final S object)
             throws RegisterException {
-        boolean staticEntityFound = false;
+        boolean staticEntityFound;
         boolean dynamicEntityFound = false;
         if (!((staticEntityFound = this.staticRepositoryEntities.containsKey(c))
                 || (dynamicEntityFound = this.dynamicRepositoryEntities.containsKey(c)))
@@ -1257,6 +1257,19 @@ public class Repository implements IRepository {
         return this.suppClusteringBasePath;
     }
 
+    @Override
+    public String getFormatsBasePath() {
+        return this.formatsBasePath;
+    }
+
+    public String getGeneratorBasePath() {
+        return this.generatorBasePath;
+    }
+
+    public String getTypesBasePath() {
+        return this.typesBasePath;
+    }
+
     /*
      * (non-Javadoc)
      *
@@ -1429,7 +1442,7 @@ public class Repository implements IRepository {
      * {@link #isInitialized()} returns true.
      *
      * @throws InterruptedException Is thrown, if the current thread is
-     *                              interrupted while waiting for finishing the initialization process.
+     * interrupted while waiting for finishing the initialization process.
      */
     public void initialize() throws InterruptedException {
         if (isInitialized() || this.supervisorThread != null) {
@@ -1749,6 +1762,21 @@ public class Repository implements IRepository {
      */
     public boolean unregister(NamedStringAttribute object) {
         return this.internalStringAttributes.remove(object) != null;
+    }
+
+    @Override
+    public Map<String, NamedDoubleAttribute> getDoubleAttributes() {
+        return internalDoubleAttributes;
+    }
+
+    @Override
+    public Map<String, NamedStringAttribute> getStringAttributes() {
+        return internalStringAttributes;
+    }
+
+    @Override
+    public Map<String, NamedIntegerAttribute> getIntegerAttributes() {
+        return internalIntegerAttributes;
     }
 
     /**

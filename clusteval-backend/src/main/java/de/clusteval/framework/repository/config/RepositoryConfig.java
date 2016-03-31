@@ -20,7 +20,6 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.HierarchicalINIConfiguration;
 import org.apache.commons.configuration.SubnodeConfiguration;
@@ -67,14 +66,14 @@ public class RepositoryConfig implements IRepositoryConfig {
      * which the threads check for changes on the filesystem.</li> </ul>
      *
      * @param absConfigPath The absolute path of the repository configuration
-     * file.
+     *                      file.
      * @return The parsed repository configuration.
      * @throws RepositoryConfigNotFoundException
      * @throws RepositoryConfigurationException
      */
     public static RepositoryConfig parseFromFile(final File absConfigPath)
             throws RepositoryConfigNotFoundException,
-                   RepositoryConfigurationException {
+            RepositoryConfigurationException {
         if (!absConfigPath.exists()) {
             throw new RepositoryConfigNotFoundException("Repository config \""
                     + absConfigPath + "\" does not exist!");
@@ -151,8 +150,6 @@ public class RepositoryConfig implements IRepositoryConfig {
             return new RepositoryConfig(mysqlConfig, threadingSleepTimes);
         } catch (ConfigurationException e) {
             throw new RepositoryConfigurationException(e.getMessage());
-        } catch (NoSuchElementException e) {
-            throw new RepositoryConfigurationException(e.getMessage());
         }
     }
 
@@ -164,9 +161,9 @@ public class RepositoryConfig implements IRepositoryConfig {
     /**
      * Creates a new repository configuration.
      *
-     * @param mysqlConfig The mysql configuration for the repository.
+     * @param mysqlConfig         The mysql configuration for the repository.
      * @param threadingSleepTimes The sleep times of the threads created for the
-     * repository.
+     *                            repository.
      */
     public RepositoryConfig(final SQLConfig mysqlConfig,
             final Map<String, Long> threadingSleepTimes) {

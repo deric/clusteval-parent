@@ -57,8 +57,12 @@ import de.clusteval.run.result.postprocessing.RunResultPostprocessor;
 import de.clusteval.run.statistics.RunDataStatistic;
 import de.clusteval.run.statistics.RunStatistic;
 import de.clusteval.utils.Finder;
+import de.clusteval.utils.NamedDoubleAttribute;
+import de.clusteval.utils.NamedIntegerAttribute;
+import de.clusteval.utils.NamedStringAttribute;
 import de.wiwie.wiutils.file.FileUtils;
 import java.io.FileNotFoundException;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -90,8 +94,8 @@ public class RunResultRepository extends Repository implements IRepository {
      */
     public RunResultRepository(String basePath, IRepository parent)
             throws FileNotFoundException, RepositoryAlreadyExistsException,
-                   InvalidRepositoryException, RepositoryConfigNotFoundException,
-                   RepositoryConfigurationException, DatabaseConnectException {
+            InvalidRepositoryException, RepositoryConfigNotFoundException,
+            RepositoryConfigurationException, DatabaseConnectException {
         super(basePath, parent);
     }
 
@@ -254,15 +258,15 @@ public class RunResultRepository extends Repository implements IRepository {
 
         this.goldStandardFormats = new ConcurrentHashMap<>();
 
-        this.internalDoubleAttributes = this.parent.internalDoubleAttributes;
-        this.internalStringAttributes = this.parent.internalStringAttributes;
-        this.internalIntegerAttributes = this.parent.internalIntegerAttributes;
+        this.internalDoubleAttributes = (Map<String, NamedDoubleAttribute>) this.parent.getDoubleAttributes();
+        this.internalStringAttributes = (Map<String, NamedStringAttribute>) this.parent.getStringAttributes();
+        this.internalIntegerAttributes = (Map<String, NamedIntegerAttribute>) this.parent.getIntegerAttributes();
 
         // added 14.04.2013
-        this.knownFinderExceptions = this.parent.knownFinderExceptions;
-        this.finderClassLoaders = this.parent.finderClassLoaders;
-        this.finderWaitingFiles = this.parent.finderWaitingFiles;
-        this.finderLoadedJarFileChangeDates = this.parent.finderLoadedJarFileChangeDates;
+        this.knownFinderExceptions = this.parent.getKnownFinderExceptions();
+        this.finderClassLoaders = this.parent.getJARFinderClassLoaders();
+        this.finderWaitingFiles = this.parent.getJARFinderWaitingFiles();
+        this.finderLoadedJarFileChangeDates = this.parent.getFinderLoadedJarFileChangeDates();
     }
 
     /*
@@ -279,9 +283,9 @@ public class RunResultRepository extends Repository implements IRepository {
 
         this.supplementaryBasePath = this.parent.getSupplementaryBasePath();
         this.suppClusteringBasePath = this.parent.getSupplementaryClusteringBasePath();
-        this.formatsBasePath = this.parent.formatsBasePath;
-        this.generatorBasePath = this.parent.generatorBasePath;
-        this.typesBasePath = this.parent.typesBasePath;
+        this.formatsBasePath = this.parent.getFormatsBasePath();
+        this.generatorBasePath = this.parent.getGeneratorBasePath();
+        this.typesBasePath = this.parent.getTypesBasePath();
     }
 
     /*
