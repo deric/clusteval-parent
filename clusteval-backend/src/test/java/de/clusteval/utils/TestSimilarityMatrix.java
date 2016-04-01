@@ -25,7 +25,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
 
-import de.wiwie.wiutils.utils.Pair;
+import de.clusteval.api.Pair;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
 
 /**

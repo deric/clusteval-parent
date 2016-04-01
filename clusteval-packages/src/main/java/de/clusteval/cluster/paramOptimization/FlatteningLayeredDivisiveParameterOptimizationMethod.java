@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import de.wiwie.wiutils.utils.Pair;
+import de.clusteval.api.Pair;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
 import de.clusteval.api.cluster.quality.ClusteringQualitySet;
 import de.clusteval.data.DataConfig;

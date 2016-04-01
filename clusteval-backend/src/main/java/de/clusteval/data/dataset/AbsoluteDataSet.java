@@ -10,13 +10,13 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset;
 
+import de.clusteval.api.Precision;
 import de.clusteval.api.data.IDataSetType;
 import de.clusteval.api.data.WEBSITE_VISIBILITY;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.data.dataset.format.AbsoluteDataSetFormat;
-import de.wiwie.wiutils.utils.SimilarityMatrix.NUMBER_PRECISION;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -101,7 +101,7 @@ public class AbsoluteDataSet extends DataSet {
      * @see data.dataset.DataSet#loadIntoMemory()
      */
     @Override
-    public boolean loadIntoMemory(NUMBER_PRECISION precision)
+    public boolean loadIntoMemory(Precision precision)
             throws IllegalArgumentException, IOException,
                    InvalidDataSetFormatVersionException {
         if (!isInMemory()) {

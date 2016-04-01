@@ -11,6 +11,7 @@
 package de.clusteval.cluster.quality;
 
 import ch.qos.logback.classic.Level;
+import de.clusteval.api.Precision;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.api.data.IDataSet;
@@ -38,7 +39,6 @@ import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
 import de.clusteval.utils.AbstractClustEvalTest;
-import de.wiwie.wiutils.utils.SimilarityMatrix.NUMBER_PRECISION;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -46,6 +46,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import org.junit.Assert;
 import org.junit.Test;
+import org.openide.util.Exceptions;
 
 /**
  * @author Christian Wiwie
@@ -143,7 +144,7 @@ public class SilhouetteValueGlobalRClusteringQualityMeasureTest
                     new ConversionInputToStandardConfiguration(DistanceMeasure
                             .parseFromString(getRepository(),
                                     "EuclidianDistanceMeasure"),
-                            NUMBER_PRECISION.DOUBLE,
+                            Precision.DOUBLE,
                             new ArrayList<>(),
                             new ArrayList<>()),
                     new ConversionStandardToInputConfiguration());
@@ -158,21 +159,16 @@ public class SilhouetteValueGlobalRClusteringQualityMeasureTest
             Assert.assertEquals(0.3346755237978247, quality, 0.0);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        } catch (UnknownGoldStandardFormatException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (UnknownDataSetFormatException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IllegalArgumentException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (InvalidDataSetFormatVersionException e) {
+        } catch (UnknownGoldStandardFormatException | UnknownDataSetFormatException |
+                IllegalArgumentException | InvalidDataSetFormatVersionException e) {
+            Exceptions.printStackTrace(e);
+        } // TODO Auto-generated catch block
+        catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        // TODO Auto-generated catch block
+        // TODO Auto-generated catch block
+
     }
 }

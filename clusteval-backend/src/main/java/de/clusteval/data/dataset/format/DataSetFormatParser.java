@@ -19,7 +19,6 @@ import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.data.dataset.DataSet;
-import de.wiwie.wiutils.utils.SimilarityMatrix.NUMBER_PRECISION;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -123,18 +122,6 @@ public abstract class DataSetFormatParser implements IDataSetFormatParser {
             throws IOException, InvalidDataSetFormatVersionException,
                    RegisterException, UnknownDataSetFormatException;
 
-    /**
-     * @param dataSet
-     *                  The dataset to be parsed.
-     * @param precision
-     *                  The precision with which to store the similarities in memory.
-     * @return A wrapper object containing the contents of the dataset
-     * @throws IllegalArgumentException
-     * @throws InvalidDataSetFormatVersionException
-     * @throws IOException
-     */
-    protected abstract Object parse(IDataSet dataSet, NUMBER_PRECISION precision)
-            throws IOException, InvalidDataSetFormatVersionException;
 
     /**
      * This method writes the contents of the dataset hold in memory to the
@@ -177,8 +164,6 @@ public abstract class DataSetFormatParser implements IDataSetFormatParser {
         }
         return false;
     }
-
-    protected abstract void writeToFileHelper(IDataSet dataSet, BufferedWriter writer) throws IOException;
 
     protected final void writeHeaderIntoFile(IDataSet dataSet, BufferedWriter writer) throws IOException {
         // writer header

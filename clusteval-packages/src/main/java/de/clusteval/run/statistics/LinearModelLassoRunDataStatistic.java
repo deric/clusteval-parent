@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 import de.wiwie.wiutils.utils.ArraysExt;
-import de.wiwie.wiutils.utils.Pair;
+import de.clusteval.api.Pair;
 import de.wiwie.wiutils.utils.StringExt;
 import de.clusteval.api.r.RLibraryRequirement;
 import de.clusteval.api.repository.RegisterException;

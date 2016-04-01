@@ -21,7 +21,7 @@ import org.apache.commons.configuration.ConfigurationException;
 import org.junit.Assert;
 import org.junit.Test;
 
-import de.wiwie.wiutils.utils.Pair;
+import de.clusteval.api.Pair;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.cluster.Clustering;

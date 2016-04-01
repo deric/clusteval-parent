@@ -37,7 +37,7 @@ import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.run.result.postprocessing.RunResultPostprocessor;
 import de.clusteval.run.runnable.ExecutionRunRunnable;
 import de.clusteval.run.runnable.ParameterOptimizationRunRunnable;
-import de.wiwie.wiutils.utils.Pair;
+import de.clusteval.api.Pair;
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;

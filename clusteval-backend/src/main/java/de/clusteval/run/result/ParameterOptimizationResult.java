@@ -65,7 +65,7 @@ import de.clusteval.run.statistics.UnknownRunDataStatisticException;
 import de.clusteval.run.statistics.UnknownRunStatisticException;
 import de.clusteval.utils.InvalidConfigurationFileException;
 import de.wiwie.wiutils.file.FileUtils;
-import de.wiwie.wiutils.utils.Pair;
+import de.clusteval.api.Pair;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;

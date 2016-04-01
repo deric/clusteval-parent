@@ -13,6 +13,7 @@
 package de.clusteval.cluster.paramOptimization;
 
 import ch.qos.logback.classic.Level;
+import de.clusteval.api.Precision;
 import de.clusteval.api.cluster.quality.ClusteringQualityMeasureValue;
 import de.clusteval.api.cluster.quality.ClusteringQualitySet;
 import de.clusteval.api.data.IDataSet;
@@ -45,7 +46,6 @@ import de.clusteval.framework.repository.config.RepositoryConfigurationException
 import de.clusteval.program.ProgramConfig;
 import de.clusteval.run.Run;
 import de.clusteval.utils.AbstractClustEvalTest;
-import de.wiwie.wiutils.utils.SimilarityMatrix.NUMBER_PRECISION;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -93,7 +93,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
                 new ConversionInputToStandardConfiguration(DistanceMeasure
                         .parseFromString(getRepository(),
                                 "EuclidianDistanceMeasure"),
-                        NUMBER_PRECISION.DOUBLE,
+                        Precision.DOUBLE,
                         new ArrayList<>(),
                         new ArrayList<>()),
                 new ConversionStandardToInputConfiguration());
@@ -232,7 +232,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
                 new ConversionInputToStandardConfiguration(DistanceMeasure
                         .parseFromString(getRepository(),
                                 "EuclidianDistanceMeasure"),
-                        NUMBER_PRECISION.DOUBLE,
+                        Precision.DOUBLE,
                         new ArrayList<>(),
                         new ArrayList<>()),
                 new ConversionStandardToInputConfiguration());
@@ -354,7 +354,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
                 new ConversionInputToStandardConfiguration(DistanceMeasure
                         .parseFromString(getRepository(),
                                 "EuclidianDistanceMeasure"),
-                        NUMBER_PRECISION.DOUBLE,
+                        Precision.DOUBLE,
                         new ArrayList<>(),
                         new ArrayList<>()),
                 new ConversionStandardToInputConfiguration());
@@ -449,7 +449,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
                 new ConversionInputToStandardConfiguration(DistanceMeasure
                         .parseFromString(getRepository(),
                                 "SpearmanCorrelationRDistanceMeasure"),
-                        NUMBER_PRECISION.DOUBLE,
+                        Precision.DOUBLE,
                         new ArrayList<>(),
                         new ArrayList<>()),
                 new ConversionStandardToInputConfiguration());

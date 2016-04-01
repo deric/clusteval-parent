@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset.format;
 
+import de.clusteval.api.Precision;
 import de.clusteval.api.data.IConversionConfiguration;
 import de.clusteval.api.data.IConversionInputToStandardConfiguration;
 import de.clusteval.api.data.IDataSet;
@@ -22,7 +23,6 @@ import de.clusteval.api.repository.RegisterException;
 import de.clusteval.data.dataset.DataSet;
 import de.clusteval.framework.repository.RepositoryObject;
 import de.wiwie.wiutils.file.FileUtils;
-import de.wiwie.wiutils.utils.SimilarityMatrix.NUMBER_PRECISION;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
@@ -196,7 +196,7 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
      * @throws InvalidDataSetFormatVersionException
      * @throws IOException
      */
-    public Object parse(final DataSet dataSet, NUMBER_PRECISION precision)
+    public Object parse(final DataSet dataSet, Precision precision)
             throws IllegalArgumentException, IOException,
                    InvalidDataSetFormatVersionException {
         final DataSetFormatParser parser = getDataSetFormatParser();

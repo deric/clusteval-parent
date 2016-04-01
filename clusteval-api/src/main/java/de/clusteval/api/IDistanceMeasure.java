@@ -22,7 +22,6 @@ import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.r.ROperationNotSupported;
 import de.clusteval.api.repository.IRepositoryObject;
-import de.wiwie.wiutils.utils.SimilarityMatrix;
 
 /**
  *
@@ -70,7 +69,7 @@ public interface IDistanceMeasure extends IRepositoryObject {
      * @throws RNotAvailableException
      * @throws InterruptedException
      */
-    SimilarityMatrix getDistances(IConversionInputToStandardConfiguration config, double[][] matrix)
+    Matrix getDistances(IConversionInputToStandardConfiguration config, double[][] matrix)
             throws RNotAvailableException, InterruptedException;
 
     IDistanceMeasure clone();

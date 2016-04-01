@@ -25,7 +25,7 @@ import de.clusteval.data.dataset.RelativeDataSet;
 import de.clusteval.data.dataset.format.RelativeDataSetFormat;
 import de.clusteval.framework.repository.Repository;
 import de.wiwie.wiutils.utils.ArraysExt;
-import de.wiwie.wiutils.utils.Pair;
+import de.clusteval.api.Pair;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
 import java.io.File;
 import java.io.IOException;

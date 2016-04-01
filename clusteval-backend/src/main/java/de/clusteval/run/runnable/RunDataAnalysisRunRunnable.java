@@ -17,7 +17,7 @@ import de.clusteval.run.Run;
 import de.clusteval.run.RunDataAnalysisRun;
 import de.clusteval.run.result.RunDataAnalysisRunResult;
 import de.clusteval.run.statistics.RunDataStatistic;
-import de.wiwie.wiutils.utils.Pair;
+import de.clusteval.api.Pair;
 import java.io.File;
 import java.util.List;
 

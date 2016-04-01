@@ -28,7 +28,7 @@ import de.clusteval.run.result.DataAnalysisRunResult;
 import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.run.result.RunResult;
 import de.wiwie.wiutils.file.FileUtils;
-import de.wiwie.wiutils.utils.Pair;
+import de.clusteval.api.Pair;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;

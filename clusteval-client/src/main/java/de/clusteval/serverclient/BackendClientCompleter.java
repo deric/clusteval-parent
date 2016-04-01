@@ -12,7 +12,7 @@ package de.clusteval.serverclient;
 
 import de.clusteval.api.run.RUN_STATUS;
 import de.wiwie.wiutils.utils.ArraysExt;
-import de.wiwie.wiutils.utils.Pair;
+import de.clusteval.api.Pair;
 import java.rmi.ConnectException;
 import java.rmi.RemoteException;
 import java.util.List;

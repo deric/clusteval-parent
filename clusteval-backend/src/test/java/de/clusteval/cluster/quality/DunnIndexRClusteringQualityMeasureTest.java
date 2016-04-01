@@ -12,12 +12,14 @@
  */
 package de.clusteval.cluster.quality;
 
+import de.clusteval.api.Precision;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetConfig;
 import de.clusteval.api.exceptions.FormatConversionException;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
+import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
@@ -34,11 +36,9 @@ import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
 import de.clusteval.data.dataset.format.ConversionStandardToInputConfiguration;
 import de.clusteval.data.dataset.format.DataSetFormat;
 import de.clusteval.data.distance.DistanceMeasure;
-import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
 import de.clusteval.utils.AbstractClustEvalTest;
-import de.wiwie.wiutils.utils.SimilarityMatrix.NUMBER_PRECISION;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -87,7 +87,7 @@ public class DunnIndexRClusteringQualityMeasureTest extends AbstractClustEvalTes
                     new ConversionInputToStandardConfiguration(DistanceMeasure
                             .parseFromString(getRepository(),
                                     "EuclidianDistanceMeasure"),
-                            NUMBER_PRECISION.DOUBLE,
+                            Precision.DOUBLE,
                             new ArrayList<>(),
                             new ArrayList<>()),
                     new ConversionStandardToInputConfiguration());

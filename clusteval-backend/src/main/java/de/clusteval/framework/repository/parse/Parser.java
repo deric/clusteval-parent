@@ -17,6 +17,7 @@
 package de.clusteval.framework.repository.parse;
 
 import de.clusteval.api.ClusteringEvaluation;
+import de.clusteval.api.Precision;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataPreprocessor;
 import de.clusteval.api.data.IDataSet;
@@ -112,7 +113,6 @@ import de.clusteval.run.statistics.RunStatistic;
 import de.clusteval.run.statistics.UnknownRunDataStatisticException;
 import de.clusteval.run.statistics.UnknownRunStatisticException;
 import de.wiwie.wiutils.file.FileUtils;
-import de.wiwie.wiutils.utils.SimilarityMatrix.NUMBER_PRECISION;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -601,15 +601,15 @@ class DataSetConfigParser extends RepositoryObjectParser<DataSetConfig> {
                 distanceMeasure = DistanceMeasure.parseFromString(repo, "EuclidianDistanceMeasure");
             }
 
-            NUMBER_PRECISION similarityPrecision = NUMBER_PRECISION.DOUBLE;
+            Precision similarityPrecision = Precision.DOUBLE;
             if (getProps().containsKey("similarityPrecision")) {
                 String val = getProps().getString("similarityPrecision");
                 if (val.equals("double")) {
-                    similarityPrecision = NUMBER_PRECISION.DOUBLE;
+                    similarityPrecision = Precision.DOUBLE;
                 } else if (val.equals("float")) {
-                    similarityPrecision = NUMBER_PRECISION.FLOAT;
+                    similarityPrecision = Precision.FLOAT;
                 } else if (val.equals("short")) {
-                    similarityPrecision = NUMBER_PRECISION.SHORT;
+                    similarityPrecision = Precision.SHORT;
                 }
             }
 

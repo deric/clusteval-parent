@@ -13,6 +13,7 @@
 package de.clusteval.cluster.quality;
 
 import ch.qos.logback.classic.Level;
+import de.clusteval.api.Precision;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.api.data.IDataSet;
@@ -40,13 +41,13 @@ import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
 import de.clusteval.utils.AbstractClustEvalTest;
-import de.wiwie.wiutils.utils.SimilarityMatrix.NUMBER_PRECISION;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import static org.junit.Assert.assertEquals;
+import org.openide.util.Exceptions;
 
 /**
  * TODO: recover CVNN measure
@@ -99,7 +100,7 @@ public class CVNNClusteringQualityMeasureTest extends AbstractClustEvalTest {
                     new ConversionInputToStandardConfiguration(DistanceMeasure
                             .parseFromString(getRepository(),
                                     "EuclidianDistanceMeasure"),
-                            NUMBER_PRECISION.DOUBLE,
+                            Precision.DOUBLE,
                             new ArrayList<>(),
                             new ArrayList<>()),
                     new ConversionStandardToInputConfiguration());
@@ -111,9 +112,9 @@ public class CVNNClusteringQualityMeasureTest extends AbstractClustEvalTest {
             System.out.println(quality);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        } catch (UnknownGoldStandardFormatException | UnknownDataSetFormatException | IllegalArgumentException | InvalidDataSetFormatVersionException | IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        } catch (UnknownGoldStandardFormatException | UnknownDataSetFormatException |
+                IllegalArgumentException | InvalidDataSetFormatVersionException | IOException e) {
+            Exceptions.printStackTrace(e);
         }
     }
 
@@ -153,7 +154,7 @@ public class CVNNClusteringQualityMeasureTest extends AbstractClustEvalTest {
                     new ConversionInputToStandardConfiguration(DistanceMeasure
                             .parseFromString(getRepository(),
                                     "EuclidianDistanceMeasure"),
-                            NUMBER_PRECISION.DOUBLE,
+                            Precision.DOUBLE,
                             new ArrayList<>(),
                             new ArrayList<>()),
                     new ConversionStandardToInputConfiguration());
@@ -168,21 +169,15 @@ public class CVNNClusteringQualityMeasureTest extends AbstractClustEvalTest {
             System.out.println(quality);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        } catch (UnknownGoldStandardFormatException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (UnknownDataSetFormatException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        } catch (UnknownGoldStandardFormatException | UnknownDataSetFormatException |
+                IllegalArgumentException | InvalidDataSetFormatVersionException e) {
+            Exceptions.printStackTrace(e);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-        } catch (IllegalArgumentException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (InvalidDataSetFormatVersionException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         }
+        // TODO Auto-generated catch block
+        // TODO Auto-generated catch block
+
     }
 }

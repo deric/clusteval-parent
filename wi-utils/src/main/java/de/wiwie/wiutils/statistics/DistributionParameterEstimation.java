@@ -7,7 +7,7 @@ import de.wiwie.wiutils.utils.ArraysExt;
 import de.wiwie.wiutils.utils.FilterFactory;
 import de.wiwie.wiutils.utils.FilterFactory.FILTER_TYPE;
 import de.wiwie.wiutils.utils.Log;
-import de.wiwie.wiutils.utils.Pair;
+import de.clusteval.api.Pair;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;

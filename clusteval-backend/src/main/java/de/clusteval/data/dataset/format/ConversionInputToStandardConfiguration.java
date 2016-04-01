@@ -11,10 +11,10 @@
 package de.clusteval.data.dataset.format;
 
 import de.clusteval.api.IDistanceMeasure;
+import de.clusteval.api.Precision;
 import de.clusteval.api.data.IConversionInputToStandardConfiguration;
 import de.clusteval.api.data.IDataPreprocessor;
 import de.clusteval.data.distance.DistanceMeasure;
-import de.wiwie.wiutils.utils.SimilarityMatrix.NUMBER_PRECISION;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +40,7 @@ public class ConversionInputToStandardConfiguration implements IConversionInputT
 
     protected List<IDataPreprocessor> preprocessorsAfterDistance;
 
-    protected NUMBER_PRECISION similarityPrecision;
+    protected Precision similarityPrecision;
 
     /**
      * @param distanceMeasure
@@ -51,7 +51,7 @@ public class ConversionInputToStandardConfiguration implements IConversionInputT
      */
     public ConversionInputToStandardConfiguration(
             final DistanceMeasure distanceMeasure,
-            final NUMBER_PRECISION similarityPrecision,
+            final Precision similarityPrecision,
             final List<IDataPreprocessor> preprocessorsBeforeDistance,
             final List<IDataPreprocessor> preprocessorsAfterDistance) {
         super();
@@ -88,7 +88,7 @@ public class ConversionInputToStandardConfiguration implements IConversionInputT
     }
 
     @Override
-    public NUMBER_PRECISION getSimilarityPrecision() {
+    public Precision getSimilarityPrecision() {
         return this.similarityPrecision;
     }
 

@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset;
 
+import de.clusteval.api.Precision;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
@@ -31,6 +32,7 @@ import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.repository.RepositoryRemoveEvent;
 import de.clusteval.api.repository.RepositoryReplaceEvent;
+import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.cluster.paramOptimization.InvalidOptimizationParameterException;
 import de.clusteval.cluster.paramOptimization.UnknownParameterOptimizationMethodException;
@@ -43,14 +45,12 @@ import de.clusteval.data.dataset.type.UnknownDataSetTypeException;
 import de.clusteval.data.distance.DistanceMeasure;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
-import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.framework.repository.parse.Parser;
 import de.clusteval.run.RunException;
 import de.clusteval.run.statistics.UnknownRunDataStatisticException;
 import de.clusteval.run.statistics.UnknownRunStatisticException;
 import de.clusteval.utils.AbstractClustEvalTest;
 import de.clusteval.utils.StubRepositoryObject;
-import de.wiwie.wiutils.utils.SimilarityMatrix.NUMBER_PRECISION;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -521,7 +521,7 @@ public class DataSetConfigTest extends AbstractClustEvalTest {
                                 DistanceMeasure.parseFromString(
                                         getRepository(),
                                         "EuclidianDistanceMeasure"),
-                                NUMBER_PRECISION.DOUBLE,
+                                Precision.DOUBLE,
                                 new ArrayList<>(),
                                 new ArrayList<>()),
                         new ConversionStandardToInputConfiguration()), gsConfig);

@@ -16,11 +16,13 @@
  */
 package de.clusteval.api.data;
 
+import de.clusteval.api.Precision;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
-import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.repository.IRepositoryObject;
 import de.clusteval.api.repository.RegisterException;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.security.InvalidParameterException;
 
@@ -29,6 +31,13 @@ import java.security.InvalidParameterException;
  * @author deric
  */
 public interface IDataSetFormatParser extends IRepositoryObject {
+
+    /**
+     * Name used for format loading
+     *
+     * @return unique format name
+     */
+    String getName();
 
     /**
      * Convert the given dataset with this dataset format and the given version
@@ -57,5 +66,19 @@ public interface IDataSetFormatParser extends IRepositoryObject {
                    InvalidDataSetFormatVersionException, RegisterException,
                    UnknownDataSetFormatException, RNotAvailableException,
                    InvalidParameterException, InterruptedException;
+
+    /**
+     * @param dataSet
+     *                  The dataset to be parsed.
+     * @param precision
+     *                  The precision with which to store the similarities in memory.
+     * @return A wrapper object containing the contents of the dataset
+     * @throws IllegalArgumentException
+     * @throws InvalidDataSetFormatVersionException
+     * @throws IOException
+     */
+    Object parse(IDataSet dataSet, Precision precision) throws IOException, InvalidDataSetFormatVersionException;
+
+    void writeToFileHelper(IDataSet dataSet, BufferedWriter writer) throws IOException;
 
 }

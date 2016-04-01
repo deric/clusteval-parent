@@ -13,6 +13,7 @@
 package de.clusteval.data.dataset;
 
 import de.clusteval.api.IContext;
+import de.clusteval.api.Precision;
 import de.clusteval.api.data.IConversionConfiguration;
 import de.clusteval.api.data.IConversionInputToStandardConfiguration;
 import de.clusteval.api.data.IDataPreprocessor;
@@ -38,7 +39,6 @@ import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.framework.repository.RepositoryObject;
 import de.clusteval.utils.NamedDoubleAttribute;
 import de.clusteval.utils.NamedIntegerAttribute;
-import de.wiwie.wiutils.utils.SimilarityMatrix.NUMBER_PRECISION;
 import java.io.File;
 import java.io.IOException;
 import java.security.InvalidParameterException;
@@ -324,7 +324,7 @@ public abstract class DataSet extends RepositoryObject implements IDataSet, IRep
     public boolean loadIntoMemory() throws IllegalArgumentException,
                                            IOException, InvalidDataSetFormatVersionException,
                                            UnknownDataSetFormatException {
-        return this.loadIntoMemory(NUMBER_PRECISION.DOUBLE);
+        return this.loadIntoMemory(Precision.DOUBLE);
     }
 
     /**
@@ -344,7 +344,8 @@ public abstract class DataSet extends RepositoryObject implements IDataSet, IRep
      * @throws IOException
      * @throws IllegalArgumentException
      */
-    public abstract boolean loadIntoMemory(NUMBER_PRECISION precision)
+    @Override
+    public abstract boolean loadIntoMemory(Precision precision)
             throws UnknownDataSetFormatException, IllegalArgumentException,
                    IOException, InvalidDataSetFormatVersionException;
 

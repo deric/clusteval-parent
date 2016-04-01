@@ -27,7 +27,7 @@ import de.clusteval.api.program.ParameterSet;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.RepositoryObject;
-import de.wiwie.wiutils.utils.Pair;
+import de.clusteval.api.Pair;
 import de.wiwie.wiutils.utils.parse.TextFileParser;
 import java.io.File;
 import java.io.IOException;

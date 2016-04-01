@@ -17,7 +17,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import de.wiwie.wiutils.utils.Pair;
+import de.clusteval.api.Pair;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
 

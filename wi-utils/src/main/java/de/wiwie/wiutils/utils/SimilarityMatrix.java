@@ -5,6 +5,8 @@ package de.wiwie.wiutils.utils;
 
 import cern.colt.function.tdouble.DoubleProcedure;
 import cern.colt.matrix.tdouble.impl.SparseDoubleMatrix2D;
+import de.clusteval.api.Pair;
+import de.clusteval.api.Precision;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -26,10 +28,6 @@ import java.util.Set;
  */
 public class SimilarityMatrix {
 
-    public enum NUMBER_PRECISION {
-        DOUBLE, FLOAT, SHORT
-    }
-
     protected Map<String, Integer> ids;
 
     protected AbstractSimilarityMatrix similarities;
@@ -47,21 +45,21 @@ public class SimilarityMatrix {
      * @param columns
      */
     public SimilarityMatrix(final int rows, final int columns) {
-        this(null, rows, columns, NUMBER_PRECISION.DOUBLE);
+        this(null, rows, columns, Precision.DOUBLE);
     }
 
     public SimilarityMatrix(final int rows, final int columns,
-            final NUMBER_PRECISION precision) {
+            final Precision precision) {
         this(null, rows, columns, precision);
     }
 
     public SimilarityMatrix(final int rows, final int columns,
-            final NUMBER_PRECISION precision, final boolean isSymmetric) {
+            final Precision precision, final boolean isSymmetric) {
         this(null, rows, columns, precision, isSymmetric);
     }
 
     public SimilarityMatrix(final String[] ids, final int rows,
-            final int columns, final NUMBER_PRECISION precision) {
+            final int columns, final Precision precision) {
         this(ids, rows, columns, precision, false);
     }
 
@@ -73,7 +71,7 @@ public class SimilarityMatrix {
      * @param isSymmetric
      */
     public SimilarityMatrix(final String[] ids, final int rows,
-            final int columns, final NUMBER_PRECISION precision,
+            final int columns, final Precision precision,
             final boolean isSymmetric) {
         super();
 
@@ -109,16 +107,16 @@ public class SimilarityMatrix {
      * @param similarities
      */
     public SimilarityMatrix(final double[][] similarities) {
-        this(similarities, NUMBER_PRECISION.DOUBLE);
+        this(similarities, Precision.DOUBLE);
     }
 
     public SimilarityMatrix(final double[][] similarities,
-            final NUMBER_PRECISION precision) {
+            final Precision precision) {
         this(null, similarities, precision);
     }
 
     public SimilarityMatrix(final String[] ids, final double[][] similarities) {
-        this(ids, similarities, NUMBER_PRECISION.DOUBLE);
+        this(ids, similarities, Precision.DOUBLE);
     }
 
     /**
@@ -127,7 +125,7 @@ public class SimilarityMatrix {
      * @param precision
      */
     public SimilarityMatrix(final String[] ids, final double[][] similarities,
-            final NUMBER_PRECISION precision) {
+            final Precision precision) {
         super();
 
         if (ids != null) {

@@ -21,7 +21,7 @@ import de.clusteval.framework.repository.MyRengine;
 import de.clusteval.framework.repository.Repository;
 import de.wiwie.wiutils.file.FileUtils;
 import de.wiwie.wiutils.utils.ArraysExt;
-import de.wiwie.wiutils.utils.Pair;
+import de.clusteval.api.Pair;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
 import java.io.File;
 import java.io.IOException;

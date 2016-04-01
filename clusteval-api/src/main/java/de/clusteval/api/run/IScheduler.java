@@ -16,7 +16,7 @@
  */
 package de.clusteval.api.run;
 
-import de.wiwie.wiutils.utils.Pair;
+import de.clusteval.api.Pair;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Set;

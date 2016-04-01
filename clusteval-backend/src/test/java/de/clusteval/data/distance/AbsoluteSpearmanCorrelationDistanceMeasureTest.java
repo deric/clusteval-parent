@@ -1,14 +1,21 @@
-/**
+/** *****************************************************************************
+ * Copyright (c) 2013 Christian Wiwie.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the GNU Public License v3.0
+ * which accompanies this distribution, and is available at
+ * http://www.gnu.org/licenses/gpl.html
  *
- */
+ * Contributors:
+ *     Christian Wiwie - initial API and implementation
+ ***************************************************************************** */
 package de.clusteval.data.distance;
 
+import de.clusteval.api.Precision;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
+import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
 import de.clusteval.utils.AbstractClustEvalTest;
-import de.clusteval.api.r.RNotAvailableException;
 import de.wiwie.wiutils.utils.ArraysExt;
-import de.wiwie.wiutils.utils.SimilarityMatrix.NUMBER_PRECISION;
 import java.util.ArrayList;
 import org.junit.Assert;
 import org.junit.Test;
@@ -17,7 +24,7 @@ import org.junit.Test;
  * @author Christian Wiwie
  *
  */
-public class TestAbsoluteSpearmanCorrelationDistanceMeasure extends AbstractClustEvalTest {
+public class AbsoluteSpearmanCorrelationDistanceMeasureTest extends AbstractClustEvalTest {
 
     @Test
     public void test() throws UnknownDistanceMeasureException,
@@ -27,7 +34,7 @@ public class TestAbsoluteSpearmanCorrelationDistanceMeasure extends AbstractClus
         Assert.assertTrue(measure != null);
 
         ConversionInputToStandardConfiguration config = new ConversionInputToStandardConfiguration(
-                measure, NUMBER_PRECISION.FLOAT,
+                measure, Precision.FLOAT,
                 new ArrayList<>(),
                 new ArrayList<>());
 

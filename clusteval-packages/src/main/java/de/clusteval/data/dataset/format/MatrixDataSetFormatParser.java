@@ -24,7 +24,7 @@ import de.clusteval.data.dataset.DataMatrix;
 import de.clusteval.data.dataset.DataSet;
 import de.clusteval.data.dataset.DataSetAttributeParser;
 import de.clusteval.data.dataset.RelativeDataSet;
-import de.wiwie.wiutils.utils.Pair;
+import de.clusteval.api.Pair;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
 import de.wiwie.wiutils.utils.SimilarityMatrix.NUMBER_PRECISION;
 import de.wiwie.wiutils.utils.parse.TextFileParser;

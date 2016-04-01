@@ -11,6 +11,7 @@
 package de.clusteval.data.dataset;
 
 import ch.qos.logback.classic.Level;
+import de.clusteval.api.Precision;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.data.WEBSITE_VISIBILITY;
@@ -38,6 +39,7 @@ import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.cluster.paramOptimization.InvalidOptimizationParameterException;
 import de.clusteval.cluster.paramOptimization.UnknownParameterOptimizationMethodException;
@@ -54,7 +56,6 @@ import de.clusteval.data.dataset.type.UnknownDataSetTypeException;
 import de.clusteval.data.distance.DistanceMeasure;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
-import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RunResultRepository;
@@ -67,7 +68,6 @@ import de.clusteval.run.statistics.UnknownRunDataStatisticException;
 import de.clusteval.run.statistics.UnknownRunStatisticException;
 import de.clusteval.utils.AbstractClustEvalTest;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
-import de.wiwie.wiutils.utils.SimilarityMatrix.NUMBER_PRECISION;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -963,7 +963,7 @@ public class DataSetTest extends AbstractClustEvalTest {
                                 DistanceMeasure.parseFromString(
                                         getRepository(),
                                         "EuclidianDistanceMeasure"),
-                                NUMBER_PRECISION.DOUBLE,
+                                Precision.DOUBLE,
                                 new ArrayList<>(),
                                 new ArrayList<>()),
                         new ConversionStandardToInputConfiguration());
@@ -1057,7 +1057,7 @@ public class DataSetTest extends AbstractClustEvalTest {
                                 DistanceMeasure.parseFromString(
                                         getRepository(),
                                         "EuclidianDistanceMeasure"),
-                                NUMBER_PRECISION.DOUBLE,
+                                Precision.DOUBLE,
                                 new ArrayList<>(),
                                 new ArrayList<>()),
                         new ConversionStandardToInputConfiguration());
@@ -1156,7 +1156,7 @@ public class DataSetTest extends AbstractClustEvalTest {
                                 DistanceMeasure.parseFromString(
                                         getRepository(),
                                         "EuclidianDistanceMeasure"),
-                                NUMBER_PRECISION.DOUBLE,
+                                Precision.DOUBLE,
                                 new ArrayList<>(),
                                 new ArrayList<>()),
                         new ConversionStandardToInputConfiguration());
@@ -1217,7 +1217,7 @@ public class DataSetTest extends AbstractClustEvalTest {
                                 DistanceMeasure.parseFromString(
                                         getRepository(),
                                         "EuclidianDistanceMeasure"),
-                                NUMBER_PRECISION.DOUBLE,
+                                Precision.DOUBLE,
                                 new ArrayList<>(),
                                 new ArrayList<>()),
                         new ConversionStandardToInputConfiguration());
@@ -1237,7 +1237,7 @@ public class DataSetTest extends AbstractClustEvalTest {
                 new ConversionInputToStandardConfiguration(DistanceMeasure
                         .parseFromString(getRepository(),
                                 "EuclidianDistanceMeasure"),
-                        NUMBER_PRECISION.DOUBLE,
+                        Precision.DOUBLE,
                         new ArrayList<>(),
                         new ArrayList<>()),
                 new ConversionStandardToInputConfiguration());
@@ -1256,7 +1256,7 @@ public class DataSetTest extends AbstractClustEvalTest {
                 new ConversionInputToStandardConfiguration(DistanceMeasure
                         .parseFromString(getRepository(),
                                 "EuclidianDistanceMeasure"),
-                        NUMBER_PRECISION.DOUBLE,
+                        Precision.DOUBLE,
                         new ArrayList<>(),
                         new ArrayList<>()),
                 new ConversionStandardToInputConfiguration());
@@ -1278,7 +1278,7 @@ public class DataSetTest extends AbstractClustEvalTest {
                 new ConversionInputToStandardConfiguration(DistanceMeasure
                         .parseFromString(getRepository(),
                                 "EuclidianDistanceMeasure"),
-                        NUMBER_PRECISION.DOUBLE,
+                        Precision.DOUBLE,
                         new ArrayList<>(),
                         new ArrayList<>()),
                 new ConversionStandardToInputConfiguration());
@@ -1342,7 +1342,7 @@ public class DataSetTest extends AbstractClustEvalTest {
                 new ConversionInputToStandardConfiguration(DistanceMeasure
                         .parseFromString(getRepository(),
                                 "EuclidianDistanceMeasure"),
-                        NUMBER_PRECISION.DOUBLE,
+                        Precision.DOUBLE,
                         new ArrayList<>(),
                         new ArrayList<>()),
                 new ConversionStandardToInputConfiguration());
@@ -1442,7 +1442,7 @@ public class DataSetTest extends AbstractClustEvalTest {
                 new ConversionInputToStandardConfiguration(DistanceMeasure
                         .parseFromString(getRepository(),
                                 "EuclidianDistanceMeasure"),
-                        NUMBER_PRECISION.DOUBLE,
+                        Precision.DOUBLE,
                         new ArrayList<>(),
                         new ArrayList<>()));
         Assert.assertTrue(targetFile.exists());
@@ -1536,7 +1536,7 @@ public class DataSetTest extends AbstractClustEvalTest {
                 new ConversionInputToStandardConfiguration(DistanceMeasure
                         .parseFromString(getRepository(),
                                 "EuclidianDistanceMeasure"),
-                        NUMBER_PRECISION.DOUBLE,
+                        Precision.DOUBLE,
                         new ArrayList<>(),
                         new ArrayList<>()));
         IDataSet standard = ((DataSet) this.repositoryObject).getInStandardFormat();
@@ -1588,7 +1588,7 @@ public class DataSetTest extends AbstractClustEvalTest {
                                 DistanceMeasure.parseFromString(
                                         getRepository(),
                                         "EuclidianDistanceMeasure"),
-                                NUMBER_PRECISION.DOUBLE,
+                                Precision.DOUBLE,
                                 new ArrayList<>(),
                                 new ArrayList<>()),
                         new ConversionStandardToInputConfiguration());
@@ -1642,7 +1642,7 @@ public class DataSetTest extends AbstractClustEvalTest {
                                 DistanceMeasure.parseFromString(
                                         getRepository(),
                                         "EuclidianDistanceMeasure"),
-                                NUMBER_PRECISION.DOUBLE,
+                                Precision.DOUBLE,
                                 new ArrayList<>(),
                                 new ArrayList<>()),
                         new ConversionStandardToInputConfiguration());
@@ -1676,7 +1676,7 @@ public class DataSetTest extends AbstractClustEvalTest {
                 new ConversionInputToStandardConfiguration(DistanceMeasure
                         .parseFromString(getRepository(),
                                 "EuclidianDistanceMeasure"),
-                        NUMBER_PRECISION.DOUBLE,
+                        Precision.DOUBLE,
                         new ArrayList<>(),
                         new ArrayList<>()),
                 new ConversionStandardToInputConfiguration());

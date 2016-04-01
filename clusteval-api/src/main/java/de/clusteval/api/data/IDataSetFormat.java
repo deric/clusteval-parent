@@ -16,12 +16,12 @@
  */
 package de.clusteval.api.data;
 
+import de.clusteval.api.Precision;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.repository.IRepositoryObject;
 import de.clusteval.api.repository.RegisterException;
-import de.wiwie.wiutils.utils.SimilarityMatrix;
 import java.io.File;
 import java.io.IOException;
 import java.security.InvalidParameterException;
@@ -32,7 +32,7 @@ import java.security.InvalidParameterException;
  */
 public interface IDataSetFormat extends IRepositoryObject {
 
-    Object parse(final IDataSet dataSet, SimilarityMatrix.NUMBER_PRECISION precision)
+    Object parse(final IDataSet dataSet, Precision precision)
             throws IllegalArgumentException, IOException, InvalidDataSetFormatVersionException;
 
     /**

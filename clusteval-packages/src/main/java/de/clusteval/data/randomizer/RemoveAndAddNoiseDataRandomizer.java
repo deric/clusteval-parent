@@ -18,7 +18,7 @@ import org.rosuda.REngine.REXPMismatchException;
 import org.rosuda.REngine.REngineException;
 import org.rosuda.REngine.Rserve.RserveException;
 
-import de.wiwie.wiutils.utils.Pair;
+import de.clusteval.api.Pair;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.data.dataset.AbsoluteDataSet;

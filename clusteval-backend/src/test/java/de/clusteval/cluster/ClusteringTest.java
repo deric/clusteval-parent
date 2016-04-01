@@ -18,7 +18,7 @@ import de.clusteval.api.exceptions.ClusteringParseException;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.program.ParameterSet;
 import de.clusteval.utils.AbstractClustEvalTest;
-import de.wiwie.wiutils.utils.Pair;
+import de.clusteval.api.Pair;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;

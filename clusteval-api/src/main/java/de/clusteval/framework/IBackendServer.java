@@ -10,10 +10,10 @@
  ***************************************************************************** */
 package de.clusteval.framework;
 
-import de.clusteval.api.run.RUN_STATUS;
 import ch.qos.logback.classic.Level;
-import de.wiwie.wiutils.utils.Pair;
-import de.wiwie.wiutils.utils.Triple;
+import de.clusteval.api.Pair;
+import de.clusteval.api.Triple;
+import de.clusteval.api.run.RUN_STATUS;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.Collection;

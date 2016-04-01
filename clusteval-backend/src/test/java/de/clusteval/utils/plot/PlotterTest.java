@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.utils.plot;
 
+import de.clusteval.api.Precision;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetConfig;
 import de.clusteval.api.exceptions.DataSetNotFoundException;
@@ -35,6 +36,7 @@ import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.cluster.paramOptimization.InvalidOptimizationParameterException;
 import de.clusteval.cluster.paramOptimization.UnknownParameterOptimizationMethodException;
@@ -55,7 +57,6 @@ import de.clusteval.data.dataset.type.UnknownDataSetTypeException;
 import de.clusteval.data.distance.DistanceMeasure;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
-import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
 import de.clusteval.framework.repository.parse.Parser;
@@ -63,7 +64,6 @@ import de.clusteval.run.RunException;
 import de.clusteval.run.statistics.UnknownRunDataStatisticException;
 import de.clusteval.run.statistics.UnknownRunStatisticException;
 import de.clusteval.utils.AbstractClustEvalTest;
-import de.wiwie.wiutils.utils.SimilarityMatrix.NUMBER_PRECISION;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -76,7 +76,7 @@ import org.rosuda.REngine.REngineException;
  * @author Christian Wiwie
  *
  */
-public class TestPlotter extends AbstractClustEvalTest {
+public class PlotterTest extends AbstractClustEvalTest {
 
     @Test
     public void testIsoMDS() throws RepositoryAlreadyExistsException,
@@ -129,7 +129,7 @@ public class TestPlotter extends AbstractClustEvalTest {
                 new ConversionInputToStandardConfiguration(DistanceMeasure
                         .parseFromString(getRepository(),
                                 "EuclidianDistanceMeasure"),
-                        NUMBER_PRECISION.DOUBLE,
+                        Precision.DOUBLE,
                         new ArrayList<>(),
                         new ArrayList<>()),
                 new ConversionStandardToInputConfiguration());
@@ -142,7 +142,7 @@ public class TestPlotter extends AbstractClustEvalTest {
                 ds, new ConversionInputToStandardConfiguration(DistanceMeasure
                         .parseFromString(getRepository(),
                                 "EuclidianDistanceMeasure"),
-                        NUMBER_PRECISION.DOUBLE,
+                        Precision.DOUBLE,
                         new ArrayList<>(),
                         new ArrayList<>()),
                 new ConversionStandardToInputConfiguration());
@@ -209,7 +209,7 @@ public class TestPlotter extends AbstractClustEvalTest {
                 new ConversionInputToStandardConfiguration(DistanceMeasure
                         .parseFromString(getRepository(),
                                 "EuclidianDistanceMeasure"),
-                        NUMBER_PRECISION.DOUBLE,
+                        Precision.DOUBLE,
                         new ArrayList<>(),
                         new ArrayList<>()),
                 new ConversionStandardToInputConfiguration());
@@ -222,7 +222,7 @@ public class TestPlotter extends AbstractClustEvalTest {
                 ds, new ConversionInputToStandardConfiguration(DistanceMeasure
                         .parseFromString(getRepository(),
                                 "EuclidianDistanceMeasure"),
-                        NUMBER_PRECISION.DOUBLE,
+                        Precision.DOUBLE,
                         new ArrayList<>(),
                         new ArrayList<>()),
                 new ConversionStandardToInputConfiguration());

@@ -11,6 +11,7 @@
 package de.clusteval.cluster.quality;
 
 import ch.qos.logback.classic.Level;
+import de.clusteval.api.Precision;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.api.data.IDataSet;
@@ -38,7 +39,6 @@ import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
 import de.clusteval.utils.AbstractClustEvalTest;
-import de.wiwie.wiutils.utils.SimilarityMatrix.NUMBER_PRECISION;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -141,7 +141,7 @@ public class SilhouetteValueFuzzyRClusteringQualityMeasureTest extends AbstractC
                     new ConversionInputToStandardConfiguration(DistanceMeasure
                             .parseFromString(getRepository(),
                                     "EuclidianDistanceMeasure"),
-                            NUMBER_PRECISION.DOUBLE,
+                            Precision.DOUBLE,
                             new ArrayList<>(),
                             new ArrayList<>()),
                     new ConversionStandardToInputConfiguration());
@@ -219,7 +219,7 @@ public class SilhouetteValueFuzzyRClusteringQualityMeasureTest extends AbstractC
                     new ConversionInputToStandardConfiguration(DistanceMeasure
                             .parseFromString(getRepository(),
                                     "EuclidianDistanceMeasure"),
-                            NUMBER_PRECISION.DOUBLE,
+                            Precision.DOUBLE,
                             new ArrayList<>(),
                             new ArrayList<>()),
                     new ConversionStandardToInputConfiguration());
@@ -291,7 +291,7 @@ public class SilhouetteValueFuzzyRClusteringQualityMeasureTest extends AbstractC
                     new ConversionInputToStandardConfiguration(DistanceMeasure
                             .parseFromString(getRepository(),
                                     "EuclidianDistanceMeasure"),
-                            NUMBER_PRECISION.DOUBLE,
+                            Precision.DOUBLE,
                             new ArrayList<>(),
                             new ArrayList<>()),
                     new ConversionStandardToInputConfiguration());

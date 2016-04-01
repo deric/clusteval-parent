@@ -12,6 +12,7 @@
  */
 package de.clusteval.cluster.quality;
 
+import de.clusteval.api.Precision;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.api.data.IDataSet;
@@ -35,7 +36,6 @@ import de.clusteval.data.distance.DistanceMeasure;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
 import de.clusteval.utils.AbstractClustEvalTest;
-import de.wiwie.wiutils.utils.SimilarityMatrix.NUMBER_PRECISION;
 import java.io.File;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -86,7 +86,7 @@ public class DaviesBouldinIndexRClusteringQualityMeasureTest extends AbstractClu
                     new ConversionInputToStandardConfiguration(DistanceMeasure
                             .parseFromString(getRepository(),
                                     "EuclidianDistanceMeasure"),
-                            NUMBER_PRECISION.DOUBLE,
+                            Precision.DOUBLE,
                             new ArrayList<>(),
                             new ArrayList<>()),
                     new ConversionStandardToInputConfiguration());

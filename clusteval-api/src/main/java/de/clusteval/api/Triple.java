@@ -1,4 +1,4 @@
-package de.wiwie.wiutils.utils;
+package de.clusteval.api;
 
 import java.io.Serializable;
 
