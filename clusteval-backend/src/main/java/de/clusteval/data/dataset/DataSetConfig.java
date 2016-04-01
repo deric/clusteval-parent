@@ -89,7 +89,7 @@ public class DataSetConfig extends DumpableRepositoryObject implements IDataSetC
      * @throws RegisterException
      */
     public DataSetConfig(final IRepository repository, final long changeDate,
-            final File absPath, final DataSet ds,
+            final File absPath, final IDataSet ds,
             final ConversionInputToStandardConfiguration configInputToStandard,
             final ConversionStandardToInputConfiguration configStandardToInput)
             throws RegisterException {

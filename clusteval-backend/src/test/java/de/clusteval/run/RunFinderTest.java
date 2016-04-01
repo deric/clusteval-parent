@@ -39,7 +39,7 @@ import org.junit.Test;
  * @author Christian Wiwie
  *
  */
-public class TestRunFinder extends AbstractClustEvalTest {
+public class RunFinderTest extends AbstractClustEvalTest {
 
 	/**
 	 * @throws RepositoryAlreadyExistsException

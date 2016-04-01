@@ -7,45 +7,38 @@
  *
  * Contributors:
  *     Christian Wiwie - initial API and implementation
- ******************************************************************************/
-/**
- *
- */
+ ***************************************************************************** */
 package de.clusteval.run.result;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.security.NoSuchAlgorithmException;
-
-import junit.framework.Assert;
-
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-
-import de.clusteval.framework.ClustevalBackendServer;
-import de.clusteval.api.r.InvalidRepositoryException;
+import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
-import de.clusteval.api.repository.RegisterException;
-import de.clusteval.framework.repository.Repository;
+import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
+import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.run.RUN_STATUS;
+import de.clusteval.framework.ClustevalBackendServer;
+import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
-import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.framework.repository.db.SQLCommunicator;
 import de.clusteval.framework.repository.db.StubSQLCommunicator;
 import de.clusteval.framework.threading.RepositorySupervisorThread;
 import de.clusteval.framework.threading.SupervisorThread;
 import de.clusteval.run.Run;
-import de.clusteval.run.result.RunResult;
-import de.clusteval.api.run.RUN_STATUS;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.security.NoSuchAlgorithmException;
+import junit.framework.Assert;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
 
 /**
  * @author Christian Wiwie
  *
  */
-public class TestRunResultFinder {
+public class RunResultFinderTest {
 
 	/**
 	 * @throws java.lang.Exception
