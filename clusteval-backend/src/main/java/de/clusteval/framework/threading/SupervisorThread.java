@@ -18,7 +18,6 @@ import de.clusteval.api.run.ISupervisorThread;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethodFinderThread;
 import de.clusteval.cluster.quality.ClusteringQualityMeasureFinderThread;
 import de.clusteval.data.dataset.DataSetConfigFinderThread;
-import de.clusteval.data.dataset.format.DataSetFormatFinderThread;
 import de.clusteval.framework.ClustevalThread;
 import de.clusteval.run.RunFinderThread;
 import java.lang.reflect.Constructor;
@@ -232,14 +231,6 @@ public abstract class SupervisorThread extends Thread implements ISupervisorThre
             }
         }
         super.interrupt();
-    }
-
-    /**
-     * @return The thread which finds dataset formats.
-     */
-    public DataSetFormatFinderThread getDataSetFormatThread() {
-        return (DataSetFormatFinderThread) this.threads
-                .get(DataSetFormatFinderThread.class);
     }
 
     /**

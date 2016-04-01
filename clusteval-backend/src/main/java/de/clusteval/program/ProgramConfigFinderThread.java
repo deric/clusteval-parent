@@ -12,11 +12,9 @@ package de.clusteval.program;
 
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.run.ISupervisorThread;
 import de.clusteval.context.Context;
 import de.clusteval.context.ContextFinderThread;
-import de.clusteval.data.dataset.format.DataSetFormat;
-import de.clusteval.data.dataset.format.DataSetFormatFinderThread;
-import de.clusteval.api.run.ISupervisorThread;
 import de.clusteval.program.r.RProgram;
 import de.clusteval.program.r.RProgramFinderThread;
 import de.clusteval.utils.Finder;
@@ -69,10 +67,6 @@ public class ProgramConfigFinderThread extends FinderThread<ProgramConfig> {
     @Override
     protected void beforeFind() {
 
-        if (!this.repository.isInitialized(DataSetFormat.class)) {
-            this.supervisorThread.getThread(DataSetFormatFinderThread.class)
-                    .waitFor();
-        }
 
         if (!this.repository.isInitialized(RProgram.class)) {
             this.supervisorThread.getThread(RProgramFinderThread.class)

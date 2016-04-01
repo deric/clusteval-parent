@@ -24,7 +24,6 @@ import de.clusteval.data.dataset.DataSetConfig;
 import de.clusteval.data.dataset.DataSetConfigFinderThread;
 import de.clusteval.data.dataset.DataSetFinderThread;
 import de.clusteval.data.dataset.format.DataSetFormat;
-import de.clusteval.data.dataset.format.DataSetFormatFinderThread;
 import de.clusteval.data.dataset.generator.DataSetGenerator;
 import de.clusteval.data.dataset.generator.DataSetGeneratorFinderThread;
 import de.clusteval.data.dataset.type.DataSetType;
@@ -130,22 +129,23 @@ public class RepositorySupervisorThread extends SupervisorThread {
 
     /**
      * @param repository
-     * The repository this thread belongs to.
+     *                           The repository this thread belongs to.
      * @param threadSleepTimes
-     * The sleep times of the created threads.
+     *                           The sleep times of the created threads.
      * @param checkOnce
-     * A boolean indicating, whether this thread should only check
-     * once and terminate afterwards.
+     *                           A boolean indicating, whether this thread should only check
+     *                           once and terminate afterwards.
      * @param checkForRunResults
-     * Whether this thread should check for run results in the
-     * repository.
+     *                           Whether this thread should check for run results in the
+     *                           repository.
      */
     @SuppressWarnings({"unchecked"})
     public RepositorySupervisorThread(final IRepository repository,
             Map<String, Long> threadSleepTimes, final boolean checkOnce,
             final boolean checkForRunResults) {
         super(repository, checkForRunResults
-                          ? createList(DataSetFormatFinderThread.class,
+                          ? createList(
+                        //DataSetFormatFinderThread.class,
                         //RunResultFormatFinderThread.class,
                         ContextFinderThread.class,
                         DataSetTypeFinderThread.class,
@@ -167,7 +167,7 @@ public class RepositorySupervisorThread extends SupervisorThread {
                         DataRandomizerFinderThread.class,
                         RunResultFinderThread.class) : createList(
                         // normal elements
-                        DataSetFormatFinderThread.class,
+                        //DataSetFormatFinderThread.class,
                         //RunResultFormatFinderThread.class,
                         ContextFinderThread.class,
                         DataSetTypeFinderThread.class,
