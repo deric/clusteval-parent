@@ -39,6 +39,7 @@ import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.IRunResult;
 import de.clusteval.api.stats.IDataStatistic;
 import de.clusteval.api.stats.IStatistic;
+import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.cluster.paramOptimization.InvalidOptimizationParameterException;
 import de.clusteval.cluster.paramOptimization.UnknownParameterOptimizationMethodException;
@@ -53,7 +54,6 @@ import de.clusteval.data.dataset.type.UnknownDataSetTypeException;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
 import de.clusteval.data.statistics.DataStatistic;
-import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
@@ -81,6 +81,8 @@ import org.apache.commons.configuration.ConfigurationException;
  */
 public class DataAnalysisRunResult extends AnalysisRunResult<IDataConfig, IDataStatistic> {
 
+    private static final String NAME = "data-analysis-result";
+
     /**
      * @param repository
      * @param changeDate
@@ -103,6 +105,11 @@ public class DataAnalysisRunResult extends AnalysisRunResult<IDataConfig, IDataS
      */
     public DataAnalysisRunResult(final DataAnalysisRunResult other) throws RegisterException {
         super(other);
+    }
+
+    @Override
+    public String getName() {
+        return NAME;
     }
 
     /*
@@ -149,7 +156,6 @@ public class DataAnalysisRunResult extends AnalysisRunResult<IDataConfig, IDataS
      * @return The data analysis run result parsed from the given runresult
      *         folder.
      *
-     * @throws RepositoryAlreadyExistsException
      * @throws RepositoryAlreadyExistsException
      * @throws InvalidRepositoryException
      * @throws UnknownRunStatisticException
@@ -398,4 +404,5 @@ public class DataAnalysisRunResult extends AnalysisRunResult<IDataConfig, IDataS
     public String toString() {
         return this.getAbsolutePath();
     }
+
 }

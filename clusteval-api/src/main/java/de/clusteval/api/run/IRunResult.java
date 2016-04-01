@@ -25,6 +25,13 @@ import de.clusteval.api.repository.IRepositoryObject;
  */
 public interface IRunResult extends IRepositoryObject {
 
+    /**
+     * Name of result format
+     *
+     * @return unique identifier
+     */
+    String getName();
+
     IRunResult clone();
 
     /**

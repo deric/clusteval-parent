@@ -18,6 +18,7 @@ import de.clusteval.api.exceptions.GoldStandardNotFoundException;
 import de.clusteval.api.exceptions.IncompatibleContextException;
 import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
+import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.exceptions.RunResultParseException;
 import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
@@ -35,6 +36,7 @@ import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.IRunResult;
+import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.cluster.paramOptimization.InvalidOptimizationParameterException;
 import de.clusteval.cluster.paramOptimization.UnknownParameterOptimizationMethodException;
@@ -47,8 +49,6 @@ import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.data.dataset.type.UnknownDataSetTypeException;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
-import de.clusteval.api.stats.UnknownDataStatisticException;
-import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
@@ -72,12 +72,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import org.apache.commons.configuration.ConfigurationException;
+import org.openide.util.Exceptions;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * @author Christian Wiwie
  *
  */
+@ServiceProvider(service = IRunResult.class)
 public class RunDataAnalysisRunResult extends AnalysisRunResult<Pair<List<String>, List<String>>, RunDataStatistic> {
+
+    private static final String NAME = "run-data-analysis-result";
+
+    public RunDataAnalysisRunResult() throws RegisterException {
+        //TODO: move logic from constructor
+        super(null);
+    }
 
     /**
      * @param repository
@@ -102,6 +112,12 @@ public class RunDataAnalysisRunResult extends AnalysisRunResult<Pair<List<String
     public RunDataAnalysisRunResult(final RunDataAnalysisRunResult other) throws RegisterException {
         super(other);
     }
+
+    @Override
+    public String getName() {
+        return NAME;
+    }
+
 
     /*
      * (non-Javadoc)
@@ -136,8 +152,7 @@ public class RunDataAnalysisRunResult extends AnalysisRunResult<Pair<List<String
         try {
             return new RunDataAnalysisRunResult(this);
         } catch (RegisterException e) {
-            // should not occur
-            e.printStackTrace();
+            Exceptions.printStackTrace(e);
         }
         return null;
     }
@@ -158,7 +173,6 @@ public class RunDataAnalysisRunResult extends AnalysisRunResult<Pair<List<String
      * @return The run-data analysis runresult parsed from the given runresult
      *         folder.
      *
-     * @throws RepositoryAlreadyExistsException
      * @throws RepositoryAlreadyExistsException
      * @throws InvalidRepositoryException
      * @throws UnknownDistanceMeasureException
@@ -277,7 +291,7 @@ public class RunDataAnalysisRunResult extends AnalysisRunResult<Pair<List<String
     @Override
     public void loadIntoMemory() throws RunResultParseException {
 
-        List<RunDataStatistic> statistics = new ArrayList<>();
+        List<RunDataStatistic> res = new ArrayList<>();
         for (final Statistic runDataStatistic : this.getRun().getStatistics()) {
             final File completeFile = new File(
                     FileUtils.buildPath(absPath.getAbsolutePath(), runDataStatistic.getIdentifier() + ".txt"));
@@ -288,11 +302,11 @@ public class RunDataAnalysisRunResult extends AnalysisRunResult<Pair<List<String
             final String fileContents = FileUtils.readStringFromFile(completeFile.getAbsolutePath());
 
             runDataStatistic.parseFromString(fileContents);
-            statistics.add((RunDataStatistic) runDataStatistic);
+            res.add((RunDataStatistic) runDataStatistic);
 
         }
         this.put(Pair.getPair(this.getRun().getUniqueRunAnalysisRunIdentifiers(),
-                this.getRun().getUniqueDataAnalysisRunIdentifiers()), statistics);
+                this.getRun().getUniqueDataAnalysisRunIdentifiers()), res);
     }
 
     /*

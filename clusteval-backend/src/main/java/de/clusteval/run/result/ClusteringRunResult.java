@@ -21,6 +21,7 @@ import de.clusteval.api.exceptions.GoldStandardNotFoundException;
 import de.clusteval.api.exceptions.IncompatibleContextException;
 import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
+import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
@@ -42,6 +43,7 @@ import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.IRunResult;
 import de.clusteval.api.run.IRunResultFormat;
 import de.clusteval.api.run.IRunResultFormatParser;
+import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.cluster.paramOptimization.InvalidOptimizationParameterException;
@@ -55,8 +57,6 @@ import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.data.dataset.type.UnknownDataSetTypeException;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
-import de.clusteval.api.stats.UnknownDataStatisticException;
-import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
@@ -79,6 +79,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Map;
 import org.apache.commons.configuration.ConfigurationException;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * The Class ClusteringResult.
@@ -86,6 +87,7 @@ import org.apache.commons.configuration.ConfigurationException;
  * @author Christian Wiwie
  *
  */
+@ServiceProvider(service = IRunResult.class)
 public class ClusteringRunResult extends ExecutionRunResult implements IClusteringRunResult {
 
     /**
@@ -94,6 +96,17 @@ public class ClusteringRunResult extends ExecutionRunResult implements IClusteri
     protected IRunResultFormat resultFormat;
 
     protected Pair<ParameterSet, Clustering> clustering;
+
+    private static final String NAME = "clustering result";
+
+    @Override
+    public String getName() {
+        return NAME;
+    }
+
+    public ClusteringRunResult() throws RegisterException {
+        super(null);//TODO
+    }
 
     /**
      * Instantiates a new clustering result.

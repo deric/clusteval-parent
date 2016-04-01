@@ -24,7 +24,6 @@ import java.lang.reflect.InvocationTargetException;
  *
  * @author Christian Wiwie
  * @param <T>
- * @deprecated
  *
  */
 public abstract class DataStatisticCalculator<T extends DataStatistic> extends StatisticCalculator<T> {

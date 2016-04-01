@@ -46,7 +46,6 @@ import de.clusteval.run.RunFinderThread;
 import de.clusteval.run.result.RunResult;
 import de.clusteval.run.result.RunResultFinderThread;
 import de.clusteval.run.result.format.RunResultFormat;
-import de.clusteval.run.result.format.RunResultFormatFinderThread;
 import de.clusteval.run.result.postprocessing.RunResultPostprocessorFinderThread;
 import de.clusteval.run.statistics.RunDataStatistic;
 import de.clusteval.run.statistics.RunDataStatisticFinderThread;
@@ -147,7 +146,7 @@ public class RepositorySupervisorThread extends SupervisorThread {
             final boolean checkForRunResults) {
         super(repository, checkForRunResults
                           ? createList(DataSetFormatFinderThread.class,
-                        RunResultFormatFinderThread.class,
+                        //RunResultFormatFinderThread.class,
                         ContextFinderThread.class,
                         DataSetTypeFinderThread.class,
                         DataSetFinderThread.class,
@@ -169,7 +168,7 @@ public class RepositorySupervisorThread extends SupervisorThread {
                         RunResultFinderThread.class) : createList(
                         // normal elements
                         DataSetFormatFinderThread.class,
-                        RunResultFormatFinderThread.class,
+                        //RunResultFormatFinderThread.class,
                         ContextFinderThread.class,
                         DataSetTypeFinderThread.class,
                         DataSetFinderThread.class,

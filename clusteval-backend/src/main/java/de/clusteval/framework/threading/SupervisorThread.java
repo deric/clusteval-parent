@@ -21,7 +21,6 @@ import de.clusteval.data.dataset.DataSetConfigFinderThread;
 import de.clusteval.data.dataset.format.DataSetFormatFinderThread;
 import de.clusteval.framework.ClustevalThread;
 import de.clusteval.run.RunFinderThread;
-import de.clusteval.run.result.format.RunResultFormatFinderThread;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -249,14 +248,6 @@ public abstract class SupervisorThread extends Thread implements ISupervisorThre
     public DataSetConfigFinderThread getDataSetConfigThread() {
         return (DataSetConfigFinderThread) this.threads
                 .get(DataSetConfigFinderThread.class);
-    }
-
-    /**
-     * @return The thread which finds runresult formats.
-     */
-    public RunResultFormatFinderThread getRunResultFormatThread() {
-        return (RunResultFormatFinderThread) this.threads
-                .get(RunResultFormatFinderThread.class);
     }
 
     /**
