@@ -32,6 +32,13 @@ import java.security.InvalidParameterException;
  */
 public interface IDataSetFormat extends IRepositoryObject {
 
+    /**
+     * Unique format name
+     *
+     * @return format name
+     */
+    String getName();
+
     Object parse(final IDataSet dataSet, Precision precision)
             throws IllegalArgumentException, IOException, InvalidDataSetFormatVersionException;
 
