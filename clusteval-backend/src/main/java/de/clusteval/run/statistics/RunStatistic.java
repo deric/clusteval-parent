@@ -12,6 +12,7 @@ package de.clusteval.run.statistics;
 
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.stats.IRunStatistic;
 import de.clusteval.run.RunAnalysisRun;
 import de.clusteval.utils.Statistic;
 import java.io.File;
@@ -60,7 +61,7 @@ import java.util.List;
  * @author Christian Wiwie
  *
  */
-public abstract class RunStatistic extends Statistic {
+public abstract class RunStatistic extends Statistic implements IRunStatistic {
 
     /**
      * @param repository
@@ -69,8 +70,7 @@ public abstract class RunStatistic extends Statistic {
      * @param absPath
      * @throws RegisterException
      */
-    public RunStatistic(IRepository repository, boolean register,
-            long changeDate, File absPath) throws RegisterException {
+    public RunStatistic(IRepository repository, boolean register, long changeDate, File absPath) throws RegisterException {
         super(repository, register, changeDate, absPath);
     }
 
@@ -95,17 +95,9 @@ public abstract class RunStatistic extends Statistic {
         try {
             return this.getClass().getConstructor(this.getClass())
                     .newInstance(this);
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        } catch (SecurityException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
+        } catch (IllegalArgumentException | SecurityException |
+                InstantiationException | IllegalAccessException |
+                InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
         this.log.warn("Cloning instance of class "
@@ -136,20 +128,12 @@ public abstract class RunStatistic extends Statistic {
                             repository, false, System.currentTimeMillis(),
                             new File(runStatistic));
             return statistic;
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
+        } catch (InstantiationException | IllegalAccessException |
+                IllegalArgumentException | SecurityException |
+                InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         } catch (NullPointerException e) {
 
-        } catch (IllegalArgumentException e1) {
-            e1.printStackTrace();
-        } catch (SecurityException e1) {
-            e1.printStackTrace();
-        } catch (InvocationTargetException e1) {
-            e1.printStackTrace();
-        } catch (NoSuchMethodException e1) {
-            e1.printStackTrace();
         }
         throw new UnknownRunStatisticException("\"" + runStatistic
                 + "\" is not a known run statistic.");
@@ -168,7 +152,7 @@ public abstract class RunStatistic extends Statistic {
      */
     public static List<RunStatistic> parseFromString(final IRepository repo,
             String[] runStatistics) throws UnknownRunStatisticException {
-        List<RunStatistic> result = new LinkedList<RunStatistic>();
+        List<RunStatistic> result = new LinkedList<>();
         for (String runStatistic : runStatistics) {
             result.add(parseFromString(repo, runStatistic));
         }

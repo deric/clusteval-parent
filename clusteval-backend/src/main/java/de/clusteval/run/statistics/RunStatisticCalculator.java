@@ -34,8 +34,7 @@ public abstract class RunStatisticCalculator<T extends RunStatistic> extends Sta
      * @param uniqueRunIdentifiers
      * @throws RegisterException
      */
-    public RunStatisticCalculator(IRepository repository, long changeDate,
-            File absPath, final String uniqueRunIdentifiers)
+    public RunStatisticCalculator(IRepository repository, long changeDate, File absPath, final String uniqueRunIdentifiers)
             throws RegisterException {
         super(repository, changeDate, absPath);
         this.uniqueRunIdentifiers = uniqueRunIdentifiers;
