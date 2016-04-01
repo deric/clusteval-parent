@@ -45,7 +45,6 @@ import de.clusteval.context.Context;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.DataSet;
 import de.clusteval.data.dataset.DataSetConfig;
-import de.clusteval.data.dataset.format.DataSetFormat;
 import de.clusteval.data.dataset.generator.DataSetGenerator;
 import de.clusteval.data.dataset.type.DataSetType;
 import de.clusteval.data.distance.DistanceMeasure;
@@ -101,6 +100,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Pattern;
@@ -364,6 +364,7 @@ public class Repository implements IRepository {
 
         this.initializePaths();
         this.initAttributes();
+        //this.dumpEntities();
         this.ensureFolderStructure();
         this.pathToRepositoryObject = new ConcurrentHashMap<>();
 
@@ -397,6 +398,12 @@ public class Repository implements IRepository {
 
         instanceContent = new InstanceContent();
         lookup = new AbstractLookup(instanceContent);
+    }
+
+    private void dumpEntities() {
+        for (Entry<Class<? extends IRepositoryObject>, StaticRepositoryEntity<? extends IRepositoryObject>> e : this.staticRepositoryEntities.entrySet()) {
+            System.out.println("SE: " + e.getKey() + ": " + e.getValue());
+        }
     }
 
     /**
@@ -511,10 +518,11 @@ public class Repository implements IRepository {
      */
     private boolean ensureFolderStructure() throws FileNotFoundException {
         // TODO: replace by for loop over entries of #repositoryObjectEntities
+        this.log.info("repo base path: " + this.basePath);
         this.ensureFolder(this.basePath);
         this.ensureFolder(this.getBasePath(DataConfig.class));
         this.ensureFolder(this.getBasePath(DataSet.class));
-        this.ensureFolder(this.getBasePath(DataSetFormat.class));
+        //this.ensureFolder(this.getBasePath(DataSetFormat.class));
         this.ensureFolder(this.getBasePath(DataSetType.class));
         this.ensureFolder(this.getBasePath(DataSetConfig.class));
         this.ensureFolder(this.getBasePath(GoldStandard.class));
@@ -523,7 +531,7 @@ public class Repository implements IRepository {
         this.ensureFolder(this.getBasePath(ProgramConfig.class));
         this.ensureFolder(this.getBasePath(Run.class));
         this.ensureFolder(this.getBasePath(RunResult.class));
-        this.ensureFolder(this.getBasePath(RunResultFormat.class));
+        //this.ensureFolder(this.getBasePath(RunResultFormat.class));
         this.ensureFolder(this.supplementaryBasePath);
         this.ensureFolder(this.suppClusteringBasePath);
         this.ensureFolder(this.getBasePath(Context.class));
@@ -601,10 +609,8 @@ public class Repository implements IRepository {
      * arithmetic operations.
      *
      * <p>
-     * A helper method of null null null null null null null null null null null
-     * null null null null null null null null null null null null null null
-     * null null null null null null null null null null null null null null null null null     {@link ProgramParameter#evaluateDefaultValue(DataConfig, ProgramConfig)},
-	 * {@link ProgramParameter#evaluateMinValue(DataConfig, ProgramConfig)} and
+     * A helper method of {@link ProgramParameter#evaluateDefaultValue(DataConfig, ProgramConfig)},
+     * {@link ProgramParameter#evaluateMinValue(DataConfig, ProgramConfig)} and
      * {@link ProgramParameter#evaluateMaxValue(DataConfig, ProgramConfig)}.
      *
      * @param script The parameter value containing javascript arithmetic
@@ -1539,9 +1545,7 @@ public class Repository implements IRepository {
      */
     public boolean isInitialized() {
         // TODO: for loop?
-        return isInitialized(DataSetFormat.class) && isInitialized(DataSetType.class)
-                && isInitialized(DataStatistic.class) && isInitialized(RunStatistic.class)
-                && isInitialized(RunDataStatistic.class) && isInitialized(RunResultFormat.class)
+        return isInitialized(RunDataStatistic.class)
                 && isInitialized(ClusteringQualityMeasure.class) && isInitialized(ParameterOptimizationMethod.class)
                 && isInitialized(Run.class) && isInitialized(RProgram.class) && isInitialized(DataSetConfig.class)
                 && isInitialized(DataSet.class) && isInitialized(GoldStandardConfig.class)

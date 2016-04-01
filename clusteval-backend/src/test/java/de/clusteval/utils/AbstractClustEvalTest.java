@@ -20,6 +20,7 @@ import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RepositoryController;
 import de.clusteval.framework.repository.config.DefaultRepositoryConfig;
+import de.clusteval.framework.repository.db.StubSQLCommunicator;
 import de.clusteval.run.result.RunResult;
 import java.io.File;
 import org.junit.After;
@@ -92,12 +93,10 @@ public abstract class AbstractClustEvalTest {
         if (this.useDatabase) {
             this.repository = new Repository(path.getAbsolutePath(), null);
         } else {
-            this.repository = new Repository(path.getAbsolutePath(), null,
-                    new DefaultRepositoryConfig());
-            //getRepository().setSQLCommunicator(new StubSQLCommunicator(getRepository()));
+            this.repository = new Repository(path.getAbsolutePath(), null, new DefaultRepositoryConfig());
+            getRepository().setSQLCommunicator(new StubSQLCommunicator(getRepository()));
         }
-        // ClustevalBackendServer.getBackendServerConfiguration()
-        // .setCheckForRunResults(false);
+        ClustevalBackendServer.getBackendServerConfiguration().setCheckForRunResults(false);
         getRepository().initialize();
 
         if (ClustevalBackendServer.getBackendServerConfiguration().getCheckForRunResults()) {

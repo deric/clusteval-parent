@@ -23,8 +23,7 @@ import java.io.InputStreamReader;
  */
 public class SQLConfig {
 
-    public static SQLConfig DUMMY_CONFIG = new SQLConfig(false, DB_TYPE.NONE,
-            null, null, null, false);
+    public static SQLConfig DUMMY_CONFIG = new SQLConfig(false, DB_TYPE.NONE, null, null, null, false);
 
     protected boolean usesSql;
     protected DB_TYPE dbType;
@@ -47,8 +46,7 @@ public class SQLConfig {
      * @param username
      * @param database
      * @param host
-     * @param usesPassword
-     *                     Whether the sql connection uses a password to connect and thus
+     * @param usesPassword Whether the sql connection uses a password to connect and thus
      *                     prompt for it when connecting.
      */
     public SQLConfig(final boolean usesSql, final DB_TYPE dbType,

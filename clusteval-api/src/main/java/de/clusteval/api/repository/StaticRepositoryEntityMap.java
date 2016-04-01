@@ -18,6 +18,8 @@ package de.clusteval.api.repository;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 //TODO: rename
 public class StaticRepositoryEntityMap {
@@ -47,5 +49,9 @@ public class StaticRepositoryEntityMap {
 
     public <T extends IRepositoryObject> boolean containsKey(final Class<T> c) {
         return this.map.containsKey(c);
+    }
+
+    public Set<Entry<Class<? extends IRepositoryObject>, StaticRepositoryEntity<? extends IRepositoryObject>>> entrySet() {
+        return map.entrySet();
     }
 }
