@@ -5,6 +5,7 @@ package de.wiwie.wiutils.utils;
 
 import cern.colt.function.tdouble.DoubleProcedure;
 import cern.colt.matrix.tdouble.impl.SparseDoubleMatrix2D;
+import de.clusteval.api.Matrix;
 import de.clusteval.api.Pair;
 import de.clusteval.api.Precision;
 import java.io.IOException;
@@ -26,7 +27,7 @@ import java.util.Set;
  * @author Christian Wiwie
  *
  */
-public class SimilarityMatrix {
+public class SimilarityMatrix implements Matrix {
 
     protected Map<String, Integer> ids;
 
@@ -225,8 +226,7 @@ public class SimilarityMatrix {
      * @param id2
      * @param similarity
      */
-    public void setSimilarity(final int id1, final int id2,
-            final double similarity) {
+    public void setSimilarity(final int id1, final int id2, final double similarity) {
         if (this.similarities != null) {
             this.similarities.set(id1, id2, similarity);
         } else {
@@ -370,9 +370,9 @@ public class SimilarityMatrix {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#equals(java.lang.Object)
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
     public boolean equals(Object obj) {
@@ -392,9 +392,9 @@ public class SimilarityMatrix {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#hashCode()
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#hashCode()
      */
     @Override
     public int hashCode() {
@@ -574,8 +574,8 @@ public class SimilarityMatrix {
      * with a Fortran-like 'Fw.d' style format.
      *
      * @param output Output stream.
-     * @param w Column width.
-     * @param d Number of digits after the decimal.
+     * @param w      Column width.
+     * @param d      Number of digits after the decimal.
      */
     public void print(PrintWriter output, int w, int d) {
         DecimalFormat format = new DecimalFormat();
@@ -594,7 +594,7 @@ public class SimilarityMatrix {
      * NumberFormat that is set to US Locale.
      *
      * @param format A Formatting object for individual elements.
-     * @param width Field width for each column.
+     * @param width  Field width for each column.
      * @see java.text.DecimalFormat#setDecimalFormatSymbols
      */
     public void print(NumberFormat format, int width) {
@@ -613,7 +613,7 @@ public class SimilarityMatrix {
      *
      * @param output the output stream.
      * @param format A formatting object to format the matrix elements
-     * @param width Column width.
+     * @param width  Column width.
      * @see java.text.DecimalFormat#setDecimalFormatSymbols
      */
     public void print(PrintWriter output, NumberFormat format, int width) {
@@ -661,14 +661,14 @@ class DistributionBuilder implements DoubleProcedure {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see cern.colt.function.tdouble.DoubleFunction#apply(double)
+     * (non-Javadoc)
+     *
+     * @see cern.colt.function.tdouble.DoubleFunction#apply(double)
      */
     @Override
     public boolean apply(double argument) {
         /*
-		 * Do binary search for bucket
+         * Do binary search for bucket
          */
         int lower = 0;
         int upper = this.range.length - 1;
@@ -746,7 +746,7 @@ class ClassDistributionBuilder {
                             this.classIds[c][y]);
 
                     /*
-					 * Do binary search for bucket
+                     * Do binary search for bucket
                      */
                     int lower = 0;
                     int upper = this.range.length - 1;
@@ -813,7 +813,7 @@ class IntraInterDistributionBuilder {
         this.resultArray = new int[2][this.range.length];
 
         /*
-		 * Add one for intra, and one for inter distribution
+         * Add one for intra, and one for inter distribution
          */
         for (int c = 0; c < this.resultArray.length; c++) {
             Map<Double, Integer> tmp = new HashMap<Double, Integer>();
@@ -836,7 +836,7 @@ class IntraInterDistributionBuilder {
                 double argument = matrix.getSimilarity(id1, id2);
 
                 /*
-				 * Do binary search for bucket
+                 * Do binary search for bucket
                  */
                 int lower = 0;
                 int upper = this.range.length - 1;

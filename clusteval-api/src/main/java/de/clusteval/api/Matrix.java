@@ -22,4 +22,21 @@ package de.clusteval.api;
  */
 public interface Matrix {
 
+    /**
+     * @param id1
+     * @param id2
+     * @return
+     */
+    double getSimilarity(final int id1, final int id2);
+
+    /**
+     * @param id1
+     * @param id2
+     * @param similarity
+     */
+    void setSimilarity(final int id1, final int id2, final double similarity);
+
+    int getRows();
+
+    int getColumns();
 }
