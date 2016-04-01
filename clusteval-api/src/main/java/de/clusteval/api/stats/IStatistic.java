@@ -25,6 +25,12 @@ import de.clusteval.api.repository.IRepositoryObject;
 public interface IStatistic extends IRepositoryObject {
 
     /**
+     *
+     * @return unique statistic identifier
+     */
+    String getName();
+
+    /**
      * Parses the values of a statistic from a string and stores them in the
      * local attributes of this object.
      *

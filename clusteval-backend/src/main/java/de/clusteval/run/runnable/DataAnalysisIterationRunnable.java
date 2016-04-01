@@ -1,6 +1,7 @@
 package de.clusteval.run.runnable;
 
 import de.clusteval.api.data.IDataConfig;
+import de.clusteval.api.factory.DataStatisticFactory;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.stats.IDataStatistic;
 import de.clusteval.data.DataConfig;
@@ -54,12 +55,13 @@ public class DataAnalysisIterationRunnable extends AnalysisIterationRunnable<IDa
                    IllegalArgumentException, InstantiationException,
                    IllegalAccessException, InvocationTargetException {
 
-        Class<? extends DataStatisticCalculator> calcClass = getRun()
-                .getRepository().getDataStatisticCalculator(getStatistic().getClass().getName());
-        Constructor<? extends DataStatisticCalculator> constr = calcClass
+        Class<? extends IDataStatistic> calcClass = DataStatisticFactory.getInstance()
+                .getProvider(getStatistic().getName()).getClass();
+
+        Constructor<? extends IDataStatistic> constr = calcClass
                 .getConstructor(IRepository.class, long.class, File.class,
                         DataConfig.class);
-        DataStatisticCalculator calc = constr.newInstance(this.getRun()
+        DataStatisticCalculator calc = (DataStatisticCalculator) constr.newInstance(this.getRun()
                 .getRepository(), calcFile.lastModified(), calcFile, this
                 .getDataConfig());
         return calc;

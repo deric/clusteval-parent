@@ -55,7 +55,7 @@ import de.clusteval.data.dataset.type.UnknownDataSetTypeException;
 import de.clusteval.data.distance.DistanceMeasure;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
-import de.clusteval.data.statistics.UnknownDataStatisticException;
+import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
 import de.clusteval.framework.repository.parse.Parser;

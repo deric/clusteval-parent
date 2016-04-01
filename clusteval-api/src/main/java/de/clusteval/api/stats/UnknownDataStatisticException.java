@@ -1,34 +1,28 @@
-/*******************************************************************************
+/** *****************************************************************************
  * Copyright (c) 2013 Christian Wiwie.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Public License v3.0
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/gpl.html
- * 
+ *
  * Contributors:
  *     Christian Wiwie - initial API and implementation
- ******************************************************************************/
-/**
- * 
- */
-package de.clusteval.data.statistics;
+ ***************************************************************************** */
+package de.clusteval.api.stats;
 
 /**
  * @author Christian Wiwie
- * 
+ *
  */
 public class UnknownDataStatisticException extends Exception {
 
-	/**
-	 * @param string
-	 */
-	public UnknownDataStatisticException(String string) {
-		super(string);
-	}
+    private static final long serialVersionUID = 2173877271722904825L;
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 2173877271722904825L;
+    /**
+     * @param string
+     */
+    public UnknownDataStatisticException(String string) {
+        super(string);
+    }
 
 }

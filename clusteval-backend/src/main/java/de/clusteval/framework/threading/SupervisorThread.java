@@ -12,17 +12,16 @@
  */
 package de.clusteval.framework.threading;
 
-import de.clusteval.framework.ClustevalThread;
 import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.run.IScheduler;
+import de.clusteval.api.run.ISupervisorThread;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethodFinderThread;
 import de.clusteval.cluster.quality.ClusteringQualityMeasureFinderThread;
 import de.clusteval.data.dataset.DataSetConfigFinderThread;
 import de.clusteval.data.dataset.format.DataSetFormatFinderThread;
-import de.clusteval.api.run.IScheduler;
-import de.clusteval.api.run.ISupervisorThread;
+import de.clusteval.framework.ClustevalThread;
 import de.clusteval.run.RunFinderThread;
 import de.clusteval.run.result.format.RunResultFormatFinderThread;
-import de.clusteval.run.statistics.RunStatisticFinderThread;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -265,14 +264,6 @@ public abstract class SupervisorThread extends Thread implements ISupervisorThre
      */
     public RunFinderThread getRunFinderThread() {
         return (RunFinderThread) this.threads.get(RunFinderThread.class);
-    }
-
-    /**
-     * @return The thread which finds run statistics.
-     */
-    public RunStatisticFinderThread getRunStatisticFinderThread() {
-        return (RunStatisticFinderThread) this.threads
-                .get(RunStatisticFinderThread.class);
     }
 
     /**

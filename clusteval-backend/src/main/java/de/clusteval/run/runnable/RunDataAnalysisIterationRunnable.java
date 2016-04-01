@@ -35,8 +35,7 @@ public class RunDataAnalysisIterationRunnable extends AnalysisIterationRunnable<
     /**
      * @param iterationWrapper
      */
-    public RunDataAnalysisIterationRunnable(
-            RunDataAnalysisIterationWrapper iterationWrapper) {
+    public RunDataAnalysisIterationRunnable(RunDataAnalysisIterationWrapper iterationWrapper) {
         super(iterationWrapper);
     }
 

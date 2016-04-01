@@ -69,7 +69,7 @@ import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.randomizer.DataRandomizeException;
 import de.clusteval.data.randomizer.DataRandomizer;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
-import de.clusteval.data.statistics.UnknownDataStatisticException;
+import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.framework.repository.MyRengine;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.framework.repository.Repository;

@@ -35,8 +35,7 @@ public class RunResultFormatFinder extends JARFinder<RunResultFormat> {
      *                   the repository
      * @throws RegisterException
      */
-    public RunResultFormatFinder(final IRepository repository)
-            throws RegisterException {
+    public RunResultFormatFinder(final IRepository repository) throws RegisterException {
         super(repository, RunResultFormat.class);
     }
 

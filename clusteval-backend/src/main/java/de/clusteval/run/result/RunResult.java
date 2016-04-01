@@ -49,7 +49,7 @@ import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.data.dataset.type.UnknownDataSetTypeException;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
-import de.clusteval.data.statistics.UnknownDataStatisticException;
+import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.framework.repository.RepositoryController;
 import de.clusteval.framework.repository.RepositoryObject;

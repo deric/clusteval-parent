@@ -12,6 +12,7 @@
  */
 package de.clusteval.data.statistics;
 
+import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.api.stats.IDataStatistic;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;

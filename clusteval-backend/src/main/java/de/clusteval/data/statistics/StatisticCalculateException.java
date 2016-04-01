@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package de.clusteval.data.statistics;
 
@@ -11,26 +11,26 @@ import de.clusteval.api.exceptions.ClustEvalException;
  */
 public class StatisticCalculateException extends ClustEvalException {
 
-	/**
-	 * @param message
-	 */
-	public StatisticCalculateException(String message) {
-		super(message);
-	}
+    /**
+     * @param message
+     */
+    public StatisticCalculateException(String message) {
+        super(message);
+    }
 
-	/**
-	 * @param message
-	 * @param cause
-	 */
-	public StatisticCalculateException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    /**
+     * @param message
+     * @param cause
+     */
+    public StatisticCalculateException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
-	/**
-	 * @param cause
-	 */
-	public StatisticCalculateException(Throwable cause) {
-		super(cause);
-	}
+    /**
+     * @param cause
+     */
+    public StatisticCalculateException(Throwable cause) {
+        super(cause);
+    }
 
 }

@@ -42,8 +42,7 @@ public abstract class RunDataStatisticCalculator<T extends RunDataStatistic> ext
     public static RunDataStatistic parseFromString(final IRepository repository,
             String runDataStatistic) throws UnknownRunDataStatisticException {
         Class<? extends RunDataStatistic> c = repository.getRegisteredClass(
-                RunDataStatistic.class, "de.clusteval.run.statistics."
-                + runDataStatistic);
+                RunDataStatistic.class, "de.clusteval.run.statistics." + runDataStatistic);
 
         try {
             RunDataStatistic statistic = c.getConstructor(IRepository.class,

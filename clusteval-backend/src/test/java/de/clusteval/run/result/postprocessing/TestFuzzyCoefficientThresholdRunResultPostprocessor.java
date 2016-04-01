@@ -48,7 +48,7 @@ import de.clusteval.api.exceptions.GoldStandardConfigurationException;
 import de.clusteval.api.exceptions.GoldStandardNotFoundException;
 import de.clusteval.data.preprocessing.DataPreprocessor;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
-import de.clusteval.data.statistics.UnknownDataStatisticException;
+import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.repository.RegisterException;

@@ -25,8 +25,6 @@ import de.clusteval.program.ProgramConfig;
 import de.clusteval.program.ProgramConfigFinderThread;
 import de.clusteval.run.statistics.RunDataStatistic;
 import de.clusteval.run.statistics.RunDataStatisticFinderThread;
-import de.clusteval.run.statistics.RunStatistic;
-import de.clusteval.run.statistics.RunStatisticFinderThread;
 import de.clusteval.utils.Finder;
 import de.clusteval.utils.FinderThread;
 
@@ -92,11 +90,6 @@ public class RunFinderThread extends FinderThread<Run> {
 
         if (!this.repository.isInitialized(RunDataStatistic.class)) {
             this.supervisorThread.getThread(RunDataStatisticFinderThread.class)
-                    .waitFor();
-        }
-
-        if (!this.repository.isInitialized(RunStatistic.class)) {
-            this.supervisorThread.getThread(RunStatisticFinderThread.class)
                     .waitFor();
         }
 

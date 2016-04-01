@@ -10,26 +10,23 @@
  *     Christian Wiwie - initial API and implementation
  *****************************************************************************
  */
-/**
- *
- */
 package de.clusteval.run.statistics;
 
-import de.clusteval.cluster.quality.ClusteringQualityMeasure;
 import de.clusteval.api.cluster.quality.ClusteringQualityMeasureValue;
 import de.clusteval.api.cluster.quality.ClusteringQualitySet;
+import de.clusteval.api.exceptions.RunResultParseException;
+import de.clusteval.api.program.ParameterSet;
+import de.clusteval.api.repository.RegisterException;
+import de.clusteval.cluster.quality.ClusteringQualityMeasure;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.statistics.DataStatistic;
 import de.clusteval.data.statistics.DoubleValueDataStatistic;
 import de.clusteval.framework.repository.MyRengine;
-import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
-import de.clusteval.api.program.ParameterSet;
 import de.clusteval.program.Program;
 import de.clusteval.run.result.DataAnalysisRunResult;
 import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.run.result.RunResult;
-import de.clusteval.api.exceptions.RunResultParseException;
 import de.wiwie.wiutils.file.FileUtils;
 import de.wiwie.wiutils.utils.Pair;
 import java.io.File;

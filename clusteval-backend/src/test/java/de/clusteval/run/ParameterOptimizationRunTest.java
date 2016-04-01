@@ -44,7 +44,7 @@ import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.data.dataset.type.UnknownDataSetTypeException;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
-import de.clusteval.data.statistics.UnknownDataStatisticException;
+import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.config.DefaultRepositoryConfig;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
@@ -180,8 +180,7 @@ public class ParameterOptimizationRunTest extends AbstractClustEvalTest {
 
         getRepository().terminateSupervisorThread();
 
-        de.clusteval.framework.repository.Repository
-                .unregister(getRepository());
+        de.clusteval.framework.repository.Repository.unregister(getRepository());
 
         Repository newRepo = new Repository(
                 new File("testCaseRepository").getAbsolutePath(), null, new DefaultRepositoryConfig());

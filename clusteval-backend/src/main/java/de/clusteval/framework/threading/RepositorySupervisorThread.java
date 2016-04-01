@@ -51,7 +51,6 @@ import de.clusteval.run.result.postprocessing.RunResultPostprocessorFinderThread
 import de.clusteval.run.statistics.RunDataStatistic;
 import de.clusteval.run.statistics.RunDataStatisticFinderThread;
 import de.clusteval.run.statistics.RunStatistic;
-import de.clusteval.run.statistics.RunStatisticFinderThread;
 import java.util.Map;
 
 /**
@@ -156,7 +155,7 @@ public class RepositorySupervisorThread extends SupervisorThread {
                         RunResultPostprocessorFinderThread.class,
                         DistanceMeasureFinderThread.class,
                         //DataStatisticFinderThread.class,
-                        RunStatisticFinderThread.class,
+                        //RunStatisticFinderThread.class,
                         RunDataStatisticFinderThread.class,
                         ClusteringQualityMeasureFinderThread.class,
                         ParameterOptimizationMethodFinderThread.class,
@@ -178,7 +177,7 @@ public class RepositorySupervisorThread extends SupervisorThread {
                         RunResultPostprocessorFinderThread.class,
                         DistanceMeasureFinderThread.class,
                         // DataStatisticFinderThread.class,
-                        RunStatisticFinderThread.class,
+                        //RunStatisticFinderThread.class,
                         RunDataStatisticFinderThread.class,
                         ClusteringQualityMeasureFinderThread.class,
                         ParameterOptimizationMethodFinderThread.class,

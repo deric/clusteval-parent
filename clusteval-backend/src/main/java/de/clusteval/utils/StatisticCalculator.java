@@ -12,58 +12,14 @@
  */
 package de.clusteval.utils;
 
-import de.clusteval.api.exceptions.DataSetNotFoundException;
-import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
-import de.clusteval.api.exceptions.GoldStandardConfigurationException;
-import de.clusteval.api.exceptions.GoldStandardNotFoundException;
-import de.clusteval.api.exceptions.IncompatibleContextException;
-import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
-import de.clusteval.api.exceptions.NoDataSetException;
-import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
-import de.clusteval.api.exceptions.NoRepositoryFoundException;
-import de.clusteval.api.exceptions.RunResultParseException;
-import de.clusteval.api.exceptions.UnknownContextException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
-import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
-import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
-import de.clusteval.api.exceptions.UnknownParameterType;
-import de.clusteval.api.exceptions.UnknownProgramParameterException;
-import de.clusteval.api.exceptions.UnknownProgramTypeException;
-import de.clusteval.api.exceptions.UnknownRunResultFormatException;
-import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
-import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RNotAvailableException;
-import de.clusteval.api.r.RepositoryAlreadyExistsException;
-import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.stats.IStatistic;
-import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
-import de.clusteval.cluster.paramOptimization.InvalidOptimizationParameterException;
-import de.clusteval.cluster.paramOptimization.UnknownParameterOptimizationMethodException;
-import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
-import de.clusteval.data.DataConfigNotFoundException;
-import de.clusteval.data.DataConfigurationException;
-import de.clusteval.data.dataset.DataSetConfigNotFoundException;
-import de.clusteval.data.dataset.DataSetConfigurationException;
-import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
-import de.clusteval.data.dataset.type.UnknownDataSetTypeException;
-import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
-import de.clusteval.data.statistics.IncompatibleDataConfigDataStatisticException;
 import de.clusteval.data.statistics.RunStatisticCalculateException;
 import de.clusteval.data.statistics.StatisticCalculateException;
-import de.clusteval.data.statistics.UnknownDataStatisticException;
 import de.clusteval.framework.repository.RepositoryObject;
-import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
-import de.clusteval.framework.repository.config.RepositoryConfigurationException;
-import de.clusteval.run.InvalidRunModeException;
-import de.clusteval.run.RunException;
-import de.clusteval.run.result.AnalysisRunResultException;
-import de.clusteval.run.statistics.UnknownRunDataStatisticException;
-import de.clusteval.run.statistics.UnknownRunStatisticException;
 import java.io.File;
-import java.io.IOException;
-import org.apache.commons.configuration.ConfigurationException;
 import org.rosuda.REngine.REngineException;
 
 /**
@@ -131,59 +87,7 @@ public abstract class StatisticCalculator<T extends IStatistic> extends Reposito
      * calculator type.
      *
      * @return The calculated statistic.
-     * @throws IncompatibleDataConfigDataStatisticException
-     * @throws UnknownGoldStandardFormatException
-     * @throws UnknownDataSetFormatException
      * @throws IllegalArgumentException
-     * @throws IOException
-     * @throws InvalidDataSetFormatVersionException
-     * @throws ConfigurationException
-     * @throws GoldStandardConfigurationException
-     * @throws DataSetConfigurationException
-     * @throws DataSetNotFoundException
-     * @throws DataSetConfigNotFoundException
-     * @throws GoldStandardConfigNotFoundException
-     * @throws DataConfigurationException
-     * @throws DataConfigNotFoundException
-     * @throws UnknownRunResultFormatException
-     * @throws UnknownClusteringQualityMeasureException
-     * @throws InvalidRunModeException
-     * @throws UnknownParameterOptimizationMethodException
-     * @throws NoOptimizableProgramParameterException
-     * @throws UnknownProgramParameterException
-     * @throws InternalAttributeException
-     * @throws InvalidConfigurationFileException
-     * @throws RepositoryAlreadyExistsException
-     * @throws InvalidRepositoryException
-     * @throws NoRepositoryFoundException
-     * @throws GoldStandardNotFoundException
-     * @throws InvalidOptimizationParameterException
-     * @throws RunException
-     * @throws UnknownDataStatisticException
-     * @throws UnknownProgramTypeException
-     * @throws UnknownRProgramException
-     * @throws IncompatibleParameterOptimizationMethodException
-     * @throws UnknownDistanceMeasureException
-     * @throws UnknownRunStatisticException
-     * @throws AnalysisRunResultException
-     * @throws RepositoryConfigNotFoundException
-     * @throws RepositoryConfigurationException
-     * @throws RepositoryConfigNotFoundException
-     * @throws RepositoryConfigurationException
-     * @throws RegisterException
-     * @throws UnknownDataSetTypeException
-     * @throws NoDataSetException
-     * @throws UnknownRunDataStatisticException
-     * @throws RunResultParseException
-     * @throws IncompatibleDataSetConfigPreprocessorException
-     * @throws UnknownDataPreprocessorException
-     * @throws IncompatibleContextException
-     * @throws UnknownContextException
-     * @throws REngineException
-     * @throws RNotAvailableException
-     * @throws UnknownParameterType
-     * @throws InterruptedException
-     * @throws UnknownRunResultPostprocessorException
      * @throws RunStatisticCalculateException
      */
     protected abstract T calculateResult() throws StatisticCalculateException;
