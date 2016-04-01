@@ -16,13 +16,11 @@
  */
 package de.clusteval.run.runnable;
 
-import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.factory.StatisticCalculatorFactory;
+import de.clusteval.api.stats.IStatisticCalculator;
 import de.clusteval.run.statistics.RunStatistic;
-import de.clusteval.run.statistics.RunStatisticCalculator;
 import de.clusteval.utils.StatisticCalculator;
 import de.wiwie.wiutils.file.FileUtils;
-import java.io.File;
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
 /**
@@ -68,16 +66,16 @@ public class RunAnalysisIterationRunnable extends AnalysisIterationRunnable<RunS
             throws SecurityException, NoSuchMethodException,
                    IllegalArgumentException, InstantiationException,
                    IllegalAccessException, InvocationTargetException {
-        Class<? extends RunStatisticCalculator> calcClass = getRun()
-                .getRepository().getRunStatisticCalculator(
-                        getStatistic().getClass().getName());
-        Constructor<? extends RunStatisticCalculator> constr = calcClass
-                .getConstructor(IRepository.class, long.class, File.class,
-                        String.class);
-        RunStatisticCalculator calc = constr.newInstance(this.getRun()
-                .getRepository(), calcFile.lastModified(), calcFile, this
-                .getRunIdentifier());
-        return calc;
+        /* Class<? extends RunStatisticCalculator> calcClass = getRun()
+         * .getRepository().getRunStatisticCalculator(
+         * getStatistic().getClass().getName());
+         * Constructor<? extends RunStatisticCalculator> constr = calcClass
+         * .getConstructor(IRepository.class, long.class, File.class,
+         * String.class); */
+        IStatisticCalculator calc = StatisticCalculatorFactory.getInstance()
+                .getProvider(getStatistic().getClass().getName());
+
+        return (StatisticCalculator<RunStatistic>) calc;
     }
 
     /*

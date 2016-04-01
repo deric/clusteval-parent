@@ -409,7 +409,7 @@ public interface IRepository {
      */
     void lookupRemove(Object instance);
 
-    boolean register(final INamedAttribute<Number> object);
+    boolean register(final INamedAttribute<? extends Number> object);
 
     void terminateSupervisorThread(final boolean closeRengines) throws InterruptedException;
 

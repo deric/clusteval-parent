@@ -48,6 +48,7 @@ import de.clusteval.api.repository.IRepositoryObject;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.run.IRunResultFormat;
 import de.clusteval.api.stats.IDataStatistic;
+import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.cluster.paramOptimization.InvalidOptimizationParameterException;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
@@ -83,7 +84,6 @@ import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.randomizer.DataRandomizer;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
 import de.clusteval.data.statistics.DataStatistic;
-import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.framework.repository.RepositoryController;
 import de.clusteval.framework.repository.RepositoryObject;
 import de.clusteval.framework.repository.RunResultRepository;
@@ -676,9 +676,6 @@ class DataSetConfigParser extends RepositoryObjectParser<DataSetConfig> {
 
 class DataSetParser extends RepositoryObjectParser<DataSet> {
 
-    /**
-     *
-     */
     public DataSetParser() {
         this.loadConfigFile = false;
     }
@@ -721,7 +718,7 @@ class DataSetParser extends RepositoryObjectParser<DataSet> {
             }
             // check whether the alias is already taken by another dataset ->
             // throw exception
-            Collection<IDataSet> dataSets;
+            Collection<? extends IDataSet> dataSets;
             if (repo instanceof RunResultRepository) {
                 dataSets = repo.getParent().getCollectionStaticEntities(IDataSet.class);
             } else {

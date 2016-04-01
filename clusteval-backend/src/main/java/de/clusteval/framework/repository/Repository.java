@@ -328,7 +328,7 @@ public class Repository implements IRepository {
      */
     public Repository(final String basePath, final IRepository parent)
             throws FileNotFoundException, RepositoryAlreadyExistsException, InvalidRepositoryException,
-            RepositoryConfigNotFoundException, RepositoryConfigurationException, DatabaseConnectException {
+                   RepositoryConfigNotFoundException, RepositoryConfigurationException, DatabaseConnectException {
         this(basePath, parent, null);
     }
 
@@ -348,7 +348,7 @@ public class Repository implements IRepository {
      */
     public Repository(final String basePath, final IRepository parent, final RepositoryConfig overrideConfig)
             throws FileNotFoundException, RepositoryAlreadyExistsException, InvalidRepositoryException,
-            RepositoryConfigNotFoundException, RepositoryConfigurationException, DatabaseConnectException {
+                   RepositoryConfigNotFoundException, RepositoryConfigurationException, DatabaseConnectException {
         super();
 
         this.log = LoggerFactory.getLogger(this.getClass());
@@ -603,7 +603,7 @@ public class Repository implements IRepository {
      * <p>
      * A helper method of null null null null null null null null null null null
      * null null null null null null null null null null null null null null
-     * null null null null null null null null null null null null null null     {@link ProgramParameter#evaluateDefaultValue(DataConfig, ProgramConfig)},
+     * null null null null null null null null null null null null null null null null null     {@link ProgramParameter#evaluateDefaultValue(DataConfig, ProgramConfig)},
 	 * {@link ProgramParameter#evaluateMinValue(DataConfig, ProgramConfig)} and
      * {@link ProgramParameter#evaluateMaxValue(DataConfig, ProgramConfig)}.
      *
@@ -698,10 +698,6 @@ public class Repository implements IRepository {
             return this.staticRepositoryEntities.get(c).getBasePath();
         }
         return this.dynamicRepositoryEntities.get(c).getBasePath();
-    }
-
-    public <T extends IRepositoryObject> T getCollectionStaticEntities(final Class<T> c) {
-        return (T) this.staticRepositoryEntities.get(c).asCollection();
     }
 
     @Override
@@ -1442,7 +1438,7 @@ public class Repository implements IRepository {
      * {@link #isInitialized()} returns true.
      *
      * @throws InterruptedException Is thrown, if the current thread is
-     * interrupted while waiting for finishing the initialization process.
+     *                              interrupted while waiting for finishing the initialization process.
      */
     public void initialize() throws InterruptedException {
         if (isInitialized() || this.supervisorThread != null) {
@@ -1589,13 +1585,13 @@ public class Repository implements IRepository {
      * @return True, if the new object has been registered.
      */
     @Override
-    public boolean register(final INamedAttribute<Number> object) {
+    public boolean register(final INamedAttribute<? extends Number> object) {
 
         Type sooper = object.getClass().getGenericSuperclass();
         Type t = ((ParameterizedType) sooper).getActualTypeArguments()[0];
         switch (t.getTypeName()) {
             case "Double":
-                this.internalDoubleAttributes.put(object.getName(), object);
+                this.internalDoubleAttributes.put(object.getName(), (NamedDoubleAttribute) object);
                 this.pathToRepositoryObject.put(object.getAbsPath(), object);
                 break;
             default:
@@ -1921,4 +1917,15 @@ public class Repository implements IRepository {
     public void lookupRemove(Object instance) {
         instanceContent.remove(instance);
     }
+
+    @Override
+    public <T extends IRepositoryObject, S extends T> boolean register(S object) throws RegisterException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public <T extends IRepositoryObject> Collection<T> getCollectionStaticEntities(Class<T> c) {
+        return this.staticRepositoryEntities.get(c).asCollection();
+    }
+
 }

@@ -33,6 +33,7 @@ import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.cluster.paramOptimization.InvalidOptimizationParameterException;
 import de.clusteval.cluster.paramOptimization.UnknownParameterOptimizationMethodException;
@@ -45,8 +46,8 @@ import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.data.dataset.type.UnknownDataSetTypeException;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
-import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.framework.repository.Repository;
+import de.clusteval.framework.repository.RepositoryController;
 import de.clusteval.framework.repository.config.DefaultRepositoryConfig;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
@@ -130,7 +131,7 @@ public class ClusteringRunTest extends AbstractClustEvalTest {
 
 		getRepository().terminateSupervisorThread();
 
-		de.clusteval.framework.repository.Repository.unregister(getRepository());
+            RepositoryController.getInstance().unregister(getRepository());
 
 		Repository newRepo = new Repository(new File("testCaseRepository").getAbsolutePath(), null,
 				new DefaultRepositoryConfig());

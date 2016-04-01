@@ -16,15 +16,12 @@
  */
 package de.clusteval.run.runnable;
 
-import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.factory.StatisticCalculatorFactory;
+import de.clusteval.api.stats.IStatisticCalculator;
 import de.clusteval.run.statistics.RunDataStatistic;
-import de.clusteval.run.statistics.RunDataStatisticCalculator;
 import de.clusteval.utils.StatisticCalculator;
 import de.wiwie.wiutils.file.FileUtils;
-import java.io.File;
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.List;
 
 /**
  * @author Christian Wiwie
@@ -54,6 +51,7 @@ public class RunDataAnalysisIterationRunnable extends AnalysisIterationRunnable<
      * de.clusteval.run.runnable.AnalysisIterationRunnable#beforeStatisticCalculate
      * ()
      */
+    @Override
     protected void beforeStatisticCalculate() {
         this.log.info("Run " + this.getRun() + " - (" + this.getRunIdentifier()
                 + "," + this.getDataAnalysisIdentifier() + ") Analysing "
@@ -72,16 +70,18 @@ public class RunDataAnalysisIterationRunnable extends AnalysisIterationRunnable<
             throws SecurityException, NoSuchMethodException,
                    IllegalArgumentException, InstantiationException,
                    IllegalAccessException, InvocationTargetException {
-        Class<? extends RunDataStatisticCalculator> calcClass = getRun()
-                .getRepository().getRunDataStatisticCalculator(
+        /* Class<? extends RunDataStatisticCalculator> calcClass = getRun()                .getRepository().getRunDataStatisticCalculator(
                         this.getStatistic().getClass().getName());
         Constructor<? extends RunDataStatisticCalculator> constr = calcClass
                 .getConstructor(IRepository.class, long.class, File.class, List.class, List.class);
         RunDataStatisticCalculator calc = constr.newInstance(this.getRun()
                 .getRepository(), calcFile.lastModified(), calcFile,
                 this.iterationWrapper.getRunIdentifier(), this.iterationWrapper
-                .getUniqueDataAnalysisRunIdentifier());
-        return calc;
+                .getUniqueDataAnalysisRunIdentifier()); */
+
+        IStatisticCalculator calc = StatisticCalculatorFactory.getInstance()
+                .getProvider(getStatistic().getClass().getName());
+        return (StatisticCalculator<RunDataStatistic>) calc;
     }
 
     /*

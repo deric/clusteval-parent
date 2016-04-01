@@ -25,4 +25,10 @@ import de.clusteval.api.repository.IRepositoryObject;
  */
 public interface IStatisticCalculator<T extends IStatistic> extends IRepositoryObject {
 
+    /**
+     *
+     * @return unique identifier
+     */
+    String getName();
+
 }
