@@ -10,9 +10,9 @@
  ***************************************************************************** */
 package de.clusteval.serverclient;
 
+import de.clusteval.api.Pair;
 import de.clusteval.api.run.RUN_STATUS;
 import de.clusteval.utils.ArraysExt;
-import de.clusteval.api.Pair;
 import java.rmi.ConnectException;
 import java.rmi.RemoteException;
 import java.util.List;
@@ -128,7 +128,7 @@ public class BackendClientCompleter implements Completer {
 
     /**
      * This method updates the {@link #dataSetGenerators} attribute by
-     * retrieving the availble dataset generators from the server.
+     * retrieving the available dataset generators from the server.
      *
      * @throws RemoteException
      */
