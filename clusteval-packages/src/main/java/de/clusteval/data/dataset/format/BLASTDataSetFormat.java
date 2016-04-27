@@ -20,7 +20,7 @@ import de.clusteval.data.dataset.DataSet;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.api.FormatVersion;
-import de.wiwie.wiutils.file.FileUtils;
+import de.clusteval.utils.FileUtils;
 
 /**
  * @author Christian Wiwie

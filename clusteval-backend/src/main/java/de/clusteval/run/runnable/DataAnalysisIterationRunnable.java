@@ -7,7 +7,7 @@ import de.clusteval.api.stats.IDataStatistic;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.statistics.DataStatisticCalculator;
 import de.clusteval.utils.StatisticCalculator;
-import de.wiwie.wiutils.file.FileUtils;
+import de.clusteval.utils.FileUtils;
 import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;

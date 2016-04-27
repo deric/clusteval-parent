@@ -15,7 +15,7 @@ package de.clusteval.run.statistics;
 
 import java.io.File;
 
-import de.wiwie.wiutils.utils.ArraysExt;
+import de.clusteval.utils.ArraysExt;
 import de.wiwie.wiutils.utils.StringExt;
 import cern.colt.matrix.tlong.LongMatrix2D;
 import cern.colt.matrix.tlong.impl.SparseLongMatrix2D;

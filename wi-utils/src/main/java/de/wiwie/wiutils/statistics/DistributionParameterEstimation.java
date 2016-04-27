@@ -3,7 +3,7 @@
  */
 package de.wiwie.wiutils.statistics;
 
-import de.wiwie.wiutils.utils.ArraysExt;
+import de.clusteval.utils.ArraysExt;
 import de.wiwie.wiutils.utils.FilterFactory;
 import de.wiwie.wiutils.utils.FilterFactory.FILTER_TYPE;
 import de.wiwie.wiutils.utils.Log;

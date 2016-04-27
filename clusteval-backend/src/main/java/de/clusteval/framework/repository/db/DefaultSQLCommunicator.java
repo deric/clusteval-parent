@@ -70,7 +70,7 @@ import de.clusteval.run.result.format.RunResultFormat;
 import de.clusteval.run.statistics.RunDataStatistic;
 import de.clusteval.run.statistics.RunStatistic;
 import de.clusteval.utils.Statistic;
-import de.wiwie.wiutils.file.FileUtils;
+import de.clusteval.utils.FileUtils;
 import de.clusteval.api.Pair;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package de.wiwie.wiutils.utils;
+package de.clusteval.utils;
 
 
 /**

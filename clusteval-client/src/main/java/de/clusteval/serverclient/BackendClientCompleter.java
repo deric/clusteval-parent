@@ -11,7 +11,7 @@
 package de.clusteval.serverclient;
 
 import de.clusteval.api.run.RUN_STATUS;
-import de.wiwie.wiutils.utils.ArraysExt;
+import de.clusteval.utils.ArraysExt;
 import de.clusteval.api.Pair;
 import java.rmi.ConnectException;
 import java.rmi.RemoteException;

@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import de.wiwie.wiutils.utils.ArraysExt;
+import de.clusteval.utils.ArraysExt;
 import de.wiwie.wiutils.utils.StringExt;
 import de.wiwie.wiutils.utils.text.TextFileValueUniqueListParser;
 

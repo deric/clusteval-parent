@@ -20,7 +20,7 @@ import java.util.Map;
 import org.rosuda.REngine.REngineException;
 import org.rosuda.REngine.Rserve.RserveException;
 
-import de.wiwie.wiutils.utils.ArraysExt;
+import de.clusteval.utils.ArraysExt;
 import de.clusteval.api.Pair;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
 import de.clusteval.api.cluster.Cluster;
@@ -35,7 +35,7 @@ import de.clusteval.data.goldstandard.GoldStandardConfig;
 import de.clusteval.framework.repository.MyRengine;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
-import de.wiwie.wiutils.file.FileUtils;
+import de.clusteval.utils.FileUtils;
 
 /**
  * @author Christian Wiwie

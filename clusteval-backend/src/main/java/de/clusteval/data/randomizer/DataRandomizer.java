@@ -20,7 +20,7 @@ import de.clusteval.data.dataset.AbstractDataSetProvider;
 import de.clusteval.data.dataset.DataSet;
 import de.clusteval.data.dataset.generator.DataSetGenerationException;
 import de.clusteval.data.goldstandard.GoldStandard;
-import de.wiwie.wiutils.file.FileUtils;
+import de.clusteval.utils.FileUtils;
 import de.clusteval.api.Pair;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;

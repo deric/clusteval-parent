@@ -3,7 +3,7 @@ package de.wiwie.wiutils.utils;
 import java.io.File;
 import java.io.IOException;
 
-import de.wiwie.wiutils.file.FileUtils;
+import de.clusteval.utils.FileUtils;
 
 // TODO: Auto-generated Javadoc
 /**

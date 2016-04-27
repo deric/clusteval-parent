@@ -32,7 +32,7 @@ import de.clusteval.framework.repository.Repository;
 import de.clusteval.program.Program;
 import de.clusteval.run.result.format.RunResultFormat;
 import de.clusteval.api.exceptions.UnknownRunResultFormatException;
-import de.wiwie.wiutils.file.FileUtils;
+import de.clusteval.utils.FileUtils;
 
 /**
  * This class is an implementation of K-Means Clustering based on the

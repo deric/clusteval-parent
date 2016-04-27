@@ -3,7 +3,7 @@
  */
 package de.wiwie.wiutils.format;
 
-import de.wiwie.wiutils.format.Formatter;
+import de.clusteval.utils.Formatter;
 import junit.framework.Assert;
 import org.junit.After;
 import org.junit.AfterClass;

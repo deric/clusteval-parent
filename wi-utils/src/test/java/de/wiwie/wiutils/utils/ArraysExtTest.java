@@ -17,6 +17,7 @@
  */
 package de.wiwie.wiutils.utils;
 
+import de.clusteval.utils.ArraysExt;
 import java.util.Arrays;
 import static org.junit.Assert.*;
 import org.junit.Test;

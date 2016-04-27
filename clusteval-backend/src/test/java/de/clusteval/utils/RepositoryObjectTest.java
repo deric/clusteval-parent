@@ -176,12 +176,12 @@ public final class RepositoryObjectTest extends AbstractClustEvalTest {
                 "testCaseRepository/data/goldstandards/DS1/Zachary_karate_club_gold_standard_copy.txt")
                 .getAbsoluteFile();
         if (destF.exists()) {
-            de.wiwie.wiutils.file.FileUtils.delete(destF);
+            de.clusteval.utils.FileUtils.delete(destF);
         }
         this.repositoryObject.copyTo(destF);
             assertTrue(destF.exists());
         FileUtils.contentEquals(f, destF);
-        de.wiwie.wiutils.file.FileUtils.delete(destF);
+        de.clusteval.utils.FileUtils.delete(destF);
     }
 
     /**
@@ -211,7 +211,7 @@ public final class RepositoryObjectTest extends AbstractClustEvalTest {
                 "testCaseRepository/data/goldstandards/DS1/copy/Zachary_karate_club_gold_standard.txt");
         assertTrue(destF.exists());
         FileUtils.contentEquals(f, destF);
-        de.wiwie.wiutils.file.FileUtils.delete(destF);
+        de.clusteval.utils.FileUtils.delete(destF);
     }
 
     /**

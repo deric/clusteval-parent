@@ -32,8 +32,8 @@ import de.clusteval.api.r.RLibraryRequirement;
 import de.clusteval.framework.repository.MyRengine;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.repository.Repository;
-import de.wiwie.wiutils.file.FileUtils;
-import de.wiwie.wiutils.utils.ArraysExt;
+import de.clusteval.utils.FileUtils;
+import de.clusteval.utils.ArraysExt;
 
 /**
  * @author Christian Wiwie

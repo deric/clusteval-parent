@@ -38,7 +38,7 @@ import de.clusteval.api.run.IScheduler;
 import de.clusteval.run.ParameterOptimizationRun;
 import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.utils.plot.Plotter;
-import de.wiwie.wiutils.file.FileUtils;
+import de.clusteval.utils.FileUtils;
 import de.clusteval.api.Triple;
 import java.io.File;
 import java.io.IOException;

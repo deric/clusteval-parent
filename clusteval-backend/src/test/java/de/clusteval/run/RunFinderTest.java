@@ -25,7 +25,7 @@ import de.clusteval.framework.repository.db.StubSQLCommunicator;
 import de.clusteval.framework.threading.RepositorySupervisorThread;
 import de.clusteval.framework.threading.SupervisorThread;
 import de.clusteval.utils.AbstractClustEvalTest;
-import de.wiwie.wiutils.file.FileUtils;
+import de.clusteval.utils.FileUtils;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;

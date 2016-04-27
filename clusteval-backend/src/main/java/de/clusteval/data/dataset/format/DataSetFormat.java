@@ -22,7 +22,7 @@ import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.data.dataset.DataSet;
 import de.clusteval.framework.repository.RepositoryObject;
-import de.wiwie.wiutils.file.FileUtils;
+import de.clusteval.utils.FileUtils;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;

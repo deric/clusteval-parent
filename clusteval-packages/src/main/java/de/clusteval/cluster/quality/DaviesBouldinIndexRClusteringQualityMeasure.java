@@ -23,7 +23,7 @@ import de.clusteval.api.r.ROperationNotSupported;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.data.dataset.RelativeDataSet;
 import de.clusteval.framework.repository.Repository;
-import de.wiwie.wiutils.utils.ArraysExt;
+import de.clusteval.utils.ArraysExt;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
 import java.io.File;
 import java.util.HashMap;

@@ -82,7 +82,7 @@ import de.clusteval.run.runnable.RunRunnable;
 import de.clusteval.run.statistics.UnknownRunDataStatisticException;
 import de.clusteval.run.statistics.UnknownRunStatisticException;
 import de.clusteval.utils.InvalidConfigurationFileException;
-import de.wiwie.wiutils.file.FileUtils;
+import de.clusteval.utils.FileUtils;
 import de.clusteval.api.Triple;
 import java.io.File;
 import java.io.IOException;

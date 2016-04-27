@@ -19,8 +19,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import de.wiwie.wiutils.utils.ArraysExt;
-import de.wiwie.wiutils.utils.RangeCreationException;
+import de.clusteval.utils.ArraysExt;
+import de.clusteval.utils.RangeCreationException;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.format.DataSetFormat;

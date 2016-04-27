@@ -15,7 +15,7 @@ import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
 import de.clusteval.utils.AbstractClustEvalTest;
-import de.wiwie.wiutils.utils.ArraysExt;
+import de.clusteval.utils.ArraysExt;
 import java.util.ArrayList;
 import org.junit.Assert;
 import static org.junit.Assert.assertArrayEquals;

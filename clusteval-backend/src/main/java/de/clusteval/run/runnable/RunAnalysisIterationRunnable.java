@@ -20,7 +20,7 @@ import de.clusteval.api.factory.StatisticCalculatorFactory;
 import de.clusteval.api.stats.IStatisticCalculator;
 import de.clusteval.run.statistics.RunStatistic;
 import de.clusteval.utils.StatisticCalculator;
-import de.wiwie.wiutils.file.FileUtils;
+import de.clusteval.utils.FileUtils;
 import java.lang.reflect.InvocationTargetException;
 
 /**

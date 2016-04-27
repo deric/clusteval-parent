@@ -5,7 +5,7 @@ package de.wiwie.wiutils.utils;
 
 import java.io.PrintStream;
 
-import de.wiwie.wiutils.format.Formatter;
+import de.clusteval.utils.Formatter;
 
 /**
  * @author wiwie

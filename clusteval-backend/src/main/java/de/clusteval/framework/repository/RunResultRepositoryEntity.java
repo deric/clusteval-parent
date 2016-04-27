@@ -7,7 +7,7 @@ import de.clusteval.api.repository.StaticRepositoryEntity;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.run.result.RunResult;
-import de.wiwie.wiutils.file.FileUtils;
+import de.clusteval.utils.FileUtils;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;

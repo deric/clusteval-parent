@@ -25,7 +25,7 @@ import de.clusteval.run.RunInitializationException;
 import de.clusteval.run.result.RunResult;
 import de.clusteval.run.runnable.RunRunnableInitializationException;
 import de.clusteval.utils.AbstractClustEvalTest;
-import de.wiwie.wiutils.file.FileUtils;
+import de.clusteval.utils.FileUtils;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;

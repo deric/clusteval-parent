@@ -10,7 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.run.result.format;
 
-import de.wiwie.wiutils.file.FileUtils;
+import de.clusteval.utils.FileUtils;
 import de.wiwie.wiutils.utils.text.TextFileMapParser;
 import java.io.File;
 import java.io.IOException;

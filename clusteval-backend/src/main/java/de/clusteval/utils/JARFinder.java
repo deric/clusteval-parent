@@ -15,7 +15,6 @@ package de.clusteval.utils;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.IRepositoryObject;
 import de.clusteval.api.repository.RegisterException;
-import de.wiwie.wiutils.file.FileUtils;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;

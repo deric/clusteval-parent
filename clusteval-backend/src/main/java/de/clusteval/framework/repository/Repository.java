@@ -87,7 +87,7 @@ import de.clusteval.utils.Finder;
 import de.clusteval.utils.NamedDoubleAttribute;
 import de.clusteval.utils.NamedIntegerAttribute;
 import de.clusteval.utils.NamedStringAttribute;
-import de.wiwie.wiutils.file.FileUtils;
+import de.clusteval.utils.FileUtils;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.lang.reflect.ParameterizedType;

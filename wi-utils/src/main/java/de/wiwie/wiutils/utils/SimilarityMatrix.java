@@ -3,6 +3,8 @@
  */
 package de.wiwie.wiutils.utils;
 
+import de.clusteval.utils.RangeCreationException;
+import de.clusteval.utils.ArraysExt;
 import cern.colt.function.tdouble.DoubleProcedure;
 import cern.colt.matrix.tdouble.impl.SparseDoubleMatrix2D;
 import de.clusteval.api.Matrix;
