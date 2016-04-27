@@ -11,6 +11,7 @@
 package de.clusteval.run;
 
 import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.run.ISupervisorThread;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethodFinderThread;
 import de.clusteval.context.Context;
@@ -21,7 +22,6 @@ import de.clusteval.data.dataset.DataSetConfig;
 import de.clusteval.data.dataset.RunResultDataSetConfigFinderThread;
 import de.clusteval.data.goldstandard.GoldStandardConfig;
 import de.clusteval.data.goldstandard.GoldStandardConfigFinderThread;
-import de.clusteval.framework.threading.SupervisorThread;
 import de.clusteval.program.ProgramConfig;
 import de.clusteval.program.ProgramConfigFinderThread;
 
@@ -34,18 +34,6 @@ import de.clusteval.program.ProgramConfigFinderThread;
  */
 public class RunResultRunFinderThread extends RunFinderThread {
 
-    /**
-     * @param supervisorThread
-     * @param repository
-     *                         The repository to check for new runs.
-     * @param checkOnce
-     *                         If true, this thread only checks once for new runs.
-     *
-     */
-    public RunResultRunFinderThread(final SupervisorThread supervisorThread,
-            final IRepository repository, final boolean checkOnce) {
-        super(supervisorThread, repository, 30000, checkOnce);
-    }
 
     /**
      * @param supervisorThread
@@ -57,7 +45,7 @@ public class RunResultRunFinderThread extends RunFinderThread {
      *                         If true, this thread only checks once for new runs.
      *
      */
-    public RunResultRunFinderThread(final SupervisorThread supervisorThread,
+    public RunResultRunFinderThread(final ISupervisorThread supervisorThread,
             final IRepository repository, final long sleepTime,
             final boolean checkOnce) {
         super(supervisorThread, repository, sleepTime, checkOnce);

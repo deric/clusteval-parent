@@ -25,18 +25,6 @@ public class RunResultDataSetFinderThread extends DataSetFinderThread {
     /**
      * @param supervisorThread
      * @param framework
-     * @param checkOnce
-     *
-     */
-    public RunResultDataSetFinderThread(
-            final SupervisorThread supervisorThread,
-            final IRepository framework, final boolean checkOnce) {
-        super(supervisorThread, framework, 30000, checkOnce);
-    }
-
-    /**
-     * @param supervisorThread
-     * @param framework
      * @param sleepTime
      * @param checkOnce
      *

@@ -24,19 +24,6 @@ public class RunDataStatisticFinderThread extends FinderThread<RunDataStatistic>
     /**
      * @param supervisorThread
      * @param framework
-     * @param checkOnce
-     *
-     */
-    public RunDataStatisticFinderThread(
-            final ISupervisorThread supervisorThread,
-            final IRepository framework, final boolean checkOnce) {
-        super(supervisorThread, framework, RunDataStatistic.class, 30000,
-                checkOnce);
-    }
-
-    /**
-     * @param supervisorThread
-     * @param framework
      * @param sleepTime
      * @param checkOnce
      *

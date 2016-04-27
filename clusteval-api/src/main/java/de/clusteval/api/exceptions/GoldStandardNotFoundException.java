@@ -1,4 +1,4 @@
-/*******************************************************************************
+/** *****************************************************************************
  * Copyright (c) 2013 Christian Wiwie.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Public License v3.0
@@ -16,15 +16,15 @@ package de.clusteval.api.exceptions;
  */
 public class GoldStandardNotFoundException extends GoldStandardException {
 
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = -2215573555406810759L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = -2215573555406810759L;
 
-	/**
-	 * @param message
-	 */
-	public GoldStandardNotFoundException(final String message) {
-		super(message);
-	}
+    /**
+     * @param message
+     */
+    public GoldStandardNotFoundException(final String message) {
+        super(message);
+    }
 }

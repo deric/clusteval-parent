@@ -12,7 +12,7 @@ package de.clusteval.data.dataset.generator;
 
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.framework.threading.SupervisorThread;
+import de.clusteval.api.run.ISupervisorThread;
 import de.clusteval.utils.FinderThread;
 
 /**
@@ -23,26 +23,13 @@ public class DataSetGeneratorFinderThread extends FinderThread<DataSetGenerator>
 
     /**
      * @param supervisorThread
-     * @param repository
-     * @param checkOnce
-     *
-     */
-    public DataSetGeneratorFinderThread(
-            final SupervisorThread supervisorThread,
-            final IRepository repository, final boolean checkOnce) {
-        super(supervisorThread, repository, DataSetGenerator.class, 30000,
-                checkOnce);
-    }
-
-    /**
-     * @param supervisorThread
      * @param framework
      * @param sleepTime
      * @param checkOnce
      *
      */
     public DataSetGeneratorFinderThread(
-            final SupervisorThread supervisorThread,
+            final ISupervisorThread supervisorThread,
             final IRepository framework, final long sleepTime,
             final boolean checkOnce) {
         super(supervisorThread, framework, DataSetGenerator.class, sleepTime,

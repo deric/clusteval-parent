@@ -23,19 +23,6 @@ public class RunResultPostprocessorFinderThread extends FinderThread<RunResultPo
 
     /**
      * @param supervisorThread
-     * @param repository
-     * @param checkOnce
-     *
-     */
-    public RunResultPostprocessorFinderThread(
-            final ISupervisorThread supervisorThread,
-            final IRepository repository, final boolean checkOnce) {
-        super(supervisorThread, repository, RunResultPostprocessor.class, 30000,
-                checkOnce);
-    }
-
-    /**
-     * @param supervisorThread
      * @param framework
      * @param sleepTime
      * @param checkOnce

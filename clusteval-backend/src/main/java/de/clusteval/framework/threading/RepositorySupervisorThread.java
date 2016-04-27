@@ -143,6 +143,10 @@ public class RepositorySupervisorThread extends SupervisorThread {
     public RepositorySupervisorThread(final IRepository repository,
             Map<String, Long> threadSleepTimes, final boolean checkOnce,
             final boolean checkForRunResults) {
+
+        /**
+         * TODO: finder threads could be discovered automatically (via finder factory)
+         */
         super(repository, checkForRunResults
                           ? createList(
                         //DataSetFormatFinderThread.class,

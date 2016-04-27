@@ -12,6 +12,7 @@ package de.clusteval.run;
 
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.run.ISupervisorThread;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethodFinderThread;
 import de.clusteval.context.Context;
@@ -20,7 +21,6 @@ import de.clusteval.data.dataset.DataSetConfig;
 import de.clusteval.data.dataset.DataSetConfigFinderThread;
 import de.clusteval.data.goldstandard.GoldStandardConfig;
 import de.clusteval.data.goldstandard.GoldStandardConfigFinderThread;
-import de.clusteval.framework.threading.SupervisorThread;
 import de.clusteval.program.ProgramConfig;
 import de.clusteval.program.ProgramConfigFinderThread;
 import de.clusteval.run.statistics.RunDataStatistic;
@@ -40,26 +40,13 @@ public class RunFinderThread extends FinderThread<Run> {
      * @param supervisorThread
      * @param repository
      *                         The repository to check for new runs.
-     * @param checkOnce
-     *                         If true, this thread only checks once for new runs.
-     *
-     */
-    public RunFinderThread(final SupervisorThread supervisorThread,
-            final IRepository repository, final boolean checkOnce) {
-        super(supervisorThread, repository, Run.class, 30000, checkOnce);
-    }
-
-    /**
-     * @param supervisorThread
-     * @param repository
-     *                         The repository to check for new runs.
      * @param sleepTime
      *                         The time between two checks.
      * @param checkOnce
      *                         If true, this thread only checks once for new runs.
      *
      */
-    public RunFinderThread(final SupervisorThread supervisorThread,
+    public RunFinderThread(final ISupervisorThread supervisorThread,
             final IRepository repository, final long sleepTime,
             final boolean checkOnce) {
         super(supervisorThread, repository, Run.class, sleepTime, checkOnce);

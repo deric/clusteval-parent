@@ -14,7 +14,7 @@ import de.clusteval.api.SQLConfig.DB_TYPE;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.run.IRunResult;
-import de.clusteval.framework.threading.SupervisorThread;
+import de.clusteval.api.run.ISupervisorThread;
 import de.clusteval.utils.Finder;
 import de.clusteval.utils.FinderThread;
 
@@ -28,26 +28,13 @@ public class RunResultFinderThread extends FinderThread<IRunResult> {
      * @param supervisorThread
      * @param repository
      *                         The repository to check for new run results.
-     * @param checkOnce
-     *                         If true, this thread only checks once for new run results.
-     *
-     */
-    public RunResultFinderThread(final SupervisorThread supervisorThread,
-            IRepository repository, final boolean checkOnce) {
-        super(supervisorThread, repository, IRunResult.class, 30000, checkOnce);
-    }
-
-    /**
-     * @param supervisorThread
-     * @param repository
-     *                         The repository to check for new run results.
      * @param sleepTime
      *                         The time between two checks.
      * @param checkOnce
      *                         If true, this thread only checks once for new run results.
      *
      */
-    public RunResultFinderThread(final SupervisorThread supervisorThread,
+    public RunResultFinderThread(final ISupervisorThread supervisorThread,
             IRepository repository, long sleepTime, final boolean checkOnce) {
         super(supervisorThread, repository, IRunResult.class, sleepTime,
                 checkOnce);

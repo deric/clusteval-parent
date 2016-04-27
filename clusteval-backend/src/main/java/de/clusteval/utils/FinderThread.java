@@ -12,6 +12,7 @@
  */
 package de.clusteval.utils;
 
+import de.clusteval.api.program.IFinderThread;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.IRepositoryObject;
 import de.clusteval.api.repository.RegisterException;
@@ -25,7 +26,7 @@ import org.slf4j.LoggerFactory;
  * @param <T>
  *
  */
-public abstract class FinderThread<T extends IRepositoryObject> extends ClustevalThread {
+public abstract class FinderThread<T extends IRepositoryObject> extends ClustevalThread implements IFinderThread<T> {
 
     protected IRepository repository;
 
@@ -72,6 +73,11 @@ public abstract class FinderThread<T extends IRepositoryObject> extends Clusteva
         this.sleepTime = sleepTime;
         this.checkOnce = checkOnce;
         this.start();
+    }
+
+    @Override
+    public long getSleepTime() {
+        return sleepTime;
     }
 
     protected void beforeFind() {

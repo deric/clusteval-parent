@@ -12,7 +12,7 @@ package de.clusteval.data.dataset;
 
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.framework.threading.SupervisorThread;
+import de.clusteval.api.run.ISupervisorThread;
 import de.clusteval.utils.Finder;
 import de.clusteval.utils.FinderThread;
 
@@ -26,22 +26,6 @@ public class RunResultDataSetConfigFinderThread extends FinderThread<DataSetConf
      * @param supervisorThread
      * @param repository
      *                         The repository to check for new dataset configurations.
-     * @param checkOnce
-     *                         If true, this thread only checks once for new dataset
-     *                         configurations.
-     *
-     */
-    public RunResultDataSetConfigFinderThread(
-            final SupervisorThread supervisorThread,
-            final IRepository repository, final boolean checkOnce) {
-        super(supervisorThread, repository, DataSetConfig.class, 30000,
-                checkOnce);
-    }
-
-    /**
-     * @param supervisorThread
-     * @param repository
-     *                         The repository to check for new dataset configurations.
      * @param sleepTime
      *                         The time between two checks.
      * @param checkOnce
@@ -50,7 +34,7 @@ public class RunResultDataSetConfigFinderThread extends FinderThread<DataSetConf
      *
      */
     public RunResultDataSetConfigFinderThread(
-            final SupervisorThread supervisorThread,
+            final ISupervisorThread supervisorThread,
             final IRepository repository, final long sleepTime,
             final boolean checkOnce) {
         super(supervisorThread, repository, DataSetConfig.class, sleepTime,

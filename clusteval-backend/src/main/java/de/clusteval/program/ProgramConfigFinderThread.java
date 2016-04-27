@@ -30,21 +30,6 @@ public class ProgramConfigFinderThread extends FinderThread<ProgramConfig> {
      * @param supervisorThread
      * @param repository
      *                         The repository to check for new program configurations.
-     * @param checkOnce
-     *                         If true, this thread only checks once for new program
-     *                         configurations.
-     *
-     */
-    public ProgramConfigFinderThread(final ISupervisorThread supervisorThread,
-            final IRepository repository, final boolean checkOnce) {
-        super(supervisorThread, repository, ProgramConfig.class, 30000,
-                checkOnce);
-    }
-
-    /**
-     * @param supervisorThread
-     * @param repository
-     *                         The repository to check for new program configurations.
      * @param sleepTime
      *                         The time between two checks.
      * @param checkOnce

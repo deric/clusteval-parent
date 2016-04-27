@@ -48,7 +48,7 @@ public abstract class SupervisorThread extends Thread implements ISupervisorThre
 
     /**
      * @param classes
-     * The clusteval thread classes to add to a list.
+     *                The clusteval thread classes to add to a list.
      * @return A list of clusteval thread classes.
      */
     public static List<Class<? extends ClustevalThread>> createList(
@@ -90,31 +90,33 @@ public abstract class SupervisorThread extends Thread implements ISupervisorThre
 
     protected Logger log;
 
+    protected final Map<String, Long> threadSleepTimes;
+
     /**
      * Constructor of abstract supervisor threads.
      *
      * @param repository
-     * The repository this supervisor belongs to and for which all
-     * threads should be supervised.
-     * @param threads
-     * A list containing all threads this supervisor thread should
-     * start and keep alive.
+     *                         The repository this supervisor belongs to and for which all
+     *                         threads should be supervised.
+     * @param toStart
+     *                         A list containing all threads this supervisor thread should
+     *                         start and keep alive.
      * @param threadSleepTimes
-     * A map containing sleep times for threads (must not be
-     * complete).
+     *                         A map containing sleep times for threads (must not be
+     *                         complete).
      * @param checkOnce
-     * A boolean indicating, whether this thread only should check
-     * once and then terminate. This can be useful in some subclasses
-     * of this class (e.g.
-     * {@link RunResultRepositorySupervisorThread}).
+     *                         A boolean indicating, whether this thread only should check
+     *                         once and then terminate. This can be useful in some subclasses
+     *                         of this class (e.g.
+     *                         {@link RunResultRepositorySupervisorThread}).
      */
     public SupervisorThread(final IRepository repository,
-            final List<Class<? extends ClustevalThread>> threads,
+            final List<Class<? extends ClustevalThread>> toStart,
             final Map<String, Long> threadSleepTimes, final boolean checkOnce) {
         super();
         this.setName(this.getName().replace("Thread", "Supervisor"));
         this.log = LoggerFactory.getLogger(this.getClass());
-
+        this.threadSleepTimes = threadSleepTimes;
         this.repository = repository;
         this.supervisorSleepTime = threadSleepTimes
                 .containsKey("SupervisorThread") ? threadSleepTimes
@@ -126,38 +128,28 @@ public abstract class SupervisorThread extends Thread implements ISupervisorThre
         this.threads = new LinkedHashMap<>();
 
         synchronized (this.threads) {
-            for (Class<? extends ClustevalThread> thread : threads) {
+            for (Class<? extends ClustevalThread> thread : toStart) {
                 try {
-                    this.threads.put(
-                            thread,
-                            (threadSleepTimes.containsKey(thread
-                                    .getSimpleName()))
-                            ? // if we have a specific sleep time for this thread
-                                    // use
-                                    // it
-                                    thread.getConstructor(
-                                            SupervisorThread.class,
-                                            IRepository.class, long.class,
-                                            boolean.class).newInstance(
-                                            this,
-                                            repository,
-                                            threadSleepTimes.get(thread
-                                                    .getSimpleName()),
-                                            checkOnce)
-                            : // otherwise we use the default sleep time
-                                    // of
-                                    // the thread class
-                                    thread.getConstructor(
-                                            SupervisorThread.class,
-                                            IRepository.class, boolean.class)
-                                    .newInstance(this, repository,
-                                            checkOnce));
+                    long sleep = getSleepTime(thread);
+                    ClustevalThread inst = thread.getConstructor(
+                            ISupervisorThread.class, IRepository.class,
+                            long.class, boolean.class).newInstance(
+                                    this, repository, sleep, checkOnce);
+                    this.threads.put(thread, inst);
                 } catch (IllegalArgumentException | SecurityException | InstantiationException |
-                         IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                        IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
                     e.printStackTrace();
                 }
             }
         }
+    }
+
+    private long getSleepTime(Class<? extends ClustevalThread> thread) {
+        if (threadSleepTimes.containsKey(thread.getSimpleName())) {
+            return threadSleepTimes.get(thread.getSimpleName());
+        }
+        //default sleep time for most threads
+        return 30000;
     }
 
     /*
@@ -183,12 +175,12 @@ public abstract class SupervisorThread extends Thread implements ISupervisorThre
                             try {
                                 constr = threadClass.getConstructor(
                                         ISupervisorThread.class,
-                                        IRepository.class, boolean.class);
+                                        IRepository.class, long.class, boolean.class);
                                 this.threads.put(threadClass, constr
-                                        .newInstance(this, repository, false));
+                                        .newInstance(this, repository, getSleepTime(threadClass), false));
                             } catch (NoSuchMethodException | SecurityException |
-                                     InstantiationException | IllegalAccessException |
-                                     IllegalArgumentException | InvocationTargetException e) {
+                                    InstantiationException | IllegalAccessException |
+                                    IllegalArgumentException | InvocationTargetException e) {
                                 e.printStackTrace();
                             }
                         }
@@ -274,7 +266,7 @@ public abstract class SupervisorThread extends Thread implements ISupervisorThre
 
     /**
      * @param clazz
-     * The class for which we want the thread instance
+     *              The class for which we want the thread instance
      * @return The thread instance of the passed class.
      */
     public ClustevalThread getThread(Class<? extends ClustevalThread> clazz) {

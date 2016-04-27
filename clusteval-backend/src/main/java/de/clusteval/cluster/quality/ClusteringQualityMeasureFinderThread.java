@@ -12,7 +12,7 @@ package de.clusteval.cluster.quality;
 
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.framework.threading.SupervisorThread;
+import de.clusteval.api.run.ISupervisorThread;
 import de.clusteval.utils.FinderThread;
 
 /**
@@ -20,22 +20,6 @@ import de.clusteval.utils.FinderThread;
  *
  */
 public class ClusteringQualityMeasureFinderThread extends FinderThread<ClusteringQualityMeasure> {
-
-    /**
-     * @param supervisorThread
-     * @param repository
-     *                         The repository to check for new clustering quality measures.
-     * @param checkOnce
-     *                         If true, this thread only checks once for new clustering
-     *                         quality measures.
-     *
-     */
-    public ClusteringQualityMeasureFinderThread(
-            final SupervisorThread supervisorThread,
-            final IRepository repository, final boolean checkOnce) {
-        super(supervisorThread, repository, ClusteringQualityMeasure.class,
-                30000, checkOnce);
-    }
 
     /**
      * @param supervisorThread
@@ -49,7 +33,7 @@ public class ClusteringQualityMeasureFinderThread extends FinderThread<Clusterin
      *
      */
     public ClusteringQualityMeasureFinderThread(
-            final SupervisorThread supervisorThread,
+            final ISupervisorThread supervisorThread,
             final IRepository repository, final long sleepTime,
             final boolean checkOnce) {
         super(supervisorThread, repository, ClusteringQualityMeasure.class,

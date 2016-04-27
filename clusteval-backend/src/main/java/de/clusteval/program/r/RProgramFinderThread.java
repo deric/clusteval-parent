@@ -13,7 +13,6 @@ package de.clusteval.program.r;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.run.ISupervisorThread;
-import de.clusteval.framework.threading.SupervisorThread;
 import de.clusteval.utils.FinderThread;
 
 /**
@@ -25,22 +24,11 @@ public class RProgramFinderThread extends FinderThread<RProgram> {
     /**
      * @param supervisorThread
      * @param framework
-     * @param checkOnce
-     *
-     */
-    public RProgramFinderThread(final ISupervisorThread supervisorThread,
-            final IRepository framework, final boolean checkOnce) {
-        super(supervisorThread, framework, RProgram.class, 30000, checkOnce);
-    }
-
-    /**
-     * @param supervisorThread
-     * @param framework
      * @param sleepTime
      * @param checkOnce
      *
      */
-    public RProgramFinderThread(final SupervisorThread supervisorThread,
+    public RProgramFinderThread(final ISupervisorThread supervisorThread,
             final IRepository framework, final long sleepTime,
             final boolean checkOnce) {
         super(supervisorThread, framework, RProgram.class, sleepTime, checkOnce);

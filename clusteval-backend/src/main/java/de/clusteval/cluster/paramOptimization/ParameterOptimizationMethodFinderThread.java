@@ -12,7 +12,7 @@ package de.clusteval.cluster.paramOptimization;
 
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.framework.threading.SupervisorThread;
+import de.clusteval.api.run.ISupervisorThread;
 import de.clusteval.utils.FinderThread;
 
 /**
@@ -21,22 +21,6 @@ import de.clusteval.utils.FinderThread;
  */
 public class ParameterOptimizationMethodFinderThread extends FinderThread<ParameterOptimizationMethod> {
 
-    /**
-     * @param supervisorThread
-     * @param repository
-     *                         The repository to check for new parameter optimization
-     *                         methods.
-     * @param checkOnce
-     *                         If true, this thread only checks once for new parameter
-     *                         optimization methods.
-     *
-     */
-    public ParameterOptimizationMethodFinderThread(
-            final SupervisorThread supervisorThread,
-            final IRepository repository, final boolean checkOnce) {
-        super(supervisorThread, repository, ParameterOptimizationMethod.class,
-                30000, checkOnce);
-    }
 
     /**
      * @param supervisorThread
@@ -51,7 +35,7 @@ public class ParameterOptimizationMethodFinderThread extends FinderThread<Parame
      *
      */
     public ParameterOptimizationMethodFinderThread(
-            final SupervisorThread supervisorThread,
+            final ISupervisorThread supervisorThread,
             final IRepository repository, final long sleepTime,
             final boolean checkOnce) {
         super(supervisorThread, repository, ParameterOptimizationMethod.class,
