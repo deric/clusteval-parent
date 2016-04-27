@@ -1,6 +1,6 @@
 #!/bin/bash
 set -xe
-sudo apt-get install r-base
+sudo apt-get install r-base libxtst6 libxrender1 libxi6
 mkdir -p ~/R/library
 export R_LIBS="~/R/library"
 R < install.R --no-save

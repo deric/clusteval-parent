@@ -3,6 +3,13 @@
 
 Fork of [original ClustEval](https://github.com/wiwie/clusteval) with complete list of dependencies, converted to Maven structure
 
+## Backend requirements
+
+  * `r-base`
+  * MCODE algorithm requires `libawt_xawt.so` which is provided on Debian by `libxext6`
+  * MCODE algorithm requires `libXrender.so.1` which is provided on Debian by `libxrender1`
+  * MCODE algorithm requires `libXi.so.6` which is provided on Debian by `libxi6`
+
 ## Versions of R packages
 
 Version used in original VirtualBox image:
