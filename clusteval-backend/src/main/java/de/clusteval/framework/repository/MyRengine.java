@@ -17,6 +17,7 @@ import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RExpr;
 import de.clusteval.api.r.RLibraryNotLoadedException;
 import de.clusteval.api.r.ROperationNotSupported;
+import de.clusteval.framework.BackendServerConfig;
 import de.clusteval.framework.ClustevalBackendServer;
 import java.io.IOException;
 import java.util.HashSet;
@@ -59,12 +60,9 @@ public class MyRengine implements IRengine {
      */
     public MyRengine(String string) throws RException, ROperationNotSupported {
         super();
-
+        BackendServerConfig conf = ClustevalBackendServer.getBackendServerConfiguration();
         try {
-            this.connection = new RConnection(ClustevalBackendServer
-                    .getBackendServerConfiguration().getRserveHost(),
-                    ClustevalBackendServer.getBackendServerConfiguration()
-                    .getRservePort());
+            this.connection = new RConnection(conf.getRserveHost(), conf.getRservePort());
             try {
                 this.pid = this.connection.eval("Sys.getpid()").asInteger();
             } catch (REXPMismatchException e) {
@@ -75,8 +73,9 @@ public class MyRengine implements IRengine {
             this.log = LoggerFactory.getLogger(this.getClass());
             this.loadedLibraries = new HashSet<>();
         } catch (RserveException ex) {
-            log.error(ex.getMessage(), ex);
-            throw new RException(this, string);
+            System.err.println("FATAL ERROR: failed to connect to RServe on " + conf.getRserveHost() + ":" + conf.getRservePort());
+            System.exit(0);
+            //throw new RException(this, string);
         }
     }
 
