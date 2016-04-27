@@ -1889,7 +1889,8 @@ public class Repository implements IRepository {
 
     @Override
     public <T extends IRepositoryObject, S extends T> boolean unregister(S object) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        lookupRemove(object);
+        return true;
     }
 
     @Override
@@ -1924,7 +1925,8 @@ public class Repository implements IRepository {
 
     @Override
     public <T extends IRepositoryObject, S extends T> boolean register(S object) throws RegisterException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        lookupAdd(object);
+        return true;
     }
 
     @Override
