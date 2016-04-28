@@ -55,8 +55,7 @@ public class BackendServerConfig {
     }
 
     /**
-     * @param checkForRunResults
-     *                           True, if this backend server should check for run results in
+     * @param checkForRunResults True, if this backend server should check for run results in
      *                           its repository.
      */
     public void setCheckForRunResults(final boolean checkForRunResults) {
@@ -64,8 +63,7 @@ public class BackendServerConfig {
     }
 
     /**
-     * @param noDatabase
-     *                   True, if this backend server should use a database.
+     * @param noDatabase True, if this backend server shouldn't use a database.
      */
     public void setNoDatabase(final boolean noDatabase) {
         this.noDatabase = noDatabase;

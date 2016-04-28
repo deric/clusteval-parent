@@ -13,14 +13,23 @@
 package de.clusteval.framework.repository;
 
 import de.clusteval.api.Database;
+import de.clusteval.api.IContext;
+import de.clusteval.api.IDistanceMeasure;
 import de.clusteval.api.SQLConfig;
 import de.clusteval.api.data.IDataConfig;
+import de.clusteval.api.data.IDataPreprocessor;
+import de.clusteval.api.data.IDataSet;
+import de.clusteval.api.data.IDataSetConfig;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.data.IDataSetFormatParser;
+import de.clusteval.api.data.IDataSetType;
+import de.clusteval.api.data.IGoldStandard;
+import de.clusteval.api.data.IGoldStandardConfig;
 import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.exceptions.InternalAttributeException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.program.INamedAttribute;
+import de.clusteval.api.program.IProgram;
 import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.InvalidRepositoryException;
@@ -36,8 +45,11 @@ import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.repository.StaticRepositoryEntity;
 import de.clusteval.api.repository.StaticRepositoryEntityMap;
 import de.clusteval.api.run.IRun;
+import de.clusteval.api.run.IRunResult;
 import de.clusteval.api.run.IRunResultFormat;
 import de.clusteval.api.run.IRunResultFormatParser;
+import de.clusteval.api.stats.IDataStatistic;
+import de.clusteval.api.stats.IRunStatistic;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
@@ -48,7 +60,6 @@ import de.clusteval.data.dataset.DataSetConfig;
 import de.clusteval.data.dataset.generator.DataSetGenerator;
 import de.clusteval.data.dataset.type.DataSetType;
 import de.clusteval.data.distance.DistanceMeasure;
-import de.clusteval.data.goldstandard.GoldStandard;
 import de.clusteval.data.goldstandard.GoldStandardConfig;
 import de.clusteval.data.goldstandard.format.GoldStandardFormat;
 import de.clusteval.data.preprocessing.DataPreprocessor;
@@ -352,6 +363,8 @@ public class Repository implements IRepository {
         super();
 
         this.log = LoggerFactory.getLogger(this.getClass());
+        instanceContent = new InstanceContent();
+        lookup = new AbstractLookup(instanceContent);
 
         this.basePath = basePath;
         // remove trailing file separator
@@ -395,9 +408,6 @@ public class Repository implements IRepository {
         // this.rEngineException = e;
         // }
         this.rEngines = new HashMap<>();
-
-        instanceContent = new InstanceContent();
-        lookup = new AbstractLookup(instanceContent);
     }
 
     private void dumpEntities() {
@@ -520,30 +530,30 @@ public class Repository implements IRepository {
         // TODO: replace by for loop over entries of #repositoryObjectEntities
         this.log.info("repo base path: " + this.basePath);
         this.ensureFolder(this.basePath);
-        this.ensureFolder(this.getBasePath(DataConfig.class));
-        this.ensureFolder(this.getBasePath(DataSet.class));
+        this.ensureFolder(this.getBasePath(IDataConfig.class));
+        this.ensureFolder(this.getBasePath(IDataSet.class));
         //this.ensureFolder(this.getBasePath(DataSetFormat.class));
-        this.ensureFolder(this.getBasePath(DataSetType.class));
-        this.ensureFolder(this.getBasePath(DataSetConfig.class));
-        this.ensureFolder(this.getBasePath(GoldStandard.class));
-        this.ensureFolder(this.getBasePath(GoldStandardConfig.class));
-        this.ensureFolder(this.getBasePath(Program.class));
-        this.ensureFolder(this.getBasePath(ProgramConfig.class));
-        this.ensureFolder(this.getBasePath(Run.class));
-        this.ensureFolder(this.getBasePath(RunResult.class));
+        this.ensureFolder(this.getBasePath(IDataSetType.class));
+        this.ensureFolder(this.getBasePath(IDataSetConfig.class));
+        this.ensureFolder(this.getBasePath(IGoldStandard.class));
+        this.ensureFolder(this.getBasePath(IGoldStandardConfig.class));
+        this.ensureFolder(this.getBasePath(IProgram.class));
+        this.ensureFolder(this.getBasePath(IProgramConfig.class));
+        this.ensureFolder(this.getBasePath(IRun.class));
+        this.ensureFolder(this.getBasePath(IRunResult.class));
         //this.ensureFolder(this.getBasePath(RunResultFormat.class));
         this.ensureFolder(this.supplementaryBasePath);
         this.ensureFolder(this.suppClusteringBasePath);
-        this.ensureFolder(this.getBasePath(Context.class));
+        this.ensureFolder(this.getBasePath(IContext.class));
         this.ensureFolder(this.getBasePath(ParameterOptimizationMethod.class));
-        this.ensureFolder(this.getBasePath(DataStatistic.class));
-        this.ensureFolder(this.getBasePath(RunStatistic.class));
+        this.ensureFolder(this.getBasePath(IDataStatistic.class));
+        this.ensureFolder(this.getBasePath(IRunStatistic.class));
         this.ensureFolder(this.getBasePath(RunDataStatistic.class));
-        this.ensureFolder(this.getBasePath(DistanceMeasure.class));
+        this.ensureFolder(this.getBasePath(IDistanceMeasure.class));
         this.ensureFolder(this.generatorBasePath);
         this.ensureFolder(this.getBasePath(DataSetGenerator.class));
         this.ensureFolder(this.getBasePath(DataRandomizer.class));
-        this.ensureFolder(this.getBasePath(DataPreprocessor.class));
+        this.ensureFolder(this.getBasePath(IDataPreprocessor.class));
 
         return true;
     }
@@ -700,6 +710,7 @@ public class Repository implements IRepository {
 
     @Override
     public String getBasePath(final Class<? extends IRepositoryObject> c) {
+        System.out.println("searching for " + c.getName());
         if (this.staticRepositoryEntities.containsKey(c)) {
             return this.staticRepositoryEntities.get(c).getBasePath();
         }
@@ -1295,8 +1306,17 @@ public class Repository implements IRepository {
         this.log.info(message);
     }
 
-    protected <T extends RepositoryObject> void createAndAddStaticEntity(final Class<T> c, final String basePath) {
-        this.staticRepositoryEntities.put(c, new StaticRepositoryEntity<T>(this,
+    /**
+     * TODO: is the parameterization really needed
+     * protected <T extends RepositoryObject> void createAndAddStaticEntity(final Class<T> c, final String basePath) {
+     * this.staticRepositoryEntities.put(c, new StaticRepositoryEntity<T>(this,
+     *
+     * @param <T>
+     * @param c
+     * @param basePath
+     */
+    protected <T extends RepositoryObject> void createAndAddStaticEntity(final Class c, final String basePath) {
+        this.staticRepositoryEntities.put(c, new StaticRepositoryEntity(this,
                 this.parent != null ? this.parent.getStaticEntities().get(c) : null, basePath));
     }
 
@@ -1315,21 +1335,21 @@ public class Repository implements IRepository {
      * .
      */
     protected void initAttributes() {
-
+        log.info("initializing attributes");
         this.staticRepositoryEntities = new StaticRepositoryEntityMap();
 
         this.dynamicRepositoryEntities = new DynamicRepositoryEntityMap();
 
-        this.createAndAddStaticEntity(DataSet.class, FileUtils.buildPath(this.basePath, "data", "datasets"));
-        this.createAndAddStaticEntity(DataSetConfig.class,
+        this.createAndAddStaticEntity(IDataSet.class, FileUtils.buildPath(this.basePath, "data", "datasets"));
+        this.createAndAddStaticEntity(IDataSetConfig.class,
                 FileUtils.buildPath(this.basePath, "data", "datasets", "configs"));
-        this.createAndAddStaticEntity(GoldStandard.class, FileUtils.buildPath(this.basePath, "data", "goldstandards"));
-        this.createAndAddStaticEntity(GoldStandardConfig.class,
+        this.createAndAddStaticEntity(IGoldStandard.class, FileUtils.buildPath(this.basePath, "data", "goldstandards"));
+        this.createAndAddStaticEntity(IGoldStandardConfig.class,
                 FileUtils.buildPath(this.basePath, "data", "goldstandards", "configs"));
-        this.createAndAddStaticEntity(DataConfig.class, FileUtils.buildPath(this.basePath, "data", "configs"));
-        this.createAndAddStaticEntity(Run.class, FileUtils.buildPath(this.basePath, "runs"));
-        this.createAndAddStaticEntity(ProgramConfig.class, FileUtils.buildPath(this.basePath, "programs", "configs"));
-        this.createAndAddStaticEntity(Program.class, FileUtils.buildPath(this.basePath, "programs"));
+        this.createAndAddStaticEntity(IDataConfig.class, FileUtils.buildPath(this.basePath, "data", "configs"));
+        this.createAndAddStaticEntity(IRun.class, FileUtils.buildPath(this.basePath, "runs"));
+        this.createAndAddStaticEntity(IProgramConfig.class, FileUtils.buildPath(this.basePath, "programs", "configs"));
+        this.createAndAddStaticEntity(IProgram.class, FileUtils.buildPath(this.basePath, "programs"));
         // this.createAndAddStaticEntity(Clustering.class,
         // FileUtils.buildPath(this.basePath, "results"));
 
@@ -1400,7 +1420,7 @@ public class Repository implements IRepository {
                         this.parent != null
                         ? (RProgramRepositoryEntity) this.parent.getDynamicEntities().get(RProgram.class)
                         : null,
-                        this.getBasePath(Program.class)));
+                        this.getBasePath(IProgram.class)));
 
         this.createAndAddDynamicEntity(ClusteringQualityMeasure.class,
                 FileUtils.buildPath(this.suppClusteringBasePath, "qualityMeasures"));
@@ -1444,7 +1464,7 @@ public class Repository implements IRepository {
      * {@link #isInitialized()} returns true.
      *
      * @throws InterruptedException Is thrown, if the current thread is
-     *                              interrupted while waiting for finishing the initialization process.
+     * interrupted while waiting for finishing the initialization process.
      */
     public void initialize() throws InterruptedException {
         if (isInitialized() || this.supervisorThread != null) {
@@ -1590,7 +1610,7 @@ public class Repository implements IRepository {
      */
     @Override
     public boolean register(final INamedAttribute<? extends Number> object) {
-
+        lookupAdd(object);
         Type sooper = object.getClass().getGenericSuperclass();
         Type t = ((ParameterizedType) sooper).getActualTypeArguments()[0];
         switch (t.getTypeName()) {
@@ -1614,6 +1634,7 @@ public class Repository implements IRepository {
      * @return True, if the new object has been registered.
      */
     public boolean register(final NamedIntegerAttribute object) {
+        lookupAdd(object);
         if (this.getRegisteredObject(object) != null) {
             return false;
         }
@@ -1631,6 +1652,7 @@ public class Repository implements IRepository {
      * @return True, if the new object has been registered.
      */
     public boolean register(final NamedStringAttribute object) {
+        lookupAdd(object);
         if (this.getRegisteredObject(object) != null) {
             return false;
         }

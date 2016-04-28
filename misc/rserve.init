@@ -1,0 +1,82 @@
+#!/bin/bash
+### BEGIN INIT INFO
+# Provides:          rserve
+# Required-Start:    $local_fs $remote_fs $network $syslog
+# Required-Stop:     $local_fs $remote_fs $network $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Startup script for RServe
+# Description:       Rserve is a server for execution of R code
+### END INIT INFO
+#
+# /etc/init.d/rserve
+#
+# Startup script for RServe
+#
+# chkconfig: 2345 20 80
+# description: Starts and stops rserve
+
+. /lib/lsb/init-functions
+
+
+PID=/var/run/rserve.pid
+
+NAME="rserve"
+DESC="R execution server"
+DAEMON="/usr/lib/R/bin/Rserve"
+RSERVE_USER="www-data"
+RSERVE_LOG="/var/log/rserve/rserve.log"
+RSERVE_CONF="/etc/rserve/conf"
+export R_HOME="/usr/lib/R"
+if [ -f /etc/default/rserve ]; then
+  . /etc/default/rserve
+fi
+
+running() {
+  kill -0 `cat ${PID}` > /dev/null 2>&1
+}
+
+start_rserve() {
+  touch ${PID} && chown ${RSERVE_USER}:${RSERVE_USER} ${PID}
+  start-stop-daemon --start --user ${RSERVE_USER} --make-pidfile --pidfile ${PID} --chuid ${RSERVE_USER} --chdir ${R_HOME} \
+        --startas ${DAEMON} -- --RS-conf ${RSERVE_CONF} --RS-pidfile ${PID} --no-save >>$RSERVE_LOG 2>&1 || true
+}
+
+stop_rserve() {
+  start-stop-daemon --stop --quiet --pidfile ${PID} \
+        --exec ${DAEMON} || true
+}
+
+status_rserve() {
+  status_of_proc -p ${PID} $NAME $NAME && exit 0 || exit $?
+}
+
+case "$1" in
+  start)
+    log_daemon_msg "Starting $DESC" "$NAME"
+    start_rserve
+    log_end_msg $?
+    ;;
+  stop)
+    log_daemon_msg "Stopping $DESC" "$NAME"
+    stop_rserve
+    log_end_msg $?
+   ;;
+  restart|force-reload)
+    log_daemon_msg "Restarting $DESC" "$NAME"
+    stop_rserve
+    sleep 1
+    start_rserve
+    log_end_msg $?
+    ;;
+  status)
+    status_rserve
+    ;;
+  *)
+    echo "Usage: $NAME {start|stop|restart|status}" >&2
+    exit 1
+    ;;
+esac
+
+
+exit 0

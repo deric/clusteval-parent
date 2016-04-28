@@ -275,8 +275,8 @@ public class ClustevalBackendServer implements IBackendServer {
      *
      * @param file The file object for which you want a common file object.
      * @return A common file object for the passed file, that is stored
-     * centrally such that synchronize operations on this file object affect all
-     * other methods, that also use this method.
+     *         centrally such that synchronize operations on this file object affect all
+     *         other methods, that also use this method.
      */
     public static File getCommonFile(final File file) {
         return FileUtils.getCommonFile(file);
@@ -286,7 +286,7 @@ public class ClustevalBackendServer implements IBackendServer {
      * Instantiates a new backend server.
      *
      * @param absRepositoryPath The absolute path to the repository used by this
-     * server.
+     *                          server.
      * @throws FileNotFoundException
      * @throws InvalidRepositoryException
      * @throws RepositoryAlreadyExistsException
@@ -295,9 +295,10 @@ public class ClustevalBackendServer implements IBackendServer {
      * @throws InterruptedException
      * @throws DatabaseConnectException
      */
-    public ClustevalBackendServer(final String absRepositoryPath) throws FileNotFoundException,
-                                                                         RepositoryAlreadyExistsException, InvalidRepositoryException, RepositoryConfigNotFoundException,
-                                                                         RepositoryConfigurationException, InterruptedException, DatabaseConnectException {
+    public ClustevalBackendServer(final String absRepositoryPath)
+            throws FileNotFoundException, RepositoryAlreadyExistsException,
+                   InvalidRepositoryException, RepositoryConfigNotFoundException,
+                   RepositoryConfigurationException, InterruptedException, DatabaseConnectException {
         this(new Repository(absRepositoryPath, null));
     }
 
@@ -512,7 +513,7 @@ public class ClustevalBackendServer implements IBackendServer {
      * </ul>
      *
      * @param cmd The command line parameters including possible options of
-     * logging
+     *            logging
      * @throws ParseException
      */
     private static void initLogging(CommandLine cmd) throws ParseException {
@@ -569,7 +570,7 @@ public class ClustevalBackendServer implements IBackendServer {
         logger.addAppender(consoleApp);
 
         // file appender for clustevalServer.log plaintext file
-        FileAppender<ILoggingEvent> fileApp = new FileAppender<ILoggingEvent>();
+        FileAppender<ILoggingEvent> fileApp = new FileAppender<>();
         fileApp.setName("serverLogFile");
         String logFilePath = FileUtils.buildPath(System.getProperty("user.dir"), "clustevalServer.log");
         fileApp.setFile(logFilePath);
@@ -625,11 +626,8 @@ public class ClustevalBackendServer implements IBackendServer {
             log.info("Framework up and listening on port " + port);
             log.info("Used number of processors: " + config.numberOfThreads);
             return true;
-        } catch (AlreadyBoundException e) {
-            log.error("Another instance is already running...");
-            return false;
-        } catch (RemoteException e) {
-            log.error("Another instance is already running...");
+        } catch (AlreadyBoundException | RemoteException e) {
+            log.error("Another instance is already running...", e);
             return false;
         }
     }
@@ -760,7 +758,7 @@ public class ClustevalBackendServer implements IBackendServer {
 
     /**
      * @return True, if this framework is still running and the corresponding
-     * supervisor thread hasn't been interrupted.
+     *         supervisor thread hasn't been interrupted.
      */
     public boolean isRunning() {
         return this.repository.getSupervisorThread().isAlive();
@@ -812,97 +810,27 @@ public class ClustevalBackendServer implements IBackendServer {
                 }
                 result.put(Pair.getPair(dataConfig, programConfig), measureToOptimalQuality);
             }
-        } catch (GoldStandardConfigurationException e) {
-            e.printStackTrace();
-        } catch (DataSetConfigurationException e) {
-            e.printStackTrace();
-        } catch (DataSetNotFoundException e) {
-            e.printStackTrace();
-        } catch (DataSetConfigNotFoundException e) {
-            e.printStackTrace();
-        } catch (GoldStandardConfigNotFoundException e) {
-            e.printStackTrace();
-        } catch (DataConfigurationException e) {
-            e.printStackTrace();
-        } catch (DataConfigNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (UnknownRunResultFormatException e) {
-            e.printStackTrace();
-        } catch (UnknownDataSetFormatException e) {
-            e.printStackTrace();
-        } catch (UnknownClusteringQualityMeasureException e) {
-            e.printStackTrace();
-        } catch (InvalidRunModeException e) {
-            e.printStackTrace();
-        } catch (UnknownParameterOptimizationMethodException e) {
-            e.printStackTrace();
-        } catch (NoOptimizableProgramParameterException e) {
-            e.printStackTrace();
-        } catch (UnknownProgramParameterException e) {
-            e.printStackTrace();
-        } catch (UnknownGoldStandardFormatException e) {
-            e.printStackTrace();
-        } catch (InvalidConfigurationFileException e) {
-            e.printStackTrace();
-        } catch (RepositoryAlreadyExistsException e) {
-            e.printStackTrace();
-        } catch (InvalidRepositoryException e) {
-            e.printStackTrace();
-        } catch (NoRepositoryFoundException e) {
-            e.printStackTrace();
-        } catch (GoldStandardNotFoundException e) {
-            e.printStackTrace();
-        } catch (InvalidOptimizationParameterException e) {
-            e.printStackTrace();
-        } catch (RunException e) {
-            e.printStackTrace();
-        } catch (UnknownDataStatisticException e) {
-            e.printStackTrace();
-        } catch (UnknownProgramTypeException e) {
-            e.printStackTrace();
-        } catch (UnknownRProgramException e) {
-            e.printStackTrace();
-        } catch (IncompatibleParameterOptimizationMethodException e) {
-            e.printStackTrace();
-        } catch (UnknownDistanceMeasureException e) {
-            e.printStackTrace();
-        } catch (UnknownRunStatisticException e) {
-            e.printStackTrace();
-        } catch (RepositoryConfigNotFoundException e) {
-            e.printStackTrace();
-        } catch (RepositoryConfigurationException e) {
-            e.printStackTrace();
-        } catch (ConfigurationException e) {
-            e.printStackTrace();
-        } catch (RegisterException e) {
-            e.printStackTrace();
-        } catch (UnknownDataSetTypeException e) {
-            e.printStackTrace();
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-        } catch (NoDataSetException e) {
-            e.printStackTrace();
-        } catch (UnknownRunDataStatisticException e) {
-            e.printStackTrace();
-        } catch (RunResultParseException e) {
-            e.printStackTrace();
-        } catch (UnknownDataPreprocessorException e) {
-            e.printStackTrace();
-        } catch (IncompatibleDataSetConfigPreprocessorException e) {
-            e.printStackTrace();
-        } catch (UnknownContextException e) {
-            e.printStackTrace();
-        } catch (IncompatibleContextException e) {
-            e.printStackTrace();
-        } catch (UnknownParameterType e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (UnknownRunResultPostprocessorException e) {
-            e.printStackTrace();
-        } catch (UnknownDataRandomizerException e) {
+        } catch (GoldStandardConfigurationException | DataSetConfigurationException |
+                 DataSetNotFoundException | DataSetConfigNotFoundException |
+                 GoldStandardConfigNotFoundException | DataConfigurationException |
+                 DataConfigNotFoundException | IOException | UnknownRunResultFormatException |
+                 UnknownDataSetFormatException | UnknownClusteringQualityMeasureException |
+                 InvalidRunModeException | UnknownParameterOptimizationMethodException |
+                 NoOptimizableProgramParameterException | UnknownProgramParameterException |
+                 UnknownGoldStandardFormatException | InvalidConfigurationFileException |
+                 RepositoryAlreadyExistsException | InvalidRepositoryException |
+                 NoRepositoryFoundException | GoldStandardNotFoundException |
+                 InvalidOptimizationParameterException | RunException |
+                 UnknownDataStatisticException | UnknownProgramTypeException |
+                 UnknownRProgramException | IncompatibleParameterOptimizationMethodException |
+                 UnknownDistanceMeasureException | UnknownRunStatisticException |
+                 RepositoryConfigNotFoundException | RepositoryConfigurationException |
+                 ConfigurationException | RegisterException | UnknownDataSetTypeException |
+                 NumberFormatException | NoDataSetException | UnknownRunDataStatisticException |
+                 RunResultParseException | UnknownDataPreprocessorException |
+                 IncompatibleDataSetConfigPreprocessorException | UnknownContextException |
+                 IncompatibleContextException | UnknownParameterType | InterruptedException |
+                 UnknownRunResultPostprocessorException | UnknownDataRandomizerException e) {
             e.printStackTrace();
         }
 
@@ -937,7 +865,7 @@ public class ClustevalBackendServer implements IBackendServer {
      */
     @Override
     public Collection<String> getDataSetGenerators() {
-        Collection<String> result = new HashSet<String>();
+        Collection<String> result = new HashSet<>();
 
         Collection<Class<? extends DataSetGenerator>> dataSetGenerators = this.repository
                 .getClasses(DataSetGenerator.class);
@@ -979,11 +907,7 @@ public class ClustevalBackendServer implements IBackendServer {
 
             DataSetGenerator generator = DataSetGenerator.parseFromString(repository, generatorName);
             return generator.getAllOptions();
-        } catch (SecurityException e) {
-            e.printStackTrace();
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        } catch (UnknownDataSetGeneratorException e) {
+        } catch (SecurityException | IllegalArgumentException | UnknownDataSetGeneratorException e) {
             e.printStackTrace();
         }
         return null;
@@ -1001,21 +925,10 @@ public class ClustevalBackendServer implements IBackendServer {
         try {
             DataSetGenerator generator = DataSetGenerator.parseFromString(this.repository, generatorName);
             generator.generate(args);
-        } catch (UnknownDataSetGeneratorException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        } catch (DataSetGenerationException e) {
-            e.printStackTrace();
-        } catch (GoldStandardGenerationException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (RepositoryObjectDumpException e) {
-            e.printStackTrace();
-        } catch (RegisterException e) {
-            e.printStackTrace();
-        } catch (UnknownDistanceMeasureException e) {
+        } catch (UnknownDataSetGeneratorException | ParseException |
+                 DataSetGenerationException | GoldStandardGenerationException |
+                 InterruptedException | RepositoryObjectDumpException |
+                 RegisterException | UnknownDistanceMeasureException e) {
             e.printStackTrace();
         }
         return false;
@@ -1093,11 +1006,8 @@ public class ClustevalBackendServer implements IBackendServer {
 
             DataRandomizer randomizer = DataRandomizer.parseFromString(repository, randomizerName);
             return randomizer.getAllOptions();
-        } catch (SecurityException e) {
-            e.printStackTrace();
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        } catch (UnknownDataRandomizerException e) {
+        } catch (SecurityException | IllegalArgumentException |
+                 UnknownDataRandomizerException e) {
             e.printStackTrace();
         }
         return null;
@@ -1115,9 +1025,7 @@ public class ClustevalBackendServer implements IBackendServer {
         try {
             DataRandomizer randomizer = DataRandomizer.parseFromString(this.repository, randomizerName);
             randomizer.randomize(args);
-        } catch (UnknownDataRandomizerException e) {
-            e.printStackTrace();
-        } catch (DataRandomizeException e) {
+        } catch (UnknownDataRandomizerException | DataRandomizeException e) {
             e.printStackTrace();
         }
         return false;

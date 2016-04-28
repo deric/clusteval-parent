@@ -3,5 +3,6 @@ set -xe
 sudo apt-get install r-base r-base-core r-cran-ggplot2 r-cran-hmisc libxtst6 libxrender1 libxi6
 DIR="/usr/lib/R"
 mkdir -p ${DIR}
+export R_HOME="${DIR}"
 export R_LIBS="${DIR}"
 R < install.R --no-save
