@@ -62,22 +62,21 @@ public class FileUtils {
             }
 
             String[] children = sourceLocation.list();
-            for (int i = 0; i < children.length; i++) {
-                copyDirectory(new File(sourceLocation, children[i]), new File(
-                        targetLocation, children[i]));
+            for (String child : children) {
+                copyDirectory(new File(sourceLocation, child), new File(targetLocation, child));
             }
         } else {
 
-            InputStream in = new FileInputStream(sourceLocation);
-            OutputStream out = new FileOutputStream(targetLocation);
-
-            // Copy the bits from instream to outstream
-            byte[] buf = new byte[1024];
-            int len;
-            while ((len = in.read(buf)) > 0) {
-                out.write(buf, 0, len);
+            OutputStream out;
+            try (InputStream in = new FileInputStream(sourceLocation)) {
+                out = new FileOutputStream(targetLocation);
+                // Copy the bits from instream to outstream
+                byte[] buf = new byte[1024];
+                int len;
+                while ((len = in.read(buf)) > 0) {
+                    out.write(buf, 0, len);
+                }
             }
-            in.close();
             out.close();
         }
     }
@@ -92,10 +91,8 @@ public class FileUtils {
      * @throws IOException
      */
     public static void appendStringToFile(final String path, final String output) {
-        try {
-            FileWriter fw = new FileWriter(path, true);
+        try (FileWriter fw = new FileWriter(path, true)) {
             fw.append(output);
-            fw.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -110,10 +107,8 @@ public class FileUtils {
      *               A text to write to a file
      */
     public static void writeStringToFile(final String path, final String output) {
-        try {
-            FileWriter fw = new FileWriter(path, false);
+        try (FileWriter fw = new FileWriter(path, false)) {
             fw.append(output);
-            fw.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -127,14 +122,12 @@ public class FileUtils {
      * @return The contents of the file as string.
      */
     public static String readStringFromFile(final String path) {
-        StringBuffer sb = new StringBuffer();
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(path));
+        StringBuilder sb = new StringBuilder();
+        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             while (br.ready()) {
                 sb.append(br.readLine());
                 sb.append(System.getProperty("line.separator"));
             }
-            br.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
