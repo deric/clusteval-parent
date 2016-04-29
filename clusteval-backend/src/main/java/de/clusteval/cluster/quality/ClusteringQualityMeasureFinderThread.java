@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.cluster.quality;
 
+import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.run.ISupervisorThread;
@@ -19,7 +20,7 @@ import de.clusteval.utils.FinderThread;
  * @author Christian Wiwie
  *
  */
-public class ClusteringQualityMeasureFinderThread extends FinderThread<ClusteringQualityMeasure> {
+public class ClusteringQualityMeasureFinderThread extends FinderThread<ClusteringEvaluation> {
 
     /**
      * @param supervisorThread
@@ -36,7 +37,7 @@ public class ClusteringQualityMeasureFinderThread extends FinderThread<Clusterin
             final ISupervisorThread supervisorThread,
             final IRepository repository, final long sleepTime,
             final boolean checkOnce) {
-        super(supervisorThread, repository, ClusteringQualityMeasure.class,
+        super(supervisorThread, repository, ClusteringEvaluation.class,
                 sleepTime, checkOnce);
     }
 

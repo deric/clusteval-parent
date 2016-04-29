@@ -10,12 +10,14 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset;
 
+import de.clusteval.api.IDistanceMeasure;
+import de.clusteval.api.data.IDataPreprocessor;
+import de.clusteval.api.data.IDataSet;
+import de.clusteval.api.data.IDataSetConfig;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.run.ISupervisorThread;
-import de.clusteval.data.distance.DistanceMeasure;
 import de.clusteval.data.distance.DistanceMeasureFinderThread;
-import de.clusteval.data.preprocessing.DataPreprocessor;
 import de.clusteval.data.preprocessing.DataPreprocessorFinderThread;
 import de.clusteval.utils.Finder;
 import de.clusteval.utils.FinderThread;
@@ -24,7 +26,7 @@ import de.clusteval.utils.FinderThread;
  * @author Christian Wiwie
  *
  */
-public class DataSetConfigFinderThread extends FinderThread<DataSetConfig> {
+public class DataSetConfigFinderThread extends FinderThread<IDataSetConfig> {
 
     /**
      * @param supervisorThread
@@ -40,7 +42,7 @@ public class DataSetConfigFinderThread extends FinderThread<DataSetConfig> {
     public DataSetConfigFinderThread(final ISupervisorThread supervisorThread,
             final IRepository repository, final long sleepTime,
             final boolean checkOnce) {
-        super(supervisorThread, repository, DataSetConfig.class, sleepTime,
+        super(supervisorThread, repository, IDataSetConfig.class, sleepTime,
                 checkOnce);
     }
 
@@ -51,17 +53,17 @@ public class DataSetConfigFinderThread extends FinderThread<DataSetConfig> {
      */
     @Override
     protected void beforeFind() {
-        if (!this.repository.isInitialized(DataSet.class)) {
+        if (!this.repository.isInitialized(IDataSet.class)) {
             this.supervisorThread.getThread(DataSetFinderThread.class)
                     .waitFor();
         }
 
-        if (!this.repository.isInitialized(DistanceMeasure.class)) {
+        if (!this.repository.isInitialized(IDistanceMeasure.class)) {
             this.supervisorThread.getThread(DistanceMeasureFinderThread.class)
                     .waitFor();
         }
 
-        if (!this.repository.isInitialized(DataPreprocessor.class)) {
+        if (!this.repository.isInitialized(IDataPreprocessor.class)) {
             this.supervisorThread.getThread(DataPreprocessorFinderThread.class)
                     .waitFor();
         }
@@ -74,7 +76,7 @@ public class DataSetConfigFinderThread extends FinderThread<DataSetConfig> {
      * @see de.wiwie.wiutils.utils.FinderThread#getFinder()
      */
     @Override
-    public Finder<DataSetConfig> getFinder() throws RegisterException {
+    public Finder<IDataSetConfig> getFinder() throws RegisterException {
         return new DataSetConfigFinder(repository);
     }
 }

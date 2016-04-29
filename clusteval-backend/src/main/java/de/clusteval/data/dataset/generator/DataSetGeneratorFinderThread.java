@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset.generator;
 
+import de.clusteval.api.data.IDataSetGenerator;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.run.ISupervisorThread;
@@ -19,7 +20,7 @@ import de.clusteval.utils.FinderThread;
  * @author Christian Wiwie
  *
  */
-public class DataSetGeneratorFinderThread extends FinderThread<DataSetGenerator> {
+public class DataSetGeneratorFinderThread extends FinderThread<IDataSetGenerator> {
 
     /**
      * @param supervisorThread
@@ -32,7 +33,7 @@ public class DataSetGeneratorFinderThread extends FinderThread<DataSetGenerator>
             final ISupervisorThread supervisorThread,
             final IRepository framework, final long sleepTime,
             final boolean checkOnce) {
-        super(supervisorThread, framework, DataSetGenerator.class, sleepTime,
+        super(supervisorThread, framework, IDataSetGenerator.class, sleepTime,
                 checkOnce);
     }
 

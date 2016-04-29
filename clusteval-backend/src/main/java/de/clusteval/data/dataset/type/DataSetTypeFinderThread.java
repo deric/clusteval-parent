@@ -53,7 +53,7 @@ public class DataSetTypeFinderThread extends FinderThread<IDataSetType> {
      */
     @Override
     protected void afterFind() {
-        repository.setInitialized(DataSetType.class);
+        repository.setInitialized(IDataSetType.class);
     }
 
     /*

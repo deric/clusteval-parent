@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.data.goldstandard;
 
+import de.clusteval.api.data.IGoldStandardConfig;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.utils.FileFinder;
@@ -25,7 +26,7 @@ import java.util.Iterator;
  *
  *
  */
-public class GoldStandardConfigFinder extends FileFinder<GoldStandardConfig> {
+public class GoldStandardConfigFinder extends FileFinder<IGoldStandardConfig> {
 
     /**
      * Instantiates a new run finder.
@@ -35,9 +36,8 @@ public class GoldStandardConfigFinder extends FileFinder<GoldStandardConfig> {
      *                   at.
      * @throws RegisterException
      */
-    public GoldStandardConfigFinder(final IRepository repository)
-            throws RegisterException {
-        super(repository, GoldStandardConfig.class);
+    public GoldStandardConfigFinder(final IRepository repository) throws RegisterException {
+        super(repository, IGoldStandardConfig.class);
     }
 
     /*

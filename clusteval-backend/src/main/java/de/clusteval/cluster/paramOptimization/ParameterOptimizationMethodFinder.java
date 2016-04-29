@@ -80,7 +80,7 @@ public class ParameterOptimizationMethodFinder extends JARFinder<IParameterOptim
     protected boolean isJARLoaded(File f) {
         return super.isJARLoaded(f)
                 && this.repository.isClassRegistered(
-                        ParameterOptimizationMethod.class,
+                        IParameterOptimizationMethod.class,
                         classNamesForJARFile(f)[0]);
     }
 

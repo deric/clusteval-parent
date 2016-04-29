@@ -10,12 +10,12 @@
  ***************************************************************************** */
 package de.clusteval.program;
 
+import de.clusteval.api.IContext;
 import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRProgram;
 import de.clusteval.api.run.ISupervisorThread;
-import de.clusteval.context.Context;
 import de.clusteval.context.ContextFinderThread;
 import de.clusteval.program.r.RProgramFinderThread;
 import de.clusteval.utils.Finder;
@@ -58,7 +58,7 @@ public class ProgramConfigFinderThread extends FinderThread<IProgramConfig> {
                     .waitFor();
         }
 
-        if (!this.repository.isInitialized(Context.class)) {
+        if (!this.repository.isInitialized(IContext.class)) {
             this.supervisorThread.getThread(ContextFinderThread.class)
                     .waitFor();
         }

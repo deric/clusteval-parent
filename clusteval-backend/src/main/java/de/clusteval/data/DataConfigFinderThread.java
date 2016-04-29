@@ -11,12 +11,12 @@
 package de.clusteval.data;
 
 import de.clusteval.api.data.IDataConfig;
+import de.clusteval.api.data.IDataSetConfig;
+import de.clusteval.api.data.IGoldStandardConfig;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.run.ISupervisorThread;
-import de.clusteval.data.dataset.DataSetConfig;
 import de.clusteval.data.dataset.DataSetConfigFinderThread;
-import de.clusteval.data.goldstandard.GoldStandardConfig;
 import de.clusteval.data.goldstandard.GoldStandardConfigFinderThread;
 import de.clusteval.utils.Finder;
 import de.clusteval.utils.FinderThread;
@@ -51,12 +51,12 @@ public class DataConfigFinderThread extends FinderThread<IDataConfig> {
      */
     @Override
     protected void beforeFind() {
-        if (!this.repository.isInitialized(DataSetConfig.class)) {
+        if (!this.repository.isInitialized(IDataSetConfig.class)) {
             this.supervisorThread.getThread(DataSetConfigFinderThread.class)
                     .waitFor();
         }
 
-        if (!this.repository.isInitialized(GoldStandardConfig.class)) {
+        if (!this.repository.isInitialized(IGoldStandardConfig.class)) {
             this.supervisorThread.getThread(
                     GoldStandardConfigFinderThread.class).waitFor();
         }

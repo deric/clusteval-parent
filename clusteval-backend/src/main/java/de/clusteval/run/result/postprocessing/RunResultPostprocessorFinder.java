@@ -12,6 +12,7 @@ package de.clusteval.run.result.postprocessing;
 
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.run.IRunResultPostprocessor;
 import de.clusteval.utils.JARFinder;
 import de.clusteval.utils.RecursiveSubDirectoryIterator;
 import java.io.File;
@@ -19,11 +20,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Iterator;
+import org.openide.util.Utilities;
 
 /**
  * @author Christian Wiwie
  */
-public class RunResultPostprocessorFinder extends JARFinder<RunResultPostprocessor> {
+public class RunResultPostprocessorFinder extends JARFinder<IRunResultPostprocessor> {
 
     /**
      * Instantiates a new data set generator finder.
@@ -32,9 +34,8 @@ public class RunResultPostprocessorFinder extends JARFinder<RunResultPostprocess
      *                   the repository
      * @throws RegisterException
      */
-    public RunResultPostprocessorFinder(final IRepository repository)
-            throws RegisterException {
-        super(repository, RunResultPostprocessor.class);
+    public RunResultPostprocessorFinder(final IRepository repository) throws RegisterException {
+        super(repository, IRunResultPostprocessor.class);
     }
 
     /*
@@ -90,7 +91,7 @@ public class RunResultPostprocessorFinder extends JARFinder<RunResultPostprocess
     @Override
     protected URLClassLoader getURLClassLoader0(File f, final ClassLoader parent)
             throws MalformedURLException {
-        URL url = f.toURI().toURL();
+        URL url = Utilities.toURI(f).toURL();
         return new RunResultPostprocessorURLClassLoader(this, new URL[]{url},
                 parent);
     }

@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset;
 
+import de.clusteval.api.data.IDataSetConfig;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.utils.FileFinder;
@@ -25,7 +26,7 @@ import java.util.Iterator;
  *
  *
  */
-public class DataSetConfigFinder extends FileFinder<DataSetConfig> {
+public class DataSetConfigFinder extends FileFinder<IDataSetConfig> {
 
     /**
      * Instantiates a new dataset configuration finder.
@@ -36,7 +37,7 @@ public class DataSetConfigFinder extends FileFinder<DataSetConfig> {
      */
     public DataSetConfigFinder(final IRepository repository)
             throws RegisterException {
-        super(repository, DataSetConfig.class);
+        super(repository, IDataSetConfig.class);
     }
 
     /*

@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset.generator;
 
+import de.clusteval.api.data.IDataSetGenerator;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.utils.JARFinder;
@@ -23,7 +24,7 @@ import java.util.Iterator;
 /**
  * @author Christian Wiwie
  */
-public class DataSetGeneratorFinder extends JARFinder<DataSetGenerator> {
+public class DataSetGeneratorFinder extends JARFinder<IDataSetGenerator> {
 
     /**
      * Instantiates a new data set generator finder.
@@ -33,7 +34,7 @@ public class DataSetGeneratorFinder extends JARFinder<DataSetGenerator> {
      * @throws RegisterException
      */
     public DataSetGeneratorFinder(final IRepository repository) throws RegisterException {
-        super(repository, DataSetGenerator.class);
+        super(repository, IDataSetGenerator.class);
     }
 
     /*

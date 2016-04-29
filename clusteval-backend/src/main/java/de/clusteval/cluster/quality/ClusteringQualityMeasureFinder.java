@@ -12,6 +12,7 @@
  */
 package de.clusteval.cluster.quality;
 
+import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.utils.JARFinder;
@@ -25,7 +26,7 @@ import java.util.Iterator;
 /**
  * @author Christian Wiwie
  */
-public class ClusteringQualityMeasureFinder extends JARFinder<ClusteringQualityMeasure> {
+public class ClusteringQualityMeasureFinder extends JARFinder<ClusteringEvaluation> {
 
     /**
      * Instantiates a new clustering quality measure finder.
@@ -36,7 +37,7 @@ public class ClusteringQualityMeasureFinder extends JARFinder<ClusteringQualityM
      */
     public ClusteringQualityMeasureFinder(final IRepository repository)
             throws RegisterException {
-        super(repository, ClusteringQualityMeasure.class);
+        super(repository, ClusteringEvaluation.class);
     }
 
     /*

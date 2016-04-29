@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.data.goldstandard;
 
+import de.clusteval.api.data.IGoldStandardConfig;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.run.ISupervisorThread;
@@ -20,7 +21,7 @@ import de.clusteval.utils.FinderThread;
  * @author Christian Wiwie
  *
  */
-public class GoldStandardConfigFinderThread extends FinderThread<GoldStandardConfig> {
+public class GoldStandardConfigFinderThread extends FinderThread<IGoldStandardConfig> {
 
     /**
      * @param supervisorThread
@@ -37,7 +38,7 @@ public class GoldStandardConfigFinderThread extends FinderThread<GoldStandardCon
             final ISupervisorThread supervisorThread,
             final IRepository repository, final long sleepTime,
             final boolean checkOnce) {
-        super(supervisorThread, repository, GoldStandardConfig.class,
+        super(supervisorThread, repository, IGoldStandardConfig.class,
                 sleepTime, checkOnce);
     }
 
@@ -47,7 +48,7 @@ public class GoldStandardConfigFinderThread extends FinderThread<GoldStandardCon
      * @see de.wiwie.wiutils.utils.FinderThread#getFinder()
      */
     @Override
-    public Finder<GoldStandardConfig> getFinder() throws RegisterException {
+    public Finder<IGoldStandardConfig> getFinder() throws RegisterException {
         return new GoldStandardConfigFinder(repository);
     }
 }

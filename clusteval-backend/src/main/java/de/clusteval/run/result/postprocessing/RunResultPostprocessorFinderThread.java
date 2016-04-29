@@ -12,6 +12,7 @@ package de.clusteval.run.result.postprocessing;
 
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.run.IRunResultPostprocessor;
 import de.clusteval.api.run.ISupervisorThread;
 import de.clusteval.utils.FinderThread;
 
@@ -19,7 +20,7 @@ import de.clusteval.utils.FinderThread;
  * @author Christian Wiwie
  *
  */
-public class RunResultPostprocessorFinderThread extends FinderThread<RunResultPostprocessor> {
+public class RunResultPostprocessorFinderThread extends FinderThread<IRunResultPostprocessor> {
 
     /**
      * @param supervisorThread
@@ -32,7 +33,7 @@ public class RunResultPostprocessorFinderThread extends FinderThread<RunResultPo
             final ISupervisorThread supervisorThread,
             final IRepository framework, final long sleepTime,
             final boolean checkOnce) {
-        super(supervisorThread, framework, RunResultPostprocessor.class, sleepTime,
+        super(supervisorThread, framework, IRunResultPostprocessor.class, sleepTime,
                 checkOnce);
     }
 
