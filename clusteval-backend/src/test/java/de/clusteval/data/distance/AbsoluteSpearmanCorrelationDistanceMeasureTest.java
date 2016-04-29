@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.data.distance;
 
+import de.clusteval.api.IDistanceMeasure;
 import de.clusteval.api.Precision;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.r.RNotAvailableException;
@@ -29,7 +30,7 @@ public class AbsoluteSpearmanCorrelationDistanceMeasureTest extends AbstractClus
     @Test
     public void test() throws UnknownDistanceMeasureException,
                               RNotAvailableException, InterruptedException {
-        DistanceMeasure measure = DistanceMeasure.parseFromString(
+        IDistanceMeasure measure = DistanceMeasure.parseFromString(
                 getRepository(), "AbsoluteSpearmanCorrelationRDistanceMeasure");
         Assert.assertTrue(measure != null);
 

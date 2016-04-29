@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.data.distance;
 
+import de.clusteval.api.IDistanceMeasure;
 import de.clusteval.api.Precision;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.r.RNotAvailableException;
@@ -17,8 +18,8 @@ import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
 import de.clusteval.utils.AbstractClustEvalTest;
 import de.clusteval.utils.ArraysExt;
 import java.util.ArrayList;
-import org.junit.Assert;
 import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 /**
@@ -30,9 +31,9 @@ public class SpearmanCorrelationDistanceMeasureTest extends AbstractClustEvalTes
     @Test
     public void test() throws UnknownDistanceMeasureException,
                               RNotAvailableException, InterruptedException {
-        DistanceMeasure measure = DistanceMeasure.parseFromString(
+        IDistanceMeasure measure = DistanceMeasure.parseFromString(
                 getRepository(), "SpearmanCorrelationRDistanceMeasure");
-        Assert.assertTrue(measure != null);
+        assertTrue(measure != null);
 
         ConversionInputToStandardConfiguration config = new ConversionInputToStandardConfiguration(
                 measure, Precision.FLOAT,

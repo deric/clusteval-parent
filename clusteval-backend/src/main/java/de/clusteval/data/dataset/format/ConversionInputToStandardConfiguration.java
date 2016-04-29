@@ -14,7 +14,6 @@ import de.clusteval.api.IDistanceMeasure;
 import de.clusteval.api.Precision;
 import de.clusteval.api.data.IConversionInputToStandardConfiguration;
 import de.clusteval.api.data.IDataPreprocessor;
-import de.clusteval.data.distance.DistanceMeasure;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,7 +49,7 @@ public class ConversionInputToStandardConfiguration implements IConversionInputT
      *
      */
     public ConversionInputToStandardConfiguration(
-            final DistanceMeasure distanceMeasure,
+            final IDistanceMeasure distanceMeasure,
             final Precision similarityPrecision,
             final List<IDataPreprocessor> preprocessorsBeforeDistance,
             final List<IDataPreprocessor> preprocessorsAfterDistance) {

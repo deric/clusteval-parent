@@ -39,4 +39,6 @@ public interface Matrix {
     int getRows();
 
     int getColumns();
+
+    double[][] toArray();
 }

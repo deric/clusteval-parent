@@ -31,6 +31,7 @@ import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
@@ -75,6 +76,8 @@ import org.slf4j.LoggerFactory;
  *
  */
 public abstract class DataSetFormat extends RepositoryObject implements IDataSetFormat {
+
+    private static final Logger LOG = LoggerFactory.getLogger(DataSetFormat.class);
 
     /**
      * This method returns a deep copy of the given list of dataset formats,
@@ -136,11 +139,11 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
                     System.currentTimeMillis(), new File(datasetFormat),
                     formatVersion);
         } catch (InstantiationException | IllegalAccessException |
-                SecurityException | NoSuchMethodException | IllegalArgumentException |
-                InvocationTargetException e) {
-            e.printStackTrace();
+                 SecurityException | NoSuchMethodException | IllegalArgumentException |
+                 InvocationTargetException e) {
+            LOG.warn("failed parsing format " + datasetFormat, e);
         } catch (NullPointerException e) {
-
+            LOG.warn("failed parsing format " + datasetFormat, e);
         }
         throw new UnknownDataSetFormatException("\"" + datasetFormat
                 + "\" is not a known dataset format.");
@@ -176,7 +179,7 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
      *                       the dataset formats
      * @return the list
      * @throws UnknownDataSetFormatException
-     *                                       the unknown data set format exception
+     * the unknown data set format exception
      */
     public static List<IDataSetFormat> parseFromString(final IRepository repo,
             String[] datasetFormats) throws UnknownDataSetFormatException {
@@ -237,7 +240,7 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
      *                The configuration to use to convert the passed dataset.
      * @return The converted dataset.
      * @throws IOException
-     *                                              Signals that an I/O exception has occurred.
+     * Signals that an I/O exception has occurred.
      * @throws InvalidDataSetFormatVersionException
      * @throws RegisterException
      * @throws UnknownDataSetFormatException
@@ -279,7 +282,7 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
      *                      The configuration to use to convert the passed dataset.
      * @return The converted dataset.
      * @throws IOException
-     *                                              Signals that an I/O exception has occurred.
+     * Signals that an I/O exception has occurred.
      * @throws InvalidDataSetFormatVersionException
      * @throws RegisterException
      * @throws UnknownDataSetFormatException
@@ -392,7 +395,7 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
             return this.getClass().getConstructor(this.getClass())
                     .newInstance(this);
         } catch (IllegalArgumentException | SecurityException | InstantiationException |
-                IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                 IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
         this.log.warn("Cloning instance of class "

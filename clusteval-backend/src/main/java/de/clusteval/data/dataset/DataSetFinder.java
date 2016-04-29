@@ -17,6 +17,8 @@ import de.clusteval.utils.FileFinder;
 import de.clusteval.utils.SubDirectoryIterator;
 import java.io.File;
 import java.util.Iterator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Objects of this class look for new run-files in the run-directory defined in
@@ -27,6 +29,8 @@ import java.util.Iterator;
  *
  */
 public class DataSetFinder extends FileFinder<IDataSet> {
+
+    private Logger LOG = LoggerFactory.getLogger(DataSetFinder.class);
 
     /**
      * Instantiates a new run finder.
@@ -56,6 +60,7 @@ public class DataSetFinder extends FileFinder<IDataSet> {
             }
             return false;
         } catch (Exception e) {
+            LOG.warn("failed to load " + file.getPath(), e);
             return false;
         }
     }

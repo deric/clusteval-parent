@@ -18,11 +18,11 @@ import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.r.RLibraryInferior;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
-import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
 import de.clusteval.framework.repository.RepositoryObject;
-import de.wiwie.wiutils.utils.SimilarityMatrix;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -55,6 +55,8 @@ import java.lang.reflect.InvocationTargetException;
  *
  */
 public abstract class DistanceMeasure extends RepositoryObject implements RLibraryInferior, IDistanceMeasure {
+
+    private static final Logger LOG = LoggerFactory.getLogger(DistanceMeasure.class);
 
     /**
      * @param repository
@@ -89,7 +91,9 @@ public abstract class DistanceMeasure extends RepositoryObject implements RLibra
         try {
             return this.getClass().getConstructor(this.getClass())
                     .newInstance(this);
-        } catch (IllegalArgumentException | SecurityException | InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+        } catch (IllegalArgumentException | SecurityException |
+                 InstantiationException | IllegalAccessException |
+                 InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
         this.log.warn("Cloning instance of class "
@@ -105,23 +109,23 @@ public abstract class DistanceMeasure extends RepositoryObject implements RLibra
      * @return the distance measure
      * @throws UnknownDistanceMeasureException
      */
-    public static DistanceMeasure parseFromString(final IRepository repository,
+    public static IDistanceMeasure parseFromString(final IRepository repository,
             String distanceMeasure) throws UnknownDistanceMeasureException {
-        Class<? extends DistanceMeasure> c = repository.getRegisteredClass(
-                DistanceMeasure.class, "de.clusteval.data.distance."
+        Class<? extends IDistanceMeasure> c = repository.getRegisteredClass(
+                IDistanceMeasure.class, "de.clusteval.data.distance."
                 + distanceMeasure);
         try {
-            DistanceMeasure measure = c.getConstructor(IRepository.class,
+            IDistanceMeasure measure = c.getConstructor(IRepository.class,
                     boolean.class, long.class, File.class).newInstance(
                             repository, false, System.currentTimeMillis(),
                             new File(distanceMeasure));
 
             return measure;
         } catch (InstantiationException | IllegalAccessException | IllegalArgumentException |
-                SecurityException | InvocationTargetException | NoSuchMethodException e) {
+                 SecurityException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         } catch (NullPointerException e) {
-
+            LOG.warn("failed parsing", e);
         }
         throw new UnknownDistanceMeasureException("\"" + distanceMeasure
                 + "\" is not a known distance measure.");
@@ -137,39 +141,6 @@ public abstract class DistanceMeasure extends RepositoryObject implements RLibra
     public abstract double getDistance(double[] point1, double[] point2)
             throws RNotAvailableException, InterruptedException;
 
-    /**
-     * This method indicates, whether a distance measure supports the bulk
-     * calculation of all pairwise distances of rows of a matrix with rows of a
-     * second matrix. Overwrite it in your subclass and return the appropriate
-     * boolean value. If your subclass supports matrices you also have to
-     * overwrite {@link #getDistances(double[][])} with a correct
-     * implementation.
-     *
-     * @return True, if this distance measure supports bulk distance calculation
-     *         of matrices.
-     */
-    public abstract boolean supportsMatrix();
-
-    /**
-     * This method indicates whether the similarity s(x,y)==s(y,x).
-     *
-     * @return True, if this distance measure is symmetric, false otherwise.
-     */
-    public abstract boolean isSymmetric();
-
-    /**
-     * This method calculates all pairwise distances between the rows of a
-     * matrix.
-     *
-     * @param matrix A matrix containing samples in each row and features in the
-     *               columns.
-     * @return Matrix containing all pairwise distances of rows of the matrix
-     * @throws RNotAvailableException
-     * @throws InterruptedException
-     */
-    public abstract SimilarityMatrix getDistances(
-            ConversionInputToStandardConfiguration config, double[][] matrix)
-            throws RNotAvailableException, InterruptedException;
 
     /*
      * (non-Javadoc)

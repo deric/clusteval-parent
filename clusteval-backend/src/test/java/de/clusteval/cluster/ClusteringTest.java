@@ -170,15 +170,15 @@ public class ClusteringTest extends AbstractClustEvalTest {
         expectedCluster3.add(expectedItem2, 0.1f);
         expectedCluster3.add(expectedItem3, 0.05f);
 
-        Map<ClusterItem, Map<Cluster, Float>> expectedClusters = new HashMap<ClusterItem, Map<Cluster, Float>>();
+        Map<ClusterItem, Map<Cluster, Float>> expectedClusters = new HashMap<>();
 
-        Map<Cluster, Float> expectedClusters1 = new HashMap<Cluster, Float>();
+        Map<Cluster, Float> expectedClusters1 = new HashMap<>();
         expectedClusters1.put(expectedCluster1, 0.6f);
         expectedClusters1.put(expectedCluster2, 0.3f);
         expectedClusters1.put(expectedCluster3, 0.1f);
         expectedClusters.put(expectedItem1, expectedClusters1);
 
-        Map<Cluster, Float> expectedClusters2 = new HashMap<Cluster, Float>();
+        Map<Cluster, Float> expectedClusters2 = new HashMap<>();
         expectedClusters2.put(expectedCluster1, 0.2f);
         expectedClusters2.put(expectedCluster2, 0.7f);
         expectedClusters2.put(expectedCluster3, 0.1f);
