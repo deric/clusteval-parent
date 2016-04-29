@@ -13,6 +13,7 @@
  */
 package de.clusteval.cluster.paramOptimization;
 
+import de.clusteval.api.opt.ParameterOptimizationException;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;

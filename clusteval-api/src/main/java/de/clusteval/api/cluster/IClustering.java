@@ -70,4 +70,12 @@ public interface IClustering extends IRepositoryObject {
      */
     double fuzzySize();
 
+    /**
+     *
+     * @return A string representing this clustering, where clusters are
+     *         separated by semi-colons and elements of clusters are separated by
+     *         commas.
+     */
+    String toFormattedString();
+
 }

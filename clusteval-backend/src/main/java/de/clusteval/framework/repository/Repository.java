@@ -32,6 +32,7 @@ import de.clusteval.api.data.IGoldStandardConfig;
 import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.exceptions.InternalAttributeException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.opt.IParameterOptimizationMethod;
 import de.clusteval.api.program.INamedAttribute;
 import de.clusteval.api.program.IProgram;
 import de.clusteval.api.program.IProgramConfig;
@@ -53,21 +54,14 @@ import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.IRunResult;
 import de.clusteval.api.run.IRunResultFormat;
 import de.clusteval.api.run.IRunResultFormatParser;
+import de.clusteval.api.run.IRunResultPostprocessor;
 import de.clusteval.api.stats.IDataStatistic;
 import de.clusteval.api.stats.IRunDataStatistic;
 import de.clusteval.api.stats.IRunStatistic;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
-import de.clusteval.cluster.quality.ClusteringQualityMeasure;
-import de.clusteval.context.Context;
 import de.clusteval.data.DataConfig;
-import de.clusteval.data.dataset.DataSet;
-import de.clusteval.data.dataset.DataSetConfig;
-import de.clusteval.data.dataset.generator.DataSetGenerator;
-import de.clusteval.data.distance.DistanceMeasure;
-import de.clusteval.data.goldstandard.GoldStandardConfig;
 import de.clusteval.data.goldstandard.format.GoldStandardFormat;
-import de.clusteval.data.preprocessing.DataPreprocessor;
 import de.clusteval.data.statistics.DataStatistic;
 import de.clusteval.data.statistics.DataStatisticCalculator;
 import de.clusteval.framework.ClustevalBackendServer;
@@ -87,12 +81,10 @@ import de.clusteval.program.IntegerProgramParameter;
 import de.clusteval.program.ProgramConfig;
 import de.clusteval.program.ProgramParameter;
 import de.clusteval.program.StringProgramParameter;
-import de.clusteval.program.r.RProgram;
 import de.clusteval.run.Run;
 import de.clusteval.run.result.RunResult;
 import de.clusteval.run.result.format.RunResultFormat;
 import de.clusteval.run.result.format.RunResultFormatParser;
-import de.clusteval.run.result.postprocessing.RunResultPostprocessor;
 import de.clusteval.run.statistics.RunDataStatistic;
 import de.clusteval.run.statistics.RunDataStatisticCalculator;
 import de.clusteval.run.statistics.RunStatistic;
@@ -1423,7 +1415,7 @@ public class Repository implements IRepository {
         this.createAndAddDynamicEntity(IDataRandomizer.class, FileUtils.buildPath(this.randomizerBasePath, "data"));
         this.createAndAddDynamicEntity(IDataPreprocessor.class,
                 FileUtils.buildPath(this.supplementaryBasePath, "preprocessing"));
-        this.createAndAddDynamicEntity(RunResultPostprocessor.class,
+        this.createAndAddDynamicEntity(IRunResultPostprocessor.class,
                 FileUtils.buildPath(this.supplementaryBasePath, "postprocessing"));
 
         this.dynamicRepositoryEntities.put(IRProgram.class,
@@ -1438,7 +1430,7 @@ public class Repository implements IRepository {
 
         this.createAndAddDynamicEntity(IContext.class, FileUtils.buildPath(this.supplementaryBasePath, "contexts"));
 
-        this.createAndAddDynamicEntity(ParameterOptimizationMethod.class,
+        this.createAndAddDynamicEntity(IParameterOptimizationMethod.class,
                 FileUtils.buildPath(this.suppClusteringBasePath, "paramOptimization"));
 
         this.createAndAddDynamicEntity(IDataSetType.class, FileUtils.buildPath(this.typesBasePath, "dataset"));
@@ -1576,13 +1568,13 @@ public class Repository implements IRepository {
      */
     public boolean isInitialized() {
         // TODO: for loop?
-        return isInitialized(RunDataStatistic.class)
-                && isInitialized(ClusteringQualityMeasure.class) && isInitialized(ParameterOptimizationMethod.class)
-                && isInitialized(Run.class) && isInitialized(RProgram.class) && isInitialized(DataSetConfig.class)
-                && isInitialized(DataSet.class) && isInitialized(GoldStandardConfig.class)
-                && isInitialized(DataConfig.class) && isInitialized(ProgramConfig.class)
-                && isInitialized(DataSetGenerator.class) && isInitialized(Context.class)
-                && isInitialized(DataPreprocessor.class) && isInitialized(DistanceMeasure.class);
+        return isInitialized(IRunDataStatistic.class)
+                && isInitialized(ClusteringEvaluation.class) && isInitialized(IParameterOptimizationMethod.class)
+                && isInitialized(IRun.class) && isInitialized(IRProgram.class) && isInitialized(IDataSetConfig.class)
+                && isInitialized(IDataSet.class) && isInitialized(IGoldStandardConfig.class)
+                && isInitialized(IDataConfig.class) && isInitialized(IProgramConfig.class)
+                && isInitialized(IDataSetGenerator.class) && isInitialized(IContext.class)
+                && isInitialized(IDataPreprocessor.class) && isInitialized(IDistanceMeasure.class);
     }
 
     /**

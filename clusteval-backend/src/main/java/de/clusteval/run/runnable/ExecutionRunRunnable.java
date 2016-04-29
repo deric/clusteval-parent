@@ -41,7 +41,7 @@ import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.IRunResultFormat;
 import de.clusteval.api.run.IScheduler;
 import de.clusteval.cluster.Clustering;
-import de.clusteval.cluster.paramOptimization.NoParameterSetFoundException;
+import de.clusteval.api.opt.NoParameterSetFoundException;
 import de.clusteval.data.dataset.AbsoluteDataSet;
 import de.clusteval.data.dataset.RelativeDataSet;
 import de.clusteval.framework.ClustevalBackendServer;
@@ -60,6 +60,7 @@ import de.clusteval.utils.Formatter;
 import de.clusteval.api.Pair;
 import de.wiwie.wiutils.utils.StringExt;
 import de.clusteval.api.Triple;
+import de.clusteval.api.cluster.IClustering;
 import de.wiwie.wiutils.utils.parse.TextFileParser;
 import de.wiwie.wiutils.utils.parse.TextFileParser.OUTPUT_MODE;
 import java.io.BufferedWriter;
@@ -464,8 +465,8 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
      * @throws InternalAttributeException
      * @throws RegisterException
      * @throws NoParameterSetFoundException
-     *                                      This exception is thrown, if no parameter set was found that
-     *                                      was not already evaluated before.
+     * This exception is thrown, if no parameter set was found that
+     * was not already evaluated before.
      *
      */
     protected String[] parseInvocationLineAndEffectiveParameters(final ExecutionIterationWrapper iterationWrapper)
@@ -573,8 +574,8 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
      * @throws InternalAttributeException
      * @throws RegisterException
      * @throws NoParameterSetFoundException
-     *                                      This exception is thrown, if no parameter set was found that
-     *                                      was not already evaluated before.
+     * This exception is thrown, if no parameter set was found that
+     * was not already evaluated before.
      */
     @SuppressWarnings("unused")
     protected String[] replaceRunParameters(String[] invocation, final Map<String, String> effectiveParams)
@@ -818,7 +819,7 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
                                     try {
                                         tmpResult.loadIntoMemory();
 
-                                        final Clustering cl = postprocessor
+                                        final IClustering cl = postprocessor
                                                 .postprocess(tmpResult.getClustering().getSecond());
                                         tmpResult.unloadFromMemory();
 

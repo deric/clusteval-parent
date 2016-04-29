@@ -11,7 +11,7 @@
 /**
  * 
  */
-package de.clusteval.cluster.paramOptimization;
+package de.clusteval.api.opt;
 
 /**
  * @author Christian Wiwie

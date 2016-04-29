@@ -12,16 +12,20 @@
  */
 package de.clusteval.cluster.paramOptimization;
 
+import de.clusteval.api.opt.ParameterOptimizationException;
+import de.clusteval.api.opt.ParameterSetAlreadyEvaluatedException;
+import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
+import de.clusteval.api.opt.NoParameterSetFoundException;
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.cluster.quality.ClusteringQualitySet;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.exceptions.InternalAttributeException;
 import de.clusteval.api.exceptions.RunResultParseException;
+import de.clusteval.api.opt.IParameterOptimizationMethod;
 import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.IProgramParameter;
 import de.clusteval.api.program.ParameterSet;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.repository.IRepositoryObject;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.api.run.IRun;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
@@ -114,7 +118,7 @@ import org.slf4j.LoggerFactory;
  *
  *
  */
-public abstract class ParameterOptimizationMethod extends RepositoryObject implements IRepositoryObject {
+public abstract class ParameterOptimizationMethod extends RepositoryObject implements IParameterOptimizationMethod {
 
     /**
      * A helper method for cloning a list of optimization methods.
@@ -360,52 +364,6 @@ public abstract class ParameterOptimizationMethod extends RepositoryObject imple
     }
 
     /**
-     * This method purely determines and calculates the next parameter set that
-     * follows from the current state of the method.
-     *
-     * <p>
-     * If the force parameter set is given != null, this parameter set is forced
-     * to be evaluated. This scenario is used during resumption of an older run,
-     * where the parameter sets are already fixed and we want to feed them to
-     * this method together with their results exactly as they were performed
-     * last time.
-     *
-     * <p>
-     * This is a helper-method for {@link #next()} and
-     * {@link #next(ParameterSet)}.
-     *
-     * <p>
-     * It might happen that this method puts the calling thread to sleep, in
-     * case the next parameter set requires older parameter sets to finish
-     * first.
-     *
-     * <p>
-     * It might happen that this method puts the calling thread to sleep, in
-     * case the next parameter set requires older parameter sets to finish
-     * first.
-     *
-     * @param forcedParameterSet If this parameter is set != null, this
-     *                           parameter set is forced to be evaluated in the next iteration.
-     * @return The next parameter set.
-     * @throws InternalAttributeException
-     * @throws RegisterException
-     * @throws NoParameterSetFoundException          This exception is thrown, if no
-     *                                               parameter set was found that was not already evaluated before.
-     * @throws InterruptedException
-     * @throws ParameterSetAlreadyEvaluatedException
-     */
-    protected abstract ParameterSet getNextParameterSet(
-            ParameterSet forcedParameterSet) throws InternalAttributeException,
-                                                    RegisterException, NoParameterSetFoundException,
-                                                    InterruptedException, ParameterSetAlreadyEvaluatedException;
-
-    /**
-     * @return True, if there are more iterations together with parameter sets
-     *         that have to be evaluated.
-     */
-    public abstract boolean hasNext();
-
-    /**
      * This method tells the method that the next parameter set should be
      * determined and that the invoker wants to start the evaluation of the next
      * iteration.
@@ -422,8 +380,8 @@ public abstract class ParameterOptimizationMethod extends RepositoryObject imple
      * @return The parameter set that is being evaluated in the next iteration.
      * @throws InternalAttributeException
      * @throws RegisterException
-     * @throws NoParameterSetFoundException          This exception is thrown, if no
-     *                                               parameter set was found that was not already evaluated before.
+     * @throws NoParameterSetFoundException This exception is thrown, if no
+     * parameter set was found that was not already evaluated before.
      * @throws InterruptedException
      * @throws ParameterSetAlreadyEvaluatedException
      */
@@ -462,8 +420,8 @@ public abstract class ParameterOptimizationMethod extends RepositoryObject imple
      * @return The parameter set that is being evaluated in the next iteration.
      * @throws InternalAttributeException
      * @throws RegisterException
-     * @throws NoParameterSetFoundException          This exception is thrown, if no
-     *                                               parameter set was found that was not already evaluated before.
+     * @throws NoParameterSetFoundException This exception is thrown, if no
+     * parameter set was found that was not already evaluated before.
      * @throws InterruptedException
      * @throws ParameterSetAlreadyEvaluatedException
      */
@@ -594,7 +552,7 @@ public abstract class ParameterOptimizationMethod extends RepositoryObject imple
                     totalIterationCount, isResume);
             return method;
         } catch (InstantiationException | IllegalAccessException | NoSuchMethodException |
-                SecurityException | IllegalArgumentException | InvocationTargetException e) {
+                 SecurityException | IllegalArgumentException | InvocationTargetException e) {
             e.printStackTrace();
         } catch (NullPointerException e) {
 
@@ -764,7 +722,7 @@ public abstract class ParameterOptimizationMethod extends RepositoryObject imple
             return this.getClass().getConstructor(this.getClass())
                     .newInstance(this);
         } catch (IllegalArgumentException | SecurityException | InstantiationException |
-                IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                 IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
         this.log.warn("Cloning instance of class "

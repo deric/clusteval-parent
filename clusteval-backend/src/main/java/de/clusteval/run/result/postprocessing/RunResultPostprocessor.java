@@ -14,18 +14,19 @@ import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
 import de.clusteval.api.r.RLibraryInferior;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.cluster.Clustering;
+import de.clusteval.api.run.IRunResultPostprocessor;
 import de.clusteval.framework.repository.RepositoryObject;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import org.openide.util.Exceptions;
 
 /**
  * @author Christian Wiwie
  *
  */
-public abstract class RunResultPostprocessor extends RepositoryObject implements RLibraryInferior {
+public abstract class RunResultPostprocessor extends RepositoryObject implements RLibraryInferior, IRunResultPostprocessor {
 
     protected RunResultPostprocessorParameters parameters;
 
@@ -69,8 +70,8 @@ public abstract class RunResultPostprocessor extends RepositoryObject implements
             return this.getClass().getConstructor(this.getClass())
                     .newInstance(this);
         } catch (IllegalArgumentException | SecurityException |
-                InstantiationException | IllegalAccessException |
-                InvocationTargetException | NoSuchMethodException e) {
+                 InstantiationException | IllegalAccessException |
+                 InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
         this.log.warn("Cloning instance of class "
@@ -132,34 +133,16 @@ public abstract class RunResultPostprocessor extends RepositoryObject implements
                             new File(runResultPostProcessor), parameters);
             return preprocessor;
 
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
+        } catch (InstantiationException | IllegalAccessException |
+                 IllegalArgumentException | SecurityException |
+                 InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         } catch (NullPointerException e) {
-
-        } catch (IllegalArgumentException e1) {
-            e1.printStackTrace();
-        } catch (SecurityException e1) {
-            e1.printStackTrace();
-        } catch (InvocationTargetException e1) {
-            e1.printStackTrace();
-        } catch (NoSuchMethodException e1) {
-            e1.printStackTrace();
+            Exceptions.printStackTrace(e);
         }
         throw new UnknownRunResultPostprocessorException("\""
                 + runResultPostProcessor
                 + "\" is not a known runresult postprocessor.");
     }
 
-    /**
-     * This method is reponsible for postprocessing the passed clustering and
-     * creating a new clustering object corresponding to the newly created
-     * postprocessed clustering.
-     *
-     * @param clustering
-     *                   The clustering to be postprocessed.
-     * @return The postprocessed clustering.
-     */
-    public abstract Clustering postprocess(final Clustering clustering);
 }

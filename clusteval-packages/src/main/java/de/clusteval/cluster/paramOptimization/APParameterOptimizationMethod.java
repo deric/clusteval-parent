@@ -13,6 +13,10 @@
  */
 package de.clusteval.cluster.paramOptimization;
 
+import de.clusteval.api.opt.ParameterOptimizationException;
+import de.clusteval.api.opt.ParameterSetAlreadyEvaluatedException;
+import de.clusteval.api.opt.NoParameterSetFoundException;
+import de.clusteval.api.opt.IDivergingParameterOptimizationMethod;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -18,7 +18,7 @@
  * Contributors: Christian Wiwie - initial API and implementation
  *
  */
-package de.clusteval.cluster.paramOptimization;
+package de.clusteval.api.opt;
 
 import de.clusteval.api.cluster.quality.ClusteringQualitySet;
 import de.clusteval.api.program.ParameterSet;
