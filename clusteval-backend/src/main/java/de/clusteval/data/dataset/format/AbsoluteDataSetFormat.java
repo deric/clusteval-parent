@@ -56,8 +56,9 @@ public abstract class AbsoluteDataSetFormat extends DataSetFormat {
     }
 
     @Override
-    public final DataMatrix parse(final DataSet dataSet, Precision precision) throws IllegalArgumentException,
-                                                                                     IOException, InvalidDataSetFormatVersionException {
+    public final DataMatrix parse(final DataSet dataSet, Precision precision)
+            throws IllegalArgumentException,
+                   IOException, InvalidDataSetFormatVersionException {
         return (DataMatrix) super.parse(dataSet, precision);
     }
 }

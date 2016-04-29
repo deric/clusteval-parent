@@ -15,8 +15,10 @@ import de.clusteval.api.data.IConversionConfiguration;
 import de.clusteval.api.data.IConversionInputToStandardConfiguration;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetFormat;
+import de.clusteval.api.data.IDataSetFormatParser;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.factory.DataSetFormatFactory;
 import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
@@ -25,7 +27,6 @@ import de.clusteval.framework.repository.RepositoryObject;
 import de.clusteval.utils.FileUtils;
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
@@ -124,29 +125,17 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
      * @return The parsed dataset format.
      * @throws UnknownDataSetFormatException
      */
-    public static DataSetFormat parseFromString(final IRepository repository,
-            String datasetFormat, final int formatVersion)
-            throws UnknownDataSetFormatException {
-        Class<? extends DataSetFormat> c = repository.getRegisteredClass(
-                DataSetFormat.class, "de.clusteval.data.dataset.format."
-                + datasetFormat);
-        try {
-            Constructor<? extends DataSetFormat> constr = c.getConstructor(
-                    IRepository.class, boolean.class, long.class, File.class,
-                    int.class);
-            // changed 21.03.2013: do not register dataset formats here
-            return constr.newInstance(repository, false,
-                    System.currentTimeMillis(), new File(datasetFormat),
-                    formatVersion);
-        } catch (InstantiationException | IllegalAccessException |
-                 SecurityException | NoSuchMethodException | IllegalArgumentException |
-                 InvocationTargetException e) {
-            LOG.warn("failed parsing format " + datasetFormat, e);
-        } catch (NullPointerException e) {
-            LOG.warn("failed parsing format " + datasetFormat, e);
+    public static IDataSetFormat parseFromString(final IRepository repository,
+            String datasetFormat, final int formatVersion) throws UnknownDataSetFormatException {
+
+        DataSetFormatFactory factory = DataSetFormatFactory.getInstance();
+        if (factory.hasProvider(datasetFormat)) {
+            IDataSetFormat format = factory.getProvider(datasetFormat);
+            format.init(repository, System.currentTimeMillis(), new File(datasetFormat), formatVersion);
+            return format;
         }
-        throw new UnknownDataSetFormatException("\"" + datasetFormat
-                + "\" is not a known dataset format.");
+
+        throw new UnknownDataSetFormatException("\"" + datasetFormat + "\" is not a known dataset format.");
     }
 
     /**
@@ -199,13 +188,11 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
      * @throws InvalidDataSetFormatVersionException
      * @throws IOException
      */
-    public Object parse(final DataSet dataSet, Precision precision)
-            throws IllegalArgumentException, IOException,
-                   InvalidDataSetFormatVersionException {
-        final DataSetFormatParser parser = getDataSetFormatParser();
+    public Object parse(final DataSet dataSet, Precision precision) throws IllegalArgumentException, IOException,
+                                                                           InvalidDataSetFormatVersionException {
+        final IDataSetFormatParser parser = getDataSetFormatParser();
         if (parser == null) {
-            throw new IllegalArgumentException(
-                    "Operation only supported for the standard dataset format");
+            throw new IllegalArgumentException("Operation only supported for the standard dataset format");
         }
         return parser.parse(dataSet, precision);
     }
@@ -218,7 +205,7 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
      * @return True, if the dataset has been written to filesystem successfully.
      */
     public boolean writeToFile(final IDataSet dataSet, final boolean withHeader) {
-        final DataSetFormatParser parser = getDataSetFormatParser();
+        final IDataSetFormatParser parser = getDataSetFormatParser();
         if (parser == null) {
             throw new IllegalArgumentException(
                     "Operation only supported for the standard dataset format");
@@ -250,11 +237,12 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
      */
     @Override
     public final IDataSet convertToStandardFormat(IDataSet dataSet,
-            IConversionInputToStandardConfiguration config) throws IOException,
-                                                                   InvalidDataSetFormatVersionException, RegisterException,
-                                                                   UnknownDataSetFormatException, RNotAvailableException,
-                                                                   InvalidParameterException, InterruptedException {
-        final DataSetFormatParser parser = getDataSetFormatParser();
+            IConversionInputToStandardConfiguration config)
+            throws IOException,
+                   InvalidDataSetFormatVersionException, RegisterException,
+                   UnknownDataSetFormatException, RNotAvailableException,
+                   InvalidParameterException, InterruptedException {
+        final IDataSetFormatParser parser = getDataSetFormatParser();
         if (parser == null) {
             throw new IllegalArgumentException(
                     "Operation only supported for the standard dataset format");
@@ -290,20 +278,13 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
     public final IDataSet convertToThisFormat(IDataSet dataSet, IDataSetFormat dataSetFormat, IConversionConfiguration config)
             throws IOException, InvalidDataSetFormatVersionException,
                    RegisterException, UnknownDataSetFormatException {
-        final DataSetFormatParser parser = getDataSetFormatParser();
+        final IDataSetFormatParser parser = getDataSetFormatParser();
         if (parser == null) {
             throw new IllegalArgumentException(
                     "Operation only supported for the standard dataset format");
         }
         return parser.convertToThisFormat(dataSet, dataSetFormat, config);
     }
-
-    /**
-     *
-     * @return An instance of the dataset format parser corresponding to this
-     *         dataset format class.
-     */
-    protected abstract DataSetFormatParser getDataSetFormatParser();
 
     /**
      * Instantiates a new dataset format with the given version.
@@ -313,8 +294,8 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
      * @param changeDate
      * @param absPath
      *
-     * @param version
-     *                   The version of the dataset format.
+     * @param version    The version of the dataset format.
+     *
      * @throws RegisterException
      */
     public DataSetFormat(final IRepository repo, final boolean register,

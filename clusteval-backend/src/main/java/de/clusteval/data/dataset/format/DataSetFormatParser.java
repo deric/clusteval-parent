@@ -10,20 +10,12 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset.format;
 
-import de.clusteval.api.data.IConversionConfiguration;
 import de.clusteval.api.data.IDataSet;
-import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.data.IDataSetFormatParser;
-import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
-import de.clusteval.api.r.RNotAvailableException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
-import de.clusteval.api.program.RegisterException;
-import de.clusteval.data.dataset.DataSet;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.security.InvalidParameterException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -66,64 +58,6 @@ public abstract class DataSetFormatParser implements IDataSetFormatParser {
     }
 
     /**
-     * Convert the given dataset with this dataset format and the given version
-     * using the passed configuration.
-     *
-     * <p>
-     * This method validates, that the passed dataset has the correct format and
-     * that the version of the format is supported.
-     *
-     * @param dataSet
-     *                The dataset to convert to the standard format.
-     * @param config
-     *                The configuration to use to convert the passed dataset.
-     * @return The converted dataset.
-     * @throws IOException
-     *                                              Signals that an I/O exception has occurred.
-     * @throws InvalidDataSetFormatVersionException
-     * @throws RegisterException
-     * @throws UnknownDataSetFormatException
-     * @throws RNotAvailableException
-     * @throws InterruptedException
-     * @throws InvalidParameterException
-     */
-    public abstract IDataSet convertToStandardFormat(IDataSet dataSet,
-            ConversionInputToStandardConfiguration config) throws IOException,
-                                                                  InvalidDataSetFormatVersionException, RegisterException,
-                                                                  UnknownDataSetFormatException, RNotAvailableException,
-                                                                  InvalidParameterException, InterruptedException;
-
-    /**
-     * Convert the given dataset to the given dataset format (this format) using
-     * the passed configuration.
-     *
-     * <p>
-     * The passed dataset format object has to be of this class and is used only
-     * for its version and normalize attributes.
-     *
-     * <p>
-     * This method validates, that the passed dataset format to convert the
-     * dataset to is correct and that the version of the format is supported.
-     *
-     * @param dataSet
-     *                The dataset to convert to the standard format.
-     * @param dataSetFormat
-     * @param config
-     *                The configuration to use to convert the passed dataset.
-     * @return The converted dataset.
-     * @throws IOException
-     *                                              Signals that an I/O exception has occurred.
-     * @throws InvalidDataSetFormatVersionException
-     * @throws RegisterException
-     * @throws UnknownDataSetFormatException
-     */
-    protected abstract DataSet convertToThisFormat(IDataSet dataSet,
-            IDataSetFormat dataSetFormat, IConversionConfiguration config)
-            throws IOException, InvalidDataSetFormatVersionException,
-                   RegisterException, UnknownDataSetFormatException;
-
-
-    /**
      * This method writes the contents of the dataset hold in memory to the
      * filesystem.
      *
@@ -136,7 +70,7 @@ public abstract class DataSetFormatParser implements IDataSetFormatParser {
      * @param withHeader
      * @return
      */
-    protected final boolean writeToFile(IDataSet dataSet, final boolean withHeader) {
+    public final boolean writeToFile(IDataSet dataSet, final boolean withHeader) {
         if (!dataSet.getDataSetFormat().getClass().getSimpleName()
                 .equals(this.getClass().getSimpleName().replace("Parser", ""))) {
             return false;
@@ -151,8 +85,7 @@ public abstract class DataSetFormatParser implements IDataSetFormatParser {
 
         try {
             // dataset file
-            BufferedWriter writer = new BufferedWriter(new FileWriter(
-                    dataSetFile));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(dataSetFile));
             if (withHeader) {
                 writeHeaderIntoFile(dataSet, writer);
             }

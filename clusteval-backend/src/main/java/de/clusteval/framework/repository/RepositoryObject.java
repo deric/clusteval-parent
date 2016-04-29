@@ -111,8 +111,7 @@ public abstract class RepositoryObject implements RepositoryListener, IRepositor
         super();
         this.repository = repository;
         this.changeDate = changeDate;
-        this.listener = Collections
-                .synchronizedSet(new HashSet<RepositoryListener>());
+        this.listener = Collections.synchronizedSet(new HashSet<RepositoryListener>());
         this.absPath = absPath;
         this.log = LoggerFactory.getLogger(this.getClass());
 
@@ -172,8 +171,8 @@ public abstract class RepositoryObject implements RepositoryListener, IRepositor
      *
      * @return true, if successful
      * @throws RegisterException An exception is thrown if something goes wrong
-     *                           during the registering process, that might be interesting to handle
-     *                           individually.
+     * during the registering process, that might be interesting to handle
+     * individually.
      */
     @Override
     public boolean register() throws RegisterException {
@@ -202,6 +201,7 @@ public abstract class RepositoryObject implements RepositoryListener, IRepositor
      * @return The changedate of this repository object.
      * @see #changeDate
      */
+    @Override
     public long getChangeDate() {
         return this.changeDate;
     }

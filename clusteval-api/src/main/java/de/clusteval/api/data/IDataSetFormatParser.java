@@ -53,7 +53,7 @@ public interface IDataSetFormatParser extends IRepositoryObject {
      *                The configuration to use to convert the passed dataset.
      * @return The converted dataset.
      * @throws IOException
-     *                                              Signals that an I/O exception has occurred.
+     * Signals that an I/O exception has occurred.
      * @throws InvalidDataSetFormatVersionException
      * @throws RegisterException
      * @throws UnknownDataSetFormatException
@@ -80,5 +80,43 @@ public interface IDataSetFormatParser extends IRepositoryObject {
     Object parse(IDataSet dataSet, Precision precision) throws IOException, InvalidDataSetFormatVersionException;
 
     void writeToFileHelper(IDataSet dataSet, BufferedWriter writer) throws IOException;
+
+    /**
+     * @param dataSet
+     *                   The dataset to be written to the filesystem.
+     * @param withHeader
+     *                   Whether to write the header into the dataset file.
+     * @return True, if the dataset has been written to filesystem successfully.
+     */
+    boolean writeToFile(final IDataSet dataSet, final boolean withHeader);
+
+    /**
+     * Convert the given dataset to the given dataset format (this format) using
+     * the passed configuration.
+     *
+     * <p>
+     * The passed dataset format object has to be of this class and is used only
+     * for its version and normalize attributes.
+     *
+     * <p>
+     * This method validates, that the passed dataset format to convert the
+     * dataset to is correct and that the version of the format is supported.
+     *
+     * @param dataSet
+     *                      The dataset to convert to the standard format.
+     * @param dataSetFormat
+     *                      The dataset format to convert the dataset to.
+     * @param config
+     *                      The configuration to use to convert the passed dataset.
+     * @return The converted dataset.
+     * @throws IOException
+     * Signals that an I/O exception has occurred.
+     * @throws InvalidDataSetFormatVersionException
+     * @throws RegisterException
+     * @throws UnknownDataSetFormatException
+     */
+    IDataSet convertToThisFormat(IDataSet dataSet, IDataSetFormat dataSetFormat, IConversionConfiguration config)
+            throws IOException, InvalidDataSetFormatVersionException,
+                   RegisterException, UnknownDataSetFormatException;
 
 }

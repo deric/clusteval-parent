@@ -22,6 +22,7 @@ import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.repository.IRepositoryObject;
 import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.repository.IRepository;
 import java.io.File;
 import java.io.IOException;
 import java.security.InvalidParameterException;
@@ -38,6 +39,16 @@ public interface IDataSetFormat extends IRepositoryObject {
      * @return format name
      */
     String getName();
+
+    /**
+     * Configure format
+     *
+     * @param repo
+     * @param changeDate
+     * @param absPath
+     * @param version
+     */
+    void init(final IRepository repo, final long changeDate, final File absPath, final int version);
 
     Object parse(final IDataSet dataSet, Precision precision)
             throws IllegalArgumentException, IOException, InvalidDataSetFormatVersionException;
@@ -65,7 +76,7 @@ public interface IDataSetFormat extends IRepositoryObject {
      *                The configuration to use to convert the passed dataset.
      * @return The converted dataset.
      * @throws IOException
-     *                                              Signals that an I/O exception has occurred.
+     * Signals that an I/O exception has occurred.
      * @throws InvalidDataSetFormatVersionException
      * @throws RegisterException
      * @throws UnknownDataSetFormatException
@@ -73,10 +84,11 @@ public interface IDataSetFormat extends IRepositoryObject {
      * @throws InterruptedException
      * @throws InvalidParameterException
      */
-    IDataSet convertToStandardFormat(IDataSet dataSet, IConversionInputToStandardConfiguration config) throws IOException,
-                                                                                                              InvalidDataSetFormatVersionException, RegisterException,
-                                                                                                              UnknownDataSetFormatException, RNotAvailableException,
-                                                                                                              InvalidParameterException, InterruptedException;
+    IDataSet convertToStandardFormat(IDataSet dataSet, IConversionInputToStandardConfiguration config)
+            throws IOException,
+                   InvalidDataSetFormatVersionException, RegisterException,
+                   UnknownDataSetFormatException, RNotAvailableException,
+                   InvalidParameterException, InterruptedException;
 
     /**
      *
@@ -145,7 +157,39 @@ public interface IDataSetFormat extends IRepositoryObject {
      */
     boolean getNormalized();
 
+    /**
+     * Convert the given dataset to the given dataset format (this format) using
+     * the passed configuration.
+     *
+     * <p>
+     * The passed dataset format object has to be of this class and is used only
+     * for its version and normalize attributes.
+     *
+     * <p>
+     * This method validates, that the passed dataset format to convert the
+     * dataset to is correct and that the version of the format is supported.
+     *
+     * @param dataSet
+     *                      The dataset to convert to the standard format.
+     * @param dataSetFormat
+     *                      The dataset format to convert the dataset to.
+     * @param config
+     *                      The configuration to use to convert the passed dataset.
+     * @return The converted dataset.
+     * @throws IOException
+     * Signals that an I/O exception has occurred.
+     * @throws InvalidDataSetFormatVersionException
+     * @throws RegisterException
+     * @throws UnknownDataSetFormatException
+     */
     IDataSet convertToThisFormat(IDataSet dataSet, IDataSetFormat dataSetFormat, IConversionConfiguration config)
             throws IOException, InvalidDataSetFormatVersionException,
                    RegisterException, UnknownDataSetFormatException;
+
+    /**
+     *
+     * @return An instance of the dataset format parser corresponding to this
+     *         dataset format class.
+     */
+    IDataSetFormatParser getDataSetFormatParser();
 }
