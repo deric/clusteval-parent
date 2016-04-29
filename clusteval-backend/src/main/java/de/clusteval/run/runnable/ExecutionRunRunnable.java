@@ -36,7 +36,7 @@ import de.clusteval.api.program.ParameterSet;
 import de.clusteval.api.r.RLibraryNotLoadedException;
 import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.IRunResultFormat;
 import de.clusteval.api.run.IScheduler;

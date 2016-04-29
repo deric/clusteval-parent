@@ -12,7 +12,7 @@ package de.clusteval.run;
 
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.run.IRunRunnable;
 import de.clusteval.api.run.IScheduler;
 import de.clusteval.api.stats.IDataStatistic;

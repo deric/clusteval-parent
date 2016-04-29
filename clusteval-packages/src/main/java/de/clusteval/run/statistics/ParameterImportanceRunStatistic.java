@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import de.clusteval.api.Pair;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.framework.repository.Repository;
 
 /**

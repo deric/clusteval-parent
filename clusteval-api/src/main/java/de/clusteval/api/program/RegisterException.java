@@ -10,7 +10,7 @@
  *     Christian Wiwie - initial API and implementation
  *****************************************************************************
  */
-package de.clusteval.api.repository;
+package de.clusteval.api.program;
 
 import de.clusteval.api.exceptions.ClustEvalException;
 

@@ -27,7 +27,7 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import de.clusteval.data.goldstandard.GoldStandard;
 import de.clusteval.api.r.RLibraryRequirement;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.utils.FileUtils;
 

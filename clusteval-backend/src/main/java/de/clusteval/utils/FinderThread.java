@@ -12,10 +12,11 @@
  */
 package de.clusteval.utils;
 
+import de.clusteval.api.program.IFinder;
 import de.clusteval.api.program.IFinderThread;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.IRepositoryObject;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.run.ISupervisorThread;
 import de.clusteval.framework.ClustevalThread;
 import org.slf4j.Logger;
@@ -38,7 +39,7 @@ public abstract class FinderThread<T extends IRepositoryObject> extends Clusteva
 
     protected Logger log;
 
-    protected Finder<T> currentFinder;
+    protected IFinder<T> currentFinder;
 
     /**
      * @param supervisorThread
@@ -48,8 +49,7 @@ public abstract class FinderThread<T extends IRepositoryObject> extends Clusteva
      *
      */
     public FinderThread(final ISupervisorThread supervisorThread,
-            final IRepository repository, final Class<T> classToFind,
-            boolean checkOnce) {
+            final IRepository repository, final Class<T> classToFind, boolean checkOnce) {
         this(supervisorThread, repository, classToFind, 60000, checkOnce);
     }
 
@@ -83,8 +83,6 @@ public abstract class FinderThread<T extends IRepositoryObject> extends Clusteva
     protected void beforeFind() {
         this.log.debug("Checking for " + classToFind.getSimpleName() + "...");
     }
-
-    protected abstract Finder<T> getFinder() throws RegisterException;
 
     protected void afterFind() {
         repository.setInitialized(classToFind);

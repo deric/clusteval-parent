@@ -15,7 +15,7 @@ import de.clusteval.api.data.IDataSetType;
 import de.clusteval.api.data.WEBSITE_VISIBILITY;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.data.dataset.format.AbsoluteDataSetFormat;
 import java.io.File;
 import java.io.IOException;

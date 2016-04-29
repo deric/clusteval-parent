@@ -15,7 +15,7 @@ package de.clusteval.data.statistics;
 import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.api.stats.IDataStatistic;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.run.DataAnalysisRun;
 import de.clusteval.utils.Statistic;
 import java.io.File;

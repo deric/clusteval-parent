@@ -25,7 +25,7 @@ import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.RelativeDataSet;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.program.ProgramConfig;
 import de.clusteval.program.ProgramParameter;

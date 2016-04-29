@@ -14,7 +14,8 @@ package de.clusteval.program.r;
 
 import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.r.IRProgram;
 import de.clusteval.utils.JARFinder;
 import de.wiwie.wiutils.utils.ArrayIterator;
 import java.io.File;
@@ -31,7 +32,7 @@ import java.util.Iterator;
  *
  *
  */
-public class RProgramFinder extends JARFinder<RProgram> {
+public class RProgramFinder extends JARFinder<IRProgram> {
 
     /**
      * Instantiates a new RProgram finder.
@@ -40,7 +41,7 @@ public class RProgramFinder extends JARFinder<RProgram> {
      * @throws RegisterException
      */
     public RProgramFinder(final IRepository repository) throws RegisterException {
-        super(repository, RProgram.class);
+        super(repository, IRProgram.class);
     }
 
     /*
@@ -49,7 +50,7 @@ public class RProgramFinder extends JARFinder<RProgram> {
      * @see de.wiwie.wiutils.utils.Finder#checkFile(java.io.File)
      */
     @Override
-    protected boolean checkFile(File file) {
+    public boolean checkFile(File file) {
         return file.isFile() && file.getName().endsWith("RProgram.jar");
     }
 
@@ -59,7 +60,7 @@ public class RProgramFinder extends JARFinder<RProgram> {
      * @see de.wiwie.wiutils.utils.Finder#getIterator()
      */
     @Override
-    protected Iterator<File> getIterator() {
+    public Iterator<File> getIterator() {
         return new ArrayIterator<>(getBaseDir().listFiles());
     }
 
@@ -69,7 +70,7 @@ public class RProgramFinder extends JARFinder<RProgram> {
      * @see de.wiwie.wiutils.utils.JARFinder#classNamesForJARFile(java.io.File)
      */
     @Override
-    protected String[] classNamesForJARFile(File f) {
+    public String[] classNamesForJARFile(File f) {
         return new String[]{"de.clusteval.program.r."
             + f.getName().replace(".jar", "")};
     }

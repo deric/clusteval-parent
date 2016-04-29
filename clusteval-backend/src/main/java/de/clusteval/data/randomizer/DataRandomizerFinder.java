@@ -12,8 +12,9 @@
  */
 package de.clusteval.data.randomizer;
 
+import de.clusteval.api.data.IDataRandomizer;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.utils.JARFinder;
 import de.clusteval.utils.RecursiveSubDirectoryIterator;
 import java.io.File;
@@ -25,7 +26,7 @@ import java.util.Iterator;
 /**
  * @author Christian Wiwie
  */
-public class DataRandomizerFinder extends JARFinder<DataRandomizer> {
+public class DataRandomizerFinder extends JARFinder<IDataRandomizer> {
 
     /**
      * Instantiates a new data set Randomizer finder.
@@ -35,7 +36,7 @@ public class DataRandomizerFinder extends JARFinder<DataRandomizer> {
      */
     public DataRandomizerFinder(final IRepository repository)
             throws RegisterException {
-        super(repository, DataRandomizer.class);
+        super(repository, IDataRandomizer.class);
     }
 
     /*
@@ -44,7 +45,7 @@ public class DataRandomizerFinder extends JARFinder<DataRandomizer> {
      * @see de.wiwie.wiutils.utils.Finder#checkFile(java.io.File)
      */
     @Override
-    protected boolean checkFile(File file) {
+    public boolean checkFile(File file) {
         return file.getName().endsWith("DataRandomizer.jar");
     }
 
@@ -54,7 +55,7 @@ public class DataRandomizerFinder extends JARFinder<DataRandomizer> {
      * @see de.wiwie.wiutils.utils.JARFinder#classNameForJARFile(java.io.File)
      */
     @Override
-    protected String[] classNamesForJARFile(File f) {
+    public String[] classNamesForJARFile(File f) {
         return new String[]{"de.clusteval.data.randomizer."
             + f.getName().replace(".jar", "")};
     }
@@ -65,7 +66,7 @@ public class DataRandomizerFinder extends JARFinder<DataRandomizer> {
      * @see de.wiwie.wiutils.utils.Finder#getIterator()
      */
     @Override
-    protected Iterator<File> getIterator() {
+    public Iterator<File> getIterator() {
         return new RecursiveSubDirectoryIterator(getBaseDir());
     }
 

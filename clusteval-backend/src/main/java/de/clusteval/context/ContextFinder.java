@@ -10,8 +10,9 @@
  ***************************************************************************** */
 package de.clusteval.context;
 
+import de.clusteval.api.IContext;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.utils.JARFinder;
 import de.clusteval.utils.RecursiveSubDirectoryIterator;
 import java.io.File;
@@ -23,7 +24,7 @@ import java.util.Iterator;
 /**
  * @author Christian Wiwie
  */
-public class ContextFinder extends JARFinder<Context> {
+public class ContextFinder extends JARFinder<IContext> {
 
     /**
      * Instantiates a new data set format finder.
@@ -33,7 +34,7 @@ public class ContextFinder extends JARFinder<Context> {
      * @throws RegisterException
      */
     public ContextFinder(final IRepository repository) throws RegisterException {
-        super(repository, Context.class);
+        super(repository, IContext.class);
     }
 
     /*
@@ -42,7 +43,7 @@ public class ContextFinder extends JARFinder<Context> {
      * @see de.wiwie.wiutils.utils.Finder#checkFile(java.io.File)
      */
     @Override
-    protected boolean checkFile(File file) {
+    public boolean checkFile(File file) {
         return file.getName().endsWith("Context.jar");
     }
 
@@ -52,7 +53,7 @@ public class ContextFinder extends JARFinder<Context> {
      * @see de.wiwie.wiutils.utils.JARFinder#classNameForJARFile(java.io.File)
      */
     @Override
-    protected String[] classNamesForJARFile(File f) {
+    public String[] classNamesForJARFile(File f) {
         return new String[]{"de.clusteval.context."
             + f.getName().replace(".jar", "")};
     }
@@ -63,7 +64,7 @@ public class ContextFinder extends JARFinder<Context> {
      * @see de.wiwie.wiutils.utils.Finder#getIterator()
      */
     @Override
-    protected Iterator<File> getIterator() {
+    public Iterator<File> getIterator() {
         return new RecursiveSubDirectoryIterator(getBaseDir());
     }
 
@@ -124,7 +125,7 @@ class ContextURLClassLoader extends URLClassLoader {
                 @SuppressWarnings("unchecked")
                 Class<? extends Context> context = (Class<? extends Context>) result;
 
-                this.parent.getRepository().registerClass(Context.class,
+                this.parent.getRepository().registerClass(IContext.class,
                         context);
             }
         }

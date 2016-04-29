@@ -10,8 +10,9 @@
  ***************************************************************************** */
 package de.clusteval.data.preprocessing;
 
+import de.clusteval.api.data.IDataPreprocessor;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.utils.JARFinder;
 import de.clusteval.utils.RecursiveSubDirectoryIterator;
 import java.io.File;
@@ -19,11 +20,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Iterator;
+import org.openide.util.Utilities;
 
 /**
  * @author Christian Wiwie
  */
-public class DataPreprocessorFinder extends JARFinder<DataPreprocessor> {
+public class DataPreprocessorFinder extends JARFinder<IDataPreprocessor> {
 
     /**
      * Instantiates a new data set generator finder.
@@ -34,7 +36,7 @@ public class DataPreprocessorFinder extends JARFinder<DataPreprocessor> {
      */
     public DataPreprocessorFinder(final IRepository repository)
             throws RegisterException {
-        super(repository, DataPreprocessor.class);
+        super(repository, IDataPreprocessor.class);
     }
 
     /*
@@ -43,7 +45,7 @@ public class DataPreprocessorFinder extends JARFinder<DataPreprocessor> {
      * @see de.wiwie.wiutils.utils.Finder#checkFile(java.io.File)
      */
     @Override
-    protected boolean checkFile(File file) {
+    public boolean checkFile(File file) {
         return file.getName().endsWith("DataPreprocessor.jar");
     }
 
@@ -53,7 +55,7 @@ public class DataPreprocessorFinder extends JARFinder<DataPreprocessor> {
      * @see de.wiwie.wiutils.utils.JARFinder#classNameForJARFile(java.io.File)
      */
     @Override
-    protected String[] classNamesForJARFile(File f) {
+    public String[] classNamesForJARFile(File f) {
         return new String[]{"de.clusteval.data.preprocessing."
             + f.getName().replace(".jar", "")};
     }
@@ -64,7 +66,7 @@ public class DataPreprocessorFinder extends JARFinder<DataPreprocessor> {
      * @see de.wiwie.wiutils.utils.Finder#getIterator()
      */
     @Override
-    protected Iterator<File> getIterator() {
+    public Iterator<File> getIterator() {
         return new RecursiveSubDirectoryIterator(getBaseDir());
     }
 
@@ -89,7 +91,7 @@ public class DataPreprocessorFinder extends JARFinder<DataPreprocessor> {
     @Override
     protected URLClassLoader getURLClassLoader0(File f, final ClassLoader parent)
             throws MalformedURLException {
-        URL url = f.toURI().toURL();
+        URL url = Utilities.toURI(f).toURL();
         return new DataPreprocessorURLClassLoader(this, new URL[]{url}, parent);
     }
 }

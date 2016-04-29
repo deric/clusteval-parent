@@ -10,8 +10,9 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset;
 
+import de.clusteval.api.data.IDataSetConfig;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.run.ISupervisorThread;
 import de.clusteval.utils.Finder;
 import de.clusteval.utils.FinderThread;
@@ -20,7 +21,7 @@ import de.clusteval.utils.FinderThread;
  * @author Christian Wiwie
  *
  */
-public class RunResultDataSetConfigFinderThread extends FinderThread<DataSetConfig> {
+public class RunResultDataSetConfigFinderThread extends FinderThread<IDataSetConfig> {
 
     /**
      * @param supervisorThread
@@ -37,7 +38,7 @@ public class RunResultDataSetConfigFinderThread extends FinderThread<DataSetConf
             final ISupervisorThread supervisorThread,
             final IRepository repository, final long sleepTime,
             final boolean checkOnce) {
-        super(supervisorThread, repository, DataSetConfig.class, sleepTime,
+        super(supervisorThread, repository, IDataSetConfig.class, sleepTime,
                 checkOnce);
     }
 
@@ -61,7 +62,7 @@ public class RunResultDataSetConfigFinderThread extends FinderThread<DataSetConf
      * @see de.wiwie.wiutils.utils.FinderThread#getFinder()
      */
     @Override
-    protected Finder<DataSetConfig> getFinder() throws RegisterException {
+    public Finder<IDataSetConfig> getFinder() throws RegisterException {
         return new RunResultDataSetConfigFinder(repository);
     }
 }

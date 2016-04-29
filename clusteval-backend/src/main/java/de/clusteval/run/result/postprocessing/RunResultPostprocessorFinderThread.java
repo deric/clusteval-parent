@@ -11,7 +11,7 @@
 package de.clusteval.run.result.postprocessing;
 
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.run.ISupervisorThread;
 import de.clusteval.utils.FinderThread;
 
@@ -42,7 +42,7 @@ public class RunResultPostprocessorFinderThread extends FinderThread<RunResultPo
      * @see de.wiwie.wiutils.utils.FinderThread#getFinder()
      */
     @Override
-    protected RunResultPostprocessorFinder getFinder() throws RegisterException {
+    public RunResultPostprocessorFinder getFinder() throws RegisterException {
         return new RunResultPostprocessorFinder(repository);
     }
 }

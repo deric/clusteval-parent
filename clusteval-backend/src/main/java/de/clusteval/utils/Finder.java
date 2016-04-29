@@ -10,9 +10,10 @@
  ***************************************************************************** */
 package de.clusteval.utils;
 
+import de.clusteval.api.program.IFinder;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.IRepositoryObject;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.RepositoryEvent;
 import de.clusteval.framework.repository.RepositoryObject;
 import de.clusteval.api.repository.RepositoryRemoveEvent;
@@ -28,7 +29,7 @@ import java.util.Map;
  * @param <T>
  *
  */
-public abstract class Finder<T extends IRepositoryObject> extends RepositoryObject {
+public abstract class Finder<T extends IRepositoryObject> extends RepositoryObject implements IFinder<T> {
 
     protected Class<T> classToFind;
 
@@ -73,7 +74,7 @@ public abstract class Finder<T extends IRepositoryObject> extends RepositoryObje
             return (Finder<T>) this.getClass().getConstructor(Finder.class)
                     .newInstance(this);
         } catch (IllegalArgumentException | SecurityException | InstantiationException |
-                IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                 IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
         this.log.warn("Cloning instance of class "
@@ -83,7 +84,7 @@ public abstract class Finder<T extends IRepositoryObject> extends RepositoryObje
 
     /**
      * Find files and try to parse them. If the parsing process is successful it
-     * will implicitely register the new object at the repository. if the object
+     * will implicitly register the new object at the repository. if the object
      * was known before it will updated, if and only if the changeDate of the
      * found object is newer.
      *
@@ -118,12 +119,6 @@ public abstract class Finder<T extends IRepositoryObject> extends RepositoryObje
     protected File getBaseDir() {
         return new File(this.repository.getBasePath(this.getClassToFind()));
     }
-
-    protected abstract Iterator<File> getIterator();
-
-    protected abstract boolean checkFile(final File file);
-
-    protected abstract void doOnFileFound(final File file) throws Exception;
 
     protected final Class<T> getClassToFind() {
         return this.classToFind;

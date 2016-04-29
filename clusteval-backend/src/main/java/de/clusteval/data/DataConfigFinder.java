@@ -12,7 +12,7 @@ package de.clusteval.data;
 
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.utils.FileFinder;
 import de.wiwie.wiutils.utils.ArrayIterator;
 import java.io.File;
@@ -46,7 +46,7 @@ public class DataConfigFinder extends FileFinder<IDataConfig> {
      * @see de.wiwie.wiutils.utils.Finder#checkFile(java.io.File)
      */
     @Override
-    protected boolean checkFile(File file) {
+    public boolean checkFile(File file) {
         return file.isFile() && file.getName().endsWith(".dataconfig");
     }
 
@@ -56,7 +56,7 @@ public class DataConfigFinder extends FileFinder<IDataConfig> {
      * @see de.wiwie.wiutils.utils.Finder#getIterator()
      */
     @Override
-    protected Iterator<File> getIterator() {
+    public Iterator<File> getIterator() {
         return new ArrayIterator<>(getBaseDir().listFiles());
     }
 }

@@ -10,8 +10,9 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset;
 
+import de.clusteval.api.data.IDataSetConfig;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.utils.FileFinder;
 import de.wiwie.wiutils.utils.ArrayIterator;
 import java.io.File;
@@ -25,7 +26,7 @@ import java.util.Iterator;
  *
  *
  */
-public class RunResultDataSetConfigFinder extends FileFinder<DataSetConfig> {
+public class RunResultDataSetConfigFinder extends FileFinder<IDataSetConfig> {
 
     /**
      * Instantiates a new dataset configuration finder.
@@ -36,7 +37,7 @@ public class RunResultDataSetConfigFinder extends FileFinder<DataSetConfig> {
      */
     public RunResultDataSetConfigFinder(final IRepository repository)
             throws RegisterException {
-        super(repository, DataSetConfig.class);
+        super(repository, IDataSetConfig.class);
     }
 
     /*
@@ -45,7 +46,7 @@ public class RunResultDataSetConfigFinder extends FileFinder<DataSetConfig> {
      * @see de.wiwie.wiutils.utils.Finder#checkFile(java.io.File)
      */
     @Override
-    protected boolean checkFile(File file) {
+    public boolean checkFile(File file) {
         return file.isFile() && file.getName().endsWith(".dsconfig");
     }
 
@@ -55,7 +56,7 @@ public class RunResultDataSetConfigFinder extends FileFinder<DataSetConfig> {
      * @see de.wiwie.wiutils.utils.Finder#getIterator()
      */
     @Override
-    protected Iterator<File> getIterator() {
+    public Iterator<File> getIterator() {
         return new ArrayIterator<>(getBaseDir().listFiles());
     }
 }

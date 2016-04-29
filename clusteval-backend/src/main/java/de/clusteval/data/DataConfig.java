@@ -17,7 +17,7 @@ import de.clusteval.api.data.IDataSetConfig;
 import de.clusteval.api.data.IGoldStandardConfig;
 import de.clusteval.api.exceptions.RepositoryObjectDumpException;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.RepositoryEvent;
 import de.clusteval.api.repository.RepositoryRemoveEvent;
 import de.clusteval.api.repository.RepositoryReplaceEvent;

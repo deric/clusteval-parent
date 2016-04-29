@@ -12,7 +12,7 @@ package de.clusteval.run.result;
 
 import de.clusteval.api.SQLConfig.DB_TYPE;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.run.IRunResult;
 import de.clusteval.api.run.ISupervisorThread;
 import de.clusteval.utils.Finder;
@@ -80,7 +80,7 @@ public class RunResultFinderThread extends FinderThread<IRunResult> {
      * @see de.wiwie.wiutils.utils.FinderThread#getFinder()
      */
     @Override
-    protected Finder<IRunResult> getFinder() throws RegisterException {
+    public Finder<IRunResult> getFinder() throws RegisterException {
         return new RunResultFinder(repository);
     }
 }

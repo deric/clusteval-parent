@@ -11,7 +11,7 @@
 package de.clusteval.data.dataset.generator;
 
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.run.ISupervisorThread;
 import de.clusteval.utils.FinderThread;
 
@@ -42,7 +42,7 @@ public class DataSetGeneratorFinderThread extends FinderThread<DataSetGenerator>
      * @see de.wiwie.wiutils.utils.FinderThread#getFinder()
      */
     @Override
-    protected DataSetGeneratorFinder getFinder() throws RegisterException {
+    public DataSetGeneratorFinder getFinder() throws RegisterException {
         return new DataSetGeneratorFinder(repository);
     }
 }

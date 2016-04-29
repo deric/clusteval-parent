@@ -12,7 +12,7 @@ package de.clusteval.data;
 
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.run.ISupervisorThread;
 import de.clusteval.data.dataset.DataSetConfig;
 import de.clusteval.data.dataset.DataSetConfigFinderThread;
@@ -69,7 +69,7 @@ public class DataConfigFinderThread extends FinderThread<IDataConfig> {
      * @see de.wiwie.wiutils.utils.FinderThread#getFinder()
      */
     @Override
-    protected Finder<IDataConfig> getFinder() throws RegisterException {
+    public Finder<IDataConfig> getFinder() throws RegisterException {
         return new DataConfigFinder(repository);
     }
 }

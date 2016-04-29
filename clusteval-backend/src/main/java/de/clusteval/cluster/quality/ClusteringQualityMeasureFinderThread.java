@@ -11,7 +11,7 @@
 package de.clusteval.cluster.quality;
 
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.run.ISupervisorThread;
 import de.clusteval.utils.FinderThread;
 
@@ -46,8 +46,7 @@ public class ClusteringQualityMeasureFinderThread extends FinderThread<Clusterin
      * @see de.wiwie.wiutils.utils.FinderThread#getFinder()
      */
     @Override
-    protected ClusteringQualityMeasureFinder getFinder()
-            throws RegisterException {
+    public ClusteringQualityMeasureFinder getFinder() throws RegisterException {
         return new ClusteringQualityMeasureFinder(repository);
     }
 }

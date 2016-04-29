@@ -11,10 +11,10 @@
 package de.clusteval.data.dataset;
 
 import de.clusteval.api.data.IDataSet;
+import de.clusteval.api.data.IDataSetType;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.run.ISupervisorThread;
-import de.clusteval.data.dataset.type.DataSetType;
 import de.clusteval.data.dataset.type.DataSetTypeFinderThread;
 import de.clusteval.utils.FinderThread;
 
@@ -45,7 +45,7 @@ public class DataSetFinderThread extends FinderThread<IDataSet> {
     @Override
     protected void beforeFind() {
 
-        if (!this.repository.isInitialized(DataSetType.class)) {
+        if (!this.repository.isInitialized(IDataSetType.class)) {
             this.supervisorThread.getThread(DataSetTypeFinderThread.class)
                     .waitFor();
         }
@@ -58,7 +58,7 @@ public class DataSetFinderThread extends FinderThread<IDataSet> {
      * @see de.wiwie.wiutils.utils.FinderThread#getFinder()
      */
     @Override
-    protected DataSetFinder getFinder() throws RegisterException {
+    public DataSetFinder getFinder() throws RegisterException {
         return new DataSetFinder(repository);
     }
 }

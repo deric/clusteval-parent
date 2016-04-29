@@ -12,8 +12,9 @@
  */
 package de.clusteval.cluster.paramOptimization;
 
+import de.clusteval.api.opt.IParameterOptimizationMethod;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.utils.JARFinder;
 import de.clusteval.utils.RecursiveSubDirectoryIterator;
 import java.io.File;
@@ -25,7 +26,7 @@ import java.util.Iterator;
 /**
  * @author Christian Wiwie
  */
-public class ParameterOptimizationMethodFinder extends JARFinder<ParameterOptimizationMethod> {
+public class ParameterOptimizationMethodFinder extends JARFinder<IParameterOptimizationMethod> {
 
     /**
      * Instantiates a new clustering quality measure finder.
@@ -36,7 +37,7 @@ public class ParameterOptimizationMethodFinder extends JARFinder<ParameterOptimi
      */
     public ParameterOptimizationMethodFinder(final IRepository repository)
             throws RegisterException {
-        super(repository, ParameterOptimizationMethod.class);
+        super(repository, IParameterOptimizationMethod.class);
     }
 
     /*
@@ -45,7 +46,7 @@ public class ParameterOptimizationMethodFinder extends JARFinder<ParameterOptimi
      * @see de.wiwie.wiutils.utils.Finder#checkFile(java.io.File)
      */
     @Override
-    protected boolean checkFile(File file) {
+    public boolean checkFile(File file) {
         return file.getName().endsWith("ParameterOptimizationMethod.jar");
     }
 
@@ -55,7 +56,7 @@ public class ParameterOptimizationMethodFinder extends JARFinder<ParameterOptimi
      * @see de.wiwie.wiutils.utils.Finder#getIterator()
      */
     @Override
-    protected Iterator<File> getIterator() {
+    public Iterator<File> getIterator() {
         return new RecursiveSubDirectoryIterator(getBaseDir());
     }
 
@@ -65,7 +66,7 @@ public class ParameterOptimizationMethodFinder extends JARFinder<ParameterOptimi
      * @see de.wiwie.wiutils.utils.JARFinder#classNameForJARFile(java.io.File)
      */
     @Override
-    protected String[] classNamesForJARFile(File f) {
+    public String[] classNamesForJARFile(File f) {
         return new String[]{"de.clusteval.cluster.paramOptimization."
             + f.getName().replace(".jar", "")};
     }

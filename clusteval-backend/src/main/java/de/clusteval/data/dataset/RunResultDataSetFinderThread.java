@@ -11,7 +11,7 @@
 package de.clusteval.data.dataset;
 
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.data.dataset.type.DataSetType;
 import de.clusteval.data.dataset.type.DataSetTypeFinderThread;
 import de.clusteval.framework.threading.SupervisorThread;
@@ -42,7 +42,7 @@ public class RunResultDataSetFinderThread extends DataSetFinderThread {
      * @see de.wiwie.wiutils.utils.FinderThread#getFinder()
      */
     @Override
-    protected RunResultDataSetFinder getFinder() throws RegisterException {
+    public RunResultDataSetFinder getFinder() throws RegisterException {
         return new RunResultDataSetFinder(repository);
     }
 

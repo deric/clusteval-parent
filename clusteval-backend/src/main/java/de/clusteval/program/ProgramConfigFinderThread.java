@@ -10,12 +10,13 @@
  ***************************************************************************** */
 package de.clusteval.program;
 
+import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.r.IRProgram;
 import de.clusteval.api.run.ISupervisorThread;
 import de.clusteval.context.Context;
 import de.clusteval.context.ContextFinderThread;
-import de.clusteval.program.r.RProgram;
 import de.clusteval.program.r.RProgramFinderThread;
 import de.clusteval.utils.Finder;
 import de.clusteval.utils.FinderThread;
@@ -24,7 +25,7 @@ import de.clusteval.utils.FinderThread;
  * @author Christian Wiwie
  *
  */
-public class ProgramConfigFinderThread extends FinderThread<ProgramConfig> {
+public class ProgramConfigFinderThread extends FinderThread<IProgramConfig> {
 
     /**
      * @param supervisorThread
@@ -40,7 +41,7 @@ public class ProgramConfigFinderThread extends FinderThread<ProgramConfig> {
     public ProgramConfigFinderThread(final ISupervisorThread supervisorThread,
             final IRepository repository, final long sleepTime,
             final boolean checkOnce) {
-        super(supervisorThread, repository, ProgramConfig.class, sleepTime,
+        super(supervisorThread, repository, IProgramConfig.class, sleepTime,
                 checkOnce);
     }
 
@@ -52,8 +53,7 @@ public class ProgramConfigFinderThread extends FinderThread<ProgramConfig> {
     @Override
     protected void beforeFind() {
 
-
-        if (!this.repository.isInitialized(RProgram.class)) {
+        if (!this.repository.isInitialized(IRProgram.class)) {
             this.supervisorThread.getThread(RProgramFinderThread.class)
                     .waitFor();
         }
@@ -71,7 +71,7 @@ public class ProgramConfigFinderThread extends FinderThread<ProgramConfig> {
      * @see de.wiwie.wiutils.utils.FinderThread#getFinder()
      */
     @Override
-    protected Finder<ProgramConfig> getFinder() throws RegisterException {
+    public Finder<IProgramConfig> getFinder() throws RegisterException {
         return new ProgramConfigFinder(repository);
     }
 }

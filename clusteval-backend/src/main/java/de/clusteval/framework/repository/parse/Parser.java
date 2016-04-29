@@ -46,7 +46,7 @@ import de.clusteval.api.program.ParameterSet;
 import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.IRepositoryObject;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.run.IRunResultFormat;
 import de.clusteval.api.stats.IDataStatistic;
 import de.clusteval.api.stats.UnknownDataStatisticException;

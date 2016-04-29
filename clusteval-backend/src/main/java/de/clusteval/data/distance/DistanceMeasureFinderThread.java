@@ -10,8 +10,9 @@
  ***************************************************************************** */
 package de.clusteval.data.distance;
 
+import de.clusteval.api.IDistanceMeasure;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.run.ISupervisorThread;
 import de.clusteval.utils.FinderThread;
 
@@ -19,7 +20,7 @@ import de.clusteval.utils.FinderThread;
  * @author Christian Wiwie
  *
  */
-public class DistanceMeasureFinderThread extends FinderThread<DistanceMeasure> {
+public class DistanceMeasureFinderThread extends FinderThread<IDistanceMeasure> {
 
     /**
      * @param supervisorThread
@@ -30,7 +31,7 @@ public class DistanceMeasureFinderThread extends FinderThread<DistanceMeasure> {
     public DistanceMeasureFinderThread(final ISupervisorThread supervisorThread,
             final IRepository framework, final long sleepTime,
             final boolean checkOnce) {
-        super(supervisorThread, framework, DistanceMeasure.class, sleepTime,
+        super(supervisorThread, framework, IDistanceMeasure.class, sleepTime,
                 checkOnce);
     }
 
@@ -40,7 +41,7 @@ public class DistanceMeasureFinderThread extends FinderThread<DistanceMeasure> {
      * @see de.wiwie.wiutils.utils.FinderThread#getFinder()
      */
     @Override
-    protected DistanceMeasureFinder getFinder() throws RegisterException {
+    public DistanceMeasureFinder getFinder() throws RegisterException {
         return new DistanceMeasureFinder(repository);
     }
 

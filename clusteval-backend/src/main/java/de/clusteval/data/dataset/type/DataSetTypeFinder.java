@@ -12,8 +12,9 @@
  */
 package de.clusteval.data.dataset.type;
 
+import de.clusteval.api.data.IDataSetType;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.utils.JARFinder;
 import de.clusteval.utils.RecursiveSubDirectoryIterator;
 import java.io.File;
@@ -29,7 +30,7 @@ import java.util.Map;
  *
  * @author Christian Wiwie
  */
-public class DataSetTypeFinder extends JARFinder<DataSetType> {
+public class DataSetTypeFinder extends JARFinder<IDataSetType> {
 
     protected static Map<URL, URLClassLoader> classLoaders = new HashMap<>();
 
@@ -39,9 +40,8 @@ public class DataSetTypeFinder extends JARFinder<DataSetType> {
      * @param repository the repository
      * @throws RegisterException
      */
-    public DataSetTypeFinder(final IRepository repository)
-            throws RegisterException {
-        super(repository, DataSetType.class);
+    public DataSetTypeFinder(final IRepository repository) throws RegisterException {
+        super(repository, IDataSetType.class);
     }
 
     /*
@@ -50,7 +50,7 @@ public class DataSetTypeFinder extends JARFinder<DataSetType> {
      * @see de.wiwie.wiutils.utils.Finder#checkFile(java.io.File)
      */
     @Override
-    protected boolean checkFile(File file) {
+    public boolean checkFile(File file) {
         return file.getName().endsWith("DataSetType.jar");
     }
 
@@ -60,7 +60,7 @@ public class DataSetTypeFinder extends JARFinder<DataSetType> {
      * @see de.wiwie.wiutils.utils.JARFinder#classNameForJARFile(java.io.File)
      */
     @Override
-    protected String[] classNamesForJARFile(File f) {
+    public String[] classNamesForJARFile(File f) {
         return new String[]{"de.clusteval.data.dataset.type."
             + f.getName().replace(".jar", "")};
     }
@@ -71,7 +71,7 @@ public class DataSetTypeFinder extends JARFinder<DataSetType> {
      * @see de.wiwie.wiutils.utils.Finder#getIterator()
      */
     @Override
-    protected Iterator<File> getIterator() {
+    public Iterator<File> getIterator() {
         return new RecursiveSubDirectoryIterator(getBaseDir());
     }
 

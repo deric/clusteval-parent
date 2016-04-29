@@ -12,6 +12,8 @@
  */
 package de.clusteval.api.repository;
 
+import de.clusteval.api.program.RegisterException;
+
 /**
  * @author Christian Wiwie
  *

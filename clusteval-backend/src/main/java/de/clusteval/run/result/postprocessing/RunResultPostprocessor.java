@@ -13,7 +13,7 @@ package de.clusteval.run.result.postprocessing;
 import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
 import de.clusteval.api.r.RLibraryInferior;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.run.IRunResultPostprocessor;
 import de.clusteval.framework.repository.RepositoryObject;
 import java.io.File;

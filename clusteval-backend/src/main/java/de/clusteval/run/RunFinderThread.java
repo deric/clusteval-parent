@@ -10,20 +10,21 @@
  ***************************************************************************** */
 package de.clusteval.run;
 
+import de.clusteval.api.IContext;
+import de.clusteval.api.data.IDataSetConfig;
+import de.clusteval.api.data.IGoldStandardConfig;
+import de.clusteval.api.opt.IParameterOptimizationMethod;
+import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.ISupervisorThread;
-import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
+import de.clusteval.api.stats.IRunDataStatistic;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethodFinderThread;
-import de.clusteval.context.Context;
 import de.clusteval.context.ContextFinderThread;
-import de.clusteval.data.dataset.DataSetConfig;
 import de.clusteval.data.dataset.DataSetConfigFinderThread;
-import de.clusteval.data.goldstandard.GoldStandardConfig;
 import de.clusteval.data.goldstandard.GoldStandardConfigFinderThread;
-import de.clusteval.program.ProgramConfig;
 import de.clusteval.program.ProgramConfigFinderThread;
-import de.clusteval.run.statistics.RunDataStatistic;
 import de.clusteval.run.statistics.RunDataStatisticFinderThread;
 import de.clusteval.utils.Finder;
 import de.clusteval.utils.FinderThread;
@@ -34,7 +35,7 @@ import de.clusteval.utils.FinderThread;
  * @author Christian Wiwie
  *
  */
-public class RunFinderThread extends FinderThread<Run> {
+public class RunFinderThread extends FinderThread<IRun> {
 
     /**
      * @param supervisorThread
@@ -49,7 +50,7 @@ public class RunFinderThread extends FinderThread<Run> {
     public RunFinderThread(final ISupervisorThread supervisorThread,
             final IRepository repository, final long sleepTime,
             final boolean checkOnce) {
-        super(supervisorThread, repository, Run.class, sleepTime, checkOnce);
+        super(supervisorThread, repository, IRun.class, sleepTime, checkOnce);
     }
 
     /*
@@ -60,32 +61,32 @@ public class RunFinderThread extends FinderThread<Run> {
     @Override
     protected void beforeFind() {
 
-        if (!this.repository.isInitialized(DataSetConfig.class)) {
+        if (!this.repository.isInitialized(IDataSetConfig.class)) {
             this.supervisorThread.getThread(DataSetConfigFinderThread.class)
                     .waitFor();
         }
 
-        if (!this.repository.isInitialized(GoldStandardConfig.class)) {
+        if (!this.repository.isInitialized(IGoldStandardConfig.class)) {
             this.supervisorThread.getThread(
                     GoldStandardConfigFinderThread.class).waitFor();
         }
 
-        if (!this.repository.isInitialized(ProgramConfig.class)) {
+        if (!this.repository.isInitialized(IProgramConfig.class)) {
             this.supervisorThread.getThread(ProgramConfigFinderThread.class)
                     .waitFor();
         }
 
-        if (!this.repository.isInitialized(RunDataStatistic.class)) {
+        if (!this.repository.isInitialized(IRunDataStatistic.class)) {
             this.supervisorThread.getThread(RunDataStatisticFinderThread.class)
                     .waitFor();
         }
 
-        if (!this.repository.isInitialized(ParameterOptimizationMethod.class)) {
+        if (!this.repository.isInitialized(IParameterOptimizationMethod.class)) {
             this.supervisorThread.getThread(
                     ParameterOptimizationMethodFinderThread.class).waitFor();
         }
 
-        if (!this.repository.isInitialized(Context.class)) {
+        if (!this.repository.isInitialized(IContext.class)) {
             this.supervisorThread.getThread(ContextFinderThread.class)
                     .waitFor();
         }
@@ -99,7 +100,7 @@ public class RunFinderThread extends FinderThread<Run> {
      * @see de.wiwie.wiutils.utils.FinderThread#getFinder()
      */
     @Override
-    protected Finder<Run> getFinder() throws RegisterException {
+    public Finder<IRun> getFinder() throws RegisterException {
         return new RunFinder(repository);
     }
 }

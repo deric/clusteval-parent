@@ -11,7 +11,7 @@
 package de.clusteval.data.goldstandard;
 
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.run.ISupervisorThread;
 import de.clusteval.utils.Finder;
 import de.clusteval.utils.FinderThread;
@@ -47,7 +47,7 @@ public class GoldStandardConfigFinderThread extends FinderThread<GoldStandardCon
      * @see de.wiwie.wiutils.utils.FinderThread#getFinder()
      */
     @Override
-    protected Finder<GoldStandardConfig> getFinder() throws RegisterException {
+    public Finder<GoldStandardConfig> getFinder() throws RegisterException {
         return new GoldStandardConfigFinder(repository);
     }
 }

@@ -10,8 +10,9 @@
  ***************************************************************************** */
 package de.clusteval.data.distance;
 
+import de.clusteval.api.IDistanceMeasure;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.utils.JARFinder;
 import de.clusteval.utils.RecursiveSubDirectoryIterator;
 import java.io.File;
@@ -24,14 +25,14 @@ import java.util.Iterator;
  * @author Christian Wiwie
  *
  */
-public class DistanceMeasureFinder extends JARFinder<DistanceMeasure> {
+public class DistanceMeasureFinder extends JARFinder<IDistanceMeasure> {
 
     /**
      * @param repository
      * @throws RegisterException
      */
     public DistanceMeasureFinder(IRepository repository) throws RegisterException {
-        super(repository, DistanceMeasure.class);
+        super(repository, IDistanceMeasure.class);
     }
 
     /*
@@ -40,7 +41,7 @@ public class DistanceMeasureFinder extends JARFinder<DistanceMeasure> {
      * @see de.wiwie.wiutils.utils.Finder#getIterator()
      */
     @Override
-    protected Iterator<File> getIterator() {
+    public Iterator<File> getIterator() {
         return new RecursiveSubDirectoryIterator(getBaseDir());
     }
 
@@ -62,7 +63,7 @@ public class DistanceMeasureFinder extends JARFinder<DistanceMeasure> {
      * @see de.wiwie.wiutils.utils.Finder#checkFile(java.io.File)
      */
     @Override
-    protected boolean checkFile(File file) {
+    public boolean checkFile(File file) {
         return file.getName().endsWith("DistanceMeasure.jar");
     }
 
@@ -72,7 +73,7 @@ public class DistanceMeasureFinder extends JARFinder<DistanceMeasure> {
      * @see de.wiwie.wiutils.utils.JARFinder#classNamesForJARFile(java.io.File)
      */
     @Override
-    protected String[] classNamesForJARFile(File f) {
+    public String[] classNamesForJARFile(File f) {
         return new String[]{"de.clusteval.data.distance."
             + f.getName().replace(".jar", "")};
     }

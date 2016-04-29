@@ -14,7 +14,7 @@ package de.clusteval.utils;
 
 import de.clusteval.api.r.RLibraryInferior;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.stats.IStatistic;
 import de.clusteval.framework.repository.RepositoryObject;
 import java.io.File;

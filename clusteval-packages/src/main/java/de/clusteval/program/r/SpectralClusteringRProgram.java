@@ -31,7 +31,7 @@ import de.clusteval.data.dataset.format.DataSetFormat;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.r.RLibraryNotLoadedException;
 import de.clusteval.api.r.RLibraryRequirement;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.program.Program;
 import de.clusteval.program.ProgramConfig;

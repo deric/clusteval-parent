@@ -34,7 +34,7 @@ import de.clusteval.data.dataset.DataSet;
 import de.clusteval.data.dataset.DataSetAttributeFilterer;
 import de.clusteval.data.dataset.RelativeDataSet;
 import de.clusteval.data.dataset.DataSet.WEBSITE_VISIBILITY;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.FormatVersion;
 
 /**

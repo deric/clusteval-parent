@@ -33,7 +33,7 @@ import de.clusteval.data.dataset.format.RelativeDataSetFormat;
 import de.clusteval.data.goldstandard.GoldStandard;
 import de.clusteval.data.goldstandard.GoldStandardConfig;
 import de.clusteval.framework.repository.MyRengine;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.utils.FileUtils;
 

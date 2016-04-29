@@ -16,6 +16,7 @@
  */
 package de.clusteval.api.repository;
 
+import de.clusteval.api.program.RegisterException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;

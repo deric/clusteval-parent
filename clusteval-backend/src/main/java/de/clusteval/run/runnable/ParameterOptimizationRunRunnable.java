@@ -26,7 +26,7 @@ import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.IProgramParameter;
 import de.clusteval.api.program.ParameterSet;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.run.IRun;
 import de.clusteval.api.opt.IDivergingParameterOptimizationMethod;
 import de.clusteval.api.opt.NoParameterSetFoundException;

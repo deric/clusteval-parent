@@ -11,7 +11,7 @@
 package de.clusteval.run.result.postprocessing;
 
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.utils.JARFinder;
 import de.clusteval.utils.RecursiveSubDirectoryIterator;
 import java.io.File;
@@ -43,7 +43,7 @@ public class RunResultPostprocessorFinder extends JARFinder<RunResultPostprocess
      * @see de.wiwie.wiutils.utils.Finder#checkFile(java.io.File)
      */
     @Override
-    protected boolean checkFile(File file) {
+    public boolean checkFile(File file) {
         return file.getName().endsWith("RunResultPostprocessor.jar");
     }
 
@@ -53,7 +53,7 @@ public class RunResultPostprocessorFinder extends JARFinder<RunResultPostprocess
      * @see de.wiwie.wiutils.utils.JARFinder#classNameForJARFile(java.io.File)
      */
     @Override
-    protected String[] classNamesForJARFile(File f) {
+    public String[] classNamesForJARFile(File f) {
         return new String[]{"de.clusteval.run.result.postprocessing."
             + f.getName().replace(".jar", "")};
     }
@@ -64,7 +64,7 @@ public class RunResultPostprocessorFinder extends JARFinder<RunResultPostprocess
      * @see de.wiwie.wiutils.utils.Finder#getIterator()
      */
     @Override
-    protected Iterator<File> getIterator() {
+    public Iterator<File> getIterator() {
         return new RecursiveSubDirectoryIterator(getBaseDir());
     }
 

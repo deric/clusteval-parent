@@ -10,8 +10,9 @@
  ***************************************************************************** */
 package de.clusteval.context;
 
+import de.clusteval.api.IContext;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.run.ISupervisorThread;
 import de.clusteval.utils.FinderThread;
 
@@ -19,7 +20,7 @@ import de.clusteval.utils.FinderThread;
  * @author Christian Wiwie
  *
  */
-public class ContextFinderThread extends FinderThread<Context> {
+public class ContextFinderThread extends FinderThread<IContext> {
 
     /**
      * @param supervisorThread
@@ -31,7 +32,7 @@ public class ContextFinderThread extends FinderThread<Context> {
     public ContextFinderThread(final ISupervisorThread supervisorThread,
             final IRepository framework, final long sleepTime,
             final boolean checkOnce) {
-        super(supervisorThread, framework, Context.class, sleepTime, checkOnce);
+        super(supervisorThread, framework, IContext.class, sleepTime, checkOnce);
     }
 
     /*
@@ -40,7 +41,7 @@ public class ContextFinderThread extends FinderThread<Context> {
      * @see de.wiwie.wiutils.utils.FinderThread#getFinder()
      */
     @Override
-    protected ContextFinder getFinder() throws RegisterException {
+    public ContextFinder getFinder() throws RegisterException {
         return new ContextFinder(repository);
     }
 }

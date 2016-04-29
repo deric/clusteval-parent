@@ -10,8 +10,9 @@
  ***************************************************************************** */
 package de.clusteval.cluster.paramOptimization;
 
+import de.clusteval.api.opt.IParameterOptimizationMethod;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.run.ISupervisorThread;
 import de.clusteval.utils.FinderThread;
 
@@ -19,8 +20,7 @@ import de.clusteval.utils.FinderThread;
  * @author Christian Wiwie
  *
  */
-public class ParameterOptimizationMethodFinderThread extends FinderThread<ParameterOptimizationMethod> {
-
+public class ParameterOptimizationMethodFinderThread extends FinderThread<IParameterOptimizationMethod> {
 
     /**
      * @param supervisorThread
@@ -38,7 +38,7 @@ public class ParameterOptimizationMethodFinderThread extends FinderThread<Parame
             final ISupervisorThread supervisorThread,
             final IRepository repository, final long sleepTime,
             final boolean checkOnce) {
-        super(supervisorThread, repository, ParameterOptimizationMethod.class,
+        super(supervisorThread, repository, IParameterOptimizationMethod.class,
                 sleepTime, checkOnce);
     }
 
@@ -48,8 +48,7 @@ public class ParameterOptimizationMethodFinderThread extends FinderThread<Parame
      * @see de.wiwie.wiutils.utils.FinderThread#getFinder()
      */
     @Override
-    protected ParameterOptimizationMethodFinder getFinder()
-            throws RegisterException {
+    public ParameterOptimizationMethodFinder getFinder() throws RegisterException {
         return new ParameterOptimizationMethodFinder(repository);
     }
 }

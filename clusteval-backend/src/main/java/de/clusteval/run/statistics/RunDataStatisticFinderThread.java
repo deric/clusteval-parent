@@ -11,15 +11,16 @@
 package de.clusteval.run.statistics;
 
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.run.ISupervisorThread;
+import de.clusteval.api.stats.IRunDataStatistic;
 import de.clusteval.utils.FinderThread;
 
 /**
  * @author Christian Wiwie
  *
  */
-public class RunDataStatisticFinderThread extends FinderThread<RunDataStatistic> {
+public class RunDataStatisticFinderThread extends FinderThread<IRunDataStatistic> {
 
     /**
      * @param supervisorThread
@@ -32,7 +33,7 @@ public class RunDataStatisticFinderThread extends FinderThread<RunDataStatistic>
             final ISupervisorThread supervisorThread,
             final IRepository framework, final long sleepTime,
             final boolean checkOnce) {
-        super(supervisorThread, framework, RunDataStatistic.class, sleepTime,
+        super(supervisorThread, framework, IRunDataStatistic.class, sleepTime,
                 checkOnce);
     }
 
@@ -42,7 +43,7 @@ public class RunDataStatisticFinderThread extends FinderThread<RunDataStatistic>
      * @see de.wiwie.wiutils.utils.FinderThread#getFinder()
      */
     @Override
-    protected RunDataStatisticFinder getFinder() throws RegisterException {
+    public RunDataStatisticFinder getFinder() throws RegisterException {
         return new RunDataStatisticFinder(repository);
     }
 }

@@ -14,7 +14,7 @@ import de.clusteval.api.exceptions.UnknownParameterType;
 import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.IProgramParameter;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.framework.repository.RepositoryObject;
 import java.io.File;
 import java.util.ArrayList;

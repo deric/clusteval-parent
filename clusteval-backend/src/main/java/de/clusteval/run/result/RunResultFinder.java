@@ -12,7 +12,7 @@ package de.clusteval.run.result;
 
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.IRepositoryObject;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.IRunResult;
 import de.clusteval.api.run.IScheduler;
@@ -67,7 +67,7 @@ public class RunResultFinder extends FileFinder<IRunResult> {
      * @see de.wiwie.wiutils.utils.Finder#getIterator()
      */
     @Override
-    protected Iterator<File> getIterator() {
+    public Iterator<File> getIterator() {
         iter = new RunResultIterator(this.repository, this.getBaseDir());
         return iter;
     }
@@ -80,7 +80,7 @@ public class RunResultFinder extends FileFinder<IRunResult> {
     @Override
     // Fixed 17.03.2014: changed !isRunning(file.getName()) to
     // !isRunning(file.getParentFile().getParentFile().getName())
-    protected boolean checkFile(File file) {
+    public boolean checkFile(File file) {
         String uniqueRunId;
         File f = file;
         while (!f.getParentFile().getName().equals("results")) {

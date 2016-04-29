@@ -7,7 +7,7 @@ import de.clusteval.api.exceptions.FormatConversionException;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.r.RNotAvailableException;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.run.IterationRunnable;
 import de.clusteval.api.stats.IStatistic;
 import de.clusteval.data.statistics.StatisticCalculateException;

@@ -19,7 +19,7 @@ import de.clusteval.cluster.quality.ClusteringQualityMeasure;
 import de.clusteval.api.cluster.quality.ClusteringQualityMeasureValue;
 import de.clusteval.api.cluster.quality.ClusteringQualitySet;
 import de.clusteval.data.statistics.RunStatisticCalculateException;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.api.program.ParameterSet;
 import de.clusteval.run.result.ParameterOptimizationResult;

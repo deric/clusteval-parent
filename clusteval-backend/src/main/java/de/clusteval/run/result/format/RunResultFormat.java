@@ -12,7 +12,7 @@ package de.clusteval.run.result.format;
 
 import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.run.IRunResultFormat;
 import de.clusteval.framework.repository.RepositoryObject;
 import java.io.File;

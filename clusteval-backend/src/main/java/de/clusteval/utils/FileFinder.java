@@ -14,7 +14,7 @@ package de.clusteval.utils;
 
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.IRepositoryObject;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.RepositoryRemoveEvent;
 import de.clusteval.framework.repository.parse.Parser;
 import java.io.File;
@@ -46,7 +46,7 @@ public abstract class FileFinder<T extends IRepositoryObject> extends Finder<T> 
      * @see de.wiwie.wiutils.utils.Finder#doOnFileFound(java.io.File)
      */
     @Override
-    protected void doOnFileFound(File file) throws InterruptedException, Exception {
+    public void doOnFileFound(File file) throws InterruptedException, Exception {
         try {
             T newObject = parseObjectFromFile(file);
             /*
@@ -147,8 +147,7 @@ public abstract class FileFinder<T extends IRepositoryObject> extends Finder<T> 
      * @see de.wiwie.wiutils.utils.Finder#findAndRegisterObjects()
      */
     @Override
-    public void findAndRegisterObjects() throws RegisterException,
-                                                InterruptedException {
+    public void findAndRegisterObjects() throws RegisterException, InterruptedException {
         validateRegisteredObjects();
         super.findAndRegisterObjects();
     }

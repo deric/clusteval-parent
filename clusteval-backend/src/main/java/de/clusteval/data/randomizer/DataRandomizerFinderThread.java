@@ -10,8 +10,9 @@
  ***************************************************************************** */
 package de.clusteval.data.randomizer;
 
+import de.clusteval.api.data.IDataRandomizer;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.run.ISupervisorThread;
 import de.clusteval.utils.FinderThread;
 
@@ -19,7 +20,7 @@ import de.clusteval.utils.FinderThread;
  * @author Christian Wiwie
  *
  */
-public class DataRandomizerFinderThread extends FinderThread<DataRandomizer> {
+public class DataRandomizerFinderThread extends FinderThread<IDataRandomizer> {
 
     /**
      * @param supervisorThread
@@ -32,7 +33,7 @@ public class DataRandomizerFinderThread extends FinderThread<DataRandomizer> {
             final ISupervisorThread supervisorThread,
             final IRepository framework, final long sleepTime,
             final boolean checkOnce) {
-        super(supervisorThread, framework, DataRandomizer.class, sleepTime,
+        super(supervisorThread, framework, IDataRandomizer.class, sleepTime,
                 checkOnce);
     }
 
@@ -42,7 +43,7 @@ public class DataRandomizerFinderThread extends FinderThread<DataRandomizer> {
      * @see de.wiwie.wiutils.utils.FinderThread#getFinder()
      */
     @Override
-    protected DataRandomizerFinder getFinder() throws RegisterException {
+    public DataRandomizerFinder getFinder() throws RegisterException {
         return new DataRandomizerFinder(repository);
     }
 }

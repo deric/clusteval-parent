@@ -17,19 +17,24 @@
 package de.clusteval.api.program;
 
 import de.clusteval.api.repository.IRepositoryObject;
+import java.io.File;
+import java.util.Iterator;
 
 /**
  *
  * @author deric
+ * @param <T>
  */
-public interface IFinderThread<T extends IRepositoryObject> {
+public interface IFinder<T extends IRepositoryObject> extends IRepositoryObject {
 
-    /**
-     * Default time between running checks
-     *
-     * @return
-     */
-    long getSleepTime();
+    Iterator<File> getIterator();
 
-    IFinder<T> getFinder() throws RegisterException;
+    boolean checkFile(final File file);
+
+    void doOnFileFound(final File file) throws Exception;
+
+    void findAndRegisterObjects() throws RegisterException, InterruptedException;
+
+    boolean foundInLastRun();
+
 }

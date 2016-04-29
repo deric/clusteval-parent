@@ -30,7 +30,7 @@ import de.clusteval.cluster.Clustering;
 import de.clusteval.data.DataConfig;
 import de.clusteval.api.r.RLibraryRequirement;
 import de.clusteval.framework.repository.MyRengine;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.framework.repository.Repository;
 
 /**

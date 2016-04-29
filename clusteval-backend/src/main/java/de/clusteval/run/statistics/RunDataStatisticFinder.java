@@ -13,7 +13,8 @@
 package de.clusteval.run.statistics;
 
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.stats.IRunDataStatistic;
 import de.clusteval.utils.JARFinder;
 import de.clusteval.utils.RecursiveSubDirectoryIterator;
 import java.io.File;
@@ -27,7 +28,7 @@ import java.util.List;
 /**
  * @author Christian Wiwie
  */
-public class RunDataStatisticFinder extends JARFinder<RunDataStatistic> {
+public class RunDataStatisticFinder extends JARFinder<IRunDataStatistic> {
 
     /**
      * Instantiates a new data set format finder.
@@ -37,7 +38,7 @@ public class RunDataStatisticFinder extends JARFinder<RunDataStatistic> {
      */
     public RunDataStatisticFinder(final IRepository repository)
             throws RegisterException {
-        super(repository, RunDataStatistic.class);
+        super(repository, IRunDataStatistic.class);
     }
 
     /*
@@ -71,7 +72,7 @@ public class RunDataStatisticFinder extends JARFinder<RunDataStatistic> {
 	 * @see de.wiwie.wiutils.utils.Finder#checkFile(java.io.File)
      */
     @Override
-    protected boolean checkFile(File file) {
+    public boolean checkFile(File file) {
         return file.getName().endsWith("RunDataStatistic.jar");
     }
 
@@ -81,7 +82,7 @@ public class RunDataStatisticFinder extends JARFinder<RunDataStatistic> {
 	 * @see de.wiwie.wiutils.utils.JARFinder#classNamesForJARFile(java.io.File)
      */
     @Override
-    protected String[] classNamesForJARFile(File f) {
+    public String[] classNamesForJARFile(File f) {
         return new String[]{
             "de.clusteval.run.statistics."
             + f.getName().replace(".jar", ""),
@@ -95,7 +96,7 @@ public class RunDataStatisticFinder extends JARFinder<RunDataStatistic> {
 	 * @see de.wiwie.wiutils.utils.Finder#getIterator()
      */
     @Override
-    protected Iterator<File> getIterator() {
+    public Iterator<File> getIterator() {
         return new RecursiveSubDirectoryIterator(getBaseDir());
     }
 

@@ -16,6 +16,8 @@
  */
 package de.clusteval.api.repository;
 
+import de.clusteval.api.program.RegisterException;
+
 public abstract class RepositoryEntity<T extends IRepositoryObject> {
 
     protected IRepository repository;

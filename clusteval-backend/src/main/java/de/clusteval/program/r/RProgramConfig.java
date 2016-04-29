@@ -12,7 +12,7 @@ package de.clusteval.program.r;
 
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.program.IProgramParameter;
 import de.clusteval.api.run.IRunResultFormat;
 import de.clusteval.program.Program;

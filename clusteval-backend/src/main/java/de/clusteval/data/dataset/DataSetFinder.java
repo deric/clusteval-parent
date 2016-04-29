@@ -12,7 +12,7 @@ package de.clusteval.data.dataset;
 
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.utils.FileFinder;
 import de.clusteval.utils.SubDirectoryIterator;
 import java.io.File;
@@ -45,7 +45,7 @@ public class DataSetFinder extends FileFinder<IDataSet> {
      * @see de.wiwie.wiutils.utils.Finder#checkFile(java.io.File)
      */
     @Override
-    protected boolean checkFile(File file) {
+    public boolean checkFile(File file) {
         try {
             DataSetAttributeParser p;
             if (file.isFile()
@@ -66,7 +66,7 @@ public class DataSetFinder extends FileFinder<IDataSet> {
      * @see de.wiwie.wiutils.utils.Finder#getIterator()
      */
     @Override
-    protected Iterator<File> getIterator() {
+    public Iterator<File> getIterator() {
         return new SubDirectoryIterator(getBaseDir());
     }
 }

@@ -17,7 +17,7 @@ import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
 import java.io.File;

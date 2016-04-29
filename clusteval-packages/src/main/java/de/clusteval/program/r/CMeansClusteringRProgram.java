@@ -27,7 +27,7 @@ import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.data.dataset.format.DataSetFormat;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.r.RLibraryRequirement;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.program.Program;
 import de.clusteval.run.result.format.RunResultFormat;

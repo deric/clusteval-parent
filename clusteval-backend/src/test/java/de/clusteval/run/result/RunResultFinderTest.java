@@ -14,7 +14,7 @@ import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.run.RUN_STATUS;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.framework.repository.Repository;

@@ -15,7 +15,7 @@ package de.clusteval.context;
 import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.api.IContext;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.framework.repository.RepositoryObject;
 import java.io.File;
 import java.lang.reflect.Constructor;

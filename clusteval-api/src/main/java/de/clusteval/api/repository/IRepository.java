@@ -16,6 +16,7 @@
  */
 package de.clusteval.api.repository;
 
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.Database;
 import de.clusteval.api.SQLConfig;
 import de.clusteval.api.data.IDataConfig;

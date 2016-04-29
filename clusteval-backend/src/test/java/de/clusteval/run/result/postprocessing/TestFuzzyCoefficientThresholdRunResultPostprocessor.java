@@ -43,7 +43,7 @@ import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;

@@ -23,7 +23,7 @@ import de.clusteval.utils.RangeCreationException;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
 import de.clusteval.api.cluster.quality.ClusteringQualitySet;
 import de.clusteval.data.DataConfig;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.program.DoubleProgramParameter;
 import de.clusteval.program.IntegerProgramParameter;

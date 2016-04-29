@@ -4,7 +4,7 @@
 package de.clusteval.framework.repository;
 
 import de.clusteval.api.repository.StaticRepositoryEntity;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.utils.Finder;
 
 /**

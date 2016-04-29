@@ -8,7 +8,7 @@ import de.clusteval.api.repository.StaticRepositoryEntity;
 import de.clusteval.api.repository.DynamicRepositoryEntity;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.program.r.RProgram;
 import java.lang.reflect.InvocationTargetException;

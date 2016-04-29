@@ -3,6 +3,7 @@
  */
 package de.clusteval.api.repository;
 
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RLibraryNotLoadedException;

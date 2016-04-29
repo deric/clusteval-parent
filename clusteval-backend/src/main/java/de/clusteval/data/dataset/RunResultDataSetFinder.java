@@ -11,7 +11,7 @@
 package de.clusteval.data.dataset;
 
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.utils.SubSubDirectoryIterator;
 import java.io.File;
 import java.util.Iterator;
@@ -41,7 +41,7 @@ public class RunResultDataSetFinder extends DataSetFinder {
      * @see de.wiwie.wiutils.utils.Finder#getIterator()
      */
     @Override
-    protected Iterator<File> getIterator() {
+    public Iterator<File> getIterator() {
         return new SubSubDirectoryIterator(getBaseDir());
     }
 }

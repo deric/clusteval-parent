@@ -12,9 +12,10 @@
  */
 package de.clusteval.utils;
 
+import de.clusteval.api.program.IFinder;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.IRepositoryObject;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -30,7 +31,7 @@ import java.util.Map;
  * @param <T>
  *
  */
-public abstract class JARFinder<T extends IRepositoryObject> extends Finder<T> {
+public abstract class JARFinder<T extends IRepositoryObject> extends Finder<T> implements IFinder<T> {
 
     protected Map<URL, URLClassLoader> classLoaders;
 
@@ -52,12 +53,12 @@ public abstract class JARFinder<T extends IRepositoryObject> extends Finder<T> {
                 .getFinderLoadedJarFileChangeDates();
     }
 
-    protected abstract String[] classNamesForJARFile(final File f);
-
     protected Class<?> loadClass(final String className,
             final URLClassLoader loader) throws ClassNotFoundException {
         return Class.forName(className, true, loader);
     }
+
+    public abstract String[] classNamesForJARFile(final File f);
 
     /*
      * (non-Javadoc)
@@ -65,7 +66,7 @@ public abstract class JARFinder<T extends IRepositoryObject> extends Finder<T> {
      * @see de.wiwie.wiutils.utils.Finder#doOnFileFound(java.io.File)
      */
     @Override
-    protected void doOnFileFound(File file) throws Exception {
+    public void doOnFileFound(File file) throws Exception {
         loadJAR(file);
     }
 

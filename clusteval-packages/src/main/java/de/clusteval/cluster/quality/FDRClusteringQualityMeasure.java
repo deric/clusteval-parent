@@ -21,7 +21,7 @@ import java.util.Set;
 import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.data.DataConfig;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.framework.repository.Repository;
 
 /**

@@ -11,7 +11,7 @@
 package de.clusteval.data.dataset;
 
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.run.ISupervisorThread;
 import de.clusteval.data.distance.DistanceMeasure;
 import de.clusteval.data.distance.DistanceMeasureFinderThread;
@@ -74,7 +74,7 @@ public class DataSetConfigFinderThread extends FinderThread<DataSetConfig> {
      * @see de.wiwie.wiutils.utils.FinderThread#getFinder()
      */
     @Override
-    protected Finder<DataSetConfig> getFinder() throws RegisterException {
+    public Finder<DataSetConfig> getFinder() throws RegisterException {
         return new DataSetConfigFinder(repository);
     }
 }

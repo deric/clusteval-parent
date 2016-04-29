@@ -11,7 +11,8 @@
 package de.clusteval.program.r;
 
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.r.IRProgram;
 import de.clusteval.api.run.ISupervisorThread;
 import de.clusteval.utils.FinderThread;
 
@@ -19,7 +20,7 @@ import de.clusteval.utils.FinderThread;
  * @author Christian Wiwie
  *
  */
-public class RProgramFinderThread extends FinderThread<RProgram> {
+public class RProgramFinderThread extends FinderThread<IRProgram> {
 
     /**
      * @param supervisorThread
@@ -31,7 +32,7 @@ public class RProgramFinderThread extends FinderThread<RProgram> {
     public RProgramFinderThread(final ISupervisorThread supervisorThread,
             final IRepository framework, final long sleepTime,
             final boolean checkOnce) {
-        super(supervisorThread, framework, RProgram.class, sleepTime, checkOnce);
+        super(supervisorThread, framework, IRProgram.class, sleepTime, checkOnce);
     }
 
     /*
@@ -40,7 +41,7 @@ public class RProgramFinderThread extends FinderThread<RProgram> {
      * @see de.wiwie.wiutils.utils.FinderThread#getFinder()
      */
     @Override
-    protected RProgramFinder getFinder() throws RegisterException {
+    public RProgramFinder getFinder() throws RegisterException {
         return new RProgramFinder(repository);
     }
 }

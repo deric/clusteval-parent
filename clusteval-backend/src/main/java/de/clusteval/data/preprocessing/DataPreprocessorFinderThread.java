@@ -10,8 +10,9 @@
  ***************************************************************************** */
 package de.clusteval.data.preprocessing;
 
+import de.clusteval.api.data.IDataPreprocessor;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.repository.RegisterException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.run.ISupervisorThread;
 import de.clusteval.utils.FinderThread;
 
@@ -19,7 +20,7 @@ import de.clusteval.utils.FinderThread;
  * @author Christian Wiwie
  *
  */
-public class DataPreprocessorFinderThread extends FinderThread<DataPreprocessor> {
+public class DataPreprocessorFinderThread extends FinderThread<IDataPreprocessor> {
 
     /**
      * @param supervisorThread
@@ -32,7 +33,7 @@ public class DataPreprocessorFinderThread extends FinderThread<DataPreprocessor>
             final ISupervisorThread supervisorThread,
             final IRepository framework, final long sleepTime,
             final boolean checkOnce) {
-        super(supervisorThread, framework, DataPreprocessor.class, sleepTime,
+        super(supervisorThread, framework, IDataPreprocessor.class, sleepTime,
                 checkOnce);
     }
 
@@ -42,7 +43,7 @@ public class DataPreprocessorFinderThread extends FinderThread<DataPreprocessor>
      * @see de.wiwie.wiutils.utils.FinderThread#getFinder()
      */
     @Override
-    protected DataPreprocessorFinder getFinder() throws RegisterException {
+    public DataPreprocessorFinder getFinder() throws RegisterException {
         return new DataPreprocessorFinder(repository);
     }
 }
