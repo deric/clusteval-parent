@@ -14,7 +14,7 @@ package de.clusteval.run.statistics;
 
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.api.stats.IStatistic;
+import de.clusteval.api.stats.IRunDataStatistic;
 import de.clusteval.run.RunDataAnalysisRun;
 import de.clusteval.utils.Statistic;
 import java.io.File;
@@ -61,7 +61,7 @@ import java.util.List;
  * @author Christian Wiwie
  *
  */
-public abstract class RunDataStatistic extends Statistic implements IStatistic {
+public abstract class RunDataStatistic extends Statistic implements IRunDataStatistic {
 
     /**
      * @param repository
@@ -97,7 +97,7 @@ public abstract class RunDataStatistic extends Statistic implements IStatistic {
             return this.getClass().getConstructor(this.getClass())
                     .newInstance(this);
         } catch (IllegalArgumentException | SecurityException | InstantiationException |
-                IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                 IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
         this.log.warn("Cloning instance of class "
@@ -128,7 +128,7 @@ public abstract class RunDataStatistic extends Statistic implements IStatistic {
                             new File(runDataStatistic));
             return statistic;
         } catch (InstantiationException | IllegalAccessException | IllegalArgumentException |
-                SecurityException | InvocationTargetException | NoSuchMethodException e) {
+                 SecurityException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         } catch (NullPointerException e) {
 

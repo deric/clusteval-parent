@@ -16,6 +16,7 @@ import de.clusteval.api.Database;
 import de.clusteval.api.IContext;
 import de.clusteval.api.IDistanceMeasure;
 import de.clusteval.api.SQLConfig;
+import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataPreprocessor;
 import de.clusteval.api.data.IDataSet;
@@ -49,6 +50,7 @@ import de.clusteval.api.run.IRunResult;
 import de.clusteval.api.run.IRunResultFormat;
 import de.clusteval.api.run.IRunResultFormatParser;
 import de.clusteval.api.stats.IDataStatistic;
+import de.clusteval.api.stats.IRunDataStatistic;
 import de.clusteval.api.stats.IRunStatistic;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
@@ -58,7 +60,6 @@ import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.DataSet;
 import de.clusteval.data.dataset.DataSetConfig;
 import de.clusteval.data.dataset.generator.DataSetGenerator;
-import de.clusteval.data.dataset.type.DataSetType;
 import de.clusteval.data.distance.DistanceMeasure;
 import de.clusteval.data.goldstandard.GoldStandardConfig;
 import de.clusteval.data.goldstandard.format.GoldStandardFormat;
@@ -754,7 +755,7 @@ public class Repository implements IRepository {
         if (staticEntityFound) {
             return this.staticRepositoryEntities.get(c).getRegisteredObject(object, ignoreChangeDate);
         } else if (dynamicEntityFound) {
-            return this.dynamicRepositoryEntities.get(c).getRegisteredObject(object, ignoreChangeDate);
+            return (S) this.dynamicRepositoryEntities.get(c).getRegisteredObject(object, ignoreChangeDate);
         }
         return null;
     }
@@ -1320,8 +1321,16 @@ public class Repository implements IRepository {
                 this.parent != null ? this.parent.getStaticEntities().get(c) : null, basePath));
     }
 
-    protected <T extends RepositoryObject> void createAndAddDynamicEntity(final Class<T> c, final String basePath) {
-        this.dynamicRepositoryEntities.put(c, new DynamicRepositoryEntity<T>(this,
+    /**
+     * protected <T extends RepositoryObject> void createAndAddDynamicEntity(final Class<T> c, final String basePath) {
+     * this.dynamicRepositoryEntities.put(c, new DynamicRepositoryEntity<T>(this,
+     *
+     * @param <T>
+     * @param c
+     * @param basePath
+     */
+    protected <T extends RepositoryObject> void createAndAddDynamicEntity(final Class c, final String basePath) {
+        this.dynamicRepositoryEntities.put(c, new DynamicRepositoryEntity(this,
                 this.parent != null ? this.parent.getDynamicEntities().get(c) : null, basePath));
     }
 
@@ -1353,12 +1362,12 @@ public class Repository implements IRepository {
         // this.createAndAddStaticEntity(Clustering.class,
         // FileUtils.buildPath(this.basePath, "results"));
 
-        this.staticRepositoryEntities.put(Clustering.class,
+        this.staticRepositoryEntities.put(IClustering.class,
                 new ClusteringRepositoryEntity(this,
                         this.parent != null ? this.parent.getStaticEntities().get(Clustering.class) : null,
                         FileUtils.buildPath(this.basePath, "results")));
 
-        this.staticRepositoryEntities.put(RunResult.class,
+        this.staticRepositoryEntities.put(IRunResult.class,
                 new RunResultRepositoryEntity(this,
                         this.parent != null ? this.parent.getStaticEntities().get(RunResult.class) : null,
                         FileUtils.buildPath(this.basePath, "results")));
@@ -1387,30 +1396,30 @@ public class Repository implements IRepository {
                                 : null,
                                 null));
 
-        this.createAndAddDynamicEntity(DistanceMeasure.class,
+        this.createAndAddDynamicEntity(IDistanceMeasure.class,
                 FileUtils.buildPath(this.supplementaryBasePath, "distanceMeasures"));
 
-        this.dynamicRepositoryEntities.put(DataStatistic.class,
+        this.dynamicRepositoryEntities.put(IDataStatistic.class,
                 new DataStatisticRepositoryEntity(this, this.parent != null
-                                                        ? (DataStatisticRepositoryEntity) this.parent.getDynamicEntities().get(DataStatistic.class)
+                                                        ? (DataStatisticRepositoryEntity) this.parent.getDynamicEntities().get(IDataStatistic.class)
                                                         : null, FileUtils.buildPath(this.supplementaryBasePath, "statistics", "data")));
 
-        this.dynamicRepositoryEntities.put(RunStatistic.class,
+        this.dynamicRepositoryEntities.put(IRunStatistic.class,
                 new RunStatisticRepositoryEntity(this, this.parent != null
-                                                       ? (RunStatisticRepositoryEntity) this.parent.getDynamicEntities().get(RunStatistic.class)
+                                                       ? (RunStatisticRepositoryEntity) this.parent.getDynamicEntities().get(IRunStatistic.class)
                                                        : null, FileUtils.buildPath(this.supplementaryBasePath, "statistics", "run")));
 
-        this.dynamicRepositoryEntities.put(RunDataStatistic.class,
+        this.dynamicRepositoryEntities.put(IRunDataStatistic.class,
                 new RunDataStatisticRepositoryEntity(this,
                         this.parent != null
                         ? (RunDataStatisticRepositoryEntity) this.parent.getDynamicEntities()
-                                .get(RunDataStatistic.class)
+                                .get(IRunDataStatistic.class)
                         : null,
                         FileUtils.buildPath(this.supplementaryBasePath, "statistics", "rundata")));
 
         this.createAndAddDynamicEntity(DataSetGenerator.class, FileUtils.buildPath(this.generatorBasePath, "dataset"));
         this.createAndAddDynamicEntity(DataRandomizer.class, FileUtils.buildPath(this.randomizerBasePath, "data"));
-        this.createAndAddDynamicEntity(DataPreprocessor.class,
+        this.createAndAddDynamicEntity(IDataPreprocessor.class,
                 FileUtils.buildPath(this.supplementaryBasePath, "preprocessing"));
         this.createAndAddDynamicEntity(RunResultPostprocessor.class,
                 FileUtils.buildPath(this.supplementaryBasePath, "postprocessing"));
@@ -1430,7 +1439,7 @@ public class Repository implements IRepository {
         this.createAndAddDynamicEntity(ParameterOptimizationMethod.class,
                 FileUtils.buildPath(this.suppClusteringBasePath, "paramOptimization"));
 
-        this.createAndAddDynamicEntity(DataSetType.class, FileUtils.buildPath(this.typesBasePath, "dataset"));
+        this.createAndAddDynamicEntity(IDataSetType.class, FileUtils.buildPath(this.typesBasePath, "dataset"));
 
         this.dynamicRepositoryEntities.put(IDataSetFormat.class,
                 new DataSetFormatRepositoryEntity(this, this.parent != null

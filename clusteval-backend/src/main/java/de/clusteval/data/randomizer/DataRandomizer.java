@@ -18,10 +18,12 @@ import de.clusteval.api.repository.RegisterException;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.AbstractDataSetProvider;
 import de.clusteval.data.dataset.DataSet;
-import de.clusteval.data.dataset.generator.DataSetGenerationException;
-import de.clusteval.data.goldstandard.GoldStandard;
 import de.clusteval.utils.FileUtils;
 import de.clusteval.api.Pair;
+import de.clusteval.api.data.IDataConfig;
+import de.clusteval.api.data.IDataRandomizer;
+import de.clusteval.api.data.IDataSet;
+import de.clusteval.api.data.IGoldStandard;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import org.apache.commons.cli.CommandLine;
@@ -29,8 +31,8 @@ import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
-import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
+import org.openide.util.Exceptions;
 
 /**
  * <p>
@@ -61,7 +63,7 @@ import org.apache.commons.cli.PosixParser;
  * @author Christian Wiwie
  *
  */
-public abstract class DataRandomizer extends AbstractDataSetProvider implements RLibraryInferior {
+public abstract class DataRandomizer extends AbstractDataSetProvider implements RLibraryInferior, IDataRandomizer {
 
     /**
      * This attribute holds the name of the data configuration to randomize.
@@ -103,17 +105,9 @@ public abstract class DataRandomizer extends AbstractDataSetProvider implements 
     public DataRandomizer clone() {
         try {
             return this.getClass().getConstructor(this.getClass()).newInstance(this);
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        } catch (SecurityException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
+        } catch (IllegalArgumentException | SecurityException |
+                 InstantiationException | IllegalAccessException |
+                 InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
         this.log.warn("Cloning instance of class " + this.getClass().getSimpleName() + " failed");
@@ -135,14 +129,7 @@ public abstract class DataRandomizer extends AbstractDataSetProvider implements 
         return options;
     }
 
-    /**
-     * @return A wrapper object keeping the options of your dataset generator.
-     *         The options returned by this method are going to be used and interpreted
-     *         in your subclass implementation in {@link #generateDataSet()} .
-     */
-    protected abstract Options getOptions();
-
-    public DataConfig randomize(final String[] cliArguments) throws DataRandomizeException {
+    public IDataConfig randomize(final String[] cliArguments) throws DataRandomizeException {
         return randomize(cliArguments, false);
     }
 
@@ -154,12 +141,12 @@ public abstract class DataRandomizer extends AbstractDataSetProvider implements 
      * @param cliArguments
      * @return The generated {@link DataSet}.
      * @throws DataRandomizeException This exception is thrown, if the passed
-     *                                arguments are not valid, or parsing of the written data set/ gold
-     *                                standard or config files fails.
+     * arguments are not valid, or parsing of the written data set/ gold
+     * standard or config files fails.
      * @throws DataRandomizeException
      */
     // TODO: remove onlySimulate attribute
-    public DataConfig randomize(final String[] cliArguments, final boolean onlySimulate) throws DataRandomizeException {
+    public IDataConfig randomize(final String[] cliArguments, final boolean onlySimulate) throws DataRandomizeException {
         try {
             this.onlySimulate = onlySimulate;
             CommandLineParser parser = new PosixParser();
@@ -169,7 +156,7 @@ public abstract class DataRandomizer extends AbstractDataSetProvider implements 
             CommandLine cmd = parser.parse(options, cliArguments);
 
             // get data config with the specified name
-            String absFilePath = FileUtils.buildPath(this.repository.getBasePath(DataConfig.class),
+            String absFilePath = FileUtils.buildPath(this.repository.getBasePath(IDataConfig.class),
                     cmd.getOptionValue("dataConfig") + ".dataconfig");
             this.dataConfig = (DataConfig) this.repository.getRegisteredObject(new File(absFilePath));
 
@@ -177,9 +164,9 @@ public abstract class DataRandomizer extends AbstractDataSetProvider implements 
 
             this.handleOptions(cmd);
 
-            Pair<DataSet, GoldStandard> newObjects = randomizeDataConfig();
+            Pair<IDataSet, IGoldStandard> newObjects = randomizeDataConfig();
 
-            DataConfig dataConfig = this.writeConfigFiles(newObjects.getFirst(), newObjects.getSecond(), this.uniqueId
+            IDataConfig dataConfig = this.writeConfigFiles(newObjects.getFirst(), newObjects.getSecond(), this.uniqueId
                     + "_" + this.dataConfig.getGoldstandardConfig().toString() + getDataSetFileNamePostFix());
 
             return dataConfig;
@@ -214,32 +201,6 @@ public abstract class DataRandomizer extends AbstractDataSetProvider implements 
     }
 
     /**
-     * This method is reponsible for interpreting the arguments passed to this
-     * generator call and to initialize possibly needed member variables.
-     *
-     * <p>
-     * If you want to react to certain options in your implementation of
-     * {@link #generateDataSet()}, initialize member variables in this method.
-     *
-     * @param cmd A wrapper object for the arguments passed to this generator.
-     * @throws ParseException
-     */
-    protected abstract void handleOptions(final CommandLine cmd) throws ParseException;
-
-    /**
-     * This method needs to be implemented in subclasses and is a helper method
-     * for {@link #randomize(String[])}. It provides the core of a dataset
-     * generator by generating the dataset file and creating a {@link DataSet}
-     * wrapper object for it.
-     *
-     * @throws InterruptedException
-     *
-     * @throws DataSetGenerationException If something goes wrong during the
-     *                                    generation process, this exception is thrown.
-     */
-    protected abstract Pair<DataSet, GoldStandard> randomizeDataConfig() throws InterruptedException;
-
-    /**
      * Parses a dataconfig randomizer from string.
      *
      * @param repository     the repository
@@ -257,10 +218,12 @@ public abstract class DataRandomizer extends AbstractDataSetProvider implements 
                     .newInstance(repository, false, System.currentTimeMillis(), new File(dataRandomizer));
             return generator;
 
-        } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | SecurityException | InvocationTargetException | NoSuchMethodException e) {
+        } catch (InstantiationException | IllegalAccessException |
+                 IllegalArgumentException | SecurityException |
+                 InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         } catch (NullPointerException e) {
-
+            Exceptions.printStackTrace(e);
         }
         throw new UnknownDataRandomizerException("\"" + dataRandomizer + "\" is not a known data randomizer.");
     }

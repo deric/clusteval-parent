@@ -240,7 +240,7 @@ public class RobustnessAnalysisRun extends ClusteringRun {
                     goldStandardBasePath, this.getRunIdentificationString()));
             newGoldStandardDir.mkdir();
 
-            Map<IDataConfig, List<DataConfig>> newDataConfigs = new HashMap<>();
+            Map<IDataConfig, List<IDataConfig>> newDataConfigs = new HashMap<>();
 
             Options options = this.randomizer.getAllOptions();
 
@@ -264,7 +264,7 @@ public class RobustnessAnalysisRun extends ClusteringRun {
                         params.add("-uniqueId");
                         params.add(this.runIdentString + "_" + i);
                         try {
-                            DataConfig newDataConfig = this.randomizer
+                            IDataConfig newDataConfig = this.randomizer
                                     .randomize(params.toArray(new String[0]),
                                             true);
 
@@ -476,7 +476,7 @@ public class RobustnessAnalysisRun extends ClusteringRun {
                         params.add("-uniqueId");
                         params.add(this.runIdentString + "_" + i);
                         try {
-                            DataConfig newDataConfig = this.randomizer
+                            IDataConfig newDataConfig = this.randomizer
                                     .randomize(params.toArray(new String[0]));
 
                             File targetDataSetFile = new File(

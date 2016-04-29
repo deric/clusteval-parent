@@ -32,8 +32,8 @@ public class StaticRepositoryEntityMap {
     }
 
     @SuppressWarnings("unchecked")
-    public <T extends IRepositoryObject> StaticRepositoryEntity<T> put(
-            final Class<? extends T> c, final StaticRepositoryEntity<T> o) {
+    public <T extends IRepositoryObject> StaticRepositoryEntity put(
+            final Class c, final StaticRepositoryEntity o) {
         return (StaticRepositoryEntity<T>) this.map.put(c, o);
     }
 

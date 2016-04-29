@@ -12,6 +12,7 @@
  */
 package de.clusteval.data.dataset.generator;
 
+import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.WEBSITE_VISIBILITY;
 import de.clusteval.api.exceptions.RepositoryObjectDumpException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
@@ -20,7 +21,6 @@ import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.r.RLibraryInferior;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
-import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.AbsoluteDataSet;
 import de.clusteval.data.dataset.AbstractDataSetProvider;
 import de.clusteval.data.dataset.DataSet;
@@ -138,7 +138,7 @@ public abstract class DataSetGenerator extends AbstractDataSetProvider implement
         try {
             return this.getClass().getConstructor(this.getClass()).newInstance(this);
         } catch (IllegalArgumentException | SecurityException | InstantiationException |
-                IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                 IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
         this.log.warn("Cloning instance of class " + this.getClass().getSimpleName() + " failed");
@@ -188,8 +188,8 @@ public abstract class DataSetGenerator extends AbstractDataSetProvider implement
      *
      * @param cliArguments
      * @return The generated {@link DataSet}.
-     * @throws ParseException                  This exception is thrown, if the passed arguments
-     *                                         are not valid.
+     * @throws ParseException This exception is thrown, if the passed arguments
+     * are not valid.
      * @throws DataSetGenerationException
      * @throws GoldStandardGenerationException
      * @throws InterruptedException
@@ -250,7 +250,7 @@ public abstract class DataSetGenerator extends AbstractDataSetProvider implement
             gs = generateGoldStandard();
         }
 
-        DataConfig dataConfig = this.writeConfigFiles(dataSet, gs, fileName);
+        IDataConfig dataConfig = this.writeConfigFiles(dataSet, gs, fileName);
 
         return dataSet;
     }
@@ -317,7 +317,7 @@ public abstract class DataSetGenerator extends AbstractDataSetProvider implement
      * attribute.
      *
      * @throws DataSetGenerationException If something goes wrong during the
-     *                                    generation process, this exception is thrown.
+     * generation process, this exception is thrown.
      * @throws InterruptedException
      */
     protected abstract void generateDataSet() throws DataSetGenerationException, InterruptedException;
@@ -331,7 +331,7 @@ public abstract class DataSetGenerator extends AbstractDataSetProvider implement
      * @return A {@link GoldStandard} wrapper object for the generated
      *         goldstandard file.
      * @throws GoldStandardGenerationException If something goes wrong during
-     *                                         the generation process, this exception is thrown.
+     * the generation process, this exception is thrown.
      */
     protected abstract GoldStandard generateGoldStandard() throws GoldStandardGenerationException;
 
@@ -354,7 +354,7 @@ public abstract class DataSetGenerator extends AbstractDataSetProvider implement
             return generator;
 
         } catch (InstantiationException | IllegalAccessException | IllegalArgumentException |
-                SecurityException | InvocationTargetException | NoSuchMethodException e) {
+                 SecurityException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         } catch (NullPointerException e) {
 

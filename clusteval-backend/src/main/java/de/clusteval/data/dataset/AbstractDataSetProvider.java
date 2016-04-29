@@ -11,7 +11,10 @@
 package de.clusteval.data.dataset;
 
 import de.clusteval.api.Precision;
+import de.clusteval.api.data.IDataConfig;
+import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetConfig;
+import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.exceptions.RepositoryObjectDumpException;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.repository.IRepository;
@@ -20,7 +23,6 @@ import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
 import de.clusteval.data.dataset.format.ConversionStandardToInputConfiguration;
 import de.clusteval.data.distance.DistanceMeasure;
-import de.clusteval.data.goldstandard.GoldStandard;
 import de.clusteval.data.goldstandard.GoldStandardConfig;
 import de.clusteval.framework.repository.RepositoryObject;
 import de.clusteval.utils.FileUtils;
@@ -63,12 +65,12 @@ public abstract class AbstractDataSetProvider extends RepositoryObject {
         super(other);
     }
 
-    protected DataConfig writeConfigFiles(final DataSet newDataSet, final GoldStandard newGoldStandard,
-            final String configFileName)
+    protected IDataConfig writeConfigFiles(final IDataSet newDataSet,
+            final IGoldStandard newGoldStandard, final String configFileName)
             throws RepositoryObjectDumpException, RegisterException, UnknownDistanceMeasureException {
         // write dataset config file
         File dsConfigFile = new File(
-                FileUtils.buildPath(repository.getBasePath(DataSetConfig.class), configFileName + ".dsconfig"));
+                FileUtils.buildPath(repository.getBasePath(IDataSetConfig.class), configFileName + ".dsconfig"));
         IDataSetConfig dsConfig = new DataSetConfig(this.repository, System.currentTimeMillis(), dsConfigFile,
                 newDataSet,
                 new ConversionInputToStandardConfiguration(

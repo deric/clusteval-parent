@@ -33,13 +33,13 @@ public class DynamicRepositoryEntityMap {
     }
 
     @SuppressWarnings("unchecked")
-    public <T extends IRepositoryObject> DynamicRepositoryEntity<T> put(
-            final Class<? extends T> c, final DynamicRepositoryEntity<T> o) {
+    public <T extends IRepositoryObject> DynamicRepositoryEntity put(
+            final Class c, final DynamicRepositoryEntity<T> o) {
         return (DynamicRepositoryEntity<T>) this.map.put(c, o);
     }
 
     @SuppressWarnings("unchecked")
-    public <T extends IRepositoryObject> DynamicRepositoryEntity<T> get(final Class<T> c) {
+    public <T extends IRepositoryObject> DynamicRepositoryEntity get(final Class<T> c) {
         Object o = this.map.get(c);
         if (o != null) {
             return (DynamicRepositoryEntity<T>) o;

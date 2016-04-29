@@ -34,8 +34,7 @@ public class ProgramConfigFinder extends FileFinder<ProgramConfig> {
      *                   The repository to register the new program configurations at.
      * @throws RegisterException
      */
-    public ProgramConfigFinder(final IRepository repository)
-            throws RegisterException {
+    public ProgramConfigFinder(final IRepository repository) throws RegisterException {
         super(repository, ProgramConfig.class);
     }
 
