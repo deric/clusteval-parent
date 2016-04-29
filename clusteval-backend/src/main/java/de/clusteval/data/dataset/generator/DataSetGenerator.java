@@ -12,7 +12,11 @@
  */
 package de.clusteval.data.dataset.generator;
 
+import de.clusteval.api.exceptions.DataSetGenerationException;
+import de.clusteval.api.exceptions.GoldStandardGenerationException;
 import de.clusteval.api.data.IDataConfig;
+import de.clusteval.api.data.IDataSetGenerator;
+import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.data.WEBSITE_VISIBILITY;
 import de.clusteval.api.exceptions.RepositoryObjectDumpException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
@@ -75,7 +79,7 @@ import org.apache.commons.cli.PosixParser;
  * @author Christian Wiwie
  *
  */
-public abstract class DataSetGenerator extends AbstractDataSetProvider implements RLibraryInferior {
+public abstract class DataSetGenerator extends AbstractDataSetProvider implements RLibraryInferior, IDataSetGenerator {
 
     /**
      * This attribute corresponds to the name of the folder located in
@@ -161,27 +165,6 @@ public abstract class DataSetGenerator extends AbstractDataSetProvider implement
     }
 
     /**
-     * @return A wrapper object keeping the options of your dataset generator.
-     *         The options returned by this method are going to be used and interpreted
-     *         in your subclass implementation in {@link #generateDataSet()} .
-     */
-    protected abstract Options getOptions();
-
-    /**
-     * If your dataset generator also creates a goldstandard for the generated
-     * dataset, this method has to return true.
-     *
-     * <p>
-     * If a goldstandard is to be created, it is going to be stored under the
-     * same {@link #folderName} and with the same {@link #fileName} as the
-     * dataset, but within the goldstandard directory of the repository.
-     *
-     * @return A boolean indicating, whether your dataset generator also
-     *         generates a corresponding goldstandard for the created dataset.
-     */
-    public abstract boolean generatesGoldStandard();
-
-    /**
      * This method has to be invoked with command line arguments for this
      * generator. Valid arguments are defined by the options returned by
      * {@link #getOptions()}.
@@ -235,7 +218,7 @@ public abstract class DataSetGenerator extends AbstractDataSetProvider implement
             throw new DataSetGenerationException("The dataset could not be generated!");
         }
 
-        GoldStandard gs = null;
+        IGoldStandard gs = null;
 
         if (this.generatesGoldStandard()) {
             // Ensure, that the goldstandard target file does not exist yet
@@ -285,19 +268,6 @@ public abstract class DataSetGenerator extends AbstractDataSetProvider implement
         options.addOption(option);
     }
 
-    /**
-     * This method is reponsible for interpreting the arguments passed to this
-     * generator call and to initialize possibly needed member variables.
-     *
-     * <p>
-     * If you want to react to certain options in your implementation of
-     * {@link #generateDataSet()}, initialize member variables in this method.
-     *
-     * @param cmd A wrapper object for the arguments passed to this generator.
-     * @throws ParseException
-     */
-    protected abstract void handleOptions(final CommandLine cmd) throws ParseException;
-
     protected String getFileName() {
         return this.fileName;
     }
@@ -309,31 +279,6 @@ public abstract class DataSetGenerator extends AbstractDataSetProvider implement
     protected String getAlias() {
         return this.alias;
     }
-
-    /**
-     * This method needs to be implemented in subclasses and is a helper method
-     * for {@link #generate(String[])}. It provides the core of a dataset
-     * generator by generating the dataset and storing it in the coords
-     * attribute.
-     *
-     * @throws DataSetGenerationException If something goes wrong during the
-     * generation process, this exception is thrown.
-     * @throws InterruptedException
-     */
-    protected abstract void generateDataSet() throws DataSetGenerationException, InterruptedException;
-
-    /**
-     * This method needs to be implemented in subclasses and is a helper method
-     * for {@link #generate(String[])}. It provides the functionality to
-     * generate the goldstandard file and creating a {@link GoldStandard}
-     * wrapper object for it.
-     *
-     * @return A {@link GoldStandard} wrapper object for the generated
-     *         goldstandard file.
-     * @throws GoldStandardGenerationException If something goes wrong during
-     * the generation process, this exception is thrown.
-     */
-    protected abstract GoldStandard generateGoldStandard() throws GoldStandardGenerationException;
 
     /**
      * Parses a dataset generator from string.

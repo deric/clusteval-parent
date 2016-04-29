@@ -3,12 +3,13 @@
  */
 package de.clusteval.framework.repository;
 
+import de.clusteval.api.program.IProgram;
 import de.clusteval.api.repository.StaticRepositoryEntity;
 import de.clusteval.api.repository.DynamicRepositoryEntity;
 import de.clusteval.api.r.RException;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RegisterException;
 import de.clusteval.framework.ClustevalBackendServer;
-import de.clusteval.program.Program;
 import de.clusteval.program.r.RProgram;
 import java.lang.reflect.InvocationTargetException;
 
@@ -18,7 +19,7 @@ import java.lang.reflect.InvocationTargetException;
  */
 public class RProgramRepositoryEntity extends DynamicRepositoryEntity<RProgram> {
 
-    protected StaticRepositoryEntity<Program> programEntity;
+    protected StaticRepositoryEntity<IProgram> programEntity;
 
     /**
      * @param repository
@@ -26,8 +27,8 @@ public class RProgramRepositoryEntity extends DynamicRepositoryEntity<RProgram> 
      * @param parent
      * @param basePath
      */
-    public RProgramRepositoryEntity(Repository repository,
-            StaticRepositoryEntity<Program> programEntity,
+    public RProgramRepositoryEntity(IRepository repository,
+            StaticRepositoryEntity<IProgram> programEntity,
             DynamicRepositoryEntity<RProgram> parent, String basePath) {
         super(repository, parent, basePath);
         this.programEntity = programEntity;
@@ -56,7 +57,9 @@ public class RProgramRepositoryEntity extends DynamicRepositoryEntity<RProgram> 
             // registers the program
             object.getConstructor(Repository.class)
                     .newInstance(this.repository);
-        } catch (IllegalArgumentException | SecurityException | InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+        } catch (IllegalArgumentException | SecurityException |
+                 InstantiationException | IllegalAccessException |
+                 InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
         return true;

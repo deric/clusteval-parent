@@ -12,6 +12,7 @@
  */
 package de.clusteval.framework.repository;
 
+import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.Database;
 import de.clusteval.api.IContext;
 import de.clusteval.api.IDistanceMeasure;
@@ -19,10 +20,12 @@ import de.clusteval.api.SQLConfig;
 import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataPreprocessor;
+import de.clusteval.api.data.IDataRandomizer;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetConfig;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.data.IDataSetFormatParser;
+import de.clusteval.api.data.IDataSetGenerator;
 import de.clusteval.api.data.IDataSetType;
 import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.data.IGoldStandardConfig;
@@ -32,6 +35,7 @@ import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.program.INamedAttribute;
 import de.clusteval.api.program.IProgram;
 import de.clusteval.api.program.IProgramConfig;
+import de.clusteval.api.r.IRProgram;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RException;
@@ -64,7 +68,6 @@ import de.clusteval.data.distance.DistanceMeasure;
 import de.clusteval.data.goldstandard.GoldStandardConfig;
 import de.clusteval.data.goldstandard.format.GoldStandardFormat;
 import de.clusteval.data.preprocessing.DataPreprocessor;
-import de.clusteval.data.randomizer.DataRandomizer;
 import de.clusteval.data.statistics.DataStatistic;
 import de.clusteval.data.statistics.DataStatisticCalculator;
 import de.clusteval.framework.ClustevalBackendServer;
@@ -81,7 +84,6 @@ import de.clusteval.framework.threading.RunResultRepositorySupervisorThread;
 import de.clusteval.framework.threading.SupervisorThread;
 import de.clusteval.program.DoubleProgramParameter;
 import de.clusteval.program.IntegerProgramParameter;
-import de.clusteval.program.Program;
 import de.clusteval.program.ProgramConfig;
 import de.clusteval.program.ProgramParameter;
 import de.clusteval.program.StringProgramParameter;
@@ -549,11 +551,11 @@ public class Repository implements IRepository {
         this.ensureFolder(this.getBasePath(ParameterOptimizationMethod.class));
         this.ensureFolder(this.getBasePath(IDataStatistic.class));
         this.ensureFolder(this.getBasePath(IRunStatistic.class));
-        this.ensureFolder(this.getBasePath(RunDataStatistic.class));
+        this.ensureFolder(this.getBasePath(IRunDataStatistic.class));
         this.ensureFolder(this.getBasePath(IDistanceMeasure.class));
         this.ensureFolder(this.generatorBasePath);
-        this.ensureFolder(this.getBasePath(DataSetGenerator.class));
-        this.ensureFolder(this.getBasePath(DataRandomizer.class));
+        this.ensureFolder(this.getBasePath(IDataSetGenerator.class));
+        this.ensureFolder(this.getBasePath(IDataRandomizer.class));
         this.ensureFolder(this.getBasePath(IDataPreprocessor.class));
 
         return true;
@@ -1417,24 +1419,24 @@ public class Repository implements IRepository {
                         : null,
                         FileUtils.buildPath(this.supplementaryBasePath, "statistics", "rundata")));
 
-        this.createAndAddDynamicEntity(DataSetGenerator.class, FileUtils.buildPath(this.generatorBasePath, "dataset"));
-        this.createAndAddDynamicEntity(DataRandomizer.class, FileUtils.buildPath(this.randomizerBasePath, "data"));
+        this.createAndAddDynamicEntity(IDataSetGenerator.class, FileUtils.buildPath(this.generatorBasePath, "dataset"));
+        this.createAndAddDynamicEntity(IDataRandomizer.class, FileUtils.buildPath(this.randomizerBasePath, "data"));
         this.createAndAddDynamicEntity(IDataPreprocessor.class,
                 FileUtils.buildPath(this.supplementaryBasePath, "preprocessing"));
         this.createAndAddDynamicEntity(RunResultPostprocessor.class,
                 FileUtils.buildPath(this.supplementaryBasePath, "postprocessing"));
 
-        this.dynamicRepositoryEntities.put(RProgram.class,
-                new RProgramRepositoryEntity(this, this.staticRepositoryEntities.get(Program.class),
+        this.dynamicRepositoryEntities.put(IRProgram.class,
+                new RProgramRepositoryEntity(this, this.staticRepositoryEntities.get(IProgram.class),
                         this.parent != null
-                        ? (RProgramRepositoryEntity) this.parent.getDynamicEntities().get(RProgram.class)
+                        ? (RProgramRepositoryEntity) this.parent.getDynamicEntities().get(IRProgram.class)
                         : null,
                         this.getBasePath(IProgram.class)));
 
-        this.createAndAddDynamicEntity(ClusteringQualityMeasure.class,
+        this.createAndAddDynamicEntity(ClusteringEvaluation.class,
                 FileUtils.buildPath(this.suppClusteringBasePath, "qualityMeasures"));
 
-        this.createAndAddDynamicEntity(Context.class, FileUtils.buildPath(this.supplementaryBasePath, "contexts"));
+        this.createAndAddDynamicEntity(IContext.class, FileUtils.buildPath(this.supplementaryBasePath, "contexts"));
 
         this.createAndAddDynamicEntity(ParameterOptimizationMethod.class,
                 FileUtils.buildPath(this.suppClusteringBasePath, "paramOptimization"));
@@ -1446,7 +1448,7 @@ public class Repository implements IRepository {
                                                         ? (DataSetFormatRepositoryEntity) this.parent.getDynamicEntities().get(IDataSetFormat.class)
                                                         : null, FileUtils.buildPath(this.formatsBasePath, "dataset")));
 
-        this.dynamicRepositoryEntities.put(RunResultFormat.class,
+        this.dynamicRepositoryEntities.put(IRunResultFormat.class,
                 new RunResultFormatRepositoryEntity(this,
                         this.parent != null
                         ? (RunResultFormatRepositoryEntity) this.parent.getDynamicEntities()

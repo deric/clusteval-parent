@@ -13,6 +13,8 @@
  */
 package de.clusteval.data.dataset.generator;
 
+import de.clusteval.api.exceptions.DataSetGenerationException;
+import de.clusteval.api.exceptions.GoldStandardGenerationException;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;

@@ -11,7 +11,7 @@
 /**
  * 
  */
-package de.clusteval.data.dataset.generator;
+package de.clusteval.api.exceptions;
 
 /**
  * @author Christian Wiwie
