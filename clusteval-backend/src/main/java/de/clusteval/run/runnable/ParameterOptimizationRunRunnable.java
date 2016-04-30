@@ -13,8 +13,8 @@
 package de.clusteval.run.runnable;
 
 import de.clusteval.api.ClusteringEvaluation;
-import de.clusteval.api.cluster.quality.ClusteringQualityMeasureValue;
-import de.clusteval.api.cluster.quality.ClusteringQualitySet;
+import de.clusteval.api.cluster.ClustEvalValue;
+import de.clusteval.api.cluster.ClusteringQualitySet;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.exceptions.IncompleteGoldStandardException;
 import de.clusteval.api.exceptions.InternalAttributeException;
@@ -359,7 +359,7 @@ public class ParameterOptimizationRunRunnable extends ExecutionRunRunnable {
         ClusteringQualitySet minimalQualities = new ClusteringQualitySet();
         for (ClusteringEvaluation measure : this.getRun().getQualityMeasures()) {
             minimalQualities.put(measure,
-                    ClusteringQualityMeasureValue.getForNotTerminated());
+                    ClustEvalValue.getForNotTerminated());
         }
 
         if (this.optimizationMethod instanceof IDivergingParameterOptimizationMethod) {

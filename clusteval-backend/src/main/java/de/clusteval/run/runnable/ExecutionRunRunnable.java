@@ -12,8 +12,8 @@ package de.clusteval.run.runnable;
 
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.cluster.ClusterItem;
-import de.clusteval.api.cluster.quality.ClusteringQualityMeasureValue;
-import de.clusteval.api.cluster.quality.ClusteringQualitySet;
+import de.clusteval.api.cluster.ClustEvalValue;
+import de.clusteval.api.cluster.ClusteringQualitySet;
 import de.clusteval.api.data.IConversionInputToStandardConfiguration;
 import de.clusteval.api.data.IConversionStandardToInputConfiguration;
 import de.clusteval.api.data.IDataConfig;
@@ -1163,7 +1163,7 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
         }
         sb.append("\t");
         for (int i = 0; i < this.getRun().getQualityMeasures().size(); i++) {
-            sb.append(ClusteringQualityMeasureValue.getForNotTerminated());
+            sb.append(ClustEvalValue.getForNotTerminated());
             sb.append("\t");
         }
         sb.deleteCharAt(sb.length() - 1);

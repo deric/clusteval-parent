@@ -16,8 +16,8 @@
 package de.clusteval.run.statistics;
 
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
-import de.clusteval.api.cluster.quality.ClusteringQualityMeasureValue;
-import de.clusteval.api.cluster.quality.ClusteringQualitySet;
+import de.clusteval.api.cluster.ClustEvalValue;
+import de.clusteval.api.cluster.ClusteringQualitySet;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.statistics.DataStatistic;
 import de.clusteval.data.statistics.DoubleValueDataStatistic;
@@ -256,10 +256,9 @@ public class LinearModelRunDataStatisticCalculator
                             if (ind != -1) {
                                 if (yMap.get(pair)[ind] == null
                                         || measure
-                                        .isBetterThan(
-                                                ClusteringQualityMeasureValue
+                                        .isBetterThan(ClustEvalValue
                                                 .getForDouble(value),
-                                                ClusteringQualityMeasureValue
+                                                ClustEvalValue
                                                 .getForDouble(yMap
                                                         .get(pair)[ind]))) {
                                     yMap.get(pair)[ind] = value;

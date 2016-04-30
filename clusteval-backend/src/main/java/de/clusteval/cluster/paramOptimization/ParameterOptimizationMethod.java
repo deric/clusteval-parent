@@ -17,7 +17,7 @@ import de.clusteval.api.opt.ParameterSetAlreadyEvaluatedException;
 import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
 import de.clusteval.api.opt.NoParameterSetFoundException;
 import de.clusteval.api.ClusteringEvaluation;
-import de.clusteval.api.cluster.quality.ClusteringQualitySet;
+import de.clusteval.api.cluster.ClusteringQualitySet;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.exceptions.InternalAttributeException;
 import de.clusteval.api.exceptions.RunResultParseException;

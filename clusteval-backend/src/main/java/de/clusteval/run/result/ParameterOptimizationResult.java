@@ -11,7 +11,7 @@
 package de.clusteval.run.result;
 
 import de.clusteval.api.ClusteringEvaluation;
-import de.clusteval.api.cluster.quality.ClusteringQualitySet;
+import de.clusteval.api.cluster.ClusteringQualitySet;
 import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;

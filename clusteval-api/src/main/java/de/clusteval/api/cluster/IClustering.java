@@ -16,7 +16,6 @@
  */
 package de.clusteval.api.cluster;
 
-import de.clusteval.api.cluster.quality.ClusteringQualitySet;
 import de.clusteval.api.repository.IRepositoryObject;
 import java.util.Map;
 import java.util.Set;
@@ -25,7 +24,7 @@ import java.util.Set;
  *
  * @author deric
  */
-public interface IClustering extends IRepositoryObject {
+public interface IClustering extends IRepositoryObject, Iterable<Cluster> {
 
     Map<Cluster, Float> getClusterForItem(ClusterItem item);
 
@@ -78,4 +77,19 @@ public interface IClustering extends IRepositoryObject {
      */
     String toFormattedString();
 
+    /**
+     * Remove a cluster item from this clustering by removing the item from
+     * every cluster contained.
+     *
+     * @param item The item to remove
+     * @return True if this item was contained in this clustering.
+     */
+    boolean removeClusterItem(final ClusterItem item);
+
+    /**
+     *
+     * @param id The id of the cluster item.
+     * @return The cluster item with the given id.
+     */
+    ClusterItem getClusterItemWithId(final String id);
 }

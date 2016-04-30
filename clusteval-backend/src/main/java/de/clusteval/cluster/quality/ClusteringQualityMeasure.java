@@ -13,10 +13,16 @@
 package de.clusteval.cluster.quality;
 
 import de.clusteval.api.ClusteringEvaluation;
-import de.clusteval.api.cluster.quality.ClusteringQualityMeasureValue;
-import de.clusteval.api.r.RLibraryInferior;
+import de.clusteval.api.cluster.IClustering;
+import de.clusteval.api.cluster.ClustEvalValue;
+import de.clusteval.api.data.IDataConfig;
+import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.r.IRengine;
+import de.clusteval.api.r.RException;
+import de.clusteval.api.r.RNotAvailableException;
+import de.clusteval.api.r.ROperationNotSupported;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.data.DataConfig;
 import de.clusteval.framework.repository.RepositoryObject;
@@ -43,32 +49,32 @@ import java.util.List;
  * {@code
  *
  * A clustering quality measure MyClusteringQualityMeasure can be added to ClustEval by
- *
- * 1. extending the class :java:ref:`ClusteringQualityMeasure` with your own class MyClusteringQualityMeasure. You have to provide your own implementations for the following methods, otherwise the framework will not be able to load your clustering quality measure.
- *
- *   * public :java:ref:`ClusteringQualityMeasure(Repository, boolean, long, File, ClusteringQualityMeasureParameters)` : The constructor for your distance measure. This constructor has to be implemented and public.
- *   * public :java:ref:`ClusteringQualityMeasure(MyClusteringQualityMeasure)` : The copy constructor for your distance measure. This constructor has to be implemented and public.
- *   * public :java:ref:`getAlias()` : This method returns a readable alias for this clustering quality measure which is used e.g. on the website.
- *   * public :java:ref:`getMinimum()` : Returns the minimal value this measure can calculate.
- *   * public :java:ref:`getMaximum()` : Returns the maximal value this measure can calculate.
- *   * public :java:ref:`requiresGoldStandard()` : Indicates, whether this clustering quality measure requires a goldstandard to assess the quality of a given clustering.
- *   * public :java:ref:`getQualityOfClustering(Clustering)` : This method is the core of your clustering quality measure. It assesses and returns the quality of the given clustering.
- *   * public :java:ref:`isBetterThanHelper(ClusteringQualityMeasureValue)` : This method is used by sorting algorithms of the framework to compare clustering quality measure results and find the optimal parameter sets.
- *
- * 2. Creating a jar file named MyClusteringQualityMeasure.jar containing the MyClusteringQualityMeasure class compiled on your machine in the correct folder structure corresponding to the packages:
- *
- *   * de/clusteval/cluster/quality/MyClusteringQualityMeasure.class
- *
- * 3. Putting the MyClusteringQualityMeasure.jar into the clustering quality measure folder of the repository:
- *
- *   * <REPOSITORY ROOT>/supp/clustering/qualityMeasures
- *   * The backend server will recognize and try to load the new clustering quality measure automatically the next time, the ClusteringQualityMeasureFinderThread checks the filesystem.
- *
- * }
+
+ 1. extending the class :java:ref:`ClusteringQualityMeasure` with your own class MyClusteringQualityMeasure. You have to provide your own implementations for the following methods, otherwise the framework will not be able to load your clustering quality measure.
+
+   * public :java:ref:`ClusteringQualityMeasure(Repository, boolean, long, File, ClusteringQualityMeasureParameters)` : The constructor for your distance measure. This constructor has to be implemented and public.
+   * public :java:ref:`ClusteringQualityMeasure(MyClusteringQualityMeasure)` : The copy constructor for your distance measure. This constructor has to be implemented and public.
+   * public :java:ref:`getAlias()` : This method returns a readable alias for this clustering quality measure which is used e.g. on the website.
+   * public :java:ref:`getMinimum()` : Returns the minimal value this measure can calculate.
+   * public :java:ref:`getMaximum()` : Returns the maximal value this measure can calculate.
+   * public :java:ref:`requiresGoldStandard()` : Indicates, whether this clustering quality measure requires a goldstandard to assess the quality of a given clustering.
+   * public :java:ref:`getQualityOfClustering(Clustering)` : This method is the core of your clustering quality measure. It assesses and returns the quality of the given clustering.
+   * public :java:ref:`isBetterThanHelper(ClustEvalValue)` : This method is used by sorting algorithms of the framework to compare clustering quality measure results and find the optimal parameter sets.
+
+ 2. Creating a jar file named MyClusteringQualityMeasure.jar containing the MyClusteringQualityMeasure class compiled on your machine in the correct folder structure corresponding to the packages:
+
+   * de/clusteval/cluster/quality/MyClusteringQualityMeasure.class
+
+ 3. Putting the MyClusteringQualityMeasure.jar into the clustering quality measure folder of the repository:
+
+   * <REPOSITORY ROOT>/supp/clustering/qualityMeasures
+   * The backend server will recognize and try to load the new clustering quality measure automatically the next time, the ClusteringQualityMeasureFinderThread checks the filesystem.
+
+ }
  *
  * @author Christian Wiwie
  */
-public abstract class ClusteringQualityMeasure extends RepositoryObject implements ClusteringEvaluation, RLibraryInferior {
+public abstract class ClusteringQualityMeasure extends RepositoryObject implements ClusteringEvaluation {
 
     protected ClusteringQualityMeasureParameters parameters;
 
@@ -124,6 +130,14 @@ public abstract class ClusteringQualityMeasure extends RepositoryObject implemen
         return result;
     }
 
+    @Override
+    public ClustEvalValue getQualityOfClusteringHelper(
+            IClustering clustering, IClustering goldStandard, IDataConfig dataConfig, IRengine rEngine)
+            throws InvalidDataSetFormatVersionException, IllegalArgumentException,
+                   InterruptedException, RException, ROperationNotSupported, RNotAvailableException {
+        return getQualityOfClustering(clustering, clustering, dataConfig);
+    }
+
     /**
      * Parses the from string.
      *
@@ -132,7 +146,7 @@ public abstract class ClusteringQualityMeasure extends RepositoryObject implemen
      * @param parameters
      * @return the clustering quality measure
      * @throws UnknownClusteringQualityMeasureException the unknown clustering
-     *                                                  quality measure exception
+     * quality measure exception
      */
     public static ClusteringQualityMeasure parseFromString(
             final IRepository repository, String qualityMeasure,
@@ -151,7 +165,7 @@ public abstract class ClusteringQualityMeasure extends RepositoryObject implemen
 
             return measure;
         } catch (InstantiationException | IllegalAccessException | IllegalArgumentException |
-                SecurityException | InvocationTargetException | NoSuchMethodException e) {
+                 SecurityException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         } catch (NullPointerException e) {
 
@@ -184,7 +198,7 @@ public abstract class ClusteringQualityMeasure extends RepositoryObject implemen
             return this.getClass().getConstructor(this.getClass())
                     .newInstance(this);
         } catch (IllegalArgumentException | SecurityException | InstantiationException |
-                IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                 IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
         this.log.warn("Cloning instance of class "
@@ -221,8 +235,8 @@ public abstract class ClusteringQualityMeasure extends RepositoryObject implemen
      * @return True, if quality1 is better than quality2
      */
     @Override
-    public final boolean isBetterThan(ClusteringQualityMeasureValue quality1,
-            ClusteringQualityMeasureValue quality2) {
+    public final boolean isBetterThan(ClustEvalValue quality1,
+            ClustEvalValue quality2) {
         if (!quality1.isTerminated) {
             return false;
         }

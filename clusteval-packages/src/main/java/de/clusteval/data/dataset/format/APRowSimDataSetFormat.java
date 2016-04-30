@@ -12,9 +12,9 @@ package de.clusteval.data.dataset.format;
 
 import java.io.File;
 import java.io.IOException;
-import de.clusteval.data.dataset.DataSet;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.FormatVersion;
+import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.repository.IRepository;
 
 /**
@@ -49,9 +49,9 @@ public class APRowSimDataSetFormat extends RowSimDataSetFormat {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.clusteval.data.dataset.format.DataSetFormat#getAlias()
+     * (non-Javadoc)
+     *
+     * @see de.clusteval.data.dataset.format.DataSetFormat#getAlias()
      */
     @Override
     public String getAlias() {
@@ -59,15 +59,14 @@ public class APRowSimDataSetFormat extends RowSimDataSetFormat {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * data.dataset.format.DataSetFormat#moveDataSetTo(data.dataset.DataSet,
-	 * java.io.File, boolean)
+     * (non-Javadoc)
+     *
+     * @see
+     * data.dataset.format.DataSetFormat#moveDataSetTo(data.dataset.DataSet,
+     * java.io.File, boolean)
      */
     @Override
-    public boolean moveDataSetTo(DataSet dataSet, File moveDestination,
-            boolean overwrite) {
+    public boolean moveDataSetTo(IDataSet dataSet, File moveDestination, boolean overwrite) {
         boolean result = super.moveDataSetTo(dataSet, moveDestination,
                 overwrite);
 
@@ -92,14 +91,14 @@ public class APRowSimDataSetFormat extends RowSimDataSetFormat {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * de.clusteval.data.dataset.format.RowSimDataSetFormat#getDataSetFormatParser
-	 * ()
+     * (non-Javadoc)
+     *
+     * @see
+     * de.clusteval.data.dataset.format.RowSimDataSetFormat#getDataSetFormatParser
+     * ()
      */
     @Override
-    protected DataSetFormatParser getDataSetFormatParser() {
+    public DataSetFormatParser getDataSetFormatParser() {
         return new APRowSimDataSetFormatParser();
     }
 }

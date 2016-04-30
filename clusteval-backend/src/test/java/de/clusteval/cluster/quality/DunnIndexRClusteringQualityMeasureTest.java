@@ -23,12 +23,12 @@ import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
-import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RCalculationException;
 import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.r.RException;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.context.Context;
 import de.clusteval.data.DataConfig;
@@ -61,7 +61,7 @@ public class DunnIndexRClusteringQualityMeasureTest extends AbstractClustEvalTes
                               RegisterException, NoSuchAlgorithmException,
                               FormatConversionException, UnknownDistanceMeasureException,
                               UnknownContextException, RNotAvailableException,
-                              RCalculationException, InterruptedException {
+                              RCalculationException, InterruptedException, RException {
         try {
 
             Context context = Context.parseFromString(getRepository(), "ClusteringContext");
@@ -102,7 +102,8 @@ public class DunnIndexRClusteringQualityMeasureTest extends AbstractClustEvalTes
             assertEquals(2.0326861833688232, quality, DELTA);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        } catch (UnknownGoldStandardFormatException | UnknownDataSetFormatException | IllegalArgumentException | InvalidDataSetFormatVersionException | UnknownClusteringQualityMeasureException | IOException e) {
+        } catch (UnknownDataSetFormatException | IllegalArgumentException |
+                 InvalidDataSetFormatVersionException | UnknownClusteringQualityMeasureException | IOException e) {
             e.printStackTrace();
         }
 

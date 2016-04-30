@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
-import de.clusteval.api.cluster.quality.ClusteringQualitySet;
+import de.clusteval.api.cluster.ClusteringQualitySet;
 import de.clusteval.data.DataConfig;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.framework.repository.Repository;

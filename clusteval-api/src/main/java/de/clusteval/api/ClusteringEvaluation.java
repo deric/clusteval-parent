@@ -17,18 +17,14 @@
 package de.clusteval.api;
 
 import de.clusteval.api.cluster.IClustering;
-import de.clusteval.api.cluster.quality.ClusteringQualityMeasureValue;
+import de.clusteval.api.cluster.ClustEvalValue;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
-import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.r.IRengine;
-import de.clusteval.api.r.RCalculationException;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.r.ROperationNotSupported;
 import de.clusteval.api.repository.IRepositoryObject;
-import java.io.IOException;
 
 /**
  *
@@ -47,11 +43,11 @@ public interface ClusteringEvaluation extends IRepositoryObject {
 
     ClusteringEvaluation clone();
 
-    boolean isBetterThan(ClusteringQualityMeasureValue quality1,
-            ClusteringQualityMeasureValue quality2);
+    boolean isBetterThan(ClustEvalValue quality1,
+            ClustEvalValue quality2);
 
-    boolean isBetterThanHelper(ClusteringQualityMeasureValue quality1,
-            ClusteringQualityMeasureValue quality2);
+    boolean isBetterThanHelper(ClustEvalValue quality1,
+            ClustEvalValue quality2);
 
     /**
      * @return The minimal value of the range of possible values of this quality
@@ -82,36 +78,17 @@ public interface ClusteringEvaluation extends IRepositoryObject {
      */
     String getAlias();
 
-    /**
-     * Gets the quality of clustering.
-     *
-     * @param clustering   the clustering
-     * @param goldStandard The expected goldstandard.
-     * @param dataConfig   the data config
-     * @return the quality of clustering
-     * @throws UnknownGoldStandardFormatException   the unknown gold standard
-     *                                              format exception
-     * @throws UnknownDataSetFormatException
-     * @throws InvalidDataSetFormatVersionException
-     * @throws IOException
-     * @throws RNotAvailableException
-     * @throws RCalculationException
-     * @throws InterruptedException
-     */
-    ClusteringQualityMeasureValue getQualityOfClustering(
-            IClustering clustering, IClustering goldStandard,
-            IDataConfig dataConfig) throws UnknownGoldStandardFormatException,
-                                           UnknownDataSetFormatException, IOException,
-                                           InvalidDataSetFormatVersionException, RNotAvailableException,
-                                           RCalculationException, InterruptedException;
-
-    ClusteringQualityMeasureValue getQualityOfClusteringHelper(
+    ClustEvalValue getQualityOfClusteringHelper(
             IClustering clustering, IClustering goldStandard,
             IDataConfig dataConfig, final IRengine rEngine)
-            throws UnknownGoldStandardFormatException,
-                   UnknownDataSetFormatException, IOException,
-                   InvalidDataSetFormatVersionException,
+            throws InvalidDataSetFormatVersionException,
                    IllegalArgumentException, InterruptedException, RException,
-                   ROperationNotSupported;
+                   ROperationNotSupported, RNotAvailableException;
+
+    ClustEvalValue getQualityOfClustering(
+            IClustering clustering, IClustering gsClustering, IDataConfig dataConfig)
+            throws InvalidDataSetFormatVersionException,
+                   IllegalArgumentException, InterruptedException, RException,
+                   ROperationNotSupported, RNotAvailableException;
 
 }

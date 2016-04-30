@@ -15,21 +15,18 @@ import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
-import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RCalculationException;
 import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.r.RException;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
 import de.clusteval.utils.AbstractClustEvalTest;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import org.junit.Test;
 
@@ -46,12 +43,13 @@ public class PairwiseFMeasureClusteringQualityMeasureTest
     }
 
     @Test
-    public void testSingleCluster() throws InstantiationException,
-                                           IllegalAccessException, RepositoryAlreadyExistsException,
-                                           InvalidRepositoryException, RepositoryConfigNotFoundException,
-                                           RepositoryConfigurationException, NoRepositoryFoundException,
-                                           RegisterException, NoSuchAlgorithmException,
-                                           RNotAvailableException, RCalculationException, InterruptedException {
+    public void testSingleCluster()
+            throws InstantiationException,
+                   IllegalAccessException, RepositoryAlreadyExistsException,
+                   InvalidRepositoryException, RepositoryConfigNotFoundException,
+                   RepositoryConfigurationException, NoRepositoryFoundException,
+                   RegisterException, NoSuchAlgorithmException,
+                   RNotAvailableException, RCalculationException, InterruptedException, RException {
         try {
             ClustevalBackendServer.logLevel(Level.WARN);
             Clustering goldStandard = new Clustering(this.getRepository(),
@@ -88,36 +86,20 @@ public class PairwiseFMeasureClusteringQualityMeasureTest
             double quality = measure.getQualityOfClustering(clustering,
                     goldStandard, null).getValue();
             System.out.println(measure.getAlias() + " " + quality);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (UnknownGoldStandardFormatException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (UnknownDataSetFormatException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IllegalArgumentException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (InvalidDataSetFormatVersionException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (UnknownClusteringQualityMeasureException e) {
-            // TODO Auto-generated catch block
+        } catch (IllegalArgumentException | InvalidDataSetFormatVersionException |
+                 UnknownClusteringQualityMeasureException e) {
             e.printStackTrace();
         }
     }
 
     @Test
-    public void testSingleCluster2() throws InstantiationException,
-                                            IllegalAccessException, RepositoryAlreadyExistsException,
-                                            InvalidRepositoryException, RepositoryConfigNotFoundException,
-                                            RepositoryConfigurationException, NoRepositoryFoundException,
-                                            RegisterException, NoSuchAlgorithmException,
-                                            RNotAvailableException, RCalculationException, InterruptedException {
+    public void testSingleCluster2()
+            throws InstantiationException,
+                   IllegalAccessException, RepositoryAlreadyExistsException,
+                   InvalidRepositoryException, RepositoryConfigNotFoundException,
+                   RepositoryConfigurationException, NoRepositoryFoundException,
+                   RegisterException, NoSuchAlgorithmException,
+                   RNotAvailableException, RCalculationException, InterruptedException, RException {
         try {
             ClustevalBackendServer.logLevel(Level.WARN);
             Clustering goldStandard = new Clustering(this.getRepository(),
@@ -156,17 +138,6 @@ public class PairwiseFMeasureClusteringQualityMeasureTest
             double quality = measure.getQualityOfClustering(clustering,
                     goldStandard, null).getValue();
             System.out.println(measure.getAlias() + " " + quality);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (UnknownGoldStandardFormatException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (UnknownDataSetFormatException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         } catch (IllegalArgumentException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

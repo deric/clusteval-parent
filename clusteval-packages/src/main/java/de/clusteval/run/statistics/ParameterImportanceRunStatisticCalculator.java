@@ -16,8 +16,8 @@
 package de.clusteval.run.statistics;
 
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
-import de.clusteval.api.cluster.quality.ClusteringQualityMeasureValue;
-import de.clusteval.api.cluster.quality.ClusteringQualitySet;
+import de.clusteval.api.cluster.ClustEvalValue;
+import de.clusteval.api.cluster.ClusteringQualitySet;
 import de.clusteval.data.statistics.RunStatisticCalculateException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.framework.repository.Repository;
@@ -98,7 +98,7 @@ public class ParameterImportanceRunStatisticCalculator
                     // paramName x paramValue -> validityIndex x ( ...,
                     // qualities,
                     // ...)
-                    Map<Pair<String, String>, Map<ClusteringQualityMeasure, List<ClusteringQualityMeasureValue>>> paramQualities = new HashMap<>();
+                    Map<Pair<String, String>, Map<ClusteringQualityMeasure, List<ClustEvalValue>>> paramQualities = new HashMap<>();
 
                     for (Pair<ParameterSet, ClusteringQualitySet> qualities : result) {
                         for (String paramName : qualities.getFirst().keySet()) {
@@ -106,19 +106,18 @@ public class ParameterImportanceRunStatisticCalculator
                                     + ":" + paramName, qualities.getFirst()
                                     .get(paramName));
 
-                            Map<ClusteringQualityMeasure, List<ClusteringQualityMeasureValue>> quals;
+                            Map<ClusteringQualityMeasure, List<ClustEvalValue>> quals;
                             if (paramQualities.containsKey(p)) {
                                 quals = paramQualities.get(p);
                             } else {
-                                quals = new HashMap<ClusteringQualityMeasure, List<ClusteringQualityMeasureValue>>();
+                                quals = new HashMap<ClusteringQualityMeasure, List<ClustEvalValue>>();
                                 paramQualities.put(p, quals);
                             }
                             for (ClusteringQualityMeasure m : qualities
                                     .getSecond().keySet()) {
                                 if (!quals.containsKey(m)) {
-                                    quals.put(
-                                            m,
-                                            new ArrayList<ClusteringQualityMeasureValue>());
+                                    quals.put(m,
+                                            new ArrayList<ClustEvalValue>());
                                 }
                                 quals.get(m).add(qualities.getSecond().get(m));
                             }
@@ -129,7 +128,7 @@ public class ParameterImportanceRunStatisticCalculator
 
                     // average over qualities for a certain parameter value
                     for (Pair<String, String> p : paramQualities.keySet()) {
-                        Map<ClusteringQualityMeasure, List<ClusteringQualityMeasureValue>> quals = paramQualities
+                        Map<ClusteringQualityMeasure, List<ClustEvalValue>> quals = paramQualities
                                 .get(p);
 
                         for (ClusteringQualityMeasure measure : quals.keySet()) {

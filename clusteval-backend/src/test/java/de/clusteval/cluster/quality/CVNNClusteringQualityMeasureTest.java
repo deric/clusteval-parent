@@ -24,12 +24,12 @@ import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
-import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RCalculationException;
 import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.r.RException;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.context.Context;
 import de.clusteval.data.DataConfig;
@@ -70,7 +70,7 @@ public class CVNNClusteringQualityMeasureTest extends AbstractClustEvalTest {
                                            RNotAvailableException, RCalculationException,
                                            UnknownClusteringQualityMeasureException,
                                            FormatConversionException, UnknownDistanceMeasureException,
-                                           InterruptedException {
+                                           InterruptedException, RException, UnknownDataSetFormatException {
         try {
             Clustering clustering = new Clustering(this.getRepository(),
                     System.currentTimeMillis(), new File(""));
@@ -95,8 +95,7 @@ public class CVNNClusteringQualityMeasureTest extends AbstractClustEvalTest {
             IDataSet ds = dsc.getDataSet();
             ds.preprocessAndConvertTo(
                     context,
-                    DataSetFormat.parseFromString(this.getRepository(),
-                            "SimMatrixDataSetFormat"),
+                    DataSetFormat.parseFromString(this.getRepository(), "SimMatrixDataSetFormat"),
                     new ConversionInputToStandardConfiguration(DistanceMeasure
                             .parseFromString(getRepository(),
                                     "EuclidianDistanceMeasure"),
@@ -112,8 +111,7 @@ public class CVNNClusteringQualityMeasureTest extends AbstractClustEvalTest {
             System.out.println(quality);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        } catch (UnknownGoldStandardFormatException | UnknownDataSetFormatException |
-                IllegalArgumentException | InvalidDataSetFormatVersionException | IOException e) {
+        } catch (IllegalArgumentException | InvalidDataSetFormatVersionException | IOException e) {
             Exceptions.printStackTrace(e);
         }
     }
@@ -127,7 +125,7 @@ public class CVNNClusteringQualityMeasureTest extends AbstractClustEvalTest {
                                          RNotAvailableException, RCalculationException,
                                          UnknownClusteringQualityMeasureException,
                                          FormatConversionException, UnknownDistanceMeasureException,
-                                         UnknownContextException, InterruptedException {
+                                         UnknownContextException, InterruptedException, RException {
         try {
 
             Context context = Context.parseFromString(getRepository(),
@@ -163,14 +161,13 @@ public class CVNNClusteringQualityMeasureTest extends AbstractClustEvalTest {
                     .parseFromString(getRepository(),
                             "CVNNClusteringQualityMeasure",
                             new ClusteringQualityMeasureParameters());
-            double quality = measure.getQualityOfClustering(clustering, null,
-                    dc).getValue();
+            double quality = measure.getQualityOfClustering(clustering, null, dc).getValue();
             ds.getInStandardFormat().unloadFromMemory();
             System.out.println(quality);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        } catch (UnknownGoldStandardFormatException | UnknownDataSetFormatException |
-                IllegalArgumentException | InvalidDataSetFormatVersionException e) {
+        } catch (UnknownDataSetFormatException |
+                 IllegalArgumentException | InvalidDataSetFormatVersionException e) {
             Exceptions.printStackTrace(e);
         } catch (IOException e) {
             // TODO Auto-generated catch block

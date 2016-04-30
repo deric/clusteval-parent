@@ -13,7 +13,7 @@ package de.clusteval.cluster.quality;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.api.cluster.IClustering;
-import de.clusteval.api.cluster.quality.ClusteringQualityMeasureValue;
+import de.clusteval.api.cluster.ClustEvalValue;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
@@ -82,7 +82,7 @@ public class DaviesBouldinIndexRClusteringQualityMeasure extends ClusteringQuali
      */
     @SuppressWarnings("unused")
     @Override
-    public ClusteringQualityMeasureValue getQualityOfClusteringHelper(final IClustering clustering, IClustering gsClustering,
+    public ClustEvalValue getQualityOfClusteringHelper(final IClustering clustering, IClustering gsClustering,
             final IDataConfig dataConfig, final IRengine rEngine) throws IllegalArgumentException,
                                                                          ROperationNotSupported, InterruptedException, RException {
 
@@ -140,7 +140,7 @@ public class DaviesBouldinIndexRClusteringQualityMeasure extends ClusteringQuali
             result = this.getMaximum();
         }
 
-        return ClusteringQualityMeasureValue.getForDouble(result);
+        return ClustEvalValue.getForDouble(result);
     }
 
     /*
@@ -178,12 +178,12 @@ public class DaviesBouldinIndexRClusteringQualityMeasure extends ClusteringQuali
      *
      * @see
      * cluster.quality.ClusteringQualityMeasure#isBetterThanHelper(cluster.quality
-     * .ClusteringQualityMeasureValue,
-     * cluster.quality.ClusteringQualityMeasureValue)
+     * .ClustEvalValue,
+     * cluster.quality.ClustEvalValue)
      */
     @Override
-    public boolean isBetterThanHelper(ClusteringQualityMeasureValue quality1,
-            ClusteringQualityMeasureValue quality2) {
+    public boolean isBetterThanHelper(ClustEvalValue quality1,
+            ClustEvalValue quality2) {
         return quality1.getValue() < quality2.getValue();
     }
 
@@ -197,4 +197,5 @@ public class DaviesBouldinIndexRClusteringQualityMeasure extends ClusteringQuali
     public boolean supportsFuzzyClusterings() {
         return false;
     }
+
 }

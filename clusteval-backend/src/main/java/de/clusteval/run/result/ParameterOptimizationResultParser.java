@@ -13,8 +13,8 @@
 package de.clusteval.run.result;
 
 import de.clusteval.api.ClusteringEvaluation;
-import de.clusteval.api.cluster.quality.ClusteringQualityMeasureValue;
-import de.clusteval.api.cluster.quality.ClusteringQualitySet;
+import de.clusteval.api.cluster.ClustEvalValue;
+import de.clusteval.api.cluster.ClusteringQualitySet;
 import de.clusteval.api.exceptions.ClusteringParseException;
 import de.clusteval.api.program.IProgramParameter;
 import de.clusteval.api.program.ParameterSet;
@@ -186,7 +186,7 @@ public class ParameterOptimizationResultParser extends TextFileParser {
                 // if (absFile.exists()) {
                 for (int pos = 2; pos < value.length; pos++) {
                     ClusteringEvaluation other = this.qualityMeasures.get(pos - 2);
-                    qualitySet.put(other, ClusteringQualityMeasureValue.parseFromString(value[pos]));
+                    qualitySet.put(other, ClustEvalValue.parseFromString(value[pos]));
                 }
                 // }
                 // if the file does not exist, put NT quality values
@@ -194,7 +194,7 @@ public class ParameterOptimizationResultParser extends TextFileParser {
                 // for (int pos = 1; pos < value.length; pos++) {
                 // ClusteringQualityMeasure other = this.qualityMeasures
                 // .get(pos - 1);
-                // qualitySet.put(other, ClusteringQualityMeasureValue
+                // qualitySet.put(other, ClustEvalValue
                 // .getForNotTerminated());
                 // }
                 // }

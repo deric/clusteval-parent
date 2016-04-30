@@ -40,11 +40,10 @@ import de.clusteval.framework.repository.config.RepositoryConfigNotFoundExceptio
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
 import de.clusteval.utils.AbstractClustEvalTest;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import org.junit.Assert;
+import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import org.openide.util.Exceptions;
 
@@ -52,8 +51,7 @@ import org.openide.util.Exceptions;
  * @author Christian Wiwie
  *
  */
-public class SilhouetteValueGlobalRClusteringQualityMeasureTest
-        extends
+public class SilhouetteValueGlobalRClusteringQualityMeasureTest extends
         AbstractClustEvalTest {
 
     static {
@@ -61,13 +59,14 @@ public class SilhouetteValueGlobalRClusteringQualityMeasureTest
     }
 
     @Test
-    public void testSingleCluster() throws InstantiationException,
-                                           IllegalAccessException, RepositoryAlreadyExistsException,
-                                           InvalidRepositoryException, RepositoryConfigNotFoundException,
-                                           RepositoryConfigurationException, NoRepositoryFoundException,
-                                           RegisterException, NoSuchAlgorithmException,
-                                           RNotAvailableException, RCalculationException,
-                                           UnknownClusteringQualityMeasureException, InterruptedException {
+    public void testSingleCluster()
+            throws InstantiationException,
+                   IllegalAccessException, RepositoryAlreadyExistsException,
+                   InvalidRepositoryException, RepositoryConfigNotFoundException,
+                   RepositoryConfigurationException, NoRepositoryFoundException,
+                   RegisterException, NoSuchAlgorithmException,
+                   RNotAvailableException, RCalculationException,
+                   UnknownClusteringQualityMeasureException, InterruptedException {
         try {
             Clustering clustering = new Clustering(this.getRepository(),
                     System.currentTimeMillis(), new File(""));
@@ -87,37 +86,23 @@ public class SilhouetteValueGlobalRClusteringQualityMeasureTest
                             new ClusteringQualityMeasureParameters());
             double quality = measure.getQualityOfClustering(clustering, null,
                     null).getValue();
-            Assert.assertEquals(-1.0, quality, 0.0);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (UnknownGoldStandardFormatException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (UnknownDataSetFormatException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IllegalArgumentException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (InvalidDataSetFormatVersionException e) {
-            // TODO Auto-generated catch block
+            assertEquals(-1.0, quality, DELTA);
+        } catch (IllegalArgumentException | InvalidDataSetFormatVersionException e) {
             e.printStackTrace();
         }
     }
 
     @Test
-    public void testTwoClusters() throws InstantiationException,
-                                         IllegalAccessException, RepositoryAlreadyExistsException,
-                                         InvalidRepositoryException, RepositoryConfigNotFoundException,
-                                         RepositoryConfigurationException, NoRepositoryFoundException,
-                                         RegisterException, NoSuchAlgorithmException,
-                                         RNotAvailableException, RCalculationException,
-                                         UnknownClusteringQualityMeasureException,
-                                         FormatConversionException, UnknownDistanceMeasureException,
-                                         UnknownContextException, InterruptedException {
+    public void testTwoClusters()
+            throws InstantiationException,
+                   IllegalAccessException, RepositoryAlreadyExistsException,
+                   InvalidRepositoryException, RepositoryConfigNotFoundException,
+                   RepositoryConfigurationException, NoRepositoryFoundException,
+                   RegisterException, NoSuchAlgorithmException,
+                   RNotAvailableException, RCalculationException,
+                   UnknownClusteringQualityMeasureException,
+                   FormatConversionException, UnknownDistanceMeasureException,
+                   UnknownContextException, InterruptedException {
         try {
 
             Context context = Context.parseFromString(getRepository(),
@@ -156,19 +141,11 @@ public class SilhouetteValueGlobalRClusteringQualityMeasureTest
             double quality = measure.getQualityOfClustering(clustering, null,
                     dc).getValue();
             ds.getInStandardFormat().unloadFromMemory();
-            Assert.assertEquals(0.3346755237978247, quality, 0.0);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            assertEquals(0.3346755237978247, quality, DELTA);
         } catch (UnknownGoldStandardFormatException | UnknownDataSetFormatException |
-                IllegalArgumentException | InvalidDataSetFormatVersionException e) {
+                 IllegalArgumentException | InvalidDataSetFormatVersionException |
+                 IOException | FileNotFoundExceptione) {
             Exceptions.printStackTrace(e);
-        } // TODO Auto-generated catch block
-        catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         }
-        // TODO Auto-generated catch block
-        // TODO Auto-generated catch block
-
     }
 }

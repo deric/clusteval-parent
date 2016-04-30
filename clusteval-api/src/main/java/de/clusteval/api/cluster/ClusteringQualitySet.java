@@ -10,8 +10,9 @@
  *     Christian Wiwie - initial API and implementation
  *****************************************************************************
  */
-package de.clusteval.api.cluster.quality;
+package de.clusteval.api.cluster;
 
+import de.clusteval.api.cluster.ClustEvalValue;
 import de.clusteval.api.ClusteringEvaluation;
 import java.util.HashMap;
 
@@ -22,7 +23,7 @@ import java.util.HashMap;
  * @author Christian Wiwie
  *
  */
-public class ClusteringQualitySet extends HashMap<ClusteringEvaluation, ClusteringQualityMeasureValue> {
+public class ClusteringQualitySet extends HashMap<ClusteringEvaluation, ClustEvalValue> {
 
     private static final long serialVersionUID = 7026335787094648699L;
 

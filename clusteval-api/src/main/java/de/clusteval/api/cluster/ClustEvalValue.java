@@ -10,7 +10,7 @@
  *     Christian Wiwie - initial API and implementation
  *****************************************************************************
  */
-package de.clusteval.api.cluster.quality;
+package de.clusteval.api.cluster;
 
 /**
  * This is a wrapper class for double values calculated by clustering quality
@@ -25,7 +25,7 @@ package de.clusteval.api.cluster.quality;
  * @author Christian Wiwie
  *
  */
-public class ClusteringQualityMeasureValue {
+public class ClustEvalValue {
 
     /**
      * The clustering quality assessed. Set this value to <b>null</b> if the
@@ -39,7 +39,7 @@ public class ClusteringQualityMeasureValue {
      */
     public boolean isTerminated;
 
-    private ClusteringQualityMeasureValue(final Double value) {
+    private ClustEvalValue(final Double value) {
         super();
         this.value = value;
         this.isTerminated = value != null;
@@ -50,16 +50,16 @@ public class ClusteringQualityMeasureValue {
      * @return A wrapper object for a clustering quality given as a double
      * value.
      */
-    public static ClusteringQualityMeasureValue getForDouble(final double value) {
-        return new ClusteringQualityMeasureValue(value);
+    public static ClustEvalValue getForDouble(final double value) {
+        return new ClustEvalValue(value);
     }
 
     /**
      * @return A wrapper object for an optimization iteration that did not
      * terminate.
      */
-    public static ClusteringQualityMeasureValue getForNotTerminated() {
-        return new ClusteringQualityMeasureValue(null);
+    public static ClustEvalValue getForNotTerminated() {
+        return new ClustEvalValue(null);
     }
 
     @Override
@@ -86,12 +86,12 @@ public class ClusteringQualityMeasureValue {
      * @return A clustering quality value wrapper object corresponding to the
      * given string.
      */
-    public static ClusteringQualityMeasureValue parseFromString(
+    public static ClustEvalValue parseFromString(
             String stringValue) {
         if (stringValue.equals("NT")) {
-            return ClusteringQualityMeasureValue.getForNotTerminated();
+            return ClustEvalValue.getForNotTerminated();
         }
-        return ClusteringQualityMeasureValue.getForDouble(Double.valueOf(stringValue));
+        return ClustEvalValue.getForDouble(Double.valueOf(stringValue));
     }
 
     /**

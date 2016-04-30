@@ -16,8 +16,8 @@ import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.api.cluster.IClustering;
-import de.clusteval.api.cluster.quality.ClusteringQualityMeasureValue;
-import de.clusteval.api.cluster.quality.ClusteringQualitySet;
+import de.clusteval.api.cluster.ClustEvalValue;
+import de.clusteval.api.cluster.ClusteringQualitySet;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.exceptions.ClusteringParseException;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
@@ -661,9 +661,9 @@ public class Clustering extends RepositoryObject implements Iterable<Cluster>, I
      * @param qualityMeasures the quality measures
      * @return A set of qualities for every quality measure that was passed in
      *         the list.
-     * @throws UnknownGoldStandardFormatException   the unknown gold standard
-     *                                              format exception
-     * @throws IOException                          Signals that an I/O exception has occurred.
+     * @throws UnknownGoldStandardFormatException the unknown gold standard
+     * format exception
+     * @throws IOException Signals that an I/O exception has occurred.
      * @throws UnknownDataSetFormatException
      * @throws InvalidDataSetFormatVersionException
      */
@@ -693,7 +693,7 @@ public class Clustering extends RepositoryObject implements Iterable<Cluster>, I
                     && !dataConfig.hasGoldStandardConfig()) {
                 continue;
             }
-            ClusteringQualityMeasureValue quality;
+            ClustEvalValue quality;
             try {
                 IClustering goldStandard = null;
                 if (dataConfig.hasGoldStandardConfig()) {
@@ -714,13 +714,12 @@ public class Clustering extends RepositoryObject implements Iterable<Cluster>, I
                 // .unloadFromMemory();
                 // we rethrow some exceptions, since they mean, that we
                 // cannot calculate ANY quality measures for this data
-            } catch (UnknownGoldStandardFormatException | IOException |
-                    UnknownDataSetFormatException | InvalidDataSetFormatVersionException e) {
+            } catch (InvalidDataSetFormatVersionException e) {
                 throw e;
             } catch (Exception e) {
                 // all the remaining exceptions are catched, because they
                 // mean, that the quality measure calculation is flawed
-                quality = ClusteringQualityMeasureValue
+                quality = ClustEvalValue
                         .getForDouble(Double.NaN);
             }
             resultSet.put(qualityMeasure, quality);

@@ -18,8 +18,8 @@ import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
 import de.clusteval.api.opt.NoParameterSetFoundException;
 import ch.qos.logback.classic.Level;
 import de.clusteval.api.Precision;
-import de.clusteval.api.cluster.quality.ClusteringQualityMeasureValue;
-import de.clusteval.api.cluster.quality.ClusteringQualitySet;
+import de.clusteval.api.cluster.ClustEvalValue;
+import de.clusteval.api.cluster.ClusteringQualitySet;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.exceptions.FormatConversionException;
@@ -172,7 +172,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
 
         for (double d : f2s) {
             ClusteringQualitySet qualitySet = new ClusteringQualitySet();
-            qualitySet.put(f2, ClusteringQualityMeasureValue.getForDouble(d));
+            qualitySet.put(f2, ClustEvalValue.getForDouble(d));
             qualitySets.add(qualitySet);
         }
 
@@ -303,7 +303,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
 
         for (double d : f2s) {
             ClusteringQualitySet qualitySet = new ClusteringQualitySet();
-            qualitySet.put(f2, ClusteringQualityMeasureValue.getForDouble(d));
+            qualitySet.put(f2, ClustEvalValue.getForDouble(d));
             qualitySets.add(qualitySet);
         }
 
@@ -519,7 +519,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
 
         for (double d : f2s) {
             ClusteringQualitySet qualitySet = new ClusteringQualitySet();
-            qualitySet.put(f2, ClusteringQualityMeasureValue.getForDouble(d));
+            qualitySet.put(f2, ClustEvalValue.getForDouble(d));
             qualitySets.add(qualitySet);
         }
 

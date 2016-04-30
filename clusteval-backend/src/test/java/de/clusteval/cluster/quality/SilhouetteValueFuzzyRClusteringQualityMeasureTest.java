@@ -22,12 +22,12 @@ import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
-import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RCalculationException;
 import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.r.RException;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.context.Context;
 import de.clusteval.data.DataConfig;
@@ -45,6 +45,7 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import org.junit.Assert;
+import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 /**
@@ -58,13 +59,14 @@ public class SilhouetteValueFuzzyRClusteringQualityMeasureTest extends AbstractC
     }
 
     @Test
-    public void testSingleCrispCluster() throws InstantiationException,
-                                                IllegalAccessException, RepositoryAlreadyExistsException,
-                                                InvalidRepositoryException, RepositoryConfigNotFoundException,
-                                                RepositoryConfigurationException, NoRepositoryFoundException,
-                                                RegisterException, NoSuchAlgorithmException,
-                                                RNotAvailableException, RCalculationException,
-                                                UnknownClusteringQualityMeasureException, InterruptedException {
+    public void testSingleCrispCluster()
+            throws InstantiationException,
+                   IllegalAccessException, RepositoryAlreadyExistsException,
+                   InvalidRepositoryException, RepositoryConfigNotFoundException,
+                   RepositoryConfigurationException, NoRepositoryFoundException,
+                   RegisterException, NoSuchAlgorithmException,
+                   RNotAvailableException, RCalculationException,
+                   UnknownClusteringQualityMeasureException, InterruptedException, RException {
         try {
             Clustering clustering = new Clustering(this.getRepository(),
                     System.currentTimeMillis(), new File(""));
@@ -85,36 +87,22 @@ public class SilhouetteValueFuzzyRClusteringQualityMeasureTest extends AbstractC
             double quality = measure.getQualityOfClustering(clustering, null,
                     null).getValue();
             Assert.assertEquals(-1.0, quality, 0.0);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (UnknownGoldStandardFormatException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (UnknownDataSetFormatException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IllegalArgumentException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (InvalidDataSetFormatVersionException e) {
-            // TODO Auto-generated catch block
+        } catch (IllegalArgumentException | InvalidDataSetFormatVersionException e) {
             e.printStackTrace();
         }
     }
 
     @Test
-    public void testTwoCrispClusters() throws InstantiationException,
-                                              IllegalAccessException, RepositoryAlreadyExistsException,
-                                              InvalidRepositoryException, RepositoryConfigNotFoundException,
-                                              RepositoryConfigurationException, NoRepositoryFoundException,
-                                              RegisterException, NoSuchAlgorithmException,
-                                              RNotAvailableException, RCalculationException,
-                                              UnknownClusteringQualityMeasureException,
-                                              FormatConversionException, UnknownDistanceMeasureException,
-                                              UnknownContextException, InterruptedException {
+    public void testTwoCrispClusters()
+            throws InstantiationException,
+                   IllegalAccessException, RepositoryAlreadyExistsException,
+                   InvalidRepositoryException, RepositoryConfigNotFoundException,
+                   RepositoryConfigurationException, NoRepositoryFoundException,
+                   RegisterException, NoSuchAlgorithmException,
+                   RNotAvailableException, RCalculationException,
+                   UnknownClusteringQualityMeasureException,
+                   FormatConversionException, UnknownDistanceMeasureException,
+                   UnknownContextException, InterruptedException, RException {
         try {
 
             Context context = Context.parseFromString(getRepository(),
@@ -159,37 +147,26 @@ public class SilhouetteValueFuzzyRClusteringQualityMeasureTest extends AbstractC
             double qualitySil = measureSil.getQualityOfClustering(clustering,
                     null, dc).getValue();
             ds.getInStandardFormat().unloadFromMemory();
-            Assert.assertEquals(qualitySil, quality, 0.0);
+            assertEquals(qualitySil, quality, 0.0);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        } catch (UnknownGoldStandardFormatException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (UnknownDataSetFormatException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IllegalArgumentException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (InvalidDataSetFormatVersionException e) {
-            // TODO Auto-generated catch block
+        } catch (UnknownDataSetFormatException | IllegalArgumentException |
+                 InvalidDataSetFormatVersionException | IOException e) {
             e.printStackTrace();
         }
     }
 
     @Test
-    public void testTwoFuzzyClusters() throws InstantiationException,
-                                              IllegalAccessException, RepositoryAlreadyExistsException,
-                                              InvalidRepositoryException, RepositoryConfigNotFoundException,
-                                              RepositoryConfigurationException, NoRepositoryFoundException,
-                                              RegisterException, NoSuchAlgorithmException,
-                                              RNotAvailableException, RCalculationException,
-                                              UnknownClusteringQualityMeasureException,
-                                              FormatConversionException, UnknownDistanceMeasureException,
-                                              UnknownContextException, InterruptedException {
+    public void testTwoFuzzyClusters()
+            throws InstantiationException,
+                   IllegalAccessException, RepositoryAlreadyExistsException,
+                   InvalidRepositoryException, RepositoryConfigNotFoundException,
+                   RepositoryConfigurationException, NoRepositoryFoundException,
+                   RegisterException, NoSuchAlgorithmException,
+                   RNotAvailableException, RCalculationException,
+                   UnknownClusteringQualityMeasureException,
+                   FormatConversionException, UnknownDistanceMeasureException,
+                   UnknownContextException, InterruptedException, RException {
         try {
 
             Context context = Context.parseFromString(getRepository(),
@@ -234,34 +211,23 @@ public class SilhouetteValueFuzzyRClusteringQualityMeasureTest extends AbstractC
             Assert.assertEquals(0.014446969720531404, quality, 0.0);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        } catch (UnknownGoldStandardFormatException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (UnknownDataSetFormatException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IllegalArgumentException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (InvalidDataSetFormatVersionException e) {
-            // TODO Auto-generated catch block
+        } catch (UnknownDataSetFormatException | IllegalArgumentException |
+                 InvalidDataSetFormatVersionException | IOException e) {
             e.printStackTrace();
         }
     }
 
     @Test
-    public void testTwoFuzzyAlphaZeroClusters() throws InstantiationException,
-                                                       IllegalAccessException, RepositoryAlreadyExistsException,
-                                                       InvalidRepositoryException, RepositoryConfigNotFoundException,
-                                                       RepositoryConfigurationException, NoRepositoryFoundException,
-                                                       RegisterException, NoSuchAlgorithmException,
-                                                       RNotAvailableException, RCalculationException,
-                                                       UnknownClusteringQualityMeasureException,
-                                                       FormatConversionException, UnknownDistanceMeasureException,
-                                                       UnknownContextException, InterruptedException {
+    public void testTwoFuzzyAlphaZeroClusters()
+            throws InstantiationException,
+                   IllegalAccessException, RepositoryAlreadyExistsException,
+                   InvalidRepositoryException, RepositoryConfigNotFoundException,
+                   RepositoryConfigurationException, NoRepositoryFoundException,
+                   RegisterException, NoSuchAlgorithmException,
+                   RNotAvailableException, RCalculationException,
+                   UnknownClusteringQualityMeasureException,
+                   FormatConversionException, UnknownDistanceMeasureException,
+                   UnknownContextException, InterruptedException, RException {
         try {
 
             Context context = Context.parseFromString(getRepository(),
@@ -316,20 +282,8 @@ public class SilhouetteValueFuzzyRClusteringQualityMeasureTest extends AbstractC
             Assert.assertEquals(qualitySil, quality, 0.0);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        } catch (UnknownGoldStandardFormatException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (UnknownDataSetFormatException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IllegalArgumentException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (InvalidDataSetFormatVersionException e) {
-            // TODO Auto-generated catch block
+        } catch (UnknownDataSetFormatException | IllegalArgumentException |
+                 InvalidDataSetFormatVersionException | IOException e) {
             e.printStackTrace();
         }
     }

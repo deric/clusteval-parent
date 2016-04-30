@@ -17,8 +17,8 @@
 package de.clusteval.run;
 
 import de.clusteval.api.ClusteringEvaluation;
-import de.clusteval.api.cluster.quality.ClusteringQualityMeasureValue;
-import de.clusteval.api.cluster.quality.ClusteringQualitySet;
+import de.clusteval.api.cluster.ClustEvalValue;
+import de.clusteval.api.cluster.ClusteringQualitySet;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
@@ -607,7 +607,7 @@ public class RobustnessAnalysisRun extends ClusteringRun {
             dataConfigNames.add(dataConfig.getName());
         }
 
-        Map<String, Map<String, Triple<List<ParameterSet>, ClusteringEvaluation, ClusteringQualityMeasureValue>>> bestParams = new HashMap<>();
+        Map<String, Map<String, Triple<List<ParameterSet>, ClusteringEvaluation, ClustEvalValue>>> bestParams = new HashMap<>();
 
         // get best parameters for each pair of program and dataset
         // from run results
@@ -627,11 +627,11 @@ public class RobustnessAnalysisRun extends ClusteringRun {
                     IProgramConfig pc = paramOptResult.getProgramConfig();
                     IDataConfig dc = paramOptResult.getDataConfig();
                     ClusteringEvaluation measure = paramOptResult.getMethod().getOptimizationCriterion();
-                    ClusteringQualityMeasureValue min = ClusteringQualityMeasureValue
+                    ClustEvalValue min = ClustEvalValue
                             .getForDouble(measure.getMinimum());
-                    ClusteringQualityMeasureValue max = ClusteringQualityMeasureValue
+                    ClustEvalValue max = ClustEvalValue
                             .getForDouble(measure.getMaximum());
-                    ClusteringQualityMeasureValue def;
+                    ClustEvalValue def;
                     if (measure.isBetterThan(max, min)) {
                         def = min;
                     } else {
@@ -651,7 +651,7 @@ public class RobustnessAnalysisRun extends ClusteringRun {
                                             new Triple<>(new ArrayList<>(), measure, def));
                         }
 
-                        ClusteringQualityMeasureValue currentOpt = bestParams
+                        ClustEvalValue currentOpt = bestParams
                                 .get(pc.getName()).get(dc.getName()).getThird();
                         Map<ClusteringEvaluation, ParameterSet> optParams = paramOptResult
                                 .getOptimalParameterSets();
@@ -661,7 +661,7 @@ public class RobustnessAnalysisRun extends ClusteringRun {
                         if (paramOptResult.get(bestParamSet) == null) {
                             continue;
                         }
-                        ClusteringQualityMeasureValue newBestValue = paramOptResult
+                        ClustEvalValue newBestValue = paramOptResult
                                 .get(bestParamSet).get(measure);
 
                         if (measure.isBetterThan(newBestValue, currentOpt)) {
@@ -709,7 +709,7 @@ public class RobustnessAnalysisRun extends ClusteringRun {
                 if (bestParams.containsKey(pc.getName())
                         && bestParams.get(pc.getName()).containsKey(
                         dc.getName())) {
-                    Triple<List<ParameterSet>, ClusteringEvaluation, ClusteringQualityMeasureValue> params = bestParams
+                    Triple<List<ParameterSet>, ClusteringEvaluation, ClustEvalValue> params = bestParams
                             .get(pc.getName()).get(dc.getName());
 
                     if (params.getFirst().size() > 0) {
