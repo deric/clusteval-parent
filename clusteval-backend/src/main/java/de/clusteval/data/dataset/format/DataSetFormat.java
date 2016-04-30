@@ -22,7 +22,6 @@ import de.clusteval.api.factory.DataSetFormatFactory;
 import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
-import de.clusteval.data.dataset.DataSet;
 import de.clusteval.framework.repository.RepositoryObject;
 import de.clusteval.utils.FileUtils;
 import java.io.File;
@@ -110,7 +109,7 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
      * This is used for compatibility reasons to ensure, that if at some point a
      * format specification changes, the framework can recognize this.
      */
-    private final int version;
+    private int version;
 
     /**
      * This method parses a dataset format from the given string, containing a
@@ -131,7 +130,8 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
         DataSetFormatFactory factory = DataSetFormatFactory.getInstance();
         if (factory.hasProvider(datasetFormat)) {
             IDataSetFormat format = factory.getProvider(datasetFormat);
-            format.init(repository, System.currentTimeMillis(), new File(datasetFormat), formatVersion);
+
+            format.init(repository, System.currentTimeMillis(), new File(datasetFormat));
             return format;
         }
 
@@ -188,8 +188,8 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
      * @throws InvalidDataSetFormatVersionException
      * @throws IOException
      */
-    public Object parse(final DataSet dataSet, Precision precision) throws IllegalArgumentException, IOException,
-                                                                           InvalidDataSetFormatVersionException {
+    public Object parse(final IDataSet dataSet, Precision precision) throws IllegalArgumentException, IOException,
+                                                                            InvalidDataSetFormatVersionException {
         final IDataSetFormatParser parser = getDataSetFormatParser();
         if (parser == null) {
             throw new IllegalArgumentException("Operation only supported for the standard dataset format");
@@ -486,11 +486,7 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
         return true;
     }
 
-    /**
-     * This alias is used whenever this dataset format is visually represented
-     * and a readable name is needed.
-     *
-     * @return The alias of this dataset format.
-     */
-    public abstract String getAlias();
+    public void setVersion(int version) {
+        this.version = version;
+    }
 }

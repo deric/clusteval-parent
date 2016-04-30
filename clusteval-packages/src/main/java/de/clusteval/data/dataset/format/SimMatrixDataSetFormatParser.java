@@ -16,17 +16,18 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
-
 import de.wiwie.wiutils.utils.SimilarityMatrix;
-import de.wiwie.wiutils.utils.SimilarityMatrix.NUMBER_PRECISION;
 import de.wiwie.wiutils.utils.parse.SimFileMatrixParser;
 import de.wiwie.wiutils.utils.parse.SimFileParser.SIM_FILE_FORMAT;
 import de.wiwie.wiutils.utils.parse.TextFileParser.OUTPUT_MODE;
-import de.clusteval.data.dataset.DataSet;
 import de.clusteval.data.dataset.RelativeDataSet;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.FormatVersion;
+import de.clusteval.api.Precision;
+import de.clusteval.api.data.IConversionInputToStandardConfiguration;
+import de.clusteval.api.data.IDataSet;
+import de.clusteval.api.data.IDataSetFormat;
 
 /**
  * @author Christian Wiwie
@@ -35,12 +36,12 @@ import de.clusteval.api.FormatVersion;
 public class SimMatrixDataSetFormatParser extends DataSetFormatParser {
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see data.dataset.format.DataSetFormat#parseDataSet(data.dataset.DataSet)
+     * (non-Javadoc)
+     *
+     * @see data.dataset.format.DataSetFormat#parseDataSet(data.dataset.DataSet)
      */
     @Override
-    protected SimilarityMatrix parse(DataSet dataSet, NUMBER_PRECISION precision)
+    public SimilarityMatrix parse(IDataSet dataSet, Precision precision)
             throws IllegalArgumentException, IOException,
                    InvalidDataSetFormatVersionException {
 
@@ -63,49 +64,46 @@ public class SimMatrixDataSetFormatParser extends DataSetFormatParser {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * de.clusteval.data.dataset.format.DataSetFormatParser#convertToStandardFormat
-	 * (de.clusteval.data.dataset.DataSet,
-	 * de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration)
+     * (non-Javadoc)
+     *
+     * @see
+     * de.clusteval.data.dataset.format.DataSetFormatParser#convertToStandardFormat
+     * (de.clusteval.data.dataset.DataSet,
+     * de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration)
      */
-    @SuppressWarnings("unused")
     @Override
-    protected DataSet convertToStandardFormat(DataSet dataSet,
-            ConversionInputToStandardConfiguration config) throws IOException,
-                                                                  InvalidDataSetFormatVersionException, RegisterException {
+    public IDataSet convertToStandardFormat(IDataSet dataSet,
+            IConversionInputToStandardConfiguration config)
+            throws IOException, InvalidDataSetFormatVersionException, RegisterException {
         return null;
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * de.clusteval.data.dataset.format.DataSetFormatParser#convertToThisFormat
-	 * (de.clusteval.data.dataset.DataSet,
-	 * de.clusteval.data.dataset.format.DataSetFormat,
-	 * de.clusteval.data.dataset.format.ConversionConfiguration)
+     * (non-Javadoc)
+     *
+     * @see
+     * de.clusteval.data.dataset.format.DataSetFormatParser#convertToThisFormat
+     * (de.clusteval.data.dataset.DataSet,
+     * de.clusteval.data.dataset.format.DataSetFormat,
+     * de.clusteval.data.dataset.format.ConversionConfiguration)
      */
-    @SuppressWarnings("unused")
     @Override
-    protected DataSet convertToThisFormat(DataSet dataSet,
-            DataSetFormat dataSetFormat, IConversionConfiguration config)
+    public IDataSet convertToThisFormat(IDataSet dataSet,
+            IDataSetFormat dataSetFormat, IConversionConfiguration config)
             throws IOException, InvalidDataSetFormatVersionException,
                    RegisterException {
         return null;
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * de.clusteval.data.dataset.format.DataSetFormatParser#writeToFile(de.clusteval
-	 * .data.dataset.DataSet)
+     * (non-Javadoc)
+     *
+     * @see
+     * de.clusteval.data.dataset.format.DataSetFormatParser#writeToFile(de.clusteval
+     * .data.dataset.DataSet)
      */
     @Override
-    protected void writeToFileHelper(DataSet dataSet, BufferedWriter writer)
-            throws IOException {
+    public void writeToFileHelper(IDataSet dataSet, BufferedWriter writer) throws IOException {
         RelativeDataSet absDataSet = (RelativeDataSet) dataSet;
         SimilarityMatrix matrix = absDataSet.getDataSetContent();
 

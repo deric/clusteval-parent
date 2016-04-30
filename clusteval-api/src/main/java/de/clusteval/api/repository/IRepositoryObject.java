@@ -26,13 +26,26 @@ import java.io.File;
 public interface IRepositoryObject extends RepositoryListener {
 
     /**
+     * Instantiates a new repository object.
+     *
+     * @param repository The repository this object is registered in.
+     * @param changeDate The changedate of this object can be used for
+     *                   identification and equality checks of objects.
+     * @param absPath    The absolute path of this object is used for
+     *                   identification and equality checks of objects.
+     */
+    void init(final IRepository repository, final long changeDate, final File absPath);
+
+    /**
      * Any subclass needs to implement this method. It will be responsible to
      * register a new object of the subclass at the repository.
      *
+     * `init()` must be called before registering
+     *
      * @return true, if successful
      * @throws RegisterException An exception is thrown if something goes wrong
-     *                           during the registering process, that might be interesting to handle
-     *                           individually.
+     * during the registering process, that might be interesting to handle
+     * individually.
      */
     boolean register() throws RegisterException;
 
@@ -111,7 +124,7 @@ public interface IRepositoryObject extends RepositoryListener {
      *                        and target file for equality.
      * @return True, if the copy operation was successful.
      */
-    public boolean copyTo(final File copyDestination, final boolean overwrite, final boolean wait);
+    boolean copyTo(final File copyDestination, final boolean overwrite, final boolean wait);
 
     /**
      * A convenience method for {@link #copyToFolder(File, boolean)}, with
@@ -121,7 +134,7 @@ public interface IRepositoryObject extends RepositoryListener {
      *                              copied
      * @return True, if the copy operation was successful.
      */
-    public boolean copyToFolder(final File copyFolderDestination);
+    boolean copyToFolder(final File copyFolderDestination);
 
     /**
      * This method copies the file corresponding to this repository object into

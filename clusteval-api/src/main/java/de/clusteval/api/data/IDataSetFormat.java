@@ -22,7 +22,6 @@ import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.repository.IRepositoryObject;
 import de.clusteval.api.program.RegisterException;
-import de.clusteval.api.repository.IRepository;
 import java.io.File;
 import java.io.IOException;
 import java.security.InvalidParameterException;
@@ -34,21 +33,12 @@ import java.security.InvalidParameterException;
 public interface IDataSetFormat extends IRepositoryObject {
 
     /**
-     * Unique format name
+     * This alias is used whenever this dataset format is visually represented
+     * and a readable name is needed.
      *
-     * @return format name
+     * @return The alias of this dataset format.
      */
     String getName();
-
-    /**
-     * Configure format
-     *
-     * @param repo
-     * @param changeDate
-     * @param absPath
-     * @param version
-     */
-    void init(final IRepository repo, final long changeDate, final File absPath, final int version);
 
     Object parse(final IDataSet dataSet, Precision precision)
             throws IllegalArgumentException, IOException, InvalidDataSetFormatVersionException;
@@ -192,4 +182,11 @@ public interface IDataSetFormat extends IRepositoryObject {
      *         dataset format class.
      */
     IDataSetFormatParser getDataSetFormatParser();
+
+    /**
+     * Set format version
+     *
+     * @param version
+     */
+    void setVersion(int version);
 }

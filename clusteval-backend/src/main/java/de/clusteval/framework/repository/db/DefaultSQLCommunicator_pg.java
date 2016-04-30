@@ -1732,7 +1732,7 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
             insert(this.getTableDataSetFormats(),
                     new String[]{"repository_id", "name", "alias"},
                     new String[]{"" + this.updateRepositoryId(),
-                        "" + object.getSimpleName(), format.getAlias()});
+                        "" + object.getSimpleName(), format.getName()});
             return true;
         } catch (SQLException | IllegalArgumentException | SecurityException |
                 InstantiationException | IllegalAccessException |

@@ -21,12 +21,13 @@ import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.data.dataset.AbsoluteDataSet;
 import de.clusteval.data.dataset.DataMatrix;
-import de.clusteval.data.dataset.DataSet;
 import de.clusteval.data.dataset.DataSetAttributeParser;
 import de.clusteval.data.dataset.RelativeDataSet;
 import de.clusteval.api.Pair;
+import de.clusteval.api.Precision;
+import de.clusteval.api.data.IConversionInputToStandardConfiguration;
+import de.clusteval.api.data.IDataSetFormat;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
-import de.wiwie.wiutils.utils.SimilarityMatrix.NUMBER_PRECISION;
 import de.wiwie.wiutils.utils.parse.TextFileParser;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -50,11 +51,12 @@ public class MatrixDataSetFormatParser extends DataSetFormatParser {
      * dataset.DataSet)
      */
     @Override
-    protected IDataSet convertToStandardFormat(DataSet dataSet,
-            ConversionInputToStandardConfiguration config) throws IOException,
-                                                                  RegisterException, UnknownDataSetFormatException,
-                                                                  InvalidParameterException, RNotAvailableException,
-                                                                  InterruptedException {
+    public IDataSet convertToStandardFormat(IDataSet dataSet,
+            IConversionInputToStandardConfiguration config)
+            throws IOException,
+                   RegisterException, UnknownDataSetFormatException,
+                   InvalidParameterException, RNotAvailableException,
+                   InterruptedException {
 
         File targetFile = new File(dataSet.getAbsolutePath() + ".SimMatrix");
 
@@ -83,7 +85,7 @@ public class MatrixDataSetFormatParser extends DataSetFormatParser {
 
             this.log.info("Calculating pairwise distances");
             if (dist.supportsMatrix()) {
-                matrix = dist.getDistances(config, coordsMatrix);
+                matrix = (SimilarityMatrix) dist.getDistances(config, coordsMatrix);
                 matrix.setIds(ids);
                 this.log.info("Converting distances to similarities");
                 matrix.invert();
@@ -130,10 +132,9 @@ public class MatrixDataSetFormatParser extends DataSetFormatParser {
      * data.dataset.format.DataSetFormatParser#convertToThisFormat(data.dataset
      * .DataSet, data.dataset.format.DataSetFormat)
      */
-    @SuppressWarnings("unused")
     @Override
-    protected DataSet convertToThisFormat(DataSet dataSet,
-            DataSetFormat dataSetFormat, IConversionConfiguration config)
+    public IDataSet convertToThisFormat(IDataSet dataSet,
+            IDataSetFormat dataSetFormat, IConversionConfiguration config)
             throws InvalidDataSetFormatVersionException {
         throw new InvalidDataSetFormatVersionException(
                 "Cannot convert to this format");
@@ -145,7 +146,7 @@ public class MatrixDataSetFormatParser extends DataSetFormatParser {
      * @see data.dataset.format.DataSetFormatParser#parse(data.dataset.DataSet)
      */
     @Override
-    protected DataMatrix parse(DataSet dataSet, NUMBER_PRECISION precision)
+    public DataMatrix parse(IDataSet dataSet, Precision precision)
             throws IOException {
         MatrixParser parser = new MatrixParser(dataSet.getAbsolutePath());
         parser.process();
@@ -170,7 +171,7 @@ public class MatrixDataSetFormatParser extends DataSetFormatParser {
         public MatrixParser(String absFilePath) throws IOException {
             super(absFilePath, new int[0], new int[0]);
             this.setLockTargetFile(true);
-            this.idToCoordinates = new ArrayList<Pair<String, double[]>>();
+            this.idToCoordinates = new ArrayList<>();
         }
 
         /*
@@ -213,7 +214,7 @@ public class MatrixDataSetFormatParser extends DataSetFormatParser {
      * .data.dataset.DataSet)
      */
     @Override
-    protected void writeToFileHelper(DataSet dataSet, BufferedWriter writer)
+    public void writeToFileHelper(IDataSet dataSet, BufferedWriter writer)
             throws IOException {
         AbsoluteDataSet absDataSet = (AbsoluteDataSet) dataSet;
         DataMatrix dataMatrix = absDataSet.getDataSetContent();

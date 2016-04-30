@@ -11,11 +11,11 @@
 package de.clusteval.data.dataset.format;
 
 import de.clusteval.api.Precision;
+import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.data.dataset.DataMatrix;
-import de.clusteval.data.dataset.DataSet;
 import java.io.File;
 import java.io.IOException;
 
@@ -56,7 +56,7 @@ public abstract class AbsoluteDataSetFormat extends DataSetFormat {
     }
 
     @Override
-    public final DataMatrix parse(final DataSet dataSet, Precision precision)
+    public final DataMatrix parse(final IDataSet dataSet, Precision precision)
             throws IllegalArgumentException,
                    IOException, InvalidDataSetFormatVersionException {
         return (DataMatrix) super.parse(dataSet, precision);

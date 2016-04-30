@@ -11,10 +11,10 @@
 package de.clusteval.data.dataset.format;
 
 import de.clusteval.api.Precision;
+import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
-import de.clusteval.data.dataset.DataSet;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
 import java.io.File;
 import java.io.IOException;
@@ -56,7 +56,7 @@ public abstract class RelativeDataSetFormat extends DataSetFormat {
     }
 
     @Override
-    public final SimilarityMatrix parse(final DataSet dataSet, Precision precision)
+    public final SimilarityMatrix parse(final IDataSet dataSet, Precision precision)
             throws IllegalArgumentException, IOException, InvalidDataSetFormatVersionException {
         return (SimilarityMatrix) super.parse(dataSet, precision);
     }

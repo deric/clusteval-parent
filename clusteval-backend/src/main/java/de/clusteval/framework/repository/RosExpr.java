@@ -68,4 +68,14 @@ public class RosExpr implements RExpr {
             throw new RuntimeException(ex.getMessage());
         }
     }
+
+    @Override
+    public int asInteger() {
+        try {
+            return r.asInteger();
+        } catch (REXPMismatchException ex) {
+            log.error(ex.getMessage(), ex);
+        }
+        return Integer.MIN_VALUE;
+    }
 }

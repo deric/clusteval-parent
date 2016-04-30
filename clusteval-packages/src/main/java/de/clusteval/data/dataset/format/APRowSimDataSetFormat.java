@@ -51,10 +51,10 @@ public class APRowSimDataSetFormat extends RowSimDataSetFormat {
     /*
      * (non-Javadoc)
      *
-     * @see de.clusteval.data.dataset.format.DataSetFormat#getAlias()
+     * @see de.clusteval.data.dataset.format.DataSetFormat#getName()
      */
     @Override
-    public String getAlias() {
+    public String getName() {
         return "Rowwise Similarity (Affinity Propagation)";
     }
 

@@ -25,5 +25,7 @@ public interface RExpr {
 
     double asDouble();
 
+    int asInteger();
+
     double[][] asDoubleMatrix();
 }

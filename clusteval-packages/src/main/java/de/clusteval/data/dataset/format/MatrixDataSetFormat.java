@@ -52,10 +52,10 @@ public class MatrixDataSetFormat extends AbsoluteDataSetFormat {
     /*
 	 * (non-Javadoc)
 	 *
-	 * @see data.dataset.format.DataSetFormat#getAlias()
+	 * @see data.dataset.format.DataSetFormat#getName()
      */
     @Override
-    public String getAlias() {
+    public String getName() {
         return "Data Matrix";
     }
 

@@ -1,16 +1,13 @@
-/*******************************************************************************
+/** *****************************************************************************
  * Copyright (c) 2013 Christian Wiwie.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Public License v3.0
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/gpl.html
- * 
+ *
  * Contributors:
  *     Christian Wiwie - initial API and implementation
- ******************************************************************************/
-/**
- * 
- */
+ ***************************************************************************** */
 package de.clusteval.data.dataset.format;
 
 import de.clusteval.api.data.IConversionConfiguration;
@@ -20,204 +17,204 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-
 import de.wiwie.wiutils.utils.SimilarityMatrix;
-import de.wiwie.wiutils.utils.SimilarityMatrix.NUMBER_PRECISION;
 import de.wiwie.wiutils.utils.parse.SimFileMatrixParser;
 import de.wiwie.wiutils.utils.parse.SimFileParser;
 import de.wiwie.wiutils.utils.parse.SimFileParser.SIM_FILE_FORMAT;
 import de.wiwie.wiutils.utils.parse.TextFileParser.OUTPUT_MODE;
-import de.clusteval.data.dataset.DataSet;
 import de.clusteval.data.dataset.DataSetAttributeParser;
 import de.clusteval.data.dataset.RelativeDataSet;
-import de.clusteval.data.dataset.DataSet.WEBSITE_VISIBILITY;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.FormatVersion;
+import de.clusteval.api.Precision;
+import de.clusteval.api.data.IConversionInputToStandardConfiguration;
+import de.clusteval.api.data.IDataSet;
+import de.clusteval.api.data.IDataSetFormat;
+import de.clusteval.api.data.WEBSITE_VISIBILITY;
 
 /**
  * @author Christian Wiwie
- * 
+ *
  */
 @FormatVersion(version = 1)
 public class APRowSimDataSetFormatParser extends DataSetFormatParser {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * data.dataset.format.DataSetFormatParser#convertToStandardFormat(data.
-	 * dataset.DataSet)
-	 */
-	@SuppressWarnings("unused")
-	@Override
-	protected DataSet convertToStandardFormat(DataSet ds,
-			ConversionInputToStandardConfiguration config) {
-		return null;
-	}
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * data.dataset.format.DataSetFormatParser#convertToStandardFormat(data.
+     * dataset.DataSet)
+     */
+    @SuppressWarnings("unused")
+    @Override
+    public IDataSet convertToStandardFormat(IDataSet ds, IConversionInputToStandardConfiguration config) {
+        return null;
+    }
 
-	@Override
-	protected DataSet convertToThisFormat(DataSet dataSet,
-			DataSetFormat dataSetFormat, IConversionConfiguration config)
-			throws IOException, InvalidDataSetFormatVersionException,
-			RegisterException, UnknownDataSetFormatException {
-		switch (dataSetFormat.getVersion()) {
-			case 1 :
-				return convertToThisFormat_v1(dataSet, dataSetFormat, config);
-			default :
-				throw new InvalidDataSetFormatVersionException("Version "
-						+ dataSet.getDataSetFormat().getVersion()
-						+ " is unknown for DataSetFormat "
-						+ dataSet.getDataSetFormat());
-		}
-	}
+    @Override
+    public IDataSet convertToThisFormat(IDataSet dataSet,
+            IDataSetFormat dataSetFormat, IConversionConfiguration config)
+            throws IOException, InvalidDataSetFormatVersionException,
+                   RegisterException, UnknownDataSetFormatException {
+        switch (dataSetFormat.getVersion()) {
+            case 1:
+                return convertToThisFormat_v1(dataSet, dataSetFormat, config);
+            default:
+                throw new InvalidDataSetFormatVersionException("Version "
+                        + dataSet.getDataSetFormat().getVersion()
+                        + " is unknown for DataSetFormat "
+                        + dataSet.getDataSetFormat());
+        }
+    }
 
-	@SuppressWarnings("unused")
-	protected DataSet convertToThisFormat_v1(DataSet dataSet,
-			DataSetFormat dataSetFormat, IConversionConfiguration config)
-			throws IOException, RegisterException,
-			UnknownDataSetFormatException {
+    protected IDataSet convertToThisFormat_v1(IDataSet dataSet,
+            IDataSetFormat dataSetFormat, IConversionConfiguration config)
+            throws IOException, RegisterException, UnknownDataSetFormatException {
 
-		// check if file already exists
-		String absResultFilePath = dataSet.getAbsolutePath();
-		absResultFilePath = removeResultFileNameSuffix(absResultFilePath);
-		absResultFilePath += ".APRowSim";
-		String resultFile = absResultFilePath;
+        // check if file already exists
+        String absResultFilePath = dataSet.getAbsolutePath();
+        absResultFilePath = removeResultFileNameSuffix(absResultFilePath);
+        absResultFilePath += ".APRowSim";
+        String resultFile = absResultFilePath;
 
-		if (!(new File(resultFile).exists())) {
-			this.log.debug("Converting input file...");
-			// replace IDs by numeric values from [1:N]
-			final SimFileParser p = new APSimFileConverter(
-					dataSet.getAbsolutePath(), SIM_FILE_FORMAT.MATRIX_HEADER,
-					null, null, resultFile, OUTPUT_MODE.STREAM,
-					SIM_FILE_FORMAT.ID_ID_SIM);
-			p.process();
-			this.log.debug("Finished converting");
-		}
-		return new RelativeDataSet(dataSet.getRepository(), false,
-				System.currentTimeMillis(), new File(absResultFilePath),
-				dataSet.getAlias(), new APRowSimDataSetFormat(
-						dataSet.getRepository(), false,
-						System.currentTimeMillis(),
-						new File(absResultFilePath), dataSet.getRepository()
-								.getCurrentDataSetFormatVersion(
-										APRowSimDataSetFormat.class
-												.getSimpleName())),
-				dataSet.getDataSetType(), WEBSITE_VISIBILITY.HIDE);
-	}
+        if (!(new File(resultFile).exists())) {
+            this.log.debug("Converting input file...");
+            // replace IDs by numeric values from [1:N]
+            final SimFileParser p = new APSimFileConverter(
+                    dataSet.getAbsolutePath(), SIM_FILE_FORMAT.MATRIX_HEADER,
+                    null, null, resultFile, OUTPUT_MODE.STREAM,
+                    SIM_FILE_FORMAT.ID_ID_SIM);
+            p.process();
+            this.log.debug("Finished converting");
+        }
+        return new RelativeDataSet(dataSet.getRepository(), false,
+                System.currentTimeMillis(), new File(absResultFilePath),
+                dataSet.getAlias(), new APRowSimDataSetFormat(
+                        dataSet.getRepository(), false,
+                        System.currentTimeMillis(),
+                        new File(absResultFilePath), dataSet.getRepository()
+                        .getCurrentDataSetFormatVersion(
+                                APRowSimDataSetFormat.class
+                                .getSimpleName())),
+                dataSet.getDataSetType(), WEBSITE_VISIBILITY.HIDE);
+    }
 
-	class APSimFileConverter extends SimFileMatrixParser {
+    class APSimFileConverter extends SimFileMatrixParser {
 
-		protected BufferedWriter mappingWriter;
+        protected BufferedWriter mappingWriter;
 
-		/**
-		 * @param absFilePath
-		 * @param simFileFormat
-		 * @param absIdFilePath
-		 * @param idFileFormat
-		 * @param outputFile
-		 * @param outputMode
-		 * @param outputFormat
-		 * @throws IOException
-		 */
-		public APSimFileConverter(String absFilePath,
-				SIM_FILE_FORMAT simFileFormat, String absIdFilePath,
-				ID_FILE_FORMAT idFileFormat, String outputFile,
-				OUTPUT_MODE outputMode, SIM_FILE_FORMAT outputFormat)
-				throws IOException {
-			super(absFilePath, simFileFormat, absIdFilePath, idFileFormat,
-					outputFile, outputMode, outputFormat);
-		}
+        /**
+         * @param absFilePath
+         * @param simFileFormat
+         * @param absIdFilePath
+         * @param idFileFormat
+         * @param outputFile
+         * @param outputMode
+         * @param outputFormat
+         * @throws IOException
+         */
+        public APSimFileConverter(String absFilePath,
+                SIM_FILE_FORMAT simFileFormat, String absIdFilePath,
+                ID_FILE_FORMAT idFileFormat, String outputFile,
+                OUTPUT_MODE outputMode, SIM_FILE_FORMAT outputFormat)
+                throws IOException {
+            super(absFilePath, simFileFormat, absIdFilePath, idFileFormat,
+                    outputFile, outputMode, outputFormat);
+        }
 
-		@Override
-		protected void resetReader() throws IOException {
-			super.resetReader();
+        @Override
+        protected void resetReader() throws IOException {
+            super.resetReader();
 
-			if (this.mappingWriter != null) {
-				this.mappingWriter.close();
-			}
-			this.mappingWriter = new BufferedWriter(new FileWriter(new File(
-					this.outputFile + ".map")));
-		};
+            if (this.mappingWriter != null) {
+                this.mappingWriter.close();
+            }
+            this.mappingWriter = new BufferedWriter(new FileWriter(new File(
+                    this.outputFile + ".map")));
+        }
 
-		@Override
-		protected void closeStreams() throws IOException {
-			super.closeStreams();
+        @Override
+        protected void closeStreams() throws IOException {
+            super.closeStreams();
 
-			if (this.mappingWriter != null) {
-				this.mappingWriter.close();
-				this.mappingWriter = null;
-			}
-		};
+            if (this.mappingWriter != null) {
+                this.mappingWriter.close();
+                this.mappingWriter = null;
+            }
+        }
 
-		@Override
-		public void finishProcess() {
-			try {
-				for (String key : this.idToKey.values()) {
-					this.mappingWriter.write(key);
-					this.mappingWriter.write(this.outSplit);
-					this.mappingWriter.write((this.getIdForKey(key)) + "");
-					this.mappingWriter.newLine();
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		};
+        @Override
+        public void finishProcess() {
+            try {
+                for (String key : this.idToKey.values()) {
+                    this.mappingWriter.write(key);
+                    this.mappingWriter.write(this.outSplit);
+                    this.mappingWriter.write((this.getIdForKey(key)) + "");
+                    this.mappingWriter.newLine();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
-		@Override
-		public int getIdForKey(String key) {
-			return super.getIdForKey(key) + 1;
-		}
+        @Override
+        public int getIdForKey(String key) {
+            return super.getIdForKey(key) + 1;
+        }
 
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see utils.parse.TextFileParser#checkLine(java.lang.String)
-		 */
-		@Override
-		protected boolean checkLine(String line) {
-			return !DataSetAttributeParser.attributeLinePrefixPattern.matcher(
-					line).matches();
-		}
+        /*
+         * (non-Javadoc)
+         *
+         * @see utils.parse.TextFileParser#checkLine(java.lang.String)
+         */
+        @Override
+        protected boolean checkLine(String line) {
+            return !DataSetAttributeParser.attributeLinePrefixPattern.matcher(
+                    line).matches();
+        }
 
-		@Override
-		protected String getLineOutput(String[] key, String[] value) {
-			if (this.outputFormat.equals(SIM_FILE_FORMAT.ID_ID_SIM)) {
-				StringBuilder sb = new StringBuilder();
-				if (this.currentLine == 0)
-					return "";
-				for (int i = 0; i < value.length; i++) {
-					if (this.getIdForKey(key[0]) == i + 1)
-						continue;
-					sb.append(this.getIdForKey(key[0]) + this.outSplit
-							+ (i + 1) + this.outSplit
-							+ this.similarities.getSimilarity(0, i) + "\n");
-				}
-				return sb.toString();
-			}
-			return super.getLineOutput(key, value);
-		}
-	}
+        @Override
+        protected String getLineOutput(String[] key, String[] value) {
+            if (this.outputFormat.equals(SIM_FILE_FORMAT.ID_ID_SIM)) {
+                StringBuilder sb = new StringBuilder();
+                if (this.currentLine == 0) {
+                    return "";
+                }
+                for (int i = 0; i < value.length; i++) {
+                    if (this.getIdForKey(key[0]) == i + 1) {
+                        continue;
+                    }
+                    sb.append(this.getIdForKey(key[0]) + this.outSplit
+                            + (i + 1) + this.outSplit
+                            + this.similarities.getSimilarity(0, i) + "\n");
+                }
+                return sb.toString();
+            }
+            return super.getLineOutput(key, value);
+        }
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see data.dataset.format.DataSetFormatParser#parse(data.dataset.DataSet)
-	 */
-	@SuppressWarnings("unused")
-	@Override
-	protected SimilarityMatrix parse(DataSet dataSet, NUMBER_PRECISION precision) {
-		return null;
-	}
+    /*
+     * (non-Javadoc)
+     *
+     * @see data.dataset.format.DataSetFormatParser#parse(data.dataset.DataSet)
+     */
+    @SuppressWarnings("unused")
+    @Override
+    public SimilarityMatrix parse(IDataSet dataSet, Precision precision) {
+        return null;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * de.clusteval.data.dataset.format.DataSetFormatParser#writeToFile(de.clusteval
-	 * .data.dataset.DataSet)
-	 */
-	@SuppressWarnings("unused")
-	@Override
-	protected void writeToFileHelper(DataSet dataSet, BufferedWriter writer) {
-	}
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * de.clusteval.data.dataset.format.DataSetFormatParser#writeToFile(de.clusteval
+     * .data.dataset.DataSet)
+     */
+    @SuppressWarnings("unused")
+    @Override
+    public void writeToFileHelper(IDataSet dataSet, BufferedWriter writer) {
+    }
 }

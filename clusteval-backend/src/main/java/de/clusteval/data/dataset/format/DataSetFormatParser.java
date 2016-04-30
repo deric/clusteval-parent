@@ -12,6 +12,7 @@ package de.clusteval.data.dataset.format;
 
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetFormatParser;
+import de.clusteval.framework.repository.RepositoryObject;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -22,7 +23,7 @@ import org.slf4j.LoggerFactory;
 /**
  * @author Christian Wiwie
  */
-public abstract class DataSetFormatParser implements IDataSetFormatParser {
+public abstract class DataSetFormatParser extends RepositoryObject implements IDataSetFormatParser {
 
     /** The log. */
     protected Logger log;
@@ -39,7 +40,6 @@ public abstract class DataSetFormatParser implements IDataSetFormatParser {
      * Instantiates a new data set format parser.
      */
     public DataSetFormatParser() {
-        super();
         this.version = 1;
         this.log = LoggerFactory.getLogger(this.getClass());
     }
@@ -83,14 +83,12 @@ public abstract class DataSetFormatParser implements IDataSetFormatParser {
         // create the target file
         final File dataSetFile = new File(dataSet.getAbsolutePath());
 
-        try {
-            // dataset file
-            BufferedWriter writer = new BufferedWriter(new FileWriter(dataSetFile));
+        try ( // dataset file
+                BufferedWriter writer = new BufferedWriter(new FileWriter(dataSetFile))) {
             if (withHeader) {
                 writeHeaderIntoFile(dataSet, writer);
             }
             writeToFileHelper(dataSet, writer);
-            writer.close();
 
         } catch (IOException e) {
             e.printStackTrace();

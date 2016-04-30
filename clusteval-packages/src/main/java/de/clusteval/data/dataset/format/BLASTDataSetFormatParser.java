@@ -13,20 +13,21 @@
 package de.clusteval.data.dataset.format;
 
 import de.clusteval.api.FormatVersion;
+import de.clusteval.api.Precision;
 import de.clusteval.api.data.IConversionConfiguration;
+import de.clusteval.api.data.IConversionInputToStandardConfiguration;
 import de.clusteval.api.data.IDataSet;
+import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.data.WEBSITE_VISIBILITY;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.program.RegisterException;
-import de.clusteval.data.dataset.DataSet;
 import de.clusteval.data.dataset.DataSetAttributeFilterer;
 import de.clusteval.data.dataset.RelativeDataSet;
 import de.costmatrixcreation.main.Args;
 import de.costmatrixcreation.main.Config;
 import de.costmatrixcreation.main.Creator;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
-import de.wiwie.wiutils.utils.SimilarityMatrix.NUMBER_PRECISION;
 import de.wiwie.wiutils.utils.parse.SimFileMatrixParser;
 import de.wiwie.wiutils.utils.parse.SimFileParser.ID_FILE_FORMAT;
 import de.wiwie.wiutils.utils.parse.SimFileParser.SIM_FILE_FORMAT;
@@ -53,10 +54,10 @@ public class BLASTDataSetFormatParser extends DataSetFormatParser {
      * dataset.DataSet)
      */
     @Override
-    protected DataSet convertToStandardFormat(DataSet dataSet,
-            ConversionInputToStandardConfiguration config) throws IOException,
-                                                                  InvalidDataSetFormatVersionException, RegisterException,
-                                                                  UnknownDataSetFormatException {
+    public IDataSet convertToStandardFormat(IDataSet dataSet,
+            IConversionInputToStandardConfiguration config)
+            throws IOException, InvalidDataSetFormatVersionException, RegisterException,
+                   UnknownDataSetFormatException {
         switch (dataSet.getDataSetFormat().getVersion()) {
             case 1:
                 return convertToStandardFormat_v1(dataSet, config);
@@ -68,10 +69,9 @@ public class BLASTDataSetFormatParser extends DataSetFormatParser {
         }
     }
 
-    @SuppressWarnings("unused")
-    protected DataSet convertToStandardFormat_v1(DataSet dataSet,
-            ConversionInputToStandardConfiguration config) throws IOException,
-                                                                  RegisterException, UnknownDataSetFormatException {
+    protected IDataSet convertToStandardFormat_v1(IDataSet dataSet,
+            IConversionInputToStandardConfiguration config)
+            throws IOException, RegisterException, UnknownDataSetFormatException {
 
         String resultFileName = dataSet.getAbsolutePath();
         resultFileName = removeResultFileNameSuffix(resultFileName);
@@ -103,8 +103,8 @@ public class BLASTDataSetFormatParser extends DataSetFormatParser {
                 Config.costModel = 2; // Coverage BeH
                 Config.coverageFactor = 20;
                 Config.blastCutoff = 100000;
-                proteins2integers = new HashMap<Integer, String>();
-                integers2proteins = new HashMap<String, Integer>();
+                proteins2integers = new HashMap<>();
+                integers2proteins = new HashMap<>();
                 Creator c = new Creator();
                 c.run(proteins2integers, integers2proteins);
             }
@@ -168,10 +168,9 @@ public class BLASTDataSetFormatParser extends DataSetFormatParser {
      * data.dataset.format.DataSetFormatParser#convertToThisFormat(data.dataset
      * .DataSet)
      */
-    @SuppressWarnings("unused")
     @Override
-    protected IDataSet convertToThisFormat(DataSet dataSet,
-            DataSetFormat dataSetFormat, IConversionConfiguration config) {
+    public IDataSet convertToThisFormat(IDataSet dataSet,
+            IDataSetFormat dataSetFormat, IConversionConfiguration config) {
         return null;
     }
 
@@ -265,7 +264,7 @@ public class BLASTDataSetFormatParser extends DataSetFormatParser {
      * @see data.dataset.format.DataSetFormatParser#parse(data.dataset.DataSet)
      */
     @Override
-    protected SimilarityMatrix parse(DataSet dataSet, NUMBER_PRECISION precision)
+    public SimilarityMatrix parse(IDataSet dataSet, Precision precision)
             throws IOException, InvalidDataSetFormatVersionException {
         switch (dataSet.getDataSetFormat().getVersion()) {
             case 1:
@@ -278,8 +277,7 @@ public class BLASTDataSetFormatParser extends DataSetFormatParser {
         }
     }
 
-    protected SimilarityMatrix parse_v1(DataSet dataSet,
-            NUMBER_PRECISION precision) throws IOException {
+    protected SimilarityMatrix parse_v1(IDataSet dataSet, Precision precision) throws IOException {
 
         /*
          * Remove dataset attributes from file and write the result to
@@ -310,8 +308,8 @@ public class BLASTDataSetFormatParser extends DataSetFormatParser {
             Config.costModel = 2; // Coverage BeH
             Config.coverageFactor = 20;
             Config.blastCutoff = 100000;
-            final HashMap<Integer, String> proteins2integers = new HashMap<Integer, String>();
-            final HashMap<String, Integer> integers2proteins = new HashMap<String, Integer>();
+            final HashMap<Integer, String> proteins2integers = new HashMap<>();
+            final HashMap<String, Integer> integers2proteins = new HashMap<>();
             Creator c = new Creator();
             c.run(proteins2integers, integers2proteins);
 
@@ -349,9 +347,8 @@ public class BLASTDataSetFormatParser extends DataSetFormatParser {
      * de.clusteval.data.dataset.format.DataSetFormatParser#writeToFile(de.clusteval
      * .data.dataset.DataSet)
      */
-    @SuppressWarnings("unused")
     @Override
-    protected void writeToFileHelper(DataSet dataSet, BufferedWriter writer) {
+    public void writeToFileHelper(IDataSet dataSet, BufferedWriter writer) {
         return;
     }
 }

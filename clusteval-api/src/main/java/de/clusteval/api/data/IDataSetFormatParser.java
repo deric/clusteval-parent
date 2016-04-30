@@ -33,13 +33,6 @@ import java.security.InvalidParameterException;
 public interface IDataSetFormatParser extends IRepositoryObject {
 
     /**
-     * Name used for format loading
-     *
-     * @return unique format name
-     */
-    String getName();
-
-    /**
      * Convert the given dataset with this dataset format and the given version
      * using the passed configuration.
      *

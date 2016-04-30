@@ -75,6 +75,9 @@ public abstract class RepositoryObject implements RepositoryListener, IRepositor
 
     protected Logger log;
 
+    public RepositoryObject() {
+    }
+
     /**
      * Instantiates a new repository object.
      *
@@ -118,6 +121,14 @@ public abstract class RepositoryObject implements RepositoryListener, IRepositor
         if (register) {
             this.register();
         }
+    }
+
+    public void init(final IRepository repository, final long changeDate, final File absPath) {
+        this.repository = repository;
+        this.changeDate = changeDate;
+        this.listener = Collections.synchronizedSet(new HashSet<RepositoryListener>());
+        this.absPath = absPath;
+        this.log = LoggerFactory.getLogger(this.getClass());
     }
 
     /**

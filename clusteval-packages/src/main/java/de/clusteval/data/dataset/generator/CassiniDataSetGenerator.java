@@ -86,9 +86,9 @@ public class CassiniDataSetGenerator extends DataSetGenerator implements IDataSe
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see data.dataset.generator.DataSetGenerator#generatesGoldStandard()
+     * (non-Javadoc)
+     *
+     * @see data.dataset.generator.DataSetGenerator#generatesGoldStandard()
      */
     @Override
     public boolean generatesGoldStandard() {
@@ -136,9 +136,9 @@ public class CassiniDataSetGenerator extends DataSetGenerator implements IDataSe
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see data.dataset.generator.DataSetGenerator#generateGoldStandard()
+     * (non-Javadoc)
+     *
+     * @see data.dataset.generator.DataSetGenerator#generateGoldStandard()
      */
     @Override
     public GoldStandard generateGoldStandard() throws GoldStandardGenerationException {
