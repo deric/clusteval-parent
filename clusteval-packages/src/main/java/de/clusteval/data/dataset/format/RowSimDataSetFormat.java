@@ -10,10 +10,10 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset.format;
 
-import java.io.File;
-import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.FormatVersion;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.IRepository;
+import java.io.File;
 
 /**
  * @author Christian Wiwie
@@ -29,6 +29,9 @@ public class RowSimDataSetFormat extends RelativeDataSetFormat {
         return NAME;
     }
 
+    public RowSimDataSetFormat() {
+
+    }
     /**
      * Instantiates a new row sim data set format.
      *

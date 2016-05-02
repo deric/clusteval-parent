@@ -350,7 +350,7 @@ public class LayeredDivisiveParameterOptimizationMethod
 
         double remainingIterationCount = this.iterationsPerLayer;
         int remainingParams = this.params.size();
-        final List<Integer> iterations = new ArrayList<Integer>();
+        final List<Integer> iterations = new ArrayList<>();
 
         // parameters that have a fixed number of options
         for (int i = 0; i < params.size(); i++) {

@@ -247,7 +247,7 @@ public class DivisiveParameterOptimizationMethod extends ParameterOptimizationMe
 
     @Override
     public boolean hasNext() {
-        if (this.params.size() == 0) {
+        if (this.params.isEmpty()) {
             return false;
         }
         int currentParamPos = this.params.size() - 1;
@@ -269,7 +269,7 @@ public class DivisiveParameterOptimizationMethod extends ParameterOptimizationMe
      * @return True if the operation was successful, false otherwise.
      */
     public boolean increaseCurrentPos() {
-        if (this.params.size() == 0) {
+        if (this.params.isEmpty()) {
             return false;
         }
         int currentParamPos = this.params.size() - 1;

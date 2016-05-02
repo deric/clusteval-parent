@@ -10,17 +10,23 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset.format;
 
-import java.io.File;
-import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.FormatVersion;
+import de.clusteval.api.data.IDataSetFormat;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.IRepository;
+import java.io.File;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * @author Christian Wiwie
  */
 @FormatVersion(version = 1)
+@ServiceProvider(service = IDataSetFormat.class)
 public class TransClustSimMatrixDataSetFormat extends RelativeDataSetFormat {
 
+    public TransClustSimMatrixDataSetFormat() {
+
+    }
     /**
      * @param repo
      * @param register

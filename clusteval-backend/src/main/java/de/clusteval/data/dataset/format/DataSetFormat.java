@@ -19,9 +19,9 @@ import de.clusteval.api.data.IDataSetFormatParser;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.factory.DataSetFormatFactory;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.program.RegisterException;
 import de.clusteval.framework.repository.RepositoryObject;
 import de.clusteval.utils.FileUtils;
 import java.io.File;
@@ -77,7 +77,11 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class DataSetFormat extends RepositoryObject implements IDataSetFormat {
 
-    private static final Logger LOG = LoggerFactory.getLogger(DataSetFormat.class);
+    protected static final Logger LOG = LoggerFactory.getLogger(DataSetFormat.class);
+
+    public DataSetFormat() {
+
+    }
 
     /**
      * This method returns a deep copy of the given list of dataset formats,
@@ -135,7 +139,9 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
             return format;
         }
 
-        throw new UnknownDataSetFormatException("\"" + datasetFormat + "\" is not a known dataset format.");
+        throw new UnknownDataSetFormatException("\"" + datasetFormat + "\" "
+                + "is not a known dataset format. Supported formats are "
+                + factory.getAll().toString());
     }
 
     /**
@@ -168,7 +174,7 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
      *                       the dataset formats
      * @return the list
      * @throws UnknownDataSetFormatException
-     * the unknown data set format exception
+     *                                       the unknown data set format exception
      */
     public static List<IDataSetFormat> parseFromString(final IRepository repo,
             String[] datasetFormats) throws UnknownDataSetFormatException {
@@ -188,8 +194,9 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
      * @throws InvalidDataSetFormatVersionException
      * @throws IOException
      */
-    public Object parse(final IDataSet dataSet, Precision precision) throws IllegalArgumentException, IOException,
-                                                                            InvalidDataSetFormatVersionException {
+    public Object parse(final IDataSet dataSet, Precision precision)
+            throws IllegalArgumentException, IOException,
+                   InvalidDataSetFormatVersionException {
         final IDataSetFormatParser parser = getDataSetFormatParser();
         if (parser == null) {
             throw new IllegalArgumentException("Operation only supported for the standard dataset format");
@@ -227,7 +234,7 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
      *                The configuration to use to convert the passed dataset.
      * @return The converted dataset.
      * @throws IOException
-     * Signals that an I/O exception has occurred.
+     *                                              Signals that an I/O exception has occurred.
      * @throws InvalidDataSetFormatVersionException
      * @throws RegisterException
      * @throws UnknownDataSetFormatException
@@ -270,7 +277,7 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
      *                      The configuration to use to convert the passed dataset.
      * @return The converted dataset.
      * @throws IOException
-     * Signals that an I/O exception has occurred.
+     *                                              Signals that an I/O exception has occurred.
      * @throws InvalidDataSetFormatVersionException
      * @throws RegisterException
      * @throws UnknownDataSetFormatException
@@ -376,7 +383,7 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
             return this.getClass().getConstructor(this.getClass())
                     .newInstance(this);
         } catch (IllegalArgumentException | SecurityException | InstantiationException |
-                 IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
         this.log.warn("Cloning instance of class "
