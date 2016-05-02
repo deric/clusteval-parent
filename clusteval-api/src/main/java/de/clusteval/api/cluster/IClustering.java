@@ -92,4 +92,13 @@ public interface IClustering extends IRepositoryObject, Iterable<Cluster> {
      * @return The cluster item with the given id.
      */
     ClusterItem getClusterItemWithId(final String id);
+
+    /**
+     * Remove a cluster item from the specified cluster.
+     *
+     * @param item    The item to remove
+     * @param cluster The cluster to remove the item from.
+     * @return True if this item was contained in this clustering.
+     */
+    boolean removeClusterItem(final ClusterItem item, final Cluster cluster);
 }

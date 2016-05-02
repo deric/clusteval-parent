@@ -13,21 +13,21 @@
 package de.clusteval.cluster;
 
 import de.clusteval.api.ClusteringEvaluation;
+import de.clusteval.api.Pair;
+import de.clusteval.api.cluster.ClustEvalValue;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
-import de.clusteval.api.cluster.IClustering;
-import de.clusteval.api.cluster.ClustEvalValue;
 import de.clusteval.api.cluster.ClusteringQualitySet;
+import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.exceptions.ClusteringParseException;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.program.ParameterSet;
-import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.framework.repository.RepositoryObject;
-import de.clusteval.api.Pair;
 import de.wiwie.wiutils.utils.parse.TextFileParser;
 import java.io.File;
 import java.io.IOException;
@@ -338,8 +338,7 @@ public class Clustering extends RepositoryObject implements Iterable<Cluster>, I
      * @param cluster The cluster to remove the item from.
      * @return True if this item was contained in this clustering.
      */
-    public boolean removeClusterItem(final ClusterItem item,
-            final Cluster cluster) {
+    public boolean removeClusterItem(final ClusterItem item, final Cluster cluster) {
         if (!this.itemToCluster.containsKey(item)) {
             return false;
         }
