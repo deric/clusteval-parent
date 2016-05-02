@@ -10,23 +10,20 @@
  *     Christian Wiwie - initial API and implementation
  *****************************************************************************
  */
-/**
- *
- */
 package de.clusteval.run.statistics;
 
-import de.clusteval.cluster.quality.ClusteringQualityMeasure;
+import de.clusteval.api.ClusteringEvaluation;
+import de.clusteval.api.Pair;
 import de.clusteval.api.cluster.ClustEvalValue;
 import de.clusteval.api.cluster.ClusteringQualitySet;
-import de.clusteval.data.statistics.RunStatisticCalculateException;
-import de.clusteval.api.program.RegisterException;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.api.program.ParameterSet;
+import de.clusteval.api.program.RegisterException;
+import de.clusteval.data.statistics.RunStatisticCalculateException;
+import de.clusteval.framework.repository.Repository;
 import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.run.result.RunResult;
-import de.clusteval.utils.FileUtils;
 import de.clusteval.utils.ArraysExt;
-import de.clusteval.api.Pair;
+import de.clusteval.utils.FileUtils;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -67,9 +64,9 @@ public class ParameterImportanceRunStatisticCalculator
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see run.statistics.RunStatisticCalculator#calculateResult()
+     * (non-Javadoc)
+     *
+     * @see run.statistics.RunStatisticCalculator#calculateResult()
      */
     @Override
     protected ParameterImportanceRunStatistic calculateResult()
@@ -98,7 +95,7 @@ public class ParameterImportanceRunStatisticCalculator
                     // paramName x paramValue -> validityIndex x ( ...,
                     // qualities,
                     // ...)
-                    Map<Pair<String, String>, Map<ClusteringQualityMeasure, List<ClustEvalValue>>> paramQualities = new HashMap<>();
+                    Map<Pair<String, String>, Map<ClusteringEvaluation, List<ClustEvalValue>>> paramQualities = new HashMap<>();
 
                     for (Pair<ParameterSet, ClusteringQualitySet> qualities : result) {
                         for (String paramName : qualities.getFirst().keySet()) {
@@ -106,14 +103,14 @@ public class ParameterImportanceRunStatisticCalculator
                                     + ":" + paramName, qualities.getFirst()
                                     .get(paramName));
 
-                            Map<ClusteringQualityMeasure, List<ClustEvalValue>> quals;
+                            Map<ClusteringEvaluation, List<ClustEvalValue>> quals;
                             if (paramQualities.containsKey(p)) {
                                 quals = paramQualities.get(p);
                             } else {
-                                quals = new HashMap<ClusteringQualityMeasure, List<ClustEvalValue>>();
+                                quals = new HashMap<ClusteringEvaluation, List<ClustEvalValue>>();
                                 paramQualities.put(p, quals);
                             }
-                            for (ClusteringQualityMeasure m : qualities
+                            for (ClusteringEvaluation m : qualities
                                     .getSecond().keySet()) {
                                 if (!quals.containsKey(m)) {
                                     quals.put(m,
@@ -124,15 +121,15 @@ public class ParameterImportanceRunStatisticCalculator
                         }
                     }
 
-                    Map<Pair<String, String>, Map<String, Double>> paramQualitiesMean = new HashMap<Pair<String, String>, Map<String, Double>>();
+                    Map<Pair<String, String>, Map<String, Double>> paramQualitiesMean = new HashMap<>();
 
                     // average over qualities for a certain parameter value
                     for (Pair<String, String> p : paramQualities.keySet()) {
-                        Map<ClusteringQualityMeasure, List<ClustEvalValue>> quals = paramQualities
+                        Map<ClusteringEvaluation, List<ClustEvalValue>> quals = paramQualities
                                 .get(p);
 
-                        for (ClusteringQualityMeasure measure : quals.keySet()) {
-                            List<Double> q = new ArrayList<Double>();
+                        for (ClusteringEvaluation measure : quals.keySet()) {
+                            List<Double> q = new ArrayList<>();
                             for (int i = 0; i < quals.get(measure).size(); i++) {
                                 if (quals.get(measure).get(i).isTerminated()) {
                                     q.add(quals.get(measure).get(i).getValue());
@@ -156,7 +153,7 @@ public class ParameterImportanceRunStatisticCalculator
                     }
 
                     // merge for different param values into one list
-                    Map<String, Map<String, List<Double>>> paramQualitiesLists = new HashMap<String, Map<String, List<Double>>>();
+                    Map<String, Map<String, List<Double>>> paramQualitiesLists = new HashMap<>();
                     for (Pair<String, String> p : paramQualitiesMean.keySet()) {
                         String paramName = p.getFirst();
                         if (!paramQualitiesLists.containsKey(paramName)) {
@@ -177,12 +174,12 @@ public class ParameterImportanceRunStatisticCalculator
                     }
 
                     // calculate variances
-                    Map<String, Map<String, Double>> paramQualitiesVariances = new HashMap<String, Map<String, Double>>();
+                    Map<String, Map<String, Double>> paramQualitiesVariances = new HashMap<>();
 
                     for (String param : paramQualitiesLists.keySet()) {
                         if (!paramQualitiesVariances.containsKey(param)) {
                             paramQualitiesVariances.put(param,
-                                    new HashMap<String, Double>());
+                                    new HashMap<>());
                         }
                         Map<String, Double> map = paramQualitiesVariances
                                 .get(param);
@@ -227,9 +224,9 @@ public class ParameterImportanceRunStatisticCalculator
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see run.statistics.RunStatisticCalculator#getStatistic()
+     * (non-Javadoc)
+     *
+     * @see run.statistics.RunStatisticCalculator#getStatistic()
      */
     @Override
     public ParameterImportanceRunStatistic getStatistic() {
@@ -237,9 +234,9 @@ public class ParameterImportanceRunStatisticCalculator
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see utils.StatisticCalculator#writeOutputTo(java.io.File)
+     * (non-Javadoc)
+     *
+     * @see utils.StatisticCalculator#writeOutputTo(java.io.File)
      */
     @Override
     public void writeOutputTo(File absFolderPath) {

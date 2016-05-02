@@ -14,14 +14,15 @@ package de.clusteval.run.statistics;
 
 import cern.colt.matrix.tlong.LongMatrix2D;
 import cern.colt.matrix.tlong.impl.SparseLongMatrix2D;
+import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.cluster.Clustering;
-import de.clusteval.cluster.quality.ClusteringQualityMeasure;
 import de.clusteval.data.statistics.RunStatisticCalculateException;
-import de.clusteval.framework.repository.MyRengine;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.program.ParameterSet;
+import de.clusteval.api.r.IRengine;
+import de.clusteval.api.r.RException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.IRunResult;
 import de.clusteval.run.result.ParameterOptimizationResult;
@@ -34,8 +35,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import org.rosuda.REngine.REngineException;
-import org.rosuda.REngine.Rserve.RserveException;
 
 /**
  * @author Christian Wiwie
@@ -114,7 +113,7 @@ public class CooccurrenceBestRunStatisticCalculator
                     }
                 }
 
-                Map<ClusteringQualityMeasure, ParameterSet> paramSets = result
+                Map<ClusteringEvaluation, ParameterSet> paramSets = result
                         .getOptimalParameterSets();
 
                 try {
@@ -189,38 +188,22 @@ public class CooccurrenceBestRunStatisticCalculator
      * @see utils.StatisticCalculator#writeOutputTo(java.io.File)
      */
     @Override
-    public void writeOutputTo(File absFolderPath) throws InterruptedException {
+    public void writeOutputTo(File absFolderPath) throws InterruptedException, RException {
         LongMatrix2D matrix = lastResult.cooccurrenceMatrix;
-        try {
-            MyRengine rEngine = repository.getRengineForCurrentThread();
-            try {
-                rEngine.assign("ids", lastResult.ids);
-                rEngine.assign("coocc",
-                        ArraysExt.toDoubleArray(matrix.toArray()));
-                rEngine.eval("rownames(coocc) <- ids");
-                rEngine.eval("colnames(coocc) <- ids");
-                rEngine.eval("hclustSorted <- ids[hclust(dist(coocc))$order]");
-                rEngine.eval("cooccSorted <- coocc[hclustSorted,hclustSorted]");
-                // rEngine.eval("library(ggplot2)");
-                rEngine.eval("library(lattice)");
-                // TODO
-                rEngine.eval("png(filename='" + absFolderPath.getAbsolutePath()
-                        + ".png',width=" + lastResult.ids.length + ",height="
-                        + lastResult.ids.length + ",units='px');");
-                // rEngine.eval("plot <- ggfluctuation(as.table(cooccSorted), type='colour')+scale_fill_gradient(low='red',high='yellow')+opts(panel.grid.major = theme_blank(),panel.background = theme_blank(),panel.grid.minor = theme_blank(),axis.text.x=theme_text(size=8,angle=-45,vjust=1,hjust=0),axis.text.y= theme_text(size=8));");//+geom_text(aes(label=c(cooccSorted)),size=1);");
-                // rEngine.eval("ggsave(filename='"
-                // + absFolderPath.getAbsolutePath()
-                // + ".png', plot=plot);");
-                rEngine.eval("print(levelplot(cooccSorted,xlab='',ylab='',col.regions=colorRampPalette(c('red','yellow')),scales=list(x=list(rot=90))));");
-                // rEngine.eval("heatmap(cooccSorted,Rowv=NA,Colv=NA,scale='none')");
-                rEngine.eval("graphics.off(); ");
-            } catch (RserveException e) {
-                e.printStackTrace();
-            } finally {
-                rEngine.clear();
-            }
-        } catch (REngineException e) {
-            e.printStackTrace();
-        }
+        IRengine rEngine = repository.getRengineForCurrentThread();
+        rEngine.assign("ids", lastResult.ids);
+        rEngine.assign("coocc",
+                ArraysExt.toDoubleArray(matrix.toArray()));
+        rEngine.eval("rownames(coocc) <- ids");
+        rEngine.eval("colnames(coocc) <- ids");
+        rEngine.eval("hclustSorted <- ids[hclust(dist(coocc))$order]");
+        rEngine.eval("cooccSorted <- coocc[hclustSorted,hclustSorted]");
+        rEngine.eval("library(lattice)");
+        rEngine.eval("png(filename='" + absFolderPath.getAbsolutePath()
+                + ".png',width=" + lastResult.ids.length + ",height="
+                + lastResult.ids.length + ",units='px');");
+        rEngine.eval("print(levelplot(cooccSorted,xlab='',ylab='',col.regions=colorRampPalette(c('red','yellow')),scales=list(x=list(rot=90))));");
+        rEngine.eval("graphics.off(); ");
+        rEngine.clear();
     }
 }

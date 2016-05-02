@@ -12,24 +12,65 @@
  */
 package de.clusteval.run.statistics;
 
-import de.clusteval.cluster.quality.ClusteringQualityMeasure;
+import de.clusteval.api.ClusteringEvaluation;
+import de.clusteval.api.Pair;
 import de.clusteval.api.cluster.ClustEvalValue;
 import de.clusteval.api.cluster.ClusteringQualitySet;
-import de.clusteval.data.DataConfig;
-import de.clusteval.data.statistics.DataStatistic;
-import de.clusteval.data.statistics.DoubleValueDataStatistic;
-import de.clusteval.framework.repository.MyRengine;
-import de.clusteval.api.program.RegisterException;
-import de.clusteval.framework.repository.Repository;
+import de.clusteval.api.data.IDataConfig;
+import de.clusteval.api.exceptions.DataSetNotFoundException;
+import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
+import de.clusteval.api.exceptions.GoldStandardConfigurationException;
+import de.clusteval.api.exceptions.GoldStandardNotFoundException;
+import de.clusteval.api.exceptions.IncompatibleContextException;
+import de.clusteval.api.exceptions.NoDataSetException;
+import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
+import de.clusteval.api.exceptions.NoRepositoryFoundException;
+import de.clusteval.api.exceptions.RunResultParseException;
+import de.clusteval.api.exceptions.UnknownContextException;
+import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
+import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
+import de.clusteval.api.exceptions.UnknownParameterType;
+import de.clusteval.api.exceptions.UnknownProgramParameterException;
+import de.clusteval.api.exceptions.UnknownProgramTypeException;
+import de.clusteval.api.exceptions.UnknownRunResultFormatException;
+import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
+import de.clusteval.api.opt.InvalidOptimizationParameterException;
+import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
+import de.clusteval.api.program.IProgram;
 import de.clusteval.api.program.ParameterSet;
-import de.clusteval.program.Program;
+import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.r.IRengine;
+import de.clusteval.api.r.InvalidRepositoryException;
+import de.clusteval.api.r.RException;
+import de.clusteval.api.r.RExpr;
+import de.clusteval.api.r.RepositoryAlreadyExistsException;
+import de.clusteval.api.r.UnknownRProgramException;
+import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.run.IRunResult;
+import de.clusteval.api.stats.IDataStatistic;
+import de.clusteval.api.stats.UnknownDataStatisticException;
+import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
+import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
+import de.clusteval.data.DataConfigNotFoundException;
+import de.clusteval.data.DataConfigurationException;
+import de.clusteval.data.dataset.DataSetConfigNotFoundException;
+import de.clusteval.data.dataset.DataSetConfigurationException;
+import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
+import de.clusteval.data.dataset.type.UnknownDataSetTypeException;
+import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
+import de.clusteval.data.randomizer.UnknownDataRandomizerException;
+import de.clusteval.data.statistics.DoubleValueDataStatistic;
+import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
+import de.clusteval.framework.repository.config.RepositoryConfigurationException;
+import de.clusteval.run.InvalidRunModeException;
+import de.clusteval.run.RunException;
 import de.clusteval.run.result.DataAnalysisRunResult;
 import de.clusteval.run.result.ParameterOptimizationResult;
-import de.clusteval.run.result.RunResult;
-import de.clusteval.api.exceptions.RunResultParseException;
 import de.clusteval.utils.FileUtils;
-import de.clusteval.api.Pair;
+import de.clusteval.utils.InvalidConfigurationFileException;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -37,7 +78,8 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import org.rosuda.REngine.REXP;
+import org.apache.commons.configuration.ConfigurationException;
+import org.openide.util.Exceptions;
 
 /**
  * @author Christian Wiwie
@@ -55,7 +97,7 @@ public class LinearModelRidgeRunDataStatisticCalculator
      * @param dataIdentifiers
      * @throws RegisterException
      */
-    public LinearModelRidgeRunDataStatisticCalculator(Repository repository,
+    public LinearModelRidgeRunDataStatisticCalculator(IRepository repository,
             long changeDate, File absPath, final List<String> runIdentifiers,
             final List<String> dataIdentifiers) throws RegisterException {
         super(repository, changeDate, absPath, runIdentifiers, dataIdentifiers);
@@ -74,17 +116,16 @@ public class LinearModelRidgeRunDataStatisticCalculator
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see run.statistics.RunDataStatisticCalculator#calculateResult()
+     * (non-Javadoc)
+     *
+     * @see run.statistics.RunDataStatisticCalculator#calculateResult()
      */
     @Override
-    protected LinearModelRidgeRunDataStatistic calculateResultHelper(
-            final MyRengine rEngine) throws IllegalArgumentException,
-                                            RegisterException, RunResultParseException {
+    public LinearModelRidgeRunDataStatistic calculateResultHelper(
+            final IRengine rEngine) throws IllegalArgumentException, RegisterException, RunResultParseException {
 
         /*
-		 * Get clustering results
+         * Get clustering results
          */
         List<ParameterOptimizationResult> runResults = new ArrayList<>();
         for (String runIdentifier : this.uniqueRunIdentifiers) {
@@ -94,10 +135,24 @@ public class LinearModelRidgeRunDataStatisticCalculator
                 ParameterOptimizationResult.parseFromRunResultFolder2(
                         this.repository,
                         new File(FileUtils.buildPath(
-                                this.repository.getBasePath(RunResult.class),
+                                this.repository.getBasePath(IRunResult.class),
                                 runIdentifier)), results, false, false, false);
                 runResults.addAll(results);
-            } catch (Exception e) {
+            } catch (IOException | UnknownRunResultFormatException | UnknownDataSetFormatException |
+                    UnknownClusteringQualityMeasureException | InvalidRunModeException | UnknownParameterOptimizationMethodException |
+                    NoOptimizableProgramParameterException | UnknownProgramParameterException | UnknownGoldStandardFormatException |
+                    InvalidConfigurationFileException | RepositoryAlreadyExistsException | InvalidRepositoryException |
+                    NoRepositoryFoundException | GoldStandardNotFoundException | InvalidOptimizationParameterException |
+                    GoldStandardConfigurationException | DataSetConfigurationException | DataSetNotFoundException |
+                    DataSetConfigNotFoundException | GoldStandardConfigNotFoundException | DataConfigurationException |
+                    DataConfigNotFoundException | RunException | UnknownDataStatisticException | UnknownProgramTypeException |
+                    UnknownRProgramException | IncompatibleParameterOptimizationMethodException | UnknownDistanceMeasureException |
+                    UnknownRunStatisticException | RepositoryConfigNotFoundException | RepositoryConfigurationException |
+                    ConfigurationException | RegisterException | UnknownDataSetTypeException | NumberFormatException |
+                    NoDataSetException | UnknownRunDataStatisticException | RunResultParseException | UnknownDataPreprocessorException |
+                    IncompatibleDataSetConfigPreprocessorException | UnknownContextException | IncompatibleContextException |
+                    UnknownParameterType | InterruptedException | UnknownRunResultPostprocessorException | UnknownDataRandomizerException e) {
+                Exceptions.printStackTrace(e);
             }
         }
 
@@ -107,10 +162,10 @@ public class LinearModelRidgeRunDataStatisticCalculator
             }
 
             /*
-			 * Get data configs common for all data analysis runs
+             * Get data configs common for all data analysis runs
              */
             final List<DataAnalysisRunResult> dataResults = new ArrayList<>();
-            List<DataConfig> commonDataConfigs = new ArrayList<>();
+            List<IDataConfig> commonDataConfigs = new ArrayList<>();
             for (String dataIdentifier : this.uniqueDataIdentifiers) {
                 try {
                     DataAnalysisRunResult dataResult = DataAnalysisRunResult
@@ -118,7 +173,7 @@ public class LinearModelRidgeRunDataStatisticCalculator
                                     this.repository,
                                     new File(FileUtils.buildPath(
                                             this.repository
-                                            .getBasePath(RunResult.class),
+                                            .getBasePath(IRunResult.class),
                                             dataIdentifier)));
                     if (dataResult != null) {
                         dataResults.add(dataResult);
@@ -133,27 +188,27 @@ public class LinearModelRidgeRunDataStatisticCalculator
                     result.loadIntoMemory();
                 }
 
-                List<String> commonDataConfigNames = new ArrayList<String>();
-                for (DataConfig first : commonDataConfigs) {
+                List<String> commonDataConfigNames = new ArrayList<>();
+                for (IDataConfig first : commonDataConfigs) {
                     commonDataConfigNames.add(first.getName());
                 }
                 commonDataConfigNames = new ArrayList<String>(
                         new LinkedHashSet<String>(commonDataConfigNames));
 
                 /*
-				 * Get data statistics calculated for dataconfigs
+                 * Get data statistics calculated for dataconfigs
                  */
                 // mapping from dataconfig,dataStatisticName -> data statistic
                 final Set<String> dataStatisticNames = new HashSet<String>();
 
-                final Map<String, Map<String, DataStatistic>> calculatedDataStatistics = new HashMap<String, Map<String, DataStatistic>>();
+                final Map<String, Map<String, IDataStatistic>> calculatedDataStatistics = new HashMap<>();
                 for (DataAnalysisRunResult dataResult : dataResults) {
-                    for (DataConfig dataConfig : dataResult.getDataConfigs()) {
-                        final List<DataStatistic> dataStatistics = dataResult
+                    for (IDataConfig dataConfig : dataResult.getDataConfigs()) {
+                        final List<IDataStatistic> dataStatistics = dataResult
                                 .getDataStatistics(dataConfig);
 
                         // take only data statistics with a double value
-                        for (DataStatistic ds : dataStatistics) {
+                        for (IDataStatistic ds : dataStatistics) {
                             if (ds instanceof DoubleValueDataStatistic) {
                                 dataStatisticNames.add(ds.getClass()
                                         .getSimpleName());
@@ -165,7 +220,7 @@ public class LinearModelRidgeRunDataStatisticCalculator
                                         .containsKey(dataConfig.getName())) {
                                     calculatedDataStatistics
                                             .put(dataConfig.getName(),
-                                                    new HashMap<String, DataStatistic>());
+                                                    new HashMap<>());
                                 }
                                 calculatedDataStatistics.get(
                                         dataConfig.getName()).put(
@@ -175,10 +230,10 @@ public class LinearModelRidgeRunDataStatisticCalculator
                     }
                 }
                 /*
-				 * find data statistics common for all data configs in all data
-				 * analysis runs
+                 * find data statistics common for all data configs in all data
+                 * analysis runs
                  */
-                final List<String> commonDataStatisticNames = new ArrayList<String>(
+                final List<String> commonDataStatisticNames = new ArrayList<>(
                         new LinkedHashSet<String>(dataStatisticNames));
                 for (String dataConfig : commonDataConfigNames) {
                     commonDataStatisticNames.retainAll(calculatedDataStatistics
@@ -192,7 +247,7 @@ public class LinearModelRidgeRunDataStatisticCalculator
                 }
 
                 /*
-				 * Build up the input matrix X
+                 * Build up the input matrix X
                  */
                 final int rowNum = commonDataConfigs.size();
                 if (rowNum > 0 && colNum > 0) {
@@ -201,10 +256,10 @@ public class LinearModelRidgeRunDataStatisticCalculator
                     double[][] x = new double[rowNum][colNum];
 
                     for (int row = 0; row < rowNum; row++) {
-                        final DataConfig dc = commonDataConfigs.get(row);
+                        final IDataConfig dc = commonDataConfigs.get(row);
 
                         for (int col = 0; col < colNum; col++) {
-                            final DataStatistic ds = calculatedDataStatistics
+                            final IDataStatistic ds = calculatedDataStatistics
                                     .get(dc.getName()).get(
                                     commonDataStatisticNames.get(col));
 
@@ -217,25 +272,25 @@ public class LinearModelRidgeRunDataStatisticCalculator
                     }
 
                     /*
-					 * Build vector y for every program and quality measure.
-					 * ProgramFullName x ClusteringQualityMeasureName ->
-					 * QualitiesOfProgramOnDataConfigs
+                     * Build vector y for every program and quality measure.
+                     * ProgramFullName x ClusteringQualityMeasureName ->
+                     * QualitiesOfProgramOnDataConfigs
                      */
-                    final Map<Pair<String, String>, Double[]> yMap = new HashMap<Pair<String, String>, Double[]>();
+                    final Map<Pair<String, String>, Double[]> yMap = new HashMap<>();
 
                     // iterate over run results
                     for (ParameterOptimizationResult paramResult : runResults) {
-                        final Program p = paramResult.getMethod()
+                        final IProgram p = paramResult.getMethod()
                                 .getProgramConfig().getProgram();
-                        final DataConfig dc = paramResult.getDataConfig();
+                        final IDataConfig dc = paramResult.getDataConfig();
 
                         final String programName = p.getFullName();
                         final String dataConfigName = dc.getName();
 
                         // get qualities for this run result
-                        final Map<ClusteringQualityMeasure, ParameterSet> optParamSet = paramResult
+                        final Map<ClusteringEvaluation, ParameterSet> optParamSet = paramResult
                                 .getOptimalParameterSets();
-                        for (ClusteringQualityMeasure measure : optParamSet
+                        for (ClusteringEvaluation measure : optParamSet
                                 .keySet()) {
                             final String measureName = measure.toString();
 
@@ -265,7 +320,7 @@ public class LinearModelRidgeRunDataStatisticCalculator
                         }
                     }
 
-                    Map<Pair<String, String>, double[]> coeffMap = new HashMap<Pair<String, String>, double[]>();
+                    Map<Pair<String, String>, double[]> coeffMap = new HashMap<>();
 
                     /**
                      * Train models
@@ -299,11 +354,11 @@ public class LinearModelRidgeRunDataStatisticCalculator
                             rEngine.assign("y", newY);
                             rEngine.eval("library(MASS)");
                             rEngine.eval("model <- lm.ridge(y ~ x,lambda=1)");
-                            REXP result = rEngine.eval("coef(model)");
+                            RExpr result = rEngine.eval("coef(model)");
                             double[] coeffs = result.asDoubles();
 
                             coeffMap.put(pair, coeffs);
-                        } catch (Exception e) {
+                        } catch (RException | InterruptedException e) {
                             e.printStackTrace();
                         }
                     }
@@ -326,9 +381,9 @@ public class LinearModelRidgeRunDataStatisticCalculator
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see run.statistics.RunStatisticCalculator#getStatistic()
+     * (non-Javadoc)
+     *
+     * @see run.statistics.RunStatisticCalculator#getStatistic()
      */
     @Override
     public LinearModelRidgeRunDataStatistic getStatistic() {
@@ -336,9 +391,9 @@ public class LinearModelRidgeRunDataStatisticCalculator
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see utils.StatisticCalculator#writeOutputTo(java.io.File)
+     * (non-Javadoc)
+     *
+     * @see utils.StatisticCalculator#writeOutputTo(java.io.File)
      */
     @SuppressWarnings("unused")
     @Override

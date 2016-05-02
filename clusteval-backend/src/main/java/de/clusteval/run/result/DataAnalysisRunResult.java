@@ -44,7 +44,6 @@ import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationM
 import de.clusteval.api.opt.InvalidOptimizationParameterException;
 import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
-import de.clusteval.data.DataConfig;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
@@ -294,7 +293,7 @@ public class DataAnalysisRunResult extends AnalysisRunResult<IDataConfig, IDataS
      * @return The data statistics that were assessed for the given data
      *         configuration.
      */
-    public List<IDataStatistic> getDataStatistics(final DataConfig dataConfig) {
+    public List<IDataStatistic> getDataStatistics(final IDataConfig dataConfig) {
         return this.statistics.get(dataConfig);
     }
 

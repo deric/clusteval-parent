@@ -12,23 +12,25 @@
  */
 package de.clusteval.run.statistics;
 
+import de.clusteval.api.ClusteringEvaluation;
+import de.clusteval.api.Pair;
 import de.clusteval.api.cluster.ClustEvalValue;
 import de.clusteval.api.cluster.ClusteringQualitySet;
+import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.exceptions.RunResultParseException;
+import de.clusteval.api.program.IProgram;
 import de.clusteval.api.program.ParameterSet;
 import de.clusteval.api.program.RegisterException;
-import de.clusteval.cluster.quality.ClusteringQualityMeasure;
-import de.clusteval.data.DataConfig;
-import de.clusteval.data.statistics.DataStatistic;
+import de.clusteval.api.r.IRengine;
+import de.clusteval.api.r.RException;
+import de.clusteval.api.r.RExpr;
+import de.clusteval.api.run.IRunResult;
+import de.clusteval.api.stats.IDataStatistic;
 import de.clusteval.data.statistics.DoubleValueDataStatistic;
-import de.clusteval.framework.repository.MyRengine;
 import de.clusteval.framework.repository.Repository;
-import de.clusteval.program.Program;
 import de.clusteval.run.result.DataAnalysisRunResult;
 import de.clusteval.run.result.ParameterOptimizationResult;
-import de.clusteval.run.result.RunResult;
 import de.clusteval.utils.FileUtils;
-import de.clusteval.api.Pair;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,7 +39,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import org.rosuda.REngine.REXP;
+import org.openide.util.Exceptions;
 
 /**
  * @author Christian Wiwie
@@ -74,17 +76,16 @@ public class LinearModelLassoRunDataStatisticCalculator
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see run.statistics.RunDataStatisticCalculator#calculateResult()
+     * (non-Javadoc)
+     *
+     * @see run.statistics.RunDataStatisticCalculator#calculateResult()
      */
     @Override
     protected LinearModelLassoRunDataStatistic calculateResultHelper(
-            final MyRengine rEngine) throws IllegalArgumentException,
-                                            RegisterException, RunResultParseException {
+            final IRengine rEngine) throws IllegalArgumentException, RegisterException, RunResultParseException {
 
         /*
-		 * Get clustering results
+         * Get clustering results
          */
         List<ParameterOptimizationResult> runResults = new ArrayList<>();
         for (String runIdentifier : this.uniqueRunIdentifiers) {
@@ -94,10 +95,11 @@ public class LinearModelLassoRunDataStatisticCalculator
                 ParameterOptimizationResult.parseFromRunResultFolder2(
                         this.repository,
                         new File(FileUtils.buildPath(
-                                this.repository.getBasePath(RunResult.class),
+                                this.repository.getBasePath(IRunResult.class),
                                 runIdentifier)), results, false, false, false);
                 runResults.addAll(results);
             } catch (Exception e) {
+                Exceptions.printStackTrace(e);
             }
         }
 
@@ -106,10 +108,10 @@ public class LinearModelLassoRunDataStatisticCalculator
                 result.loadIntoMemory();
             }
             /*
-			 * Get data configs common for all data analysis runs
+             * Get data configs common for all data analysis runs
              */
             final List<DataAnalysisRunResult> dataResults = new ArrayList<>();
-            List<DataConfig> commonDataConfigs = new ArrayList<>();
+            List<IDataConfig> commonDataConfigs = new ArrayList<>();
             for (String dataIdentifier : this.uniqueDataIdentifiers) {
                 try {
                     DataAnalysisRunResult dataResult = DataAnalysisRunResult
@@ -118,13 +120,14 @@ public class LinearModelLassoRunDataStatisticCalculator
                                     new File(
                                             FileUtils.buildPath(
                                                     this.repository
-                                                    .getBasePath(RunResult.class),
+                                                    .getBasePath(IRunResult.class),
                                                     dataIdentifier)));
                     if (dataResult != null) {
                         dataResults.add(dataResult);
                         commonDataConfigs.addAll(dataResult.getDataConfigs());
                     }
                 } catch (Exception e) {
+                    Exceptions.printStackTrace(e);
                 }
             }
 
@@ -134,26 +137,26 @@ public class LinearModelLassoRunDataStatisticCalculator
                 }
 
                 List<String> commonDataConfigNames = new ArrayList<String>();
-                for (DataConfig first : commonDataConfigs) {
+                for (IDataConfig first : commonDataConfigs) {
                     commonDataConfigNames.add(first.getName());
                 }
                 commonDataConfigNames = new ArrayList<String>(
-                        new LinkedHashSet<String>(commonDataConfigNames));
+                        new LinkedHashSet<>(commonDataConfigNames));
 
                 /*
-				 * Get data statistics calculated for dataconfigs
+                 * Get data statistics calculated for dataconfigs
                  */
                 // mapping from dataconfig,dataStatisticName -> data statistic
-                final Set<String> dataStatisticNames = new HashSet<String>();
+                final Set<String> dataStatisticNames = new HashSet<>();
 
-                final Map<String, Map<String, DataStatistic>> calculatedDataStatistics = new HashMap<String, Map<String, DataStatistic>>();
+                final Map<String, Map<String, IDataStatistic>> calculatedDataStatistics = new HashMap<>();
                 for (DataAnalysisRunResult dataResult : dataResults) {
-                    for (DataConfig dataConfig : dataResult.getDataConfigs()) {
-                        final List<DataStatistic> dataStatistics = dataResult
+                    for (IDataConfig dataConfig : dataResult.getDataConfigs()) {
+                        final List<IDataStatistic> dataStatistics = dataResult
                                 .getDataStatistics(dataConfig);
 
                         // take only data statistics with a double value
-                        for (DataStatistic ds : dataStatistics) {
+                        for (IDataStatistic ds : dataStatistics) {
                             if (ds instanceof DoubleValueDataStatistic) {
                                 dataStatisticNames.add(ds.getClass()
                                         .getSimpleName());
@@ -164,8 +167,7 @@ public class LinearModelLassoRunDataStatisticCalculator
                                 if (!calculatedDataStatistics
                                         .containsKey(dataConfig.getName())) {
                                     calculatedDataStatistics
-                                            .put(dataConfig.getName(),
-                                                    new HashMap<String, DataStatistic>());
+                                            .put(dataConfig.getName(), new HashMap<>());
                                 }
                                 calculatedDataStatistics.get(
                                         dataConfig.getName()).put(
@@ -175,10 +177,10 @@ public class LinearModelLassoRunDataStatisticCalculator
                     }
                 }
                 /*
-				 * find data statistics common for all data configs in all data
-				 * analysis runs
+                 * find data statistics common for all data configs in all data
+                 * analysis runs
                  */
-                final List<String> commonDataStatisticNames = new ArrayList<String>(
+                final List<String> commonDataStatisticNames = new ArrayList<>(
                         new LinkedHashSet<String>(dataStatisticNames));
                 for (String dataConfig : commonDataConfigNames) {
                     commonDataStatisticNames.retainAll(calculatedDataStatistics
@@ -192,7 +194,7 @@ public class LinearModelLassoRunDataStatisticCalculator
                 }
 
                 /*
-				 * Build up the input matrix X
+                 * Build up the input matrix X
                  */
                 final int rowNum = commonDataConfigs.size();
                 if (rowNum > 0 && colNum > 0) {
@@ -201,10 +203,10 @@ public class LinearModelLassoRunDataStatisticCalculator
                     double[][] x = new double[rowNum][colNum];
 
                     for (int row = 0; row < rowNum; row++) {
-                        final DataConfig dc = commonDataConfigs.get(row);
+                        final IDataConfig dc = commonDataConfigs.get(row);
 
                         for (int col = 0; col < colNum; col++) {
-                            final DataStatistic ds = calculatedDataStatistics
+                            final IDataStatistic ds = calculatedDataStatistics
                                     .get(dc.getName()).get(
                                     commonDataStatisticNames.get(col));
 
@@ -217,25 +219,25 @@ public class LinearModelLassoRunDataStatisticCalculator
                     }
 
                     /*
-					 * Build vector y for every program and quality measure.
-					 * ProgramFullName x ClusteringQualityMeasureName ->
-					 * QualitiesOfProgramOnDataConfigs
+                     * Build vector y for every program and quality measure.
+                     * ProgramFullName x ClusteringQualityMeasureName ->
+                     * QualitiesOfProgramOnDataConfigs
                      */
-                    final Map<Pair<String, String>, Double[]> yMap = new HashMap<Pair<String, String>, Double[]>();
+                    final Map<Pair<String, String>, Double[]> yMap = new HashMap<>();
 
                     // iterate over run results
                     for (ParameterOptimizationResult paramResult : runResults) {
-                        final Program p = paramResult.getMethod()
+                        final IProgram p = paramResult.getMethod()
                                 .getProgramConfig().getProgram();
-                        final DataConfig dc = paramResult.getDataConfig();
+                        final IDataConfig dc = paramResult.getDataConfig();
 
                         final String programName = p.getFullName();
                         final String dataConfigName = dc.getName();
 
                         // get qualities for this run result
-                        final Map<ClusteringQualityMeasure, ParameterSet> optParamSet = paramResult
+                        final Map<ClusteringEvaluation, ParameterSet> optParamSet = paramResult
                                 .getOptimalParameterSets();
-                        for (ClusteringQualityMeasure measure : optParamSet
+                        for (ClusteringEvaluation measure : optParamSet
                                 .keySet()) {
                             final String measureName = measure.toString();
 
@@ -265,10 +267,10 @@ public class LinearModelLassoRunDataStatisticCalculator
                         }
                     }
 
-                    Map<Pair<String, String>, double[]> coeffMap = new HashMap<Pair<String, String>, double[]>();
+                    Map<Pair<String, String>, double[]> coeffMap = new HashMap<>();
 
                     /*
-					 * Train models
+                     * Train models
                      */
                     for (Pair<String, String> pair : yMap.keySet()) {
                         final Double[] y = yMap.get(pair);
@@ -299,11 +301,11 @@ public class LinearModelLassoRunDataStatisticCalculator
                             rEngine.assign("y", newY);
                             rEngine.eval("library(lars)");
                             rEngine.eval("model <- lars(x=x,y=y,type='lasso')");
-                            REXP result = rEngine.eval("model$beta[2,]");
+                            RExpr result = rEngine.eval("model$beta[2,]");
                             double[] coeffs = result.asDoubles();
 
                             coeffMap.put(pair, coeffs);
-                        } catch (Exception e) {
+                        } catch (RException | InterruptedException e) {
                             e.printStackTrace();
                         }
                     }
@@ -326,9 +328,9 @@ public class LinearModelLassoRunDataStatisticCalculator
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see run.statistics.RunStatisticCalculator#getStatistic()
+     * (non-Javadoc)
+     *
+     * @see run.statistics.RunStatisticCalculator#getStatistic()
      */
     @Override
     public LinearModelLassoRunDataStatistic getStatistic() {
@@ -336,9 +338,9 @@ public class LinearModelLassoRunDataStatisticCalculator
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see utils.StatisticCalculator#writeOutputTo(java.io.File)
+     * (non-Javadoc)
+     *
+     * @see utils.StatisticCalculator#writeOutputTo(java.io.File)
      */
     @SuppressWarnings("unused")
     @Override

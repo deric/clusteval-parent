@@ -25,6 +25,13 @@ public interface RExpr {
 
     double asDouble();
 
+    /**
+     * Convert result to an array of Doubles
+     *
+     * @return
+     */
+    double[] asDoubles();
+
     int asInteger();
 
     /**

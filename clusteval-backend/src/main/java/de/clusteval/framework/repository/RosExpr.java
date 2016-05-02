@@ -100,4 +100,14 @@ public class RosExpr implements RExpr {
         }
         return new String[0];
     }
+
+    @Override
+    public double[] asDoubles() {
+        try {
+            return r.asDoubles();
+        } catch (REXPMismatchException ex) {
+            Exceptions.printStackTrace(ex);
+        }
+        return new double[0];
+    }
 }

@@ -3,7 +3,7 @@ package de.costmatrixcreation.gui;
 import java.io.File;
 
 public class DirectoryFileFilter extends javax.swing.filechooser.FileFilter
-    implements java.io.FileFilter {
+        implements java.io.FileFilter {
 
     private static final String DESCRIPTION = "Directories only";
 
@@ -17,6 +17,5 @@ public class DirectoryFileFilter extends javax.swing.filechooser.FileFilter
     public String getDescription() {
         return DESCRIPTION;
     }
-
 
 }
