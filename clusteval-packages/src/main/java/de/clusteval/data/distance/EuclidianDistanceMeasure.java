@@ -10,20 +10,17 @@
  *     Christian Wiwie - initial API and implementation
  *****************************************************************************
  */
-/**
- *
- */
 package de.clusteval.data.distance;
 
-import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
-import de.clusteval.api.r.RLibraryRequirement;
-import de.clusteval.framework.repository.MyRengine;
+import de.clusteval.api.data.IConversionInputToStandardConfiguration;
 import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.r.IRengine;
+import de.clusteval.api.r.RException;
+import de.clusteval.api.r.RLibraryRequirement;
+import de.clusteval.api.r.ROperationNotSupported;
 import de.clusteval.framework.repository.Repository;
 import java.io.File;
 import java.security.InvalidParameterException;
-import org.rosuda.REngine.REXPMismatchException;
-import org.rosuda.REngine.REngineException;
 
 /**
  * @author Christian Wiwie
@@ -56,9 +53,9 @@ public class EuclidianDistanceMeasure extends DistanceMeasureR {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see data.distance.DistanceMeasure#supportsMatrix()
+     * (non-Javadoc)
+     *
+     * @see data.distance.DistanceMeasure#supportsMatrix()
      */
     @Override
     public boolean supportsMatrix() {
@@ -66,9 +63,9 @@ public class EuclidianDistanceMeasure extends DistanceMeasureR {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.clusteval.data.distance.DistanceMeasure#isSymmetric()
+     * (non-Javadoc)
+     *
+     * @see de.clusteval.data.distance.DistanceMeasure#isSymmetric()
      */
     @Override
     public boolean isSymmetric() {
@@ -83,8 +80,8 @@ public class EuclidianDistanceMeasure extends DistanceMeasureR {
      * double[], de.clusteval.framework.repository.MyRengine)
      */
     @Override
-    protected double getDistanceHelper(double[] point1, double[] point2,
-            MyRengine rEngine) throws REngineException, REXPMismatchException {
+    public double getDistanceHelper(double[] point1, double[] point2, IRengine rEngine)
+            throws RException, ROperationNotSupported, InterruptedException {
         double result = 0.0;
         if (point1.length != point2.length) {
             throw new InvalidParameterException(
@@ -106,14 +103,12 @@ public class EuclidianDistanceMeasure extends DistanceMeasureR {
      * de.clusteval.framework.repository.MyRengine, int)
      */
     @Override
-    protected double[][] getDistancesHelper(
-            ConversionInputToStandardConfiguration config, double[][] matrix,
-            MyRengine rEngine, int firstRow, int lastRow)
-            throws REngineException, REXPMismatchException,
-                   InterruptedException {
-        return rEngine
-                .eval(String
-                        .format("proxy::dist(rbind(matrix[%d:%d,]), rbind(matrix), method='Euclidean')",
-                                firstRow, lastRow)).asDoubleMatrix();
+    public double[][] getDistancesHelper(
+            IConversionInputToStandardConfiguration config, double[][] matrix,
+            IRengine rEngine, int firstRow, int lastRow)
+            throws RException, ROperationNotSupported, InterruptedException {
+        return rEngine.eval(String.format(
+                "proxy::dist(rbind(matrix[%d:%d,]), rbind(matrix), method='Euclidean')",
+                firstRow, lastRow)).asDoubleMatrix();
     }
 }
