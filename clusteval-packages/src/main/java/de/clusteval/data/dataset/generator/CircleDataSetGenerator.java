@@ -17,8 +17,8 @@ import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RLibraryRequirement;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.data.goldstandard.GoldStandard;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.utils.FileUtils;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -54,7 +54,7 @@ public class CircleDataSetGenerator extends DataSetGenerator {
      * @param absPath
      * @throws RegisterException
      */
-    public CircleDataSetGenerator(Repository repository, boolean register, long changeDate, File absPath)
+    public CircleDataSetGenerator(IRepository repository, boolean register, long changeDate, File absPath)
             throws RegisterException {
         super(repository, register, changeDate, absPath);
     }

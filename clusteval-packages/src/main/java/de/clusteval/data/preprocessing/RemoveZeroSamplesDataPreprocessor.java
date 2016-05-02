@@ -16,10 +16,10 @@ import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.data.dataset.AbsoluteDataSet;
 import de.clusteval.data.dataset.DataSet;
 import de.clusteval.data.dataset.RelativeDataSet;
-import de.clusteval.framework.repository.Repository;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
 import java.io.File;
 import java.io.IOException;
@@ -40,7 +40,7 @@ public class RemoveZeroSamplesDataPreprocessor extends DataPreprocessor {
      * @param absPath
      * @throws RegisterException
      */
-    public RemoveZeroSamplesDataPreprocessor(Repository repository,
+    public RemoveZeroSamplesDataPreprocessor(IRepository repository,
             boolean register, long changeDate, File absPath)
             throws RegisterException {
         super(repository, register, changeDate, absPath);

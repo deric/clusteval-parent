@@ -14,16 +14,16 @@ import de.clusteval.api.Pair;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.api.cluster.IClustering;
+import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataSetConfig;
 import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.data.IGoldStandardConfig;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
-import de.clusteval.data.DataConfig;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.data.dataset.RelativeDataSet;
 import de.clusteval.data.dataset.format.RelativeDataSetFormat;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.utils.ArraysExt;
 import de.clusteval.utils.FileUtils;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
@@ -45,8 +45,8 @@ public class IntraInterDistributionDataStatisticCalculator extends
      * @param dataConfig
      * @throws RegisterException
      */
-    public IntraInterDistributionDataStatisticCalculator(Repository repository,
-            long changeDate, File absPath, final DataConfig dataConfig)
+    public IntraInterDistributionDataStatisticCalculator(IRepository repository,
+            long changeDate, File absPath, final IDataConfig dataConfig)
             throws RegisterException {
         super(repository, changeDate, absPath, dataConfig);
         if (!(RelativeDataSetFormat.class.isAssignableFrom(dataConfig

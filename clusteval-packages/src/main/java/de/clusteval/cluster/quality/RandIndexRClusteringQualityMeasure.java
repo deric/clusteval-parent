@@ -8,30 +8,26 @@
  * Contributors:
  *     Christian Wiwie - initial API and implementation
  ***************************************************************************** */
-/**
- *
- */
 package de.clusteval.cluster.quality;
 
 import de.clusteval.api.cluster.ClustEvalValue;
-import java.io.File;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-
-import de.clusteval.utils.ArraysExt;
-import de.wiwie.wiutils.utils.SimilarityMatrix;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.data.IDataConfig;
-import de.clusteval.data.dataset.RelativeDataSet;
-import de.clusteval.api.r.RLibraryRequirement;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RExpr;
-import de.clusteval.framework.repository.Repository;
+import de.clusteval.api.r.RLibraryRequirement;
+import de.clusteval.api.repository.IRepository;
+import de.clusteval.data.dataset.RelativeDataSet;
+import de.clusteval.utils.ArraysExt;
+import de.wiwie.wiutils.utils.SimilarityMatrix;
+import java.io.File;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * @author Christian Wiwie
@@ -49,7 +45,7 @@ public class RandIndexRClusteringQualityMeasure
      * @param absPath
      * @throws RegisterException
      */
-    public RandIndexRClusteringQualityMeasure(Repository repo,
+    public RandIndexRClusteringQualityMeasure(IRepository repo,
             boolean register, long changeDate, File absPath,
             ClusteringQualityMeasureParameters parameters)
             throws RegisterException {

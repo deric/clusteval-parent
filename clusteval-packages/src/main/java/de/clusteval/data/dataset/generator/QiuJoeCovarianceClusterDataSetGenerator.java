@@ -17,8 +17,8 @@ import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RLibraryRequirement;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.data.goldstandard.GoldStandard;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.utils.ArraysExt;
 import de.clusteval.utils.FileUtils;
 import java.io.BufferedWriter;
@@ -62,7 +62,7 @@ public class QiuJoeCovarianceClusterDataSetGenerator extends DataSetGenerator {
      * @param absPath
      * @throws RegisterException
      */
-    public QiuJoeCovarianceClusterDataSetGenerator(Repository repository, boolean register, long changeDate,
+    public QiuJoeCovarianceClusterDataSetGenerator(IRepository repository, boolean register, long changeDate,
             File absPath) throws RegisterException {
         super(repository, register, changeDate, absPath);
     }

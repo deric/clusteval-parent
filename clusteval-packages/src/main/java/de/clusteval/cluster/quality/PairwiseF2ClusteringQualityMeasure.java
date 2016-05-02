@@ -11,24 +11,22 @@
 package de.clusteval.cluster.quality;
 
 import de.clusteval.api.cluster.ClustEvalValue;
-import java.io.File;
-import java.io.Serializable;
-import java.util.Map;
-
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.program.RegisterException;
-import de.clusteval.framework.repository.Repository;
+import de.clusteval.api.repository.IRepository;
+import java.io.File;
+import java.io.Serializable;
+import java.util.Map;
 
 /**
  * The Class F2ClusteringQualityMeasure.
  *
  * @author Christian Wiwie
  */
-public class PairwiseF2ClusteringQualityMeasure
-        extends
+public class PairwiseF2ClusteringQualityMeasure extends
         ClusteringQualityMeasure implements Serializable {
 
     /**
@@ -38,7 +36,7 @@ public class PairwiseF2ClusteringQualityMeasure
      * @param absPath
      * @throws RegisterException
      */
-    public PairwiseF2ClusteringQualityMeasure(Repository repo,
+    public PairwiseF2ClusteringQualityMeasure(IRepository repo,
             boolean register, long changeDate, File absPath,
             ClusteringQualityMeasureParameters parameters)
             throws RegisterException {

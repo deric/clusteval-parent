@@ -12,10 +12,6 @@
  */
 package de.clusteval.cluster.paramOptimization;
 
-import de.clusteval.api.opt.ParameterOptimizationException;
-import de.clusteval.api.opt.ParameterSetAlreadyEvaluatedException;
-import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
-import de.clusteval.api.opt.NoParameterSetFoundException;
 import ch.qos.logback.classic.Level;
 import de.clusteval.api.Precision;
 import de.clusteval.api.cluster.ClustEvalValue;
@@ -29,11 +25,16 @@ import de.clusteval.api.exceptions.RunResultParseException;
 import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
+import de.clusteval.api.opt.NoParameterSetFoundException;
+import de.clusteval.api.opt.ParameterOptimizationException;
+import de.clusteval.api.opt.ParameterSetAlreadyEvaluatedException;
+import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
 import de.clusteval.api.program.ParameterSet;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.InvalidRepositoryException;
+import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
-import de.clusteval.api.program.RegisterException;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
 import de.clusteval.cluster.quality.ClusteringQualityMeasureParameters;
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
@@ -79,7 +80,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
                    ParameterOptimizationException, FormatConversionException,
                    UnknownDistanceMeasureException, NoParameterSetFoundException,
                    UnknownContextException, RNotAvailableException,
-                   InterruptedException, ParameterSetAlreadyEvaluatedException {
+                   InterruptedException, ParameterSetAlreadyEvaluatedException, RException {
 
         ClustevalBackendServer.logLevel(Level.INFO);
 
@@ -218,7 +219,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
                    ParameterOptimizationException, FormatConversionException,
                    UnknownDistanceMeasureException, NoParameterSetFoundException,
                    UnknownContextException, RNotAvailableException,
-                   InterruptedException, ParameterSetAlreadyEvaluatedException {
+                   InterruptedException, ParameterSetAlreadyEvaluatedException, RException {
 
         ClustevalBackendServer.logLevel(Level.INFO);
 
@@ -340,7 +341,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
                    ParameterOptimizationException, FormatConversionException,
                    UnknownDistanceMeasureException, NoParameterSetFoundException,
                    UnknownContextException, RNotAvailableException,
-                   InterruptedException {
+                   InterruptedException, RException {
 
         ClustevalBackendServer.logLevel(Level.INFO);
 
@@ -435,7 +436,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
                    ParameterOptimizationException, FormatConversionException,
                    UnknownDistanceMeasureException, NoParameterSetFoundException,
                    UnknownContextException, RNotAvailableException,
-                   InterruptedException, ParameterSetAlreadyEvaluatedException {
+                   InterruptedException, ParameterSetAlreadyEvaluatedException, RException {
 
         ClustevalBackendServer.logLevel(Level.INFO);
 

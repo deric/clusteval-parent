@@ -16,11 +16,11 @@ import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.data.dataset.AbsoluteDataSet;
 import de.clusteval.data.dataset.DataMatrix;
 import de.clusteval.data.dataset.DataSet;
 import de.clusteval.data.dataset.RelativeDataSet;
-import de.clusteval.framework.repository.Repository;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -43,7 +43,7 @@ public class RangeNormalizationDataPreprocessor extends DataPreprocessor {
      * @param absPath
      * @throws RegisterException
      */
-    public RangeNormalizationDataPreprocessor(Repository repository,
+    public RangeNormalizationDataPreprocessor(IRepository repository,
             boolean register, long changeDate, File absPath)
             throws RegisterException {
         super(repository, register, changeDate, absPath);
@@ -110,7 +110,6 @@ public class RangeNormalizationDataPreprocessor extends DataPreprocessor {
      */
     @Override
     public Set<String> getCompatibleDataSetFormats() {
-        return new HashSet<String>(
-                Arrays.asList(new String[]{"MatrixDataSetFormat"}));
+        return new HashSet<>(Arrays.asList(new String[]{"MatrixDataSetFormat"}));
     }
 }

@@ -10,26 +10,25 @@
  ***************************************************************************** */
 package de.clusteval.cluster.quality;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
-
 import de.clusteval.api.cluster.ClustEvalValue;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
-import de.clusteval.api.r.RLibraryRequirement;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RExpr;
+import de.clusteval.api.r.RLibraryRequirement;
 import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.r.ROperationNotSupported;
-import de.clusteval.framework.repository.Repository;
+import de.clusteval.api.repository.IRepository;
+import java.io.File;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Christian Wiwie
@@ -45,7 +44,7 @@ public class JaccardIndexRClusteringQualityMeasure extends ClusteringQualityMeas
      * @param absPath
      * @throws RegisterException
      */
-    public JaccardIndexRClusteringQualityMeasure(Repository repo,
+    public JaccardIndexRClusteringQualityMeasure(IRepository repo,
             boolean register, long changeDate, File absPath,
             ClusteringQualityMeasureParameters parameters)
             throws RegisterException {

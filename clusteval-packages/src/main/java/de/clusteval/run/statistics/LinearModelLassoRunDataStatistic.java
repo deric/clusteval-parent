@@ -14,7 +14,6 @@ import de.clusteval.api.Pair;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.RLibraryRequirement;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.utils.ArraysExt;
 import de.wiwie.wiutils.utils.StringExt;
 import java.io.File;
@@ -43,7 +42,7 @@ public class LinearModelLassoRunDataStatistic extends RunDataStatistic {
      * @throws RegisterException
      *
      */
-    public LinearModelLassoRunDataStatistic(Repository repo, boolean register,
+    public LinearModelLassoRunDataStatistic(IRepository repo, boolean register,
             long changeDate, File absPath) throws RegisterException {
         super(repo, register, changeDate, absPath);
         this.dataStatistics = new ArrayList<>();

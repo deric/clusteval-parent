@@ -34,15 +34,16 @@ import de.clusteval.api.exceptions.UnknownProgramParameterException;
 import de.clusteval.api.exceptions.UnknownProgramTypeException;
 import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
+import de.clusteval.api.opt.InvalidOptimizationParameterException;
+import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.InvalidRepositoryException;
+import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.r.UnknownRProgramException;
-import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
-import de.clusteval.api.opt.InvalidOptimizationParameterException;
-import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.DataConfigNotFoundException;
@@ -99,7 +100,7 @@ public class DataSetTest extends AbstractClustEvalTest {
      * @throws UnknownRunDataStatisticException
      * @throws UnknownRunStatisticException
      * @throws UnknownDataStatisticException
-     * , UnknownRunResultPostprocessorException
+     *                                                          , UnknownRunResultPostprocessorException
      * @throws NoOptimizableProgramParameterException
      * @throws UnknownParameterOptimizationMethodException
      * @throws IncompatibleParameterOptimizationMethodException
@@ -192,7 +193,7 @@ public class DataSetTest extends AbstractClustEvalTest {
      * @throws UnknownRunDataStatisticException
      * @throws UnknownRunStatisticException
      * @throws UnknownDataStatisticException
-     * , UnknownRunResultPostprocessorException
+     *                                                          , UnknownRunResultPostprocessorException
      * @throws NoOptimizableProgramParameterException
      * @throws UnknownParameterOptimizationMethodException
      * @throws IncompatibleParameterOptimizationMethodException
@@ -281,7 +282,7 @@ public class DataSetTest extends AbstractClustEvalTest {
      * @throws UnknownRunDataStatisticException
      * @throws UnknownRunStatisticException
      * @throws UnknownDataStatisticException
-     * , UnknownRunResultPostprocessorException
+     *                                                          , UnknownRunResultPostprocessorException
      * @throws NoOptimizableProgramParameterException
      * @throws UnknownParameterOptimizationMethodException
      * @throws IncompatibleParameterOptimizationMethodException
@@ -362,7 +363,7 @@ public class DataSetTest extends AbstractClustEvalTest {
      * @throws UnknownRunDataStatisticException
      * @throws UnknownRunStatisticException
      * @throws UnknownDataStatisticException
-     * , UnknownRunResultPostprocessorException
+     *                                                          , UnknownRunResultPostprocessorException
      * @throws NoOptimizableProgramParameterException
      * @throws UnknownParameterOptimizationMethodException
      * @throws IncompatibleParameterOptimizationMethodException
@@ -448,7 +449,7 @@ public class DataSetTest extends AbstractClustEvalTest {
      * @throws UnknownRunDataStatisticException
      * @throws UnknownRunStatisticException
      * @throws UnknownDataStatisticException
-     * , UnknownRunResultPostprocessorException
+     *                                                          , UnknownRunResultPostprocessorException
      * @throws NoOptimizableProgramParameterException
      * @throws UnknownParameterOptimizationMethodException
      * @throws IncompatibleParameterOptimizationMethodException
@@ -519,7 +520,7 @@ public class DataSetTest extends AbstractClustEvalTest {
      * @throws UnknownRunDataStatisticException
      * @throws UnknownRunStatisticException
      * @throws UnknownDataStatisticException
-     * , UnknownRunResultPostprocessorException
+     *                                                          , UnknownRunResultPostprocessorException
      * @throws NoOptimizableProgramParameterException
      * @throws UnknownParameterOptimizationMethodException
      * @throws IncompatibleParameterOptimizationMethodException
@@ -594,7 +595,7 @@ public class DataSetTest extends AbstractClustEvalTest {
      * @throws UnknownRunDataStatisticException
      * @throws UnknownRunStatisticException
      * @throws UnknownDataStatisticException
-     * , UnknownRunResultPostprocessorException
+     *                                                          , UnknownRunResultPostprocessorException
      * @throws NoOptimizableProgramParameterException
      * @throws UnknownParameterOptimizationMethodException
      * @throws IncompatibleParameterOptimizationMethodException
@@ -667,7 +668,7 @@ public class DataSetTest extends AbstractClustEvalTest {
      * @throws UnknownRunDataStatisticException
      * @throws UnknownRunStatisticException
      * @throws UnknownDataStatisticException
-     * , UnknownRunResultPostprocessorException
+     *                                                          , UnknownRunResultPostprocessorException
      * @throws NoOptimizableProgramParameterException
      * @throws UnknownParameterOptimizationMethodException
      * @throws IncompatibleParameterOptimizationMethodException
@@ -743,7 +744,7 @@ public class DataSetTest extends AbstractClustEvalTest {
      * @throws UnknownRunDataStatisticException
      * @throws UnknownRunStatisticException
      * @throws UnknownDataStatisticException
-     * , UnknownRunResultPostprocessorException
+     *                                                          , UnknownRunResultPostprocessorException
      * @throws NoOptimizableProgramParameterException
      * @throws UnknownParameterOptimizationMethodException
      * @throws IncompatibleParameterOptimizationMethodException
@@ -815,7 +816,7 @@ public class DataSetTest extends AbstractClustEvalTest {
      * @throws UnknownRunDataStatisticException
      * @throws UnknownRunStatisticException
      * @throws UnknownDataStatisticException
-     * , UnknownRunResultPostprocessorException
+     *                                                          , UnknownRunResultPostprocessorException
      * @throws NoOptimizableProgramParameterException
      * @throws UnknownParameterOptimizationMethodException
      * @throws IncompatibleParameterOptimizationMethodException
@@ -895,7 +896,7 @@ public class DataSetTest extends AbstractClustEvalTest {
      * @throws UnknownRunDataStatisticException
      * @throws UnknownRunStatisticException
      * @throws UnknownDataStatisticException
-     * , UnknownRunResultPostprocessorException
+     *                                                          , UnknownRunResultPostprocessorException
      * @throws NoOptimizableProgramParameterException
      * @throws UnknownParameterOptimizationMethodException
      * @throws IncompatibleParameterOptimizationMethodException
@@ -948,7 +949,7 @@ public class DataSetTest extends AbstractClustEvalTest {
                                             UnknownDataStatisticException,
                                             UnknownRunResultPostprocessorException,
                                             UnknownRunStatisticException, UnknownRunDataStatisticException,
-                                            UnknownDataRandomizerException, InterruptedException {
+                                            UnknownDataRandomizerException, InterruptedException, RException {
         this.repositoryObject = Parser
                 .parseFromFile(
                         DataSet.class,
@@ -985,13 +986,15 @@ public class DataSetTest extends AbstractClustEvalTest {
      * @throws InvalidDataSetFormatVersionException
      * @throws DataSetConfigurationException
      * @throws RegisterException
+     * @throws de.clusteval.data.dataset.type.UnknownDataSetTypeException
      * @throws IllegalAccessException
      * @throws InstantiationException
      * @throws RNotAvailableException
+     * @throws de.clusteval.api.exceptions.UnknownDistanceMeasureException
      * @throws UnknownRunDataStatisticException
      * @throws UnknownRunStatisticException
      * @throws UnknownDataStatisticException
-     * , UnknownRunResultPostprocessorException
+     *                                                                     , UnknownRunResultPostprocessorException
      * @throws NoOptimizableProgramParameterException
      * @throws UnknownParameterOptimizationMethodException
      * @throws IncompatibleParameterOptimizationMethodException
@@ -1043,7 +1046,7 @@ public class DataSetTest extends AbstractClustEvalTest {
                                                  UnknownDataStatisticException,
                                                  UnknownRunResultPostprocessorException,
                                                  UnknownRunStatisticException, UnknownRunDataStatisticException,
-                                                 UnknownDataRandomizerException, InterruptedException {
+                                                 UnknownDataRandomizerException, InterruptedException, RException {
         this.repositoryObject = Parser
                 .parseFromFile(
                         DataSet.class,
@@ -1090,7 +1093,7 @@ public class DataSetTest extends AbstractClustEvalTest {
      * @throws UnknownRunDataStatisticException
      * @throws UnknownRunStatisticException
      * @throws UnknownDataStatisticException
-     * , UnknownRunResultPostprocessorException
+     *                                                          , UnknownRunResultPostprocessorException
      * @throws NoOptimizableProgramParameterException
      * @throws UnknownParameterOptimizationMethodException
      * @throws IncompatibleParameterOptimizationMethodException
@@ -1142,7 +1145,7 @@ public class DataSetTest extends AbstractClustEvalTest {
                                               UnknownDataStatisticException,
                                               UnknownRunResultPostprocessorException,
                                               UnknownRunStatisticException, UnknownRunDataStatisticException,
-                                              UnknownDataRandomizerException, InterruptedException {
+                                              UnknownDataRandomizerException, InterruptedException, RException {
         this.repositoryObject = Parser
                 .parseFromFile(
                         DataSet.class,
@@ -1202,7 +1205,7 @@ public class DataSetTest extends AbstractClustEvalTest {
                                        InstantiationException, IllegalAccessException,
                                        UnknownDistanceMeasureException, IllegalArgumentException,
                                        SecurityException, InvocationTargetException,
-                                       NoSuchMethodException, RNotAvailableException, InterruptedException {
+                                       NoSuchMethodException, RNotAvailableException, InterruptedException, RException {
         /*
          * SimMatrixDataSetFormat.convertTo() is a special case
          */
@@ -1330,7 +1333,7 @@ public class DataSetTest extends AbstractClustEvalTest {
                    UnknownDataStatisticException,
                    UnknownRunResultPostprocessorException,
                    UnknownRunStatisticException, UnknownRunDataStatisticException,
-                   UnknownDataRandomizerException, InterruptedException {
+                   UnknownDataRandomizerException, InterruptedException, RException {
         this.repositoryObject = Parser
                 .parseFromFile(
                         DataSet.class,
@@ -1367,7 +1370,7 @@ public class DataSetTest extends AbstractClustEvalTest {
      * @throws UnknownRunDataStatisticException
      * @throws UnknownRunStatisticException
      * @throws UnknownDataStatisticException
-     * , UnknownRunResultPostprocessorException
+     *                                                          , UnknownRunResultPostprocessorException
      * @throws NoOptimizableProgramParameterException
      * @throws UnknownParameterOptimizationMethodException
      * @throws IncompatibleParameterOptimizationMethodException
@@ -1468,7 +1471,7 @@ public class DataSetTest extends AbstractClustEvalTest {
      * @throws UnknownRunDataStatisticException
      * @throws UnknownRunStatisticException
      * @throws UnknownDataStatisticException
-     * , UnknownRunResultPostprocessorException
+     *                                                          , UnknownRunResultPostprocessorException
      * @throws NoOptimizableProgramParameterException
      * @throws UnknownParameterOptimizationMethodException
      * @throws IncompatibleParameterOptimizationMethodException
@@ -1574,7 +1577,7 @@ public class DataSetTest extends AbstractClustEvalTest {
                    UnknownDataStatisticException,
                    UnknownRunResultPostprocessorException,
                    UnknownRunStatisticException, UnknownRunDataStatisticException,
-                   UnknownDataRandomizerException, InterruptedException {
+                   UnknownDataRandomizerException, InterruptedException, RException {
         this.repositoryObject = Parser
                 .parseFromFile(
                         DataSet.class,
@@ -1629,7 +1632,7 @@ public class DataSetTest extends AbstractClustEvalTest {
                    UnknownDataStatisticException,
                    UnknownRunResultPostprocessorException,
                    UnknownRunStatisticException, UnknownRunDataStatisticException,
-                   UnknownDataRandomizerException, InterruptedException {
+                   UnknownDataRandomizerException, InterruptedException, RException {
         this.repositoryObject = Parser
                 .parseFromFile(
                         DataSet.class,
@@ -1664,7 +1667,7 @@ public class DataSetTest extends AbstractClustEvalTest {
                    InvalidDataSetFormatVersionException, RegisterException,
                    FormatConversionException, IOException,
                    UnknownDistanceMeasureException, RNotAvailableException,
-                   InterruptedException {
+                   InterruptedException, RException {
         ClustevalBackendServer.logLevel(Level.INFO);
 
         DataConfig dataConfig = getRepository().getStaticObjectWithName(

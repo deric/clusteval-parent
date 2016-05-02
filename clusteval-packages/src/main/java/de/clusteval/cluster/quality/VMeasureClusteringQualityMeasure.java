@@ -21,7 +21,7 @@ import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.program.RegisterException;
-import de.clusteval.framework.repository.Repository;
+import de.clusteval.api.repository.IRepository;
 
 /**
  * @author Christian Wiwie
@@ -36,7 +36,7 @@ public class VMeasureClusteringQualityMeasure extends ClusteringQualityMeasure {
      * @param absPath
      * @throws RegisterException
      */
-    public VMeasureClusteringQualityMeasure(Repository repo, boolean register,
+    public VMeasureClusteringQualityMeasure(IRepository repo, boolean register,
             long changeDate, File absPath,
             ClusteringQualityMeasureParameters parameters) throws RegisterException {
         super(repo, register, changeDate, absPath, parameters);

@@ -20,12 +20,12 @@ import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.cluster.Clustering;
-import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.RelativeDataSet;
 import de.clusteval.data.dataset.format.RelativeDataSetFormat;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.utils.ArraysExt;
 import de.clusteval.api.Pair;
+import de.clusteval.api.data.IDataConfig;
+import de.clusteval.api.repository.IRepository;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
 import java.io.File;
 import java.io.IOException;
@@ -46,8 +46,8 @@ public class IntraInterOverlapDataStatisticCalculator extends
      * @param dataConfig
      * @throws RegisterException
      */
-    public IntraInterOverlapDataStatisticCalculator(Repository repository,
-            long changeDate, File absPath, final DataConfig dataConfig)
+    public IntraInterOverlapDataStatisticCalculator(IRepository repository,
+            long changeDate, File absPath, final IDataConfig dataConfig)
             throws RegisterException {
         super(repository, changeDate, absPath, dataConfig);
         if (!(RelativeDataSetFormat.class.isAssignableFrom(dataConfig

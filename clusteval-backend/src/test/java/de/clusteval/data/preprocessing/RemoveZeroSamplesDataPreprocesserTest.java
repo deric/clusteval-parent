@@ -28,13 +28,15 @@ import de.clusteval.api.exceptions.UnknownProgramParameterException;
 import de.clusteval.api.exceptions.UnknownProgramTypeException;
 import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
-import de.clusteval.api.r.InvalidRepositoryException;
-import de.clusteval.api.r.RepositoryAlreadyExistsException;
-import de.clusteval.api.r.UnknownRProgramException;
-import de.clusteval.api.program.RegisterException;
-import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.api.opt.InvalidOptimizationParameterException;
 import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
+import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.r.InvalidRepositoryException;
+import de.clusteval.api.r.RException;
+import de.clusteval.api.r.RepositoryAlreadyExistsException;
+import de.clusteval.api.r.UnknownRProgramException;
+import de.clusteval.api.stats.UnknownDataStatisticException;
+import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
@@ -45,7 +47,6 @@ import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.data.dataset.type.UnknownDataSetTypeException;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
-import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
 import de.clusteval.framework.repository.parse.Parser;
@@ -92,7 +93,7 @@ public class RemoveZeroSamplesDataPreprocesserTest
                               UnknownDataStatisticException, UnknownRunStatisticException,
                               UnknownRunDataStatisticException,
                               UnknownRunResultPostprocessorException,
-                              UnknownDataRandomizerException {
+                              UnknownDataRandomizerException, RException {
 
         File f = new File(
                 "testCaseRepository/data/datasets/sfld/sfld_brown_et_al_amidohydrolases_protein_similarities_for_beh.txt.SimMatrix");

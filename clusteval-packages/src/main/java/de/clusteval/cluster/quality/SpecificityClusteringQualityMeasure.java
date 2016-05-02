@@ -11,14 +11,14 @@
 package de.clusteval.cluster.quality;
 
 import de.clusteval.api.cluster.ClustEvalValue;
-import java.io.File;
-import java.util.HashSet;
-import java.util.Set;
 import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.program.RegisterException;
-import de.clusteval.framework.repository.Repository;
+import de.clusteval.api.repository.IRepository;
+import java.io.File;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Christian Wiwie
@@ -35,7 +35,7 @@ public class SpecificityClusteringQualityMeasure
      * @param absPath
      * @throws RegisterException
      */
-    public SpecificityClusteringQualityMeasure(Repository repo,
+    public SpecificityClusteringQualityMeasure(IRepository repo,
             boolean register, long changeDate, File absPath,
             ClusteringQualityMeasureParameters parameters)
             throws RegisterException {
@@ -93,8 +93,7 @@ public class SpecificityClusteringQualityMeasure
          * Ensure, that clustering contains only objects, that are also in the
          * goldstandard.
          */
-        gsClusterItems = new HashSet<ClusterItem>(
-                gsClustering.getClusterItems());
+        gsClusterItems = new HashSet<>(gsClustering.getClusterItems());
         clusterItems.removeAll(gsClusterItems);
         for (ClusterItem onlyInClustering : clusterItems) {
             clustering.removeClusterItem(onlyInClustering);

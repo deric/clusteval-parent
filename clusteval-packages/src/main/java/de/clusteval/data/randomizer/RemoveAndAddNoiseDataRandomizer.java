@@ -28,6 +28,7 @@ import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.data.dataset.AbsoluteDataSet;
 import de.clusteval.data.dataset.DataMatrix;
 import de.clusteval.data.dataset.RelativeDataSet;
@@ -37,7 +38,6 @@ import de.clusteval.data.dataset.format.RelativeDataSetFormat;
 import de.clusteval.data.dataset.type.DataSetType;
 import de.clusteval.data.dataset.type.UnknownDataSetTypeException;
 import de.clusteval.data.goldstandard.GoldStandard;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.utils.FileUtils;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
 import java.io.BufferedWriter;
@@ -77,7 +77,7 @@ public class RemoveAndAddNoiseDataRandomizer extends DataRandomizer implements I
      * @param absPath
      * @throws RegisterException
      */
-    public RemoveAndAddNoiseDataRandomizer(Repository repository,
+    public RemoveAndAddNoiseDataRandomizer(IRepository repository,
             boolean register, long changeDate, File absPath)
             throws RegisterException {
         super(repository, register, changeDate, absPath);

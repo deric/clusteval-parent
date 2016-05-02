@@ -10,20 +10,19 @@
  ***************************************************************************** */
 package de.clusteval.cluster.quality;
 
-import java.io.File;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
 import de.clusteval.api.cluster.ClustEvalValue;
-import de.wiwie.wiutils.utils.SimilarityMatrix;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.data.IDataConfig;
-import de.clusteval.data.dataset.RelativeDataSet;
 import de.clusteval.api.program.RegisterException;
-import de.clusteval.framework.repository.Repository;
+import de.clusteval.api.repository.IRepository;
+import de.clusteval.data.dataset.RelativeDataSet;
+import de.wiwie.wiutils.utils.SimilarityMatrix;
+import java.io.File;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Christian Wiwie
@@ -39,7 +38,7 @@ public class SilhouetteValueClusteringQualityMeasure
      * @param absPath
      * @throws RegisterException
      */
-    public SilhouetteValueClusteringQualityMeasure(Repository repo,
+    public SilhouetteValueClusteringQualityMeasure(IRepository repo,
             boolean register, long changeDate, File absPath,
             ClusteringQualityMeasureParameters parameters)
             throws RegisterException {
@@ -78,8 +77,7 @@ public class SilhouetteValueClusteringQualityMeasure
      */
     @SuppressWarnings("unused")
     @Override
-    public ClustEvalValue getQualityOfClustering(
-            final IClustering clustering, IClustering gsClustering,
+    public ClustEvalValue getQualityOfClustering(final IClustering clustering, IClustering gsClustering,
             final IDataConfig dataConfig) throws IllegalArgumentException {
 
         if (clustering.getClusters().size() < 2) {
@@ -104,8 +102,7 @@ public class SilhouetteValueClusteringQualityMeasure
     private double getQualityOfDatum(final SimilarityMatrix simMatrix,
             final IClustering clustering, final ClusterItem item) {
         Set<Cluster> ownClusters = item.getFuzzyClusters().keySet();
-        Set<Cluster> otherClusters = new HashSet<Cluster>(
-                clustering.getClusters());
+        Set<Cluster> otherClusters = new HashSet<>(clustering.getClusters());
         otherClusters.removeAll(ownClusters);
 
         double a;

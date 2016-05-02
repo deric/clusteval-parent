@@ -10,11 +10,11 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset.format;
 
-import java.io.File;
-
-import de.clusteval.api.program.RegisterException;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.api.FormatVersion;
+import de.clusteval.api.data.IDataSetFormatParser;
+import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.repository.IRepository;
+import java.io.File;
 
 /**
  * @author Christian Wiwie
@@ -31,7 +31,7 @@ public class MatrixDataSetFormat extends AbsoluteDataSetFormat {
      * @param version
      * @throws RegisterException
      */
-    public MatrixDataSetFormat(final Repository repo, final boolean register,
+    public MatrixDataSetFormat(final IRepository repo, final boolean register,
             final long changeDate, final File absPath, final int version)
             throws RegisterException {
         super(repo, register, changeDate, absPath, version);
@@ -66,7 +66,7 @@ public class MatrixDataSetFormat extends AbsoluteDataSetFormat {
 	 * de.clusteval.data.dataset.format.DataSetFormat#getDataSetFormatParser()
      */
     @Override
-    public DataSetFormatParser getDataSetFormatParser() {
+    public IDataSetFormatParser getDataSetFormatParser() {
         return new MatrixDataSetFormatParser();
     }
 }

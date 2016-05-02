@@ -11,17 +11,16 @@
 package de.clusteval.cluster.quality;
 
 import de.clusteval.api.cluster.ClustEvalValue;
-import java.io.File;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.program.RegisterException;
-import de.clusteval.framework.repository.Repository;
+import de.clusteval.api.repository.IRepository;
+import java.io.File;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Christian Wiwie
@@ -37,7 +36,7 @@ public class TransClustF2ClusteringQualityMeasure
      * @param absPath
      * @throws RegisterException
      */
-    public TransClustF2ClusteringQualityMeasure(Repository repo,
+    public TransClustF2ClusteringQualityMeasure(IRepository repo,
             boolean register, long changeDate, File absPath,
             ClusteringQualityMeasureParameters parameters)
             throws RegisterException {
@@ -82,10 +81,8 @@ public class TransClustF2ClusteringQualityMeasure
 
         double fmeasure = 0;
 
-        Set<ClusterItem> gsClusterItems = new HashSet<>(
-                gsClustering.getClusterItems());
-        Set<ClusterItem> clusterItems = new HashSet<ClusterItem>(
-                clustering.getClusterItems());
+        Set<ClusterItem> gsClusterItems = new HashSet<>(gsClustering.getClusterItems());
+        Set<ClusterItem> clusterItems = new HashSet<>(clustering.getClusterItems());
         gsClusterItems.removeAll(clusterItems);
         for (ClusterItem onlyInGs : gsClusterItems) {
             gsClustering.removeClusterItem(onlyInGs);

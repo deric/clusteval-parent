@@ -16,7 +16,7 @@ import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RLibraryRequirement;
 import de.clusteval.api.r.ROperationNotSupported;
-import de.clusteval.framework.repository.Repository;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.utils.ArraysExt;
 import java.io.File;
 
@@ -34,7 +34,7 @@ public class AbsoluteDistanceMeasure extends DistanceMeasureR {
      * @param absPath
      * @throws RegisterException
      */
-    public AbsoluteDistanceMeasure(Repository repository, boolean register,
+    public AbsoluteDistanceMeasure(IRepository repository, boolean register,
             long changeDate, File absPath) throws RegisterException {
         super(repository, register, changeDate, absPath);
     }

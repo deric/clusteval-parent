@@ -27,7 +27,7 @@ import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RExpr;
-import de.clusteval.framework.repository.Repository;
+import de.clusteval.api.repository.IRepository;
 
 /**
  * @author Christian Wiwie
@@ -44,7 +44,7 @@ public class SilhouetteValueRClusteringQualityMeasure
      * @param absPath
      * @throws RegisterException
      */
-    public SilhouetteValueRClusteringQualityMeasure(Repository repo,
+    public SilhouetteValueRClusteringQualityMeasure(IRepository repo,
             boolean register, long changeDate, File absPath,
             ClusteringQualityMeasureParameters parameters)
             throws RegisterException {

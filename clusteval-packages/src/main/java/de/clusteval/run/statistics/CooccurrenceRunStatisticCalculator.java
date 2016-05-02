@@ -20,9 +20,9 @@ import de.clusteval.api.program.ParameterSet;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.data.statistics.RunStatisticCalculateException;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.run.result.RunResult;
 import de.clusteval.utils.ArraysExt;
@@ -50,7 +50,7 @@ public class CooccurrenceRunStatisticCalculator
      * @param uniqueRunIdentifier
      * @throws RegisterException
      */
-    public CooccurrenceRunStatisticCalculator(Repository repository,
+    public CooccurrenceRunStatisticCalculator(IRepository repository,
             long changeDate, File absPath, final String uniqueRunIdentifier)
             throws RegisterException {
         super(repository, changeDate, absPath, uniqueRunIdentifier);

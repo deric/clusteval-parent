@@ -11,7 +11,7 @@
 package de.clusteval.data.dataset.type;
 
 import de.clusteval.api.program.RegisterException;
-import de.clusteval.framework.repository.Repository;
+import de.clusteval.api.repository.IRepository;
 import java.io.File;
 
 /**
@@ -28,7 +28,7 @@ public class PPIDataSetType extends DataSetType {
      * @throws RegisterException
      *
      */
-    public PPIDataSetType(final Repository repository, final boolean register,
+    public PPIDataSetType(final IRepository repository, final boolean register,
             final long changeDate, final File absPath) throws RegisterException {
         super(repository, register, changeDate, absPath);
     }

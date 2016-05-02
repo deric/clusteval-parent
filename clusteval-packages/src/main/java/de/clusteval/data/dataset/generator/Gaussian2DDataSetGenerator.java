@@ -16,8 +16,8 @@ import de.clusteval.api.exceptions.GoldStandardGenerationException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RLibraryRequirement;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.data.goldstandard.GoldStandard;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.utils.FileUtils;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -57,7 +57,7 @@ public class Gaussian2DDataSetGenerator extends DataSetGenerator {
      * @param absPath
      * @throws RegisterException
      */
-    public Gaussian2DDataSetGenerator(Repository repository, boolean register, long changeDate, File absPath)
+    public Gaussian2DDataSetGenerator(IRepository repository, boolean register, long changeDate, File absPath)
             throws RegisterException {
         super(repository, register, changeDate, absPath);
     }

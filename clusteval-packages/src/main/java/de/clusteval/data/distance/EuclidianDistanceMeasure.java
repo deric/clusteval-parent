@@ -18,7 +18,7 @@ import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RLibraryRequirement;
 import de.clusteval.api.r.ROperationNotSupported;
-import de.clusteval.framework.repository.Repository;
+import de.clusteval.api.repository.IRepository;
 import java.io.File;
 import java.security.InvalidParameterException;
 
@@ -36,7 +36,7 @@ public class EuclidianDistanceMeasure extends DistanceMeasureR {
      * @param absPath
      * @throws RegisterException
      */
-    public EuclidianDistanceMeasure(Repository repository, boolean register,
+    public EuclidianDistanceMeasure(IRepository repository, boolean register,
             long changeDate, File absPath) throws RegisterException {
         super(repository, register, changeDate, absPath);
     }

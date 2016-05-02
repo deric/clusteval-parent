@@ -31,15 +31,16 @@ import de.clusteval.api.exceptions.UnknownProgramParameterException;
 import de.clusteval.api.exceptions.UnknownProgramTypeException;
 import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
+import de.clusteval.api.opt.InvalidOptimizationParameterException;
+import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.InvalidRepositoryException;
+import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.r.UnknownRProgramException;
-import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
-import de.clusteval.api.opt.InvalidOptimizationParameterException;
-import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
 import de.clusteval.context.Context;
 import de.clusteval.data.DataConfig;
@@ -106,7 +107,7 @@ public class PlotterTest extends AbstractClustEvalTest {
                                     UnknownDataStatisticException, UnknownRunStatisticException,
                                     UnknownRunDataStatisticException,
                                     UnknownRunResultPostprocessorException,
-                                    UnknownDataRandomizerException {
+                                    UnknownDataRandomizerException, RException {
         Context context = Context.parseFromString(getRepository(),
                 "ClusteringContext");
 
@@ -186,7 +187,7 @@ public class PlotterTest extends AbstractClustEvalTest {
                                  UnknownDataStatisticException, UnknownRunStatisticException,
                                  UnknownRunDataStatisticException,
                                  UnknownRunResultPostprocessorException,
-                                 UnknownDataRandomizerException {
+                                 UnknownDataRandomizerException, RException {
         Context context = Context.parseFromString(getRepository(),
                 "ClusteringContext");
 

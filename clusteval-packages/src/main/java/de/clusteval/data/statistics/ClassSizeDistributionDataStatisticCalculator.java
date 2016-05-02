@@ -13,11 +13,11 @@ package de.clusteval.data.statistics;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.api.cluster.IClustering;
+import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.program.RegisterException;
-import de.clusteval.data.DataConfig;
-import de.clusteval.framework.repository.Repository;
+import de.clusteval.api.repository.IRepository;
 import java.io.File;
 import java.util.Iterator;
 import java.util.List;
@@ -38,8 +38,8 @@ public class ClassSizeDistributionDataStatisticCalculator
      * @param dataConfig
      * @throws RegisterException
      */
-    public ClassSizeDistributionDataStatisticCalculator(Repository repository,
-            long changeDate, File absPath, final DataConfig dataConfig)
+    public ClassSizeDistributionDataStatisticCalculator(IRepository repository,
+            long changeDate, File absPath, final IDataConfig dataConfig)
             throws RegisterException {
         super(repository, changeDate, absPath, dataConfig);
     }

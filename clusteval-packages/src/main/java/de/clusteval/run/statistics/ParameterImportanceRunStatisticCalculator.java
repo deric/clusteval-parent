@@ -18,8 +18,8 @@ import de.clusteval.api.cluster.ClustEvalValue;
 import de.clusteval.api.cluster.ClusteringQualitySet;
 import de.clusteval.api.program.ParameterSet;
 import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.data.statistics.RunStatisticCalculateException;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.run.result.RunResult;
 import de.clusteval.utils.ArraysExt;
@@ -45,7 +45,7 @@ public class ParameterImportanceRunStatisticCalculator
      * @param uniqueRunIdentifier
      * @throws RegisterException
      */
-    public ParameterImportanceRunStatisticCalculator(Repository repository,
+    public ParameterImportanceRunStatisticCalculator(IRepository repository,
             long changeDate, File absPath, final String uniqueRunIdentifier)
             throws RegisterException {
         super(repository, changeDate, absPath, uniqueRunIdentifier);
@@ -107,14 +107,13 @@ public class ParameterImportanceRunStatisticCalculator
                             if (paramQualities.containsKey(p)) {
                                 quals = paramQualities.get(p);
                             } else {
-                                quals = new HashMap<ClusteringEvaluation, List<ClustEvalValue>>();
+                                quals = new HashMap<>();
                                 paramQualities.put(p, quals);
                             }
                             for (ClusteringEvaluation m : qualities
                                     .getSecond().keySet()) {
                                 if (!quals.containsKey(m)) {
-                                    quals.put(m,
-                                            new ArrayList<ClustEvalValue>());
+                                    quals.put(m, new ArrayList<>());
                                 }
                                 quals.get(m).add(qualities.getSecond().get(m));
                             }
@@ -139,8 +138,7 @@ public class ParameterImportanceRunStatisticCalculator
                                     .toPrimitive(q.toArray(new Double[0])));
 
                             if (!paramQualitiesMean.containsKey(p)) {
-                                paramQualitiesMean.put(p,
-                                        new HashMap<String, Double>());
+                                paramQualitiesMean.put(p, new HashMap<>());
                             }
                             // TODO
                             assert !paramQualitiesMean.get(p).containsKey(

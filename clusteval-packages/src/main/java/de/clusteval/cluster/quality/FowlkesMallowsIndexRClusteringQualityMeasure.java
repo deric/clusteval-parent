@@ -25,7 +25,7 @@ import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RExpr;
-import de.clusteval.framework.repository.Repository;
+import de.clusteval.api.repository.IRepository;
 
 /**
  * @author Christian Wiwie
@@ -41,7 +41,7 @@ public class FowlkesMallowsIndexRClusteringQualityMeasure extends ClusteringQual
      * @param absPath
      * @throws RegisterException
      */
-    public FowlkesMallowsIndexRClusteringQualityMeasure(Repository repo,
+    public FowlkesMallowsIndexRClusteringQualityMeasure(IRepository repo,
             boolean register, long changeDate, File absPath,
             ClusteringQualityMeasureParameters parameters)
             throws RegisterException {

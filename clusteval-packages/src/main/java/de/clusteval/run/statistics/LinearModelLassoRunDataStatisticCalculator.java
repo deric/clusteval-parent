@@ -24,10 +24,10 @@ import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RExpr;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.IRunResult;
 import de.clusteval.api.stats.IDataStatistic;
 import de.clusteval.data.statistics.DoubleValueDataStatistic;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.run.result.DataAnalysisRunResult;
 import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.utils.FileUtils;
@@ -57,7 +57,7 @@ public class LinearModelLassoRunDataStatisticCalculator
      * @param dataIdentifiers
      * @throws RegisterException
      */
-    public LinearModelLassoRunDataStatisticCalculator(Repository repository,
+    public LinearModelLassoRunDataStatisticCalculator(IRepository repository,
             long changeDate, File absPath, final List<String> runIdentifiers,
             final List<String> dataIdentifiers) throws RegisterException {
         super(repository, changeDate, absPath, runIdentifiers, dataIdentifiers);

@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package de.clusteval.cluster.quality;
 
@@ -11,35 +11,32 @@ import java.util.HashMap;
  */
 public class ClusteringQualityMeasureParameters extends HashMap<String, String> {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -6949276396401908242L;
+    private static final long serialVersionUID = -6949276396401908242L;
 
-	/**
-	 * 
-	 */
-	public ClusteringQualityMeasureParameters() {
-		super();
-	}
+    /**
+     *
+     */
+    public ClusteringQualityMeasureParameters() {
+        super();
+    }
 
-	/**
-	 * @param other
-	 */
-	public ClusteringQualityMeasureParameters(
-			final ClusteringQualityMeasureParameters other) {
-		super();
-		this.putAll(other);
-	}
+    /**
+     * @param other
+     */
+    public ClusteringQualityMeasureParameters(
+            final ClusteringQualityMeasureParameters other) {
+        super();
+        this.putAll(other);
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.util.HashMap#clone()
-	 */
-	@Override
-	public ClusteringQualityMeasureParameters clone() {
-		return new ClusteringQualityMeasureParameters(this);
-	}
+    /*
+     * (non-Javadoc)
+     *
+     * @see java.util.HashMap#clone()
+     */
+    @Override
+    public ClusteringQualityMeasureParameters clone() {
+        return new ClusteringQualityMeasureParameters(this);
+    }
 
 }

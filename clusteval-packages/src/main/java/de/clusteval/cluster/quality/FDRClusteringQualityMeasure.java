@@ -11,15 +11,14 @@
 package de.clusteval.cluster.quality;
 
 import de.clusteval.api.cluster.ClustEvalValue;
-import java.io.File;
-import java.util.HashSet;
-import java.util.Set;
-
 import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.program.RegisterException;
-import de.clusteval.framework.repository.Repository;
+import de.clusteval.api.repository.IRepository;
+import java.io.File;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Christian Wiwie
@@ -34,7 +33,7 @@ public class FDRClusteringQualityMeasure extends ClusteringQualityMeasure {
      * @param absPath
      * @throws RegisterException
      */
-    public FDRClusteringQualityMeasure(Repository repo, boolean register,
+    public FDRClusteringQualityMeasure(IRepository repo, boolean register,
             long changeDate, File absPath,
             ClusteringQualityMeasureParameters parameters) throws RegisterException {
         super(repo, register, changeDate, absPath, parameters);

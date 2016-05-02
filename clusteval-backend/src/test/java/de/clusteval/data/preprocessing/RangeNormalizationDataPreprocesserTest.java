@@ -28,13 +28,15 @@ import de.clusteval.api.exceptions.UnknownProgramParameterException;
 import de.clusteval.api.exceptions.UnknownProgramTypeException;
 import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
-import de.clusteval.api.r.InvalidRepositoryException;
-import de.clusteval.api.r.RepositoryAlreadyExistsException;
-import de.clusteval.api.r.UnknownRProgramException;
-import de.clusteval.api.program.RegisterException;
-import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.api.opt.InvalidOptimizationParameterException;
 import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
+import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.r.InvalidRepositoryException;
+import de.clusteval.api.r.RException;
+import de.clusteval.api.r.RepositoryAlreadyExistsException;
+import de.clusteval.api.r.UnknownRProgramException;
+import de.clusteval.api.stats.UnknownDataStatisticException;
+import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
@@ -45,7 +47,6 @@ import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.data.dataset.type.UnknownDataSetTypeException;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
-import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
 import de.clusteval.framework.repository.parse.Parser;
@@ -56,16 +57,14 @@ import de.clusteval.utils.AbstractClustEvalTest;
 import java.io.File;
 import java.io.IOException;
 import org.apache.commons.configuration.ConfigurationException;
-import org.junit.Assert;
+import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 /**
  * @author Christian Wiwie
  *
  */
-public class RangeNormalizationDataPreprocesserTest
-        extends
-        AbstractClustEvalTest {
+public class RangeNormalizationDataPreprocesserTest extends AbstractClustEvalTest {
 
     @Test
     public void test() throws RepositoryAlreadyExistsException,
@@ -92,7 +91,7 @@ public class RangeNormalizationDataPreprocesserTest
                               UnknownDataStatisticException, UnknownRunStatisticException,
                               UnknownRunDataStatisticException,
                               UnknownRunResultPostprocessorException,
-                              UnknownDataRandomizerException {
+                              UnknownDataRandomizerException, RException {
 
         File f = new File(
                 "testCaseRepository/data/datasets/synthetic/cassini250");
@@ -110,6 +109,6 @@ public class RangeNormalizationDataPreprocesserTest
                 this.getRepository(), "RangeNormalizationDataPreprocessor");
 
         IDataSet newDs = proc.preprocess(ds);
-        Assert.assertTrue(new File(newDs.getAbsolutePath()).exists());
+        assertTrue(new File(newDs.getAbsolutePath()).exists());
     }
 }

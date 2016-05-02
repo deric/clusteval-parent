@@ -12,6 +12,7 @@
  */
 package de.clusteval.data.statistics;
 
+import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataSetConfig;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
@@ -19,9 +20,8 @@ import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RExpr;
-import de.clusteval.data.DataConfig;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.data.dataset.RelativeDataSet;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.utils.ArraysExt;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
 import java.io.File;
@@ -40,8 +40,8 @@ public class AssortativityDataStatisticCalculator extends DataStatisticRCalculat
      * @param dataConfig
      * @throws RegisterException
      */
-    public AssortativityDataStatisticCalculator(Repository repository,
-            long changeDate, File absPath, DataConfig dataConfig)
+    public AssortativityDataStatisticCalculator(IRepository repository,
+            long changeDate, File absPath, IDataConfig dataConfig)
             throws RegisterException {
         super(repository, changeDate, absPath, dataConfig);
     }
