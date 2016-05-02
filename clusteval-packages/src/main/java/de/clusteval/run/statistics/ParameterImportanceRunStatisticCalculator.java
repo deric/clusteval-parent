@@ -16,19 +16,60 @@ import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.Pair;
 import de.clusteval.api.cluster.ClustEvalValue;
 import de.clusteval.api.cluster.ClusteringQualitySet;
+import de.clusteval.api.exceptions.DataSetNotFoundException;
+import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
+import de.clusteval.api.exceptions.GoldStandardConfigurationException;
+import de.clusteval.api.exceptions.GoldStandardNotFoundException;
+import de.clusteval.api.exceptions.IncompatibleContextException;
+import de.clusteval.api.exceptions.NoDataSetException;
+import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
+import de.clusteval.api.exceptions.NoRepositoryFoundException;
+import de.clusteval.api.exceptions.RunResultParseException;
+import de.clusteval.api.exceptions.UnknownContextException;
+import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
+import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
+import de.clusteval.api.exceptions.UnknownParameterType;
+import de.clusteval.api.exceptions.UnknownProgramParameterException;
+import de.clusteval.api.exceptions.UnknownProgramTypeException;
+import de.clusteval.api.exceptions.UnknownRunResultFormatException;
+import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
+import de.clusteval.api.opt.InvalidOptimizationParameterException;
+import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
 import de.clusteval.api.program.ParameterSet;
 import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.r.InvalidRepositoryException;
+import de.clusteval.api.r.RepositoryAlreadyExistsException;
+import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.stats.UnknownDataStatisticException;
+import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
+import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
+import de.clusteval.data.DataConfigNotFoundException;
+import de.clusteval.data.DataConfigurationException;
+import de.clusteval.data.dataset.DataSetConfigNotFoundException;
+import de.clusteval.data.dataset.DataSetConfigurationException;
+import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
+import de.clusteval.data.dataset.type.UnknownDataSetTypeException;
+import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
+import de.clusteval.data.randomizer.UnknownDataRandomizerException;
 import de.clusteval.data.statistics.RunStatisticCalculateException;
+import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
+import de.clusteval.framework.repository.config.RepositoryConfigurationException;
+import de.clusteval.run.InvalidRunModeException;
+import de.clusteval.run.RunException;
 import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.run.result.RunResult;
 import de.clusteval.utils.ArraysExt;
 import de.clusteval.utils.FileUtils;
+import de.clusteval.utils.InvalidConfigurationFileException;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.apache.commons.configuration.ConfigurationException;
 
 /**
  * @author Christian Wiwie
@@ -155,8 +196,7 @@ public class ParameterImportanceRunStatisticCalculator
                     for (Pair<String, String> p : paramQualitiesMean.keySet()) {
                         String paramName = p.getFirst();
                         if (!paramQualitiesLists.containsKey(paramName)) {
-                            paramQualitiesLists.put(paramName,
-                                    new HashMap<String, List<Double>>());
+                            paramQualitiesLists.put(paramName, new HashMap<>());
                         }
                         Map<String, List<Double>> map = paramQualitiesLists
                                 .get(paramName);
@@ -164,7 +204,7 @@ public class ParameterImportanceRunStatisticCalculator
                         for (String measure : paramQualitiesMean.get(p)
                                 .keySet()) {
                             if (!map.containsKey(measure)) {
-                                map.put(measure, new ArrayList<Double>());
+                                map.put(measure, new ArrayList<>());
                             }
                             map.get(measure).add(
                                     paramQualitiesMean.get(p).get(measure));
@@ -196,8 +236,7 @@ public class ParameterImportanceRunStatisticCalculator
                         Pair<String, String> p = Pair.getPair(paramName,
                                 dataConfig);
                         if (!paramImportances.containsKey(p)) {
-                            paramImportances.put(p,
-                                    new HashMap<String, Double>());
+                            paramImportances.put(p, new HashMap<>());
                         }
                         for (String measure : paramQualitiesVariances.get(
                                 paramName).keySet()) {
@@ -216,7 +255,7 @@ public class ParameterImportanceRunStatisticCalculator
 
             return new ParameterImportanceRunStatistic(repository, false,
                     changeDate, absPath, paramImportances);
-        } catch (Exception e) {
+        } catch (IOException | UnknownRunResultFormatException | UnknownDataSetFormatException | UnknownClusteringQualityMeasureException | InvalidRunModeException | UnknownParameterOptimizationMethodException | NoOptimizableProgramParameterException | UnknownProgramParameterException | UnknownGoldStandardFormatException | InvalidConfigurationFileException | RepositoryAlreadyExistsException | InvalidRepositoryException | NoRepositoryFoundException | GoldStandardNotFoundException | InvalidOptimizationParameterException | GoldStandardConfigurationException | DataSetConfigurationException | DataSetNotFoundException | DataSetConfigNotFoundException | GoldStandardConfigNotFoundException | DataConfigurationException | DataConfigNotFoundException | RunException | UnknownDataStatisticException | UnknownProgramTypeException | UnknownRProgramException | IncompatibleParameterOptimizationMethodException | UnknownDistanceMeasureException | UnknownRunStatisticException | RepositoryConfigNotFoundException | RepositoryConfigurationException | ConfigurationException | RegisterException | UnknownDataSetTypeException | NumberFormatException | NoDataSetException | UnknownRunDataStatisticException | RunResultParseException | UnknownDataPreprocessorException | IncompatibleDataSetConfigPreprocessorException | UnknownContextException | IncompatibleContextException | UnknownParameterType | InterruptedException | UnknownRunResultPostprocessorException | UnknownDataRandomizerException e) {
             throw new RunStatisticCalculateException(e);
         }
     }
