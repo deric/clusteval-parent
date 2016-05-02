@@ -5,4 +5,4 @@ packages <- function(pkg){
         sapply(pkg, require, character.only = TRUE)
 }
 packages(c("igraph"))
-packages(c("Rserve","cluster","tables","fields","kernlab","lattice","MASS","mlbench","stats","proxy","fpc","clv","lars","kohonen","clusterGeneration","tnet"))
+packages(c("Rserve","cluster","tables","fields","kernlab","lattice","MASS","mlbench","stats","proxy","fpc","clv","lars","kohonen","clusterGeneration","tnet","e1071"))
