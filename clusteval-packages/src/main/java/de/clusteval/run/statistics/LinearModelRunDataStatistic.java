@@ -110,7 +110,7 @@ public class LinearModelRunDataStatistic extends RunDataStatistic {
 	 * @see utils.Statistic#getAlias()
 	 */
 	@Override
-	public String getAlias() {
+	public String getName() {
 		return "Linear Model";
 	}
 

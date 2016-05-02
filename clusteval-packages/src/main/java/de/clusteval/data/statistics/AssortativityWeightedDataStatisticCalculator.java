@@ -14,17 +14,16 @@ import de.clusteval.api.data.IDataSetConfig;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.r.IRengine;
+import de.clusteval.api.r.RException;
+import de.clusteval.api.r.RExpr;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.RelativeDataSet;
-import de.clusteval.framework.repository.MyRengine;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.utils.ArraysExt;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
 import java.io.File;
 import java.io.IOException;
-import org.rosuda.REngine.REXP;
-import org.rosuda.REngine.REXPMismatchException;
-import org.rosuda.REngine.REngineException;
 
 /**
  * @author Christian Wiwie
@@ -67,10 +66,10 @@ public class AssortativityWeightedDataStatisticCalculator
      */
     @Override
     protected AssortativityWeightedDataStatistic calculateResultHelper(
-            final MyRengine rEngine) throws IllegalArgumentException,
-                                            IOException, InvalidDataSetFormatVersionException,
-                                            RegisterException, REngineException, REXPMismatchException,
-                                            UnknownDataSetFormatException, InterruptedException {
+            final IRengine rEngine)
+            throws IllegalArgumentException, IOException, InvalidDataSetFormatVersionException,
+                   RegisterException,
+                   UnknownDataSetFormatException, InterruptedException, RException {
 
         IDataSetConfig dataSetConfig = dataConfig.getDatasetConfig();
         RelativeDataSet dataSet = (RelativeDataSet) (dataSetConfig.getDataSet()
@@ -92,7 +91,7 @@ public class AssortativityWeightedDataStatisticCalculator
         rEngine.eval("library('igraph')");
         rEngine.eval("gr <- graph.adjacency(simMatrix,weighted=TRUE)");
         rEngine.eval("gr <- simplify(as.undirected(gr,mode='collapse'), remove.loops=TRUE, remove.multiple=TRUE)");
-        REXP result = rEngine.eval("assortativity(gr, types1=graph.strength(gr), directed = FALSE)");
+        RExpr result = rEngine.eval("assortativity(gr, types1=graph.strength(gr), directed = FALSE)");
         return new AssortativityWeightedDataStatistic(repository, false,
                 changeDate, absPath, result.asDouble());
     }
@@ -104,8 +103,7 @@ public class AssortativityWeightedDataStatisticCalculator
      */
     @SuppressWarnings("unused")
     @Override
-    protected void writeOutputToHelper(File absFolderPath,
-            final MyRengine rEngine) {
+    protected void writeOutputToHelper(File absFolderPath, final IRengine rEngine) {
     }
 
 }

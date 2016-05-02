@@ -84,7 +84,7 @@ public class ParameterImportanceRunStatistic extends RunStatistic {
 	 * @see utils.Statistic#getAlias()
 	 */
 	@Override
-	public String getAlias() {
+	public String getName() {
 		return "Parameter Importance";
 	}
 

@@ -85,7 +85,7 @@ public class CooccurrenceBestRunStatistic extends RunStatistic {
 	 * @see utils.Statistic#getAlias()
      */
     @Override
-    public String getAlias() {
+    public String getName() {
         return "Cooccurrence Matrix (Best only)";
     }
 

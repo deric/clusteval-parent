@@ -10,9 +10,9 @@
  ***************************************************************************** */
 package de.clusteval.data.statistics;
 
-import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.program.RegisterException;
-import de.clusteval.data.DataConfig;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.utils.StatisticCalculator;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
@@ -28,7 +28,7 @@ import java.lang.reflect.InvocationTargetException;
  */
 public abstract class DataStatisticCalculator<T extends DataStatistic> extends StatisticCalculator<T> {
 
-    protected DataConfig dataConfig;
+    protected IDataConfig dataConfig;
 
     /**
      * @param repository
@@ -38,7 +38,7 @@ public abstract class DataStatisticCalculator<T extends DataStatistic> extends S
      * @throws RegisterException
      */
     public DataStatisticCalculator(IRepository repository, long changeDate,
-            File absPath, final DataConfig dataConfig) throws RegisterException {
+            File absPath, final IDataConfig dataConfig) throws RegisterException {
         super(repository, changeDate, absPath);
         this.dataConfig = dataConfig;
     }
@@ -68,17 +68,8 @@ public abstract class DataStatisticCalculator<T extends DataStatistic> extends S
             return this.getClass()
                     .getConstructor(DataStatisticCalculator.class)
                     .newInstance(this);
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        } catch (SecurityException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
+        } catch (IllegalArgumentException | SecurityException | InstantiationException |
+                IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
         this.log.warn("Cloning instance of class "
@@ -102,8 +93,7 @@ public abstract class DataStatisticCalculator<T extends DataStatistic> extends S
      * @see de.wiwie.wiutils.utils.StatisticCalculator#calculate()
      */
     @Override
-    protected abstract T calculateResult()
-            throws DataStatisticCalculateException;
+    protected abstract T calculateResult() throws DataStatisticCalculateException;
 
     @Override
     public T getStatistic() {

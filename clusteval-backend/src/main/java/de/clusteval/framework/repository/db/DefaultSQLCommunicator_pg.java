@@ -1859,7 +1859,7 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
                         new String[]{"repository_id", "name", "alias"},
                         new String[]{"" + this.updateRepositoryId(),
                             "" + object.getSimpleName(),
-                            statistic.getAlias()});
+                            statistic.getName()});
 
                 insert(this.getTableStatisticsData(), new String[]{
                     "repository_id", "statistic_id"}, new String[]{
@@ -1901,7 +1901,7 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
                         new String[]{"repository_id", "name", "alias"},
                         new String[]{"" + this.updateRepositoryId(),
                             "" + object.getSimpleName(),
-                            runStatistic.getAlias()});
+                            runStatistic.getName()});
 
                 insert(this.getTableStatisticsRun(), new String[]{
                     "repository_id", "statistic_id"}, new String[]{
@@ -1951,7 +1951,7 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
                         new String[]{"repository_id", "name", "alias"},
                         new String[]{"" + this.updateRepositoryId(),
                             "" + object.getSimpleName(),
-                            runDataStatistic.getAlias()});
+                            runDataStatistic.getName()});
                 insert(this.getTableStatisticsRunData(), new String[]{
                     "repository_id", "statistic_id"}, new String[]{
                     "" + this.updateRepositoryId(), "" + statisticId});

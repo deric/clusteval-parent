@@ -25,6 +25,8 @@ import de.clusteval.api.repository.IRepositoryObject;
 public interface IStatistic extends IRepositoryObject {
 
     /**
+     * This alias is used whenever this statistic is visually represented and a
+     * readable name is needed.
      *
      * @return unique statistic identifier
      */
@@ -48,13 +50,5 @@ public interface IStatistic extends IRepositoryObject {
      * @return A string representing this statistic class.
      */
     String getIdentifier();
-
-    /**
-     * This alias is used whenever this statistic is visually represented and a
-     * readable name is needed.
-     *
-     * @return The alias of this statistic.
-     */
-    String getAlias();
 
 }

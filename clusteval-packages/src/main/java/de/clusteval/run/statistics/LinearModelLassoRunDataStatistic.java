@@ -113,7 +113,7 @@ public class LinearModelLassoRunDataStatistic extends RunDataStatistic {
 	 * @see utils.Statistic#getAlias()
 	 */
 	@Override
-	public String getAlias() {
+	public String getName() {
 		return "Linear Model (Lasso Regression)";
 	}
 

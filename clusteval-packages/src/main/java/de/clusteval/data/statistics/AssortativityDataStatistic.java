@@ -14,7 +14,7 @@ package de.clusteval.data.statistics;
 
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.RLibraryRequirement;
-import de.clusteval.framework.repository.Repository;
+import de.clusteval.api.repository.IRepository;
 import java.io.File;
 
 /**
@@ -25,12 +25,12 @@ import java.io.File;
 public class AssortativityDataStatistic extends DoubleValueDataStatistic {
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see utils.Statistic#getAlias()
+     * (non-Javadoc)
+     *
+     * @see utils.Statistic#getAlias()
      */
     @Override
-    public String getAlias() {
+    public String getName() {
         return "Assortativity";
     }
 
@@ -42,7 +42,7 @@ public class AssortativityDataStatistic extends DoubleValueDataStatistic {
      * @throws RegisterException
      *
      */
-    public AssortativityDataStatistic(final Repository repository,
+    public AssortativityDataStatistic(final IRepository repository,
             final boolean register, final long changeDate, final File absPath)
             throws RegisterException {
         super(repository, register, changeDate, absPath, 0.0);
@@ -56,7 +56,7 @@ public class AssortativityDataStatistic extends DoubleValueDataStatistic {
      * @param value
      * @throws RegisterException
      */
-    public AssortativityDataStatistic(final Repository repository,
+    public AssortativityDataStatistic(final IRepository repository,
             final boolean register, final long changeDate, final File absPath,
             final double value) throws RegisterException {
         super(repository, register, changeDate, absPath, value);

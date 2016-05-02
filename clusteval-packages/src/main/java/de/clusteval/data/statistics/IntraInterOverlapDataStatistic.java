@@ -67,7 +67,7 @@ public class IntraInterOverlapDataStatistic extends DoubleValueDataStatistic {
      * @see utils.Statistic#getAlias()
      */
     @Override
-    public String getAlias() {
+    public String getName() {
         return "Intra-/Inter Overlap";
     }
 

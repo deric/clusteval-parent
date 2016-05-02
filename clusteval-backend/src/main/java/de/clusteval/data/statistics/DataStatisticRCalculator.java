@@ -10,20 +10,17 @@
  ***************************************************************************** */
 package de.clusteval.data.statistics;
 
+import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
-import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.program.RegisterException;
-import de.clusteval.data.DataConfig;
 import java.io.File;
 import java.io.IOException;
-import org.rosuda.REngine.REXPMismatchException;
-import org.rosuda.REngine.REngineException;
-import org.rosuda.REngine.Rserve.RserveException;
+import org.openide.util.Exceptions;
 
 /**
  * This class is parent class of all different kind of analyses on a DataConfig.
@@ -44,7 +41,7 @@ public abstract class DataStatisticRCalculator<T extends DataStatistic> extends 
      * @throws RegisterException
      */
     public DataStatisticRCalculator(IRepository repository, long changeDate,
-            File absPath, final DataConfig dataConfig) throws RegisterException {
+            File absPath, final IDataConfig dataConfig) throws RegisterException {
         super(repository, changeDate, absPath, dataConfig);
     }
 
@@ -69,29 +66,23 @@ public abstract class DataStatisticRCalculator<T extends DataStatistic> extends 
     @Override
     protected final T calculateResult() throws DataStatisticCalculateException {
         try {
+            IRengine rEngine = repository.getRengineForCurrentThread();
             try {
-                IRengine rEngine = repository.getRengineForCurrentThread();
-                try {
-                    try {
-                        return calculateResultHelper(rEngine);
-                    } catch (REXPMismatchException e) {
-                        // handle this type of exception as an REngineException
-                        throw new RException(rEngine, e.getMessage());
-                    }
-                } catch (REngineException e) {
-                    this.log.warn("R-framework ("
-                            + this.getClass().getSimpleName() + "): "
-                            + rEngine.getLastError());
-                    throw e;
-                } finally {
-                    rEngine.clear();
-                }
-            } catch (RserveException e) {
-                throw new RNotAvailableException(e.getMessage());
+
+                return calculateResultHelper(rEngine);
+
+            } catch (IncompatibleDataConfigDataStatisticException |
+                    UnknownGoldStandardFormatException | UnknownDataSetFormatException |
+                    IllegalArgumentException | IOException | InvalidDataSetFormatVersionException |
+                    RegisterException | RException | InterruptedException e) {
+                throw new DataStatisticCalculateException(e);
+            } finally {
+                rEngine.clear();
             }
-        } catch (Exception e) {
-            throw new DataStatisticCalculateException(e);
+        } catch (InterruptedException | RException ex) {
+            Exceptions.printStackTrace(ex);
         }
+        return null;
     }
 
     protected abstract T calculateResultHelper(final IRengine rEngine)
@@ -99,7 +90,7 @@ public abstract class DataStatisticRCalculator<T extends DataStatistic> extends 
                    UnknownGoldStandardFormatException, UnknownDataSetFormatException,
                    IllegalArgumentException, IOException,
                    InvalidDataSetFormatVersionException, RegisterException,
-                   REngineException, REXPMismatchException, InterruptedException;
+                   RException, InterruptedException;
 
     /*
      * (non-Javadoc)
@@ -107,25 +98,12 @@ public abstract class DataStatisticRCalculator<T extends DataStatistic> extends 
      * @see de.clusteval.utils.StatisticCalculator#writeOutputTo(java.io.File)
      */
     @Override
-    public final void writeOutputTo(File absFolderPath)
-            throws REngineException, RNotAvailableException,
-                   InterruptedException {
-        try {
-            IRengine rEngine = repository.getRengineForCurrentThread();
-            try {
-                writeOutputToHelper(absFolderPath, rEngine);
-            } catch (REngineException e) {
-                this.log.warn("R-framework (" + this.getClass().getSimpleName()
-                        + "): " + rEngine.getLastError());
-                throw e;
-            } finally {
-                rEngine.clear();
-            }
-        } catch (RException e) {
-            throw new RNotAvailableException(e.getMessage());
-        }
+    public final void writeOutputTo(File absFolderPath) throws RException, InterruptedException {
+        IRengine rEngine = repository.getRengineForCurrentThread();
+        writeOutputToHelper(absFolderPath, rEngine);
+        rEngine.clear();
     }
 
     protected abstract void writeOutputToHelper(File absFolderPath,
-            final IRengine rEngine) throws REngineException, InterruptedException;
+            final IRengine rEngine) throws RException, InterruptedException;
 }

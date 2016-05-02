@@ -12,10 +12,10 @@
  */
 package de.clusteval.data.statistics;
 
-import de.clusteval.api.stats.UnknownDataStatisticException;
-import de.clusteval.api.stats.IDataStatistic;
-import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.stats.IDataStatistic;
+import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.run.DataAnalysisRun;
 import de.clusteval.utils.Statistic;
 import java.io.File;
@@ -88,16 +88,17 @@ public abstract class DataStatistic extends Statistic implements IDataStatistic 
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#clone()
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#clone()
      */
     @Override
     public final DataStatistic clone() {
         try {
             return this.getClass().getConstructor(this.getClass())
                     .newInstance(this);
-        } catch (IllegalArgumentException | SecurityException | InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+        } catch (IllegalArgumentException | SecurityException | InstantiationException |
+                IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
         this.log.warn("Cloning instance of class "
@@ -109,9 +110,9 @@ public abstract class DataStatistic extends Statistic implements IDataStatistic 
      * This method parses a string and maps it to an instance of a
      * {@link DataStatistic} looking its class up in the given repository.
      *
-     * @param repository The repository to look for the classes.
+     * @param repository    The repository to look for the classes.
      * @param dataStatistic The string representation of a data statistic
-     * subclass.
+     *                      subclass.
      * @return A subclass of {@link DataStatistic}.
      * @throws UnknownDataStatisticException
      */
@@ -128,7 +129,8 @@ public abstract class DataStatistic extends Statistic implements IDataStatistic 
                             new File(dataStatistic));
 
             return statistic;
-        } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | SecurityException | InvocationTargetException | NoSuchMethodException e) {
+        } catch (InstantiationException | IllegalAccessException | IllegalArgumentException |
+                SecurityException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         } catch (NullPointerException e) {
 
@@ -141,9 +143,9 @@ public abstract class DataStatistic extends Statistic implements IDataStatistic 
      * This method parses several strings and maps them to instances of
      * {@link DataStatistic} looking their classes up in the given repository.
      *
-     * @param repo The repository to look for the classes.
+     * @param repo           The repository to look for the classes.
      * @param dataStatistics The string representation of a data statistic
-     * subclass.
+     *                       subclass.
      * @return A subclass of {@link DataStatistic}.
      * @throws UnknownDataStatisticException
      */

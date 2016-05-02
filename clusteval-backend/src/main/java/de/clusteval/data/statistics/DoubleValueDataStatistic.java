@@ -12,8 +12,8 @@
  */
 package de.clusteval.data.statistics;
 
-import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.repository.IRepository;
 import java.io.File;
 
 /**
@@ -21,6 +21,8 @@ import java.io.File;
  *
  */
 public abstract class DoubleValueDataStatistic extends DataStatistic {
+
+    protected double value;
 
     /**
      * @param repository
@@ -53,12 +55,10 @@ public abstract class DoubleValueDataStatistic extends DataStatistic {
         this.value = other.value;
     }
 
-    protected double value;
-
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.wiwie.wiutils.utils.Statistic#parseFromString(java.lang.String)
+     * (non-Javadoc)
+     *
+     * @see de.wiwie.wiutils.utils.Statistic#parseFromString(java.lang.String)
      */
     @Override
     public void parseFromString(String contents) {
@@ -73,9 +73,9 @@ public abstract class DoubleValueDataStatistic extends DataStatistic {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see data.statistics.DataStatistic#toString()
+     * (non-Javadoc)
+     *
+     * @see data.statistics.DataStatistic#toString()
      */
     @Override
     public String toString() {

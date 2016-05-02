@@ -11,7 +11,7 @@
 package de.clusteval.data.statistics;
 
 import de.clusteval.api.program.RegisterException;
-import de.clusteval.framework.repository.Repository;
+import de.clusteval.api.repository.IRepository;
 import java.io.File;
 
 /**
@@ -28,7 +28,7 @@ public class MatrixRankRDataStatistic extends DoubleValueDataStatistic {
      * @throws RegisterException
      *
      */
-    public MatrixRankRDataStatistic(final Repository repository,
+    public MatrixRankRDataStatistic(final IRepository repository,
             final boolean register, final long changeDate, final File absPath)
             throws RegisterException {
         super(repository, register, changeDate, absPath, 0.0);
@@ -42,7 +42,7 @@ public class MatrixRankRDataStatistic extends DoubleValueDataStatistic {
      * @param value
      * @throws RegisterException
      */
-    public MatrixRankRDataStatistic(final Repository repository,
+    public MatrixRankRDataStatistic(final IRepository repository,
             final boolean register, final long changeDate, final File absPath,
             final double value) throws RegisterException {
         super(repository, register, changeDate, absPath, value);
@@ -66,7 +66,7 @@ public class MatrixRankRDataStatistic extends DoubleValueDataStatistic {
      * @see utils.Statistic#getAlias()
      */
     @Override
-    public String getAlias() {
+    public String getName() {
         return "Matrix Rank";
     }
 

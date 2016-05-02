@@ -10,22 +10,22 @@
  ***************************************************************************** */
 package de.clusteval.data.statistics;
 
+import de.clusteval.api.Pair;
+import de.clusteval.api.data.IDataSetConfig;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.r.IRengine;
+import de.clusteval.api.r.RException;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.data.DataConfig;
-import de.clusteval.data.dataset.DataSetConfig;
 import de.clusteval.data.dataset.RelativeDataSet;
 import de.clusteval.data.dataset.format.RelativeDataSetFormat;
-import de.clusteval.framework.repository.MyRengine;
-import de.clusteval.framework.repository.Repository;
-import de.clusteval.utils.FileUtils;
 import de.clusteval.utils.ArraysExt;
-import de.clusteval.api.Pair;
+import de.clusteval.utils.FileUtils;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
 import java.io.File;
 import java.io.IOException;
-import org.rosuda.REngine.REngineException;
 
 /**
  * @author Christian Wiwie
@@ -42,7 +42,7 @@ public class NodeDegreeDistributionDataStatisticCalculator
      * @param dataConfig
      * @throws RegisterException
      */
-    public NodeDegreeDistributionDataStatisticCalculator(Repository repository,
+    public NodeDegreeDistributionDataStatisticCalculator(IRepository repository,
             long changeDate, File absPath, final DataConfig dataConfig)
             throws RegisterException {
         super(repository, changeDate, absPath, dataConfig);
@@ -71,13 +71,12 @@ public class NodeDegreeDistributionDataStatisticCalculator
      *
      * @see data.statistics.DataStatisticCalculator#calculate(data.DataConfig)
      */
-    @SuppressWarnings("unused")
     @Override
     protected NodeDegreeDistributionDataStatistic calculateResultHelper(
-            final MyRengine rEngine) throws IllegalArgumentException,
-                                            IOException, InvalidDataSetFormatVersionException,
-                                            RegisterException, UnknownDataSetFormatException {
-        DataSetConfig dataSetConfig = dataConfig.getDatasetConfig();
+            final IRengine rEngine)
+            throws IllegalArgumentException, IOException, InvalidDataSetFormatVersionException,
+                   RegisterException, UnknownDataSetFormatException {
+        IDataSetConfig dataSetConfig = dataConfig.getDatasetConfig();
         RelativeDataSet dataSet = (RelativeDataSet) (dataSetConfig.getDataSet()
                 .getInStandardFormat());
 
@@ -107,9 +106,8 @@ public class NodeDegreeDistributionDataStatisticCalculator
     }
 
     @Override
-    protected void writeOutputToHelper(final File absFolderPath,
-            final MyRengine rEngine) throws REngineException,
-                                            InterruptedException {
+    protected void writeOutputToHelper(final File absFolderPath, final IRengine rEngine)
+            throws RException, InterruptedException {
 
         rEngine.eval("plotNodeDegreeDistribution <- function(title, path, xlabels, distr) {"
                 + "names(distr) <- xlabels;"

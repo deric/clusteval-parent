@@ -969,12 +969,12 @@ public class ClustevalBackendServer implements IBackendServer {
             } else if (e.getValue() instanceof DataAnalysisIterationRunnable) {
                 DataAnalysisRunRunnable r = (DataAnalysisRunRunnable) (e.getValue().getParentRunnable());
 
-                status = ((AnalysisIterationRunnable) e.getValue()).getStatistic().getAlias();
+                status = ((AnalysisIterationRunnable) e.getValue()).getStatistic().getName();
                 name = r.getRun().getName() + ": " + status + "," + r.getDataConfig();
             } else if (e.getValue() instanceof RunAnalysisIterationRunnable) {
                 RunAnalysisRunRunnable r = (RunAnalysisRunRunnable) (e.getValue().getParentRunnable());
 
-                status = ((AnalysisIterationRunnable) e.getValue()).getStatistic().getAlias();
+                status = ((AnalysisIterationRunnable) e.getValue()).getStatistic().getName();
                 name = r.getRun().getName() + ": " + status + "," + r.getRunIdentifier();
             }
             // TODO

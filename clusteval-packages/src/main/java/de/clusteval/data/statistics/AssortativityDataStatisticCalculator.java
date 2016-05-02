@@ -12,31 +12,26 @@
  */
 package de.clusteval.data.statistics;
 
-import java.io.File;
-import java.io.IOException;
-
-import org.rosuda.REngine.REXP;
-import org.rosuda.REngine.REXPMismatchException;
-import org.rosuda.REngine.REngineException;
-
-import de.clusteval.utils.ArraysExt;
-import de.wiwie.wiutils.utils.SimilarityMatrix;
-import de.clusteval.data.DataConfig;
-import de.clusteval.data.dataset.DataSetConfig;
-import de.clusteval.data.dataset.RelativeDataSet;
+import de.clusteval.api.data.IDataSetConfig;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
-import de.clusteval.framework.repository.MyRengine;
 import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.r.IRengine;
+import de.clusteval.api.r.RException;
+import de.clusteval.api.r.RExpr;
+import de.clusteval.data.DataConfig;
+import de.clusteval.data.dataset.RelativeDataSet;
 import de.clusteval.framework.repository.Repository;
+import de.clusteval.utils.ArraysExt;
+import de.wiwie.wiutils.utils.SimilarityMatrix;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * @author Christian Wiwie
  *
  */
-public class AssortativityDataStatisticCalculator
-        extends
-        DataStatisticRCalculator<AssortativityDataStatistic> {
+public class AssortativityDataStatisticCalculator extends DataStatisticRCalculator<AssortativityDataStatistic> {
 
     /**
      * @param repository
@@ -55,7 +50,7 @@ public class AssortativityDataStatisticCalculator
      * The copy constructor for this statistic calculator.
      *
      * @param other
-     * The object to clone.
+     *              The object to clone.
      * @throws RegisterException
      */
     public AssortativityDataStatisticCalculator(
@@ -65,18 +60,18 @@ public class AssortativityDataStatisticCalculator
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see data.statistics.DataStatisticCalculator#calculate()
+     * (non-Javadoc)
+     *
+     * @see data.statistics.DataStatisticCalculator#calculate()
      */
     @Override
-    protected AssortativityDataStatistic calculateResultHelper(
-            final MyRengine rEngine) throws IllegalArgumentException,
-            IOException, InvalidDataSetFormatVersionException,
-            RegisterException, REngineException, REXPMismatchException,
-            UnknownDataSetFormatException, InterruptedException {
+    protected AssortativityDataStatistic calculateResultHelper(final IRengine rEngine)
+            throws IllegalArgumentException,
+                   IOException, InvalidDataSetFormatVersionException,
+                   RegisterException, RException,
+                   UnknownDataSetFormatException, InterruptedException {
 
-        DataSetConfig dataSetConfig = dataConfig.getDatasetConfig();
+        IDataSetConfig dataSetConfig = dataConfig.getDatasetConfig();
         RelativeDataSet dataSet = (RelativeDataSet) (dataSetConfig.getDataSet()
                 .getInStandardFormat());
 
@@ -96,15 +91,15 @@ public class AssortativityDataStatisticCalculator
         rEngine.eval("library('igraph')");
         rEngine.eval("gr <- graph.adjacency(simMatrix,weighted=TRUE)");
         rEngine.eval("gr <- simplify(as.undirected(gr,mode='collapse'), remove.loops=TRUE, remove.multiple=TRUE)");
-        REXP result = rEngine.eval("assortativity_degree(gr, directed = FALSE)");
+        RExpr result = rEngine.eval("assortativity_degree(gr, directed = FALSE)");
         return new AssortativityDataStatistic(repository, false,
                 changeDate, absPath, result.asDouble());
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see data.statistics.DataStatisticCalculator#writeOutputTo(java.io.File)
+     * (non-Javadoc)
+     *
+     * @see data.statistics.DataStatisticCalculator#writeOutputTo(java.io.File)
      */
     @SuppressWarnings("unused")
     @Override

@@ -12,9 +12,10 @@
  */
 package de.clusteval.utils;
 
+import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.stats.IStatistic;
 import de.clusteval.data.statistics.RunStatisticCalculateException;
 import de.clusteval.data.statistics.StatisticCalculateException;
@@ -100,7 +101,7 @@ public abstract class StatisticCalculator<T extends IStatistic> extends Reposito
      * @throws InterruptedException
      */
     public abstract void writeOutputTo(final File absFolderPath)
-            throws REngineException, RNotAvailableException, InterruptedException;
+            throws RException, InterruptedException;
 
     /**
      * @return The statistic calculated during the last {@link #calculate()}
