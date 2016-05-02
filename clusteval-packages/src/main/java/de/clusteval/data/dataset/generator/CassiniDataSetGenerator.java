@@ -14,7 +14,13 @@ import de.clusteval.api.data.IDataSetGenerator;
 import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.exceptions.DataSetGenerationException;
 import de.clusteval.api.exceptions.GoldStandardGenerationException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
+import de.clusteval.api.r.RException;
+import de.clusteval.api.r.RLibraryRequirement;
+import de.clusteval.data.goldstandard.GoldStandard;
+import de.clusteval.framework.repository.Repository;
+import de.clusteval.utils.FileUtils;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -25,11 +31,6 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
-import de.clusteval.data.goldstandard.GoldStandard;
-import de.clusteval.api.r.RLibraryRequirement;
-import de.clusteval.api.program.RegisterException;
-import de.clusteval.framework.repository.Repository;
-import de.clusteval.utils.FileUtils;
 
 /**
  * @author Christian Wiwie
@@ -129,7 +130,8 @@ public class CassiniDataSetGenerator extends DataSetGenerator implements IDataSe
             coords = rEngine.eval("result$x").asDoubleMatrix();
             classes = rEngine.eval("result$classes").asIntegers();
 
-        } catch (Exception e) {
+        } catch (RException | InterruptedException e) {
+            LOG.error("failed to generate", e);
             throw new DataSetGenerationException("The dataset could not be generated!");
         }
 
@@ -147,16 +149,17 @@ public class CassiniDataSetGenerator extends DataSetGenerator implements IDataSe
             // goldstandard file
             File goldStandardFile = new File(FileUtils.buildPath(this.repository.getBasePath(IGoldStandard.class),
                     this.getFolderName(), this.getFileName()));
-            BufferedWriter writer = new BufferedWriter(new FileWriter(goldStandardFile));
-            for (int row = 0; row < classes.length; row++) {
-                writer.append((row + 1) + "\t" + classes[row] + ":1.0");
-                writer.newLine();
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(goldStandardFile))) {
+                for (int row = 0; row < classes.length; row++) {
+                    writer.append((row + 1) + "\t" + classes[row] + ":1.0");
+                    writer.newLine();
+                }
             }
-            writer.close();
 
             return new GoldStandard(repository, goldStandardFile.lastModified(), goldStandardFile);
 
         } catch (IOException | RegisterException e) {
+            LOG.error("failed to generate", e);
             e.printStackTrace();
         }
         throw new GoldStandardGenerationException("The goldstandard could not be generated!");

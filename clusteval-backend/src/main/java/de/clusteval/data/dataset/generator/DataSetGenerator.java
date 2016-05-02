@@ -12,19 +12,19 @@
  */
 package de.clusteval.data.dataset.generator;
 
-import de.clusteval.api.exceptions.DataSetGenerationException;
-import de.clusteval.api.exceptions.GoldStandardGenerationException;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataSetGenerator;
 import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.data.WEBSITE_VISIBILITY;
+import de.clusteval.api.exceptions.DataSetGenerationException;
+import de.clusteval.api.exceptions.GoldStandardGenerationException;
 import de.clusteval.api.exceptions.RepositoryObjectDumpException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownDataSetGeneratorException;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.RLibraryInferior;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.program.RegisterException;
 import de.clusteval.data.dataset.AbsoluteDataSet;
 import de.clusteval.data.dataset.AbstractDataSetProvider;
 import de.clusteval.data.dataset.DataSet;
@@ -47,6 +47,8 @@ import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -110,6 +112,8 @@ public abstract class DataSetGenerator extends AbstractDataSetProvider implement
      */
     protected int[] classes;
 
+    protected Logger LOG;
+
     /**
      * @param repository
      * @param register
@@ -120,6 +124,7 @@ public abstract class DataSetGenerator extends AbstractDataSetProvider implement
     public DataSetGenerator(IRepository repository, boolean register, long changeDate, File absPath)
             throws RegisterException {
         super(repository, register, changeDate, absPath);
+        LOG = LoggerFactory.getLogger(DataSetGenerator.class.getName());
     }
 
     /**
@@ -130,6 +135,7 @@ public abstract class DataSetGenerator extends AbstractDataSetProvider implement
      */
     public DataSetGenerator(DataSetGenerator other) throws RegisterException {
         super(other);
+        LOG = LoggerFactory.getLogger(DataSetGenerator.class.getName());
     }
 
     /*

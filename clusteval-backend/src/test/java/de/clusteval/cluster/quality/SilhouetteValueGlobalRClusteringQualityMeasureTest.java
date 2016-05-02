@@ -22,12 +22,12 @@ import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
-import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RCalculationException;
+import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
-import de.clusteval.api.program.RegisterException;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.context.Context;
 import de.clusteval.data.DataConfig;
@@ -66,7 +66,7 @@ public class SilhouetteValueGlobalRClusteringQualityMeasureTest extends
                    RepositoryConfigurationException, NoRepositoryFoundException,
                    RegisterException, NoSuchAlgorithmException,
                    RNotAvailableException, RCalculationException,
-                   UnknownClusteringQualityMeasureException, InterruptedException {
+                   UnknownClusteringQualityMeasureException, InterruptedException, RException {
         try {
             Clustering clustering = new Clustering(this.getRepository(),
                     System.currentTimeMillis(), new File(""));
@@ -102,7 +102,7 @@ public class SilhouetteValueGlobalRClusteringQualityMeasureTest extends
                    RNotAvailableException, RCalculationException,
                    UnknownClusteringQualityMeasureException,
                    FormatConversionException, UnknownDistanceMeasureException,
-                   UnknownContextException, InterruptedException {
+                   UnknownContextException, InterruptedException, RException, UnknownDataSetFormatException {
         try {
 
             Context context = Context.parseFromString(getRepository(),
@@ -142,9 +142,8 @@ public class SilhouetteValueGlobalRClusteringQualityMeasureTest extends
                     dc).getValue();
             ds.getInStandardFormat().unloadFromMemory();
             assertEquals(0.3346755237978247, quality, DELTA);
-        } catch (UnknownGoldStandardFormatException | UnknownDataSetFormatException |
-                 IllegalArgumentException | InvalidDataSetFormatVersionException |
-                 IOException | FileNotFoundExceptione) {
+        } catch (IllegalArgumentException | InvalidDataSetFormatVersionException |
+                IOException e) {
             Exceptions.printStackTrace(e);
         }
     }

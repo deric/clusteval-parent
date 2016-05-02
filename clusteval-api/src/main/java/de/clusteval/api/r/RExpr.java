@@ -27,5 +27,12 @@ public interface RExpr {
 
     int asInteger();
 
+    /**
+     * Convert result to an array of integers
+     *
+     * @return array of integers
+     */
+    int[] asIntegers();
+
     double[][] asDoubleMatrix();
 }

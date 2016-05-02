@@ -10,26 +10,26 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset.generator;
 
+import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.exceptions.DataSetGenerationException;
 import de.clusteval.api.exceptions.GoldStandardGenerationException;
+import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.r.IRengine;
+import de.clusteval.api.r.RException;
+import de.clusteval.api.r.RLibraryRequirement;
+import de.clusteval.data.goldstandard.GoldStandard;
+import de.clusteval.framework.repository.Repository;
+import de.clusteval.utils.FileUtils;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
-
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
-
-import de.clusteval.data.goldstandard.GoldStandard;
-import de.clusteval.api.r.RLibraryRequirement;
-import de.clusteval.framework.repository.MyRengine;
-import de.clusteval.api.program.RegisterException;
-import de.clusteval.framework.repository.Repository;
-import de.clusteval.utils.FileUtils;
 
 /**
  * @author Christian Wiwie
@@ -71,7 +71,7 @@ public class CuboidDataSetGenerator extends DataSetGenerator {
      * @see data.dataset.generator.DataSetGenerator#getOptions()
      */
     @Override
-    protected Options getOptions() {
+    public Options getOptions() {
         Options options = new Options();
 
         OptionBuilder.withArgName("n");
@@ -102,7 +102,7 @@ public class CuboidDataSetGenerator extends DataSetGenerator {
      * .cli.CommandLine)
      */
     @Override
-    protected void handleOptions(CommandLine cmd) throws ParseException {
+    public void handleOptions(CommandLine cmd) throws ParseException {
         if (cmd.getArgList().size() > 0) {
             throw new ParseException("Unknown parameters: " + Arrays.toString(cmd.getArgs()));
         }
@@ -120,15 +120,14 @@ public class CuboidDataSetGenerator extends DataSetGenerator {
      * @see data.dataset.generator.DataSetGenerator#generateDataSet()
      */
     @Override
-    protected void generateDataSet() throws DataSetGenerationException, InterruptedException {
+    public void generateDataSet() throws DataSetGenerationException, InterruptedException {
         try {
-            MyRengine rEngine = repository.getRengineForCurrentThread();
+            IRengine rEngine = repository.getRengineForCurrentThread();
             rEngine.eval("library(mlbench)");
             rEngine.eval("result <- mlbench.cuboids(n=" + this.numberOfPoints + ");");
             coords = rEngine.eval("result$x").asDoubleMatrix();
             classes = rEngine.eval("result$classes").asIntegers();
-
-        } catch (Exception e) {
+        } catch (RException | InterruptedException e) {
             throw new DataSetGenerationException("The dataset could not be generated!");
         }
     }
@@ -139,24 +138,23 @@ public class CuboidDataSetGenerator extends DataSetGenerator {
      * @see data.dataset.generator.DataSetGenerator#generateGoldStandard()
      */
     @Override
-    protected GoldStandard generateGoldStandard() throws GoldStandardGenerationException {
+    public GoldStandard generateGoldStandard() throws GoldStandardGenerationException {
 
         try {
             // goldstandard file
-            File goldStandardFile = new File(FileUtils.buildPath(this.repository.getBasePath(GoldStandard.class),
+            File goldStandardFile = new File(FileUtils.buildPath(this.repository.getBasePath(IGoldStandard.class),
                     this.getFolderName(), this.getFileName()));
-            BufferedWriter writer = new BufferedWriter(new FileWriter(goldStandardFile));
-            for (int row = 0; row < classes.length; row++) {
-                writer.append((row + 1) + "\t" + classes[row] + ":1.0");
-                writer.newLine();
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(goldStandardFile))) {
+                for (int row = 0; row < classes.length; row++) {
+                    writer.append((row + 1) + "\t" + classes[row] + ":1.0");
+                    writer.newLine();
+                }
             }
-            writer.close();
 
             return new GoldStandard(repository, goldStandardFile.lastModified(), goldStandardFile);
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (RegisterException e) {
+        } catch (IOException | RegisterException e) {
+            LOG.error("failed to generate", e);
             e.printStackTrace();
         }
         throw new GoldStandardGenerationException("The goldstandard could not be generated!");

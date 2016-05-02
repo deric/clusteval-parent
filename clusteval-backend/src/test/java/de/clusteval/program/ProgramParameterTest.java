@@ -15,6 +15,7 @@ import de.clusteval.api.program.IProgramParameter;
 import de.clusteval.utils.AbstractClustEvalTest;
 import java.io.File;
 import junitx.framework.ArrayAssert;
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
@@ -63,7 +64,7 @@ public class ProgramParameterTest extends AbstractClustEvalTest {
         IProgramParameter<?> param = pc.getParamWithId("method");
         assertEquals("", param.getMinValue());
         assertEquals("", param.getMaxValue());
-        ArrayAssert.assertEquals(new String[]{"0", "1", "2"}, param.getOptions());
+        assertArrayEquals(new String[]{"0", "1", "2"}, param.getOptions());
     }
 
 }

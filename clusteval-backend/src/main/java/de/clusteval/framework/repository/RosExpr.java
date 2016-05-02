@@ -20,6 +20,7 @@ import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RExpr;
 import de.clusteval.api.r.ROperationNotSupported;
+import org.openide.util.Exceptions;
 import org.rosuda.REngine.REXP;
 import org.rosuda.REngine.REXPMismatchException;
 import org.slf4j.Logger;
@@ -77,5 +78,16 @@ public class RosExpr implements RExpr {
             log.error(ex.getMessage(), ex);
         }
         return Integer.MIN_VALUE;
+    }
+
+    @Override
+    public int[] asIntegers() {
+        try {
+            return r.asIntegers();
+        } catch (REXPMismatchException ex) {
+            log.error(ex.getMessage(), ex);
+            Exceptions.printStackTrace(ex);
+        }
+        return new int[0];
     }
 }
