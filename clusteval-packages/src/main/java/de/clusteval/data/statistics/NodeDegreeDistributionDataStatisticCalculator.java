@@ -11,6 +11,7 @@
 package de.clusteval.data.statistics;
 
 import de.clusteval.api.Pair;
+import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataSetConfig;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
@@ -18,7 +19,6 @@ import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.RelativeDataSet;
 import de.clusteval.data.dataset.format.RelativeDataSetFormat;
 import de.clusteval.utils.ArraysExt;
@@ -43,7 +43,7 @@ public class NodeDegreeDistributionDataStatisticCalculator
      * @throws RegisterException
      */
     public NodeDegreeDistributionDataStatisticCalculator(IRepository repository,
-            long changeDate, File absPath, final DataConfig dataConfig)
+            long changeDate, File absPath, final IDataConfig dataConfig)
             throws RegisterException {
         super(repository, changeDate, absPath, dataConfig);
         if (!(RelativeDataSetFormat.class.isAssignableFrom(dataConfig

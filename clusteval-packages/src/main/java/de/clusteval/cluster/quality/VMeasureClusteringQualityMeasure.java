@@ -11,17 +11,17 @@
 package de.clusteval.cluster.quality;
 
 import de.clusteval.api.cluster.ClustEvalValue;
-import java.io.File;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.IRepository;
+import java.io.File;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Christian Wiwie
@@ -56,7 +56,6 @@ public class VMeasureClusteringQualityMeasure extends ClusteringQualityMeasure {
      *
      * @see
      * de.clusteval.cluster.quality.ClusteringQualityMeasure#getQualityOfClustering
-     * (de.clusteval.cluster.Clustering, de.clusteval.data.DataConfig)
      */
     @Override
     public ClustEvalValue getQualityOfClustering(

@@ -8,6 +8,7 @@
  ***************************************************************************** */
 package de.clusteval.data.statistics;
 
+import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataSetConfig;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
@@ -16,7 +17,6 @@ import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RExpr;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.RelativeDataSet;
 import de.clusteval.utils.ArraysExt;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
@@ -39,7 +39,7 @@ public class RichClubMaxDataStatisticCalculator
      * @throws RegisterException
      */
     public RichClubMaxDataStatisticCalculator(IRepository repository,
-            long changeDate, File absPath, DataConfig dataConfig)
+            long changeDate, File absPath, IDataConfig dataConfig)
             throws RegisterException {
         super(repository, changeDate, absPath, dataConfig);
     }

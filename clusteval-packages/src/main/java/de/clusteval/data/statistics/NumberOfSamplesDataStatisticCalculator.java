@@ -10,12 +10,12 @@
  ***************************************************************************** */
 package de.clusteval.data.statistics;
 
+import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataSetConfig;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.RelativeDataSet;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
 import java.io.File;
@@ -37,7 +37,7 @@ public class NumberOfSamplesDataStatisticCalculator
      * @throws RegisterException
      */
     public NumberOfSamplesDataStatisticCalculator(IRepository repository,
-            long changeDate, File absPath, DataConfig dataConfig)
+            long changeDate, File absPath, IDataConfig dataConfig)
             throws RegisterException {
         super(repository, changeDate, absPath, dataConfig);
     }
