@@ -39,8 +39,7 @@ public class MCODERunResultFormatParser extends RunResultFormatParser {
     }
 
     @Override
-    protected String getLineOutput(@SuppressWarnings("unused") String[] key,
-            String[] value) {
+    protected String getLineOutput(String[] key, String[] value) {
         StringBuilder sb = new StringBuilder();
         if (currentLine == 0) {
             String v = null, cutoff = null, fluff = null, haircut = null;
