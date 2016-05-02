@@ -13,8 +13,10 @@
 package de.clusteval.program.r;
 
 import de.clusteval.api.data.IDataConfig;
+import de.clusteval.api.program.IProgram;
 import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.IProgramParameter;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRProgram;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
@@ -25,7 +27,6 @@ import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.r.ROperationNotSupported;
 import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.program.RegisterException;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.program.Program;
 import de.wiwie.wiutils.utils.StringExt;
@@ -346,5 +347,28 @@ public abstract class RProgram extends Program implements RLibraryInferior, IRPr
         sb.append("\t");
         sb.append(resultClustering.toFormattedString());
         return sb.toString();
+    }
+
+    @Override
+    public IProgram duplicate() {
+        try {
+            return this.getClass().getConstructor(this.getClass()).newInstance(this);
+        } catch (IllegalArgumentException | SecurityException | InstantiationException |
+                IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        this.log.warn("Cloning instance of class "
+                + this.getClass().getSimpleName() + " failed");
+        return null;
+    }
+
+    @Override
+    public void setEngine(IRengine engine) {
+        this.rEngine = engine;
+    }
+
+    @Override
+    public IRengine getEngine() {
+        return rEngine;
     }
 }

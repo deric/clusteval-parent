@@ -24,10 +24,11 @@ import de.clusteval.api.data.WEBSITE_VISIBILITY;
 import de.clusteval.api.exceptions.FormatConversionException;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.IRepositoryObject;
-import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.RepositoryEvent;
 import de.clusteval.api.repository.RepositoryMoveEvent;
 import de.clusteval.api.repository.RepositoryRemoveEvent;
@@ -395,7 +396,7 @@ public abstract class DataSet extends RepositoryObject implements IDataSet, IRep
             final IConversionConfiguration configStandardToInput)
             throws FormatConversionException, IOException,
                    InvalidDataSetFormatVersionException, RegisterException,
-                   RNotAvailableException, InterruptedException {
+                   RNotAvailableException, InterruptedException, RException {
 
         // only one conversion process at a time
         File sourceFile = ClustevalBackendServer.getCommonFile(new File(this
