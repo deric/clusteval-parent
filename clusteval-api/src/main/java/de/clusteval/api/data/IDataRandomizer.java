@@ -17,6 +17,7 @@
 package de.clusteval.api.data;
 
 import de.clusteval.api.Pair;
+import de.clusteval.api.r.RException;
 import de.clusteval.api.repository.IRepositoryObject;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
@@ -59,6 +60,6 @@ public interface IDataRandomizer extends IRepositoryObject {
      * @throws DataSetGenerationException If something goes wrong during the
      * generation process, this exception is thrown.
      */
-    Pair<IDataSet, IGoldStandard> randomizeDataConfig() throws InterruptedException;
+    Pair<IDataSet, IGoldStandard> randomizeDataConfig() throws InterruptedException, RException;
 
 }

@@ -90,14 +90,9 @@ public class VarianceNormalizationDataPreprocessor extends DataPreprocessor {
             newDataSet.writeToFile(false);
             newDataSet.unloadFromMemory();
             rEngine.clear();
-        } catch (InvalidDataSetFormatVersionException e1) {
+        } catch (InvalidDataSetFormatVersionException | IllegalArgumentException |
+                IOException | UnknownDataSetFormatException e1) {
             e1.printStackTrace();
-        } catch (IllegalArgumentException e1) {
-            e1.printStackTrace();
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        } catch (UnknownDataSetFormatException e) {
-            e.printStackTrace();
         } finally {
             dataSet.unloadFromMemory();
         }
@@ -113,7 +108,6 @@ public class VarianceNormalizationDataPreprocessor extends DataPreprocessor {
      */
     @Override
     public Set<String> getCompatibleDataSetFormats() {
-        return new HashSet<String>(
-                Arrays.asList(new String[]{"MatrixDataSetFormat"}));
+        return new HashSet<>(Arrays.asList(new String[]{"MatrixDataSetFormat"}));
     }
 }
