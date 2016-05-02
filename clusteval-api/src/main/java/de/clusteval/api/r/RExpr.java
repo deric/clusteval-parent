@@ -34,5 +34,12 @@ public interface RExpr {
      */
     int[] asIntegers();
 
+    /**
+     * Convert result to an array of Strings
+     *
+     * @return array of strings
+     */
+    String[] asStrings();
+
     double[][] asDoubleMatrix();
 }

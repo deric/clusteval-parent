@@ -16,6 +16,7 @@
  */
 package de.clusteval.api.data;
 
+import de.clusteval.api.r.RException;
 import de.clusteval.api.repository.IRepositoryObject;
 import java.util.Set;
 
@@ -34,8 +35,9 @@ public interface IDataPreprocessor extends IRepositoryObject {
      *                The dataset to be preprocessed.
      * @return The preprocessed dataset.
      * @throws InterruptedException
+     * @throws de.clusteval.api.r.RException
      */
-    IDataSet preprocess(final IDataSet dataSet) throws InterruptedException;
+    IDataSet preprocess(final IDataSet dataSet) throws InterruptedException, RException;
 
     IDataPreprocessor clone();
 

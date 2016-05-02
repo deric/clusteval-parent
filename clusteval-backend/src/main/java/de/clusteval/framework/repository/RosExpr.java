@@ -90,4 +90,14 @@ public class RosExpr implements RExpr {
         }
         return new int[0];
     }
+
+    @Override
+    public String[] asStrings() {
+        try {
+            return r.asStrings();
+        } catch (REXPMismatchException ex) {
+            Exceptions.printStackTrace(ex);
+        }
+        return new String[0];
+    }
 }
