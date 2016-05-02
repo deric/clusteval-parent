@@ -33,5 +33,5 @@ public interface IDivergingParameterOptimizationMethod {
      * @param parameterSet
      * @param minimalQualities
      */
-    public void giveFeedbackNotTerminated(final ParameterSet parameterSet, ClusteringQualitySet minimalQualities);
+    void giveFeedbackNotTerminated(final ParameterSet parameterSet, ClusteringQualitySet minimalQualities);
 }

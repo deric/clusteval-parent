@@ -1,22 +1,31 @@
-/*******************************************************************************
+/** *****************************************************************************
  * Copyright (c) 2013 Christian Wiwie.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Public License v3.0
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/gpl.html
- * 
+ *
  * Contributors:
  *     Christian Wiwie - initial API and implementation
- ******************************************************************************/
-/**
- * 
- */
+ ***************************************************************************** */
 package de.clusteval.cluster.paramOptimization;
 
+import de.clusteval.api.ClusteringEvaluation;
+import de.clusteval.api.cluster.ClusteringQualitySet;
+import de.clusteval.api.data.IDataConfig;
+import de.clusteval.api.exceptions.InternalAttributeException;
+import de.clusteval.api.exceptions.RunResultParseException;
+import de.clusteval.api.opt.IDivergingParameterOptimizationMethod;
+import de.clusteval.api.opt.NoParameterSetFoundException;
 import de.clusteval.api.opt.ParameterOptimizationException;
 import de.clusteval.api.opt.ParameterSetAlreadyEvaluatedException;
-import de.clusteval.api.opt.NoParameterSetFoundException;
-import de.clusteval.api.opt.IDivergingParameterOptimizationMethod;
+import de.clusteval.api.program.IProgramConfig;
+import de.clusteval.api.program.IProgramParameter;
+import de.clusteval.api.program.ParameterSet;
+import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.repository.IRepository;
+import de.clusteval.program.ProgramParameter;
+import de.clusteval.run.ParameterOptimizationRun;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,273 +33,267 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import de.clusteval.cluster.quality.ClusteringQualityMeasure;
-import de.clusteval.api.cluster.ClusteringQualitySet;
-import de.clusteval.data.DataConfig;
-import de.clusteval.api.program.RegisterException;
-import de.clusteval.framework.repository.Repository;
-import de.clusteval.api.program.ParameterSet;
-import de.clusteval.program.ProgramConfig;
-import de.clusteval.program.ProgramParameter;
-import de.clusteval.run.ParameterOptimizationRun;
-import de.clusteval.api.exceptions.RunResultParseException;
-import de.clusteval.api.exceptions.InternalAttributeException;
-
 /**
  * @author Christian Wiwie
- * 
+ *
  */
 @LoadableClassParentAnnotation(parent = "LayeredDivisiveParameterOptimizationMethod")
 public class APParameterOptimizationMethod
-		extends
-			LayeredDivisiveParameterOptimizationMethod
-		implements
-			IDivergingParameterOptimizationMethod {
+        extends
+        LayeredDivisiveParameterOptimizationMethod
+        implements
+        IDivergingParameterOptimizationMethod {
 
-	protected int numberTriesOnNotTerminated;
-	protected Map<ParameterSet, DivisiveParameterOptimizationMethod> iterationParamMethods;
-	protected List<ProgramParameter<?>> allParams;
+    protected int numberTriesOnNotTerminated;
+    protected Map<ParameterSet, DivisiveParameterOptimizationMethod> iterationParamMethods;
+    protected List<IProgramParameter<?>> allParams;
 
-	/**
-	 * @param repo
-	 * @param register
-	 * @param changeDate
-	 * @param absPath
-	 * @param run
-	 *            The run this method belongs to.
-	 * @param programConfig
-	 *            The program configuration this method was created for.
-	 * @param dataConfig
-	 *            The data configuration this method was created for.
-	 * @param params
-	 *            This list holds the program parameters that are to be
-	 *            optimized by the parameter optimization run.
-	 * @param optimizationCriterion
-	 *            The quality measure used as the optimization criterion (see
-	 *            {@link #optimizationCriterion}).
-	 * @param iterationPerParameter
-	 *            This array holds the number of iterations that are to be
-	 *            performed for each optimization parameter.
-	 * @param isResume
-	 *            This boolean indiciates, whether the run is a resumption of a
-	 *            previous run execution or a completely new execution.
-	 * @throws RegisterException
-	 */
-	public APParameterOptimizationMethod(final Repository repo,
-			final boolean register, final long changeDate, final File absPath,
-			final ParameterOptimizationRun run,
-			final ProgramConfig programConfig, final DataConfig dataConfig,
-			final List<ProgramParameter<?>> params,
-			final ClusteringQualityMeasure optimizationCriterion,
-			int iterationPerParameter, final boolean isResume)
-			throws RegisterException {
-		super(repo, false, changeDate, absPath, run, programConfig, dataConfig,
-				getPreferenceParam(params), optimizationCriterion,
-				// TODO: why?
-				// new int[]{iterationPerParameter[0]},
-				iterationPerParameter, isResume);
-		this.allParams = params;
-		this.numberTriesOnNotTerminated = 3; // TODO
-		this.iterationParamMethods = new HashMap<ParameterSet, DivisiveParameterOptimizationMethod>();
+    /**
+     * @param repo
+     * @param register
+     * @param changeDate
+     * @param absPath
+     * @param run
+     *                              The run this method belongs to.
+     * @param programConfig
+     *                              The program configuration this method was created for.
+     * @param dataConfig
+     *                              The data configuration this method was created for.
+     * @param params
+     *                              This list holds the program parameters that are to be
+     *                              optimized by the parameter optimization run.
+     * @param optimizationCriterion
+     *                              The quality measure used as the optimization criterion (see
+     *                              {@link #optimizationCriterion}).
+     * @param iterationPerParameter
+     *                              This array holds the number of iterations that are to be
+     *                              performed for each optimization parameter.
+     * @param isResume
+     *                              This boolean indiciates, whether the run is a resumption of a
+     *                              previous run execution or a completely new execution.
+     * @throws RegisterException
+     */
+    public APParameterOptimizationMethod(final IRepository repo,
+            final boolean register, final long changeDate, final File absPath,
+            final ParameterOptimizationRun run,
+            final IProgramConfig programConfig, final IDataConfig dataConfig,
+            final List<IProgramParameter<?>> params,
+            final ClusteringEvaluation optimizationCriterion,
+            int iterationPerParameter, final boolean isResume)
+            throws RegisterException {
+        super(repo, false, changeDate, absPath, run, programConfig, dataConfig,
+                getPreferenceParam(params), optimizationCriterion,
+                // TODO: why?
+                // new int[]{iterationPerParameter[0]},
+                iterationPerParameter, isResume);
+        this.allParams = params;
+        this.numberTriesOnNotTerminated = 3; // TODO
+        this.iterationParamMethods = new HashMap<>();
 
-		if (register)
-			this.register();
-	}
+        if (register) {
+            this.register();
+        }
+    }
 
-	/**
-	 * The copy constructor for this method.
-	 * 
-	 * @param other
-	 *            The object to clone.
-	 * @throws RegisterException
-	 */
-	public APParameterOptimizationMethod(
-			final APParameterOptimizationMethod other) throws RegisterException {
-		super(other);
+    /**
+     * The copy constructor for this method.
+     *
+     * @param other
+     *              The object to clone.
+     * @throws RegisterException
+     */
+    public APParameterOptimizationMethod(
+            final APParameterOptimizationMethod other) throws RegisterException {
+        super(other);
 
-		this.allParams = ProgramParameter.cloneParameterList(other.allParams);
-		this.numberTriesOnNotTerminated = other.numberTriesOnNotTerminated; // TODO
-		this.iterationParamMethods = new HashMap<ParameterSet, DivisiveParameterOptimizationMethod>(
-				other.iterationParamMethods);
-	}
+        this.allParams = ProgramParameter.cloneParameterList(other.allParams);
+        this.numberTriesOnNotTerminated = other.numberTriesOnNotTerminated; // TODO
+        this.iterationParamMethods = new HashMap<>(other.iterationParamMethods);
+    }
 
-	/**
-	 * @param params
-	 *            The complete list of optimization parameters
-	 * @return A list containing only the preference parameter.
-	 */
-	public static List<ProgramParameter<?>> getPreferenceParam(
-			List<ProgramParameter<?>> params) {
-		/*
-		 * Only add the preference-parameter to this list
-		 */
-		List<ProgramParameter<?>> result = new ArrayList<ProgramParameter<?>>();
-		for (ProgramParameter<?> param : params)
-			if (param.getName().equals("preference")) {
-				result.add(param);
-				break;
-			}
-		return result;
-	}
+    /**
+     * @param params
+     *               The complete list of optimization parameters
+     * @return A list containing only the preference parameter.
+     */
+    public static List<IProgramParameter<?>> getPreferenceParam(
+            List<IProgramParameter<?>> params) {
+        /*
+         * Only add the preference-parameter to this list
+         */
+        List<IProgramParameter<?>> result = new ArrayList<>();
+        for (IProgramParameter<?> param : params) {
+            if (param.getName().equals("preference")) {
+                result.add(param);
+                break;
+            }
+        }
+        return result;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * cluster.paramOptimization.LayeredDivisiveParameterOptimizationMethod#
-	 * hasNext()
-	 */
-	@Override
-	public synchronized boolean hasNext() {
-		boolean hasNext = super.hasNext();
-		for (DivisiveParameterOptimizationMethod method : this.iterationParamMethods
-				.values())
-			if (method.hasNext()) {
-				return true;
-			}
-		return hasNext;
-	}
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * cluster.paramOptimization.LayeredDivisiveParameterOptimizationMethod#
+     * hasNext()
+     */
+    @Override
+    public synchronized boolean hasNext() {
+        boolean hasNext = super.hasNext();
+        for (DivisiveParameterOptimizationMethod method : this.iterationParamMethods
+                .values()) {
+            if (method.hasNext()) {
+                return true;
+            }
+        }
+        return hasNext;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * cluster.paramOptimization.LayeredDivisiveParameterOptimizationMethod#
-	 * getNextParameterSet()
-	 */
-	@Override
-	protected synchronized ParameterSet getNextParameterSet(
-			final ParameterSet forcedParameterSet)
-			throws InternalAttributeException, RegisterException,
-			NoParameterSetFoundException, InterruptedException,
-			ParameterSetAlreadyEvaluatedException {
-		ParameterSet iterationParamSet = null;
-		ParameterSet preferenceParamSet = null;
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * cluster.paramOptimization.LayeredDivisiveParameterOptimizationMethod#
+     * getNextParameterSet()
+     */
+    @Override
+    public synchronized ParameterSet getNextParameterSet(
+            final ParameterSet forcedParameterSet)
+            throws InternalAttributeException, RegisterException,
+                   NoParameterSetFoundException, InterruptedException,
+                   ParameterSetAlreadyEvaluatedException {
+        ParameterSet iterationParamSet = null;
+        ParameterSet preferenceParamSet = null;
 
-		// if there are old parameters which didn't terminate, first finish
-		// those with more iterations
-		Iterator<ParameterSet> existingMethods = this.iterationParamMethods
-				.keySet().iterator();
-		while (existingMethods.hasNext()) {
-			ParameterSet notTerminatedParameterSet = existingMethods.next();
-			DivisiveParameterOptimizationMethod method = this.iterationParamMethods
-					.get(notTerminatedParameterSet);
+        // if there are old parameters which didn't terminate, first finish
+        // those with more iterations
+        Iterator<ParameterSet> existingMethods = this.iterationParamMethods
+                .keySet().iterator();
+        while (existingMethods.hasNext()) {
+            ParameterSet notTerminatedParameterSet = existingMethods.next();
+            DivisiveParameterOptimizationMethod method = this.iterationParamMethods
+                    .get(notTerminatedParameterSet);
 
-			// check if all previous iterations have a result, if not don't
-			// create another iteration parameter set for this, because
-			// otherwise we will create tons of parameter sets for the same
-			// preference parameter
-			boolean unfinishedIteration = false;
-			for (ParameterSet old : method.getResult().getParameterSets())
-				// we found a parameter set for which we don't have a result yet
-				// -> check next method/ preference parameter
-				if (method.getResult().get(old) == null) {
-					unfinishedIteration = true;
-					break;
-				}
-			if (unfinishedIteration)
-				continue;
+            // check if all previous iterations have a result, if not don't
+            // create another iteration parameter set for this, because
+            // otherwise we will create tons of parameter sets for the same
+            // preference parameter
+            boolean unfinishedIteration = false;
+            for (ParameterSet old : method.getResult().getParameterSets()) // we found a parameter set for which we don't have a result yet
+            // -> check next method/ preference parameter
+            {
+                if (method.getResult().get(old) == null) {
+                    unfinishedIteration = true;
+                    break;
+                }
+            }
+            if (unfinishedIteration) {
+                continue;
+            }
 
-			/*
-			 * If we have another iteration parameter set we just merge it with
-			 * our current one.
-			 */
-			if (method.hasNext()) {
-				try {
-					iterationParamSet = method.next(forcedParameterSet,
-							method.getStartedCount() + 1);
-					preferenceParamSet = notTerminatedParameterSet;
+            /*
+             * If we have another iteration parameter set we just merge it with
+             * our current one.
+             */
+            if (method.hasNext()) {
+                try {
+                    iterationParamSet = method.next(forcedParameterSet,
+                            method.getStartedCount() + 1);
+                    preferenceParamSet = notTerminatedParameterSet;
 
-					ParameterSet newParamSet = new ParameterSet();
-					newParamSet.putAll(preferenceParamSet);
-					newParamSet.putAll(iterationParamSet);
-					return newParamSet;
-				} catch (NoParameterSetFoundException e) {
-				} catch (ParameterSetAlreadyEvaluatedException e) {
-					// cannot happen
-				}
-			} else
-				this.iterationParamMethods.remove(notTerminatedParameterSet);
-		}
+                    ParameterSet newParamSet = new ParameterSet();
+                    newParamSet.putAll(preferenceParamSet);
+                    newParamSet.putAll(iterationParamSet);
+                    return newParamSet;
+                } catch (NoParameterSetFoundException e) {
+                } catch (ParameterSetAlreadyEvaluatedException e) {
+                    // cannot happen
+                }
+            } else {
+                this.iterationParamMethods.remove(notTerminatedParameterSet);
+            }
+        }
 
-		DivisiveParameterOptimizationMethod method = null;
+        DivisiveParameterOptimizationMethod method = null;
 
-		// at this point we know, that no old parameter sets exist we can or
-		// have to finish, so we create a new one
-		try {
-			List<ProgramParameter<?>> iterationParams = new ArrayList<ProgramParameter<?>>(
-					this.allParams);
-			iterationParams.removeAll(this.params);
-			method = new DivisiveParameterOptimizationMethod(repository, false,
-					changeDate, absPath, run, programConfig, dataConfig,
-					iterationParams, optimizationCriterion, (int) Math.pow(
-							this.numberTriesOnNotTerminated,
-							iterationParams.size()), isResume);
-			method.reset(new File(this.getResult().getAbsolutePath()));
-			iterationParamSet = method.next(forcedParameterSet,
-					method.getStartedCount() + 1);
-			preferenceParamSet = super.getNextParameterSet(forcedParameterSet);
-		} catch (ParameterOptimizationException e) {
-			e.printStackTrace();
-		} catch (RunResultParseException e) {
-			e.printStackTrace();
-		}
-		ParameterSet newParamSet = new ParameterSet();
-		newParamSet.putAll(iterationParamSet);
-		newParamSet.putAll(preferenceParamSet);
+        // at this point we know, that no old parameter sets exist we can or
+        // have to finish, so we create a new one
+        try {
+            List<IProgramParameter<?>> iterationParams = new ArrayList<>(
+                    this.allParams);
+            iterationParams.removeAll(this.params);
+            method = new DivisiveParameterOptimizationMethod(repository, false,
+                    changeDate, absPath, run, programConfig, dataConfig,
+                    iterationParams, optimizationCriterion, (int) Math.pow(
+                            this.numberTriesOnNotTerminated,
+                            iterationParams.size()), isResume);
+            method.reset(new File(this.getResult().getAbsolutePath()));
+            iterationParamSet = method.next(forcedParameterSet,
+                    method.getStartedCount() + 1);
+            preferenceParamSet = super.getNextParameterSet(forcedParameterSet);
+        } catch (ParameterOptimizationException e) {
+            e.printStackTrace();
+        } catch (RunResultParseException e) {
+            e.printStackTrace();
+        }
+        ParameterSet newParamSet = new ParameterSet();
+        newParamSet.putAll(iterationParamSet);
+        newParamSet.putAll(preferenceParamSet);
 
-		this.iterationParamMethods.put(preferenceParamSet, method);
+        this.iterationParamMethods.put(preferenceParamSet, method);
 
-		return newParamSet;
-	}
+        return newParamSet;
+    }
 
-	@Override
-	public synchronized void giveFeedbackNotTerminated(
-			final ParameterSet parameterSet,
-			ClusteringQualitySet minimalQualities) {
-		try {
-			super.giveQualityFeedback(parameterSet, minimalQualities);
+    @Override
+    public synchronized void giveFeedbackNotTerminated(
+            final ParameterSet parameterSet,
+            ClusteringQualitySet minimalQualities) {
+        try {
+            super.giveQualityFeedback(parameterSet, minimalQualities);
 
-			ParameterSet preference = new ParameterSet();
-			preference.put("preference", parameterSet.get("preference"));
-			ParameterSet iteration = parameterSet.clone();
-			iteration.remove("preference");
+            ParameterSet preference = new ParameterSet();
+            preference.put("preference", parameterSet.get("preference"));
+            ParameterSet iteration = parameterSet.clone();
+            iteration.remove("preference");
 
-			// we don't have a param method for this parameter set if we
-			// discovered
-			// earlier, that there are no new possible iteration params
-			if (this.iterationParamMethods.containsKey(preference))
-				this.iterationParamMethods.get(preference).giveQualityFeedback(
-						iteration, minimalQualities);
-		} finally {
-			this.notifyAll();
-		}
-	}
+            // we don't have a param method for this parameter set if we
+            // discovered
+            // earlier, that there are no new possible iteration params
+            if (this.iterationParamMethods.containsKey(preference)) {
+                this.iterationParamMethods.get(preference).giveQualityFeedback(
+                        iteration, minimalQualities);
+            }
+        } finally {
+            this.notifyAll();
+        }
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * cluster.paramOptimization.LayeredDivisiveParameterOptimizationMethod#
-	 * giveQualityFeedback(cluster.quality.ClusteringQualitySet)
-	 */
-	@Override
-	public synchronized void giveQualityFeedback(
-			final ParameterSet parameterSet, ClusteringQualitySet qualities) {
-		super.giveQualityFeedback(parameterSet, qualities);
-		ParameterSet preference = new ParameterSet();
-		preference.put("preference", parameterSet.get("preference"));
-		this.iterationParamMethods.remove(preference);
-	}
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * cluster.paramOptimization.LayeredDivisiveParameterOptimizationMethod#
+     * giveQualityFeedback(cluster.quality.ClusteringQualitySet)
+     */
+    @Override
+    public synchronized void giveQualityFeedback(
+            final ParameterSet parameterSet, ClusteringQualitySet qualities) {
+        super.giveQualityFeedback(parameterSet, qualities);
+        ParameterSet preference = new ParameterSet();
+        preference.put("preference", parameterSet.get("preference"));
+        this.iterationParamMethods.remove(preference);
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod#
-	 * getOptimizationParameter()
-	 */
-	@Override
-	public List<ProgramParameter<?>> getOptimizationParameter() {
-		return this.allParams;
-	}
+    /*
+     * (non-Javadoc)
+     *
+     * @see de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod#
+     * getOptimizationParameter()
+     */
+    @Override
+    public List<IProgramParameter<?>> getOptimizationParameter() {
+        return this.allParams;
+    }
 }

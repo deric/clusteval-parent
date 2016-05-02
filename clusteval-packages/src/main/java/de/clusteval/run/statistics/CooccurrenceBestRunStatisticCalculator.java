@@ -21,10 +21,10 @@ import de.clusteval.cluster.quality.ClusteringQualityMeasure;
 import de.clusteval.data.statistics.RunStatisticCalculateException;
 import de.clusteval.framework.repository.MyRengine;
 import de.clusteval.api.program.RegisterException;
-import de.clusteval.framework.repository.Repository;
 import de.clusteval.api.program.ParameterSet;
+import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.run.IRunResult;
 import de.clusteval.run.result.ParameterOptimizationResult;
-import de.clusteval.run.result.RunResult;
 import de.clusteval.utils.FileUtils;
 import de.clusteval.utils.ArraysExt;
 import java.io.File;
@@ -52,7 +52,7 @@ public class CooccurrenceBestRunStatisticCalculator
      * @param uniqueRunIdentifier
      * @throws RegisterException
      */
-    public CooccurrenceBestRunStatisticCalculator(Repository repository,
+    public CooccurrenceBestRunStatisticCalculator(IRepository repository,
             long changeDate, File absPath, final String uniqueRunIdentifier)
             throws RegisterException {
         super(repository, changeDate, absPath, uniqueRunIdentifier);
@@ -71,9 +71,9 @@ public class CooccurrenceBestRunStatisticCalculator
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see run.statistics.RunStatisticCalculator#calculateResult()
+     * (non-Javadoc)
+     *
+     * @see run.statistics.RunStatisticCalculator#calculateResult()
      */
     @Override
     protected CooccurrenceBestRunStatistic calculateResult()
@@ -86,7 +86,7 @@ public class CooccurrenceBestRunStatisticCalculator
             ParameterOptimizationResult.parseFromRunResultFolder2(
                     this.repository,
                     new File(FileUtils.buildPath(
-                            this.repository.getBasePath(RunResult.class),
+                            this.repository.getBasePath(IRunResult.class),
                             this.uniqueRunIdentifiers)), results, true, true,
                     false);
 
@@ -174,9 +174,9 @@ public class CooccurrenceBestRunStatisticCalculator
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see run.statistics.RunStatisticCalculator#getStatistic()
+     * (non-Javadoc)
+     *
+     * @see run.statistics.RunStatisticCalculator#getStatistic()
      */
     @Override
     public CooccurrenceBestRunStatistic getStatistic() {
@@ -184,9 +184,9 @@ public class CooccurrenceBestRunStatisticCalculator
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see utils.StatisticCalculator#writeOutputTo(java.io.File)
+     * (non-Javadoc)
+     *
+     * @see utils.StatisticCalculator#writeOutputTo(java.io.File)
      */
     @Override
     public void writeOutputTo(File absFolderPath) throws InterruptedException {

@@ -11,9 +11,12 @@
 package de.clusteval.run.runnable;
 
 import de.clusteval.api.ClusteringEvaluation;
-import de.clusteval.api.cluster.ClusterItem;
+import de.clusteval.api.Pair;
+import de.clusteval.api.Triple;
 import de.clusteval.api.cluster.ClustEvalValue;
+import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.api.cluster.ClusteringQualitySet;
+import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.data.IConversionInputToStandardConfiguration;
 import de.clusteval.api.data.IConversionStandardToInputConfiguration;
 import de.clusteval.api.data.IDataConfig;
@@ -30,18 +33,19 @@ import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.RunIterationException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
+import de.clusteval.api.opt.NoParameterSetFoundException;
 import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.IProgramParameter;
 import de.clusteval.api.program.ParameterSet;
+import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RLibraryNotLoadedException;
 import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.IRunResultFormat;
 import de.clusteval.api.run.IScheduler;
 import de.clusteval.cluster.Clustering;
-import de.clusteval.api.opt.NoParameterSetFoundException;
 import de.clusteval.data.dataset.AbsoluteDataSet;
 import de.clusteval.data.dataset.RelativeDataSet;
 import de.clusteval.framework.ClustevalBackendServer;
@@ -54,13 +58,10 @@ import de.clusteval.run.result.ClusteringRunResult;
 import de.clusteval.run.result.NoRunResultFormatParserException;
 import de.clusteval.run.result.format.RunResultNotFoundException;
 import de.clusteval.run.result.postprocessing.RunResultPostprocessor;
-import de.clusteval.utils.plot.Plotter;
 import de.clusteval.utils.FileUtils;
 import de.clusteval.utils.Formatter;
-import de.clusteval.api.Pair;
+import de.clusteval.utils.plot.Plotter;
 import de.wiwie.wiutils.utils.StringExt;
-import de.clusteval.api.Triple;
-import de.clusteval.api.cluster.IClustering;
 import de.wiwie.wiutils.utils.parse.TextFileParser;
 import de.wiwie.wiutils.utils.parse.TextFileParser.OUTPUT_MODE;
 import java.io.BufferedWriter;
@@ -74,6 +75,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import org.openide.util.Exceptions;
 import org.slf4j.LoggerFactory;
 
 /**
@@ -190,7 +192,7 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
      * @throws InterruptedException
      */
     protected boolean preprocessAndCheckCompatibleDataSetFormat()
-            throws IOException, RegisterException, InterruptedException {
+            throws IOException, RegisterException, InterruptedException, RException {
 
         IConversionInputToStandardConfiguration configInputToStandard = dataConfig.getDatasetConfig()
                 .getConversionInputToStandardConfiguration();
@@ -237,10 +239,7 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
                     // found a convertable compatible format
                     found = true;
                     break;
-                } catch (FormatConversionException e) {
-                } catch (InvalidDataSetFormatVersionException e) {
-                    e.printStackTrace();
-                } catch (RNotAvailableException e) {
+                } catch (InvalidDataSetFormatVersionException | RNotAvailableException | FormatConversionException e) {
                     e.printStackTrace();
                 }
             }
@@ -465,8 +464,8 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
      * @throws InternalAttributeException
      * @throws RegisterException
      * @throws NoParameterSetFoundException
-     * This exception is thrown, if no parameter set was found that
-     * was not already evaluated before.
+     *                                      This exception is thrown, if no parameter set was found that
+     *                                      was not already evaluated before.
      *
      */
     protected String[] parseInvocationLineAndEffectiveParameters(final ExecutionIterationWrapper iterationWrapper)
@@ -574,8 +573,8 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
      * @throws InternalAttributeException
      * @throws RegisterException
      * @throws NoParameterSetFoundException
-     * This exception is thrown, if no parameter set was found that
-     * was not already evaluated before.
+     *                                      This exception is thrown, if no parameter set was found that
+     *                                      was not already evaluated before.
      */
     @SuppressWarnings("unused")
     protected String[] replaceRunParameters(String[] invocation, final Map<String, String> effectiveParams)
@@ -1251,66 +1250,184 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
             throws UnknownDataSetFormatException, InvalidDataSetFormatVersionException, IllegalArgumentException,
                    IOException, RegisterException, InternalAttributeException, IncompatibleDataSetFormatException,
                    UnknownGoldStandardFormatException, IncompleteGoldStandardException, InterruptedException {
-        this.log.info("Run " + this.getRun() + " (" + this.programConfig + "," + this.dataConfig + ") "
-                + (!isResume ? "started" : "RESUMED") + " (asynchronously)");
-
-        if (checkForInterrupted()) {
-            throw new InterruptedException();
-        }
-
-        lastStartTime = System.currentTimeMillis();
-
-        FileUtils.appendStringToFile(this.getRun().getLogFilePath(),
-                Formatter.currentTimeAsString(true, "MM_dd_yyyy-HH_mm_ss", Locale.UK) + "\tStarting runThread \""
-                + this.getRun() + " (" + this.programConfig + "," + this.dataConfig + ")\""
-                + System.getProperty("line.separator"));
-
-        this.format = programConfig.getOutputFormat();
-
-        // this.getRunParametersFromRun();
-        this.log.info("Converting and preprocessing dataset ...");
-        boolean found = preprocessAndCheckCompatibleDataSetFormat();
-        if (!found) {
-            IncompatibleDataSetFormatException ex = new IncompatibleDataSetFormatException(
-                    "The program \"" + programConfig.getProgram() + "\" cannot be run with the dataset format \""
-                    + dataConfig.getDatasetConfig().getDataSet().getDataSetFormat() + "\"");
-            // otherwise throw exception
-            throw ex;
-        }
-
-        if (checkForInterrupted()) {
-            throw new InterruptedException();
-        }
-
         try {
-            this.log.debug("Loading the input similarities into memory ...");
-            // Load the dataset into memory
-            IDataSet dataSet = this.dataConfig.getDatasetConfig().getDataSet().getInStandardFormat();
-            dataSet.loadIntoMemory(this.dataConfig.getDatasetConfig().getConversionInputToStandardConfiguration()
-                    .getSimilarityPrecision());
-            // if the original dataset is an absolute dataset, load it into
-            // memory as well
-            dataSet = this.dataConfig.getDatasetConfig().getDataSet().getOriginalDataSet();
-            if (dataSet instanceof AbsoluteDataSet) {
-                this.log.debug("Loading the input coordinates into memory ...");
-                dataSet.loadIntoMemory();
+            this.log.info("Run " + this.getRun() + " (" + this.programConfig + "," + this.dataConfig + ") "
+                    + (!isResume ? "started" : "RESUMED") + " (asynchronously)");
+
+            if (checkForInterrupted()) {
+                throw new InterruptedException();
+            }
+
+            lastStartTime = System.currentTimeMillis();
+
+            FileUtils.appendStringToFile(this.getRun().getLogFilePath(),
+                    Formatter.currentTimeAsString(true, "MM_dd_yyyy-HH_mm_ss", Locale.UK) + "\tStarting runThread \""
+                    + this.getRun() + " (" + this.programConfig + "," + this.dataConfig + ")\""
+                    + System.getProperty("line.separator"));
+
+            this.format = programConfig.getOutputFormat();
+
+            // this.getRunParametersFromRun();
+            this.log.info("Converting and preprocessing dataset ...");
+            boolean found = preprocessAndCheckCompatibleDataSetFormat();
+            if (!found) {
+                IncompatibleDataSetFormatException ex = new IncompatibleDataSetFormatException(
+                        "The program \"" + programConfig.getProgram() + "\" cannot be run with the dataset format \""
+                        + dataConfig.getDatasetConfig().getDataSet().getDataSetFormat() + "\"");
+                // otherwise throw exception
+                throw ex;
             }
 
             if (checkForInterrupted()) {
                 throw new InterruptedException();
             }
 
-            /*
-             * Check compatibility of dataset with goldstandard
-             */
-            if (this.dataConfig.hasGoldStandardConfig()) {
-                checkCompatibilityDataSetGoldStandard(this.dataConfig.getDatasetConfig(),
-                        this.dataConfig.getGoldstandardConfig());
+            try {
+                this.log.debug("Loading the input similarities into memory ...");
+                // Load the dataset into memory
+                IDataSet dataSet = this.dataConfig.getDatasetConfig().getDataSet().getInStandardFormat();
+                dataSet.loadIntoMemory(this.dataConfig.getDatasetConfig().getConversionInputToStandardConfiguration()
+                        .getSimilarityPrecision());
+                // if the original dataset is an absolute dataset, load it into
+                // memory as well
+                dataSet = this.dataConfig.getDatasetConfig().getDataSet().getOriginalDataSet();
+                if (dataSet instanceof AbsoluteDataSet) {
+                    this.log.debug("Loading the input coordinates into memory ...");
+                    dataSet.loadIntoMemory();
+                }
+
+                if (checkForInterrupted()) {
+                    throw new InterruptedException();
+                }
+
+                /*
+                 * Check compatibility of dataset with goldstandard
+                 */
+                if (this.dataConfig.hasGoldStandardConfig()) {
+                    checkCompatibilityDataSetGoldStandard(this.dataConfig.getDatasetConfig(),
+                            this.dataConfig.getGoldstandardConfig());
+                }
+
+                assert !this.dataConfig.hasGoldStandardConfig()
+                        || this.dataConfig.getGoldstandardConfig().getGoldstandard().isInMemory();
+            } catch (IncompleteGoldStandardException e1) {
+                // this.exceptions.add(e1);
+                // 15.11.2012: missing entries in the goldstandard is no longer
+                // a termination criterion. maybe introduce option
+                // return;
+                // 15.04.2013: since missing entries in the goldstandard distort
+                // result qualities, we interrupt again when such an exception is
+                // thrown. The user has the possibility of removing samples from the
+                // data if this is the case.
+                // 12.08.2014: removed again, because of randomized data sets which
+                // have points in data set but not in gold standard. -> make it an
+                // option definitely
+                // throw e1;
+            }
+            if (checkForInterrupted()) {
+                throw new InterruptedException();
             }
 
-            assert !this.dataConfig.hasGoldStandardConfig()
-                    || this.dataConfig.getGoldstandardConfig().getGoldstandard().isInMemory();
-        } catch (IncompleteGoldStandardException e1) {
+            // 30.06.2014: performing isoMDS calculations in parallel
+            final IDataConfig dcMDS = this.dataConfig;
+
+            ExecutionIterationWrapper wrapper = new ExecutionIterationWrapper();
+            wrapper.setDataConfig(dcMDS);
+            wrapper.setProgramConfig(programConfig);
+            wrapper.setRunnable(this);
+            wrapper.setOptId(-1);
+
+            ExecutionIterationRunnable iterationRunnable = new ExecutionIterationRunnable(wrapper) {
+
+                @Override
+                public void doRun() {
+                    IScheduler scheduler;
+                    IRepository repo = getRun().getRepository();
+                    if (repo instanceof RunResultRepository) {
+                        repo = repo.getParent();
+                    }
+                    scheduler = repo.getSupervisorThread().getRunScheduler();
+                    scheduler.informOnStartedIterationRunnable(Thread.currentThread(), this);
+
+                    try {
+                        this.log.debug("Assessing isoMDS coordinates of dataset samples ...");
+                        // Plotter.assessAndWriteIsoMDSCoordinates(dcMDS);
+                    } catch (Throwable e) {
+                        e.printStackTrace();
+                    } finally {
+                        scheduler.informOnFinishedIterationRunnable(Thread.currentThread(), this);
+                    }
+                }
+            };
+
+            this.submitIterationRunnable(iterationRunnable);
+
+            if (checkForInterrupted()) {
+                throw new InterruptedException();
+            }
+
+            // 30.06.2014: performing isoMDS calculations in parallel
+            final IDataConfig dcPCA = this.dataConfig;
+
+            wrapper = new ExecutionIterationWrapper();
+            wrapper.setDataConfig(dcPCA);
+            wrapper.setProgramConfig(programConfig);
+            wrapper.setRunnable(this);
+            wrapper.setOptId(-2);
+
+            iterationRunnable = new ExecutionIterationRunnable(wrapper) {
+
+                @Override
+                public void doRun() {
+                    IScheduler scheduler;
+                    IRepository repo = getRun().getRepository();
+                    if (repo instanceof RunResultRepository) {
+                        repo = repo.getParent();
+                    }
+                    scheduler = repo.getSupervisorThread().getRunScheduler();
+                    scheduler.informOnStartedIterationRunnable(Thread.currentThread(), this);
+
+                    try {
+                        this.log.debug("Assessing PCA coordinates of dataset samples ...");
+                        Plotter.assessAndWritePCACoordinates(dcPCA);
+                    } catch (Throwable e) {
+                        e.printStackTrace();
+                    } finally {
+                        scheduler.informOnFinishedIterationRunnable(Thread.currentThread(), this);
+                    }
+                }
+            };
+
+            this.submitIterationRunnable(iterationRunnable);
+
+            setInternalAttributes();
+
+            /*
+             * Ensure that the target directory exists
+             */
+            if (!isResume) {
+                new File(this.getRun().getRepository().getClusterResultsQualityBasePath().replace("%RUNIDENTSTRING",
+                        runThreadIdentString)).mkdirs();
+            } else {
+                new File(this.getRun().getRepository().getParent().getClusterResultsQualityBasePath()
+                        .replace("%RUNIDENTSTRING", runThreadIdentString)).mkdirs();
+            }
+
+            /*
+             * Writing all the qualities of the optimization process into one file
+             */
+            if (!isResume) {
+                completeQualityOutput = FileUtils.buildPath(this.getRun().getRepository().getClusterResultsQualityBasePath()
+                        .replace("%RUNIDENTSTRING", runThreadIdentString),
+                        programConfig + "_" + dataConfig + ".results.qual.complete");
+            } else {
+                completeQualityOutput = FileUtils.buildPath(
+                        this.getRun().getRepository().getParent().getClusterResultsQualityBasePath()
+                        .replace("%RUNIDENTSTRING", runThreadIdentString),
+                        programConfig + "_" + dataConfig + ".results.qual.complete");
+            }
+        } catch (RException ex) {
+            Exceptions.printStackTrace(ex);
             // this.exceptions.add(e1);
             // 15.11.2012: missing entries in the goldstandard is no longer
             // a termination criterion. maybe introduce option
@@ -1323,108 +1440,6 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
             // have points in data set but not in gold standard. -> make it an
             // option definitely
             // throw e1;
-        }
-        if (checkForInterrupted()) {
-            throw new InterruptedException();
-        }
-
-        // 30.06.2014: performing isoMDS calculations in parallel
-        final IDataConfig dcMDS = this.dataConfig;
-
-        ExecutionIterationWrapper wrapper = new ExecutionIterationWrapper();
-        wrapper.setDataConfig(dcMDS);
-        wrapper.setProgramConfig(programConfig);
-        wrapper.setRunnable(this);
-        wrapper.setOptId(-1);
-
-        ExecutionIterationRunnable iterationRunnable = new ExecutionIterationRunnable(wrapper) {
-
-            @Override
-            public void doRun() {
-                IScheduler scheduler;
-                IRepository repo = getRun().getRepository();
-                if (repo instanceof RunResultRepository) {
-                    repo = repo.getParent();
-                }
-                scheduler = repo.getSupervisorThread().getRunScheduler();
-                scheduler.informOnStartedIterationRunnable(Thread.currentThread(), this);
-
-                try {
-                    this.log.debug("Assessing isoMDS coordinates of dataset samples ...");
-                    // Plotter.assessAndWriteIsoMDSCoordinates(dcMDS);
-                } catch (Throwable e) {
-                    e.printStackTrace();
-                } finally {
-                    scheduler.informOnFinishedIterationRunnable(Thread.currentThread(), this);
-                }
-            }
-        };
-
-        this.submitIterationRunnable(iterationRunnable);
-
-        if (checkForInterrupted()) {
-            throw new InterruptedException();
-        }
-
-        // 30.06.2014: performing isoMDS calculations in parallel
-        final IDataConfig dcPCA = this.dataConfig;
-
-        wrapper = new ExecutionIterationWrapper();
-        wrapper.setDataConfig(dcPCA);
-        wrapper.setProgramConfig(programConfig);
-        wrapper.setRunnable(this);
-        wrapper.setOptId(-2);
-
-        iterationRunnable = new ExecutionIterationRunnable(wrapper) {
-
-            @Override
-            public void doRun() {
-                IScheduler scheduler;
-                IRepository repo = getRun().getRepository();
-                if (repo instanceof RunResultRepository) {
-                    repo = repo.getParent();
-                }
-                scheduler = repo.getSupervisorThread().getRunScheduler();
-                scheduler.informOnStartedIterationRunnable(Thread.currentThread(), this);
-
-                try {
-                    this.log.debug("Assessing PCA coordinates of dataset samples ...");
-                    Plotter.assessAndWritePCACoordinates(dcPCA);
-                } catch (Throwable e) {
-                    e.printStackTrace();
-                } finally {
-                    scheduler.informOnFinishedIterationRunnable(Thread.currentThread(), this);
-                }
-            }
-        };
-
-        this.submitIterationRunnable(iterationRunnable);
-
-        setInternalAttributes();
-
-        /*
-         * Ensure that the target directory exists
-         */
-        if (!isResume) {
-            new File(this.getRun().getRepository().getClusterResultsQualityBasePath().replace("%RUNIDENTSTRING",
-                    runThreadIdentString)).mkdirs();
-        } else {
-            new File(this.getRun().getRepository().getParent().getClusterResultsQualityBasePath()
-                    .replace("%RUNIDENTSTRING", runThreadIdentString)).mkdirs();
-        }
-
-        /*
-         * Writing all the qualities of the optimization process into one file
-         */
-        if (!isResume) {
-            completeQualityOutput = FileUtils.buildPath(this.getRun().getRepository().getClusterResultsQualityBasePath()
-                    .replace("%RUNIDENTSTRING", runThreadIdentString),
-                    programConfig + "_" + dataConfig + ".results.qual.complete");
-        } else {
-            completeQualityOutput = FileUtils.buildPath(
-                    this.getRun().getRepository().getParent().getClusterResultsQualityBasePath()
-                    .replace("%RUNIDENTSTRING", runThreadIdentString),
-                    programConfig + "_" + dataConfig + ".results.qual.complete");
         }
     }
 

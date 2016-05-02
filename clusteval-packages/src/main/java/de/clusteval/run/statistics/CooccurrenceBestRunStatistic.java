@@ -10,15 +10,14 @@
  ***************************************************************************** */
 package de.clusteval.run.statistics;
 
-import java.io.File;
-
-import de.clusteval.utils.ArraysExt;
-import de.wiwie.wiutils.utils.StringExt;
 import cern.colt.matrix.tlong.LongMatrix2D;
 import cern.colt.matrix.tlong.impl.SparseLongMatrix2D;
-import de.clusteval.api.r.RLibraryRequirement;
 import de.clusteval.api.program.RegisterException;
-import de.clusteval.framework.repository.Repository;
+import de.clusteval.api.r.RLibraryRequirement;
+import de.clusteval.api.repository.IRepository;
+import de.clusteval.utils.ArraysExt;
+import de.wiwie.wiutils.utils.StringExt;
+import java.io.File;
 
 /**
  * @author Christian Wiwie
@@ -39,7 +38,7 @@ public class CooccurrenceBestRunStatistic extends RunStatistic {
      * @throws RegisterException
      *
      */
-    public CooccurrenceBestRunStatistic(Repository repo, boolean register,
+    public CooccurrenceBestRunStatistic(IRepository repo, boolean register,
             long changeDate, File absPath) throws RegisterException {
         super(repo, register, changeDate, absPath);
     }
@@ -53,7 +52,7 @@ public class CooccurrenceBestRunStatistic extends RunStatistic {
      * @param cooccurrenceMatrix
      * @throws RegisterException
      */
-    public CooccurrenceBestRunStatistic(Repository repo, boolean register,
+    public CooccurrenceBestRunStatistic(IRepository repo, boolean register,
             long changeDate, File absPath, final String[] ids,
             final LongMatrix2D cooccurrenceMatrix) throws RegisterException {
         super(repo, register, changeDate, absPath);
@@ -80,9 +79,9 @@ public class CooccurrenceBestRunStatistic extends RunStatistic {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see utils.Statistic#getAlias()
+     * (non-Javadoc)
+     *
+     * @see utils.Statistic#getAlias()
      */
     @Override
     public String getName() {
@@ -90,9 +89,9 @@ public class CooccurrenceBestRunStatistic extends RunStatistic {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see utils.Statistic#toString()
+     * (non-Javadoc)
+     *
+     * @see utils.Statistic#toString()
      */
     @Override
     public String toString() {
@@ -103,9 +102,9 @@ public class CooccurrenceBestRunStatistic extends RunStatistic {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see utils.Statistic#parseFromString(java.lang.String)
+     * (non-Javadoc)
+     *
+     * @see utils.Statistic#parseFromString(java.lang.String)
      */
     @Override
     public void parseFromString(String contents) {

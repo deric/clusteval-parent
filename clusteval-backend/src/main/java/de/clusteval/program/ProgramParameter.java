@@ -13,8 +13,8 @@ package de.clusteval.program;
 import de.clusteval.api.exceptions.UnknownParameterType;
 import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.IProgramParameter;
-import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.framework.repository.RepositoryObject;
 import java.io.File;
 import java.util.ArrayList;
@@ -87,7 +87,7 @@ public abstract class ProgramParameter<T> extends RepositoryObject implements IP
     /**
      * The program configuration which defined this parameter.
      */
-    protected ProgramConfig programConfig;
+    protected IProgramConfig programConfig;
 
     /**
      * The name of this parameter has to be unique for the program configuration
@@ -163,7 +163,7 @@ public abstract class ProgramParameter<T> extends RepositoryObject implements IP
      * @throws RegisterException
      */
     public ProgramParameter(final IRepository repository,
-            final boolean register, final ProgramConfig programConfig,
+            final boolean register, final IProgramConfig programConfig,
             final String name, final String desc, final String minValue,
             final String maxValue, final String[] options, final String def)
             throws RegisterException {
@@ -427,14 +427,17 @@ public abstract class ProgramParameter<T> extends RepositoryObject implements IP
             throws UnknownParameterType {
 
         // String
-        if (value.equals("0")) {
-            return ParameterType.STRING;
-        } // Integer
-        else if (value.equals("1")) {
-            return ParameterType.INTEGER;
-        } // Float
-        else if (value.equals("2")) {
-            return ParameterType.FLOAT;
+        switch (value) {
+            // Integer
+            case "0":
+                return ParameterType.STRING;
+            // Float
+            case "1":
+                return ParameterType.INTEGER;
+            case "2":
+                return ParameterType.FLOAT;
+            default:
+                break;
         }
 
         throw new UnknownParameterType("The parameter type " + value

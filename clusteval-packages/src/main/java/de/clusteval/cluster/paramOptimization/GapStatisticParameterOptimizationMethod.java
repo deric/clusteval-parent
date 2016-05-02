@@ -12,29 +12,28 @@
  */
 package de.clusteval.cluster.paramOptimization;
 
-import de.clusteval.cluster.quality.ClusteringQualityMeasure;
-import de.clusteval.data.DataConfig;
+import de.clusteval.api.ClusteringEvaluation;
+import de.clusteval.api.data.IDataConfig;
+import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
+import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.program.IProgramConfig;
+import de.clusteval.api.program.IProgramParameter;
+import de.clusteval.api.program.ParameterSet;
+import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.r.IRengine;
+import de.clusteval.api.r.RException;
+import de.clusteval.api.r.RExpr;
+import de.clusteval.api.r.RLibraryRequirement;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.data.dataset.AbsoluteDataSet;
 import de.clusteval.data.dataset.format.AbsoluteDataSetFormat;
 import de.clusteval.data.dataset.format.DataSetFormat;
-import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
-import de.clusteval.api.r.RLibraryRequirement;
-import de.clusteval.framework.repository.MyRengine;
-import de.clusteval.api.program.RegisterException;
-import de.clusteval.framework.repository.Repository;
-import de.clusteval.api.program.ParameterSet;
-import de.clusteval.program.ProgramConfig;
-import de.clusteval.program.ProgramParameter;
 import de.clusteval.run.ParameterOptimizationRun;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import org.rosuda.REngine.REXP;
-import org.rosuda.REngine.REXPMismatchException;
-import org.rosuda.REngine.REngineException;
-import org.rosuda.REngine.Rserve.RserveException;
+import org.openide.util.Exceptions;
 
 /**
  *
@@ -52,25 +51,25 @@ public class GapStatisticParameterOptimizationMethod extends ParameterOptimizati
      * @param register
      * @param changeDate
      * @param absPath
-     * @param run The run this method belongs to.
-     * @param programConfig The program configuration this method was created
-     * for.
-     * @param dataConfig The data configuration this method was created for.
-     * @param params This list holds the program parameters that are to be
-     * optimized by the parameter optimization run.
+     * @param run                   The run this method belongs to.
+     * @param programConfig         The program configuration this method was created
+     *                              for.
+     * @param dataConfig            The data configuration this method was created for.
+     * @param params                This list holds the program parameters that are to be
+     *                              optimized by the parameter optimization run.
      * @param optimizationCriterion The quality measure used as the optimization
-     * criterion (see {@link #optimizationCriterion}).
+     *                              criterion (see {@link #optimizationCriterion}).
      * @param iterationPerParameter This array holds the number of iterations
-     * that are to be performed for each optimization parameter.
-     * @param isResume This boolean indiciates, whether the run is a resumption
-     * of a previous run execution or a completely new execution.
+     *                              that are to be performed for each optimization parameter.
+     * @param isResume              This boolean indiciates, whether the run is a resumption
+     *                              of a previous run execution or a completely new execution.
      * @throws RegisterException
      */
-    public GapStatisticParameterOptimizationMethod(final Repository repo,
+    public GapStatisticParameterOptimizationMethod(final IRepository repo,
             final boolean register, final long changeDate, final File absPath,
-            ParameterOptimizationRun run, ProgramConfig programConfig,
-            DataConfig dataConfig, List<ProgramParameter<?>> params,
-            ClusteringQualityMeasure optimizationCriterion,
+            ParameterOptimizationRun run, IProgramConfig programConfig,
+            IDataConfig dataConfig, List<IProgramParameter<?>> params,
+            ClusteringEvaluation optimizationCriterion,
             int iterationPerParameter, boolean isResume)
             throws RegisterException {
         super(repo, false, changeDate, absPath, run, programConfig, dataConfig,
@@ -94,61 +93,59 @@ public class GapStatisticParameterOptimizationMethod extends ParameterOptimizati
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * cluster.paramOptimization.ParameterOptimizationMethod#getNextParameterSet
-	 * (program.ParameterSet)
+     * (non-Javadoc)
+     *
+     * @see
+     * cluster.paramOptimization.ParameterOptimizationMethod#getNextParameterSet
+     * (program.ParameterSet)
      */
-    @SuppressWarnings("unused")
     @Override
-    protected ParameterSet getNextParameterSet(ParameterSet forcedParameterSet)
+    public ParameterSet getNextParameterSet(ParameterSet forcedParameterSet)
             throws InterruptedException {
 
         AbsoluteDataSet dataSet = (AbsoluteDataSet) (dataConfig
                 .getDatasetConfig().getDataSet().getOriginalDataSet());
 
         try {
-            MyRengine rEngine = repository.getRengineForCurrentThread();
-            try {
-                dataSet.loadIntoMemory();
-                double[][] coords = dataSet.getDataSetContent().getData();
-                List<String> ids = dataSet.getIds();
-                rEngine.assign("ids", ids.toArray(new String[0]));
-                dataSet.unloadFromMemory();
-                rEngine.eval("x <- c()");
-                for (int i = 0; i < coords.length; i++) {
-                    rEngine.assign("x_" + i, coords[i]);
-                    rEngine.eval("x <- rbind(x, x_" + i + ")");
-                    rEngine.eval("remove(x_" + i + ")");
-                }
-                rEngine.eval("rownames(x) <- ids");
-                rEngine.eval("library(cluster)");
-                rEngine.eval("result <- clusGap(x, FUNcluster=kmeans, K.max=10, B=100)");
-                rEngine.eval("result_tab <- cbind(result$Tab,result$Tab[,3]-result$Tab[,4])");
-                REXP result = rEngine
-                        .eval("maxSE(f=result_tab[,3],SE.f=result_tab[,4])");
-                int noOfClusters = result.asInteger();
-
-                ParameterSet res = new ParameterSet();
-                res.put("k", (double) noOfClusters + "");
-
-                return res;
-
-            } catch (IllegalArgumentException | InvalidDataSetFormatVersionException | IOException | REngineException | REXPMismatchException | UnknownDataSetFormatException e) {
-                e.printStackTrace();
+            IRengine rEngine = repository.getRengineForCurrentThread();
+            dataSet.loadIntoMemory();
+            double[][] coords = dataSet.getDataSetContent().getData();
+            List<String> ids = dataSet.getIds();
+            rEngine.assign("ids", ids.toArray(new String[0]));
+            dataSet.unloadFromMemory();
+            rEngine.eval("x <- c()");
+            for (int i = 0; i < coords.length; i++) {
+                rEngine.assign("x_" + i, coords[i]);
+                rEngine.eval("x <- rbind(x, x_" + i + ")");
+                rEngine.eval("remove(x_" + i + ")");
             }
-        } catch (RserveException e) {
+            rEngine.eval("rownames(x) <- ids");
+            rEngine.eval("library(cluster)");
+            rEngine.eval("result <- clusGap(x, FUNcluster=kmeans, K.max=10, B=100)");
+            rEngine.eval("result_tab <- cbind(result$Tab,result$Tab[,3]-result$Tab[,4])");
+            RExpr result = rEngine
+                    .eval("maxSE(f=result_tab[,3],SE.f=result_tab[,4])");
+            int noOfClusters = result.asInteger();
+
+            ParameterSet res = new ParameterSet();
+            res.put("k", (double) noOfClusters + "");
+
+            return res;
+
+        } catch (IllegalArgumentException | InvalidDataSetFormatVersionException |
+                IOException | UnknownDataSetFormatException e) {
             e.printStackTrace();
+        } catch (RException ex) {
+            Exceptions.printStackTrace(ex);
         }
 
         return null;
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see cluster.paramOptimization.ParameterOptimizationMethod#hasNext()
+     * (non-Javadoc)
+     *
+     * @see cluster.paramOptimization.ParameterOptimizationMethod#hasNext()
      */
     @Override
     public boolean hasNext() {
@@ -156,11 +153,11 @@ public class GapStatisticParameterOptimizationMethod extends ParameterOptimizati
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * cluster.paramOptimization.ParameterOptimizationMethod#getTotalIterationCount
-	 * ()
+     * (non-Javadoc)
+     *
+     * @see
+     * cluster.paramOptimization.ParameterOptimizationMethod#getTotalIterationCount
+     * ()
      */
     @Override
     public int getTotalIterationCount() {
@@ -168,10 +165,10 @@ public class GapStatisticParameterOptimizationMethod extends ParameterOptimizati
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see cluster.paramOptimization.ParameterOptimizationMethod#
-	 * getCompatibleDataSetFormatBaseClasses()
+     * (non-Javadoc)
+     *
+     * @see cluster.paramOptimization.ParameterOptimizationMethod#
+     * getCompatibleDataSetFormatBaseClasses()
      */
     @Override
     public List<Class<? extends DataSetFormat>> getCompatibleDataSetFormatBaseClasses() {
@@ -181,10 +178,10 @@ public class GapStatisticParameterOptimizationMethod extends ParameterOptimizati
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see cluster.paramOptimization.ParameterOptimizationMethod#
-	 * getCompatibleProgramClasses()
+     * (non-Javadoc)
+     *
+     * @see cluster.paramOptimization.ParameterOptimizationMethod#
+     * getCompatibleProgramClasses()
      */
     @Override
     public List<String> getCompatibleProgramNames() {

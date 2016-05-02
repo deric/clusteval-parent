@@ -12,21 +12,21 @@
  */
 package de.clusteval.cluster.paramOptimization;
 
-import de.clusteval.api.opt.ParameterOptimizationException;
-import de.clusteval.api.opt.ParameterSetAlreadyEvaluatedException;
-import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
-import de.clusteval.api.opt.NoParameterSetFoundException;
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.cluster.ClusteringQualitySet;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.exceptions.InternalAttributeException;
 import de.clusteval.api.exceptions.RunResultParseException;
 import de.clusteval.api.opt.IParameterOptimizationMethod;
+import de.clusteval.api.opt.NoParameterSetFoundException;
+import de.clusteval.api.opt.ParameterOptimizationException;
+import de.clusteval.api.opt.ParameterSetAlreadyEvaluatedException;
+import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
 import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.IProgramParameter;
 import de.clusteval.api.program.ParameterSet;
-import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.IRun;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
 import de.clusteval.data.DataConfig;
@@ -380,8 +380,8 @@ public abstract class ParameterOptimizationMethod extends RepositoryObject imple
      * @return The parameter set that is being evaluated in the next iteration.
      * @throws InternalAttributeException
      * @throws RegisterException
-     * @throws NoParameterSetFoundException This exception is thrown, if no
-     * parameter set was found that was not already evaluated before.
+     * @throws NoParameterSetFoundException          This exception is thrown, if no
+     *                                               parameter set was found that was not already evaluated before.
      * @throws InterruptedException
      * @throws ParameterSetAlreadyEvaluatedException
      */
@@ -420,8 +420,8 @@ public abstract class ParameterOptimizationMethod extends RepositoryObject imple
      * @return The parameter set that is being evaluated in the next iteration.
      * @throws InternalAttributeException
      * @throws RegisterException
-     * @throws NoParameterSetFoundException This exception is thrown, if no
-     * parameter set was found that was not already evaluated before.
+     * @throws NoParameterSetFoundException          This exception is thrown, if no
+     *                                               parameter set was found that was not already evaluated before.
      * @throws InterruptedException
      * @throws ParameterSetAlreadyEvaluatedException
      */
@@ -552,7 +552,7 @@ public abstract class ParameterOptimizationMethod extends RepositoryObject imple
                     totalIterationCount, isResume);
             return method;
         } catch (InstantiationException | IllegalAccessException | NoSuchMethodException |
-                 SecurityException | IllegalArgumentException | InvocationTargetException e) {
+                SecurityException | IllegalArgumentException | InvocationTargetException e) {
             e.printStackTrace();
         } catch (NullPointerException e) {
 
@@ -722,7 +722,7 @@ public abstract class ParameterOptimizationMethod extends RepositoryObject imple
             return this.getClass().getConstructor(this.getClass())
                     .newInstance(this);
         } catch (IllegalArgumentException | SecurityException | InstantiationException |
-                 IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
         this.log.warn("Cloning instance of class "

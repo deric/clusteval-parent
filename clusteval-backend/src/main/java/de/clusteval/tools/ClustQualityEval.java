@@ -26,6 +26,7 @@ import de.clusteval.api.exceptions.IncompatibleContextException;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
+import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.exceptions.RunResultParseException;
 import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
@@ -36,17 +37,19 @@ import de.clusteval.api.exceptions.UnknownProgramParameterException;
 import de.clusteval.api.exceptions.UnknownProgramTypeException;
 import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
+import de.clusteval.api.opt.InvalidOptimizationParameterException;
+import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
 import de.clusteval.api.program.IProgramConfig;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.InvalidRepositoryException;
+import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
-import de.clusteval.api.opt.InvalidOptimizationParameterException;
-import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
 import de.clusteval.cluster.quality.ClusteringQualityMeasureParameters;
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
@@ -60,9 +63,7 @@ import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.data.dataset.type.UnknownDataSetTypeException;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
-import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.framework.ClustevalBackendServer;
-import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
@@ -74,9 +75,9 @@ import de.clusteval.run.RunException;
 import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.run.statistics.UnknownRunDataStatisticException;
 import de.clusteval.run.statistics.UnknownRunStatisticException;
+import de.clusteval.utils.FileUtils;
 import de.clusteval.utils.InvalidConfigurationFileException;
 import de.clusteval.utils.ProgressPrinter;
-import de.clusteval.utils.FileUtils;
 import de.wiwie.wiutils.utils.parse.TextFileParser;
 import de.wiwie.wiutils.utils.parse.TextFileParser.OUTPUT_MODE;
 import java.io.File;
@@ -134,7 +135,7 @@ public class ClustQualityEval {
                    IncompatibleContextException, InvalidDataSetFormatVersionException,
                    RNotAvailableException, FormatConversionException,
                    UnknownRunResultPostprocessorException,
-                   UnknownDataRandomizerException, DatabaseConnectException {
+                   UnknownDataRandomizerException, DatabaseConnectException, RException {
         super();
         ClustevalBackendServer.logLevel(Level.INFO);
         ClustevalBackendServer.getBackendServerConfiguration().setNoDatabase(
@@ -506,7 +507,7 @@ public class ClustQualityEval {
                    IncompatibleContextException, InvalidDataSetFormatVersionException,
                    RNotAvailableException, FormatConversionException,
                    UnknownRunResultPostprocessorException,
-                   UnknownDataRandomizerException, DatabaseConnectException {
+                   UnknownDataRandomizerException, DatabaseConnectException, RException {
         new ClustQualityEval(args[0], args[1], Arrays.copyOfRange(args, 2,
                 args.length));
     }
