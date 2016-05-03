@@ -12,9 +12,9 @@
  */
 package de.clusteval.framework.repository;
 
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.IRepositoryObject;
-import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.RepositoryEvent;
 import de.clusteval.api.repository.RepositoryListener;
 import de.clusteval.api.repository.RepositoryMoveEvent;
@@ -440,10 +440,8 @@ public abstract class RepositoryObject implements RepositoryListener, IRepositor
      *              propagated to the listeners of this object.
      * @throws RegisterException
      */
-    private void notifyListener(final RepositoryEvent event)
-            throws RegisterException {
-        List<RepositoryListener> toNotify = new ArrayList<>(
-                this.listener);
+    private void notifyListener(final RepositoryEvent event) throws RegisterException {
+        List<RepositoryListener> toNotify = new ArrayList<>(this.listener);
         for (RepositoryListener listener : toNotify) {
             listener.notify(event);
         }

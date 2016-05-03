@@ -10,29 +10,14 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset.type;
 
+import de.clusteval.api.data.AbsDataType;
 import de.clusteval.api.program.RegisterException;
-import de.clusteval.api.repository.IRepository;
-import java.io.File;
 
 /**
  * @author Christian Wiwie
  *
  */
-public class WordSenseDisambiguationDataSetType extends DataSetType {
-
-    /**
-     * @param repository
-     * @param register
-     * @param changeDate
-     * @param absPath
-     * @throws RegisterException
-     *
-     */
-    public WordSenseDisambiguationDataSetType(final IRepository repository,
-            final boolean register, final long changeDate, final File absPath)
-            throws RegisterException {
-        super(repository, register, changeDate, absPath);
-    }
+public class WordSenseDisambiguationDataSetType extends AbsDataType {
 
     /**
      * The copy constructor for this type.
@@ -53,7 +38,7 @@ public class WordSenseDisambiguationDataSetType extends DataSetType {
      * @see data.dataset.type.DataSetType#getAlias()
      */
     @Override
-    public String getAlias() {
+    public String getName() {
         return "Word Sense Disambiguation";
     }
 

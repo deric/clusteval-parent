@@ -149,5 +149,5 @@ public abstract class DataSetType extends RepositoryObject {
      *
      * @return The alias of this dataset type.
      */
-    public abstract String getAlias();
+    public abstract String getName();
 }

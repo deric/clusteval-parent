@@ -11,11 +11,9 @@
 package de.clusteval.data.dataset;
 
 import de.clusteval.api.data.IDataSet;
-import de.clusteval.api.data.IDataSetType;
-import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.ISupervisorThread;
-import de.clusteval.data.dataset.type.DataSetTypeFinderThread;
 import de.clusteval.utils.FinderThread;
 
 /**
@@ -35,21 +33,6 @@ public class DataSetFinderThread extends FinderThread<IDataSet> {
             final IRepository framework, final long sleepTime,
             final boolean checkOnce) {
         super(supervisorThread, framework, IDataSet.class, sleepTime, checkOnce);
-    }
-
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.wiwie.wiutils.utils.FinderThread#beforeFind()
-     */
-    @Override
-    protected void beforeFind() {
-
-        if (!this.repository.isInitialized(IDataSetType.class)) {
-            this.supervisorThread.getThread(DataSetTypeFinderThread.class)
-                    .waitFor();
-        }
-        super.beforeFind();
     }
 
     /*

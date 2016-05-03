@@ -10,29 +10,14 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset.type;
 
+import de.clusteval.api.data.AbsDataType;
 import de.clusteval.api.program.RegisterException;
-import de.clusteval.api.repository.IRepository;
-import java.io.File;
 
 /**
  * @author Christian Wiwie
  *
  */
-public class SocialNetworkDataSetType extends DataSetType {
-
-    /**
-     * @param repository
-     * @param register
-     * @param changeDate
-     * @param absPath
-     * @throws RegisterException
-     *
-     */
-    public SocialNetworkDataSetType(final IRepository repository,
-            final boolean register, final long changeDate, final File absPath)
-            throws RegisterException {
-        super(repository, register, changeDate, absPath);
-    }
+public class SocialNetworkDataSetType extends AbsDataType {
 
     /**
      * The copy constructor for this type.
@@ -52,7 +37,7 @@ public class SocialNetworkDataSetType extends DataSetType {
      * @see data.dataset.type.DataSetType#getAlias()
      */
     @Override
-    public String getAlias() {
+    public String getName() {
         return "Social Network";
     }
 

@@ -10,29 +10,14 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset.type;
 
+import de.clusteval.api.data.AbsDataType;
 import de.clusteval.api.program.RegisterException;
-import de.clusteval.api.repository.IRepository;
-import java.io.File;
 
 /**
  * @author Christian Wiwie
  *
  */
-public class ProteinSequenceSimilarityDataSetType extends DataSetType {
-
-    /**
-     * @param repository
-     * @param register
-     * @param changeDate
-     * @param absPath
-     * @throws RegisterException
-     *
-     */
-    public ProteinSequenceSimilarityDataSetType(final IRepository repository,
-            final boolean register, final long changeDate, final File absPath)
-            throws RegisterException {
-        super(repository, register, changeDate, absPath);
-    }
+public class ProteinSequenceSimilarityDataSetType extends AbsDataType {
 
     /**
      * The copy constructor for this type.
@@ -41,8 +26,7 @@ public class ProteinSequenceSimilarityDataSetType extends DataSetType {
      *              The object to clone.
      * @throws RegisterException
      */
-    public ProteinSequenceSimilarityDataSetType(
-            final ProteinSequenceSimilarityDataSetType other)
+    public ProteinSequenceSimilarityDataSetType(final ProteinSequenceSimilarityDataSetType other)
             throws RegisterException {
         super(other);
     }
@@ -53,7 +37,7 @@ public class ProteinSequenceSimilarityDataSetType extends DataSetType {
      * @see data.dataset.type.DataSetType#getAlias()
      */
     @Override
-    public String getAlias() {
+    public String getName() {
         return "Protein Sequence Similarity";
     }
 

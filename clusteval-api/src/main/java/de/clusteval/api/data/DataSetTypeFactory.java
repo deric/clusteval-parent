@@ -16,16 +16,32 @@
  */
 package de.clusteval.api.data;
 
-import de.clusteval.api.repository.IRepositoryObject;
+import de.clusteval.api.factory.ServiceFactory;
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import org.openide.util.Lookup;
 
 /**
  *
  * @author deric
  */
-public interface IDataSetType extends IRepositoryObject {
+public class DataSetTypeFactory extends ServiceFactory<IDataSetType> {
 
-    String getName();
+    private static DataSetTypeFactory instance;
 
-    IDataSetType clone();
+    public static DataSetTypeFactory getInstance() {
+        if (instance == null) {
+            instance = new DataSetTypeFactory();
+        }
+        return instance;
+    }
 
+    private DataSetTypeFactory() {
+        providers = new LinkedHashMap<>();
+        Collection<? extends IDataSetType> list = Lookup.getDefault().lookupAll(IDataSetType.class);
+        for (IDataSetType c : list) {
+            providers.put(c.getName(), c);
+        }
+        sort();
+    }
 }

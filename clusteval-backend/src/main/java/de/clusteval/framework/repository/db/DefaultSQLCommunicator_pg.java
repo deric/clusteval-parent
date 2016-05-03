@@ -1758,7 +1758,7 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
             insert(this.getTableDataSetTypes(),
                     new String[]{"repository_id", "name", "alias"},
                     new String[]{"" + this.updateRepositoryId(),
-                        "" + object.getSimpleName(), type.getAlias()});
+                        "" + object.getSimpleName(), type.getName()});
             return true;
         } catch (SQLException | IllegalArgumentException | SecurityException |
                 InstantiationException | IllegalAccessException |

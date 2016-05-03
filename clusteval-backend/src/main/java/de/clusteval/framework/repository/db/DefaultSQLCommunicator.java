@@ -12,16 +12,21 @@ package de.clusteval.framework.repository.db;
 
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.Database;
+import de.clusteval.api.Pair;
 import de.clusteval.api.SQLConfig;
-import de.clusteval.api.cluster.IClustering;
+import de.clusteval.api.cluster.ClusteringEvaluationParameters;
 import de.clusteval.api.cluster.ClusteringQualitySet;
+import de.clusteval.api.cluster.IClustering;
+import de.clusteval.api.data.DataSetTypeFactory;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetConfig;
 import de.clusteval.api.data.IDataSetFormat;
+import de.clusteval.api.data.IDataSetType;
 import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.data.IGoldStandardConfig;
 import de.clusteval.api.exceptions.DatabaseConnectException;
+import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.IProgramParameter;
 import de.clusteval.api.program.ParameterSet;
@@ -30,7 +35,6 @@ import de.clusteval.api.run.IRun;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
-import de.clusteval.api.cluster.ClusteringEvaluationParameters;
 import de.clusteval.context.Context;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.DataSet;
@@ -40,7 +44,6 @@ import de.clusteval.data.dataset.type.DataSetType;
 import de.clusteval.data.goldstandard.GoldStandard;
 import de.clusteval.data.goldstandard.GoldStandardConfig;
 import de.clusteval.data.statistics.DataStatistic;
-import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.framework.repository.RepositoryController;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.program.DoubleProgramParameter;
@@ -69,9 +72,8 @@ import de.clusteval.run.result.RunResult;
 import de.clusteval.run.result.format.RunResultFormat;
 import de.clusteval.run.statistics.RunDataStatistic;
 import de.clusteval.run.statistics.RunStatistic;
-import de.clusteval.utils.Statistic;
 import de.clusteval.utils.FileUtils;
-import de.clusteval.api.Pair;
+import de.clusteval.utils.Statistic;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
@@ -1762,20 +1764,18 @@ public class DefaultSQLCommunicator extends SQLCommunicator implements Database 
     protected boolean registerDataSetTypeClass(
             Class<? extends DataSetType> object) {
         try {
-            DataSetType type = object.getConstructor(IRepository.class,
-                    boolean.class, long.class, File.class).newInstance(
-                            repository, false, System.currentTimeMillis(),
-                            new File(object.getSimpleName()));
+            DataSetTypeFactory dsf = DataSetTypeFactory.getInstance();
+            IDataSetType type = dsf.getProvider(object.getSimpleName());
+
+            type.init(repository, System.currentTimeMillis(), new File(object.getSimpleName()));
+
             insert(this.getTableDataSetTypes(),
                     new String[]{"repository_id", "name", "alias"},
                     new String[]{"" + this.updateRepositoryId(),
-                        "" + object.getSimpleName(), type.getAlias()});
+                        "" + object.getSimpleName(), type.getName()});
             return true;
         } catch (SQLException e) {
             this.exceptionHandler.handleException(e);
-        } catch (IllegalArgumentException | SecurityException | InstantiationException |
-                IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-            e.printStackTrace();
         }
         return false;
     }
