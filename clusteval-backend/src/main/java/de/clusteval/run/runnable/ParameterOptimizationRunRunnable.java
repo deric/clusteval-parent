@@ -13,9 +13,11 @@
 package de.clusteval.run.runnable;
 
 import de.clusteval.api.ClusteringEvaluation;
+import de.clusteval.api.Triple;
 import de.clusteval.api.cluster.ClustEvalValue;
 import de.clusteval.api.cluster.ClusteringQualitySet;
 import de.clusteval.api.data.IDataConfig;
+import de.clusteval.api.exceptions.IncompatibleDataSetFormatException;
 import de.clusteval.api.exceptions.IncompleteGoldStandardException;
 import de.clusteval.api.exceptions.InternalAttributeException;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
@@ -23,23 +25,22 @@ import de.clusteval.api.exceptions.RunIterationException;
 import de.clusteval.api.exceptions.RunResultParseException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
+import de.clusteval.api.factory.UnknownProviderException;
+import de.clusteval.api.opt.IDivergingParameterOptimizationMethod;
+import de.clusteval.api.opt.NoParameterSetFoundException;
+import de.clusteval.api.opt.ParameterOptimizationException;
+import de.clusteval.api.opt.ParameterSetAlreadyEvaluatedException;
 import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.IProgramParameter;
 import de.clusteval.api.program.ParameterSet;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.run.IRun;
-import de.clusteval.api.opt.IDivergingParameterOptimizationMethod;
-import de.clusteval.api.opt.NoParameterSetFoundException;
-import de.clusteval.api.opt.ParameterOptimizationException;
-import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
-import de.clusteval.api.opt.ParameterSetAlreadyEvaluatedException;
-import de.clusteval.api.exceptions.IncompatibleDataSetFormatException;
 import de.clusteval.api.run.IScheduler;
+import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
 import de.clusteval.run.ParameterOptimizationRun;
 import de.clusteval.run.result.ParameterOptimizationResult;
-import de.clusteval.utils.plot.Plotter;
 import de.clusteval.utils.FileUtils;
-import de.clusteval.api.Triple;
+import de.clusteval.utils.plot.Plotter;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -172,7 +173,7 @@ public class ParameterOptimizationRunRunnable extends ExecutionRunRunnable {
                                       InvalidDataSetFormatVersionException, RegisterException,
                                       InternalAttributeException, IncompatibleDataSetFormatException,
                                       UnknownGoldStandardFormatException,
-                                      IncompleteGoldStandardException, InterruptedException {
+                                      IncompleteGoldStandardException, InterruptedException, UnknownProviderException {
         super.beforeRun();
 
         if (!new File(completeQualityOutput).exists() || !isResume) {

@@ -33,6 +33,7 @@ import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.RunIterationException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
+import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.opt.NoParameterSetFoundException;
 import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.IProgramParameter;
@@ -192,7 +193,7 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
      * @throws InterruptedException
      */
     protected boolean preprocessAndCheckCompatibleDataSetFormat()
-            throws IOException, RegisterException, InterruptedException, RException {
+            throws IOException, RegisterException, InterruptedException, RException, UnknownProviderException {
 
         IConversionInputToStandardConfiguration configInputToStandard = dataConfig.getDatasetConfig()
                 .getConversionInputToStandardConfiguration();
@@ -1249,7 +1250,7 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
     protected void beforeRun()
             throws UnknownDataSetFormatException, InvalidDataSetFormatVersionException, IllegalArgumentException,
                    IOException, RegisterException, InternalAttributeException, IncompatibleDataSetFormatException,
-                   UnknownGoldStandardFormatException, IncompleteGoldStandardException, InterruptedException {
+                   UnknownGoldStandardFormatException, IncompleteGoldStandardException, InterruptedException, UnknownProviderException {
         try {
             this.log.info("Run " + this.getRun() + " (" + this.programConfig + "," + this.dataConfig + ") "
                     + (!isResume ? "started" : "RESUMED") + " (asynchronously)");

@@ -18,6 +18,7 @@ import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.RunIterationException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
+import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.IProgramParameter;
 import de.clusteval.api.program.RegisterException;
@@ -75,7 +76,7 @@ public class InternalParameterOptimizationRunRunnable extends ExecutionRunRunnab
                                       InvalidDataSetFormatVersionException, RegisterException,
                                       InternalAttributeException, IncompatibleDataSetFormatException,
                                       UnknownGoldStandardFormatException,
-                                      IncompleteGoldStandardException, InterruptedException {
+                                      IncompleteGoldStandardException, InterruptedException, UnknownProviderException {
         super.beforeRun();
         if (!new File(completeQualityOutput).exists() || !isResume) {
             writeHeaderIntoCompleteFile(completeQualityOutput);

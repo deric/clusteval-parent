@@ -17,6 +17,7 @@ import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.RunIterationException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
+import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.run.IProgress;
 import de.clusteval.api.run.IRun;
@@ -256,7 +257,7 @@ public abstract class RunRunnable<IR extends IterationRunnable, IW extends Itera
                                       IOException, RegisterException, InternalAttributeException,
                                       IncompatibleDataSetFormatException,
                                       UnknownGoldStandardFormatException,
-                                      IncompleteGoldStandardException, InterruptedException {
+                                      IncompleteGoldStandardException, InterruptedException, UnknownProviderException {
         this.futures.clear();
     }
 

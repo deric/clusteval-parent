@@ -11,18 +11,19 @@
 package de.clusteval.run.runnable;
 
 import de.clusteval.api.data.IDataConfig;
+import de.clusteval.api.exceptions.IncompatibleDataSetFormatException;
 import de.clusteval.api.exceptions.IncompleteGoldStandardException;
 import de.clusteval.api.exceptions.InternalAttributeException;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.RunIterationException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
+import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.IProgramParameter;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.IScheduler;
-import de.clusteval.api.exceptions.IncompatibleDataSetFormatException;
 import de.clusteval.run.ClusteringRun;
 import de.clusteval.run.result.ClusteringRunResult;
 import java.io.BufferedReader;
@@ -84,7 +85,7 @@ public class ClusteringRunRunnable extends ExecutionRunRunnable {
                                    InvalidDataSetFormatVersionException, RegisterException,
                                    InternalAttributeException, IncompatibleDataSetFormatException,
                                    UnknownGoldStandardFormatException,
-                                   IncompleteGoldStandardException, InterruptedException {
+                                   IncompleteGoldStandardException, InterruptedException, UnknownProviderException {
         super.beforeRun();
 
         if (!new File(completeQualityOutput).exists() || !isResume) {

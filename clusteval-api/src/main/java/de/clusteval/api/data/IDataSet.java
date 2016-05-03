@@ -21,6 +21,7 @@ import de.clusteval.api.Precision;
 import de.clusteval.api.exceptions.FormatConversionException;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RNotAvailableException;
@@ -153,7 +154,7 @@ public interface IDataSet extends IRepositoryObject {
             throws IOException, InvalidDataSetFormatVersionException,
                    RegisterException, UnknownDataSetFormatException,
                    InvalidParameterException, RNotAvailableException,
-                   InterruptedException;
+                   InterruptedException, UnknownProviderException;
 
     /**
      * This method is a helper method to convert a dataset in a internal
@@ -211,7 +212,7 @@ public interface IDataSet extends IRepositoryObject {
             final IConversionConfiguration configStandardToInput)
             throws FormatConversionException, IOException,
                    InvalidDataSetFormatVersionException, RegisterException,
-                   RNotAvailableException, InterruptedException, RException;
+                   RNotAvailableException, InterruptedException, RException, UnknownProviderException;
 
     /**
      * This method does not load the content of the dataset into memory, it just
