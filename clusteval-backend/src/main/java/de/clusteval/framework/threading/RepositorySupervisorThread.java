@@ -15,7 +15,6 @@ package de.clusteval.framework.threading;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethodFinderThread;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
-import de.clusteval.cluster.quality.ClusteringQualityMeasureFinderThread;
 import de.clusteval.context.ContextFinderThread;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.DataConfigFinderThread;
@@ -160,7 +159,7 @@ public class RepositorySupervisorThread extends SupervisorThread {
                         //DataStatisticFinderThread.class,
                         //RunStatisticFinderThread.class,
                         RunDataStatisticFinderThread.class,
-                        ClusteringQualityMeasureFinderThread.class,
+                        //ClusteringQualityMeasureFinderThread.class,
                         ParameterOptimizationMethodFinderThread.class,
                         DataSetConfigFinderThread.class,
                         GoldStandardConfigFinderThread.class,
@@ -182,7 +181,7 @@ public class RepositorySupervisorThread extends SupervisorThread {
                         // DataStatisticFinderThread.class,
                         //RunStatisticFinderThread.class,
                         RunDataStatisticFinderThread.class,
-                        ClusteringQualityMeasureFinderThread.class,
+                        //ClusteringQualityMeasureFinderThread.class,
                         ParameterOptimizationMethodFinderThread.class,
                         DataSetConfigFinderThread.class,
                         GoldStandardConfigFinderThread.class,

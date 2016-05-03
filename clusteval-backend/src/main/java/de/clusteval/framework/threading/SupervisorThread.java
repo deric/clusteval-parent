@@ -16,7 +16,6 @@ import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.IScheduler;
 import de.clusteval.api.run.ISupervisorThread;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethodFinderThread;
-import de.clusteval.cluster.quality.ClusteringQualityMeasureFinderThread;
 import de.clusteval.data.dataset.DataSetConfigFinderThread;
 import de.clusteval.framework.ClustevalThread;
 import de.clusteval.run.RunFinderThread;
@@ -238,14 +237,6 @@ public abstract class SupervisorThread extends Thread implements ISupervisorThre
      */
     public RunFinderThread getRunFinderThread() {
         return (RunFinderThread) this.threads.get(RunFinderThread.class);
-    }
-
-    /**
-     * @return The thread which finds clustering quality measures.
-     */
-    public ClusteringQualityMeasureFinderThread getClusteringQualityMeasureFinderThread() {
-        return (ClusteringQualityMeasureFinderThread) this.threads
-                .get(ClusteringQualityMeasureFinderThread.class);
     }
 
     /**
