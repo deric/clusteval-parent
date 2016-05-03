@@ -13,3 +13,4 @@ target/
 logs/
 /nbproject/private/
 clusteval-backend/testCaseRepository
+/clusteval-packages/nbproject/
