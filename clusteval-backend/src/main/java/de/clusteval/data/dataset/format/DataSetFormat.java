@@ -11,6 +11,7 @@
 package de.clusteval.data.dataset.format;
 
 import de.clusteval.api.Precision;
+import de.clusteval.api.data.DataSetFormatFactory;
 import de.clusteval.api.data.IConversionConfiguration;
 import de.clusteval.api.data.IConversionInputToStandardConfiguration;
 import de.clusteval.api.data.IDataSet;
@@ -18,7 +19,7 @@ import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.data.IDataSetFormatParser;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
-import de.clusteval.api.factory.DataSetFormatFactory;
+import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.repository.IRepository;
@@ -129,7 +130,7 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
      * @throws UnknownDataSetFormatException
      */
     public static IDataSetFormat parseFromString(final IRepository repository,
-            String datasetFormat, final int formatVersion) throws UnknownDataSetFormatException {
+            String datasetFormat, final int formatVersion) throws UnknownDataSetFormatException, UnknownProviderException {
 
         DataSetFormatFactory factory = DataSetFormatFactory.getInstance();
         if (factory.hasProvider(datasetFormat)) {
@@ -156,7 +157,7 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
      * @throws UnknownDataSetFormatException
      */
     public static IDataSetFormat parseFromString(final IRepository repository,
-            String datasetFormat) throws UnknownDataSetFormatException {
+            String datasetFormat) throws UnknownDataSetFormatException, UnknownProviderException {
         return parseFromString(repository, datasetFormat,
                 repository.getCurrentDataSetFormatVersion(datasetFormat));
     }
@@ -177,7 +178,7 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
      *                                       the unknown data set format exception
      */
     public static List<IDataSetFormat> parseFromString(final IRepository repo,
-            String[] datasetFormats) throws UnknownDataSetFormatException {
+            String[] datasetFormats) throws UnknownDataSetFormatException, UnknownProviderException {
         List<IDataSetFormat> result = new LinkedList<>();
         for (String dsFormat : datasetFormats) {
             result.add(parseFromString(repo, dsFormat));

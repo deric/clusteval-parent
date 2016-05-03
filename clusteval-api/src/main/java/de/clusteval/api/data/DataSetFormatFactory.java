@@ -14,9 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.clusteval.api.factory;
+package de.clusteval.api.data;
 
-import de.clusteval.api.data.IDataSetFormat;
+import de.clusteval.api.factory.ServiceFactory;
+import de.clusteval.api.factory.UnknownProviderException;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import org.openide.util.Lookup;
@@ -43,5 +44,9 @@ public class DataSetFormatFactory extends ServiceFactory<IDataSetFormat> {
             providers.put(c.getName(), c);
         }
         sort();
+    }
+
+    public static IDataSetFormat parseFromString(String name) throws UnknownProviderException {
+        return getInstance().getProvider(name);
     }
 }
