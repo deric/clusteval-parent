@@ -8,23 +8,20 @@
  * Contributors:
  *     Christian Wiwie - initial API and implementation
  ***************************************************************************** */
-package de.clusteval.data.dataset.format;
+package de.clusteval.api.data;
 
 import de.clusteval.api.Precision;
-import de.clusteval.api.data.DataSetFormat;
-import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.program.RegisterException;
-import de.wiwie.wiutils.utils.SimilarityMatrix;
 import java.io.IOException;
 
 /**
  * @author Christian Wiwie
  *
  */
-public abstract class RelativeDataSetFormat extends DataSetFormat {
+public abstract class AbsoluteDataSetFormat extends DataSetFormat {
 
-    public RelativeDataSetFormat() {
+    public AbsoluteDataSetFormat() {
 
     }
 
@@ -35,14 +32,15 @@ public abstract class RelativeDataSetFormat extends DataSetFormat {
      *              The object to clone.
      * @throws RegisterException
      */
-    public RelativeDataSetFormat(final RelativeDataSetFormat other)
+    public AbsoluteDataSetFormat(final AbsoluteDataSetFormat other)
             throws RegisterException {
         super(other);
     }
 
     @Override
-    public final SimilarityMatrix parse(final IDataSet dataSet, Precision precision)
-            throws IllegalArgumentException, IOException, InvalidDataSetFormatVersionException {
-        return (SimilarityMatrix) super.parse(dataSet, precision);
+    public final DataMatrix parse(final IDataSet dataSet, Precision precision)
+            throws IllegalArgumentException,
+                   IOException, InvalidDataSetFormatVersionException {
+        return (DataMatrix) super.parse(dataSet, precision);
     }
 }

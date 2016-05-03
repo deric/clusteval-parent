@@ -19,9 +19,6 @@ package de.clusteval.api.exceptions;
  */
 public class InvalidDataSetFormatVersionException extends DataSetException {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = -6502244551092326961L;
 
     /**

@@ -8,7 +8,7 @@
  * Contributors:
  *     Christian Wiwie - initial API and implementation
  ***************************************************************************** */
-package de.clusteval.data.dataset;
+package de.clusteval.api.data;
 
 /**
  * This is a wrapper class for absolute data that needs to be stored in memory.

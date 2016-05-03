@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset.format;
 
+import de.clusteval.api.data.RelativeDataSetFormat;
 import de.clusteval.api.FormatVersion;
 import de.clusteval.api.program.RegisterException;
 

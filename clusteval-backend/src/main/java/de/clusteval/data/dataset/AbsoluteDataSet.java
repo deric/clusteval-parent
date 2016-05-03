@@ -10,13 +10,14 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset;
 
+import de.clusteval.api.data.DataMatrix;
 import de.clusteval.api.Precision;
 import de.clusteval.api.data.IDataSetType;
 import de.clusteval.api.data.WEBSITE_VISIBILITY;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
-import de.clusteval.data.dataset.format.AbsoluteDataSetFormat;
+import de.clusteval.api.data.AbsoluteDataSetFormat;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;

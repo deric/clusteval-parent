@@ -54,7 +54,7 @@ import de.clusteval.data.DataConfigurationException;
 import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
 import de.clusteval.data.dataset.format.ConversionStandardToInputConfiguration;
 import de.clusteval.api.data.DataSetFormat;
-import de.clusteval.data.dataset.format.RelativeDataSetFormat;
+import de.clusteval.api.data.RelativeDataSetFormat;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
 import de.clusteval.framework.ClustevalBackendServer;

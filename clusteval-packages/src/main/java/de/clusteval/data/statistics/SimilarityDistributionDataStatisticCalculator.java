@@ -18,7 +18,7 @@ import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.data.dataset.RelativeDataSet;
-import de.clusteval.data.dataset.format.RelativeDataSetFormat;
+import de.clusteval.api.data.RelativeDataSetFormat;
 import de.clusteval.utils.ArraysExt;
 import de.clusteval.utils.FileUtils;
 import de.wiwie.wiutils.utils.SimilarityMatrix;

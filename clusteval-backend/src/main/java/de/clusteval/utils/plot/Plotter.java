@@ -20,7 +20,7 @@ import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.AbsoluteDataSet;
-import de.clusteval.data.dataset.DataMatrix;
+import de.clusteval.api.data.DataMatrix;
 import de.clusteval.data.dataset.RelativeDataSet;
 import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.utils.ArraysExt;

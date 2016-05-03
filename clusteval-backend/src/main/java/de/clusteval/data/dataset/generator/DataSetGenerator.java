@@ -30,7 +30,7 @@ import de.clusteval.api.repository.IRepository;
 import de.clusteval.data.dataset.AbsoluteDataSet;
 import de.clusteval.data.dataset.AbstractDataSetProvider;
 import de.clusteval.data.dataset.DataSet;
-import de.clusteval.data.dataset.format.AbsoluteDataSetFormat;
+import de.clusteval.api.data.AbsoluteDataSetFormat;
 import de.clusteval.api.data.DataSetFormat;
 import de.clusteval.data.goldstandard.GoldStandard;
 import de.clusteval.api.repository.RepositoryObject;

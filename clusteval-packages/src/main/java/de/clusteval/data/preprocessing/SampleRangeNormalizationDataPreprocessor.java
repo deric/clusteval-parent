@@ -18,7 +18,7 @@ import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.data.dataset.AbsoluteDataSet;
-import de.clusteval.data.dataset.DataMatrix;
+import de.clusteval.api.data.DataMatrix;
 import de.clusteval.data.dataset.DataSet;
 import de.clusteval.data.dataset.RelativeDataSet;
 import java.io.File;

@@ -13,11 +13,11 @@ package de.clusteval.data.dataset;
 import de.clusteval.api.Precision;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetType;
+import de.clusteval.api.data.RelativeDataSetFormat;
 import de.clusteval.api.data.WEBSITE_VISIBILITY;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
-import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
-import de.clusteval.data.dataset.format.RelativeDataSetFormat;
+import de.clusteval.api.repository.IRepository;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
 import java.io.File;
 import java.io.IOException;
@@ -107,7 +107,7 @@ public class RelativeDataSet extends DataSet implements IDataSet {
     public boolean loadIntoMemory(Precision precision) throws IllegalArgumentException, IOException,
                                                               InvalidDataSetFormatVersionException {
         if (!isInMemory()) {
-            this.similarities = this.getDataSetFormat().parse(this, precision);
+            this.similarities = (SimilarityMatrix) this.getDataSetFormat().parse(this, precision);
         }
         return true;
     }

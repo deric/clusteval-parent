@@ -8,23 +8,21 @@
  * Contributors:
  *     Christian Wiwie - initial API and implementation
  ***************************************************************************** */
-package de.clusteval.data.dataset.format;
+package de.clusteval.api.data;
 
+import de.clusteval.api.Matrix;
 import de.clusteval.api.Precision;
-import de.clusteval.api.data.DataSetFormat;
-import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.program.RegisterException;
-import de.clusteval.data.dataset.DataMatrix;
 import java.io.IOException;
 
 /**
  * @author Christian Wiwie
  *
  */
-public abstract class AbsoluteDataSetFormat extends DataSetFormat {
+public abstract class RelativeDataSetFormat extends DataSetFormat {
 
-    public AbsoluteDataSetFormat() {
+    public RelativeDataSetFormat() {
 
     }
 
@@ -35,15 +33,14 @@ public abstract class AbsoluteDataSetFormat extends DataSetFormat {
      *              The object to clone.
      * @throws RegisterException
      */
-    public AbsoluteDataSetFormat(final AbsoluteDataSetFormat other)
+    public RelativeDataSetFormat(final RelativeDataSetFormat other)
             throws RegisterException {
         super(other);
     }
 
     @Override
-    public final DataMatrix parse(final IDataSet dataSet, Precision precision)
-            throws IllegalArgumentException,
-                   IOException, InvalidDataSetFormatVersionException {
-        return (DataMatrix) super.parse(dataSet, precision);
+    public final Matrix parse(final IDataSet dataSet, Precision precision)
+            throws IllegalArgumentException, IOException, InvalidDataSetFormatVersionException {
+        return (Matrix) super.parse(dataSet, precision);
     }
 }

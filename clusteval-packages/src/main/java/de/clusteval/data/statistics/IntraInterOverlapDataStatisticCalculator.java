@@ -21,7 +21,7 @@ import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.data.dataset.RelativeDataSet;
-import de.clusteval.data.dataset.format.RelativeDataSetFormat;
+import de.clusteval.api.data.RelativeDataSetFormat;
 import de.clusteval.utils.ArraysExt;
 import de.clusteval.api.Pair;
 import de.clusteval.api.data.IDataConfig;

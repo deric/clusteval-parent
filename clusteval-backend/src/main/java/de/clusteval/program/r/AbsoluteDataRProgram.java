@@ -20,7 +20,7 @@ import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.data.dataset.AbsoluteDataSet;
-import de.clusteval.data.dataset.DataMatrix;
+import de.clusteval.api.data.DataMatrix;
 import java.io.File;
 import java.util.Map;
 

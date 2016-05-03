@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset.format;
 
+import de.clusteval.api.data.RelativeDataSetFormat;
 import de.clusteval.api.data.DataSetFormat;
 import de.clusteval.api.FormatVersion;
 import de.clusteval.api.IDistanceMeasure;
@@ -26,7 +27,7 @@ import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.data.dataset.AbsoluteDataSet;
-import de.clusteval.data.dataset.DataMatrix;
+import de.clusteval.api.data.DataMatrix;
 import de.clusteval.data.dataset.DataSetAttributeParser;
 import de.clusteval.data.dataset.RelativeDataSet;
 import de.wiwie.wiutils.utils.SimilarityMatrix;

@@ -30,7 +30,7 @@ import de.clusteval.api.run.IScheduler;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
 import de.clusteval.context.Context;
-import de.clusteval.data.dataset.format.AbsoluteDataSetFormat;
+import de.clusteval.api.data.AbsoluteDataSetFormat;
 import de.clusteval.api.data.DataSetFormat;
 import de.clusteval.program.ProgramParameter;
 import de.clusteval.run.result.ParameterOptimizationResult;
