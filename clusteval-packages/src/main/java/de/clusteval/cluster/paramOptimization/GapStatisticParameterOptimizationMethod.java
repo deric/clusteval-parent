@@ -27,7 +27,7 @@ import de.clusteval.api.r.RLibraryRequirement;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.data.dataset.AbsoluteDataSet;
 import de.clusteval.data.dataset.format.AbsoluteDataSetFormat;
-import de.clusteval.data.dataset.format.DataSetFormat;
+import de.clusteval.api.data.DataSetFormat;
 import de.clusteval.run.ParameterOptimizationRun;
 import java.io.File;
 import java.io.IOException;

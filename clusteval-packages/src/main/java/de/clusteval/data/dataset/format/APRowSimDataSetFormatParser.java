@@ -10,27 +10,27 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset.format;
 
+import de.clusteval.api.FormatVersion;
+import de.clusteval.api.Precision;
 import de.clusteval.api.data.IConversionConfiguration;
+import de.clusteval.api.data.IConversionInputToStandardConfiguration;
+import de.clusteval.api.data.IDataSet;
+import de.clusteval.api.data.IDataSetFormat;
+import de.clusteval.api.data.WEBSITE_VISIBILITY;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import de.clusteval.api.program.RegisterException;
+import de.clusteval.data.dataset.DataSetAttributeParser;
+import de.clusteval.data.dataset.RelativeDataSet;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
 import de.wiwie.wiutils.utils.parse.SimFileMatrixParser;
 import de.wiwie.wiutils.utils.parse.SimFileParser;
 import de.wiwie.wiutils.utils.parse.SimFileParser.SIM_FILE_FORMAT;
 import de.wiwie.wiutils.utils.parse.TextFileParser.OUTPUT_MODE;
-import de.clusteval.data.dataset.DataSetAttributeParser;
-import de.clusteval.data.dataset.RelativeDataSet;
-import de.clusteval.api.program.RegisterException;
-import de.clusteval.api.FormatVersion;
-import de.clusteval.api.Precision;
-import de.clusteval.api.data.IConversionInputToStandardConfiguration;
-import de.clusteval.api.data.IDataSet;
-import de.clusteval.api.data.IDataSetFormat;
-import de.clusteval.api.data.WEBSITE_VISIBILITY;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  * @author Christian Wiwie
@@ -88,15 +88,13 @@ public class APRowSimDataSetFormatParser extends DataSetFormatParser {
             p.process();
             this.log.debug("Finished converting");
         }
+        APRowSimDataSetFormat format = new APRowSimDataSetFormat();
+        format.init(dataSet.getRepository(), System.currentTimeMillis(), new File(absResultFilePath));
+        format.setVersion(dataSet.getRepository().getCurrentDataSetFormatVersion(APRowSimDataSetFormat.class.getSimpleName()));
+
         return new RelativeDataSet(dataSet.getRepository(), false,
                 System.currentTimeMillis(), new File(absResultFilePath),
-                dataSet.getAlias(), new APRowSimDataSetFormat(
-                        dataSet.getRepository(), false,
-                        System.currentTimeMillis(),
-                        new File(absResultFilePath), dataSet.getRepository()
-                        .getCurrentDataSetFormatVersion(
-                                APRowSimDataSetFormat.class
-                                .getSimpleName())),
+                dataSet.getAlias(), format,
                 dataSet.getDataSetType(), WEBSITE_VISIBILITY.HIDE);
     }
 

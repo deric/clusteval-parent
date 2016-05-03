@@ -14,7 +14,6 @@ import de.clusteval.api.FormatVersion;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.program.RegisterException;
-import de.clusteval.api.repository.IRepository;
 import de.clusteval.utils.FileUtils;
 import java.io.File;
 import java.io.IOException;
@@ -30,20 +29,6 @@ public class BLASTDataSetFormat extends RelativeDataSetFormat {
 
     public BLASTDataSetFormat() {
 
-    }
-
-    /**
-     * @param repo
-     * @param register
-     * @param changeDate
-     * @param absPath
-     * @param version
-     * @throws RegisterException
-     */
-    public BLASTDataSetFormat(final IRepository repo, final boolean register,
-            final long changeDate, final File absPath, final int version)
-            throws RegisterException {
-        super(repo, register, changeDate, absPath, version);
     }
 
     /**

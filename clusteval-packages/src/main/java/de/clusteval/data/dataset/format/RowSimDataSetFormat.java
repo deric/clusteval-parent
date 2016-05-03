@@ -12,8 +12,6 @@ package de.clusteval.data.dataset.format;
 
 import de.clusteval.api.FormatVersion;
 import de.clusteval.api.program.RegisterException;
-import de.clusteval.api.repository.IRepository;
-import java.io.File;
 
 /**
  * @author Christian Wiwie
@@ -31,23 +29,6 @@ public class RowSimDataSetFormat extends RelativeDataSetFormat {
 
     public RowSimDataSetFormat() {
 
-    }
-    /**
-     * Instantiates a new row sim data set format.
-     *
-     * @param repo
-     * @param register
-     * @param changeDate
-     * @param absPath
-     *
-     * @param version
-     * @throws RegisterException
-     *
-     */
-    public RowSimDataSetFormat(final IRepository repo, final boolean register,
-            final long changeDate, final File absPath, final int version)
-            throws RegisterException {
-        super(repo, register, changeDate, absPath, version);
     }
 
     /**

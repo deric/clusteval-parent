@@ -11,12 +11,11 @@
 package de.clusteval.data.dataset.format;
 
 import de.clusteval.api.Precision;
+import de.clusteval.api.data.DataSetFormat;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.program.RegisterException;
-import de.clusteval.api.repository.IRepository;
 import de.clusteval.data.dataset.DataMatrix;
-import java.io.File;
 import java.io.IOException;
 
 /**
@@ -27,24 +26,6 @@ public abstract class AbsoluteDataSetFormat extends DataSetFormat {
 
     public AbsoluteDataSetFormat() {
 
-    }
-
-    /**
-     * Instantiates a new absolute data set format.
-     *
-     * @param repo
-     * @param register
-     * @param changeDate
-     * @param absPath
-     *
-     * @param version
-     * @throws RegisterException
-     *
-     */
-    public AbsoluteDataSetFormat(final IRepository repo, final boolean register,
-            final long changeDate, final File absPath, final int version)
-            throws RegisterException {
-        super(repo, register, changeDate, absPath, version);
     }
 
     /**

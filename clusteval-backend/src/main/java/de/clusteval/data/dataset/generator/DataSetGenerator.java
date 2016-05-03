@@ -31,7 +31,7 @@ import de.clusteval.data.dataset.AbsoluteDataSet;
 import de.clusteval.data.dataset.AbstractDataSetProvider;
 import de.clusteval.data.dataset.DataSet;
 import de.clusteval.data.dataset.format.AbsoluteDataSetFormat;
-import de.clusteval.data.dataset.format.DataSetFormat;
+import de.clusteval.api.data.DataSetFormat;
 import de.clusteval.data.goldstandard.GoldStandard;
 import de.clusteval.framework.repository.RepositoryObject;
 import de.clusteval.utils.FileUtils;

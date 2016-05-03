@@ -12,6 +12,7 @@ package de.clusteval.data.dataset.format;
 
 import de.clusteval.api.FormatVersion;
 import de.clusteval.api.Precision;
+import de.clusteval.api.data.DataSetFormat;
 import de.clusteval.api.data.IConversionConfiguration;
 import de.clusteval.api.data.IConversionInputToStandardConfiguration;
 import de.clusteval.api.data.IDataSet;
@@ -157,13 +158,14 @@ public class RowSimDataSetFormatParser extends DataSetFormatParser {
                     SIM_FILE_FORMAT.ID_ID_SIM);
             p.process();
         }
+
+        RowSimDataSetFormat format = new RowSimDataSetFormat();
+        format.init(dataSet.getRepository(), System.currentTimeMillis(), new File(resultFileName));
+        format.setVersion(dataSet.getRepository().getCurrentDataSetFormatVersion(RowSimDataSetFormat.class.getSimpleName()));
+
         return new RelativeDataSet(dataSet.getRepository(), false,
                 dataSet.getChangeDate(), new File(resultFileName),
-                dataSet.getAlias(), new RowSimDataSetFormat(
-                        dataSet.getRepository(), false,
-                        dataSet.getChangeDate(), new File(resultFileName),
-                        dataSet.getRepository().getCurrentDataSetFormatVersion(
-                                RowSimDataSetFormat.class.getSimpleName())),
+                dataSet.getAlias(), format,
                 dataSet.getDataSetType(), WEBSITE_VISIBILITY.HIDE);
     }
 
@@ -193,7 +195,7 @@ public class RowSimDataSetFormatParser extends DataSetFormatParser {
          * @param outputFormat
          *                      the output format
          * @throws IOException
-         * Signals that an I/O exception has occurred.
+         *                     Signals that an I/O exception has occurred.
          */
         public APSimFileConverter(String absFilePath,
                 SIM_FILE_FORMAT simFileFormat, String absIdFilePath,

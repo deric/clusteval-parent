@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset.format;
 
+import de.clusteval.api.data.DataSetFormat;
 import de.clusteval.api.FormatVersion;
 import de.clusteval.api.IDistanceMeasure;
 import de.clusteval.api.Pair;

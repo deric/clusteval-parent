@@ -31,7 +31,7 @@ import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationM
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
 import de.clusteval.context.Context;
 import de.clusteval.data.dataset.format.AbsoluteDataSetFormat;
-import de.clusteval.data.dataset.format.DataSetFormat;
+import de.clusteval.api.data.DataSetFormat;
 import de.clusteval.program.ProgramParameter;
 import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.run.result.postprocessing.RunResultPostprocessor;

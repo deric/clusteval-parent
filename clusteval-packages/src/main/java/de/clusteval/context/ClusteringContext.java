@@ -18,7 +18,7 @@ import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.IRunResultFormat;
-import de.clusteval.data.dataset.format.DataSetFormat;
+import de.clusteval.api.data.DataSetFormat;
 import de.clusteval.run.result.format.RunResultFormat;
 import java.io.File;
 import java.util.Arrays;

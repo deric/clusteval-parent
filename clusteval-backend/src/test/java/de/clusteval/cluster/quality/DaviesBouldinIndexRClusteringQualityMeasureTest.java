@@ -32,7 +32,7 @@ import de.clusteval.context.Context;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
 import de.clusteval.data.dataset.format.ConversionStandardToInputConfiguration;
-import de.clusteval.data.dataset.format.DataSetFormat;
+import de.clusteval.api.data.DataSetFormat;
 import de.clusteval.api.data.DistanceMeasure;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;

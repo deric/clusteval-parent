@@ -8,22 +8,16 @@
  * Contributors:
  *     Christian Wiwie - initial API and implementation
  ***************************************************************************** */
-package de.clusteval.data.dataset.format;
+package de.clusteval.api.data;
 
 import de.clusteval.api.Precision;
-import de.clusteval.api.data.DataSetFormatFactory;
-import de.clusteval.api.data.IConversionConfiguration;
-import de.clusteval.api.data.IConversionInputToStandardConfiguration;
-import de.clusteval.api.data.IDataSet;
-import de.clusteval.api.data.IDataSetFormat;
-import de.clusteval.api.data.IDataSetFormatParser;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.RNotAvailableException;
+import de.clusteval.api.repository.AbsRepoObject;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.framework.repository.RepositoryObject;
 import de.clusteval.utils.FileUtils;
 import java.io.File;
 import java.io.IOException;
@@ -45,38 +39,10 @@ import org.slf4j.LoggerFactory;
  * {@link DataSetFormatParser}).
  *
  * <p>
- * {@code
- *
- * A data set format MyDataSetFormat can be added to ClustEval by
- *
- * 1. extending the class de.clusteval.data.dataset.format.DataSetFormat with your own class MyDataSetFormat. You have to provide your own implementations for the following methods, otherwise the framework will not be able to load your dataset format.
- *
- *   * :java:ref:`DataSetFormat(IRepository, boolean, long, File, int)`: The constructor of your dataset format class. This constructor has to be implemented and public, otherwise the framework will not be able to load your dataset format.
- *   * :java:ref:`DataSetFormat(DataSetFormat)`: The copy constructor of your class taking another instance of your class. This constructor has to be implemented and public.
- *
- * 2. extending the class de.clusteval.data.dataset.format.DataSetFormatParser with your own class MyDataSetFormatParser. You have to provide your own implementations for the following methods, otherwise the framework will not be able to load your class.
- *
- *   * :java:ref:`convertToStandardFormat(DataSet, ConversionInputToStandardConfiguration)`: This method converts the given dataset to the standard input format of the framework using the given conversion configuration. This assumes, that the passed dataset has this format.
- *   * :java:ref:`convertToThisFormat(DataSet, DataSetFormat, ConversionConfiguration)`: This method converts the given dataset to the given input format using the conversion configuration.
- *   * :java:ref:`parse(DataSet)`: This method parses the given dataset and returns an object, wrapping the contents of the dataset (e.g. an instance of SimilarityMatrix or DataMatrix ).
- *
- * 3. Creating a jar file named MyDataSetFormat.jar containing the MyDataSetFormat.class and MyDataSetFormatParser.class compiled on your machine in the correct folder structure corresponding to the packages:
- *
- *   * de/clusteval/data/dataset/format/MyDataSetFormat.class
- *   * de/clusteval/data/dataset/format/MyDataSetFormatParser.class
- *
- * 4. Putting the MyDataSetFormat.jar into the dataset formats folder of the repository:
- *
- *   * <REPOSITORY ROOT>/supp/formats/dataset
- *   * The backend server will recognize and try to load the new dataset format automatically the next time, the :java:ref:`DataSetFormatFinderThread` checks the filesystem.
- *
- * }
- *
- *
- * @author Christian Wiwie
+ * *
  *
  */
-public abstract class DataSetFormat extends RepositoryObject implements IDataSetFormat {
+public abstract class DataSetFormat extends AbsRepoObject implements IDataSetFormat {
 
     protected static final Logger LOG = LoggerFactory.getLogger(DataSetFormat.class);
 
@@ -196,6 +162,7 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
      * @throws InvalidDataSetFormatVersionException
      * @throws IOException
      */
+    @Override
     public Object parse(final IDataSet dataSet, Precision precision)
             throws IllegalArgumentException, IOException,
                    InvalidDataSetFormatVersionException {
@@ -293,30 +260,6 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
                     "Operation only supported for the standard dataset format");
         }
         return parser.convertToThisFormat(dataSet, dataSetFormat, config);
-    }
-
-    /**
-     * Instantiates a new dataset format with the given version.
-     *
-     * @param repo
-     * @param register
-     * @param changeDate
-     * @param absPath
-     *
-     * @param version    The version of the dataset format.
-     *
-     * @throws RegisterException
-     */
-    public DataSetFormat(final IRepository repo, final boolean register,
-            final long changeDate, final File absPath, final int version)
-            throws RegisterException {
-        super(repo, false, changeDate, absPath);
-        this.version = version;
-        this.log = LoggerFactory.getLogger(this.getClass());
-
-        if (register) {
-            this.register();
-        }
     }
 
     /**

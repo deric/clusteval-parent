@@ -24,7 +24,7 @@ import de.clusteval.api.program.IProgramParameter;
 import de.clusteval.api.program.ParameterSet;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.data.dataset.format.DataSetFormat;
+import de.clusteval.api.data.DataSetFormat;
 import de.clusteval.program.DoubleProgramParameter;
 import de.clusteval.program.IntegerProgramParameter;
 import de.clusteval.program.ProgramParameter;

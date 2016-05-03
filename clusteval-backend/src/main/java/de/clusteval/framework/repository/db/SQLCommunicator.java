@@ -31,7 +31,7 @@ import de.clusteval.context.Context;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.DataSet;
 import de.clusteval.data.dataset.DataSetConfig;
-import de.clusteval.data.dataset.format.DataSetFormat;
+import de.clusteval.api.data.DataSetFormat;
 import de.clusteval.data.dataset.type.DataSetType;
 import de.clusteval.data.goldstandard.GoldStandard;
 import de.clusteval.data.goldstandard.GoldStandardConfig;

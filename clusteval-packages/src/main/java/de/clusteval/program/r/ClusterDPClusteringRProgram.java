@@ -27,7 +27,7 @@ import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.IRunResultFormat;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.context.Context;
-import de.clusteval.data.dataset.format.DataSetFormat;
+import de.clusteval.api.data.DataSetFormat;
 import de.clusteval.program.Program;
 import de.clusteval.run.result.format.RunResultFormat;
 import de.clusteval.utils.FileUtils;
