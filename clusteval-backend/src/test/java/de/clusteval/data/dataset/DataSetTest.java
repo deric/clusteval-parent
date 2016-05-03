@@ -13,6 +13,7 @@ package de.clusteval.data.dataset;
 import ch.qos.logback.classic.Level;
 import de.clusteval.api.Precision;
 import de.clusteval.api.data.DataSetTypeFactory;
+import de.clusteval.api.data.DistanceMeasure;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.data.WEBSITE_VISIBILITY;
@@ -54,7 +55,6 @@ import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
 import de.clusteval.data.dataset.format.ConversionStandardToInputConfiguration;
 import de.clusteval.data.dataset.format.DataSetFormat;
 import de.clusteval.data.dataset.format.RelativeDataSetFormat;
-import de.clusteval.data.distance.DistanceMeasure;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
 import de.clusteval.framework.ClustevalBackendServer;
@@ -1666,7 +1666,7 @@ public class DataSetTest extends AbstractClustEvalTest {
                    InvalidDataSetFormatVersionException, RegisterException,
                    FormatConversionException, IOException,
                    UnknownDistanceMeasureException, RNotAvailableException,
-                   InterruptedException, RException {
+                   InterruptedException, RException, UnknownProviderException {
         ClustevalBackendServer.logLevel(Level.INFO);
 
         DataConfig dataConfig = getRepository().getStaticObjectWithName(

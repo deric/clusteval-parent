@@ -42,17 +42,17 @@ public class EuclidianDistanceMeasureTest {
     public void test() throws UnknownDistanceMeasureException,
                               RNotAvailableException, InterruptedException {
         /* IDistanceMeasure measure = DistanceMeasure.parseFromString("EuclidianDistanceMeasure");
-           assertTrue(measure != null);
-
-        ConversionInputToStandardConfiguration config = new ConversionInputToStandardConfiguration(
-                measure, Precision.FLOAT,
-                new ArrayList<>(),
-                new ArrayList<>());
-
-        double[][] matrix = new double[][]{new double[]{1, 2, 3},
-        new double[]{4, 5, 6}, new double[]{7, 8, 9}};
-
-        System.out.println(Arrays.toString(measure.getDistances(config, matrix).toArray())); */
+         * assertTrue(measure != null);
+         *
+         * ConversionInputToStandardConfiguration config = new ConversionInputToStandardConfiguration(
+         * measure, Precision.FLOAT,
+         * new ArrayList<>(),
+         * new ArrayList<>());
+         *
+         * double[][] matrix = new double[][]{new double[]{1, 2, 3},
+         * new double[]{4, 5, 6}, new double[]{7, 8, 9}};
+         *
+         * System.out.println(Arrays.toString(measure.getDistances(config, matrix).toArray())); */
     }
 
 }

@@ -12,6 +12,7 @@
  */
 package de.clusteval.data.distance;
 
+import de.clusteval.api.data.DistanceMeasureR;
 import de.clusteval.api.data.IConversionInputToStandardConfiguration;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;

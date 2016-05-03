@@ -10,14 +10,12 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset;
 
-import de.clusteval.api.IDistanceMeasure;
 import de.clusteval.api.data.IDataPreprocessor;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetConfig;
-import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.ISupervisorThread;
-import de.clusteval.data.distance.DistanceMeasureFinderThread;
 import de.clusteval.data.preprocessing.DataPreprocessorFinderThread;
 import de.clusteval.utils.Finder;
 import de.clusteval.utils.FinderThread;
@@ -55,11 +53,6 @@ public class DataSetConfigFinderThread extends FinderThread<IDataSetConfig> {
     protected void beforeFind() {
         if (!this.repository.isInitialized(IDataSet.class)) {
             this.supervisorThread.getThread(DataSetFinderThread.class)
-                    .waitFor();
-        }
-
-        if (!this.repository.isInitialized(IDistanceMeasure.class)) {
-            this.supervisorThread.getThread(DistanceMeasureFinderThread.class)
                     .waitFor();
         }
 

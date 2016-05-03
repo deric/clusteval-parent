@@ -11,6 +11,7 @@
 package de.clusteval.utils.plot;
 
 import de.clusteval.api.Precision;
+import de.clusteval.api.data.DistanceMeasure;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetConfig;
 import de.clusteval.api.exceptions.DataSetNotFoundException;
@@ -31,6 +32,7 @@ import de.clusteval.api.exceptions.UnknownProgramParameterException;
 import de.clusteval.api.exceptions.UnknownProgramTypeException;
 import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
+import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.opt.InvalidOptimizationParameterException;
 import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
 import de.clusteval.api.program.RegisterException;
@@ -54,7 +56,6 @@ import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
 import de.clusteval.data.dataset.format.ConversionStandardToInputConfiguration;
 import de.clusteval.data.dataset.format.DataSetFormat;
-import de.clusteval.data.distance.DistanceMeasure;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
@@ -105,7 +106,7 @@ public class PlotterTest extends AbstractClustEvalTest {
                                     UnknownDataStatisticException, UnknownRunStatisticException,
                                     UnknownRunDataStatisticException,
                                     UnknownRunResultPostprocessorException,
-                                    UnknownDataRandomizerException, RException {
+                                    UnknownDataRandomizerException, RException, UnknownProviderException {
         Context context = Context.parseFromString(getRepository(),
                 "ClusteringContext");
 
@@ -185,7 +186,7 @@ public class PlotterTest extends AbstractClustEvalTest {
                                  UnknownDataStatisticException, UnknownRunStatisticException,
                                  UnknownRunDataStatisticException,
                                  UnknownRunResultPostprocessorException,
-                                 UnknownDataRandomizerException, RException {
+                                 UnknownDataRandomizerException, RException, UnknownProviderException {
         Context context = Context.parseFromString(getRepository(),
                 "ClusteringContext");
 

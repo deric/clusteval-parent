@@ -30,6 +30,13 @@ import de.clusteval.api.repository.IRepositoryObject;
 public interface IDistanceMeasure extends IRepositoryObject {
 
     /**
+     * A unique identifier for distance measure
+     *
+     * @return commonly used name
+     */
+    String getName();
+
+    /**
      * @param point1 A point with double valued coordinates.
      * @param point2 A point with double valued coordinates.
      * @return Distance between point1 and point2.

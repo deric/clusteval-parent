@@ -31,7 +31,7 @@ import de.clusteval.data.dataset.DataSetRegisterException;
 import de.clusteval.data.dataset.format.DataSetFormat;
 import de.clusteval.data.dataset.generator.DataSetGenerator;
 import de.clusteval.data.dataset.type.DataSetType;
-import de.clusteval.data.distance.DistanceMeasure;
+import de.clusteval.api.data.DistanceMeasure;
 import de.clusteval.data.goldstandard.GoldStandard;
 import de.clusteval.data.goldstandard.GoldStandardConfig;
 import de.clusteval.data.preprocessing.DataPreprocessor;

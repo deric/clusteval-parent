@@ -10,17 +10,14 @@
  *     Christian Wiwie - initial API and implementation
  *****************************************************************************
  */
-package de.clusteval.data.distance;
+package de.clusteval.api.data;
 
 import de.clusteval.api.IDistanceMeasure;
-import de.clusteval.api.data.IConversionInputToStandardConfiguration;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RNotAvailableException;
-import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.program.RegisterException;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
-import java.io.File;
 
 /**
  * This type of distance measure uses the R framework.
@@ -29,18 +26,6 @@ import java.io.File;
  *
  */
 public abstract class DistanceMeasureR extends DistanceMeasure implements IDistanceMeasure {
-
-    /**
-     * @param repository
-     * @param register
-     * @param changeDate
-     * @param absPath
-     * @throws RegisterException
-     */
-    public DistanceMeasureR(IRepository repository, boolean register,
-            long changeDate, File absPath) throws RegisterException {
-        super(repository, register, changeDate, absPath);
-    }
 
     /**
      * The copy constructor of this R distance measures.

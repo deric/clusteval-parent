@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.data.distance;
 
+import de.clusteval.api.data.DistanceMeasure;
 import de.clusteval.api.IDistanceMeasure;
 import de.clusteval.api.Precision;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;

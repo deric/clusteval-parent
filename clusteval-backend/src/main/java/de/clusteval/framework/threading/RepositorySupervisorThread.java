@@ -26,8 +26,7 @@ import de.clusteval.data.dataset.format.DataSetFormat;
 import de.clusteval.data.dataset.generator.DataSetGenerator;
 import de.clusteval.data.dataset.generator.DataSetGeneratorFinderThread;
 import de.clusteval.data.dataset.type.DataSetType;
-import de.clusteval.data.distance.DistanceMeasure;
-import de.clusteval.data.distance.DistanceMeasureFinderThread;
+import de.clusteval.api.data.DistanceMeasure;
 import de.clusteval.data.goldstandard.GoldStandardConfig;
 import de.clusteval.data.goldstandard.GoldStandardConfigFinderThread;
 import de.clusteval.data.preprocessing.DataPreprocessorFinderThread;
@@ -154,7 +153,7 @@ public class RepositorySupervisorThread extends SupervisorThread {
                         DataSetFinderThread.class,
                         DataPreprocessorFinderThread.class,
                         RunResultPostprocessorFinderThread.class,
-                        DistanceMeasureFinderThread.class,
+                        //DistanceMeasureFinderThread.class,
                         //DataStatisticFinderThread.class,
                         //RunStatisticFinderThread.class,
                         RunDataStatisticFinderThread.class,
@@ -176,7 +175,7 @@ public class RepositorySupervisorThread extends SupervisorThread {
                         DataSetFinderThread.class,
                         DataPreprocessorFinderThread.class,
                         RunResultPostprocessorFinderThread.class,
-                        DistanceMeasureFinderThread.class,
+                        //DistanceMeasureFinderThread.class,
                         // DataStatisticFinderThread.class,
                         //RunStatisticFinderThread.class,
                         RunDataStatisticFinderThread.class,

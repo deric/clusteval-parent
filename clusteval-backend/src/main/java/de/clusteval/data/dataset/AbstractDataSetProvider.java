@@ -22,7 +22,7 @@ import de.clusteval.api.program.RegisterException;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
 import de.clusteval.data.dataset.format.ConversionStandardToInputConfiguration;
-import de.clusteval.data.distance.DistanceMeasure;
+import de.clusteval.api.data.DistanceMeasure;
 import de.clusteval.data.goldstandard.GoldStandardConfig;
 import de.clusteval.framework.repository.RepositoryObject;
 import de.clusteval.utils.FileUtils;

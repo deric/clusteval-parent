@@ -10,15 +10,15 @@
  *     Christian Wiwie - initial API and implementation
  *****************************************************************************
  */
-package de.clusteval.data.distance;
+package de.clusteval.api.data;
 
 import de.clusteval.api.IDistanceMeasure;
-import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
-import de.clusteval.api.r.RLibraryInferior;
-import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
-import de.clusteval.framework.repository.RepositoryObject;
+import de.clusteval.api.r.RLibraryInferior;
+import de.clusteval.api.r.RNotAvailableException;
+import de.clusteval.api.repository.AbsRepoObject;
+import de.clusteval.api.repository.IRepository;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import org.slf4j.Logger;
@@ -26,49 +26,11 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
- * {@code
- *
- *
- * A distance measure MyDistanceMeasure can be added to ClustEval by
- *
- * 1. extending this class with your own class MyDistanceMeasure . You have to provide your own implementations for the following methods, otherwise the framework will not be able to load your distance measure:
- *
- *   * :java:ref:`DistanceMeasure(Repository, boolean, long, File)` : The constructor for your distance measure. This constructor has to be implemented and public, otherwise the framework will not be able to load your distance measure.
- *   * :java:ref:`DistanceMeasure(MyDistanceMeasure)` : The copy constructor for your distance measure. This constructor has to be implemented and public, otherwise the framework will not be able to load your distance measure.
- *   * :java:ref:`getDistance(double[],double[])` : This method is the core of your distance measure. It returns the distance of the two points specified by the absolute coordinates in the two double arrays.
- *   * :java:ref:`supportsMatrix()` : This method indicates, whether your distance measure can calculate distances of a whole set of point-pairs, i.e. your distance measure implements the method getDistances(double[][]).
- *   * :java:ref:`getDistances(double[][])` : The absolute coordinates of the points are stored row-wise in the given matrix and distances are calculated between every pair of rows. Position [i][j] of the returned double[][] matrix contains the distance between the i-th and j-th row of the input matrix.
- *
- * 2. Creating a jar file named MyDistanceMeasure.jar containing the MyDistanceMeasure.class compiled on your machine in the correct folder structure corresponding to the packages:
- *
- *   * de/clusteval/data/distance/MyDistanceMeasure.class
- *
- * 3. Putting the MyDistanceMeasure.jar into the distance measure folder of the repository:
- *
- *   * <REPOSITORY ROOT>/supp/distanceMeasures
- *
- * The backend server will recognize and try to load the new distance measure au- tomatically the
- *
- * }
- *
- * @author Christian Wiwie
- *
+ * @author deric
  */
-public abstract class DistanceMeasure extends RepositoryObject implements RLibraryInferior, IDistanceMeasure {
+public abstract class DistanceMeasure extends AbsRepoObject implements RLibraryInferior, IDistanceMeasure {
 
     private static final Logger LOG = LoggerFactory.getLogger(DistanceMeasure.class);
-
-    /**
-     * @param repository
-     * @param register
-     * @param changeDate
-     * @param absPath
-     * @throws RegisterException
-     */
-    public DistanceMeasure(IRepository repository, boolean register,
-            long changeDate, File absPath) throws RegisterException {
-        super(repository, register, changeDate, absPath);
-    }
 
     /**
      * The copy constructor of this distance measures.
@@ -76,8 +38,7 @@ public abstract class DistanceMeasure extends RepositoryObject implements RLibra
      * @param other The object to clone.
      * @throws RegisterException
      */
-    public DistanceMeasure(final DistanceMeasure other)
-            throws RegisterException {
+    public DistanceMeasure(final DistanceMeasure other) throws RegisterException {
         super(other);
     }
 
