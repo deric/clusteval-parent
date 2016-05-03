@@ -25,7 +25,7 @@ import de.clusteval.api.run.IRunResultFormat;
 import de.clusteval.context.Context;
 import de.clusteval.api.data.DataSetFormat;
 import de.clusteval.program.Program;
-import de.clusteval.run.result.format.RunResultFormat;
+import de.clusteval.api.run.RunResultFormat;
 import de.clusteval.utils.ArraysExt;
 import de.clusteval.utils.FileUtils;
 import java.io.File;

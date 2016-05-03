@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.run.result.format;
 
+import de.clusteval.api.run.RunResultFormat;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.IRepository;
 import java.io.File;

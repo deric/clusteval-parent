@@ -83,7 +83,7 @@ import de.clusteval.program.ProgramParameter;
 import de.clusteval.program.StringProgramParameter;
 import de.clusteval.run.Run;
 import de.clusteval.run.result.RunResult;
-import de.clusteval.run.result.format.RunResultFormat;
+import de.clusteval.api.run.RunResultFormat;
 import de.clusteval.run.result.format.RunResultFormatParser;
 import de.clusteval.run.statistics.RunDataStatistic;
 import de.clusteval.run.statistics.RunDataStatisticCalculator;

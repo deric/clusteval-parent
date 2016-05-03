@@ -41,7 +41,7 @@ import de.clusteval.run.Run;
 import de.clusteval.run.RunFinderThread;
 import de.clusteval.run.result.RunResult;
 import de.clusteval.run.result.RunResultFinderThread;
-import de.clusteval.run.result.format.RunResultFormat;
+import de.clusteval.api.run.RunResultFormat;
 import de.clusteval.run.result.postprocessing.RunResultPostprocessorFinderThread;
 import de.clusteval.run.statistics.RunDataStatistic;
 import de.clusteval.run.statistics.RunDataStatisticFinderThread;

@@ -59,7 +59,7 @@ import de.clusteval.program.StandaloneProgram;
 import de.clusteval.program.r.RProgram;
 import de.clusteval.program.r.RProgramConfig;
 import de.clusteval.run.RunException;
-import de.clusteval.run.result.format.RunResultFormat;
+import de.clusteval.api.run.RunResultFormat;
 import de.clusteval.run.statistics.UnknownRunDataStatisticException;
 import de.clusteval.run.statistics.UnknownRunStatisticException;
 import de.clusteval.utils.FileUtils;

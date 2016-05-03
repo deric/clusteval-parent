@@ -6,7 +6,7 @@ package de.clusteval.framework.repository;
 import de.clusteval.api.repository.DynamicRepositoryEntity;
 import de.clusteval.api.run.IRunResultFormat;
 import de.clusteval.api.run.IRunResultFormatParser;
-import de.clusteval.run.result.format.RunResultFormat;
+import de.clusteval.api.run.RunResultFormat;
 import de.clusteval.run.result.format.RunResultFormatParser;
 import java.util.HashMap;
 import java.util.Map;

@@ -11,15 +11,14 @@
 package de.clusteval.context;
 
 import de.clusteval.api.IContext;
+import de.clusteval.api.data.DataSetFormatFactory;
 import de.clusteval.api.data.IDataSetFormat;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.IRunResultFormat;
-import de.clusteval.api.data.DataSetFormat;
-import de.clusteval.run.result.format.RunResultFormat;
+import de.clusteval.api.run.RunResultFormat;
 import java.io.File;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -62,7 +61,7 @@ public class ClusteringContext extends Context implements IContext {
 
     @Override
     public Set<String> getRequiredJavaClassFullNames() {
-        return new HashSet<String>(Arrays.asList(new String[]{
+        return new HashSet<>(Arrays.asList(new String[]{
             "de.clusteval.data.dataset.format.SimMatrixDataSetFormat",
             "de.clusteval.run.result.format.TabSeparatedRunResultFormat"}));
     }
@@ -71,12 +70,7 @@ public class ClusteringContext extends Context implements IContext {
     public IDataSetFormat getStandardInputFormat() {
         try {
             // take the newest version
-            return DataSetFormat.parseFromString(repository,
-                    "SimMatrixDataSetFormat");
-        } catch (UnknownDataSetFormatException e) {
-            e.printStackTrace();
-            // should not occur, because we checked this in the repository using
-            // #getRequiredJavaClassFullNames()
+            return DataSetFormatFactory.parseFromString("SimMatrixDataSetFormat");
         } catch (UnknownProviderException ex) {
             Exceptions.printStackTrace(ex);
         }

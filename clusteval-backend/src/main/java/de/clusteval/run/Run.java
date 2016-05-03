@@ -30,7 +30,7 @@ import de.clusteval.api.repository.RepositoryObject;
 import de.clusteval.framework.threading.RunSchedulerThread;
 import de.clusteval.run.result.ClusteringRunResult;
 import de.clusteval.run.result.NoRunResultFormatParserException;
-import de.clusteval.run.result.format.RunResultFormat;
+import de.clusteval.api.run.RunResultFormat;
 import de.clusteval.run.runnable.RunRunnable;
 import de.clusteval.run.runnable.RunRunnableInitializationException;
 import de.clusteval.utils.ProgressPrinter;

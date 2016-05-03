@@ -8,7 +8,7 @@
  * Contributors:
  *     Christian Wiwie - initial API and implementation
  ***************************************************************************** */
-package de.clusteval.run.result.format;
+package de.clusteval.api.run;
 
 import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.api.repository.IRepository;
