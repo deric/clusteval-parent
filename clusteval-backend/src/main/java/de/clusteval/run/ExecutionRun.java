@@ -13,11 +13,12 @@
 package de.clusteval.run;
 
 import de.clusteval.api.ClusteringEvaluation;
+import de.clusteval.api.Pair;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.IProgramParameter;
-import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RepositoryEvent;
 import de.clusteval.api.repository.RepositoryRemoveEvent;
 import de.clusteval.api.repository.RepositoryReplaceEvent;
@@ -36,7 +37,6 @@ import de.clusteval.run.runnable.ExecutionRunRunnable;
 import de.clusteval.run.runnable.RunRunnable;
 import de.clusteval.run.runnable.RunRunnableInitializationException;
 import de.clusteval.utils.FileUtils;
-import de.clusteval.api.Pair;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -256,8 +256,9 @@ public abstract class ExecutionRun extends Run {
      * @throws RunInitializationException
      */
     @Override
-    public void perform(final IScheduler runScheduler) throws IOException, RunRunnableInitializationException,
-                                                              RunInitializationException {
+    public void perform(final IScheduler runScheduler)
+            throws IOException, RunRunnableInitializationException,
+                   RunInitializationException {
         /**
          * Before we start we check, whether this run has been terminated by
          * invoking terminate(). This is also the reason, why we have to

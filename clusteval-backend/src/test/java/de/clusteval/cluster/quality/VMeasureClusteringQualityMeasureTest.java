@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.cluster.quality;
 
+import de.clusteval.api.cluster.ClusteringEvaluationParameters;
 import ch.qos.logback.classic.Level;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
@@ -100,13 +101,13 @@ public class VMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
             ClusteringQualityMeasure measure = ClusteringQualityMeasure
                     .parseFromString(getRepository(),
                             "VMeasureClusteringQualityMeasure",
-                            new ClusteringQualityMeasureParameters());
+                            new ClusteringEvaluationParameters());
             double quality = measure.getQualityOfClustering(clustering,
                     goldStandard, null).getValue();
             System.out.println("V-Measure: " + quality);
             measure = ClusteringQualityMeasure.parseFromString(getRepository(),
                     "TransClustFClusteringQualityMeasure",
-                    new ClusteringQualityMeasureParameters());
+                    new ClusteringEvaluationParameters());
             quality = measure.getQualityOfClustering(clustering, goldStandard,
                     null).getValue();
             System.out.println("F-Measure: " + quality);
@@ -180,13 +181,13 @@ public class VMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
             ClusteringQualityMeasure measure = ClusteringQualityMeasure
                     .parseFromString(getRepository(),
                             "VMeasureClusteringQualityMeasure",
-                            new ClusteringQualityMeasureParameters());
+                            new ClusteringEvaluationParameters());
             double quality = measure.getQualityOfClustering(clustering,
                     goldStandard, null).getValue();
             System.out.println("V-Measure: " + quality);
             measure = ClusteringQualityMeasure.parseFromString(getRepository(),
                     "TransClustFClusteringQualityMeasure",
-                    new ClusteringQualityMeasureParameters());
+                    new ClusteringEvaluationParameters());
             quality = measure.getQualityOfClustering(clustering, goldStandard,
                     null).getValue();
             System.out.println("F-Measure: " + quality);
@@ -240,7 +241,7 @@ public class VMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
             ClusteringQualityMeasure measure = ClusteringQualityMeasure
                     .parseFromString(getRepository(),
                             "VMeasureClusteringQualityMeasure",
-                            new ClusteringQualityMeasureParameters());
+                            new ClusteringEvaluationParameters());
             double quality = measure.getQualityOfClustering(clustering,
                     goldStandard, null).getValue();
             System.out.println(measure.getAlias() + " " + quality);
@@ -301,7 +302,7 @@ public class VMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
             ClusteringQualityMeasure measure = ClusteringQualityMeasure
                     .parseFromString(getRepository(),
                             "VMeasureClusteringQualityMeasure",
-                            new ClusteringQualityMeasureParameters());
+                            new ClusteringEvaluationParameters());
             double quality = measure.getQualityOfClustering(clustering,
                     goldStandard, null).getValue();
             System.out.println(measure.getAlias() + " " + quality);
@@ -350,7 +351,7 @@ public class VMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
             ClusteringQualityMeasure measure = ClusteringQualityMeasure
                     .parseFromString(getRepository(),
                             "VMeasureClusteringQualityMeasure",
-                            new ClusteringQualityMeasureParameters());
+                            new ClusteringEvaluationParameters());
             double quality = measure.getQualityOfClustering(clustering,
                     goldStandard, null).getValue();
             System.out.println(measure.getAlias() + " " + quality);

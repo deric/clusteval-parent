@@ -36,7 +36,7 @@ import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
-import de.clusteval.cluster.quality.ClusteringQualityMeasureParameters;
+import de.clusteval.api.cluster.ClusteringEvaluationParameters;
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
 import de.clusteval.context.Context;
 import de.clusteval.data.DataConfig;
@@ -145,9 +145,8 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
         ProgramConfig programConfig = getRepository().getStaticObjectWithName(
                 ProgramConfig.class, "TransClust_2");
 
-        ClusteringQualityMeasure f2 = ClusteringQualityMeasure.parseFromString(
-                getRepository(), "TransClustF2ClusteringQualityMeasure",
-                new ClusteringQualityMeasureParameters());
+        ClusteringQualityMeasure f2 = ClusteringQualityMeasure.parseFromString(getRepository(), "TransClustF2ClusteringQualityMeasure",
+                new ClusteringEvaluationParameters());
         ParameterOptimizationMethod method = ParameterOptimizationMethod
                 .parseFromString(
                         getRepository(),
@@ -284,9 +283,8 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
         ProgramConfig programConfig = getRepository().getStaticObjectWithName(
                 ProgramConfig.class, "TransClust_2");
 
-        ClusteringQualityMeasure f2 = ClusteringQualityMeasure.parseFromString(
-                getRepository(), "TransClustF2ClusteringQualityMeasure",
-                new ClusteringQualityMeasureParameters());
+        ClusteringQualityMeasure f2 = ClusteringQualityMeasure.parseFromString(getRepository(), "TransClustF2ClusteringQualityMeasure",
+                new ClusteringEvaluationParameters());
         ParameterOptimizationMethod method = ParameterOptimizationMethod
                 .parseFromString(
                         getRepository(),
@@ -406,9 +404,8 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
         ProgramConfig programConfig = getRepository().getStaticObjectWithName(
                 ProgramConfig.class, "TransClust_2");
 
-        ClusteringQualityMeasure f2 = ClusteringQualityMeasure.parseFromString(
-                getRepository(), "TransClustF2ClusteringQualityMeasure",
-                new ClusteringQualityMeasureParameters());
+        ClusteringQualityMeasure f2 = ClusteringQualityMeasure.parseFromString(getRepository(), "TransClustF2ClusteringQualityMeasure",
+                new ClusteringEvaluationParameters());
         ParameterOptimizationMethod method = ParameterOptimizationMethod
                 .parseFromString(
                         getRepository(),
@@ -501,9 +498,8 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
         ProgramConfig programConfig = getRepository().getStaticObjectWithName(
                 ProgramConfig.class, "TransClust_2");
 
-        ClusteringQualityMeasure f2 = ClusteringQualityMeasure.parseFromString(
-                getRepository(), "TransClustF2ClusteringQualityMeasure",
-                new ClusteringQualityMeasureParameters());
+        ClusteringQualityMeasure f2 = ClusteringQualityMeasure.parseFromString(getRepository(), "TransClustF2ClusteringQualityMeasure",
+                new ClusteringEvaluationParameters());
         ParameterOptimizationMethod method = ParameterOptimizationMethod
                 .parseFromString(
                         getRepository(),
@@ -621,9 +617,8 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
         ProgramConfig programConfig = getRepository().getStaticObjectWithName(
                 ProgramConfig.class, "Hierarchical_Clustering");
 
-        ClusteringQualityMeasure f2 = ClusteringQualityMeasure.parseFromString(
-                getRepository(), "TransClustF2ClusteringQualityMeasure",
-                new ClusteringQualityMeasureParameters());
+        ClusteringQualityMeasure f2 = ClusteringQualityMeasure.parseFromString(getRepository(), "TransClustF2ClusteringQualityMeasure",
+                new ClusteringEvaluationParameters());
         ParameterOptimizationMethod method = ParameterOptimizationMethod
                 .parseFromString(
                         getRepository(),

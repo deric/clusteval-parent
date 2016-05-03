@@ -13,6 +13,7 @@ package de.clusteval.cluster.quality;
 import de.clusteval.api.cluster.ClustEvalValue;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
+import de.clusteval.api.cluster.ClusteringEvaluationParameters;
 import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.program.RegisterException;
@@ -38,7 +39,7 @@ public class VMeasureClusteringQualityMeasure extends ClusteringQualityMeasure {
      */
     public VMeasureClusteringQualityMeasure(IRepository repo, boolean register,
             long changeDate, File absPath,
-            ClusteringQualityMeasureParameters parameters) throws RegisterException {
+            ClusteringEvaluationParameters parameters) throws RegisterException {
         super(repo, register, changeDate, absPath, parameters);
     }
 
@@ -51,12 +52,6 @@ public class VMeasureClusteringQualityMeasure extends ClusteringQualityMeasure {
         super(other);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * de.clusteval.cluster.quality.ClusteringQualityMeasure#getQualityOfClustering
-     */
     @Override
     public ClustEvalValue getQualityOfClustering(
             IClustering clustering, IClustering gsClustering,
@@ -75,8 +70,7 @@ public class VMeasureClusteringQualityMeasure extends ClusteringQualityMeasure {
          * Ensure, that clustering contains only objects, that are also in the
          * goldstandard.
          */
-        gsClusterItems = new HashSet<>(
-                gsClustering.getClusterItems());
+        gsClusterItems = new HashSet<>(gsClustering.getClusterItems());
         clusterItems.removeAll(gsClusterItems);
         for (ClusterItem onlyInClustering : clusterItems) {
             clustering.removeClusterItem(onlyInClustering);
@@ -184,14 +178,6 @@ public class VMeasureClusteringQualityMeasure extends ClusteringQualityMeasure {
         return ClustEvalValue.getForDouble(vmeasure);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * de.clusteval.cluster.quality.ClusteringQualityMeasure#isBetterThanHelper
-     * (de.clusteval.cluster.quality.ClustEvalValue,
-     * de.clusteval.cluster.quality.ClustEvalValue)
-     */
     @Override
     public boolean isBetterThanHelper(
             ClustEvalValue quality1,
@@ -199,54 +185,26 @@ public class VMeasureClusteringQualityMeasure extends ClusteringQualityMeasure {
         return quality1.getValue() > quality2.getValue();
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.clusteval.cluster.quality.ClusteringQualityMeasure#getMinimum()
-     */
     @Override
     public double getMinimum() {
         return 0.0;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.clusteval.cluster.quality.ClusteringQualityMeasure#getMaximum()
-     */
     @Override
     public double getMaximum() {
         return 1.0;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * de.clusteval.cluster.quality.ClusteringQualityMeasure#requiresGoldstandard
-     * ()
-     */
     @Override
     public boolean requiresGoldstandard() {
         return true;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.clusteval.cluster.quality.ClusteringQualityMeasure#getAlias()
-     */
     @Override
     public String getAlias() {
         return "V-Measure";
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.clusteval.cluster.quality.ClusteringQualityMeasure#
-     * supportsFuzzyClusterings()
-     */
     @Override
     public boolean supportsFuzzyClusterings() {
         return false;

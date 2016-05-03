@@ -52,7 +52,7 @@ import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
 import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
 import de.clusteval.api.run.IRun;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
-import de.clusteval.cluster.quality.ClusteringQualityMeasureParameters;
+import de.clusteval.api.cluster.ClusteringEvaluationParameters;
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.DataConfigNotFoundException;
@@ -604,7 +604,7 @@ class ExecutionRunParser<T extends ExecutionRun> extends RunParser<T> {
         for (String qualityMeasure : getProps().getStringArray("qualityMeasures")) {
             try {
                 // parse parameters for this quality measure
-                ClusteringQualityMeasureParameters p = new ClusteringQualityMeasureParameters();
+                ClusteringEvaluationParameters p = new ClusteringEvaluationParameters();
                 if (getProps().getSections().contains(qualityMeasure)) {
                     Iterator<String> parameters = getProps().getKeys(qualityMeasure);
                     while (parameters.hasNext()) {

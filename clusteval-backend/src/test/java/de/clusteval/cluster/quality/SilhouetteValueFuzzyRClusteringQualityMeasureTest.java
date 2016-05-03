@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.cluster.quality;
 
+import de.clusteval.api.cluster.ClusteringEvaluationParameters;
 import ch.qos.logback.classic.Level;
 import de.clusteval.api.Precision;
 import de.clusteval.api.cluster.Cluster;
@@ -83,7 +84,7 @@ public class SilhouetteValueFuzzyRClusteringQualityMeasureTest extends AbstractC
             ClusteringQualityMeasure measure = ClusteringQualityMeasure
                     .parseFromString(getRepository(),
                             "SilhouetteValueFuzzyRClusteringQualityMeasure",
-                            new ClusteringQualityMeasureParameters());
+                            new ClusteringEvaluationParameters());
             double quality = measure.getQualityOfClustering(clustering, null,
                     null).getValue();
             Assert.assertEquals(-1.0, quality, 0.0);
@@ -137,11 +138,11 @@ public class SilhouetteValueFuzzyRClusteringQualityMeasureTest extends AbstractC
             ClusteringQualityMeasure measure = ClusteringQualityMeasure
                     .parseFromString(getRepository(),
                             "SilhouetteValueFuzzyRClusteringQualityMeasure",
-                            new ClusteringQualityMeasureParameters());
+                            new ClusteringEvaluationParameters());
             ClusteringQualityMeasure measureSil = ClusteringQualityMeasure
                     .parseFromString(getRepository(),
                             "SilhouetteValueRClusteringQualityMeasure",
-                            new ClusteringQualityMeasureParameters());
+                            new ClusteringEvaluationParameters());
             double quality = measure.getQualityOfClustering(clustering, null,
                     dc).getValue();
             double qualitySil = measureSil.getQualityOfClustering(clustering,
@@ -204,7 +205,7 @@ public class SilhouetteValueFuzzyRClusteringQualityMeasureTest extends AbstractC
             ClusteringQualityMeasure measure = ClusteringQualityMeasure
                     .parseFromString(getRepository(),
                             "SilhouetteValueFuzzyRClusteringQualityMeasure",
-                            new ClusteringQualityMeasureParameters());
+                            new ClusteringEvaluationParameters());
             double quality = measure.getQualityOfClustering(clustering, null,
                     dc).getValue();
             ds.getInStandardFormat().unloadFromMemory();
@@ -263,7 +264,7 @@ public class SilhouetteValueFuzzyRClusteringQualityMeasureTest extends AbstractC
                     new ConversionStandardToInputConfiguration());
             ds.getInStandardFormat().loadIntoMemory();
 
-            ClusteringQualityMeasureParameters params = new ClusteringQualityMeasureParameters();
+            ClusteringEvaluationParameters params = new ClusteringEvaluationParameters();
             params.put("alpha", "0.0");
 
             ClusteringQualityMeasure measure = ClusteringQualityMeasure
@@ -273,7 +274,7 @@ public class SilhouetteValueFuzzyRClusteringQualityMeasureTest extends AbstractC
             ClusteringQualityMeasure measureSil = ClusteringQualityMeasure
                     .parseFromString(getRepository(),
                             "SilhouetteValueRClusteringQualityMeasure",
-                            new ClusteringQualityMeasureParameters());
+                            new ClusteringEvaluationParameters());
             double quality = measure.getQualityOfClustering(clustering, null,
                     dc).getValue();
             double qualitySil = measureSil.getQualityOfClustering(clustering,

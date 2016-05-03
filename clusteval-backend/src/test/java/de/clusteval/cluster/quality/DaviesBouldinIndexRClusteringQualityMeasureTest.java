@@ -12,6 +12,7 @@
  */
 package de.clusteval.cluster.quality;
 
+import de.clusteval.api.cluster.ClusteringEvaluationParameters;
 import de.clusteval.api.Precision;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
@@ -94,7 +95,7 @@ public class DaviesBouldinIndexRClusteringQualityMeasureTest extends AbstractClu
             ClusteringQualityMeasure measure = ClusteringQualityMeasure
                     .parseFromString(getRepository(),
                             "DaviesBouldinIndexRClusteringQualityMeasure",
-                            new ClusteringQualityMeasureParameters());
+                            new ClusteringEvaluationParameters());
             double quality = measure.getQualityOfClustering(clustering, null,
                     dc).getValue();
             ds.getInStandardFormat().unloadFromMemory();

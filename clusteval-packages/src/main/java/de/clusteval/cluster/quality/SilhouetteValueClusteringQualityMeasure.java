@@ -13,6 +13,7 @@ package de.clusteval.cluster.quality;
 import de.clusteval.api.cluster.ClustEvalValue;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
+import de.clusteval.api.cluster.ClusteringEvaluationParameters;
 import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.program.RegisterException;
@@ -27,9 +28,7 @@ import java.util.Set;
 /**
  * @author Christian Wiwie
  */
-public class SilhouetteValueClusteringQualityMeasure
-        extends
-        ClusteringQualityMeasure {
+public class SilhouetteValueClusteringQualityMeasure extends ClusteringQualityMeasure {
 
     /**
      * @param repo
@@ -40,7 +39,7 @@ public class SilhouetteValueClusteringQualityMeasure
      */
     public SilhouetteValueClusteringQualityMeasure(IRepository repo,
             boolean register, long changeDate, File absPath,
-            ClusteringQualityMeasureParameters parameters)
+            ClusteringEvaluationParameters parameters)
             throws RegisterException {
         super(repo, register, changeDate, absPath, parameters);
     }
@@ -48,8 +47,7 @@ public class SilhouetteValueClusteringQualityMeasure
     /**
      * The copy constructor for this measure.
      *
-     * @param other
-     *              The object to clone.
+     * @param other The object to clone.
      * @throws RegisterException
      */
     public SilhouetteValueClusteringQualityMeasure(
@@ -58,24 +56,11 @@ public class SilhouetteValueClusteringQualityMeasure
         super(other);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see cluster.quality.ClusteringQualityMeasure#getAlias()
-     */
     @Override
     public String getAlias() {
         return "Silhouette Value (Java)";
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * cluster.quality.ClusteringQualityMeasure#getQualityOfClustering(cluster
-     * .Clustering, data.goldstandard.GoldStandard)
-     */
-    @SuppressWarnings("unused")
     @Override
     public ClustEvalValue getQualityOfClustering(final IClustering clustering, IClustering gsClustering,
             final IDataConfig dataConfig) throws IllegalArgumentException {
@@ -164,44 +149,21 @@ public class SilhouetteValueClusteringQualityMeasure
         return result;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see cluster.quality.ClusteringQualityMeasure#getMinimum()
-     */
     @Override
     public double getMinimum() {
         return -1.0;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see cluster.quality.ClusteringQualityMeasure#getMaximum()
-     */
     @Override
     public double getMaximum() {
         return 1.0;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see cluster.quality.ClusteringQualityMeasure#requiresGoldstandard()
-     */
     @Override
     public boolean requiresGoldstandard() {
         return false;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * cluster.quality.ClusteringQualityMeasure#isBetterThanHelper(cluster.quality
-     * .ClustEvalValue,
-     * cluster.quality.ClustEvalValue)
-     */
     @Override
     public boolean isBetterThanHelper(
             ClustEvalValue quality1,
@@ -209,9 +171,6 @@ public class SilhouetteValueClusteringQualityMeasure
         return quality1.getValue() > quality2.getValue();
     }
 
-    /* (non-Javadoc)
-     * @see de.clusteval.cluster.quality.ClusteringQualityMeasure#supportsFuzzyClusterings()
-     */
     @Override
     public boolean supportsFuzzyClusterings() {
         return false;

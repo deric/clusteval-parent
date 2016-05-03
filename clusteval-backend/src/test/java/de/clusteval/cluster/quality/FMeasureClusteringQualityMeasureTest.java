@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.cluster.quality;
 
+import de.clusteval.api.cluster.ClusteringEvaluationParameters;
 import ch.qos.logback.classic.Level;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
@@ -90,14 +91,14 @@ public class FMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
         ClusteringQualityMeasure measure = ClusteringQualityMeasure
                 .parseFromString(getRepository(),
                         "TransClustFClusteringQualityMeasure",
-                        new ClusteringQualityMeasureParameters());
+                        new ClusteringEvaluationParameters());
         double quality = measure.getQualityOfClustering(clustering,
                 goldStandard, null).getValue();
         System.out.println(measure.getAlias() + " " + quality);
 
         measure = ClusteringQualityMeasure.parseFromString(getRepository(),
                 "TransClustF2ClusteringQualityMeasure",
-                new ClusteringQualityMeasureParameters());
+                new ClusteringEvaluationParameters());
         quality = measure
                 .getQualityOfClustering(clustering, goldStandard, null)
                 .getValue();
@@ -148,7 +149,7 @@ public class FMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
         ClusteringQualityMeasure measure = ClusteringQualityMeasure
                 .parseFromString(getRepository(),
                         "TransClustFClusteringQualityMeasure",
-                        new ClusteringQualityMeasureParameters());
+                        new ClusteringEvaluationParameters());
         double quality = measure.getQualityOfClustering(clustering,
                 goldStandard, null).getValue();
         assertEquals(0.8444444444444444, quality, DELTA);
@@ -156,7 +157,7 @@ public class FMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
 
         measure = ClusteringQualityMeasure.parseFromString(getRepository(),
                 "TransClustF2ClusteringQualityMeasure",
-                new ClusteringQualityMeasureParameters());
+                new ClusteringEvaluationParameters());
         quality = measure
                 .getQualityOfClustering(clustering, goldStandard, null)
                 .getValue();
@@ -211,7 +212,7 @@ public class FMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
         ClusteringQualityMeasure measure = ClusteringQualityMeasure
                 .parseFromString(getRepository(),
                         "TransClustFClusteringQualityMeasure",
-                        new ClusteringQualityMeasureParameters());
+                        new ClusteringEvaluationParameters());
         double quality = measure.getQualityOfClustering(clustering,
                 goldStandard, null).getValue();
         assertEquals(0.8444444444444444, quality, DELTA);
@@ -219,7 +220,7 @@ public class FMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
 
         measure = ClusteringQualityMeasure.parseFromString(getRepository(),
                 "TransClustF2ClusteringQualityMeasure",
-                new ClusteringQualityMeasureParameters());
+                new ClusteringEvaluationParameters());
         quality = measure
                 .getQualityOfClustering(clustering, goldStandard, null)
                 .getValue();
@@ -275,7 +276,7 @@ public class FMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
         ClusteringQualityMeasure measure = ClusteringQualityMeasure
                 .parseFromString(getRepository(),
                         "TransClustFClusteringQualityMeasure",
-                        new ClusteringQualityMeasureParameters());
+                        new ClusteringEvaluationParameters());
         double quality = measure.getQualityOfClustering(clustering,
                 goldStandard, null).getValue();
         assertEquals(0.8444444444444444, quality, DELTA);
@@ -283,7 +284,7 @@ public class FMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
 
         measure = ClusteringQualityMeasure.parseFromString(getRepository(),
                 "TransClustF2ClusteringQualityMeasure",
-                new ClusteringQualityMeasureParameters());
+                new ClusteringEvaluationParameters());
         quality = measure
                 .getQualityOfClustering(clustering, goldStandard, null)
                 .getValue();
@@ -323,7 +324,7 @@ public class FMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
         ClusteringQualityMeasure measure = ClusteringQualityMeasure
                 .parseFromString(getRepository(),
                         "TransClustFClusteringQualityMeasure",
-                        new ClusteringQualityMeasureParameters());
+                        new ClusteringEvaluationParameters());
         double quality = measure.getQualityOfClustering(clustering,
                 goldStandard.getClustering(), dataConfig).getValue();
         System.out.println(measure.getAlias() + " " + quality);
@@ -373,14 +374,14 @@ public class FMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
         ClusteringQualityMeasure measure = ClusteringQualityMeasure
                 .parseFromString(getRepository(),
                         "TransClustFClusteringQualityMeasure",
-                        new ClusteringQualityMeasureParameters());
+                        new ClusteringEvaluationParameters());
         double quality = measure.getQualityOfClustering(clustering,
                 goldStandard, null).getValue();
         System.out.println(measure.getAlias() + " " + quality);
 
         measure = ClusteringQualityMeasure.parseFromString(getRepository(),
                 "TransClustF2ClusteringQualityMeasure",
-                new ClusteringQualityMeasureParameters());
+                new ClusteringEvaluationParameters());
         quality = measure
                 .getQualityOfClustering(clustering, goldStandard, null)
                 .getValue();

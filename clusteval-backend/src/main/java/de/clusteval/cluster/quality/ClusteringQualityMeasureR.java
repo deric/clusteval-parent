@@ -12,6 +12,7 @@
  */
 package de.clusteval.cluster.quality;
 
+import de.clusteval.api.cluster.ClusteringEvaluationParameters;
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.cluster.ClustEvalValue;
@@ -37,7 +38,7 @@ import java.lang.reflect.InvocationTargetException;
  */
 public abstract class ClusteringQualityMeasureR extends RepositoryObject implements ClusteringEvaluation, RLibraryInferior {
 
-    protected ClusteringQualityMeasureParameters parameters;
+    protected ClusteringEvaluationParameters parameters;
 
     /**
      * Instantiates a new R clustering quality measure.
@@ -51,7 +52,7 @@ public abstract class ClusteringQualityMeasureR extends RepositoryObject impleme
      */
     public ClusteringQualityMeasureR(final IRepository repo,
             final boolean register, final long changeDate, final File absPath,
-            final ClusteringQualityMeasureParameters parameters)
+            final ClusteringEvaluationParameters parameters)
             throws RegisterException {
         super(repo, false, changeDate, absPath);
 

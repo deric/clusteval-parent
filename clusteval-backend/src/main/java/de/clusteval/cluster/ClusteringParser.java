@@ -16,7 +16,7 @@ import de.clusteval.api.cluster.ClustEvalValue;
 import de.clusteval.api.cluster.ClusteringQualitySet;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
-import de.clusteval.cluster.quality.ClusteringQualityMeasureParameters;
+import de.clusteval.api.cluster.ClusteringEvaluationParameters;
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.framework.repository.RepositoryController;
@@ -139,9 +139,8 @@ public class ClusteringParser extends TextFileParser {
 
                         // TODO: ClusteringQualityMeasureParameters not
                         // initialized
-                        clMeasure = ClusteringQualityMeasure.parseFromString(
-                                this.repository, measure,
-                                new ClusteringQualityMeasureParameters());
+                        clMeasure = ClusteringQualityMeasure.parseFromString(this.repository, measure,
+                                new ClusteringEvaluationParameters());
                         qualitySet.put(clMeasure, ClustEvalValue
                                 .getForDouble(Double.parseDouble(result
                                         .get(measure))));

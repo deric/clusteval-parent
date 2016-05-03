@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.cluster.quality;
 
+import de.clusteval.api.cluster.ClusteringEvaluationParameters;
 import de.clusteval.api.cluster.ClustEvalValue;
 import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.api.cluster.IClustering;
@@ -35,7 +36,7 @@ public class FDRClusteringQualityMeasure extends ClusteringQualityMeasure {
      */
     public FDRClusteringQualityMeasure(IRepository repo, boolean register,
             long changeDate, File absPath,
-            ClusteringQualityMeasureParameters parameters) throws RegisterException {
+            ClusteringEvaluationParameters parameters) throws RegisterException {
         super(repo, register, changeDate, absPath, parameters);
     }
 
@@ -81,10 +82,8 @@ public class FDRClusteringQualityMeasure extends ClusteringQualityMeasure {
          * it directly depends on the number of items in a cluster in the
          * goldstandard.
          */
-        Set<ClusterItem> gsClusterItems = new HashSet<>(
-                gsClustering.getClusterItems());
-        Set<ClusterItem> clusterItems = new HashSet<>(
-                clustering.getClusterItems());
+        Set<ClusterItem> gsClusterItems = new HashSet<>(gsClustering.getClusterItems());
+        Set<ClusterItem> clusterItems = new HashSet<>(clustering.getClusterItems());
         gsClusterItems.removeAll(clusterItems);
         for (ClusterItem onlyInGs : gsClusterItems) {
             gsClustering.removeClusterItem(onlyInGs);
@@ -94,7 +93,7 @@ public class FDRClusteringQualityMeasure extends ClusteringQualityMeasure {
          * Ensure, that clustering contains only objects, that are also in the
          * goldstandard.
          */
-        gsClusterItems = new HashSet<ClusterItem>(
+        gsClusterItems = new HashSet<>(
                 gsClustering.getClusterItems());
         clusterItems.removeAll(gsClusterItems);
         for (ClusterItem onlyInClustering : clusterItems) {
@@ -136,44 +135,21 @@ public class FDRClusteringQualityMeasure extends ClusteringQualityMeasure {
         return ClustEvalValue.getForDouble(fp / (fp + tp));
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see cluster.quality.ClusteringQualityMeasure#getMinimum()
-     */
     @Override
     public double getMinimum() {
         return 0.0;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see cluster.quality.ClusteringQualityMeasure#getMaximum()
-     */
     @Override
     public double getMaximum() {
         return 1.0;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see cluster.quality.ClusteringQualityMeasure#requiresGoldstandard()
-     */
     @Override
     public boolean requiresGoldstandard() {
         return true;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * cluster.quality.ClusteringQualityMeasure#isBetterThanHelper(cluster.quality
-     * .ClustEvalValue,
-     * cluster.quality.ClustEvalValue)
-     */
     @Override
     public boolean isBetterThanHelper(
             ClustEvalValue quality1,
@@ -181,9 +157,6 @@ public class FDRClusteringQualityMeasure extends ClusteringQualityMeasure {
         return quality1.getValue() < quality2.getValue();
     }
 
-    /* (non-Javadoc)
-     * @see de.clusteval.cluster.quality.ClusteringQualityMeasure#supportsFuzzyClusterings()
-     */
     @Override
     public boolean supportsFuzzyClusterings() {
         return false;

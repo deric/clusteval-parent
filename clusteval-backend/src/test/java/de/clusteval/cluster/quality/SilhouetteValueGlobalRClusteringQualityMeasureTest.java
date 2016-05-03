@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.cluster.quality;
 
+import de.clusteval.api.cluster.ClusteringEvaluationParameters;
 import ch.qos.logback.classic.Level;
 import de.clusteval.api.Precision;
 import de.clusteval.api.cluster.Cluster;
@@ -83,7 +84,7 @@ public class SilhouetteValueGlobalRClusteringQualityMeasureTest extends
             ClusteringQualityMeasure measure = ClusteringQualityMeasure
                     .parseFromString(getRepository(),
                             "SilhouetteValueGlobalRClusteringQualityMeasure",
-                            new ClusteringQualityMeasureParameters());
+                            new ClusteringEvaluationParameters());
             double quality = measure.getQualityOfClustering(clustering, null,
                     null).getValue();
             assertEquals(-1.0, quality, DELTA);
@@ -137,7 +138,7 @@ public class SilhouetteValueGlobalRClusteringQualityMeasureTest extends
             ClusteringQualityMeasure measure = ClusteringQualityMeasure
                     .parseFromString(getRepository(),
                             "SilhouetteValueGlobalRClusteringQualityMeasure",
-                            new ClusteringQualityMeasureParameters());
+                            new ClusteringEvaluationParameters());
             double quality = measure.getQualityOfClustering(clustering, null,
                     dc).getValue();
             ds.getInStandardFormat().unloadFromMemory();

@@ -12,6 +12,7 @@
  */
 package de.clusteval.cluster.quality;
 
+import de.clusteval.api.cluster.ClusteringEvaluationParameters;
 import ch.qos.logback.classic.Level;
 import de.clusteval.api.Precision;
 import de.clusteval.api.cluster.Cluster;
@@ -87,7 +88,7 @@ public class CVNNClusteringQualityMeasureTest extends AbstractClustEvalTest {
             ClusteringQualityMeasure measure = ClusteringQualityMeasure
                     .parseFromString(getRepository(),
                             "CVNNClusteringQualityMeasure",
-                            new ClusteringQualityMeasureParameters());
+                            new ClusteringEvaluationParameters());
 
             DataConfig dc = this.getRepository().getStaticObjectWithName(
                     DataConfig.class, "dunnIndexMatrixTest");
@@ -160,7 +161,7 @@ public class CVNNClusteringQualityMeasureTest extends AbstractClustEvalTest {
             ClusteringQualityMeasure measure = ClusteringQualityMeasure
                     .parseFromString(getRepository(),
                             "CVNNClusteringQualityMeasure",
-                            new ClusteringQualityMeasureParameters());
+                            new ClusteringEvaluationParameters());
             double quality = measure.getQualityOfClustering(clustering, null, dc).getValue();
             ds.getInStandardFormat().unloadFromMemory();
             System.out.println(quality);

@@ -15,9 +15,6 @@ package de.clusteval.cluster.quality;
  */
 public class UnknownClusteringQualityMeasureException extends Exception {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = 433568096995882002L;
 
     /**

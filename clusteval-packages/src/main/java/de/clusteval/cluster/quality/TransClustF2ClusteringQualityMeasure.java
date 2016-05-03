@@ -13,6 +13,7 @@ package de.clusteval.cluster.quality;
 import de.clusteval.api.cluster.ClustEvalValue;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
+import de.clusteval.api.cluster.ClusteringEvaluationParameters;
 import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.program.RegisterException;
@@ -25,9 +26,7 @@ import java.util.Set;
 /**
  * @author Christian Wiwie
  */
-public class TransClustF2ClusteringQualityMeasure
-        extends
-        ClusteringQualityMeasure {
+public class TransClustF2ClusteringQualityMeasure extends ClusteringQualityMeasure {
 
     /**
      * @param repo
@@ -38,7 +37,7 @@ public class TransClustF2ClusteringQualityMeasure
      */
     public TransClustF2ClusteringQualityMeasure(IRepository repo,
             boolean register, long changeDate, File absPath,
-            ClusteringQualityMeasureParameters parameters)
+            ClusteringEvaluationParameters parameters)
             throws RegisterException {
         super(repo, register, changeDate, absPath, parameters);
     }
@@ -56,24 +55,11 @@ public class TransClustF2ClusteringQualityMeasure
         super(other);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see cluster.quality.ClusteringQualityMeasure#getAlias()
-     */
     @Override
     public String getAlias() {
         return "F2-Score";
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * cluster.quality.ClusteringQualityMeasure#getQualityOfClustering(cluster
-     * .Clustering, data.goldstandard.GoldStandard)
-     */
-    @SuppressWarnings("unused")
     @Override
     public ClustEvalValue getQualityOfClustering(
             final IClustering clustering, IClustering gsClustering,
@@ -92,8 +78,7 @@ public class TransClustF2ClusteringQualityMeasure
          * Ensure, that clustering contains only objects, that are also in the
          * goldstandard.
          */
-        gsClusterItems = new HashSet<>(
-                gsClustering.getClusterItems());
+        gsClusterItems = new HashSet<>(gsClustering.getClusterItems());
         clusterItems.removeAll(gsClusterItems);
         for (ClusterItem onlyInClustering : clusterItems) {
             clustering.removeClusterItem(onlyInClustering);
@@ -166,8 +151,7 @@ public class TransClustF2ClusteringQualityMeasure
      *           the c2
      * @return the float
      */
-    private static float calculateCommonProteins(final Cluster c1,
-            final Cluster c2) {
+    private static float calculateCommonProteins(final Cluster c1, final Cluster c2) {
         float common = 0;
 
         Map<ClusterItem, Float> items = c1.getFuzzyItems();
@@ -181,44 +165,21 @@ public class TransClustF2ClusteringQualityMeasure
         return common;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see cluster.quality.ClusteringQualityMeasure#getMinimum()
-     */
     @Override
     public double getMinimum() {
         return 0.0;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see cluster.quality.ClusteringQualityMeasure#getMaximum()
-     */
     @Override
     public double getMaximum() {
         return 1.0;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see cluster.quality.ClusteringQualityMeasure#requiresGoldstandard()
-     */
     @Override
     public boolean requiresGoldstandard() {
         return true;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * cluster.quality.ClusteringQualityMeasure#isBetterThanHelper(cluster.quality
-     * .ClustEvalValue,
-     * cluster.quality.ClustEvalValue)
-     */
     @Override
     public boolean isBetterThanHelper(
             ClustEvalValue quality1,
@@ -226,9 +187,6 @@ public class TransClustF2ClusteringQualityMeasure
         return quality1.getValue() > quality2.getValue();
     }
 
-    /* (non-Javadoc)
-     * @see de.clusteval.cluster.quality.ClusteringQualityMeasure#supportsFuzzyClusterings()
-     */
     @Override
     public boolean supportsFuzzyClusterings() {
         return false;

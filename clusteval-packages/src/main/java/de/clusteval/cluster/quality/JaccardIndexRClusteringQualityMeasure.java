@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.cluster.quality;
 
+import de.clusteval.api.cluster.ClusteringEvaluationParameters;
 import de.clusteval.api.cluster.ClustEvalValue;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
@@ -46,7 +47,7 @@ public class JaccardIndexRClusteringQualityMeasure extends ClusteringQualityMeas
      */
     public JaccardIndexRClusteringQualityMeasure(IRepository repo,
             boolean register, long changeDate, File absPath,
-            ClusteringQualityMeasureParameters parameters)
+            ClusteringEvaluationParameters parameters)
             throws RegisterException {
         super(repo, register, changeDate, absPath, parameters);
     }
@@ -150,44 +151,21 @@ public class JaccardIndexRClusteringQualityMeasure extends ClusteringQualityMeas
         return ClustEvalValue.getForDouble(result);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see cluster.quality.ClusteringQualityMeasure#getMinimum()
-     */
     @Override
     public double getMinimum() {
         return 0.0;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see cluster.quality.ClusteringQualityMeasure#getMaximum()
-     */
     @Override
     public double getMaximum() {
         return 1.0;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see cluster.quality.ClusteringQualityMeasure#requiresGoldstandard()
-     */
     @Override
     public boolean requiresGoldstandard() {
         return true;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * cluster.quality.ClusteringQualityMeasure#isBetterThanHelper(cluster.quality
-     * .ClustEvalValue,
-     * cluster.quality.ClustEvalValue)
-     */
     @Override
     public boolean isBetterThanHelper(
             ClustEvalValue quality1,
@@ -195,12 +173,6 @@ public class JaccardIndexRClusteringQualityMeasure extends ClusteringQualityMeas
         return quality1.getValue() > quality2.getValue();
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.clusteval.cluster.quality.ClusteringQualityMeasure#
-     * supportsFuzzyClusterings()
-     */
     @Override
     public boolean supportsFuzzyClusterings() {
         return false;

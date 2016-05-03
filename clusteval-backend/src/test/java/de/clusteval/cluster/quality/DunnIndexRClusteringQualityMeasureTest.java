@@ -12,6 +12,7 @@
  */
 package de.clusteval.cluster.quality;
 
+import de.clusteval.api.cluster.ClusteringEvaluationParameters;
 import de.clusteval.api.Precision;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
@@ -95,7 +96,7 @@ public class DunnIndexRClusteringQualityMeasureTest extends AbstractClustEvalTes
             ClusteringQualityMeasure measure = ClusteringQualityMeasure
                     .parseFromString(getRepository(),
                             "DunnIndexRClusteringQualityMeasure",
-                            new ClusteringQualityMeasureParameters());
+                            new ClusteringEvaluationParameters());
             double quality = measure.getQualityOfClustering(clustering, null, dc).getValue();
             ds.getInStandardFormat().unloadFromMemory();
             System.out.println("Dunn Index: " + quality);

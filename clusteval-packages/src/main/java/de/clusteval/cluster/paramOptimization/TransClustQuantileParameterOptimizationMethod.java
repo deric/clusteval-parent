@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.cluster.paramOptimization;
 
+import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
@@ -18,7 +19,6 @@ import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.IProgramParameter;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.cluster.quality.ClusteringQualityMeasure;
 import de.clusteval.data.dataset.RelativeDataSet;
 import de.clusteval.run.ParameterOptimizationRun;
 import de.clusteval.utils.RangeCreationException;
@@ -54,7 +54,7 @@ public class TransClustQuantileParameterOptimizationMethod
             final boolean register, final long changeDate, final File absPath,
             ParameterOptimizationRun run, IProgramConfig programConfig,
             IDataConfig dataConfig, List<IProgramParameter<?>> params,
-            ClusteringQualityMeasure optimizationCriterion, int terminateCount,
+            ClusteringEvaluation optimizationCriterion, int terminateCount,
             boolean isResume) throws ParameterOptimizationException,
                                      RegisterException {
         super(repo, false, changeDate, absPath, run, programConfig, dataConfig,

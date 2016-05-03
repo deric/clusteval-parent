@@ -13,18 +13,18 @@
 package de.clusteval.cluster.quality;
 
 import de.clusteval.api.ClusteringEvaluation;
-import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.cluster.ClustEvalValue;
+import de.clusteval.api.cluster.ClusteringEvaluationParameters;
+import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
-import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.r.ROperationNotSupported;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.cluster.Clustering;
-import de.clusteval.data.DataConfig;
 import de.clusteval.framework.repository.RepositoryObject;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
@@ -34,7 +34,7 @@ import java.util.List;
 /**
  * A clustering quality measure is used to assess the quality of a
  * {@link Clustering} by invoking
- * {@link #getQualityOfClustering(Clustering, Clustering, DataConfig)}.
+ * {@link #getQualityOfClustering(Clustering, Clustering, IDataConfig)}.
  *
  * It has a range of possible values between {@link #getMinimum()} and
  * {@link #getMaximum()}.
@@ -76,7 +76,7 @@ import java.util.List;
  */
 public abstract class ClusteringQualityMeasure extends RepositoryObject implements ClusteringEvaluation {
 
-    protected ClusteringQualityMeasureParameters parameters;
+    protected ClusteringEvaluationParameters parameters;
 
     /**
      *
@@ -89,7 +89,7 @@ public abstract class ClusteringQualityMeasure extends RepositoryObject implemen
      */
     public ClusteringQualityMeasure(final IRepository repo,
             final boolean register, final long changeDate, final File absPath,
-            final ClusteringQualityMeasureParameters parameters)
+            final ClusteringEvaluationParameters parameters)
             throws RegisterException {
         super(repo, false, changeDate, absPath);
 
@@ -150,16 +150,15 @@ public abstract class ClusteringQualityMeasure extends RepositoryObject implemen
      */
     public static ClusteringQualityMeasure parseFromString(
             final IRepository repository, String qualityMeasure,
-            ClusteringQualityMeasureParameters parameters)
+            ClusteringEvaluationParameters parameters)
             throws UnknownClusteringQualityMeasureException {
 
         Class<? extends ClusteringQualityMeasure> c = repository
                 .getRegisteredClass(ClusteringQualityMeasure.class,
                         "de.clusteval.cluster.quality." + qualityMeasure);
         try {
-            ClusteringQualityMeasure measure = c.getConstructor(
-                    IRepository.class, boolean.class, long.class, File.class,
-                    ClusteringQualityMeasureParameters.class).newInstance(
+            ClusteringQualityMeasure measure = c.getConstructor(IRepository.class, boolean.class, long.class, File.class,
+                    ClusteringEvaluationParameters.class).newInstance(
                             repository, false, System.currentTimeMillis(),
                             new File(qualityMeasure), parameters);
 

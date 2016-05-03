@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.cluster.paramOptimization;
 
+import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.cluster.ClusteringQualitySet;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.exceptions.InternalAttributeException;
@@ -18,12 +19,11 @@ import de.clusteval.api.opt.IDivergingParameterOptimizationMethod;
 import de.clusteval.api.opt.NoParameterSetFoundException;
 import de.clusteval.api.opt.ParameterOptimizationException;
 import de.clusteval.api.opt.ParameterSetAlreadyEvaluatedException;
+import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.IProgramParameter;
 import de.clusteval.api.program.ParameterSet;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.cluster.quality.ClusteringQualityMeasure;
-import de.clusteval.program.ProgramConfig;
 import de.clusteval.program.ProgramParameter;
 import de.clusteval.run.ParameterOptimizationRun;
 import java.io.File;
@@ -74,9 +74,9 @@ public class APDivisiveParameterOptimizationMethod
      */
     public APDivisiveParameterOptimizationMethod(final IRepository repo,
             final boolean register, final long changeDate, final File absPath,
-            final ParameterOptimizationRun run, ProgramConfig programConfig,
+            final ParameterOptimizationRun run, IProgramConfig programConfig,
             IDataConfig dataConfig, List<IProgramParameter<?>> params,
-            ClusteringQualityMeasure optimizationCriterion,
+            ClusteringEvaluation optimizationCriterion,
             int iterationPerParameter, final boolean isResume)
             throws ParameterOptimizationException, RegisterException {
         super(repo, false, changeDate, absPath, run, programConfig, dataConfig,

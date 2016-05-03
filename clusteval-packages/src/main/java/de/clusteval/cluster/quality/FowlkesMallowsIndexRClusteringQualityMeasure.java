@@ -10,22 +10,23 @@
  ***************************************************************************** */
 package de.clusteval.cluster.quality;
 
+import de.clusteval.api.cluster.ClusteringEvaluationParameters;
 import de.clusteval.api.cluster.ClustEvalValue;
+import de.clusteval.api.cluster.Cluster;
+import de.clusteval.api.cluster.ClusterItem;
+import de.clusteval.api.cluster.IClustering;
+import de.clusteval.api.data.IDataConfig;
+import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.r.IRengine;
+import de.clusteval.api.r.RException;
+import de.clusteval.api.r.RExpr;
+import de.clusteval.api.r.RLibraryRequirement;
+import de.clusteval.api.repository.IRepository;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-import de.clusteval.api.cluster.Cluster;
-import de.clusteval.api.cluster.ClusterItem;
-import de.clusteval.api.cluster.IClustering;
-import de.clusteval.api.data.IDataConfig;
-import de.clusteval.api.r.RLibraryRequirement;
-import de.clusteval.api.program.RegisterException;
-import de.clusteval.api.r.IRengine;
-import de.clusteval.api.r.RException;
-import de.clusteval.api.r.RExpr;
-import de.clusteval.api.repository.IRepository;
 
 /**
  * @author Christian Wiwie
@@ -43,7 +44,7 @@ public class FowlkesMallowsIndexRClusteringQualityMeasure extends ClusteringQual
      */
     public FowlkesMallowsIndexRClusteringQualityMeasure(IRepository repo,
             boolean register, long changeDate, File absPath,
-            ClusteringQualityMeasureParameters parameters)
+            ClusteringEvaluationParameters parameters)
             throws RegisterException {
         super(repo, register, changeDate, absPath, parameters);
     }
@@ -61,23 +62,11 @@ public class FowlkesMallowsIndexRClusteringQualityMeasure extends ClusteringQual
         super(other);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see cluster.quality.ClusteringQualityMeasure#getAlias()
-     */
     @Override
     public String getAlias() {
         return "Fowlkes Mallows Index (R)";
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * cluster.quality.ClusteringQualityMeasure#getQualityOfClustering(cluster
-     * .Clustering, data.DataConfig)
-     */
     @Override
     public ClustEvalValue getQualityOfClusteringHelper(
             IClustering clustering, IClustering gsClustering,
@@ -145,44 +134,21 @@ public class FowlkesMallowsIndexRClusteringQualityMeasure extends ClusteringQual
         return ClustEvalValue.getForDouble(result);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see cluster.quality.ClusteringQualityMeasure#getMinimum()
-     */
     @Override
     public double getMinimum() {
         return 0.0;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see cluster.quality.ClusteringQualityMeasure#getMaximum()
-     */
     @Override
     public double getMaximum() {
         return 1.0;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see cluster.quality.ClusteringQualityMeasure#requiresGoldstandard()
-     */
     @Override
     public boolean requiresGoldstandard() {
         return true;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * cluster.quality.ClusteringQualityMeasure#isBetterThanHelper(cluster.quality
-     * .ClustEvalValue,
-     * cluster.quality.ClustEvalValue)
-     */
     @Override
     public boolean isBetterThanHelper(
             ClustEvalValue quality1,
@@ -190,12 +156,6 @@ public class FowlkesMallowsIndexRClusteringQualityMeasure extends ClusteringQual
         return quality1.getValue() > quality2.getValue();
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.clusteval.cluster.quality.ClusteringQualityMeasure#
-     * supportsFuzzyClusterings()
-     */
     @Override
     public boolean supportsFuzzyClusterings() {
         return false;

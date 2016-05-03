@@ -51,7 +51,7 @@ import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
-import de.clusteval.cluster.quality.ClusteringQualityMeasureParameters;
+import de.clusteval.api.cluster.ClusteringEvaluationParameters;
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.DataConfigNotFoundException;
@@ -169,7 +169,7 @@ public class ClustQualityEval {
             String[] paramSplit = measureSplit.length > 1 ? measureSplit[1]
                     .split(";") : new String[0];
 
-            ClusteringQualityMeasureParameters params = new ClusteringQualityMeasureParameters();
+            ClusteringEvaluationParameters params = new ClusteringEvaluationParameters();
             for (String param : paramSplit) {
                 String[] paramNameValue = param.split("=");
                 params.put(paramNameValue[0], paramNameValue[1]);
@@ -355,10 +355,9 @@ public class ClustQualityEval {
                                     for (int i = 2; i < value.length; i++) {
                                         try {
                                             measures.add(ClusteringQualityMeasure
-                                                    .parseFromString(
-                                                            parent,
+                                                    .parseFromString(parent,
                                                             value[i],
-                                                            new ClusteringQualityMeasureParameters()));
+                                                            new ClusteringEvaluationParameters()));
                                         } catch (UnknownClusteringQualityMeasureException e) {
                                             e.printStackTrace();
                                             this.terminate();
