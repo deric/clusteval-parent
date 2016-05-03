@@ -35,6 +35,7 @@ import de.clusteval.api.exceptions.UnknownProgramParameterException;
 import de.clusteval.api.exceptions.UnknownProgramTypeException;
 import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
+import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.opt.InvalidOptimizationParameterException;
 import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
 import de.clusteval.api.program.IProgram;
@@ -69,6 +70,7 @@ import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.utils.FileUtils;
 import de.clusteval.utils.InvalidConfigurationFileException;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -121,7 +123,7 @@ public class LinearModelRidgeRunDataStatisticCalculator
      */
     @Override
     public LinearModelRidgeRunDataStatistic calculateResultHelper(
-            final IRengine rEngine) throws IllegalArgumentException, RegisterException, RunResultParseException {
+            final IRengine rEngine) throws IllegalArgumentException, RegisterException, RunResultParseException, FileNotFoundException {
 
         /*
          * Get clustering results
@@ -145,10 +147,12 @@ public class LinearModelRidgeRunDataStatisticCalculator
                     GoldStandardConfigurationException | DataSetConfigurationException | DataSetNotFoundException |
                     DataSetConfigNotFoundException | GoldStandardConfigNotFoundException | DataConfigurationException |
                     DataConfigNotFoundException | RunException | UnknownDataStatisticException | UnknownProgramTypeException |
-            UnknownRProgramException | IncompatibleParameterOptimizationMethodException | UnknownDistanceMeasureException |
-            UnknownRunStatisticException | RepositoryConfigNotFoundException | RepositoryConfigurationException |
-            ConfigurationException | RegisterException | NumberFormatException | NoDataSetException | UnknownRunDataStatisticException | RunResultParseException | UnknownDataPreprocessorException | IncompatibleDataSetConfigPreprocessorException | UnknownContextException | IncompatibleContextException |                    UnknownParameterType | InterruptedException | UnknownRunResultPostprocessorException | UnknownDataRandomizerException e) {
+                    UnknownRProgramException | IncompatibleParameterOptimizationMethodException | UnknownDistanceMeasureException |
+                    UnknownRunStatisticException | RepositoryConfigNotFoundException | RepositoryConfigurationException |
+                    ConfigurationException | RegisterException | NumberFormatException | NoDataSetException | UnknownRunDataStatisticException | RunResultParseException | UnknownDataPreprocessorException | IncompatibleDataSetConfigPreprocessorException | UnknownContextException | IncompatibleContextException | UnknownParameterType | InterruptedException | UnknownRunResultPostprocessorException | UnknownDataRandomizerException e) {
                 Exceptions.printStackTrace(e);
+            } catch (UnknownProviderException ex) {
+                Exceptions.printStackTrace(ex);
             }
         }
 

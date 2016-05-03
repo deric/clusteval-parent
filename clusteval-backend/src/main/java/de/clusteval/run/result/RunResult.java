@@ -31,6 +31,7 @@ import de.clusteval.api.exceptions.UnknownProgramParameterException;
 import de.clusteval.api.exceptions.UnknownProgramTypeException;
 import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
+import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.opt.InvalidOptimizationParameterException;
 import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
 import de.clusteval.api.program.RegisterException;
@@ -69,6 +70,7 @@ import de.clusteval.run.statistics.UnknownRunStatisticException;
 import de.clusteval.utils.FileUtils;
 import de.clusteval.utils.InvalidConfigurationFileException;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import org.apache.commons.configuration.ConfigurationException;
@@ -162,7 +164,7 @@ public abstract class RunResult extends RepositoryObject implements IRunResult {
                    NoDataSetException, UnknownRunDataStatisticException, RunResultParseException,
                    UnknownDataPreprocessorException, IncompatibleDataSetConfigPreprocessorException,
                    UnknownContextException, IncompatibleContextException, UnknownParameterType, InterruptedException,
-                   UnknownRunResultPostprocessorException, UnknownDataRandomizerException {
+                   UnknownRunResultPostprocessorException, UnknownDataRandomizerException, FileNotFoundException, UnknownProviderException {
         try {
             Logger log = LoggerFactory.getLogger(RunResult.class);
             log.debug("Parsing run result from '" + runResultFolder + "'");

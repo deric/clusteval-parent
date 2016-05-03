@@ -19,9 +19,10 @@ package de.clusteval.api.data;
 import de.clusteval.api.Precision;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.factory.UnknownProviderException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.repository.IRepositoryObject;
-import de.clusteval.api.program.RegisterException;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.security.InvalidParameterException;
@@ -58,7 +59,7 @@ public interface IDataSetFormatParser extends IRepositoryObject {
             throws IOException,
                    InvalidDataSetFormatVersionException, RegisterException,
                    UnknownDataSetFormatException, RNotAvailableException,
-                   InvalidParameterException, InterruptedException;
+                   InvalidParameterException, InterruptedException, UnknownProviderException;
 
     /**
      * @param dataSet

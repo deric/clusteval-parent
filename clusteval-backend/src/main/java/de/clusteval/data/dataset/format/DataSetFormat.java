@@ -176,6 +176,7 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
      * @return the list
      * @throws UnknownDataSetFormatException
      *                                       the unknown data set format exception
+     * @throws de.clusteval.api.factory.UnknownProviderException
      */
     public static List<IDataSetFormat> parseFromString(final IRepository repo,
             String[] datasetFormats) throws UnknownDataSetFormatException, UnknownProviderException {

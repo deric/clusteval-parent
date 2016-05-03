@@ -12,17 +12,19 @@ package de.clusteval.context;
 
 import de.clusteval.api.IContext;
 import de.clusteval.api.data.IDataSetFormat;
+import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.exceptions.UnknownRunResultFormatException;
+import de.clusteval.api.factory.UnknownProviderException;
+import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.run.IRunResultFormat;
+import de.clusteval.data.dataset.format.DataSetFormat;
+import de.clusteval.run.result.format.RunResultFormat;
 import java.io.File;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-import de.clusteval.data.dataset.format.DataSetFormat;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
-import de.clusteval.api.program.RegisterException;
-import de.clusteval.run.result.format.RunResultFormat;
-import de.clusteval.api.exceptions.UnknownRunResultFormatException;
-import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.run.IRunResultFormat;
+import org.openide.util.Exceptions;
 
 /**
  * This is the default context of the framework, concerning clustering tasks.
@@ -75,6 +77,8 @@ public class ClusteringContext extends Context implements IContext {
             e.printStackTrace();
             // should not occur, because we checked this in the repository using
             // #getRequiredJavaClassFullNames()
+        } catch (UnknownProviderException ex) {
+            Exceptions.printStackTrace(ex);
         }
         return null;
     }

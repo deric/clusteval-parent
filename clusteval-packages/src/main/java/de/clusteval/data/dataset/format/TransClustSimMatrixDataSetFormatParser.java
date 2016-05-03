@@ -10,14 +10,19 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset.format;
 
+import de.clusteval.api.FormatVersion;
+import de.clusteval.api.Precision;
 import de.clusteval.api.data.IConversionConfiguration;
+import de.clusteval.api.data.IConversionInputToStandardConfiguration;
+import de.clusteval.api.data.IDataSet;
+import de.clusteval.api.data.IDataSetFormat;
+import de.clusteval.api.data.WEBSITE_VISIBILITY;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import de.clusteval.api.factory.UnknownProviderException;
+import de.clusteval.api.program.RegisterException;
+import de.clusteval.data.dataset.DataSetAttributeFilterer;
+import de.clusteval.data.dataset.RelativeDataSet;
 import de.clusteval.utils.ArraysExt;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
 import de.wiwie.wiutils.utils.parse.SimFileMatrixParser;
@@ -25,15 +30,11 @@ import de.wiwie.wiutils.utils.parse.SimFileParser.SIM_FILE_FORMAT;
 import de.wiwie.wiutils.utils.parse.SimilarityFileNormalizer;
 import de.wiwie.wiutils.utils.parse.TextFileParser;
 import de.wiwie.wiutils.utils.parse.TextFileParser.OUTPUT_MODE;
-import de.clusteval.data.dataset.DataSetAttributeFilterer;
-import de.clusteval.data.dataset.RelativeDataSet;
-import de.clusteval.api.program.RegisterException;
-import de.clusteval.api.FormatVersion;
-import de.clusteval.api.Precision;
-import de.clusteval.api.data.IConversionInputToStandardConfiguration;
-import de.clusteval.api.data.IDataSet;
-import de.clusteval.api.data.IDataSetFormat;
-import de.clusteval.api.data.WEBSITE_VISIBILITY;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Christian Wiwie
@@ -51,9 +52,10 @@ public class TransClustSimMatrixDataSetFormatParser extends DataSetFormatParser 
      */
     @Override
     public IDataSet convertToStandardFormat(IDataSet dataSet,
-            IConversionInputToStandardConfiguration config) throws IOException,
-                                                                   InvalidDataSetFormatVersionException, RegisterException,
-                                                                   UnknownDataSetFormatException {
+            IConversionInputToStandardConfiguration config)
+            throws IOException,
+                   InvalidDataSetFormatVersionException, RegisterException,
+                   UnknownDataSetFormatException, UnknownProviderException {
         switch (dataSet.getDataSetFormat().getVersion()) {
             case 1:
                 return convertToStandardFormat_v1(dataSet, config);
@@ -68,7 +70,7 @@ public class TransClustSimMatrixDataSetFormatParser extends DataSetFormatParser 
     @SuppressWarnings("unused")
     protected IDataSet convertToStandardFormat_v1(IDataSet dataSet,
             IConversionInputToStandardConfiguration config)
-            throws IOException, RegisterException, UnknownDataSetFormatException {
+            throws IOException, RegisterException, UnknownDataSetFormatException, UnknownProviderException {
         // check if file already exists
         String resultFileName = dataSet.getAbsolutePath();
         resultFileName = removeResultFileNameSuffix(resultFileName);

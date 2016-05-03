@@ -39,6 +39,7 @@ import de.clusteval.api.exceptions.UnknownProgramParameterException;
 import de.clusteval.api.exceptions.UnknownProgramTypeException;
 import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
+import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.opt.InvalidOptimizationParameterException;
 import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
 import de.clusteval.api.program.IProgramConfig;
@@ -595,7 +596,7 @@ public class RobustnessAnalysisRun extends ClusteringRun {
                                                  IncompatibleDataSetConfigPreprocessorException,
                                                  IncompatibleContextException, InterruptedException,
                                                  UnknownRunResultPostprocessorException,
-                                                 UnknownDataRandomizerException {
+                                                 UnknownDataRandomizerException, UnknownProviderException {
 
         List<String> programConfigNames = new ArrayList<>();
         for (IProgramConfig programConfig : programConfigs) {

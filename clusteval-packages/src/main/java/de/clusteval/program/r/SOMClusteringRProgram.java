@@ -15,6 +15,7 @@ import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownRunResultFormatException;
+import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.IProgram;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.RException;
@@ -106,7 +107,7 @@ public class SOMClusteringRProgram extends AbsoluteDataRProgram {
      */
     @Override
     public Set<IDataSetFormat> getCompatibleDataSetFormats()
-            throws UnknownDataSetFormatException {
+            throws UnknownDataSetFormatException, UnknownProviderException {
         return new HashSet<>(DataSetFormat.parseFromString(
                 repository, new String[]{"MatrixDataSetFormat"}));
     }

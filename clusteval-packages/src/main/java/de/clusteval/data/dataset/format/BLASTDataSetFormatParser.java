@@ -21,6 +21,7 @@ import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.data.WEBSITE_VISIBILITY;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.data.dataset.DataSetAttributeFilterer;
 import de.clusteval.data.dataset.RelativeDataSet;
@@ -57,7 +58,7 @@ public class BLASTDataSetFormatParser extends DataSetFormatParser {
     public IDataSet convertToStandardFormat(IDataSet dataSet,
             IConversionInputToStandardConfiguration config)
             throws IOException, InvalidDataSetFormatVersionException, RegisterException,
-                   UnknownDataSetFormatException {
+                   UnknownDataSetFormatException, UnknownProviderException {
         switch (dataSet.getDataSetFormat().getVersion()) {
             case 1:
                 return convertToStandardFormat_v1(dataSet, config);
@@ -71,7 +72,7 @@ public class BLASTDataSetFormatParser extends DataSetFormatParser {
 
     protected IDataSet convertToStandardFormat_v1(IDataSet dataSet,
             IConversionInputToStandardConfiguration config)
-            throws IOException, RegisterException, UnknownDataSetFormatException {
+            throws IOException, RegisterException, UnknownDataSetFormatException, UnknownProviderException {
 
         String resultFileName = dataSet.getAbsolutePath();
         resultFileName = removeResultFileNameSuffix(resultFileName);

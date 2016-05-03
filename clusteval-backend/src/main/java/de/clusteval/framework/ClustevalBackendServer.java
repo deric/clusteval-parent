@@ -832,6 +832,8 @@ public class ClustevalBackendServer implements IBackendServer {
                 IncompatibleContextException | UnknownParameterType | InterruptedException |
                 UnknownRunResultPostprocessorException | UnknownDataRandomizerException e) {
             e.printStackTrace();
+        } catch (UnknownProviderException ex) {
+            Exceptions.printStackTrace(ex);
         }
 
         return result;

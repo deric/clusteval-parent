@@ -34,6 +34,7 @@ import de.clusteval.api.exceptions.UnknownProgramParameterException;
 import de.clusteval.api.exceptions.UnknownProgramTypeException;
 import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
+import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.opt.InvalidOptimizationParameterException;
 import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
 import de.clusteval.api.program.ParameterSet;
@@ -69,6 +70,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.apache.commons.configuration.ConfigurationException;
+import org.openide.util.Exceptions;
 
 /**
  * @author Christian Wiwie
@@ -256,7 +258,10 @@ public class ParameterImportanceRunStatisticCalculator
                     changeDate, absPath, paramImportances);
         } catch (IOException | UnknownRunResultFormatException | UnknownDataSetFormatException | UnknownClusteringQualityMeasureException | InvalidRunModeException | UnknownParameterOptimizationMethodException | NoOptimizableProgramParameterException | UnknownProgramParameterException | UnknownGoldStandardFormatException | InvalidConfigurationFileException | RepositoryAlreadyExistsException | InvalidRepositoryException | NoRepositoryFoundException | GoldStandardNotFoundException | InvalidOptimizationParameterException | GoldStandardConfigurationException | DataSetConfigurationException | DataSetNotFoundException | DataSetConfigNotFoundException | GoldStandardConfigNotFoundException | DataConfigurationException | DataConfigNotFoundException | RunException | UnknownDataStatisticException | UnknownProgramTypeException | UnknownRProgramException | IncompatibleParameterOptimizationMethodException | UnknownDistanceMeasureException | UnknownRunStatisticException | RepositoryConfigNotFoundException | RepositoryConfigurationException | ConfigurationException | RegisterException | NumberFormatException | NoDataSetException | UnknownRunDataStatisticException | RunResultParseException | UnknownDataPreprocessorException | IncompatibleDataSetConfigPreprocessorException | UnknownContextException | IncompatibleContextException | UnknownParameterType | InterruptedException | UnknownRunResultPostprocessorException | UnknownDataRandomizerException e) {
             throw new RunStatisticCalculateException(e);
+        } catch (UnknownProviderException ex) {
+            Exceptions.printStackTrace(ex);
         }
+        return null;
     }
 
     /*

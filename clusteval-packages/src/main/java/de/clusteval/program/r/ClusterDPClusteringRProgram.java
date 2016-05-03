@@ -15,6 +15,7 @@ import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownRunResultFormatException;
+import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.IProgram;
 import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.RegisterException;
@@ -81,55 +82,54 @@ public class ClusterDPClusteringRProgram extends RelativeDataRProgram {
                 effectiveParams, internalParams);
 
         // define function for this program
-        this.rEngine
-                .eval("clusterdp <- function(dc, k) {"
-                        + "  d <- as.matrix(x);"
-                        + "  ND <- nrow(d);"
-                        + "  rho <- c();"
-                        + "  for (  i in 1 : ND ) {"
-                        + "    rho[i]<-0.;"
-                        + "  };"
-                        + "  for (  i in 1:(ND-1) ) {"
-                        + "    for (  j in (i+1):ND ) {"
-                        + "       e <- exp(-(d[i,j]/dc)*(d[i,j]/dc));"
-                        + "       rho[i]<-rho[i]+e;"
-                        + "       rho[j]<-rho[j]+e;"
-                        + "    };"
-                        + "  };"
-                        + "  "
-                        + "  maxd<-max(max(d));"
-                        + "  "
-                        + "  tmp <- sort(rho,decreasing=T, index.return=T);"
-                        + "  rho.sorted <- tmp$x;"
-                        + "  ordrho <- tmp$ix;"
-                        + "  "
-                        + "  delta <- c();"
-                        + "  nneigh <- c();"
-                        + "  "
-                        + "  delta[ordrho[1]]<--1.;"
-                        + "  nneigh[ordrho[1]]<-1;"
-                        + "  "
-                        + "  for (  ii in 2 : ND ) {"
-                        + "     delta[ordrho[ii]]<-maxd;"
-                        + "     for (  jj in 1 : (ii-1) ) {"
-                        + "       if(d[ordrho[ii],ordrho[jj]]<delta[ordrho[ii]]) {"
-                        + "          delta[ordrho[ii]]<-d[ordrho[ii],ordrho[jj]];"
-                        + "          nneigh[ordrho[ii]]<-ordrho[jj];"
-                        + "       };"
-                        + "     };"
-                        + "  };"
-                        + "  delta[ordrho[1]]<-max(delta);"
-                        + "  rhodelta <- c();"
-                        + "  for (i in 1:ND) { rhodelta[i]=rho[i]*delta[i];};"
-                        + "  ordrhodelta <- sort(rhodelta,decreasing=T, index.return=T);"
-                        + "  cl <- c();" + "  icl <- c();"
-                        + "  for (i in 1:ND) {" + "    cl[i]=-1;" + "  };"
-                        + "  for (i in 1:k) {"
-                        + "    cl[ordrhodelta$ix[i]] <- i;" + "      icl[i]=i;"
-                        + "  };" + "  " + "  for (  i in 1 : ND ) {"
-                        + "    if (cl[ordrho[i]]==-1)"
-                        + "      cl[ordrho[i]]<-cl[nneigh[ordrho[i]]];"
-                        + "  };" + "  result <- cl;" + "};" + "return (0);");
+        this.rEngine.eval("clusterdp <- function(dc, k) {"
+                + "  d <- as.matrix(x);"
+                + "  ND <- nrow(d);"
+                + "  rho <- c();"
+                + "  for (  i in 1 : ND ) {"
+                + "    rho[i]<-0.;"
+                + "  };"
+                + "  for (  i in 1:(ND-1) ) {"
+                + "    for (  j in (i+1):ND ) {"
+                + "       e <- exp(-(d[i,j]/dc)*(d[i,j]/dc));"
+                + "       rho[i]<-rho[i]+e;"
+                + "       rho[j]<-rho[j]+e;"
+                + "    };"
+                + "  };"
+                + "  "
+                + "  maxd<-max(max(d));"
+                + "  "
+                + "  tmp <- sort(rho,decreasing=T, index.return=T);"
+                + "  rho.sorted <- tmp$x;"
+                + "  ordrho <- tmp$ix;"
+                + "  "
+                + "  delta <- c();"
+                + "  nneigh <- c();"
+                + "  "
+                + "  delta[ordrho[1]]<--1.;"
+                + "  nneigh[ordrho[1]]<-1;"
+                + "  "
+                + "  for (  ii in 2 : ND ) {"
+                + "     delta[ordrho[ii]]<-maxd;"
+                + "     for (  jj in 1 : (ii-1) ) {"
+                + "       if(d[ordrho[ii],ordrho[jj]]<delta[ordrho[ii]]) {"
+                + "          delta[ordrho[ii]]<-d[ordrho[ii],ordrho[jj]];"
+                + "          nneigh[ordrho[ii]]<-ordrho[jj];"
+                + "       };"
+                + "     };"
+                + "  };"
+                + "  delta[ordrho[1]]<-max(delta);"
+                + "  rhodelta <- c();"
+                + "  for (i in 1:ND) { rhodelta[i]=rho[i]*delta[i];};"
+                + "  ordrhodelta <- sort(rhodelta,decreasing=T, index.return=T);"
+                + "  cl <- c();" + "  icl <- c();"
+                + "  for (i in 1:ND) {" + "    cl[i]=-1;" + "  };"
+                + "  for (i in 1:k) {"
+                + "    cl[ordrhodelta$ix[i]] <- i;" + "      icl[i]=i;"
+                + "  };" + "  " + "  for (  i in 1 : ND ) {"
+                + "    if (cl[ordrho[i]]==-1)"
+                + "      cl[ordrho[i]]<-cl[nneigh[ordrho[i]]];"
+                + "  };" + "  result <- cl;" + "};" + "return (0);");
     }
 
     /*
@@ -171,7 +171,7 @@ public class ClusterDPClusteringRProgram extends RelativeDataRProgram {
      * @see de.clusteval.program.r.RProgram#getCompatibleDataSetFormats()
      */
     @Override
-    public Set<IDataSetFormat> getCompatibleDataSetFormats() throws UnknownDataSetFormatException {
+    public Set<IDataSetFormat> getCompatibleDataSetFormats() throws UnknownDataSetFormatException, UnknownProviderException {
         return new HashSet<>(DataSetFormat.parseFromString(
                 repository, new String[]{"SimMatrixDataSetFormat"}));
     }

@@ -35,6 +35,7 @@ import de.clusteval.api.exceptions.UnknownProgramParameterException;
 import de.clusteval.api.exceptions.UnknownProgramTypeException;
 import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
+import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.opt.InvalidOptimizationParameterException;
 import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
 import de.clusteval.api.program.RegisterException;
@@ -101,7 +102,7 @@ class DataSetConfigParser extends RepositoryObjectParser<DataSetConfig> {
                    IncompatibleDataSetConfigPreprocessorException, IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
                    UnknownDataStatisticException, UnknownRunStatisticException, UnknownRunDataStatisticException,
-                   UnknownRunResultPostprocessorException, UnknownDataRandomizerException {
+                   UnknownRunResultPostprocessorException, UnknownDataRandomizerException, UnknownProviderException {
         super.parseFromFile(absPath);
 
         log.debug("Parsing dataset config \"" + absPath + "\"");
@@ -190,7 +191,7 @@ class DataSetConfigParser extends RepositoryObjectParser<DataSetConfig> {
                    UnknownDataPreprocessorException, IncompatibleDataSetConfigPreprocessorException,
                    IncompatibleParameterOptimizationMethodException, UnknownParameterOptimizationMethodException,
                    NoOptimizableProgramParameterException, UnknownDataStatisticException, UnknownRunStatisticException,
-                   UnknownRunDataStatisticException, UnknownRunResultPostprocessorException, UnknownDataRandomizerException {
+                   UnknownRunDataStatisticException, UnknownRunResultPostprocessorException, UnknownDataRandomizerException, UnknownProviderException {
         if (repo instanceof RunResultRepository) {
             return repo.getStaticObjectWithName(DataSet.class, datasetName + "/" + datasetFile);
         }
