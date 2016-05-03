@@ -20,14 +20,19 @@ import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.ConsoleAppender;
 import ch.qos.logback.core.FileAppender;
 import de.clusteval.api.ClusteringEvaluation;
+import de.clusteval.api.Pair;
+import de.clusteval.api.Triple;
+import de.clusteval.api.exceptions.DataSetGenerationException;
 import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigurationException;
+import de.clusteval.api.exceptions.GoldStandardGenerationException;
 import de.clusteval.api.exceptions.GoldStandardNotFoundException;
 import de.clusteval.api.exceptions.IncompatibleContextException;
 import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
+import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.exceptions.RepositoryObjectDumpException;
 import de.clusteval.api.exceptions.RunResultParseException;
 import de.clusteval.api.exceptions.UnknownContextException;
@@ -40,20 +45,22 @@ import de.clusteval.api.exceptions.UnknownProgramParameterException;
 import de.clusteval.api.exceptions.UnknownProgramTypeException;
 import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
+import de.clusteval.api.factory.UnknownProviderException;
+import de.clusteval.api.opt.InvalidOptimizationParameterException;
+import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.run.IScheduler;
 import de.clusteval.api.run.IterationRunnable;
 import de.clusteval.api.run.IterationWrapper;
 import de.clusteval.api.run.RUN_STATUS;
+import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
-import de.clusteval.api.opt.InvalidOptimizationParameterException;
-import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
@@ -61,17 +68,12 @@ import de.clusteval.data.dataset.DataSet;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
-import de.clusteval.api.exceptions.DataSetGenerationException;
 import de.clusteval.data.dataset.generator.DataSetGenerator;
-import de.clusteval.api.exceptions.GoldStandardGenerationException;
-import de.clusteval.data.dataset.type.UnknownDataSetTypeException;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.randomizer.DataRandomizeException;
 import de.clusteval.data.randomizer.DataRandomizer;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
-import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.framework.repository.MyRengine;
-import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RepositoryController;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
@@ -92,11 +94,9 @@ import de.clusteval.run.runnable.RunAnalysisIterationRunnable;
 import de.clusteval.run.runnable.RunAnalysisRunRunnable;
 import de.clusteval.run.statistics.UnknownRunDataStatisticException;
 import de.clusteval.run.statistics.UnknownRunStatisticException;
+import de.clusteval.utils.FileUtils;
 import de.clusteval.utils.InvalidConfigurationFileException;
 import de.clusteval.utils.MyHighlightingCompositeConverter;
-import de.clusteval.utils.FileUtils;
-import de.clusteval.api.Pair;
-import de.clusteval.api.Triple;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -126,6 +126,7 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
 import org.apache.commons.configuration.ConfigurationException;
+import org.openide.util.Exceptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -330,7 +331,7 @@ public class ClustevalBackendServer implements IBackendServer {
 
         if (!registerServer || ClustevalBackendServer.registerServer(this)) {
             /*
-			 * Check, whether the repository is being initialized
+             * Check, whether the repository is being initialized
              */
             if (this.repository.getSupervisorThread() == null) {
                 this.repository.initialize();
@@ -351,10 +352,10 @@ public class ClustevalBackendServer implements IBackendServer {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see serverclient.EvalServer#performRun(java.lang.String,
-	 * java.lang.String)
+     * (non-Javadoc)
+     *
+     * @see serverclient.EvalServer#performRun(java.lang.String,
+     * java.lang.String)
      */
     @Override
     public boolean performRun(final String clientId, final String runId) {
@@ -370,10 +371,10 @@ public class ClustevalBackendServer implements IBackendServer {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see serverclient.EvalServer#performRun(java.lang.String,
-	 * java.lang.String)
+     * (non-Javadoc)
+     *
+     * @see serverclient.EvalServer#performRun(java.lang.String,
+     * java.lang.String)
      */
     @Override
     public boolean terminateRun(final String clientId, final String runId) {
@@ -674,9 +675,9 @@ public class ClustevalBackendServer implements IBackendServer {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see serverclient.EvalServer#getClientId()
+     * (non-Javadoc)
+     *
+     * @see serverclient.EvalServer#getClientId()
      */
     @SuppressWarnings("unused")
     @Override
@@ -685,9 +686,9 @@ public class ClustevalBackendServer implements IBackendServer {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see serverclient.EvalServer#getRunStatusForClientId(java.lang.String)
+     * (non-Javadoc)
+     *
+     * @see serverclient.EvalServer#getRunStatusForClientId(java.lang.String)
      */
     @SuppressWarnings("unused")
     @Override
@@ -703,9 +704,9 @@ public class ClustevalBackendServer implements IBackendServer {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see serverclient.EvalServer#getRuns()
+     * (non-Javadoc)
+     *
+     * @see serverclient.EvalServer#getRuns()
      */
     @Override
     public Collection<String> getRuns() {
@@ -717,9 +718,9 @@ public class ClustevalBackendServer implements IBackendServer {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see serverclient.EvalServer#getDataSets()
+     * (non-Javadoc)
+     *
+     * @see serverclient.EvalServer#getDataSets()
      */
     @Override
     public Collection<String> getDataSets() {
@@ -731,9 +732,9 @@ public class ClustevalBackendServer implements IBackendServer {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see serverclient.EvalServer#getPrograms()
+     * (non-Javadoc)
+     *
+     * @see serverclient.EvalServer#getPrograms()
      */
     @Override
     public Collection<String> getPrograms() {
@@ -765,9 +766,9 @@ public class ClustevalBackendServer implements IBackendServer {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see serverclient.EvalServer#getRunResumes()
+     * (non-Javadoc)
+     *
+     * @see serverclient.EvalServer#getRunResumes()
      */
     @SuppressWarnings("unused")
     @Override
@@ -784,10 +785,10 @@ public class ClustevalBackendServer implements IBackendServer {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see serverclient.EvalServer#getRunResults(java.lang.String,
-	 * java.lang.String)
+     * (non-Javadoc)
+     *
+     * @see serverclient.EvalServer#getRunResults(java.lang.String,
+     * java.lang.String)
      */
     @SuppressWarnings("unused")
     @Override
@@ -811,26 +812,25 @@ public class ClustevalBackendServer implements IBackendServer {
                 result.put(Pair.getPair(dataConfig, programConfig), measureToOptimalQuality);
             }
         } catch (GoldStandardConfigurationException | DataSetConfigurationException |
-                 DataSetNotFoundException | DataSetConfigNotFoundException |
-                 GoldStandardConfigNotFoundException | DataConfigurationException |
-                 DataConfigNotFoundException | IOException | UnknownRunResultFormatException |
-                 UnknownDataSetFormatException | UnknownClusteringQualityMeasureException |
-                 InvalidRunModeException | UnknownParameterOptimizationMethodException |
-                 NoOptimizableProgramParameterException | UnknownProgramParameterException |
-                 UnknownGoldStandardFormatException | InvalidConfigurationFileException |
-                 RepositoryAlreadyExistsException | InvalidRepositoryException |
-                 NoRepositoryFoundException | GoldStandardNotFoundException |
-                 InvalidOptimizationParameterException | RunException |
-                 UnknownDataStatisticException | UnknownProgramTypeException |
-                 UnknownRProgramException | IncompatibleParameterOptimizationMethodException |
-                 UnknownDistanceMeasureException | UnknownRunStatisticException |
-                 RepositoryConfigNotFoundException | RepositoryConfigurationException |
-                 ConfigurationException | RegisterException | UnknownDataSetTypeException |
-                 NumberFormatException | NoDataSetException | UnknownRunDataStatisticException |
-                 RunResultParseException | UnknownDataPreprocessorException |
-                 IncompatibleDataSetConfigPreprocessorException | UnknownContextException |
-                 IncompatibleContextException | UnknownParameterType | InterruptedException |
-                 UnknownRunResultPostprocessorException | UnknownDataRandomizerException e) {
+                DataSetNotFoundException | DataSetConfigNotFoundException |
+                GoldStandardConfigNotFoundException | DataConfigurationException |
+                DataConfigNotFoundException | IOException | UnknownRunResultFormatException |
+                UnknownDataSetFormatException | UnknownClusteringQualityMeasureException |
+                InvalidRunModeException | UnknownParameterOptimizationMethodException |
+                NoOptimizableProgramParameterException | UnknownProgramParameterException |
+                UnknownGoldStandardFormatException | InvalidConfigurationFileException |
+                RepositoryAlreadyExistsException | InvalidRepositoryException |
+                NoRepositoryFoundException | GoldStandardNotFoundException |
+                InvalidOptimizationParameterException | RunException |
+                UnknownDataStatisticException | UnknownProgramTypeException |
+                UnknownRProgramException | IncompatibleParameterOptimizationMethodException |
+                UnknownDistanceMeasureException | UnknownRunStatisticException |
+                RepositoryConfigNotFoundException | RepositoryConfigurationException |
+                ConfigurationException | RegisterException | NumberFormatException | NoDataSetException | UnknownRunDataStatisticException |
+                RunResultParseException | UnknownDataPreprocessorException |
+                IncompatibleDataSetConfigPreprocessorException | UnknownContextException |
+                IncompatibleContextException | UnknownParameterType | InterruptedException |
+                UnknownRunResultPostprocessorException | UnknownDataRandomizerException e) {
             e.printStackTrace();
         }
 
@@ -838,10 +838,10 @@ public class ClustevalBackendServer implements IBackendServer {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * serverclient.IBackendServer#setLogLevel(ch.qos.logback.classic.Level)
+     * (non-Javadoc)
+     *
+     * @see
+     * serverclient.IBackendServer#setLogLevel(ch.qos.logback.classic.Level)
      */
     @SuppressWarnings("unused")
     @Override
@@ -859,9 +859,9 @@ public class ClustevalBackendServer implements IBackendServer {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see serverclient.IBackendServer#getDataSetGenerators()
+     * (non-Javadoc)
+     *
+     * @see serverclient.IBackendServer#getDataSetGenerators()
      */
     @Override
     public Collection<String> getDataSetGenerators() {
@@ -878,9 +878,9 @@ public class ClustevalBackendServer implements IBackendServer {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see serverclient.IBackendServer#getDataSetRandomizers()
+     * (non-Javadoc)
+     *
+     * @see serverclient.IBackendServer#getDataSetRandomizers()
      */
     @Override
     public Collection<String> getDataRandomizers() {
@@ -896,10 +896,10 @@ public class ClustevalBackendServer implements IBackendServer {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see serverclient.IBackendServer#getOptionsForDataSetGenerator(java.lang.
-	 * String )
+     * (non-Javadoc)
+     *
+     * @see serverclient.IBackendServer#getOptionsForDataSetGenerator(java.lang.
+     * String )
      */
     @Override
     public Options getOptionsForDataSetGenerator(String generatorName) {
@@ -914,10 +914,10 @@ public class ClustevalBackendServer implements IBackendServer {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see serverclient.IBackendServer#generateDataSet(java.lang.String,
-	 * java.lang.String[])
+     * (non-Javadoc)
+     *
+     * @see serverclient.IBackendServer#generateDataSet(java.lang.String,
+     * java.lang.String[])
      */
     @SuppressWarnings("unused")
     @Override
@@ -926,18 +926,20 @@ public class ClustevalBackendServer implements IBackendServer {
             DataSetGenerator generator = DataSetGenerator.parseFromString(this.repository, generatorName);
             generator.generate(args);
         } catch (UnknownDataSetGeneratorException | ParseException |
-                 DataSetGenerationException | GoldStandardGenerationException |
-                 InterruptedException | RepositoryObjectDumpException |
-                 RegisterException | UnknownDistanceMeasureException e) {
+                DataSetGenerationException | GoldStandardGenerationException |
+                InterruptedException | RepositoryObjectDumpException |
+                RegisterException | UnknownDistanceMeasureException e) {
             e.printStackTrace();
+        } catch (UnknownProviderException ex) {
+            Exceptions.printStackTrace(ex);
         }
         return false;
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see serverclient.IBackendServer#getQueue()
+     * (non-Javadoc)
+     *
+     * @see serverclient.IBackendServer#getQueue()
      */
     @SuppressWarnings("unused")
     @Override
@@ -947,9 +949,9 @@ public class ClustevalBackendServer implements IBackendServer {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.clusteval.serverclient.IBackendServer#getActiveThreads()
+     * (non-Javadoc)
+     *
+     * @see de.clusteval.serverclient.IBackendServer#getActiveThreads()
      */
     @Override
     public Map<String, Triple<String, String, Long>> getActiveThreads() throws RemoteException {
@@ -994,11 +996,11 @@ public class ClustevalBackendServer implements IBackendServer {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * serverclient.IBackendServer#getOptionsForDataRandomizer(java.lang.String
-	 * )
+     * (non-Javadoc)
+     *
+     * @see
+     * serverclient.IBackendServer#getOptionsForDataRandomizer(java.lang.String
+     * )
      */
     @Override
     public Options getOptionsForDataRandomizer(String randomizerName) {
@@ -1007,17 +1009,17 @@ public class ClustevalBackendServer implements IBackendServer {
             DataRandomizer randomizer = DataRandomizer.parseFromString(repository, randomizerName);
             return randomizer.getAllOptions();
         } catch (SecurityException | IllegalArgumentException |
-                 UnknownDataRandomizerException e) {
+                UnknownDataRandomizerException e) {
             e.printStackTrace();
         }
         return null;
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see serverclient.IBackendServer#randomizeDataConfig(java.lang.String,
-	 * java.lang.String[])
+     * (non-Javadoc)
+     *
+     * @see serverclient.IBackendServer#randomizeDataConfig(java.lang.String,
+     * java.lang.String[])
      */
     @SuppressWarnings("unused")
     @Override
@@ -1032,9 +1034,9 @@ public class ClustevalBackendServer implements IBackendServer {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.clusteval.serverclient.IBackendServer#setThreadNumber(int)
+     * (non-Javadoc)
+     *
+     * @see de.clusteval.serverclient.IBackendServer#setThreadNumber(int)
      */
     @Override
     public void setThreadNumber(int threadNumber) throws RemoteException {

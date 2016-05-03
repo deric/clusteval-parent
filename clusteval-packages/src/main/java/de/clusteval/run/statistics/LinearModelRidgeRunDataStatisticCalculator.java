@@ -57,7 +57,6 @@ import de.clusteval.data.DataConfigurationException;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
-import de.clusteval.data.dataset.type.UnknownDataSetTypeException;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
 import de.clusteval.data.statistics.DoubleValueDataStatistic;
@@ -146,12 +145,9 @@ public class LinearModelRidgeRunDataStatisticCalculator
                     GoldStandardConfigurationException | DataSetConfigurationException | DataSetNotFoundException |
                     DataSetConfigNotFoundException | GoldStandardConfigNotFoundException | DataConfigurationException |
                     DataConfigNotFoundException | RunException | UnknownDataStatisticException | UnknownProgramTypeException |
-                    UnknownRProgramException | IncompatibleParameterOptimizationMethodException | UnknownDistanceMeasureException |
-                    UnknownRunStatisticException | RepositoryConfigNotFoundException | RepositoryConfigurationException |
-                    ConfigurationException | RegisterException | UnknownDataSetTypeException | NumberFormatException |
-                    NoDataSetException | UnknownRunDataStatisticException | RunResultParseException | UnknownDataPreprocessorException |
-                    IncompatibleDataSetConfigPreprocessorException | UnknownContextException | IncompatibleContextException |
-                    UnknownParameterType | InterruptedException | UnknownRunResultPostprocessorException | UnknownDataRandomizerException e) {
+            UnknownRProgramException | IncompatibleParameterOptimizationMethodException | UnknownDistanceMeasureException |
+            UnknownRunStatisticException | RepositoryConfigNotFoundException | RepositoryConfigurationException |
+            ConfigurationException | RegisterException | NumberFormatException | NoDataSetException | UnknownRunDataStatisticException | RunResultParseException | UnknownDataPreprocessorException | IncompatibleDataSetConfigPreprocessorException | UnknownContextException | IncompatibleContextException |                    UnknownParameterType | InterruptedException | UnknownRunResultPostprocessorException | UnknownDataRandomizerException e) {
                 Exceptions.printStackTrace(e);
             }
         }

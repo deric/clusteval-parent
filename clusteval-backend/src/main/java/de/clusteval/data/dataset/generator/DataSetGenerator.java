@@ -12,6 +12,7 @@
  */
 package de.clusteval.data.dataset.generator;
 
+import de.clusteval.api.data.DataSetTypeFactory;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataSetGenerator;
 import de.clusteval.api.data.IGoldStandard;
@@ -22,6 +23,7 @@ import de.clusteval.api.exceptions.RepositoryObjectDumpException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownDataSetGeneratorException;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
+import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.RLibraryInferior;
 import de.clusteval.api.repository.IRepository;
@@ -30,8 +32,6 @@ import de.clusteval.data.dataset.AbstractDataSetProvider;
 import de.clusteval.data.dataset.DataSet;
 import de.clusteval.data.dataset.format.AbsoluteDataSetFormat;
 import de.clusteval.data.dataset.format.DataSetFormat;
-import de.clusteval.data.dataset.type.DataSetType;
-import de.clusteval.data.dataset.type.UnknownDataSetTypeException;
 import de.clusteval.data.goldstandard.GoldStandard;
 import de.clusteval.framework.repository.RepositoryObject;
 import de.clusteval.utils.FileUtils;
@@ -188,7 +188,7 @@ public abstract class DataSetGenerator extends AbstractDataSetProvider implement
      */
     public DataSet generate(final String[] cliArguments)
             throws ParseException, DataSetGenerationException, GoldStandardGenerationException, InterruptedException,
-                   RepositoryObjectDumpException, RegisterException, UnknownDistanceMeasureException {
+                   RepositoryObjectDumpException, RegisterException, UnknownDistanceMeasureException, UnknownProviderException {
         CommandLineParser parser = new PosixParser();
 
         Options options = this.getAllOptions();
@@ -220,7 +220,7 @@ public abstract class DataSetGenerator extends AbstractDataSetProvider implement
                     this.getFolderName(), this.getFileName()));
 
             dataSet = writeCoordsToFile(dataSetFile);
-        } catch (IOException | UnknownDataSetFormatException | RegisterException | UnknownDataSetTypeException e) {
+        } catch (IOException | UnknownDataSetFormatException | RegisterException e) {
             throw new DataSetGenerationException("The dataset could not be generated!");
         }
 
@@ -317,13 +317,12 @@ public abstract class DataSetGenerator extends AbstractDataSetProvider implement
      * @param dataSetFile
      * @return
      * @throws IOException
-     * @throws UnknownDataSetTypeException
      * @throws RegisterException
      * @throws UnknownDataSetFormatException
      *
      */
     protected DataSet writeCoordsToFile(final File dataSetFile)
-            throws IOException, UnknownDataSetFormatException, RegisterException, UnknownDataSetTypeException {
+            throws IOException, UnknownDataSetFormatException, RegisterException, UnknownProviderException {
         // writer header
         try ( // dataset file
                 BufferedWriter writer = new BufferedWriter(new FileWriter(dataSetFile))) {
@@ -351,7 +350,7 @@ public abstract class DataSetGenerator extends AbstractDataSetProvider implement
 
         return new AbsoluteDataSet(this.repository, true, dataSetFile.lastModified(), dataSetFile, getAlias(),
                 (AbsoluteDataSetFormat) DataSetFormat.parseFromString(repository, "MatrixDataSetFormat"),
-                DataSetType.parseFromString(repository, "SyntheticDataSetType"), WEBSITE_VISIBILITY.HIDE);
+                DataSetTypeFactory.parseFromString("SyntheticDataSetType"), WEBSITE_VISIBILITY.HIDE);
 
     }
 }

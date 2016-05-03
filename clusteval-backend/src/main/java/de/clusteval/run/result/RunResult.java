@@ -20,6 +20,7 @@ import de.clusteval.api.exceptions.GoldStandardNotFoundException;
 import de.clusteval.api.exceptions.IncompatibleContextException;
 import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
+import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.exceptions.RunResultParseException;
 import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
@@ -30,27 +31,25 @@ import de.clusteval.api.exceptions.UnknownProgramParameterException;
 import de.clusteval.api.exceptions.UnknownProgramTypeException;
 import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
+import de.clusteval.api.opt.InvalidOptimizationParameterException;
+import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.IRunResult;
+import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
-import de.clusteval.api.opt.InvalidOptimizationParameterException;
-import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
-import de.clusteval.data.dataset.type.UnknownDataSetTypeException;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
-import de.clusteval.api.stats.UnknownDataStatisticException;
-import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.framework.repository.RepositoryController;
 import de.clusteval.framework.repository.RepositoryObject;
 import de.clusteval.framework.repository.RunResultRepository;
@@ -67,8 +66,8 @@ import de.clusteval.run.RunDataAnalysisRun;
 import de.clusteval.run.RunException;
 import de.clusteval.run.statistics.UnknownRunDataStatisticException;
 import de.clusteval.run.statistics.UnknownRunStatisticException;
-import de.clusteval.utils.InvalidConfigurationFileException;
 import de.clusteval.utils.FileUtils;
+import de.clusteval.utils.InvalidConfigurationFileException;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -125,7 +124,6 @@ public abstract class RunResult extends RepositoryObject implements IRunResult {
      * @throws RepositoryConfigNotFoundException
      * @throws ConfigurationException
      * @throws RegisterException
-     * @throws UnknownDataSetTypeException
      * @throws NoDataSetException
      * @throws NumberFormatException
      * @throws UnknownRunDataStatisticException
@@ -147,23 +145,24 @@ public abstract class RunResult extends RepositoryObject implements IRunResult {
     // of the folder in one object.
     public static Run parseFromRunResultFolder(final IRepository parentRepository, final File runResultFolder,
             final List<IRunResult> result, final boolean parseClusterings, final boolean storeClusterings,
-            final boolean register) throws IOException, UnknownRunResultFormatException, UnknownDataSetFormatException,
-                                           UnknownClusteringQualityMeasureException, InvalidRunModeException,
-                                           UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
-                                           UnknownProgramParameterException, UnknownGoldStandardFormatException,
-                                           InvalidConfigurationFileException, RepositoryAlreadyExistsException, InvalidRepositoryException,
-                                           NoRepositoryFoundException, GoldStandardNotFoundException, InvalidOptimizationParameterException,
-                                           GoldStandardConfigurationException, DataSetConfigurationException, DataSetNotFoundException,
-                                           DataSetConfigNotFoundException, GoldStandardConfigNotFoundException, DataConfigurationException,
-                                           DataConfigNotFoundException, RunException, UnknownDataStatisticException,
-                                           UnknownProgramTypeException, UnknownRProgramException,
-                                           IncompatibleParameterOptimizationMethodException, UnknownDistanceMeasureException,
-                                           UnknownRunStatisticException, RepositoryConfigNotFoundException, RepositoryConfigurationException,
-                                           ConfigurationException, RegisterException, UnknownDataSetTypeException, NumberFormatException,
-                                           NoDataSetException, UnknownRunDataStatisticException, RunResultParseException,
-                                           UnknownDataPreprocessorException, IncompatibleDataSetConfigPreprocessorException,
-                                           UnknownContextException, IncompatibleContextException, UnknownParameterType, InterruptedException,
-                                           UnknownRunResultPostprocessorException, UnknownDataRandomizerException {
+            final boolean register)
+            throws IOException, UnknownRunResultFormatException, UnknownDataSetFormatException,
+                   UnknownClusteringQualityMeasureException, InvalidRunModeException,
+                   UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
+                   UnknownProgramParameterException, UnknownGoldStandardFormatException,
+                   InvalidConfigurationFileException, RepositoryAlreadyExistsException, InvalidRepositoryException,
+                   NoRepositoryFoundException, GoldStandardNotFoundException, InvalidOptimizationParameterException,
+                   GoldStandardConfigurationException, DataSetConfigurationException, DataSetNotFoundException,
+                   DataSetConfigNotFoundException, GoldStandardConfigNotFoundException, DataConfigurationException,
+                   DataConfigNotFoundException, RunException, UnknownDataStatisticException,
+                   UnknownProgramTypeException, UnknownRProgramException,
+                   IncompatibleParameterOptimizationMethodException, UnknownDistanceMeasureException,
+                   UnknownRunStatisticException, RepositoryConfigNotFoundException, RepositoryConfigurationException,
+                   ConfigurationException, RegisterException, NumberFormatException,
+                   NoDataSetException, UnknownRunDataStatisticException, RunResultParseException,
+                   UnknownDataPreprocessorException, IncompatibleDataSetConfigPreprocessorException,
+                   UnknownContextException, IncompatibleContextException, UnknownParameterType, InterruptedException,
+                   UnknownRunResultPostprocessorException, UnknownDataRandomizerException {
         try {
             Logger log = LoggerFactory.getLogger(RunResult.class);
             log.debug("Parsing run result from '" + runResultFolder + "'");

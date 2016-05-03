@@ -14,6 +14,7 @@ package de.clusteval.tools;
 
 import ch.qos.logback.classic.Level;
 import de.clusteval.api.ClusteringEvaluation;
+import de.clusteval.api.cluster.ClusteringEvaluationParameters;
 import de.clusteval.api.cluster.ClusteringQualitySet;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.exceptions.DataSetNotFoundException;
@@ -37,6 +38,7 @@ import de.clusteval.api.exceptions.UnknownProgramParameterException;
 import de.clusteval.api.exceptions.UnknownProgramTypeException;
 import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
+import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.opt.InvalidOptimizationParameterException;
 import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
 import de.clusteval.api.program.IProgramConfig;
@@ -51,7 +53,6 @@ import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
-import de.clusteval.api.cluster.ClusteringEvaluationParameters;
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.DataConfigNotFoundException;
@@ -60,7 +61,6 @@ import de.clusteval.data.dataset.DataSet;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
-import de.clusteval.data.dataset.type.UnknownDataSetTypeException;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
 import de.clusteval.framework.ClustevalBackendServer;
@@ -81,6 +81,7 @@ import de.clusteval.utils.ProgressPrinter;
 import de.wiwie.wiutils.utils.parse.TextFileParser;
 import de.wiwie.wiutils.utils.parse.TextFileParser.OUTPUT_MODE;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -129,13 +130,13 @@ public class ClustQualityEval {
                    UnknownRProgramException,
                    IncompatibleParameterOptimizationMethodException,
                    UnknownDistanceMeasureException, UnknownRunStatisticException,
-                   UnknownDataSetTypeException, UnknownRunDataStatisticException,
+                   UnknownRunDataStatisticException,
                    UnknownDataPreprocessorException,
                    IncompatibleDataSetConfigPreprocessorException,
                    IncompatibleContextException, InvalidDataSetFormatVersionException,
                    RNotAvailableException, FormatConversionException,
                    UnknownRunResultPostprocessorException,
-                   UnknownDataRandomizerException, DatabaseConnectException, RException {
+                   UnknownDataRandomizerException, DatabaseConnectException, RException, FileNotFoundException, UnknownProviderException {
         super();
         ClustevalBackendServer.logLevel(Level.INFO);
         ClustevalBackendServer.getBackendServerConfiguration().setNoDatabase(
@@ -500,13 +501,13 @@ public class ClustQualityEval {
                    UnknownRProgramException,
                    IncompatibleParameterOptimizationMethodException,
                    UnknownDistanceMeasureException, UnknownRunStatisticException,
-                   UnknownDataSetTypeException, UnknownRunDataStatisticException,
+                   UnknownRunDataStatisticException,
                    UnknownDataPreprocessorException,
                    IncompatibleDataSetConfigPreprocessorException,
                    IncompatibleContextException, InvalidDataSetFormatVersionException,
                    RNotAvailableException, FormatConversionException,
                    UnknownRunResultPostprocessorException,
-                   UnknownDataRandomizerException, DatabaseConnectException, RException {
+                   UnknownDataRandomizerException, DatabaseConnectException, RException, FileNotFoundException, UnknownProviderException {
         new ClustQualityEval(args[0], args[1], Arrays.copyOfRange(args, 2,
                 args.length));
     }

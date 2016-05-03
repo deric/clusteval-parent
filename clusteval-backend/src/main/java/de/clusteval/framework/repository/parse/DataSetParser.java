@@ -16,6 +16,7 @@
  */
 package de.clusteval.framework.repository.parse;
 
+import de.clusteval.api.data.DataSetTypeFactory;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.data.IDataSetType;
@@ -36,6 +37,7 @@ import de.clusteval.api.exceptions.UnknownProgramParameterException;
 import de.clusteval.api.exceptions.UnknownProgramTypeException;
 import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
+import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.opt.InvalidOptimizationParameterException;
 import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
 import de.clusteval.api.program.RegisterException;
@@ -55,8 +57,6 @@ import de.clusteval.data.dataset.RelativeDataSet;
 import de.clusteval.data.dataset.format.AbsoluteDataSetFormat;
 import de.clusteval.data.dataset.format.DataSetFormat;
 import de.clusteval.data.dataset.format.RelativeDataSetFormat;
-import de.clusteval.data.dataset.type.DataSetType;
-import de.clusteval.data.dataset.type.UnknownDataSetTypeException;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
 import de.clusteval.framework.repository.RunResultRepository;
@@ -98,11 +98,11 @@ class DataSetParser extends RepositoryObjectParser<DataSet> {
                    GoldStandardNotFoundException, GoldStandardConfigurationException, DataSetConfigurationException,
                    DataSetNotFoundException, DataSetConfigNotFoundException, GoldStandardConfigNotFoundException,
                    NoDataSetException, DataConfigurationException, DataConfigNotFoundException, NumberFormatException,
-                   UnknownDistanceMeasureException, UnknownDataSetTypeException, UnknownDataPreprocessorException,
+                   UnknownDistanceMeasureException, UnknownDataPreprocessorException,
                    IncompatibleDataSetConfigPreprocessorException, IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
                    UnknownDataStatisticException, UnknownRunStatisticException, UnknownRunDataStatisticException,
-                   UnknownRunResultPostprocessorException, UnknownDataRandomizerException {
+                   UnknownRunResultPostprocessorException, UnknownDataRandomizerException, UnknownProviderException {
         super.parseFromFile(absPath);
 
         try {
@@ -149,7 +149,7 @@ class DataSetParser extends RepositoryObjectParser<DataSet> {
 
             IDataSetType dsType;
             if (attributeValues.containsKey("dataSetType")) {
-                dsType = DataSetType.parseFromString(repo, attributeValues.get("dataSetType"));
+                dsType = DataSetTypeFactory.parseFromString(attributeValues.get("dataSetType"));
             } else {
                 throw new DataSetConfigurationException("No type specified for dataset " + absPath.getAbsolutePath());
             }

@@ -51,7 +51,6 @@ import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
 import de.clusteval.data.dataset.format.ConversionStandardToInputConfiguration;
-import de.clusteval.data.dataset.type.UnknownDataSetTypeException;
 import de.clusteval.data.distance.DistanceMeasure;
 import de.clusteval.data.preprocessing.DataPreprocessor;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
@@ -98,7 +97,7 @@ class DataSetConfigParser extends RepositoryObjectParser<DataSetConfig> {
                    GoldStandardNotFoundException, GoldStandardConfigurationException, DataSetConfigurationException,
                    DataSetNotFoundException, DataSetConfigNotFoundException, GoldStandardConfigNotFoundException,
                    NoDataSetException, DataConfigurationException, DataConfigNotFoundException, NumberFormatException,
-                   UnknownDistanceMeasureException, UnknownDataSetTypeException, UnknownDataPreprocessorException,
+                   UnknownDistanceMeasureException, UnknownDataPreprocessorException,
                    IncompatibleDataSetConfigPreprocessorException, IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
                    UnknownDataStatisticException, UnknownRunStatisticException, UnknownRunDataStatisticException,
@@ -182,7 +181,7 @@ class DataSetConfigParser extends RepositoryObjectParser<DataSetConfig> {
     protected DataSet getDataSet()
             throws DataSetNotFoundException, UnknownDataSetFormatException, DataSetConfigurationException,
                    NoDataSetException, NumberFormatException, RegisterException, NoRepositoryFoundException,
-                   UnknownDataSetTypeException, GoldStandardNotFoundException, GoldStandardConfigurationException,
+                   GoldStandardNotFoundException, GoldStandardConfigurationException,
                    DataSetConfigNotFoundException, GoldStandardConfigNotFoundException, DataConfigurationException,
                    DataConfigNotFoundException, ConfigurationException, UnknownContextException, FileNotFoundException,
                    UnknownParameterType, UnknownClusteringQualityMeasureException, RunException, IncompatibleContextException,

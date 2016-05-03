@@ -10,15 +10,11 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset.type;
 
-import de.clusteval.api.data.IDataSetType;
-import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.framework.repository.RepositoryObject;
 import java.io.File;
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Dataset types are used to classify datasets into different thematic groups.
@@ -93,55 +89,6 @@ public abstract class DataSetType extends RepositoryObject {
         return null;
     }
 
-    /**
-     * Parses the from string.
-     *
-     * @param repository
-     *                    the repository
-     * @param datasetType
-     *                    the dataset type
-     * @return the data set format
-     * @throws UnknownDataSetTypeException
-     *                                     the unknown data set type exception
-     */
-    public static IDataSetType parseFromString(final IRepository repository,
-            String datasetType) throws UnknownDataSetTypeException {
-        Class<? extends DataSetType> c = repository.getRegisteredClass(
-                DataSetType.class, "de.clusteval.data.dataset.type."
-                + datasetType);
-        try {
-            Constructor<? extends IDataSetType> constr = (Constructor<? extends IDataSetType>) c.getConstructor(
-                    IRepository.class, boolean.class, long.class, File.class);
-            // changed 21.03.2013: do not register dataset types here
-            return constr.newInstance(repository, false,
-                    System.currentTimeMillis(), new File(datasetType));
-        } catch (InstantiationException | IllegalAccessException | SecurityException |
-                NoSuchMethodException | IllegalArgumentException | InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (NullPointerException e) {
-
-        }
-        throw new UnknownDataSetTypeException("\"" + datasetType
-                + "\" is not a known dataset type.");
-    }
-
-    /**
-     * Parses the from string.
-     *
-     * @param repo         the repo
-     * @param datasetTypes the dataset Types
-     * @return the list
-     * @throws UnknownDataSetTypeException
-     *                                     the unknown data set type exception
-     */
-    public static List<IDataSetType> parseFromString(final IRepository repo,
-            String[] datasetTypes) throws UnknownDataSetTypeException {
-        List<IDataSetType> result = new LinkedList<>();
-        for (String dsType : datasetTypes) {
-            result.add(parseFromString(repo, dsType));
-        }
-        return result;
-    }
 
     /**
      * This alias is used whenever this dataset type is visually represented and

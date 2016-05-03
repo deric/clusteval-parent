@@ -27,22 +27,22 @@ import de.clusteval.api.exceptions.UnknownProgramParameterException;
 import de.clusteval.api.exceptions.UnknownProgramTypeException;
 import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
+import de.clusteval.api.factory.UnknownProviderException;
+import de.clusteval.api.opt.InvalidOptimizationParameterException;
+import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
 import de.clusteval.api.program.IProgramParameter;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.r.UnknownRProgramException;
-import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
-import de.clusteval.api.opt.InvalidOptimizationParameterException;
-import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
-import de.clusteval.data.dataset.type.UnknownDataSetTypeException;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
 import de.clusteval.framework.repository.Repository;
@@ -85,7 +85,7 @@ public class ParameterOptimizationRunTest extends AbstractClustEvalTest {
                               InvalidOptimizationParameterException, RunException,
                               UnknownProgramTypeException, UnknownRProgramException,
                               IncompatibleParameterOptimizationMethodException,
-                              UnknownDistanceMeasureException, UnknownDataSetTypeException,
+                              UnknownDistanceMeasureException, UnknownProviderException,
                               UnknownDataPreprocessorException,
                               IncompatibleDataSetConfigPreprocessorException,
                               IncompatibleContextException, UnknownDataStatisticException,
@@ -166,7 +166,7 @@ public class ParameterOptimizationRunTest extends AbstractClustEvalTest {
                                        NoRepositoryFoundException, InvalidOptimizationParameterException,
                                        UnknownProgramTypeException, UnknownRProgramException,
                                        IncompatibleContextException, UnknownDistanceMeasureException,
-                                       UnknownDataSetTypeException, UnknownDataPreprocessorException,
+                                       UnknownProviderException, UnknownDataPreprocessorException,
                                        IncompatibleDataSetConfigPreprocessorException, IOException,
                                        InterruptedException, RepositoryAlreadyExistsException,
                                        InvalidRepositoryException, RepositoryConfigNotFoundException,

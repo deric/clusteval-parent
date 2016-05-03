@@ -54,7 +54,6 @@ import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
 import de.clusteval.data.dataset.format.ConversionStandardToInputConfiguration;
 import de.clusteval.data.dataset.format.DataSetFormat;
-import de.clusteval.data.dataset.type.UnknownDataSetTypeException;
 import de.clusteval.data.distance.DistanceMeasure;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
@@ -83,8 +82,7 @@ public class PlotterTest extends AbstractClustEvalTest {
     public void testIsoMDS() throws RepositoryAlreadyExistsException,
                                     InvalidRepositoryException, RepositoryConfigNotFoundException,
                                     RepositoryConfigurationException, UnknownDataSetFormatException,
-                                    RegisterException, UnknownDataSetTypeException,
-                                    UnknownDistanceMeasureException,
+                                    RegisterException, UnknownDistanceMeasureException,
                                     InvalidDataSetFormatVersionException, IllegalArgumentException,
                                     IOException, REngineException, FormatConversionException,
                                     DataSetNotFoundException, DataSetConfigurationException,
@@ -163,7 +161,7 @@ public class PlotterTest extends AbstractClustEvalTest {
     public void testPCA() throws RepositoryAlreadyExistsException,
                                  InvalidRepositoryException, RepositoryConfigNotFoundException,
                                  RepositoryConfigurationException, UnknownDataSetFormatException,
-                                 RegisterException, UnknownDataSetTypeException,
+                                 RegisterException,
                                  UnknownDistanceMeasureException,
                                  InvalidDataSetFormatVersionException, IllegalArgumentException,
                                  IOException, REngineException, FormatConversionException,

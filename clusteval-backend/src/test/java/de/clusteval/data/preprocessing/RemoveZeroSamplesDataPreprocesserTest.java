@@ -28,6 +28,7 @@ import de.clusteval.api.exceptions.UnknownProgramParameterException;
 import de.clusteval.api.exceptions.UnknownProgramTypeException;
 import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
+import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.opt.InvalidOptimizationParameterException;
 import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
 import de.clusteval.api.program.RegisterException;
@@ -45,7 +46,6 @@ import de.clusteval.data.dataset.DataSetAttributeFilterer;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
-import de.clusteval.data.dataset.type.UnknownDataSetTypeException;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
@@ -74,7 +74,7 @@ public class RemoveZeroSamplesDataPreprocesserTest
                               RepositoryConfigurationException, DataSetNotFoundException,
                               UnknownDataSetFormatException, DataSetConfigurationException,
                               NoDataSetException, NumberFormatException, RegisterException,
-                              NoRepositoryFoundException, UnknownDataSetTypeException,
+                              NoRepositoryFoundException, UnknownProviderException,
                               UnknownDataPreprocessorException, IOException,
                               InterruptedException, GoldStandardNotFoundException,
                               GoldStandardConfigurationException, DataSetConfigNotFoundException,

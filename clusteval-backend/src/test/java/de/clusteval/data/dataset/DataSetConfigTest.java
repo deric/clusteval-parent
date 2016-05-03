@@ -28,20 +28,20 @@ import de.clusteval.api.exceptions.UnknownProgramParameterException;
 import de.clusteval.api.exceptions.UnknownProgramTypeException;
 import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
-import de.clusteval.api.r.UnknownRProgramException;
+import de.clusteval.api.factory.UnknownProviderException;
+import de.clusteval.api.opt.InvalidOptimizationParameterException;
+import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
 import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.RepositoryRemoveEvent;
 import de.clusteval.api.repository.RepositoryReplaceEvent;
 import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
-import de.clusteval.api.opt.InvalidOptimizationParameterException;
-import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
 import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
 import de.clusteval.data.dataset.format.ConversionStandardToInputConfiguration;
-import de.clusteval.data.dataset.type.UnknownDataSetTypeException;
 import de.clusteval.data.distance.DistanceMeasure;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
@@ -109,7 +109,7 @@ public class DataSetConfigTest extends AbstractClustEvalTest {
                                       NoRepositoryFoundException, DataSetNotFoundException,
                                       UnknownDataSetFormatException, DataSetConfigNotFoundException,
                                       UnknownDistanceMeasureException, RegisterException,
-                                      UnknownDataSetTypeException, NoDataSetException,
+                                      NoDataSetException,
                                       NumberFormatException, UnknownDataPreprocessorException,
                                       IncompatibleDataSetConfigPreprocessorException,
                                       GoldStandardNotFoundException, GoldStandardConfigurationException,
@@ -128,7 +128,7 @@ public class DataSetConfigTest extends AbstractClustEvalTest {
                                       UnknownDataStatisticException, UnknownRunStatisticException,
                                       UnknownRunDataStatisticException,
                                       UnknownRunResultPostprocessorException,
-                                      UnknownDataRandomizerException {
+                                      UnknownDataRandomizerException, UnknownProviderException {
         this.repositoryObject = Parser
                 .parseFromFile(
                         DataSetConfig.class,
@@ -192,7 +192,7 @@ public class DataSetConfigTest extends AbstractClustEvalTest {
                                         NoRepositoryFoundException, DataSetNotFoundException,
                                         UnknownDataSetFormatException, DataSetConfigNotFoundException,
                                         UnknownDistanceMeasureException, RegisterException,
-                                        UnknownDataSetTypeException, NoDataSetException,
+                                        NoDataSetException,
                                         NumberFormatException, UnknownDataPreprocessorException,
                                         IncompatibleDataSetConfigPreprocessorException,
                                         GoldStandardNotFoundException, GoldStandardConfigurationException,
@@ -211,7 +211,7 @@ public class DataSetConfigTest extends AbstractClustEvalTest {
                                         UnknownDataStatisticException, UnknownRunStatisticException,
                                         UnknownRunDataStatisticException,
                                         UnknownRunResultPostprocessorException,
-                                        UnknownDataRandomizerException {
+                                        UnknownDataRandomizerException, UnknownProviderException {
         this.repositoryObject = Parser
                 .parseFromFile(
                         DataSetConfig.class,
@@ -266,30 +266,31 @@ public class DataSetConfigTest extends AbstractClustEvalTest {
      * @throws GoldStandardNotFoundException
      */
     @Test
-    public void testNotifyRepositoryEvent() throws NoRepositoryFoundException,
-                                                   DataSetNotFoundException, DataSetConfigurationException,
-                                                   UnknownDataSetFormatException, DataSetConfigNotFoundException,
-                                                   UnknownDistanceMeasureException, RegisterException,
-                                                   UnknownDataSetTypeException, NoDataSetException,
-                                                   NumberFormatException, UnknownDataPreprocessorException,
-                                                   IncompatibleDataSetConfigPreprocessorException,
-                                                   GoldStandardNotFoundException, GoldStandardConfigurationException,
-                                                   GoldStandardConfigNotFoundException, DataConfigurationException,
-                                                   DataConfigNotFoundException, ConfigurationException,
-                                                   UnknownContextException, FileNotFoundException,
-                                                   UnknownParameterType, UnknownClusteringQualityMeasureException,
-                                                   RunException, IncompatibleContextException,
-                                                   UnknownRunResultFormatException,
-                                                   InvalidOptimizationParameterException,
-                                                   UnknownProgramParameterException, UnknownProgramTypeException,
-                                                   UnknownRProgramException,
-                                                   IncompatibleParameterOptimizationMethodException,
-                                                   UnknownParameterOptimizationMethodException,
-                                                   NoOptimizableProgramParameterException,
-                                                   UnknownDataStatisticException, UnknownRunStatisticException,
-                                                   UnknownRunDataStatisticException,
-                                                   UnknownRunResultPostprocessorException,
-                                                   UnknownDataRandomizerException {
+    public void testNotifyRepositoryEvent()
+            throws NoRepositoryFoundException,
+                   DataSetNotFoundException, DataSetConfigurationException,
+                   UnknownDataSetFormatException, DataSetConfigNotFoundException,
+                   UnknownDistanceMeasureException, RegisterException,
+                   UnknownProviderException, NoDataSetException,
+                   NumberFormatException, UnknownDataPreprocessorException,
+                   IncompatibleDataSetConfigPreprocessorException,
+                   GoldStandardNotFoundException, GoldStandardConfigurationException,
+                   GoldStandardConfigNotFoundException, DataConfigurationException,
+                   DataConfigNotFoundException, ConfigurationException,
+                   UnknownContextException, FileNotFoundException,
+                   UnknownParameterType, UnknownClusteringQualityMeasureException,
+                   RunException, IncompatibleContextException,
+                   UnknownRunResultFormatException,
+                   InvalidOptimizationParameterException,
+                   UnknownProgramParameterException, UnknownProgramTypeException,
+                   UnknownRProgramException,
+                   IncompatibleParameterOptimizationMethodException,
+                   UnknownParameterOptimizationMethodException,
+                   NoOptimizableProgramParameterException,
+                   UnknownDataStatisticException, UnknownRunStatisticException,
+                   UnknownRunDataStatisticException,
+                   UnknownRunResultPostprocessorException,
+                   UnknownDataRandomizerException {
 
         /*
          * REPLACE
@@ -397,7 +398,7 @@ public class DataSetConfigTest extends AbstractClustEvalTest {
             throws DataSetConfigurationException, NoRepositoryFoundException,
                    DataSetNotFoundException, UnknownDataSetFormatException,
                    DataSetConfigNotFoundException, UnknownDistanceMeasureException,
-                   RegisterException, UnknownDataSetTypeException, NoDataSetException,
+                   RegisterException, UnknownProviderException, NoDataSetException,
                    NumberFormatException, UnknownDataPreprocessorException,
                    IncompatibleDataSetConfigPreprocessorException,
                    GoldStandardNotFoundException, GoldStandardConfigurationException,
@@ -477,7 +478,7 @@ public class DataSetConfigTest extends AbstractClustEvalTest {
                                            NoRepositoryFoundException, DataSetNotFoundException,
                                            UnknownDataSetFormatException, DataSetConfigNotFoundException,
                                            UnknownDistanceMeasureException, RegisterException,
-                                           UnknownDataSetTypeException, NoDataSetException,
+                                           UnknownProviderException, NoDataSetException,
                                            NumberFormatException, UnknownDataPreprocessorException,
                                            IncompatibleDataSetConfigPreprocessorException,
                                            GoldStandardNotFoundException, GoldStandardConfigurationException,
@@ -571,7 +572,7 @@ public class DataSetConfigTest extends AbstractClustEvalTest {
             throws DataSetConfigurationException, NoRepositoryFoundException,
                    DataSetNotFoundException, UnknownDataSetFormatException,
                    DataSetConfigNotFoundException, UnknownDistanceMeasureException,
-                   RegisterException, UnknownDataSetTypeException, NoDataSetException,
+                   RegisterException, UnknownProviderException, NoDataSetException,
                    NumberFormatException, UnknownDataPreprocessorException,
                    IncompatibleDataSetConfigPreprocessorException,
                    GoldStandardNotFoundException, GoldStandardConfigurationException,
@@ -654,7 +655,7 @@ public class DataSetConfigTest extends AbstractClustEvalTest {
             throws NoRepositoryFoundException, DataSetNotFoundException,
                    DataSetConfigurationException, UnknownDataSetFormatException,
                    DataSetConfigNotFoundException, UnknownDistanceMeasureException,
-                   RegisterException, UnknownDataSetTypeException, NoDataSetException,
+                   RegisterException, UnknownProviderException, NoDataSetException,
                    NumberFormatException, UnknownDataPreprocessorException,
                    IncompatibleDataSetConfigPreprocessorException,
                    GoldStandardNotFoundException, GoldStandardConfigurationException,
@@ -722,7 +723,7 @@ public class DataSetConfigTest extends AbstractClustEvalTest {
                                         NoRepositoryFoundException, DataSetNotFoundException,
                                         UnknownDataSetFormatException, DataSetConfigNotFoundException,
                                         UnknownDistanceMeasureException, RegisterException,
-                                        UnknownDataSetTypeException, NoDataSetException,
+                                        UnknownProviderException, NoDataSetException,
                                         NumberFormatException, UnknownDataPreprocessorException,
                                         IncompatibleDataSetConfigPreprocessorException,
                                         GoldStandardNotFoundException, GoldStandardConfigurationException,
@@ -803,7 +804,7 @@ public class DataSetConfigTest extends AbstractClustEvalTest {
                                         NoRepositoryFoundException, DataSetNotFoundException,
                                         UnknownDataSetFormatException, DataSetConfigNotFoundException,
                                         UnknownDistanceMeasureException, RegisterException,
-                                        UnknownDataSetTypeException, NoDataSetException,
+                                        UnknownProviderException, NoDataSetException,
                                         NumberFormatException, UnknownDataPreprocessorException,
                                         IncompatibleDataSetConfigPreprocessorException,
                                         GoldStandardNotFoundException, GoldStandardConfigurationException,
@@ -891,7 +892,7 @@ public class DataSetConfigTest extends AbstractClustEvalTest {
                                       NoRepositoryFoundException, DataSetNotFoundException,
                                       UnknownDataSetFormatException, DataSetConfigNotFoundException,
                                       UnknownDistanceMeasureException, RegisterException,
-                                      UnknownDataSetTypeException, NoDataSetException,
+                                      UnknownProviderException, NoDataSetException,
                                       NumberFormatException, UnknownDataPreprocessorException,
                                       IncompatibleDataSetConfigPreprocessorException,
                                       GoldStandardNotFoundException, GoldStandardConfigurationException,

@@ -44,9 +44,10 @@ public class ServiceFactory<T> {
         providers = someMap;
     }
 
-    public T getProvider(String key) {
+    public T getProvider(String key) throws UnknownProviderException {
         if (!hasProvider(key)) {
-            throw new RuntimeException("provider " + key + " was not found");
+            throw new UnknownProviderException("provider " + key
+                    + " was not found. Supported providers are " + providers.keySet().toString());
         }
         return providers.get(key);
     }

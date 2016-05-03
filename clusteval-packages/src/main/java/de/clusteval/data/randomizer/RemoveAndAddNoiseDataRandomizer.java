@@ -18,6 +18,7 @@ package de.clusteval.data.randomizer;
 
 import de.clusteval.api.Pair;
 import de.clusteval.api.cluster.IClustering;
+import de.clusteval.api.data.DataSetTypeFactory;
 import de.clusteval.api.data.IDataRandomizer;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IGoldStandard;
@@ -25,6 +26,8 @@ import de.clusteval.api.data.WEBSITE_VISIBILITY;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
+import de.clusteval.api.factory.DataSetFormatFactory;
+import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
@@ -35,8 +38,6 @@ import de.clusteval.data.dataset.RelativeDataSet;
 import de.clusteval.data.dataset.format.AbsoluteDataSetFormat;
 import de.clusteval.data.dataset.format.DataSetFormat;
 import de.clusteval.data.dataset.format.RelativeDataSetFormat;
-import de.clusteval.data.dataset.type.DataSetType;
-import de.clusteval.data.dataset.type.UnknownDataSetTypeException;
 import de.clusteval.data.goldstandard.GoldStandard;
 import de.clusteval.utils.FileUtils;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
@@ -50,6 +51,7 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+import org.openide.util.Exceptions;
 
 /**
  * @author Christian Wiwie
@@ -270,8 +272,7 @@ public class RemoveAndAddNoiseDataRandomizer extends DataRandomizer implements I
                         (AbsoluteDataSetFormat) DataSetFormat
                         .parseFromString(repository,
                                 "MatrixDataSetFormat"),
-                        DataSetType.parseFromString(repository,
-                                "SyntheticDataSetType"),
+                        DataSetTypeFactory.parseFromString("SyntheticDataSetType"),
                         WEBSITE_VISIBILITY.HIDE);
 
                 GoldStandard newGsObject = new GoldStandard(
@@ -280,10 +281,11 @@ public class RemoveAndAddNoiseDataRandomizer extends DataRandomizer implements I
 
                 return new Pair<>(newDs, newGsObject);
 
-            } catch (IOException | UnknownDataSetFormatException | RegisterException |
-                    UnknownDataSetTypeException | InvalidDataSetFormatVersionException |
-                    IllegalArgumentException | UnknownGoldStandardFormatException e) {
+            } catch (IOException | UnknownProviderException | RegisterException |
+                    InvalidDataSetFormatVersionException | IllegalArgumentException | UnknownGoldStandardFormatException e) {
                 e.printStackTrace();
+            } catch (UnknownDataSetFormatException ex) {
+                Exceptions.printStackTrace(ex);
             } finally {
                 rEngine.clear();
                 dataSet.unloadFromMemory();
@@ -421,10 +423,8 @@ public class RemoveAndAddNoiseDataRandomizer extends DataRandomizer implements I
                     false, dataSetFile.lastModified(), dataSetFile,
                     this.onlySimulate ? newAlias
                             + System.currentTimeMillis() : newAlias,
-                    (RelativeDataSetFormat) DataSetFormat.parseFromString(
-                            repository, "SimMatrixDataSetFormat"),
-                    DataSetType.parseFromString(repository,
-                            "SyntheticDataSetType"),
+                    (RelativeDataSetFormat) DataSetFormatFactory.parseFromString("SimMatrixDataSetFormat"),
+                    DataSetTypeFactory.parseFromString("SyntheticDataSetType"),
                     WEBSITE_VISIBILITY.HIDE);
 
             GoldStandard newGsObject = new GoldStandard(this.repository,
@@ -432,10 +432,11 @@ public class RemoveAndAddNoiseDataRandomizer extends DataRandomizer implements I
 
             return new Pair<>(newDs, newGsObject);
 
-        } catch (IOException | UnknownDataSetFormatException | RegisterException |
-                UnknownDataSetTypeException | InvalidDataSetFormatVersionException |
-                IllegalArgumentException | UnknownGoldStandardFormatException e) {
+        } catch (IOException | UnknownProviderException | RegisterException |
+                InvalidDataSetFormatVersionException | IllegalArgumentException | UnknownGoldStandardFormatException e) {
             e.printStackTrace();
+        } catch (UnknownDataSetFormatException ex) {
+            Exceptions.printStackTrace(ex);
         } finally {
             rEngine.clear();
             dataSet.unloadFromMemory();

@@ -19,6 +19,7 @@ package de.clusteval.run.runnable;
 import de.clusteval.api.exceptions.FormatConversionException;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.run.IterationRunnable;
@@ -97,7 +98,7 @@ public abstract class AnalysisIterationRunnable<S extends IStatistic, IW extends
                    InvalidDataSetFormatVersionException, RegisterException,
                    SecurityException, NoSuchMethodException, IllegalArgumentException,
                    InstantiationException, IllegalAccessException,
-                   InvocationTargetException, UnknownDataSetFormatException;
+                   InvocationTargetException, UnknownDataSetFormatException, UnknownProviderException;
 
     /**
      * A helper method for {@link #doRun()}. It returns the absolute path to the
@@ -138,10 +139,10 @@ public abstract class AnalysisIterationRunnable<S extends IStatistic, IW extends
 
             calc.writeOutputTo(new File(output));
         } catch (IOException | SecurityException | IllegalArgumentException | NoSuchMethodException |
-        InstantiationException | IllegalAccessException | InvocationTargetException |
-        StatisticCalculateException | InvalidDataSetFormatVersionException | UnknownDataSetFormatException |                RegisterException | FormatConversionException e) {
+                InstantiationException | IllegalAccessException | InvocationTargetException |
+                StatisticCalculateException | InvalidDataSetFormatVersionException | UnknownDataSetFormatException | RegisterException | FormatConversionException e) {
             e.printStackTrace();
-        } catch (RException ex) {
+        } catch (RException | UnknownProviderException ex) {
             Exceptions.printStackTrace(ex);
         } finally {
             // TODO

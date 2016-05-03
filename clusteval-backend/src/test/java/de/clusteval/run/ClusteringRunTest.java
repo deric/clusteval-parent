@@ -29,21 +29,20 @@ import de.clusteval.api.exceptions.UnknownProgramParameterException;
 import de.clusteval.api.exceptions.UnknownProgramTypeException;
 import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
+import de.clusteval.api.opt.InvalidOptimizationParameterException;
+import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.r.UnknownRProgramException;
-import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
-import de.clusteval.api.opt.InvalidOptimizationParameterException;
-import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
-import de.clusteval.data.dataset.type.UnknownDataSetTypeException;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
 import de.clusteval.framework.repository.Repository;
@@ -57,8 +56,8 @@ import de.clusteval.run.statistics.UnknownRunStatisticException;
 import de.clusteval.utils.AbstractClustEvalTest;
 import java.io.File;
 import java.io.IOException;
-import junit.framework.Assert;
 import org.apache.commons.configuration.ConfigurationException;
+import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 /**
@@ -67,95 +66,96 @@ import org.junit.Test;
  */
 public class ClusteringRunTest extends AbstractClustEvalTest {
 
-	/**
-	 * @throws NumberFormatException
-	 * @throws InterruptedException
-	 * @throws RepositoryConfigurationException
-	 * @throws RepositoryConfigNotFoundException
-	 * @throws InvalidRepositoryException
-	 * @throws RepositoryAlreadyExistsException
-	 * @throws IncompatibleContextException
-	 * @throws IncompatibleDataSetConfigPreprocessorException
-	 * @throws UnknownDataPreprocessorException
-	 * @throws UnknownDataSetTypeException
-	 * @throws UnknownDistanceMeasureException
-	 * @throws UnknownRProgramException
-	 * @throws UnknownProgramTypeException
-	 * @throws RunException
-	 * @throws InvalidOptimizationParameterException
-	 * @throws NoRepositoryFoundException
-	 * @throws UnknownProgramParameterException
-	 * @throws UnknownClusteringQualityMeasureException
-	 * @throws UnknownRunResultFormatException
-	 * @throws IOException
-	 * @throws UnknownParameterType
-	 * @throws UnknownContextException
-	 * @throws RegisterException
-	 * @throws ConfigurationException
-	 * @throws DataConfigNotFoundException
-	 * @throws DataConfigurationException
-	 * @throws NoDataSetException
-	 * @throws GoldStandardConfigNotFoundException
-	 * @throws DataSetConfigNotFoundException
-	 * @throws DataSetNotFoundException
-	 * @throws DataSetConfigurationException
-	 * @throws GoldStandardConfigurationException
-	 * @throws GoldStandardNotFoundException
-	 * @throws UnknownDataSetFormatException
-	 * @throws UnknownRunDataStatisticException
-	 * @throws UnknownRunStatisticException
-	 * @throws UnknownDataStatisticException
-	 * @throws NoOptimizableProgramParameterException
-	 * @throws UnknownParameterOptimizationMethodException
-	 * @throws IncompatibleParameterOptimizationMethodException
-	 * @throws DatabaseConnectException
-	 */
-	@Test
-	public void testNewParser() throws InterruptedException, RepositoryAlreadyExistsException,
-			InvalidRepositoryException, RepositoryConfigNotFoundException, RepositoryConfigurationException,
-			UnknownDataSetFormatException, GoldStandardNotFoundException, GoldStandardConfigurationException,
-			DataSetConfigurationException, DataSetNotFoundException, DataSetConfigNotFoundException,
-			GoldStandardConfigNotFoundException, NoDataSetException, DataConfigurationException,
-			DataConfigNotFoundException, NumberFormatException, ConfigurationException, RegisterException,
-			UnknownContextException, UnknownParameterType, IOException, UnknownRunResultFormatException,
-			UnknownClusteringQualityMeasureException, UnknownProgramParameterException, NoRepositoryFoundException,
-			InvalidOptimizationParameterException, RunException, UnknownProgramTypeException, UnknownRProgramException,
-			UnknownDistanceMeasureException, UnknownDataSetTypeException, UnknownDataPreprocessorException,
-			IncompatibleDataSetConfigPreprocessorException, IncompatibleContextException,
-			IncompatibleParameterOptimizationMethodException, UnknownParameterOptimizationMethodException,
-			NoOptimizableProgramParameterException, UnknownDataStatisticException, UnknownRunStatisticException,
-			UnknownRunDataStatisticException, UnknownRunResultPostprocessorException, UnknownDataRandomizerException,
-			DatabaseConnectException {
-		ClusteringRun run = Parser.parseFromFile(ClusteringRun.class,
-				new File("testCaseRepository/runs/all_vs_DS1_clustering.run").getAbsoluteFile());
+    /**
+     * @throws NumberFormatException
+     * @throws InterruptedException
+     * @throws RepositoryConfigurationException
+     * @throws RepositoryConfigNotFoundException
+     * @throws InvalidRepositoryException
+     * @throws RepositoryAlreadyExistsException
+     * @throws IncompatibleContextException
+     * @throws IncompatibleDataSetConfigPreprocessorException
+     * @throws UnknownDataPreprocessorException
+     * @throws UnknownDataSetTypeException
+     * @throws UnknownDistanceMeasureException
+     * @throws UnknownRProgramException
+     * @throws UnknownProgramTypeException
+     * @throws RunException
+     * @throws InvalidOptimizationParameterException
+     * @throws NoRepositoryFoundException
+     * @throws UnknownProgramParameterException
+     * @throws UnknownClusteringQualityMeasureException
+     * @throws UnknownRunResultFormatException
+     * @throws IOException
+     * @throws UnknownParameterType
+     * @throws UnknownContextException
+     * @throws RegisterException
+     * @throws ConfigurationException
+     * @throws DataConfigNotFoundException
+     * @throws DataConfigurationException
+     * @throws NoDataSetException
+     * @throws GoldStandardConfigNotFoundException
+     * @throws DataSetConfigNotFoundException
+     * @throws DataSetNotFoundException
+     * @throws DataSetConfigurationException
+     * @throws GoldStandardConfigurationException
+     * @throws GoldStandardNotFoundException
+     * @throws UnknownDataSetFormatException
+     * @throws UnknownRunDataStatisticException
+     * @throws UnknownRunStatisticException
+     * @throws UnknownDataStatisticException
+     * @throws NoOptimizableProgramParameterException
+     * @throws UnknownParameterOptimizationMethodException
+     * @throws IncompatibleParameterOptimizationMethodException
+     * @throws DatabaseConnectException
+     */
+    @Test
+    public void testNewParser()
+            throws InterruptedException, RepositoryAlreadyExistsException,
+                   InvalidRepositoryException, RepositoryConfigNotFoundException, RepositoryConfigurationException,
+                   UnknownDataSetFormatException, GoldStandardNotFoundException, GoldStandardConfigurationException,
+                   DataSetConfigurationException, DataSetNotFoundException, DataSetConfigNotFoundException,
+                   GoldStandardConfigNotFoundException, NoDataSetException, DataConfigurationException,
+                   DataConfigNotFoundException, NumberFormatException, ConfigurationException, RegisterException,
+                   UnknownContextException, UnknownParameterType, IOException, UnknownRunResultFormatException,
+                   UnknownClusteringQualityMeasureException, UnknownProgramParameterException, NoRepositoryFoundException,
+                   InvalidOptimizationParameterException, RunException, UnknownProgramTypeException, UnknownRProgramException,
+                   UnknownDistanceMeasureException, UnknownDataPreprocessorException,
+                   IncompatibleDataSetConfigPreprocessorException, IncompatibleContextException,
+                   IncompatibleParameterOptimizationMethodException, UnknownParameterOptimizationMethodException,
+                   NoOptimizableProgramParameterException, UnknownDataStatisticException, UnknownRunStatisticException,
+                   UnknownRunDataStatisticException, UnknownRunResultPostprocessorException, UnknownDataRandomizerException,
+                   DatabaseConnectException {
+        ClusteringRun run = Parser.parseFromFile(ClusteringRun.class,
+                new File("testCaseRepository/runs/all_vs_DS1_clustering.run").getAbsoluteFile());
 
-		getRepository().terminateSupervisorThread();
+        getRepository().terminateSupervisorThread();
 
-            RepositoryController.getInstance().unregister(getRepository());
+        RepositoryController.getInstance().unregister(getRepository());
 
-		Repository newRepo = new Repository(new File("testCaseRepository").getAbsolutePath(), null,
-				new DefaultRepositoryConfig());
-		newRepo.initialize();
-		try {
+        Repository newRepo = new Repository(new File("testCaseRepository").getAbsolutePath(), null,
+                new DefaultRepositoryConfig());
+        newRepo.initialize();
+        try {
 
-			ClusteringRun run2 = Parser.parseFromFile(ClusteringRun.class,
-					new File("testCaseRepository/runs/all_vs_DS1_clustering.run").getAbsoluteFile());
+            ClusteringRun run2 = Parser.parseFromFile(ClusteringRun.class,
+                    new File("testCaseRepository/runs/all_vs_DS1_clustering.run").getAbsoluteFile());
 
-			Assert.assertEquals(run2.logFilePath, run.logFilePath);
-			Assert.assertEquals(run2.runIdentString, run.runIdentString);
-			Assert.assertEquals(run2.startTime, run.startTime);
-			Assert.assertEquals(run2.progress, run.progress);
-			Assert.assertEquals(run2.context, run.context);
-			Assert.assertEquals(run2.results, run.results);
-			Assert.assertEquals(run2.runnables, run.runnables);
-			Assert.assertEquals(run2.dataConfigs, run.dataConfigs);
-			Assert.assertEquals(run2.parameterValues, run.parameterValues);
-			Assert.assertEquals(run2.programConfigs, run.programConfigs);
-			Assert.assertEquals(run2.qualityMeasures, run.qualityMeasures);
-			Assert.assertEquals(run2.runPairs, run.runPairs);
-			Assert.assertEquals(run2.status, run.status);
-		} finally {
-			newRepo.terminateSupervisorThread();
-		}
-	}
+            assertEquals(run2.logFilePath, run.logFilePath);
+            assertEquals(run2.runIdentString, run.runIdentString);
+            assertEquals(run2.startTime, run.startTime);
+            assertEquals(run2.progress, run.progress);
+            assertEquals(run2.context, run.context);
+            assertEquals(run2.results, run.results);
+            assertEquals(run2.runnables, run.runnables);
+            assertEquals(run2.dataConfigs, run.dataConfigs);
+            assertEquals(run2.parameterValues, run.parameterValues);
+            assertEquals(run2.programConfigs, run.programConfigs);
+            assertEquals(run2.qualityMeasures, run.qualityMeasures);
+            assertEquals(run2.runPairs, run.runPairs);
+            assertEquals(run2.status, run.status);
+        } finally {
+            newRepo.terminateSupervisorThread();
+        }
+    }
 }

@@ -10,53 +10,52 @@
  ***************************************************************************** */
 package de.clusteval.run.result.postprocessing;
 
-import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
-import java.io.File;
-import java.io.IOException;
-import org.apache.commons.configuration.ConfigurationException;
-import org.junit.Assert;
-import org.junit.Test;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.api.cluster.IClustering;
-import de.clusteval.cluster.Clustering;
-import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
+import de.clusteval.api.exceptions.DataSetNotFoundException;
+import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
+import de.clusteval.api.exceptions.GoldStandardConfigurationException;
+import de.clusteval.api.exceptions.GoldStandardNotFoundException;
+import de.clusteval.api.exceptions.IncompatibleContextException;
+import de.clusteval.api.exceptions.NoDataSetException;
+import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
+import de.clusteval.api.exceptions.NoRepositoryFoundException;
+import de.clusteval.api.exceptions.UnknownContextException;
+import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
+import de.clusteval.api.exceptions.UnknownParameterType;
+import de.clusteval.api.exceptions.UnknownProgramParameterException;
+import de.clusteval.api.exceptions.UnknownProgramTypeException;
+import de.clusteval.api.exceptions.UnknownRunResultFormatException;
+import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
 import de.clusteval.api.opt.InvalidOptimizationParameterException;
 import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
+import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.r.InvalidRepositoryException;
+import de.clusteval.api.r.RepositoryAlreadyExistsException;
+import de.clusteval.api.r.UnknownRProgramException;
+import de.clusteval.api.stats.UnknownDataStatisticException;
+import de.clusteval.cluster.Clustering;
+import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
-import de.clusteval.api.exceptions.IncompatibleContextException;
-import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
-import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
-import de.clusteval.api.exceptions.NoDataSetException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
-import de.clusteval.data.dataset.type.UnknownDataSetTypeException;
-import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
-import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
-import de.clusteval.api.exceptions.GoldStandardConfigurationException;
-import de.clusteval.api.exceptions.GoldStandardNotFoundException;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
-import de.clusteval.api.stats.UnknownDataStatisticException;
-import de.clusteval.api.r.InvalidRepositoryException;
-import de.clusteval.api.exceptions.NoRepositoryFoundException;
-import de.clusteval.api.program.RegisterException;
-import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
-import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
-import de.clusteval.api.exceptions.UnknownParameterType;
-import de.clusteval.api.exceptions.UnknownProgramParameterException;
-import de.clusteval.api.exceptions.UnknownProgramTypeException;
-import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.run.RunException;
-import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.run.statistics.UnknownRunDataStatisticException;
 import de.clusteval.run.statistics.UnknownRunStatisticException;
 import de.clusteval.utils.AbstractClustEvalTest;
+import java.io.File;
+import java.io.IOException;
+import org.apache.commons.configuration.ConfigurationException;
+import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 
 /**
  * @author Christian Wiwie
@@ -72,8 +71,7 @@ public class TestFuzzyCoefficientThresholdRunResultPostprocessor
                               RepositoryConfigurationException, DataSetNotFoundException,
                               UnknownDataSetFormatException, DataSetConfigurationException,
                               NoDataSetException, NumberFormatException, RegisterException,
-                              NoRepositoryFoundException, UnknownDataSetTypeException,
-                              UnknownDataPreprocessorException, IOException,
+                              NoRepositoryFoundException, UnknownDataPreprocessorException, IOException,
                               InterruptedException, GoldStandardNotFoundException,
                               GoldStandardConfigurationException, DataSetConfigNotFoundException,
                               GoldStandardConfigNotFoundException, DataConfigurationException,
@@ -126,7 +124,7 @@ public class TestFuzzyCoefficientThresholdRunResultPostprocessor
                 "FuzzyCoefficientThresholdRunResultPostprocessor", params);
 
         IClustering postprocessed = proc.postprocess(clustering);
-        Assert.assertEquals(expected, postprocessed);
+        assertEquals(expected, postprocessed);
     }
 
     // TODO: choose another file and add asserts

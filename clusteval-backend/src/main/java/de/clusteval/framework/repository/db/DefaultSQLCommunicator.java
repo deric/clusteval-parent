@@ -27,6 +27,7 @@ import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.data.IGoldStandardConfig;
 import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
+import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.IProgramParameter;
 import de.clusteval.api.program.ParameterSet;
@@ -1776,6 +1777,8 @@ public class DefaultSQLCommunicator extends SQLCommunicator implements Database 
             return true;
         } catch (SQLException e) {
             this.exceptionHandler.handleException(e);
+        } catch (UnknownProviderException ex) {
+            log.error(ex.getMessage());
         }
         return false;
     }

@@ -17,10 +17,11 @@
 package de.clusteval.run.runnable;
 
 import de.clusteval.api.factory.StatisticCalculatorFactory;
+import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.stats.IStatisticCalculator;
 import de.clusteval.run.statistics.RunDataStatistic;
-import de.clusteval.utils.StatisticCalculator;
 import de.clusteval.utils.FileUtils;
+import de.clusteval.utils.StatisticCalculator;
 import java.lang.reflect.InvocationTargetException;
 
 /**
@@ -69,15 +70,15 @@ public class RunDataAnalysisIterationRunnable extends AnalysisIterationRunnable<
     protected StatisticCalculator<RunDataStatistic> getStatisticCalculator()
             throws SecurityException, NoSuchMethodException,
                    IllegalArgumentException, InstantiationException,
-                   IllegalAccessException, InvocationTargetException {
-        /* Class<? extends RunDataStatisticCalculator> calcClass = getRun()                .getRepository().getRunDataStatisticCalculator(
-                        this.getStatistic().getClass().getName());
-        Constructor<? extends RunDataStatisticCalculator> constr = calcClass
-                .getConstructor(IRepository.class, long.class, File.class, List.class, List.class);
-        RunDataStatisticCalculator calc = constr.newInstance(this.getRun()
-                .getRepository(), calcFile.lastModified(), calcFile,
-                this.iterationWrapper.getRunIdentifier(), this.iterationWrapper
-                .getUniqueDataAnalysisRunIdentifier()); */
+                   IllegalAccessException, InvocationTargetException, UnknownProviderException {
+        /* Class<? extends RunDataStatisticCalculator> calcClass = getRun() .getRepository().getRunDataStatisticCalculator(
+         * this.getStatistic().getClass().getName());
+         * Constructor<? extends RunDataStatisticCalculator> constr = calcClass
+         * .getConstructor(IRepository.class, long.class, File.class, List.class, List.class);
+         * RunDataStatisticCalculator calc = constr.newInstance(this.getRun()
+         * .getRepository(), calcFile.lastModified(), calcFile,
+         * this.iterationWrapper.getRunIdentifier(), this.iterationWrapper
+         * .getUniqueDataAnalysisRunIdentifier()); */
 
         IStatisticCalculator calc = StatisticCalculatorFactory.getInstance()
                 .getProvider(getStatistic().getClass().getName());

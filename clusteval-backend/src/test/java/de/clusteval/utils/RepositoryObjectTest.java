@@ -23,14 +23,13 @@ import de.clusteval.api.repository.RepositoryReplaceEvent;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
-import de.clusteval.data.dataset.type.UnknownDataSetTypeException;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RepositoryObject;
 import java.io.File;
 import java.io.IOException;
-import junit.framework.Assert;
 import org.apache.commons.io.FileUtils;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
@@ -55,20 +54,17 @@ public final class RepositoryObjectTest extends AbstractClustEvalTest {
         this.repositoryObject = new StubRepositoryObject(this.getRepository(),
                 false, f.lastModified(), f);
 
-        Assert.assertEquals(f.getAbsolutePath(),
-                this.repositoryObject.getAbsolutePath());
+        assertEquals(f.getAbsolutePath(), repositoryObject.getAbsolutePath());
     }
 
-    ;
-
-	/**
-	 * Test method for
-	 * {@link framework.repository.RepositoryObject#setAbsolutePath(java.io.File)}
-	 * .
-	 *
-	 * @throws Exception
-	 */
-	@Test
+    /**
+     * Test method for
+     * {@link framework.repository.RepositoryObject#setAbsolutePath(java.io.File)}
+     * .
+     *
+     * @throws Exception
+     */
+    @Test
     public void testSetAbsolutePath() throws Exception {
         File f = new File(
                 "testCaseRepository/data/goldstandards/DS1/Zachary_karate_club_gold_standard.txt")
@@ -80,38 +76,32 @@ public final class RepositoryObjectTest extends AbstractClustEvalTest {
                 .getAbsoluteFile();
         this.repositoryObject.setAbsolutePath(f2);
 
-        Assert.assertEquals(f2.getAbsolutePath(),
-                this.repositoryObject.getAbsolutePath());
+        assertEquals(f2.getAbsolutePath(), repositoryObject.getAbsolutePath());
     }
 
-    ;
-
-	/**
-	 * Test method for
-	 * {@link framework.repository.RepositoryObject#getChangeDate()}.
-	 *
-	 * @throws Exception
-	 */
-	@Test
+    /**
+     * Test method for
+     * {@link framework.repository.RepositoryObject#getChangeDate()}.
+     *
+     * @throws Exception
+     */
+    @Test
     public void testGetChangeDate() throws Exception {
         File f = new File(
                 "testCaseRepository/data/goldstandards/DS1/Zachary_karate_club_gold_standard.txt")
                 .getAbsoluteFile();
         this.repositoryObject = new StubRepositoryObject(this.getRepository(),
                 false, f.lastModified(), f);
-        Assert.assertEquals(f.lastModified(),
-                this.repositoryObject.getChangeDate());
+        assertEquals(f.lastModified(), repositoryObject.getChangeDate());
     }
 
-    ;
-
-	/**
-	 * Test method for
-	 * {@link framework.repository.RepositoryObject#equals(java.lang.Object)}.
-	 *
-	 * @throws Exception
-	 */
-	@Test
+    /**
+     * Test method for
+     * {@link framework.repository.RepositoryObject#equals(java.lang.Object)}.
+     *
+     * @throws Exception
+     */
+    @Test
     public void testEqualsObject() throws Exception {
         File f = new File(
                 "testCaseRepository/data/goldstandards/DS1/Zachary_karate_club_gold_standard.txt")
@@ -119,53 +109,51 @@ public final class RepositoryObjectTest extends AbstractClustEvalTest {
         this.repositoryObject = new StubRepositoryObject(this.getRepository(),
                 false, f.lastModified(), f);
 
-            /*
-             * Identity
-             */
-            Assert.assertEquals(new StubRepositoryObject(this.getRepository(),
-                    false, f.lastModified(), f), this.repositoryObject);
-            /*
-             * Mod-date is ignored
-             */
-            Assert.assertEquals(new StubRepositoryObject(this.getRepository(),
-                    false, f.lastModified() - 1, f), this.repositoryObject);
+        /*
+         * Identity
+         */
+        assertEquals(new StubRepositoryObject(this.getRepository(),
+                false, f.lastModified(), f), this.repositoryObject);
+        /*
+         * Mod-date is ignored
+         */
+        assertEquals(new StubRepositoryObject(this.getRepository(),
+                false, f.lastModified() - 1, f), this.repositoryObject);
 
-            Repository repository2 = new Repository(
-                    new File("repository2").getAbsolutePath(), null);
+        Repository repository2 = new Repository(
+                new File("repository2").getAbsolutePath(), null);
 
-            /*
-             * Different repositories
-             */
-            Assert.assertFalse(new StubRepositoryObject(repository2, false, f
-                    .lastModified(), f).equals(this.repositoryObject));
+        /*
+         * Different repositories
+         */
+        assertFalse(new StubRepositoryObject(repository2, false, f
+                .lastModified(), f).equals(this.repositoryObject));
 
-            FileUtils.deleteDirectory(new File("repository2").getAbsoluteFile());
+        FileUtils.deleteDirectory(new File("repository2").getAbsoluteFile());
 
-            File f2 = new File(
-                    "testCaseRepository/data/goldstandards/sfld/sfld_brown_et_al_amidohydrolases_families_gold_standard.txt");
-            Assert.assertFalse(this.repositoryObject
-                    .equals(new StubRepositoryObject(this.getRepository(), false,
-                            f2.lastModified(), f2)));
+        File f2 = new File(
+                "testCaseRepository/data/goldstandards/sfld/sfld_brown_et_al_amidohydrolases_families_gold_standard.txt");
+        assertFalse(this.repositoryObject
+                .equals(new StubRepositoryObject(this.getRepository(), false,
+                        f2.lastModified(), f2)));
 
         /*
          * Different classes
          */
-        Assert.assertFalse(this.repositoryObject
+        assertFalse(this.repositoryObject
                 .equals(new StubRepositoryObject(this.getRepository(), false,
                         f2.lastModified(), f2)));
     }
 
-    ;
-
-	/**
-	 * Test method for
-	 * {@link framework.repository.RepositoryObject#copyTo(java.io.File)}.
-	 *
-	 * @throws IOException
-	 * @throws RegisterException
-	 *
-	 */
-	@Test
+    /**
+     * Test method for
+     * {@link framework.repository.RepositoryObject#copyTo(java.io.File)}.
+     *
+     * @throws IOException
+     * @throws RegisterException
+     *
+     */
+    @Test
     public void testCopyToFile() throws IOException, RegisterException {
         File f = new File(
                 "testCaseRepository/data/goldstandards/DS1/Zachary_karate_club_gold_standard.txt")
@@ -179,7 +167,7 @@ public final class RepositoryObjectTest extends AbstractClustEvalTest {
             de.clusteval.utils.FileUtils.delete(destF);
         }
         this.repositoryObject.copyTo(destF);
-            assertTrue(destF.exists());
+        assertTrue(destF.exists());
         FileUtils.contentEquals(f, destF);
         de.clusteval.utils.FileUtils.delete(destF);
     }
@@ -299,7 +287,6 @@ public final class RepositoryObjectTest extends AbstractClustEvalTest {
      * @throws GoldStandardConfigNotFoundException
      * @throws UnknownDistanceMeasureException
      * @throws RegisterException
-     * @throws UnknownDataSetTypeException
      * @throws NoDataSetException
      * @throws UnknownDataPreprocessorException
      * @throws NumberFormatException
@@ -314,7 +301,7 @@ public final class RepositoryObjectTest extends AbstractClustEvalTest {
                                                    DataSetConfigNotFoundException,
                                                    GoldStandardConfigNotFoundException,
                                                    UnknownDistanceMeasureException, RegisterException,
-                                                   UnknownDataSetTypeException, NoDataSetException,
+                                                   NoDataSetException,
                                                    NumberFormatException, UnknownDataPreprocessorException,
                                                    IncompatibleDataSetConfigPreprocessorException {
 

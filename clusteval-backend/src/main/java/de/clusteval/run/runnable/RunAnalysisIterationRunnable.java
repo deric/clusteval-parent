@@ -17,10 +17,11 @@
 package de.clusteval.run.runnable;
 
 import de.clusteval.api.factory.StatisticCalculatorFactory;
+import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.stats.IStatisticCalculator;
 import de.clusteval.run.statistics.RunStatistic;
-import de.clusteval.utils.StatisticCalculator;
 import de.clusteval.utils.FileUtils;
+import de.clusteval.utils.StatisticCalculator;
 import java.lang.reflect.InvocationTargetException;
 
 /**
@@ -65,7 +66,7 @@ public class RunAnalysisIterationRunnable extends AnalysisIterationRunnable<RunS
     protected StatisticCalculator<RunStatistic> getStatisticCalculator()
             throws SecurityException, NoSuchMethodException,
                    IllegalArgumentException, InstantiationException,
-                   IllegalAccessException, InvocationTargetException {
+                   IllegalAccessException, InvocationTargetException, UnknownProviderException {
         /* Class<? extends RunStatisticCalculator> calcClass = getRun()
          * .getRepository().getRunStatisticCalculator(
          * getStatistic().getClass().getName());
