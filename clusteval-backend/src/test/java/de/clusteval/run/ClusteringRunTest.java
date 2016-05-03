@@ -21,7 +21,6 @@ import de.clusteval.api.exceptions.IncompatibleContextException;
 import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
-import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.exceptions.UnknownParameterType;
@@ -118,7 +117,7 @@ public class ClusteringRunTest extends AbstractClustEvalTest {
                    DataSetConfigurationException, DataSetNotFoundException, DataSetConfigNotFoundException,
                    GoldStandardConfigNotFoundException, NoDataSetException, DataConfigurationException,
                    DataConfigNotFoundException, NumberFormatException, ConfigurationException, RegisterException,
-                   UnknownContextException, UnknownParameterType, IOException, UnknownRunResultFormatException,
+                   UnknownParameterType, IOException, UnknownRunResultFormatException,
                    UnknownClusteringQualityMeasureException, UnknownProgramParameterException, NoRepositoryFoundException,
                    InvalidOptimizationParameterException, RunException, UnknownProgramTypeException, UnknownRProgramException,
                    UnknownDistanceMeasureException, UnknownDataPreprocessorException,

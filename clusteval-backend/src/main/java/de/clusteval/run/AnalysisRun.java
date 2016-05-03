@@ -10,12 +10,12 @@
  ***************************************************************************** */
 package de.clusteval.run;
 
-import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.IContext;
 import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RepositoryEvent;
 import de.clusteval.api.repository.RepositoryRemoveEvent;
 import de.clusteval.api.stats.IStatistic;
-import de.clusteval.context.Context;
 import java.io.File;
 import java.util.List;
 
@@ -52,7 +52,7 @@ public abstract class AnalysisRun<S extends IStatistic> extends Run {
      *                   analysis.
      * @throws RegisterException
      */
-    public AnalysisRun(IRepository repository, final Context context,
+    public AnalysisRun(IRepository repository, final IContext context,
             long changeDate, File absPath, List<S> statistics)
             throws RegisterException {
         super(repository, context, changeDate, absPath);

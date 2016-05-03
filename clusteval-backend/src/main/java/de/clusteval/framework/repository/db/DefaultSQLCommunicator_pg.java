@@ -32,7 +32,7 @@ import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
 import de.clusteval.api.cluster.ClusteringEvaluationParameters;
-import de.clusteval.context.Context;
+import de.clusteval.api.AbsContext;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.DataSet;
 import de.clusteval.data.dataset.DataSetConfig;
@@ -3379,7 +3379,7 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
 
     @SuppressWarnings("unused")
     @Override
-    protected boolean registerContextClass(Class<? extends Context> object) {
+    protected boolean registerContextClass(Class<? extends AbsContext> object) {
         // TODO think about how to integrate contexts into the website &
         // database
         return false;
@@ -3387,7 +3387,7 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
 
     @SuppressWarnings("unused")
     @Override
-    protected boolean unregisterContextClass(Class<? extends Context> object) {
+    protected boolean unregisterContextClass(Class<? extends AbsContext> object) {
         // TODO think about how to integrate contexts into the website &
         // database
         return false;

@@ -12,6 +12,8 @@
  */
 package de.clusteval.cluster.quality;
 
+import de.clusteval.api.ContextFactory;
+import de.clusteval.api.IContext;
 import de.clusteval.api.Precision;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
@@ -23,7 +25,6 @@ import de.clusteval.api.data.IDataSetConfig;
 import de.clusteval.api.exceptions.FormatConversionException;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
-import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.factory.UnknownProviderException;
@@ -34,7 +35,6 @@ import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.cluster.Clustering;
-import de.clusteval.context.Context;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
 import de.clusteval.data.dataset.format.ConversionStandardToInputConfiguration;
@@ -62,11 +62,11 @@ public class DunnIndexRClusteringQualityMeasureTest extends AbstractClustEvalTes
                               RepositoryConfigurationException, NoRepositoryFoundException,
                               RegisterException, NoSuchAlgorithmException,
                               FormatConversionException, UnknownDistanceMeasureException,
-                              UnknownContextException, RNotAvailableException,
+                              RNotAvailableException,
                               RCalculationException, InterruptedException, RException, UnknownProviderException {
         try {
 
-            Context context = Context.parseFromString(getRepository(), "ClusteringContext");
+            IContext context = ContextFactory.parseFromString(getRepository(), "ClusteringContext");
             Clustering clustering = new Clustering(this.getRepository(),
                     System.currentTimeMillis(), new File(""));
             Cluster cluster1 = new Cluster("1");

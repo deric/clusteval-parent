@@ -26,7 +26,7 @@ import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.IRunResultFormat;
 import de.clusteval.cluster.Clustering;
-import de.clusteval.context.Context;
+import de.clusteval.api.AbsContext;
 import de.clusteval.api.data.DataSetFormat;
 import de.clusteval.program.Program;
 import de.clusteval.api.run.RunResultFormat;
@@ -189,7 +189,7 @@ public class ClusterDPClusteringRProgram extends RelativeDataRProgram {
     }
 
     @Override
-    public Context getContext() throws UnknownContextException {
-        return Context.parseFromString(repository, "ClusteringContext");
+    public AbsContext getContext() throws UnknownContextException {
+        return AbsContext.parseFromString(repository, "ClusteringContext");
     }
 }

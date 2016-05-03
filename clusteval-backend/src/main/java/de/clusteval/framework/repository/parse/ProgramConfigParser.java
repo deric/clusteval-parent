@@ -16,6 +16,9 @@
  */
 package de.clusteval.framework.repository.parse;
 
+import de.clusteval.api.ContextFactory;
+import de.clusteval.api.IContext;
+import de.clusteval.api.data.DataSetFormat;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
@@ -25,7 +28,6 @@ import de.clusteval.api.exceptions.IncompatibleContextException;
 import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
-import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.exceptions.UnknownParameterType;
@@ -40,16 +42,15 @@ import de.clusteval.api.program.IProgramParameter;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.run.IRunResultFormat;
+import de.clusteval.api.run.RunResultFormatFactory;
 import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
-import de.clusteval.context.Context;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
-import de.clusteval.api.data.DataSetFormat;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
 import de.clusteval.program.Program;
@@ -59,7 +60,6 @@ import de.clusteval.program.StandaloneProgram;
 import de.clusteval.program.r.RProgram;
 import de.clusteval.program.r.RProgramConfig;
 import de.clusteval.run.RunException;
-import de.clusteval.api.run.RunResultFormat;
 import de.clusteval.run.statistics.UnknownRunDataStatisticException;
 import de.clusteval.run.statistics.UnknownRunStatisticException;
 import de.clusteval.utils.FileUtils;
@@ -90,7 +90,7 @@ class ProgramConfigParser extends RepositoryObjectParser<ProgramConfig> {
     @Override
     public void parseFromFile(File absPath)
             throws NoRepositoryFoundException, ConfigurationException,
-                   UnknownContextException, UnknownClusteringQualityMeasureException, RunException,
+                   UnknownClusteringQualityMeasureException, RunException,
                    UnknownDataSetFormatException, FileNotFoundException, RegisterException, UnknownParameterType,
                    IncompatibleContextException, UnknownRunResultFormatException, InvalidOptimizationParameterException,
                    UnknownProgramParameterException, UnknownProgramTypeException, UnknownRProgramException,
@@ -107,12 +107,12 @@ class ProgramConfigParser extends RepositoryObjectParser<ProgramConfig> {
         log.debug("Parsing program config \"" + absPath + "\"");
         getProps().setThrowExceptionOnMissing(true);
 
-        Context context;
+        IContext context;
         // by default we are in a clustering context
         if (getProps().containsKey("context")) {
-            context = Context.parseFromString(repo, getProps().getString("context"));
+            context = ContextFactory.parseFromString(repo, getProps().getString("context"));
         } else {
-            context = Context.parseFromString(repo, "ClusteringContext");
+            context = ContextFactory.parseFromString(repo, "ClusteringContext");
         }
 
         /**
@@ -160,7 +160,7 @@ class ProgramConfigParser extends RepositoryObjectParser<ProgramConfig> {
                 format.setNormalized(expectsNormalizedDataSet);
             }
 
-            runresultFormat = RunResultFormat.parseFromString(repo, outputFormat);
+            runresultFormat = RunResultFormatFactory.parseFromString(repo, outputFormat);
 
             String alias = getProps().getString("alias");
 

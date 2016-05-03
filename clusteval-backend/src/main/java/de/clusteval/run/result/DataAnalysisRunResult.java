@@ -21,7 +21,6 @@ import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.exceptions.RunResultParseException;
-import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
@@ -190,13 +189,11 @@ public class DataAnalysisRunResult extends AnalysisRunResult<IDataConfig, IDataS
      * @throws RepositoryConfigNotFoundException
      * @throws ConfigurationException
      * @throws RegisterException
-     * @throws UnknownDataSetTypeException
      * @throws NoDataSetException
      * @throws NumberFormatException
      * @throws UnknownRunDataStatisticException
      * @throws UnknownDataPreprocessorException
      * @throws IncompatibleDataSetConfigPreprocessorException
-     * @throws UnknownContextException
      * @throws IncompatibleContextException
      * @throws UnknownParameterType
      * @throws InterruptedException
@@ -220,7 +217,7 @@ public class DataAnalysisRunResult extends AnalysisRunResult<IDataConfig, IDataS
                    RepositoryConfigNotFoundException, RepositoryConfigurationException, ConfigurationException,
                    RegisterException, NumberFormatException, NoDataSetException,
                    UnknownRunDataStatisticException, UnknownDataPreprocessorException,
-                   IncompatibleDataSetConfigPreprocessorException, UnknownContextException,
+                   IncompatibleDataSetConfigPreprocessorException,
                    IncompatibleContextException, UnknownParameterType, InterruptedException,
                    UnknownRunResultPostprocessorException, UnknownDataRandomizerException, FileNotFoundException, UnknownProviderException {
         try {

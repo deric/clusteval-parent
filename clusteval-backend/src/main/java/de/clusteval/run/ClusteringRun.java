@@ -13,14 +13,14 @@
 package de.clusteval.run;
 
 import de.clusteval.api.ClusteringEvaluation;
+import de.clusteval.api.IContext;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.IProgramParameter;
-import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.IScheduler;
-import de.clusteval.context.Context;
 import de.clusteval.run.result.postprocessing.RunResultPostprocessor;
 import de.clusteval.run.runnable.ClusteringRunRunnable;
 import de.clusteval.run.runnable.ExecutionRunRunnable;
@@ -53,7 +53,7 @@ public class ClusteringRun extends ExecutionRun {
      * @param maxExecutionTimes
      * @throws RegisterException
      */
-    public ClusteringRun(IRepository repository, final Context context,
+    public ClusteringRun(IRepository repository, final IContext context,
             long changeDate, File absPath, List<IProgramConfig> programConfigs,
             List<IDataConfig> dataConfigs,
             List<ClusteringEvaluation> qualityMeasures,

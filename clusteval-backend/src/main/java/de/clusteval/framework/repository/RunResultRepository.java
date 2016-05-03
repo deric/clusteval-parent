@@ -23,7 +23,7 @@ import de.clusteval.api.repository.StaticRepositoryEntityMap;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
-import de.clusteval.context.Context;
+import de.clusteval.api.AbsContext;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.DataSet;
 import de.clusteval.data.dataset.DataSetConfig;
@@ -239,8 +239,8 @@ public class RunResultRepository extends Repository implements IRepository {
         this.dynamicRepositoryEntities.put(RProgram.class,
                 this.parent.getDynamicEntities().get(RProgram.class));
 
-        this.dynamicRepositoryEntities.put(Context.class,
-                this.parent.getDynamicEntities().get(Context.class));
+        this.dynamicRepositoryEntities.put(AbsContext.class,
+                this.parent.getDynamicEntities().get(AbsContext.class));
 
         this.dynamicRepositoryEntities.put(ParameterOptimizationMethod.class,
                 this.parent.getDynamicEntities()

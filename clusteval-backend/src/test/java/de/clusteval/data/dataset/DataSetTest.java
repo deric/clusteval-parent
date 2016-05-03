@@ -12,10 +12,12 @@ package de.clusteval.data.dataset;
 
 import ch.qos.logback.classic.Level;
 import de.clusteval.api.Precision;
+import de.clusteval.api.data.DataSetFormat;
 import de.clusteval.api.data.DataSetTypeFactory;
 import de.clusteval.api.data.DistanceMeasure;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetFormat;
+import de.clusteval.api.data.RelativeDataSetFormat;
 import de.clusteval.api.data.WEBSITE_VISIBILITY;
 import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.api.exceptions.DatabaseConnectException;
@@ -28,7 +30,6 @@ import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
-import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.exceptions.UnknownParameterType;
@@ -53,8 +54,6 @@ import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
 import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
 import de.clusteval.data.dataset.format.ConversionStandardToInputConfiguration;
-import de.clusteval.api.data.DataSetFormat;
-import de.clusteval.api.data.RelativeDataSetFormat;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
 import de.clusteval.framework.ClustevalBackendServer;
@@ -136,7 +135,7 @@ public class DataSetTest extends AbstractClustEvalTest {
                                       DataSetConfigNotFoundException,
                                       GoldStandardConfigNotFoundException, DataConfigurationException,
                                       DataConfigNotFoundException, NumberFormatException,
-                                      ConfigurationException, UnknownContextException,
+                                      ConfigurationException,
                                       FileNotFoundException, UnknownParameterType,
                                       UnknownClusteringQualityMeasureException, RunException,
                                       IncompatibleContextException, UnknownRunResultFormatException,
@@ -232,7 +231,7 @@ public class DataSetTest extends AbstractClustEvalTest {
                    DataSetConfigNotFoundException,
                    GoldStandardConfigNotFoundException, DataConfigurationException,
                    DataConfigNotFoundException, NumberFormatException,
-                   ConfigurationException, UnknownContextException,
+                   ConfigurationException,
                    UnknownParameterType, UnknownClusteringQualityMeasureException,
                    RunException, IncompatibleContextException,
                    UnknownRunResultFormatException,
@@ -317,7 +316,7 @@ public class DataSetTest extends AbstractClustEvalTest {
                                         DataSetConfigNotFoundException,
                                         GoldStandardConfigNotFoundException, DataConfigurationException,
                                         DataConfigNotFoundException, NumberFormatException,
-                                        ConfigurationException, UnknownContextException,
+                                        ConfigurationException,
                                         FileNotFoundException, UnknownParameterType,
                                         UnknownClusteringQualityMeasureException, RunException,
                                         IncompatibleContextException, UnknownRunResultFormatException,
@@ -399,7 +398,7 @@ public class DataSetTest extends AbstractClustEvalTest {
                                            DataSetConfigNotFoundException,
                                            GoldStandardConfigNotFoundException, DataConfigurationException,
                                            DataConfigNotFoundException, NumberFormatException,
-                                           ConfigurationException, UnknownContextException,
+                                           ConfigurationException,
                                            FileNotFoundException, UnknownParameterType,
                                            UnknownClusteringQualityMeasureException, RunException,
                                            IncompatibleContextException, UnknownRunResultFormatException,
@@ -484,7 +483,7 @@ public class DataSetTest extends AbstractClustEvalTest {
                    DataSetConfigNotFoundException,
                    GoldStandardConfigNotFoundException, DataConfigurationException,
                    DataConfigNotFoundException, NumberFormatException,
-                   ConfigurationException, UnknownContextException,
+                   ConfigurationException,
                    FileNotFoundException, UnknownParameterType,
                    UnknownClusteringQualityMeasureException, RunException,
                    IncompatibleContextException, UnknownRunResultFormatException,
@@ -555,7 +554,7 @@ public class DataSetTest extends AbstractClustEvalTest {
                                               DataSetConfigNotFoundException,
                                               GoldStandardConfigNotFoundException, DataConfigurationException,
                                               DataConfigNotFoundException, NumberFormatException,
-                                              ConfigurationException, UnknownContextException,
+                                              ConfigurationException,
                                               FileNotFoundException, UnknownParameterType,
                                               UnknownClusteringQualityMeasureException, RunException,
                                               IncompatibleContextException, UnknownRunResultFormatException,
@@ -630,7 +629,7 @@ public class DataSetTest extends AbstractClustEvalTest {
                                           DataSetConfigNotFoundException,
                                           GoldStandardConfigNotFoundException, DataConfigurationException,
                                           DataConfigNotFoundException, NumberFormatException,
-                                          ConfigurationException, UnknownContextException,
+                                          ConfigurationException,
                                           FileNotFoundException, UnknownParameterType,
                                           UnknownClusteringQualityMeasureException, RunException,
                                           IncompatibleContextException, UnknownRunResultFormatException,
@@ -703,7 +702,7 @@ public class DataSetTest extends AbstractClustEvalTest {
                                           DataSetConfigNotFoundException,
                                           GoldStandardConfigNotFoundException, DataConfigurationException,
                                           DataConfigNotFoundException, NumberFormatException,
-                                          ConfigurationException, UnknownContextException,
+                                          ConfigurationException,
                                           FileNotFoundException, UnknownParameterType,
                                           UnknownClusteringQualityMeasureException, RunException,
                                           IncompatibleContextException, UnknownRunResultFormatException,
@@ -778,7 +777,7 @@ public class DataSetTest extends AbstractClustEvalTest {
                                          DataSetConfigNotFoundException,
                                          GoldStandardConfigNotFoundException, DataConfigurationException,
                                          DataConfigNotFoundException, NumberFormatException,
-                                         ConfigurationException, UnknownContextException,
+                                         ConfigurationException,
                                          FileNotFoundException, UnknownParameterType,
                                          UnknownClusteringQualityMeasureException, RunException,
                                          IncompatibleContextException, UnknownRunResultFormatException,
@@ -851,7 +850,7 @@ public class DataSetTest extends AbstractClustEvalTest {
                                       DataSetConfigNotFoundException,
                                       GoldStandardConfigNotFoundException, DataConfigurationException,
                                       DataConfigNotFoundException, NumberFormatException,
-                                      ConfigurationException, UnknownContextException,
+                                      ConfigurationException,
                                       FileNotFoundException, UnknownParameterType,
                                       UnknownClusteringQualityMeasureException, RunException,
                                       IncompatibleContextException, UnknownRunResultFormatException,
@@ -934,7 +933,7 @@ public class DataSetTest extends AbstractClustEvalTest {
                                             DataSetConfigNotFoundException,
                                             GoldStandardConfigNotFoundException, DataConfigurationException,
                                             DataConfigNotFoundException, NumberFormatException,
-                                            ConfigurationException, UnknownContextException,
+                                            ConfigurationException,
                                             UnknownParameterType, UnknownClusteringQualityMeasureException,
                                             RunException, IncompatibleContextException,
                                             UnknownRunResultFormatException,
@@ -1031,7 +1030,7 @@ public class DataSetTest extends AbstractClustEvalTest {
                                                  DataSetConfigNotFoundException,
                                                  GoldStandardConfigNotFoundException, DataConfigurationException,
                                                  DataConfigNotFoundException, NumberFormatException,
-                                                 ConfigurationException, UnknownContextException,
+                                                 ConfigurationException,
                                                  UnknownParameterType, UnknownClusteringQualityMeasureException,
                                                  RunException, IncompatibleContextException,
                                                  UnknownRunResultFormatException,
@@ -1130,7 +1129,7 @@ public class DataSetTest extends AbstractClustEvalTest {
                                               DataSetConfigNotFoundException,
                                               GoldStandardConfigNotFoundException, DataConfigurationException,
                                               DataConfigNotFoundException, NumberFormatException,
-                                              ConfigurationException, UnknownContextException,
+                                              ConfigurationException,
                                               UnknownParameterType, UnknownClusteringQualityMeasureException,
                                               RunException, IncompatibleContextException,
                                               UnknownRunResultFormatException,
@@ -1319,7 +1318,7 @@ public class DataSetTest extends AbstractClustEvalTest {
                    DataSetConfigNotFoundException,
                    GoldStandardConfigNotFoundException, DataConfigurationException,
                    DataConfigNotFoundException, ConfigurationException,
-                   UnknownContextException, UnknownParameterType,
+                   UnknownParameterType,
                    UnknownClusteringQualityMeasureException, RunException,
                    IncompatibleContextException, UnknownRunResultFormatException,
                    InvalidOptimizationParameterException,
@@ -1405,7 +1404,7 @@ public class DataSetTest extends AbstractClustEvalTest {
                                                GoldStandardConfigurationException, DataSetConfigNotFoundException,
                                                GoldStandardConfigNotFoundException, DataConfigurationException,
                                                DataConfigNotFoundException, NumberFormatException,
-                                               ConfigurationException, UnknownContextException,
+                                               ConfigurationException,
                                                UnknownParameterType, UnknownClusteringQualityMeasureException,
                                                RunException, IncompatibleContextException,
                                                UnknownRunResultFormatException,
@@ -1506,7 +1505,7 @@ public class DataSetTest extends AbstractClustEvalTest {
                                                  GoldStandardConfigurationException, DataSetConfigNotFoundException,
                                                  GoldStandardConfigNotFoundException, DataConfigurationException,
                                                  DataConfigNotFoundException, NumberFormatException,
-                                                 ConfigurationException, UnknownContextException,
+                                                 ConfigurationException,
                                                  UnknownParameterType, UnknownClusteringQualityMeasureException,
                                                  RunException, IncompatibleContextException,
                                                  UnknownRunResultFormatException,
@@ -1563,7 +1562,7 @@ public class DataSetTest extends AbstractClustEvalTest {
                    DataSetConfigNotFoundException,
                    GoldStandardConfigNotFoundException, DataConfigurationException,
                    DataConfigNotFoundException, ConfigurationException,
-                   UnknownContextException, UnknownParameterType,
+                   UnknownParameterType,
                    UnknownClusteringQualityMeasureException, RunException,
                    IncompatibleContextException, UnknownRunResultFormatException,
                    InvalidOptimizationParameterException,
@@ -1618,7 +1617,7 @@ public class DataSetTest extends AbstractClustEvalTest {
                    DataSetConfigNotFoundException,
                    GoldStandardConfigNotFoundException, DataConfigurationException,
                    DataConfigNotFoundException, ConfigurationException,
-                   UnknownContextException, UnknownParameterType,
+                   UnknownParameterType,
                    UnknownClusteringQualityMeasureException, RunException,
                    IncompatibleContextException, UnknownRunResultFormatException,
                    InvalidOptimizationParameterException,

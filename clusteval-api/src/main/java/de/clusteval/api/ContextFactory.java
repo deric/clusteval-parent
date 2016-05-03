@@ -14,9 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.clusteval.api.factory;
+package de.clusteval.api;
 
-import de.clusteval.api.run.IRunResult;
+import de.clusteval.api.factory.ServiceFactory;
+import de.clusteval.api.factory.UnknownProviderException;
+import de.clusteval.api.repository.IRepository;
+import java.io.File;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import org.openide.util.Lookup;
@@ -25,23 +28,33 @@ import org.openide.util.Lookup;
  *
  * @author deric
  */
-public class RunResultFactory extends ServiceFactory<IRunResult> {
+public class ContextFactory extends ServiceFactory<IContext> {
 
-    private static RunResultFactory instance;
+    private static ContextFactory instance;
 
-    public static RunResultFactory getInstance() {
+    public static ContextFactory getInstance() {
         if (instance == null) {
-            instance = new RunResultFactory();
+            instance = new ContextFactory();
         }
         return instance;
     }
 
-    private RunResultFactory() {
+    private ContextFactory() {
         providers = new LinkedHashMap<>();
-        Collection<? extends IRunResult> list = Lookup.getDefault().lookupAll(IRunResult.class);
-        for (IRunResult c : list) {
+        Collection<? extends IContext> list = Lookup.getDefault().lookupAll(IContext.class);
+        for (IContext c : list) {
             providers.put(c.getName(), c);
         }
         sort();
+    }
+
+    public static IContext parseFromString(String name) throws UnknownProviderException {
+        return getInstance().getProvider(name);
+    }
+
+    public static IContext parseFromString(IRepository repo, String name) throws UnknownProviderException {
+        IContext ctx = getInstance().getProvider(name);
+        ctx.init(repo, System.currentTimeMillis(), new File(name));
+        return ctx;
     }
 }

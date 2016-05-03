@@ -12,28 +12,28 @@
  */
 package de.clusteval.cluster.quality;
 
-import de.clusteval.api.cluster.ClusteringEvaluationParameters;
+import de.clusteval.api.ContextFactory;
+import de.clusteval.api.IContext;
 import de.clusteval.api.Precision;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
+import de.clusteval.api.cluster.ClusteringEvaluationParameters;
+import de.clusteval.api.data.DataSetFormat;
+import de.clusteval.api.data.DistanceMeasure;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetConfig;
 import de.clusteval.api.exceptions.FormatConversionException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
-import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RCalculationException;
 import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
-import de.clusteval.api.program.RegisterException;
 import de.clusteval.cluster.Clustering;
-import de.clusteval.context.Context;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
 import de.clusteval.data.dataset.format.ConversionStandardToInputConfiguration;
-import de.clusteval.api.data.DataSetFormat;
-import de.clusteval.api.data.DistanceMeasure;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
 import de.clusteval.utils.AbstractClustEvalTest;
@@ -59,11 +59,11 @@ public class DaviesBouldinIndexRClusteringQualityMeasureTest extends AbstractClu
                               RepositoryConfigurationException, NoRepositoryFoundException,
                               RegisterException, NoSuchAlgorithmException,
                               FormatConversionException, UnknownDistanceMeasureException,
-                              UnknownContextException, RNotAvailableException,
+                              RNotAvailableException,
                               RCalculationException {
         try {
 
-            Context context = Context.parseFromString(getRepository(), "ClusteringContext");
+            IContext context = ContextFactory.parseFromString(getRepository(), "ClusteringContext");
 
             Clustering clustering = new Clustering(this.getRepository(),
                     System.currentTimeMillis(), new File(""));

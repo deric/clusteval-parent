@@ -22,7 +22,7 @@ public enum RUN_STATUS {
      */
     SCHEDULED,
     /**
-     * As soon as ressourcess are available, the scheduler starts the job and
+     * As soon as ressources are available, the scheduler starts the job and
      * its status is changed to RUNNING.
      */
     RUNNING,

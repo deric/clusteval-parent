@@ -16,10 +16,13 @@
  */
 package de.clusteval.framework.repository.parse;
 
+import de.clusteval.api.data.AbsoluteDataSetFormat;
+import de.clusteval.api.data.DataSetFormat;
 import de.clusteval.api.data.DataSetTypeFactory;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.data.IDataSetType;
+import de.clusteval.api.data.RelativeDataSetFormat;
 import de.clusteval.api.data.WEBSITE_VISIBILITY;
 import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
@@ -29,7 +32,6 @@ import de.clusteval.api.exceptions.IncompatibleContextException;
 import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
-import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.exceptions.UnknownParameterType;
@@ -54,9 +56,6 @@ import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.data.dataset.RelativeDataSet;
-import de.clusteval.api.data.AbsoluteDataSetFormat;
-import de.clusteval.api.data.DataSetFormat;
-import de.clusteval.api.data.RelativeDataSetFormat;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
 import de.clusteval.framework.repository.RunResultRepository;
@@ -91,7 +90,7 @@ class DataSetParser extends RepositoryObjectParser<DataSet> {
     @Override
     public void parseFromFile(File absPath)
             throws NoRepositoryFoundException, ConfigurationException,
-                   UnknownContextException, UnknownClusteringQualityMeasureException, RunException,
+                   UnknownClusteringQualityMeasureException, RunException,
                    UnknownDataSetFormatException, FileNotFoundException, RegisterException, UnknownParameterType,
                    IncompatibleContextException, UnknownRunResultFormatException, InvalidOptimizationParameterException,
                    UnknownProgramParameterException, UnknownProgramTypeException, UnknownRProgramException,

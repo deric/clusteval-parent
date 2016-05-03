@@ -10,18 +10,16 @@
  ***************************************************************************** */
 package de.clusteval.run;
 
-import de.clusteval.api.IContext;
 import de.clusteval.api.data.IDataSetConfig;
 import de.clusteval.api.data.IGoldStandardConfig;
 import de.clusteval.api.opt.IParameterOptimizationMethod;
 import de.clusteval.api.program.IProgramConfig;
-import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.ISupervisorThread;
 import de.clusteval.api.stats.IRunDataStatistic;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethodFinderThread;
-import de.clusteval.context.ContextFinderThread;
 import de.clusteval.data.dataset.DataSetConfigFinderThread;
 import de.clusteval.data.goldstandard.GoldStandardConfigFinderThread;
 import de.clusteval.program.ProgramConfigFinderThread;
@@ -84,11 +82,6 @@ public class RunFinderThread extends FinderThread<IRun> {
         if (!this.repository.isInitialized(IParameterOptimizationMethod.class)) {
             this.supervisorThread.getThread(
                     ParameterOptimizationMethodFinderThread.class).waitFor();
-        }
-
-        if (!this.repository.isInitialized(IContext.class)) {
-            this.supervisorThread.getThread(ContextFinderThread.class)
-                    .waitFor();
         }
 
         super.beforeFind();

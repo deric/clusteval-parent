@@ -23,7 +23,7 @@ import de.clusteval.api.run.IRun;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
-import de.clusteval.context.Context;
+import de.clusteval.api.AbsContext;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.DataSet;
 import de.clusteval.data.dataset.DataSetConfig;
@@ -1587,12 +1587,12 @@ public class StubSQLCommunicator extends SQLCommunicator {
     }
 
     @Override
-    protected boolean registerContextClass(Class<? extends Context> object) {
+    protected boolean registerContextClass(Class<? extends AbsContext> object) {
         return false;
     }
 
     @Override
-    protected boolean unregisterContextClass(Class<? extends Context> object) {
+    protected boolean unregisterContextClass(Class<? extends AbsContext> object) {
         return false;
     }
 

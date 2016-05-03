@@ -35,7 +35,6 @@ import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.exceptions.RepositoryObjectDumpException;
 import de.clusteval.api.exceptions.RunResultParseException;
-import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownDataSetGeneratorException;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
@@ -828,9 +827,7 @@ public class ClustevalBackendServer implements IBackendServer {
                 RepositoryConfigNotFoundException | RepositoryConfigurationException |
                 ConfigurationException | RegisterException | NumberFormatException | NoDataSetException | UnknownRunDataStatisticException |
                 RunResultParseException | UnknownDataPreprocessorException |
-                IncompatibleDataSetConfigPreprocessorException | UnknownContextException |
-                IncompatibleContextException | UnknownParameterType | InterruptedException |
-                UnknownRunResultPostprocessorException | UnknownDataRandomizerException e) {
+                IncompatibleDataSetConfigPreprocessorException | IncompatibleContextException | UnknownParameterType | InterruptedException | UnknownRunResultPostprocessorException | UnknownDataRandomizerException e) {
             e.printStackTrace();
         } catch (UnknownProviderException ex) {
             Exceptions.printStackTrace(ex);

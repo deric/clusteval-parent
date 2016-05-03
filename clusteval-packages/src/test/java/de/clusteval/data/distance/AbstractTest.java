@@ -17,7 +17,7 @@
 package de.clusteval.data.distance;
 
 import de.clusteval.api.repository.IRepositoryObject;
-import de.clusteval.context.Context;
+import de.clusteval.api.AbsContext;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.config.DefaultRepositoryConfig;
@@ -36,7 +36,7 @@ public class AbstractTest {
 
     protected static Repository repository;
     protected static IRepositoryObject repositoryObject;
-    protected static Context context;
+    protected static AbsContext context;
     protected boolean useDatabase;
     static Logger logger = LoggerFactory.getLogger(AbstractTest.class);
 

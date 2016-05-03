@@ -10,11 +10,11 @@
  ***************************************************************************** */
 package de.clusteval.program;
 
+import de.clusteval.api.IContext;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.program.IProgramConfig;
-import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
-import de.clusteval.context.Context;
+import de.clusteval.api.repository.IRepository;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -47,7 +47,7 @@ import java.util.Map;
 public class StandaloneProgram extends Program {
 
     protected String alias;
-    protected Context context;
+    protected IContext context;
     protected Map<String, String> envVars;
 
     /**
@@ -67,7 +67,7 @@ public class StandaloneProgram extends Program {
      *                   executed.
      * @throws RegisterException
      */
-    public StandaloneProgram(IRepository repository, final Context context,
+    public StandaloneProgram(IRepository repository, final IContext context,
             final boolean register, long changeDate, File absPath,
             final String alias, final Map<String, String> envVars)
             throws RegisterException {
@@ -150,7 +150,7 @@ public class StandaloneProgram extends Program {
     }
 
     @Override
-    public Context getContext() {
+    public IContext getContext() {
         return this.context;
     }
 

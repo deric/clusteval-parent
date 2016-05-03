@@ -24,5 +24,7 @@ import de.clusteval.api.repository.IRepositoryObject;
  */
 public interface IRunResultFormat extends IRepositoryObject {
 
+    String getName();
+
     IRunResultFormat clone();
 }

@@ -12,21 +12,21 @@
  */
 package de.clusteval.framework.threading;
 
+import de.clusteval.api.data.DataSetFormat;
+import de.clusteval.api.data.DistanceMeasure;
 import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.run.RunResultFormat;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethodFinderThread;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
-import de.clusteval.context.ContextFinderThread;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.DataConfigFinderThread;
 import de.clusteval.data.dataset.DataSet;
 import de.clusteval.data.dataset.DataSetConfig;
 import de.clusteval.data.dataset.DataSetConfigFinderThread;
 import de.clusteval.data.dataset.DataSetFinderThread;
-import de.clusteval.api.data.DataSetFormat;
 import de.clusteval.data.dataset.generator.DataSetGenerator;
 import de.clusteval.data.dataset.generator.DataSetGeneratorFinderThread;
 import de.clusteval.data.dataset.type.DataSetType;
-import de.clusteval.api.data.DistanceMeasure;
 import de.clusteval.data.goldstandard.GoldStandardConfig;
 import de.clusteval.data.goldstandard.GoldStandardConfigFinderThread;
 import de.clusteval.data.preprocessing.DataPreprocessorFinderThread;
@@ -41,7 +41,6 @@ import de.clusteval.run.Run;
 import de.clusteval.run.RunFinderThread;
 import de.clusteval.run.result.RunResult;
 import de.clusteval.run.result.RunResultFinderThread;
-import de.clusteval.api.run.RunResultFormat;
 import de.clusteval.run.result.postprocessing.RunResultPostprocessorFinderThread;
 import de.clusteval.run.statistics.RunDataStatistic;
 import de.clusteval.run.statistics.RunDataStatisticFinderThread;
@@ -148,7 +147,7 @@ public class RepositorySupervisorThread extends SupervisorThread {
                           ? createList(
                         //DataSetFormatFinderThread.class,
                         //RunResultFormatFinderThread.class,
-                        ContextFinderThread.class,
+                        //ContextFinderThread.class,
                         //DataSetTypeFinderThread.class,
                         DataSetFinderThread.class,
                         DataPreprocessorFinderThread.class,
@@ -170,7 +169,7 @@ public class RepositorySupervisorThread extends SupervisorThread {
                         // normal elements
                         //DataSetFormatFinderThread.class,
                         //RunResultFormatFinderThread.class,
-                        ContextFinderThread.class,
+                        //ContextFinderThread.class,
                         //DataSetTypeFinderThread.class,
                         DataSetFinderThread.class,
                         DataPreprocessorFinderThread.class,

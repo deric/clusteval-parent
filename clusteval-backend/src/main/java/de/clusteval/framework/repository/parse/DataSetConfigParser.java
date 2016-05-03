@@ -18,6 +18,7 @@ package de.clusteval.framework.repository.parse;
 
 import de.clusteval.api.IDistanceMeasure;
 import de.clusteval.api.Precision;
+import de.clusteval.api.data.DistanceMeasure;
 import de.clusteval.api.data.IDataPreprocessor;
 import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
@@ -27,7 +28,6 @@ import de.clusteval.api.exceptions.IncompatibleContextException;
 import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
-import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.exceptions.UnknownParameterType;
@@ -52,7 +52,6 @@ import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
 import de.clusteval.data.dataset.format.ConversionStandardToInputConfiguration;
-import de.clusteval.api.data.DistanceMeasure;
 import de.clusteval.data.preprocessing.DataPreprocessor;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
@@ -91,7 +90,7 @@ class DataSetConfigParser extends RepositoryObjectParser<DataSetConfig> {
     @Override
     public void parseFromFile(File absPath)
             throws NoRepositoryFoundException, ConfigurationException,
-                   UnknownContextException, UnknownClusteringQualityMeasureException, RunException,
+                   UnknownClusteringQualityMeasureException, RunException,
                    UnknownDataSetFormatException, FileNotFoundException, RegisterException, UnknownParameterType,
                    IncompatibleContextException, UnknownRunResultFormatException, InvalidOptimizationParameterException,
                    UnknownProgramParameterException, UnknownProgramTypeException, UnknownRProgramException,
@@ -184,7 +183,7 @@ class DataSetConfigParser extends RepositoryObjectParser<DataSetConfig> {
                    NoDataSetException, NumberFormatException, RegisterException, NoRepositoryFoundException,
                    GoldStandardNotFoundException, GoldStandardConfigurationException,
                    DataSetConfigNotFoundException, GoldStandardConfigNotFoundException, DataConfigurationException,
-                   DataConfigNotFoundException, ConfigurationException, UnknownContextException, FileNotFoundException,
+                   DataConfigNotFoundException, ConfigurationException, FileNotFoundException,
                    UnknownParameterType, UnknownClusteringQualityMeasureException, RunException, IncompatibleContextException,
                    UnknownRunResultFormatException, InvalidOptimizationParameterException, UnknownProgramParameterException,
                    UnknownProgramTypeException, UnknownRProgramException, UnknownDistanceMeasureException,

@@ -10,15 +10,15 @@
  ***************************************************************************** */
 package de.clusteval.context;
 
+import de.clusteval.api.AbsContext;
 import de.clusteval.api.IContext;
 import de.clusteval.api.data.DataSetFormatFactory;
 import de.clusteval.api.data.IDataSetFormat;
-import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.IRunResultFormat;
-import de.clusteval.api.run.RunResultFormat;
+import de.clusteval.api.run.RunResultFormatFactory;
 import java.io.File;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -31,7 +31,10 @@ import org.openide.util.Exceptions;
  * @author Christian Wiwie
  *
  */
-public class ClusteringContext extends Context implements IContext {
+public class ClusteringContext extends AbsContext implements IContext {
+
+    private IDataSetFormat df;
+    private IRunResultFormat rf;
 
     /**
      * @param repository
@@ -70,7 +73,11 @@ public class ClusteringContext extends Context implements IContext {
     public IDataSetFormat getStandardInputFormat() {
         try {
             // take the newest version
-            return DataSetFormatFactory.parseFromString("SimMatrixDataSetFormat");
+            if (df == null) {
+                df = DataSetFormatFactory.parseFromString("SimMatrixDataSetFormat");
+                df.init(repository, System.currentTimeMillis(), new File(df.getName()));
+            }
+            return df;
         } catch (UnknownProviderException ex) {
             Exceptions.printStackTrace(ex);
         }
@@ -81,12 +88,13 @@ public class ClusteringContext extends Context implements IContext {
     public IRunResultFormat getStandardOutputFormat() {
         try {
             // take the newest version
-            return RunResultFormat.parseFromString(repository,
-                    "TabSeparatedRunResultFormat");
-        } catch (UnknownRunResultFormatException e) {
-            e.printStackTrace();
-            // should not occur, because we checked this in the repository using
-            // #getRequiredJavaClassFullNames()
+            if (rf == null) {
+                rf = RunResultFormatFactory.parseFromString("TabSeparatedRunResultFormat");
+                rf.init(repository, System.currentTimeMillis(), new File(rf.getName()));
+            }
+            return rf;
+        } catch (UnknownProviderException ex) {
+            Exceptions.printStackTrace(ex);
         }
         return null;
     }

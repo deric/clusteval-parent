@@ -16,7 +16,7 @@ import de.clusteval.api.repository.IRepositoryObject;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
-import de.clusteval.context.Context;
+import de.clusteval.api.AbsContext;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.DataSet;
 import de.clusteval.data.dataset.DataSetConfig;
@@ -653,8 +653,8 @@ public abstract class SQLCommunicator_pg {
         if (ClusteringQualityMeasure.class.isAssignableFrom(c)) {
             return this
                     .registerClusteringQualityMeasureClass((Class<? extends ClusteringQualityMeasure>) c);
-        } else if (Context.class.isAssignableFrom(c)) {
-            return this.registerContextClass((Class<? extends Context>) c);
+        } else if (AbsContext.class.isAssignableFrom(c)) {
+            return this.registerContextClass((Class<? extends AbsContext>) c);
         } else if (DataSetFormat.class.isAssignableFrom(c)) {
             return this
                     .registerDataSetFormatClass((Class<? extends DataSetFormat>) c);
@@ -685,8 +685,8 @@ public abstract class SQLCommunicator_pg {
         if (ClusteringQualityMeasure.class.isAssignableFrom(c)) {
             return this
                     .unregisterClusteringQualityMeasureClass((Class<? extends ClusteringQualityMeasure>) c);
-        } else if (Context.class.isAssignableFrom(c)) {
-            return this.unregisterContextClass((Class<? extends Context>) c);
+        } else if (AbsContext.class.isAssignableFrom(c)) {
+            return this.unregisterContextClass((Class<? extends AbsContext>) c);
         } else if (DataSetFormat.class.isAssignableFrom(c)) {
             return this
                     .unregisterDataSetFormatClass((Class<? extends DataSetFormat>) c);
@@ -1132,10 +1132,10 @@ public abstract class SQLCommunicator_pg {
     protected abstract String getTableDataSetFormats();
 
     protected abstract boolean registerContextClass(
-            Class<? extends Context> object);
+            Class<? extends AbsContext> object);
 
     protected abstract boolean unregisterContextClass(
-            final Class<? extends Context> object);
+            final Class<? extends AbsContext> object);
 
     protected int updateRepositoryId() {
         ResultSet rs;

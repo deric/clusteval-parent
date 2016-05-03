@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.context;
 
+import de.clusteval.api.AbsContext;
 import de.clusteval.api.IContext;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
@@ -76,8 +77,7 @@ public class ContextFinder extends JARFinder<IContext> {
     @Override
     protected boolean isJARLoaded(File f) {
         return super.isJARLoaded(f)
-                && this.repository.isClassRegistered(
-                        Context.class,
+                && this.repository.isClassRegistered(AbsContext.class,
                         "de.clusteval.context."
                         + f.getName().replace(".jar", ""));
     }
@@ -123,7 +123,7 @@ class ContextURLClassLoader extends URLClassLoader {
                 && !name.equals("de.clusteval.context.Context")) {
             if (name.endsWith("Context")) {
                 @SuppressWarnings("unchecked")
-                Class<? extends Context> context = (Class<? extends Context>) result;
+                Class<? extends AbsContext> context = (Class<? extends AbsContext>) result;
 
                 this.parent.getRepository().registerClass(IContext.class,
                         context);

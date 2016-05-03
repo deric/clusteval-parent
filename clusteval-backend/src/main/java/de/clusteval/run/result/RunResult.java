@@ -22,7 +22,6 @@ import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.exceptions.RunResultParseException;
-import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
@@ -39,6 +38,7 @@ import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.repository.RepositoryObject;
 import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.IRunResult;
 import de.clusteval.api.stats.UnknownDataStatisticException;
@@ -52,7 +52,6 @@ import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
 import de.clusteval.framework.repository.RepositoryController;
-import de.clusteval.api.repository.RepositoryObject;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
@@ -163,7 +162,7 @@ public abstract class RunResult extends RepositoryObject implements IRunResult {
                    ConfigurationException, RegisterException, NumberFormatException,
                    NoDataSetException, UnknownRunDataStatisticException, RunResultParseException,
                    UnknownDataPreprocessorException, IncompatibleDataSetConfigPreprocessorException,
-                   UnknownContextException, IncompatibleContextException, UnknownParameterType, InterruptedException,
+                   IncompatibleContextException, UnknownParameterType, InterruptedException,
                    UnknownRunResultPostprocessorException, UnknownDataRandomizerException, FileNotFoundException, UnknownProviderException {
         try {
             Logger log = LoggerFactory.getLogger(RunResult.class);

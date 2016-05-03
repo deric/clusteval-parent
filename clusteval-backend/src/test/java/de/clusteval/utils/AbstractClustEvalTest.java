@@ -13,9 +13,10 @@
 package de.clusteval.utils;
 
 import ch.qos.logback.classic.Level;
+import de.clusteval.api.ContextFactory;
+import de.clusteval.api.IContext;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.IRepositoryObject;
-import de.clusteval.context.Context;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RepositoryController;
@@ -44,7 +45,7 @@ public abstract class AbstractClustEvalTest {
     public TestName name = new TestName();
     private Repository repository;
     protected IRepositoryObject repositoryObject;
-    protected Context context;
+    protected IContext context;
     protected boolean useDatabase;
     static Logger logger = LoggerFactory.getLogger(AbstractClustEvalTest.class);
 
@@ -107,7 +108,7 @@ public abstract class AbstractClustEvalTest {
 
         repositoryObject = new StubRepositoryObject(this.getRepository(), false, System.currentTimeMillis(),
                 new File("test"));
-        context = Context.parseFromString(getRepository(), "ClusteringContext");
+        context = ContextFactory.parseFromString(getRepository(), "ClusteringContext");
     }
 
     /**

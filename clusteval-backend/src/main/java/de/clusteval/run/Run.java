@@ -13,10 +13,12 @@
 package de.clusteval.run;
 
 import de.clusteval.api.IContext;
+import de.clusteval.api.Pair;
 import de.clusteval.api.program.IProgramParameter;
-import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RepositoryEvent;
+import de.clusteval.api.repository.RepositoryObject;
 import de.clusteval.api.repository.RepositoryRemoveEvent;
 import de.clusteval.api.repository.RepositoryReplaceEvent;
 import de.clusteval.api.run.IProgress;
@@ -25,18 +27,15 @@ import de.clusteval.api.run.IRunResult;
 import de.clusteval.api.run.IRunRunnable;
 import de.clusteval.api.run.IScheduler;
 import de.clusteval.api.run.RUN_STATUS;
-import de.clusteval.context.Context;
-import de.clusteval.api.repository.RepositoryObject;
+import de.clusteval.api.run.RunResultFormat;
 import de.clusteval.framework.threading.RunSchedulerThread;
 import de.clusteval.run.result.ClusteringRunResult;
 import de.clusteval.run.result.NoRunResultFormatParserException;
-import de.clusteval.api.run.RunResultFormat;
 import de.clusteval.run.runnable.RunRunnable;
 import de.clusteval.run.runnable.RunRunnableInitializationException;
-import de.clusteval.utils.ProgressPrinter;
 import de.clusteval.utils.FileUtils;
 import de.clusteval.utils.Formatter;
-import de.clusteval.api.Pair;
+import de.clusteval.utils.ProgressPrinter;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -168,7 +167,7 @@ public abstract class Run extends RepositoryObject implements IRun {
     /**
      * Every run belongs to a context.
      */
-    protected Context context;
+    protected IContext context;
 
     /**
      * The constructor of this class takes a date and configuration. It is
@@ -181,7 +180,7 @@ public abstract class Run extends RepositoryObject implements IRun {
      *                   corresponds to this run.
      * @throws RegisterException
      */
-    protected Run(final IRepository repository, final Context context,
+    protected Run(final IRepository repository, final IContext context,
             final long changeDate, final File absPath) throws RegisterException {
         super(repository, false, changeDate, absPath);
 

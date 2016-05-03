@@ -10,7 +10,10 @@
  ***************************************************************************** */
 package de.clusteval.utils.plot;
 
+import de.clusteval.api.ContextFactory;
+import de.clusteval.api.IContext;
 import de.clusteval.api.Precision;
+import de.clusteval.api.data.DataSetFormat;
 import de.clusteval.api.data.DistanceMeasure;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetConfig;
@@ -24,7 +27,6 @@ import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
-import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.exceptions.UnknownParameterType;
@@ -44,7 +46,6 @@ import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
-import de.clusteval.context.Context;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
@@ -55,7 +56,6 @@ import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
 import de.clusteval.data.dataset.format.ConversionStandardToInputConfiguration;
-import de.clusteval.api.data.DataSetFormat;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
@@ -88,7 +88,7 @@ public class PlotterTest extends AbstractClustEvalTest {
                                     IOException, REngineException, FormatConversionException,
                                     DataSetNotFoundException, DataSetConfigurationException,
                                     NoDataSetException, NoRepositoryFoundException,
-                                    UnknownContextException, RNotAvailableException,
+                                    RNotAvailableException,
                                     InterruptedException, GoldStandardNotFoundException,
                                     GoldStandardConfigurationException, DataSetConfigNotFoundException,
                                     GoldStandardConfigNotFoundException, DataConfigurationException,
@@ -107,7 +107,7 @@ public class PlotterTest extends AbstractClustEvalTest {
                                     UnknownRunDataStatisticException,
                                     UnknownRunResultPostprocessorException,
                                     UnknownDataRandomizerException, RException, UnknownProviderException {
-        Context context = Context.parseFromString(getRepository(),
+        IContext context = ContextFactory.parseFromString(getRepository(),
                 "ClusteringContext");
 
         IDataSet ds = Parser
@@ -168,7 +168,7 @@ public class PlotterTest extends AbstractClustEvalTest {
                                  IOException, REngineException, FormatConversionException,
                                  DataSetNotFoundException, DataSetConfigurationException,
                                  NoDataSetException, NoRepositoryFoundException,
-                                 UnknownContextException, RNotAvailableException,
+                                 RNotAvailableException,
                                  InterruptedException, GoldStandardNotFoundException,
                                  GoldStandardConfigurationException, DataSetConfigNotFoundException,
                                  GoldStandardConfigNotFoundException, DataConfigurationException,
@@ -187,8 +187,7 @@ public class PlotterTest extends AbstractClustEvalTest {
                                  UnknownRunDataStatisticException,
                                  UnknownRunResultPostprocessorException,
                                  UnknownDataRandomizerException, RException, UnknownProviderException {
-        Context context = Context.parseFromString(getRepository(),
-                "ClusteringContext");
+        IContext context = ContextFactory.parseFromString(getRepository(), "ClusteringContext");
 
         IDataSet ds = Parser
                 .parseFromFile(

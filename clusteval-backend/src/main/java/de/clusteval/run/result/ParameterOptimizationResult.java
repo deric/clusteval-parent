@@ -23,7 +23,6 @@ import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.exceptions.RunResultParseException;
-import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
@@ -173,7 +172,7 @@ public class ParameterOptimizationResult extends ExecutionRunResult implements I
                    ConfigurationException, RegisterException, NumberFormatException,
                    NoDataSetException, UnknownRunDataStatisticException, RunResultParseException,
                    UnknownDataPreprocessorException, IncompatibleDataSetConfigPreprocessorException,
-                   UnknownContextException, IncompatibleContextException, UnknownParameterType, InterruptedException,
+                   IncompatibleContextException, UnknownParameterType, InterruptedException,
                    UnknownRunResultPostprocessorException, UnknownDataRandomizerException, FileNotFoundException, UnknownProviderException {
         try {
             IRepository childRepository = new RunResultRepository(runResultFolder.getAbsolutePath(), parentRepository);

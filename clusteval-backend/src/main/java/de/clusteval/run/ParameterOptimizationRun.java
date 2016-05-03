@@ -13,15 +13,19 @@
 package de.clusteval.run;
 
 import de.clusteval.api.ClusteringEvaluation;
+import de.clusteval.api.IContext;
+import de.clusteval.api.Pair;
 import de.clusteval.api.cluster.ClusteringQualitySet;
+import de.clusteval.api.data.AbsoluteDataSetFormat;
+import de.clusteval.api.data.DataSetFormat;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.exceptions.RunResultParseException;
 import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.IProgramParameter;
 import de.clusteval.api.program.ParameterSet;
-import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RepositoryEvent;
 import de.clusteval.api.repository.RepositoryRemoveEvent;
 import de.clusteval.api.run.IRun;
@@ -29,15 +33,11 @@ import de.clusteval.api.run.IRunRunnable;
 import de.clusteval.api.run.IScheduler;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
-import de.clusteval.context.Context;
-import de.clusteval.api.data.AbsoluteDataSetFormat;
-import de.clusteval.api.data.DataSetFormat;
 import de.clusteval.program.ProgramParameter;
 import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.run.result.postprocessing.RunResultPostprocessor;
 import de.clusteval.run.runnable.ExecutionRunRunnable;
 import de.clusteval.run.runnable.ParameterOptimizationRunRunnable;
-import de.clusteval.api.Pair;
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
@@ -158,7 +158,7 @@ public class ParameterOptimizationRun extends ExecutionRun {
      * @param maxExecutionTimes
      * @throws RegisterException
      */
-    public ParameterOptimizationRun(final IRepository repository, final Context context, final long changeDate,
+    public ParameterOptimizationRun(final IRepository repository, final IContext context, final long changeDate,
             final File absPath, final List<IProgramConfig> programConfigs, final List<IDataConfig> dataConfigs,
             final List<ClusteringEvaluation> qualityMeasures,
             final List<Map<IProgramParameter<?>, String>> parameterValues,

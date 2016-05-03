@@ -16,6 +16,8 @@
  */
 package de.clusteval.framework.repository.parse;
 
+import de.clusteval.api.ContextFactory;
+import de.clusteval.api.IContext;
 import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigurationException;
@@ -24,7 +26,6 @@ import de.clusteval.api.exceptions.IncompatibleContextException;
 import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
-import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.exceptions.UnknownParameterType;
@@ -40,7 +41,6 @@ import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
-import de.clusteval.context.Context;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
@@ -63,14 +63,14 @@ import org.apache.commons.configuration.ConfigurationException;
 class RunParser<T extends Run> extends RepositoryObjectParser<T> {
 
     // the members of the Run class
-    protected Context context;
+    protected IContext context;
 
     protected String mode;
 
     @Override
     public void parseFromFile(final File absPath)
             throws NoRepositoryFoundException, ConfigurationException,
-                   UnknownContextException, UnknownClusteringQualityMeasureException, RunException,
+                   UnknownClusteringQualityMeasureException, RunException,
                    UnknownDataSetFormatException, FileNotFoundException, RegisterException, UnknownParameterType,
                    IncompatibleContextException, UnknownRunResultFormatException, InvalidOptimizationParameterException,
                    UnknownProgramParameterException, UnknownProgramTypeException, UnknownRProgramException,
@@ -86,9 +86,9 @@ class RunParser<T extends Run> extends RepositoryObjectParser<T> {
 
         // by default we are in a clustering context
         if (getProps().containsKey("context")) {
-            context = Context.parseFromString(repo, getProps().getString("context"));
+            context = ContextFactory.parseFromString(repo, getProps().getString("context"));
         } else {
-            context = Context.parseFromString(repo, "ClusteringContext");
+            context = ContextFactory.parseFromString(repo, "ClusteringContext");
         }
 
         mode = getProps().getString("mode", "clustering");

@@ -28,7 +28,7 @@ import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.IRunResultFormat;
 import de.clusteval.cluster.Clustering;
-import de.clusteval.context.Context;
+import de.clusteval.api.AbsContext;
 import de.clusteval.api.data.DataSetFormat;
 import de.clusteval.api.run.RunResultFormat;
 import de.clusteval.utils.FileUtils;
@@ -136,7 +136,7 @@ public class SpectralClusteringRProgram extends AbsoluteAndRelativeDataRProgram 
 
     @Override
     public IContext getContext() throws UnknownContextException {
-        return Context.parseFromString(repository, "ClusteringContext");
+        return AbsContext.parseFromString(repository, "ClusteringContext");
     }
 
     /*

@@ -17,6 +17,7 @@
 package de.clusteval.run;
 
 import de.clusteval.api.ClusteringEvaluation;
+import de.clusteval.api.IContext;
 import de.clusteval.api.Triple;
 import de.clusteval.api.cluster.ClustEvalValue;
 import de.clusteval.api.cluster.ClusteringQualitySet;
@@ -30,7 +31,6 @@ import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.exceptions.RunResultParseException;
-import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
@@ -57,7 +57,6 @@ import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
-import de.clusteval.context.Context;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
@@ -135,7 +134,7 @@ public class RobustnessAnalysisRun extends ClusteringRun {
      * @param maxExecutionTimes
      * @throws RegisterException
      */
-    public RobustnessAnalysisRun(IRepository repository, final Context context,
+    public RobustnessAnalysisRun(IRepository repository, final IContext context,
             long changeDate, File absPath, List<String> uniqueRunIdentifiers,
             List<IProgramConfig> programConfigs, List<IDataConfig> dataConfigs,
             List<IDataConfig> originalDataConfigs,
@@ -551,7 +550,6 @@ public class RobustnessAnalysisRun extends ClusteringRun {
      * @throws UnknownRunResultFormatException
      * @throws IOException
      * @throws UnknownParameterType
-     * @throws UnknownContextException
      * @throws RegisterException
      * @throws ConfigurationException
      * @throws RunResultParseException
@@ -570,33 +568,34 @@ public class RobustnessAnalysisRun extends ClusteringRun {
      *
      */
     protected void findBestParamsAndInitParameterValues(
-            final IRepository repository) throws UnknownDataSetFormatException,
-                                                 UnknownGoldStandardFormatException, GoldStandardNotFoundException,
-                                                 GoldStandardConfigurationException, DataSetConfigurationException,
-                                                 DataSetNotFoundException, DataSetConfigNotFoundException,
-                                                 GoldStandardConfigNotFoundException, NoDataSetException,
-                                                 DataConfigurationException, DataConfigNotFoundException,
-                                                 NumberFormatException, RunResultParseException,
-                                                 ConfigurationException, RegisterException, UnknownContextException,
-                                                 UnknownParameterType, IOException, UnknownRunResultFormatException,
-                                                 UnknownClusteringQualityMeasureException, InvalidRunModeException,
-                                                 UnknownParameterOptimizationMethodException,
-                                                 NoOptimizableProgramParameterException,
-                                                 UnknownProgramParameterException,
-                                                 InvalidConfigurationFileException,
-                                                 RepositoryAlreadyExistsException, InvalidRepositoryException,
-                                                 NoRepositoryFoundException, InvalidOptimizationParameterException,
-                                                 RunException, UnknownDataStatisticException,
-                                                 UnknownProgramTypeException, UnknownRProgramException,
-                                                 IncompatibleParameterOptimizationMethodException,
-                                                 UnknownDistanceMeasureException, UnknownRunStatisticException,
-                                                 RepositoryConfigNotFoundException,
-                                                 RepositoryConfigurationException,
-                                                 UnknownRunDataStatisticException, UnknownDataPreprocessorException,
-                                                 IncompatibleDataSetConfigPreprocessorException,
-                                                 IncompatibleContextException, InterruptedException,
-                                                 UnknownRunResultPostprocessorException,
-                                                 UnknownDataRandomizerException, UnknownProviderException {
+            final IRepository repository)
+            throws UnknownDataSetFormatException,
+                   UnknownGoldStandardFormatException, GoldStandardNotFoundException,
+                   GoldStandardConfigurationException, DataSetConfigurationException,
+                   DataSetNotFoundException, DataSetConfigNotFoundException,
+                   GoldStandardConfigNotFoundException, NoDataSetException,
+                   DataConfigurationException, DataConfigNotFoundException,
+                   NumberFormatException, RunResultParseException,
+                   ConfigurationException, RegisterException,
+                   UnknownParameterType, IOException, UnknownRunResultFormatException,
+                   UnknownClusteringQualityMeasureException, InvalidRunModeException,
+                   UnknownParameterOptimizationMethodException,
+                   NoOptimizableProgramParameterException,
+                   UnknownProgramParameterException,
+                   InvalidConfigurationFileException,
+                   RepositoryAlreadyExistsException, InvalidRepositoryException,
+                   NoRepositoryFoundException, InvalidOptimizationParameterException,
+                   RunException, UnknownDataStatisticException,
+                   UnknownProgramTypeException, UnknownRProgramException,
+                   IncompatibleParameterOptimizationMethodException,
+                   UnknownDistanceMeasureException, UnknownRunStatisticException,
+                   RepositoryConfigNotFoundException,
+                   RepositoryConfigurationException,
+                   UnknownRunDataStatisticException, UnknownDataPreprocessorException,
+                   IncompatibleDataSetConfigPreprocessorException,
+                   IncompatibleContextException, InterruptedException,
+                   UnknownRunResultPostprocessorException,
+                   UnknownDataRandomizerException, UnknownProviderException {
 
         List<String> programConfigNames = new ArrayList<>();
         for (IProgramConfig programConfig : programConfigs) {

@@ -10,11 +10,11 @@
  ***************************************************************************** */
 package de.clusteval.run;
 
-import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.IContext;
 import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.IRunRunnable;
 import de.clusteval.api.run.IScheduler;
-import de.clusteval.context.Context;
 import de.clusteval.framework.threading.RunSchedulerThread;
 import de.clusteval.run.runnable.RunDataAnalysisRunRunnable;
 import de.clusteval.run.runnable.RunRunnable;
@@ -74,7 +74,7 @@ public class RunDataAnalysisRun extends AnalysisRun<RunDataStatistic> {
      *                                         analysis.
      * @throws RegisterException
      */
-    public RunDataAnalysisRun(IRepository repository, final Context context,
+    public RunDataAnalysisRun(IRepository repository, final IContext context,
             long changeDate, File absPath,
             List<String> uniqueRunAnalysisRunIdentifiers,
             List<String> uniqueDataAnalysisRunIdentifiers,

@@ -21,7 +21,6 @@ import de.clusteval.api.exceptions.IncompatibleContextException;
 import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
-import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.exceptions.UnknownParameterType;
@@ -76,7 +75,7 @@ public class TestFuzzyCoefficientThresholdRunResultPostprocessor
                               GoldStandardConfigurationException, DataSetConfigNotFoundException,
                               GoldStandardConfigNotFoundException, DataConfigurationException,
                               DataConfigNotFoundException, ConfigurationException,
-                              UnknownContextException, UnknownParameterType,
+                              UnknownParameterType,
                               UnknownClusteringQualityMeasureException, RunException,
                               IncompatibleContextException, UnknownRunResultFormatException,
                               InvalidOptimizationParameterException,

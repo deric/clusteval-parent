@@ -13,6 +13,8 @@
 package de.clusteval.cluster.paramOptimization;
 
 import ch.qos.logback.classic.Level;
+import de.clusteval.api.ContextFactory;
+import de.clusteval.api.IContext;
 import de.clusteval.api.Precision;
 import de.clusteval.api.cluster.ClustEvalValue;
 import de.clusteval.api.cluster.ClusteringEvaluationParameters;
@@ -25,7 +27,6 @@ import de.clusteval.api.exceptions.FormatConversionException;
 import de.clusteval.api.exceptions.InternalAttributeException;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.RunResultParseException;
-import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.factory.UnknownProviderException;
@@ -41,7 +42,6 @@ import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
-import de.clusteval.context.Context;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.RelativeDataSet;
 import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
@@ -80,13 +80,12 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
                    InternalAttributeException, RegisterException,
                    ParameterOptimizationException, FormatConversionException,
                    UnknownDistanceMeasureException, NoParameterSetFoundException,
-                   UnknownContextException, RNotAvailableException,
+                   RNotAvailableException,
                    InterruptedException, ParameterSetAlreadyEvaluatedException, RException, UnknownProviderException {
 
         ClustevalBackendServer.logLevel(Level.INFO);
 
-        Context context = Context.parseFromString(getRepository(),
-                "ClusteringContext");
+        IContext context = ContextFactory.parseFromString(getRepository(), "ClusteringContext");
 
         DataConfig dataConfig = getRepository().getStaticObjectWithName(
                 DataConfig.class, "synthetic_cassini250");
@@ -217,13 +216,12 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
                    InternalAttributeException, RegisterException,
                    ParameterOptimizationException, FormatConversionException,
                    UnknownDistanceMeasureException, NoParameterSetFoundException,
-                   UnknownContextException, RNotAvailableException,
+                   RNotAvailableException,
                    InterruptedException, ParameterSetAlreadyEvaluatedException, RException, UnknownProviderException {
 
         ClustevalBackendServer.logLevel(Level.INFO);
 
-        Context context = Context.parseFromString(getRepository(),
-                "ClusteringContext");
+        IContext context = ContextFactory.parseFromString(getRepository(), "ClusteringContext");
 
         DataConfig dataConfig = getRepository().getStaticObjectWithName(
                 DataConfig.class, "synthetic_cassini250");
@@ -337,13 +335,12 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
                    InternalAttributeException, RegisterException,
                    ParameterOptimizationException, FormatConversionException,
                    UnknownDistanceMeasureException, NoParameterSetFoundException,
-                   UnknownContextException, RNotAvailableException,
+                   RNotAvailableException,
                    InterruptedException, RException, UnknownProviderException {
 
         ClustevalBackendServer.logLevel(Level.INFO);
 
-        Context context = Context.parseFromString(getRepository(),
-                "ClusteringContext");
+        IContext context = ContextFactory.parseFromString(getRepository(), "ClusteringContext");
 
         DataConfig dataConfig = getRepository().getStaticObjectWithName(
                 DataConfig.class, "synthetic_cassini250");
@@ -430,13 +427,12 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
                    InternalAttributeException, RegisterException,
                    ParameterOptimizationException, FormatConversionException,
                    UnknownDistanceMeasureException, NoParameterSetFoundException,
-                   UnknownContextException, RNotAvailableException,
+                   RNotAvailableException,
                    InterruptedException, ParameterSetAlreadyEvaluatedException, RException, UnknownProviderException {
 
         ClustevalBackendServer.logLevel(Level.INFO);
 
-        Context context = Context.parseFromString(getRepository(),
-                "ClusteringContext");
+        IContext context = ContextFactory.parseFromString(getRepository(), "ClusteringContext");
 
         DataConfig dataConfig = getRepository().getStaticObjectWithName(
                 DataConfig.class, "baechler2003");
@@ -546,14 +542,13 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
     public void testDivisiveNumberIterationsTwoParamsWithOptions()
             throws UnknownClusteringQualityMeasureException,
                    UnknownParameterOptimizationMethodException,
-                   UnknownContextException, IllegalArgumentException,
+                   IllegalArgumentException,
                    SecurityException, IllegalAccessException, NoSuchFieldException,
-                   InternalAttributeException, ParameterOptimizationException {
+                   InternalAttributeException, ParameterOptimizationException, UnknownProviderException {
 
         ClustevalBackendServer.logLevel(Level.INFO);
 
-        Context context = Context.parseFromString(getRepository(),
-                "ClusteringContext");
+        IContext context = ContextFactory.parseFromString(getRepository(), "ClusteringContext");
 
         DataConfig dataConfig = getRepository().getStaticObjectWithName(
                 DataConfig.class, "DS1");

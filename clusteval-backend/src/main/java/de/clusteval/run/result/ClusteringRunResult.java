@@ -23,7 +23,6 @@ import de.clusteval.api.exceptions.IncompatibleContextException;
 import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
-import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
@@ -47,6 +46,7 @@ import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.IRunResult;
 import de.clusteval.api.run.IRunResultFormat;
 import de.clusteval.api.run.IRunResultFormatParser;
+import de.clusteval.api.run.RunResultFormat;
 import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
@@ -66,7 +66,6 @@ import de.clusteval.run.ClusteringRun;
 import de.clusteval.run.InvalidRunModeException;
 import de.clusteval.run.Run;
 import de.clusteval.run.RunException;
-import de.clusteval.api.run.RunResultFormat;
 import de.clusteval.run.result.format.RunResultNotFoundException;
 import de.clusteval.run.statistics.UnknownRunDataStatisticException;
 import de.clusteval.run.statistics.UnknownRunStatisticException;
@@ -414,7 +413,7 @@ public class ClusteringRunResult extends ExecutionRunResult implements IClusteri
                    UnknownRunStatisticException, RepositoryConfigNotFoundException, RepositoryConfigurationException,
                    ConfigurationException, RegisterException, NumberFormatException,
                    NoDataSetException, UnknownRunDataStatisticException, UnknownDataPreprocessorException,
-                   IncompatibleDataSetConfigPreprocessorException, UnknownContextException,
+                   IncompatibleDataSetConfigPreprocessorException,
                    IncompatibleContextException, UnknownParameterType, InterruptedException,
                    UnknownRunResultPostprocessorException, UnknownDataRandomizerException, UnknownProviderException {
 

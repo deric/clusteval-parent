@@ -13,6 +13,7 @@
 package de.clusteval.run;
 
 import de.clusteval.api.ClusteringEvaluation;
+import de.clusteval.api.IContext;
 import de.clusteval.api.Pair;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.program.IProgramConfig;
@@ -27,7 +28,6 @@ import de.clusteval.api.run.IRunRunnable;
 import de.clusteval.api.run.IScheduler;
 import de.clusteval.api.run.RUN_STATUS;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
-import de.clusteval.context.Context;
 import de.clusteval.data.DataConfig;
 import de.clusteval.framework.threading.RunSchedulerThread;
 import de.clusteval.program.ProgramConfig;
@@ -156,7 +156,7 @@ public abstract class ExecutionRun extends Run {
      * @param parameterValues   The parameter values of this run.
      * @throws RegisterException
      */
-    protected ExecutionRun(final IRepository repository, final Context context,
+    protected ExecutionRun(final IRepository repository, final IContext context,
             final boolean register, final long changeDate, final File absPath,
             final List<IProgramConfig> programConfigs,
             final List<IDataConfig> dataConfigs,
