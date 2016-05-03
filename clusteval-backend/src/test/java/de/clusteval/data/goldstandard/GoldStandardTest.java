@@ -25,7 +25,7 @@ import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.framework.repository.Repository;
-import de.clusteval.framework.repository.RepositoryObject;
+import de.clusteval.api.repository.RepositoryObject;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;

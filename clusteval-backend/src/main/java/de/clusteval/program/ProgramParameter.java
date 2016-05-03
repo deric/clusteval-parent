@@ -15,7 +15,7 @@ import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.IProgramParameter;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.framework.repository.RepositoryObject;
+import de.clusteval.api.repository.RepositoryObject;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;

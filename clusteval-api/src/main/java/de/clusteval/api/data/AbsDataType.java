@@ -17,15 +17,15 @@
 package de.clusteval.api.data;
 
 import de.clusteval.api.program.RegisterException;
-import de.clusteval.api.repository.AbsRepoObject;
 import de.clusteval.api.repository.IRepositoryObject;
+import de.clusteval.api.repository.RepositoryObject;
 import java.lang.reflect.InvocationTargetException;
 
 /**
  *
  * @author deric
  */
-public abstract class AbsDataType extends AbsRepoObject implements IRepositoryObject, IDataSetType {
+public abstract class AbsDataType extends RepositoryObject implements IRepositoryObject, IDataSetType {
 
     public AbsDataType() {
 

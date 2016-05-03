@@ -23,7 +23,7 @@ import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.framework.repository.RepositoryController;
-import de.clusteval.framework.repository.RepositoryObject;
+import de.clusteval.api.repository.RepositoryObject;
 import de.wiwie.wiutils.utils.text.TextFileMapParser;
 import java.io.File;
 import java.util.HashMap;

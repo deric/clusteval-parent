@@ -33,7 +33,7 @@ import de.clusteval.data.dataset.DataSet;
 import de.clusteval.data.dataset.format.AbsoluteDataSetFormat;
 import de.clusteval.api.data.DataSetFormat;
 import de.clusteval.data.goldstandard.GoldStandard;
-import de.clusteval.framework.repository.RepositoryObject;
+import de.clusteval.api.repository.RepositoryObject;
 import de.clusteval.utils.FileUtils;
 import java.io.BufferedWriter;
 import java.io.File;

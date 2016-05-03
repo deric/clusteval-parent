@@ -26,7 +26,7 @@ import de.clusteval.api.run.IRunRunnable;
 import de.clusteval.api.run.IScheduler;
 import de.clusteval.api.run.RUN_STATUS;
 import de.clusteval.context.Context;
-import de.clusteval.framework.repository.RepositoryObject;
+import de.clusteval.api.repository.RepositoryObject;
 import de.clusteval.framework.threading.RunSchedulerThread;
 import de.clusteval.run.result.ClusteringRunResult;
 import de.clusteval.run.result.NoRunResultFormatParserException;

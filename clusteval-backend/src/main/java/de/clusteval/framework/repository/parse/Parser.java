@@ -70,7 +70,7 @@ import de.clusteval.data.randomizer.DataRandomizer;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
 import de.clusteval.data.statistics.DataStatistic;
 import de.clusteval.framework.repository.RepositoryController;
-import de.clusteval.framework.repository.RepositoryObject;
+import de.clusteval.api.repository.RepositoryObject;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.program.ProgramConfig;
 import de.clusteval.run.AnalysisRun;

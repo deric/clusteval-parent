@@ -12,6 +12,7 @@
  */
 package de.clusteval.framework.repository;
 
+import de.clusteval.api.repository.RepositoryObject;
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.Database;
 import de.clusteval.api.IContext;

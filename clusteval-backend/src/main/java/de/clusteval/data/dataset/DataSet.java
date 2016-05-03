@@ -38,7 +38,7 @@ import de.clusteval.data.dataset.format.AbsoluteDataSetFormat;
 import de.clusteval.data.dataset.format.DataSetFormatParser;
 import de.clusteval.data.dataset.format.RelativeDataSetFormat;
 import de.clusteval.framework.ClustevalBackendServer;
-import de.clusteval.framework.repository.RepositoryObject;
+import de.clusteval.api.repository.RepositoryObject;
 import de.clusteval.utils.NamedDoubleAttribute;
 import de.clusteval.utils.NamedIntegerAttribute;
 import java.io.File;

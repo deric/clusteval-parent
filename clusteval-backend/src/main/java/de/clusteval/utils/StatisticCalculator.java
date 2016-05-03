@@ -19,7 +19,7 @@ import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.stats.IStatistic;
 import de.clusteval.data.statistics.RunStatisticCalculateException;
 import de.clusteval.data.statistics.StatisticCalculateException;
-import de.clusteval.framework.repository.RepositoryObject;
+import de.clusteval.api.repository.RepositoryObject;
 import java.io.File;
 import org.rosuda.REngine.REngineException;
 

@@ -25,7 +25,7 @@ import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.r.ROperationNotSupported;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.cluster.Clustering;
-import de.clusteval.framework.repository.RepositoryObject;
+import de.clusteval.api.repository.RepositoryObject;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;

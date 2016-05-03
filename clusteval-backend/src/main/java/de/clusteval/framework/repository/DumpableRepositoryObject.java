@@ -16,6 +16,7 @@
  */
 package de.clusteval.framework.repository;
 
+import de.clusteval.api.repository.RepositoryObject;
 import de.clusteval.api.exceptions.RepositoryObjectDumpException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.IRepositoryObject;

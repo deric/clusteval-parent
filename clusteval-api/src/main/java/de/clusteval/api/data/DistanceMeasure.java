@@ -17,8 +17,8 @@ import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.RLibraryInferior;
 import de.clusteval.api.r.RNotAvailableException;
-import de.clusteval.api.repository.AbsRepoObject;
 import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.repository.RepositoryObject;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import org.slf4j.Logger;
@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author deric
  */
-public abstract class DistanceMeasure extends AbsRepoObject implements RLibraryInferior, IDistanceMeasure {
+public abstract class DistanceMeasure extends RepositoryObject implements RLibraryInferior, IDistanceMeasure {
 
     private static final Logger LOG = LoggerFactory.getLogger(DistanceMeasure.class);
 

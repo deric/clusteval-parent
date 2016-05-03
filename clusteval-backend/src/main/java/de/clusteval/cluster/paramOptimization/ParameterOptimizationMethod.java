@@ -31,7 +31,7 @@ import de.clusteval.api.run.IRun;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
 import de.clusteval.data.DataConfig;
 import de.clusteval.api.data.DataSetFormat;
-import de.clusteval.framework.repository.RepositoryObject;
+import de.clusteval.api.repository.RepositoryObject;
 import de.clusteval.framework.repository.parse.Parser;
 import de.clusteval.program.ProgramConfig;
 import de.clusteval.program.ProgramParameter;

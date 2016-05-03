@@ -19,7 +19,7 @@ package de.clusteval.framework.repository.parse;
 import java.util.HashMap;
 import java.util.Map;
 
-import de.clusteval.framework.repository.RepositoryObject;
+import de.clusteval.api.repository.RepositoryObject;
 
 //TODO: rename
 public class ParserMap {

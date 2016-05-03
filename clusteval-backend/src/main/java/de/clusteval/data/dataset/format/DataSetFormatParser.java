@@ -12,7 +12,7 @@ package de.clusteval.data.dataset.format;
 
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetFormatParser;
-import de.clusteval.framework.repository.RepositoryObject;
+import de.clusteval.api.repository.RepositoryObject;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;

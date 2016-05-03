@@ -16,8 +16,8 @@ import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.RNotAvailableException;
-import de.clusteval.api.repository.AbsRepoObject;
 import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.repository.RepositoryObject;
 import de.clusteval.utils.FileUtils;
 import java.io.File;
 import java.io.IOException;
@@ -42,7 +42,7 @@ import org.slf4j.LoggerFactory;
  * *
  *
  */
-public abstract class DataSetFormat extends AbsRepoObject implements IDataSetFormat {
+public abstract class DataSetFormat extends RepositoryObject implements IDataSetFormat {
 
     protected static final Logger LOG = LoggerFactory.getLogger(DataSetFormat.class);
 

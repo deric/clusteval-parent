@@ -24,7 +24,7 @@ import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
 import de.clusteval.data.dataset.format.ConversionStandardToInputConfiguration;
 import de.clusteval.api.data.DistanceMeasure;
 import de.clusteval.data.goldstandard.GoldStandardConfig;
-import de.clusteval.framework.repository.RepositoryObject;
+import de.clusteval.api.repository.RepositoryObject;
 import de.clusteval.utils.FileUtils;
 import java.io.File;
 import java.util.ArrayList;

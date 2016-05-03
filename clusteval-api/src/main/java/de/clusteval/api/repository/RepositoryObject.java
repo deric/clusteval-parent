@@ -10,16 +10,9 @@
  *     Christian Wiwie - initial API and implementation
  *****************************************************************************
  */
-package de.clusteval.framework.repository;
+package de.clusteval.api.repository;
 
 import de.clusteval.api.program.RegisterException;
-import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.repository.IRepositoryObject;
-import de.clusteval.api.repository.RepositoryEvent;
-import de.clusteval.api.repository.RepositoryListener;
-import de.clusteval.api.repository.RepositoryMoveEvent;
-import de.clusteval.api.repository.RepositoryRemoveEvent;
-import de.clusteval.api.repository.RepositoryReplaceEvent;
 import de.clusteval.utils.FileUtils;
 import java.io.File;
 import java.io.IOException;
@@ -27,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -182,8 +176,8 @@ public abstract class RepositoryObject implements RepositoryListener, IRepositor
      *
      * @return true, if successful
      * @throws RegisterException An exception is thrown if something goes wrong
-     * during the registering process, that might be interesting to handle
-     * individually.
+     *                           during the registering process, that might be interesting to handle
+     *                           individually.
      */
     @Override
     public boolean register() throws RegisterException {
@@ -215,30 +209,6 @@ public abstract class RepositoryObject implements RepositoryListener, IRepositor
     @Override
     public long getChangeDate() {
         return this.changeDate;
-    }
-
-    /*
-     * (non-Javadoc)
-     *
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    @Override
-    public boolean equals(Object obj) {
-        RepositoryObject other = (RepositoryObject) obj;
-
-        return this.repository.equals(other.repository)
-                && ((this.absPath == null && other.absPath == null) || this.absPath
-                .equals(other.absPath));
-    }
-
-    /*
-     * (non-Javadoc)
-     *
-     * @see java.lang.Object#hashCode()
-     */
-    @Override
-    public int hashCode() {
-        return (this.repository.toString() + this.absPath.toString()).hashCode();
     }
 
     /**
@@ -488,5 +458,27 @@ public abstract class RepositoryObject implements RepositoryListener, IRepositor
      */
     public Logger getLog() {
         return log;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 83 * hash + (int) (this.changeDate ^ (this.changeDate >>> 32));
+        hash = 83 * hash + Objects.hashCode(this.absPath);
+        return hash;
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
+        RepositoryObject other = (RepositoryObject) obj;
+
+        return this.repository.equals(other.repository)
+                && ((this.absPath == null && other.absPath == null) || this.absPath
+                .equals(other.absPath));
     }
 }

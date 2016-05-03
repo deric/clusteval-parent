@@ -27,7 +27,7 @@ import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.program.ParameterSet;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.framework.repository.RepositoryObject;
+import de.clusteval.api.repository.RepositoryObject;
 import de.wiwie.wiutils.utils.parse.TextFileParser;
 import java.io.File;
 import java.io.IOException;
