@@ -16,18 +16,28 @@
  */
 package de.clusteval.data.distance;
 
+import de.clusteval.api.IDistanceMeasure;
+import de.clusteval.api.Precision;
+import de.clusteval.api.data.DistanceMeasureFactory;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
+import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.r.RNotAvailableException;
+import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
+import java.util.ArrayList;
+import java.util.Arrays;
 import org.junit.After;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
+import org.junit.Test;
 
 /**
  *
  * @author deric
  */
-public class EuclidianDistanceMeasureTest {
+public class EuclidianDistanceMeasureTest extends AbstractTest {
 
     public EuclidianDistanceMeasureTest() {
+
     }
 
     @Before
@@ -38,21 +48,22 @@ public class EuclidianDistanceMeasureTest {
     public void tearDown() {
     }
 
-    //@Test
+    @Test
     public void test() throws UnknownDistanceMeasureException,
-                              RNotAvailableException, InterruptedException {
-        /* IDistanceMeasure measure = DistanceMeasure.parseFromString("EuclidianDistanceMeasure");
-         * assertTrue(measure != null);
-         *
-         * ConversionInputToStandardConfiguration config = new ConversionInputToStandardConfiguration(
-         * measure, Precision.FLOAT,
-         * new ArrayList<>(),
-         * new ArrayList<>());
-         *
-         * double[][] matrix = new double[][]{new double[]{1, 2, 3},
-         * new double[]{4, 5, 6}, new double[]{7, 8, 9}};
-         *
-         * System.out.println(Arrays.toString(measure.getDistances(config, matrix).toArray())); */
+                              RNotAvailableException, InterruptedException, UnknownProviderException {
+        IDistanceMeasure measure = DistanceMeasureFactory.parseFromString("euclidean");
+
+        assertTrue(measure != null);
+
+        ConversionInputToStandardConfiguration config = new ConversionInputToStandardConfiguration(
+                measure, Precision.FLOAT,
+                new ArrayList<>(),
+                new ArrayList<>());
+
+        double[][] matrix = new double[][]{new double[]{1, 2, 3},
+        new double[]{4, 5, 6}, new double[]{7, 8, 9}};
+
+        System.out.println(Arrays.toString(measure.getDistances(config, matrix).toArray()));
     }
 
 }

@@ -1762,8 +1762,7 @@ public class DefaultSQLCommunicator extends SQLCommunicator implements Database 
      * @see de.wiwie.wiutils.utils.SQLCommunicator#registerDataSetFormat(java.lang.Class)
      */
     @Override
-    protected boolean registerDataSetTypeClass(
-            Class<? extends DataSetType> object) {
+    protected boolean registerDataSetTypeClass(Class<? extends DataSetType> object) {
         try {
             DataSetTypeFactory dsf = DataSetTypeFactory.getInstance();
             IDataSetType type = dsf.getProvider(object.getSimpleName());

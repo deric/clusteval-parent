@@ -10,9 +10,11 @@
  *     Christian Wiwie - initial API and implementation
  *****************************************************************************
  */
-package de.clusteval.api.data;
+package de.clusteval.data.distance;
 
 import de.clusteval.api.IDistanceMeasure;
+import de.clusteval.api.data.DistanceMeasure;
+import de.clusteval.api.data.IConversionInputToStandardConfiguration;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
@@ -26,6 +28,10 @@ import de.wiwie.wiutils.utils.SimilarityMatrix;
  *
  */
 public abstract class DistanceMeasureR extends DistanceMeasure implements IDistanceMeasure {
+
+    public DistanceMeasureR() {
+        super();
+    }
 
     /**
      * The copy constructor of this R distance measures.

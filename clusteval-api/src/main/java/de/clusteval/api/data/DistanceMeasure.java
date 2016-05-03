@@ -32,6 +32,10 @@ public abstract class DistanceMeasure extends AbsRepoObject implements RLibraryI
 
     private static final Logger LOG = LoggerFactory.getLogger(DistanceMeasure.class);
 
+    public DistanceMeasure() {
+        super();
+    }
+
     /**
      * The copy constructor of this distance measures.
      *

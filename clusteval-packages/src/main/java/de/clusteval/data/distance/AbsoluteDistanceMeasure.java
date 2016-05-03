@@ -10,34 +10,33 @@
  ***************************************************************************** */
 package de.clusteval.data.distance;
 
-import de.clusteval.api.data.DistanceMeasureR;
+import de.clusteval.api.IDistanceMeasure;
 import de.clusteval.api.data.IConversionInputToStandardConfiguration;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RLibraryRequirement;
 import de.clusteval.api.r.ROperationNotSupported;
-import de.clusteval.api.repository.IRepository;
 import de.clusteval.utils.ArraysExt;
-import java.io.File;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * @author Christian Wiwie
  *
  */
 @RLibraryRequirement(requiredRLibraries = {"proxy"})
+@ServiceProvider(service = IDistanceMeasure.class)
 public class AbsoluteDistanceMeasure extends DistanceMeasureR {
 
-    /**
-     * @param repository
-     * @param register
-     * @param changeDate
-     * @param absPath
-     * @throws RegisterException
-     */
-    public AbsoluteDistanceMeasure(IRepository repository, boolean register,
-            long changeDate, File absPath) throws RegisterException {
-        super(repository, register, changeDate, absPath);
+    public static final String NAME = "absolute distance";
+
+    @Override
+    public String getName() {
+        return NAME;
+    }
+
+    public AbsoluteDistanceMeasure() {
+        super();
     }
 
     /**
@@ -47,8 +46,7 @@ public class AbsoluteDistanceMeasure extends DistanceMeasureR {
      *              The object to clone.
      * @throws RegisterException
      */
-    public AbsoluteDistanceMeasure(final AbsoluteDistanceMeasure other)
-            throws RegisterException {
+    public AbsoluteDistanceMeasure(final AbsoluteDistanceMeasure other) throws RegisterException {
         super(other);
     }
 

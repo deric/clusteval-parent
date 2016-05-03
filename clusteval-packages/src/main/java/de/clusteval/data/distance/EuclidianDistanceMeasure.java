@@ -12,34 +12,33 @@
  */
 package de.clusteval.data.distance;
 
-import de.clusteval.api.data.DistanceMeasureR;
+import de.clusteval.api.IDistanceMeasure;
 import de.clusteval.api.data.IConversionInputToStandardConfiguration;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RLibraryRequirement;
 import de.clusteval.api.r.ROperationNotSupported;
-import de.clusteval.api.repository.IRepository;
-import java.io.File;
 import java.security.InvalidParameterException;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * @author Christian Wiwie
  *
  */
 @RLibraryRequirement(requiredRLibraries = {"proxy"})
+@ServiceProvider(service = IDistanceMeasure.class)
 public class EuclidianDistanceMeasure extends DistanceMeasureR {
 
-    /**
-     * @param repository
-     * @param register
-     * @param changeDate
-     * @param absPath
-     * @throws RegisterException
-     */
-    public EuclidianDistanceMeasure(IRepository repository, boolean register,
-            long changeDate, File absPath) throws RegisterException {
-        super(repository, register, changeDate, absPath);
+    public static final String NAME = "euclidean";
+
+    public EuclidianDistanceMeasure() {
+        super();
+    }
+
+    @Override
+    public String getName() {
+        return NAME;
     }
 
     /**

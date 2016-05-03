@@ -15,7 +15,10 @@ package de.clusteval.cluster.paramOptimization;
 import ch.qos.logback.classic.Level;
 import de.clusteval.api.Precision;
 import de.clusteval.api.cluster.ClustEvalValue;
+import de.clusteval.api.cluster.ClusteringEvaluationParameters;
 import de.clusteval.api.cluster.ClusteringQualitySet;
+import de.clusteval.api.data.DataSetFormatFactory;
+import de.clusteval.api.data.DistanceMeasure;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.exceptions.FormatConversionException;
@@ -25,6 +28,7 @@ import de.clusteval.api.exceptions.RunResultParseException;
 import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
+import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.opt.NoParameterSetFoundException;
 import de.clusteval.api.opt.ParameterOptimizationException;
 import de.clusteval.api.opt.ParameterSetAlreadyEvaluatedException;
@@ -36,15 +40,12 @@ import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
-import de.clusteval.api.cluster.ClusteringEvaluationParameters;
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
 import de.clusteval.context.Context;
 import de.clusteval.data.DataConfig;
 import de.clusteval.data.dataset.RelativeDataSet;
 import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
 import de.clusteval.data.dataset.format.ConversionStandardToInputConfiguration;
-import de.clusteval.data.dataset.format.DataSetFormat;
-import de.clusteval.api.data.DistanceMeasure;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
@@ -80,7 +81,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
                    ParameterOptimizationException, FormatConversionException,
                    UnknownDistanceMeasureException, NoParameterSetFoundException,
                    UnknownContextException, RNotAvailableException,
-                   InterruptedException, ParameterSetAlreadyEvaluatedException, RException {
+                   InterruptedException, ParameterSetAlreadyEvaluatedException, RException, UnknownProviderException {
 
         ClustevalBackendServer.logLevel(Level.INFO);
 
@@ -90,8 +91,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
         DataConfig dataConfig = getRepository().getStaticObjectWithName(
                 DataConfig.class, "synthetic_cassini250");
         IDataSet ds = dataConfig.getDatasetConfig().getDataSet();
-        IDataSetFormat internal = DataSetFormat.parseFromString(getRepository(),
-                "SimMatrixDataSetFormat");
+        IDataSetFormat internal = DataSetFormatFactory.parseFromString("SimMatrixDataSetFormat");
         ds = ds.preprocessAndConvertTo(
                 context,
                 internal,
@@ -218,7 +218,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
                    ParameterOptimizationException, FormatConversionException,
                    UnknownDistanceMeasureException, NoParameterSetFoundException,
                    UnknownContextException, RNotAvailableException,
-                   InterruptedException, ParameterSetAlreadyEvaluatedException, RException {
+                   InterruptedException, ParameterSetAlreadyEvaluatedException, RException, UnknownProviderException {
 
         ClustevalBackendServer.logLevel(Level.INFO);
 
@@ -228,8 +228,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
         DataConfig dataConfig = getRepository().getStaticObjectWithName(
                 DataConfig.class, "synthetic_cassini250");
         IDataSet ds = dataConfig.getDatasetConfig().getDataSet();
-        IDataSetFormat internal = DataSetFormat.parseFromString(getRepository(),
-                "SimMatrixDataSetFormat");
+        IDataSetFormat internal = DataSetFormatFactory.parseFromString("SimMatrixDataSetFormat");
         ds = ds.preprocessAndConvertTo(
                 context,
                 internal,
@@ -339,7 +338,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
                    ParameterOptimizationException, FormatConversionException,
                    UnknownDistanceMeasureException, NoParameterSetFoundException,
                    UnknownContextException, RNotAvailableException,
-                   InterruptedException, RException {
+                   InterruptedException, RException, UnknownProviderException {
 
         ClustevalBackendServer.logLevel(Level.INFO);
 
@@ -349,8 +348,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
         DataConfig dataConfig = getRepository().getStaticObjectWithName(
                 DataConfig.class, "synthetic_cassini250");
         IDataSet ds = dataConfig.getDatasetConfig().getDataSet();
-        IDataSetFormat internal = DataSetFormat.parseFromString(getRepository(),
-                "SimMatrixDataSetFormat");
+        IDataSetFormat internal = DataSetFormatFactory.parseFromString("SimMatrixDataSetFormat");
         ds = ds.preprocessAndConvertTo(
                 context,
                 internal,
@@ -433,7 +431,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
                    ParameterOptimizationException, FormatConversionException,
                    UnknownDistanceMeasureException, NoParameterSetFoundException,
                    UnknownContextException, RNotAvailableException,
-                   InterruptedException, ParameterSetAlreadyEvaluatedException, RException {
+                   InterruptedException, ParameterSetAlreadyEvaluatedException, RException, UnknownProviderException {
 
         ClustevalBackendServer.logLevel(Level.INFO);
 
@@ -443,8 +441,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
         DataConfig dataConfig = getRepository().getStaticObjectWithName(
                 DataConfig.class, "baechler2003");
         IDataSet ds = dataConfig.getDatasetConfig().getDataSet();
-        IDataSetFormat internal = DataSetFormat.parseFromString(getRepository(),
-                "SimMatrixDataSetFormat");
+        IDataSetFormat internal = DataSetFormatFactory.parseFromString("SimMatrixDataSetFormat");
         ds = ds.preprocessAndConvertTo(
                 context,
                 internal,

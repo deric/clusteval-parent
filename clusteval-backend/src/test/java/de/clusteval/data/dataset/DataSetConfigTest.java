@@ -11,6 +11,7 @@
 package de.clusteval.data.dataset;
 
 import de.clusteval.api.Precision;
+import de.clusteval.api.data.DistanceMeasure;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
@@ -42,7 +43,6 @@ import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
 import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
 import de.clusteval.data.dataset.format.ConversionStandardToInputConfiguration;
-import de.clusteval.api.data.DistanceMeasure;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
 import de.clusteval.framework.repository.parse.Parser;
@@ -422,16 +422,8 @@ public class DataSetConfigTest extends AbstractClustEvalTest {
                 "testCaseRepository/data/datasets/configs/testDataSetConfig.dsconfig")
                 .getAbsoluteFile();
         f.createNewFile();
-        try {
-            Parser.parseFromFile(DataSetConfig.class, f);
-        } catch (DataSetConfigurationException e) {
-            // Assert.assertEquals(
-            // "'goldstandardName' doesn't map to an existing object",
-            // e.getMessage());
-            throw e;
-        } finally {
-            f.delete();
-        }
+        Parser.parseFromFile(DataSetConfig.class, f);
+        f.delete();
     }
 
     /**
@@ -597,21 +589,12 @@ public class DataSetConfigTest extends AbstractClustEvalTest {
                 .getAbsoluteFile();
         f.createNewFile();
 
-        try {
-            PrintWriter bw = new PrintWriter(new FileWriter(f));
-            bw.println("datasetName = Test");
-            bw.flush();
-            bw.close();
-
-            Parser.parseFromFile(DataSetConfig.class, f);
-        } catch (DataSetConfigurationException e) {
-            // Assert.assertEquals(
-            // "'goldstandardFile' doesn't map to an existing object",
-            // e.getMessage());
-            throw e;
-        } finally {
-            f.delete();
-        }
+        PrintWriter bw = new PrintWriter(new FileWriter(f));
+        bw.println("datasetName = Test");
+        bw.flush();
+        bw.close();
+        Parser.parseFromFile(DataSetConfig.class, f);
+        f.delete();
     }
 
     /**
