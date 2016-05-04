@@ -18,26 +18,25 @@ package de.clusteval.data.randomizer;
 
 import de.clusteval.api.Pair;
 import de.clusteval.api.cluster.IClustering;
+import de.clusteval.api.data.AbsoluteDataSetFormat;
+import de.clusteval.api.data.DataMatrix;
+import de.clusteval.api.data.DataSetFormat;
+import de.clusteval.api.data.DataSetFormatFactory;
 import de.clusteval.api.data.DataSetTypeFactory;
 import de.clusteval.api.data.IDataRandomizer;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IGoldStandard;
+import de.clusteval.api.data.RelativeDataSetFormat;
 import de.clusteval.api.data.WEBSITE_VISIBILITY;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
-import de.clusteval.api.data.DataSetFormatFactory;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.data.dataset.AbsoluteDataSet;
-import de.clusteval.api.data.DataMatrix;
 import de.clusteval.data.dataset.RelativeDataSet;
-import de.clusteval.api.data.AbsoluteDataSetFormat;
-import de.clusteval.api.data.DataSetFormat;
-import de.clusteval.api.data.RelativeDataSetFormat;
 import de.clusteval.data.goldstandard.GoldStandard;
 import de.clusteval.utils.FileUtils;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
@@ -51,7 +50,6 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
-import org.openide.util.Exceptions;
 
 /**
  * @author Christian Wiwie
@@ -284,8 +282,6 @@ public class RemoveAndAddNoiseDataRandomizer extends DataRandomizer implements I
             } catch (IOException | UnknownProviderException | RegisterException |
                     InvalidDataSetFormatVersionException | IllegalArgumentException | UnknownGoldStandardFormatException e) {
                 e.printStackTrace();
-            } catch (UnknownDataSetFormatException ex) {
-                Exceptions.printStackTrace(ex);
             } finally {
                 rEngine.clear();
                 dataSet.unloadFromMemory();
@@ -435,8 +431,6 @@ public class RemoveAndAddNoiseDataRandomizer extends DataRandomizer implements I
         } catch (IOException | UnknownProviderException | RegisterException |
                 InvalidDataSetFormatVersionException | IllegalArgumentException | UnknownGoldStandardFormatException e) {
             e.printStackTrace();
-        } catch (UnknownDataSetFormatException ex) {
-            Exceptions.printStackTrace(ex);
         } finally {
             rEngine.clear();
             dataSet.unloadFromMemory();

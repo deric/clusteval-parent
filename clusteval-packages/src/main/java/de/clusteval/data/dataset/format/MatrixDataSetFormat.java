@@ -10,8 +10,8 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset.format;
 
-import de.clusteval.api.data.AbsoluteDataSetFormat;
 import de.clusteval.api.FormatVersion;
+import de.clusteval.api.data.AbsoluteDataSetFormat;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.data.IDataSetFormatParser;
 import de.clusteval.api.program.RegisterException;
@@ -25,8 +25,10 @@ import org.openide.util.lookup.ServiceProvider;
 @ServiceProvider(service = IDataSetFormat.class)
 public class MatrixDataSetFormat extends AbsoluteDataSetFormat {
 
-    public MatrixDataSetFormat() {
+    public static final String NAME = "MatrixDataSetFormat";
 
+    public MatrixDataSetFormat() {
+        super();
     }
 
     /**
@@ -41,22 +43,11 @@ public class MatrixDataSetFormat extends AbsoluteDataSetFormat {
         super(other);
     }
 
-    /*
-	 * (non-Javadoc)
-	 *
-	 * @see data.dataset.format.DataSetFormat#getName()
-     */
     @Override
     public String getName() {
-        return "Data Matrix";
+        return NAME;
     }
 
-    /*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * de.clusteval.data.dataset.format.DataSetFormat#getDataSetFormatParser()
-     */
     @Override
     public IDataSetFormatParser getDataSetFormatParser() {
         return new MatrixDataSetFormatParser();

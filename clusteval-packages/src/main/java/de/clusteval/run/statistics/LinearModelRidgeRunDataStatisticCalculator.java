@@ -26,7 +26,6 @@ import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.exceptions.RunResultParseException;
-import de.clusteval.api.exceptions.UnknownContextException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
@@ -149,7 +148,7 @@ public class LinearModelRidgeRunDataStatisticCalculator
                     DataConfigNotFoundException | RunException | UnknownDataStatisticException | UnknownProgramTypeException |
                     UnknownRProgramException | IncompatibleParameterOptimizationMethodException | UnknownDistanceMeasureException |
                     UnknownRunStatisticException | RepositoryConfigNotFoundException | RepositoryConfigurationException |
-                    ConfigurationException | RegisterException | NumberFormatException | NoDataSetException | UnknownRunDataStatisticException | RunResultParseException | UnknownDataPreprocessorException | IncompatibleDataSetConfigPreprocessorException | UnknownContextException | IncompatibleContextException | UnknownParameterType | InterruptedException | UnknownRunResultPostprocessorException | UnknownDataRandomizerException e) {
+                    ConfigurationException | RegisterException | NumberFormatException | NoDataSetException | UnknownRunDataStatisticException | RunResultParseException | UnknownDataPreprocessorException | IncompatibleDataSetConfigPreprocessorException | IncompatibleContextException | UnknownParameterType | InterruptedException | UnknownRunResultPostprocessorException | UnknownDataRandomizerException e) {
                 Exceptions.printStackTrace(e);
             } catch (UnknownProviderException ex) {
                 Exceptions.printStackTrace(ex);

@@ -22,7 +22,7 @@ import java.io.IOException;
 public abstract class AbsoluteDataSetFormat extends DataSetFormat {
 
     public AbsoluteDataSetFormat() {
-
+        super();
     }
 
     /**
