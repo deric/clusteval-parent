@@ -10,27 +10,27 @@
  ***************************************************************************** */
 package de.clusteval.framework.repository.db;
 
+import de.clusteval.api.AbsContext;
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.SQLConfig;
 import de.clusteval.api.cluster.IClustering;
+import de.clusteval.api.data.DataConfig;
+import de.clusteval.api.data.DataSetConfig;
+import de.clusteval.api.data.DataSetFormat;
+import de.clusteval.api.data.GoldStandard;
+import de.clusteval.api.data.GoldStandardConfig;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetConfig;
+import de.clusteval.api.data.IDataSetType;
 import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.data.IGoldStandardConfig;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.IRun;
+import de.clusteval.api.run.RunResultFormat;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
-import de.clusteval.api.AbsContext;
-import de.clusteval.data.DataConfig;
-import de.clusteval.data.dataset.DataSet;
-import de.clusteval.data.dataset.DataSetConfig;
-import de.clusteval.api.data.DataSetFormat;
-import de.clusteval.data.dataset.type.DataSetType;
-import de.clusteval.data.goldstandard.GoldStandard;
-import de.clusteval.data.goldstandard.GoldStandardConfig;
 import de.clusteval.data.statistics.DataStatistic;
 import de.clusteval.program.DoubleProgramParameter;
 import de.clusteval.program.IntegerProgramParameter;
@@ -55,7 +55,6 @@ import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.run.result.RunAnalysisRunResult;
 import de.clusteval.run.result.RunDataAnalysisRunResult;
 import de.clusteval.run.result.RunResult;
-import de.clusteval.api.run.RunResultFormat;
 import de.clusteval.run.statistics.RunDataStatistic;
 import de.clusteval.run.statistics.RunStatistic;
 import de.clusteval.utils.Statistic;
@@ -722,7 +721,7 @@ public class StubSQLCommunicator extends SQLCommunicator {
      * @see de.wiwie.wiutils.utils.SQLCommunicator#unregister(data.dataset.DataSet)
      */
     @Override
-    protected int unregister(DataSet object) {
+    protected int unregister(IDataSet object) {
         return -1;
     }
 
@@ -1456,7 +1455,7 @@ public class StubSQLCommunicator extends SQLCommunicator {
      */
     @Override
     protected boolean unregisterDataSetTypeClass(
-            Class<? extends DataSetType> object) {
+            Class<? extends IDataSetType> object) {
         return false;
     }
 
@@ -1560,7 +1559,7 @@ public class StubSQLCommunicator extends SQLCommunicator {
      */
     @Override
     protected boolean registerDataSetTypeClass(
-            Class<? extends DataSetType> object) {
+            Class<? extends IDataSetType> object) {
         return false;
     }
 

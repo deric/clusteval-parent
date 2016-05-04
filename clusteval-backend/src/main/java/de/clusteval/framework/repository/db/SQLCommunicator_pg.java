@@ -13,11 +13,11 @@ package de.clusteval.framework.repository.db;
 import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
 import de.clusteval.api.AbsContext;
 import de.clusteval.api.data.DataConfig;
-import de.clusteval.data.dataset.DataSet;
 import de.clusteval.api.data.DataSetConfig;
 import de.clusteval.api.data.DataSetFormat;
 import de.clusteval.api.data.GoldStandard;
 import de.clusteval.api.data.GoldStandardConfig;
+import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetType;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.IRepositoryObject;
@@ -537,8 +537,8 @@ public abstract class SQLCommunicator_pg {
     protected boolean register(final RepositoryObject object,
             final boolean updateOnly) {
         int result;
-        if (object instanceof DataSet) {
-            result = this.register((DataSet) object, updateOnly);
+        if (object instanceof IDataSet) {
+            result = this.register((IDataSet) object, updateOnly);
         } else if (object instanceof ClusteringRun) {
             result = this.register((ClusteringRun) object, updateOnly);
         } else if (object instanceof ClusteringRunResult) {
@@ -595,8 +595,8 @@ public abstract class SQLCommunicator_pg {
     // TODO
     protected boolean unregister(final RepositoryObject object) {
         int result;
-        if (object instanceof DataSet) {
-            result = this.unregister((DataSet) object);
+        if (object instanceof IDataSet) {
+            result = this.unregister((IDataSet) object);
         } else if (object instanceof ClusteringRun) {
             result = this.unregister((ClusteringRun) object);
         } else if (object instanceof ClusteringRunResult) {
@@ -724,7 +724,7 @@ public abstract class SQLCommunicator_pg {
 
     protected abstract int register(final StringProgramParameter object);
 
-    protected abstract int register(final DataSet object,
+    protected abstract int register(final IDataSet object,
             final boolean updateOnly);
 
     protected abstract int register(final DataConfig object,
@@ -771,7 +771,7 @@ public abstract class SQLCommunicator_pg {
     protected abstract boolean unregisterDataSetTypeClass(
             final Class<? extends IDataSetType> object);
 
-    protected abstract int unregister(final DataSet object);
+    protected abstract int unregister(final IDataSet object);
 
     protected abstract int unregister(final Run object);
 

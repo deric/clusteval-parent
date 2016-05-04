@@ -10,11 +10,13 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset;
 
-import de.clusteval.api.data.DataSetConfig;
-import de.clusteval.api.data.RelativeDataSet;
 import de.clusteval.api.Precision;
+import de.clusteval.api.data.DataSetConfig;
 import de.clusteval.api.data.DistanceMeasure;
 import de.clusteval.api.data.IDataSet;
+import de.clusteval.api.data.InputToStd;
+import de.clusteval.api.data.RelativeDataSet;
+import de.clusteval.api.data.StdToInput;
 import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigurationException;
@@ -42,8 +44,6 @@ import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationM
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
-import de.clusteval.api.data.InputToStd;
-import de.clusteval.api.data.StdToInput;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
 import de.clusteval.framework.repository.parse.Parser;
@@ -60,6 +60,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import junit.framework.Assert;
 import org.apache.commons.configuration.ConfigurationException;
+import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 /**
@@ -497,27 +498,26 @@ public class DataSetConfigTest extends AbstractClustEvalTest {
                         new File(
                                 "testCaseRepository/data/datasets/configs/astral_1.dsconfig")
                         .getAbsoluteFile());
-        Assert.assertEquals(new DataSetConfig(
-                        getRepository(),
-                        new File(
-                                "testCaseRepository/data/datasets/configs/astral_1.dsconfig")
-                        .getAbsoluteFile().lastModified(),
-                        new File(
-                                "testCaseRepository/data/datasets/configs/astral_1.dsconfig")
-                        .getAbsoluteFile(),
-                        Parser.parseFromFile(
-                                DataSet.class,
-                                new File(
-                                        "testCaseRepository/data/datasets/astral_1_161/blastResults.txt")
-                                .getAbsoluteFile()),
-                        new InputToStd(
-                                DistanceMeasure.parseFromString(
-                                        getRepository(),
-                                        "EuclidianDistanceMeasure"),
-                                Precision.DOUBLE,
-                                new ArrayList<>(),
-                                new ArrayList<>()),
-                        new StdToInput()), gsConfig);
+        assertEquals(new DataSetConfig(
+                getRepository(),
+                new File(
+                        "testCaseRepository/data/datasets/configs/astral_1.dsconfig")
+                .getAbsoluteFile().lastModified(),
+                new File(
+                        "testCaseRepository/data/datasets/configs/astral_1.dsconfig")
+                .getAbsoluteFile(),
+                Parser.parseFromFile(
+                        IDataSet.class, new File(
+                                "testCaseRepository/data/datasets/astral_1_161/blastResults.txt")
+                        .getAbsoluteFile()),
+                new InputToStd(
+                        DistanceMeasure.parseFromString(
+                                getRepository(),
+                                "EuclidianDistanceMeasure"),
+                        Precision.DOUBLE,
+                        new ArrayList<>(),
+                        new ArrayList<>()),
+                new StdToInput()), gsConfig);
     }
 
     /**
@@ -735,11 +735,11 @@ public class DataSetConfigTest extends AbstractClustEvalTest {
         IDataSet ds = dsConfig.getDataSet();
         IDataSet expected = Parser
                 .parseFromFile(
-                        DataSet.class,
+                        IDataSet.class,
                         new File(
                                 "testCaseRepository/data/datasets/astral_1_161/blastResults.txt")
                         .getAbsoluteFile());
-        Assert.assertEquals(expected, ds);
+        assertEquals(expected, ds);
     }
 
     /**
@@ -753,12 +753,11 @@ public class DataSetConfigTest extends AbstractClustEvalTest {
      * @throws DataSetConfigNotFoundException
      * @throws UnknownDistanceMeasureException
      * @throws RegisterException
-     * @throws UnknownDataSetTypeException
      * @throws UnknownDataPreprocessorException
      * @throws NumberFormatException
      * @throws IncompatibleDataSetConfigPreprocessorException
      * @throws UnknownRunDataStatisticException
-     *                                                          , UnknownRunResultPostprocessorException
+     * @throws UnknownRunResultPostprocessorException
      * @throws UnknownRunStatisticException
      * @throws UnknownDataStatisticException
      * @throws NoOptimizableProgramParameterException
@@ -774,7 +773,6 @@ public class DataSetConfigTest extends AbstractClustEvalTest {
      * @throws UnknownClusteringQualityMeasureException
      * @throws UnknownParameterType
      * @throws FileNotFoundException
-     * @throws UnknownContextException
      * @throws ConfigurationException
      * @throws DataConfigNotFoundException
      * @throws DataConfigurationException
@@ -816,15 +814,15 @@ public class DataSetConfigTest extends AbstractClustEvalTest {
         IDataSet ds = dsConfig.getDataSet();
         IDataSet expected = Parser
                 .parseFromFile(
-                        DataSet.class,
+                        IDataSet.class,
                         new File(
                                 "testCaseRepository/data/datasets/astral_1_161/blastResults.txt")
                         .getAbsoluteFile());
-        Assert.assertEquals(expected, ds);
+        assertEquals(expected, ds);
 
-        DataSet override = Parser
+        IDataSet override = Parser
                 .parseFromFile(
-                        DataSet.class,
+                        IDataSet.class,
                         new File(
                                 "testCaseRepository/data/datasets/DS1/Zachary_karate_club_similarities.txt")
                         .getAbsoluteFile());

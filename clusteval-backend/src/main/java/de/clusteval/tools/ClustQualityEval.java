@@ -16,6 +16,7 @@ import ch.qos.logback.classic.Level;
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.cluster.ClusteringEvaluationParameters;
 import de.clusteval.api.cluster.ClusteringQualitySet;
+import de.clusteval.api.data.DataConfig;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.api.exceptions.DatabaseConnectException;
@@ -53,10 +54,8 @@ import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
-import de.clusteval.api.data.DataConfig;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
-import de.clusteval.data.dataset.DataSet;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
@@ -184,8 +183,8 @@ public class ClustQualityEval {
         System.out.println(run.getProgramConfigs());
         for (final IProgramConfig pc : run.getProgramConfigs()) {
             // get the dataset for this program config
-            DataSet dsIn = Parser.parseFromFile(
-                    DataSet.class,
+            IDataSet dsIn = Parser.parseFromFile(
+                    IDataSet.class,
                     new File(FileUtils.buildPath(absRepoPath, "inputs",
                             pc.toString() + "_" + dataConfig.toString(),
                             dataConfig.getDatasetConfig().getDataSet()

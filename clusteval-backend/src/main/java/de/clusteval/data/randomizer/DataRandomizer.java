@@ -12,18 +12,20 @@
  */
 package de.clusteval.data.randomizer;
 
-import de.clusteval.api.r.RLibraryInferior;
-import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.program.RegisterException;
-import de.clusteval.api.data.DataConfig;
-import de.clusteval.api.data.AbstractDataSetProvider;
-import de.clusteval.data.dataset.DataSet;
-import de.clusteval.utils.FileUtils;
 import de.clusteval.api.Pair;
+import de.clusteval.api.data.AbstractDataSetProvider;
+import de.clusteval.api.data.DataConfig;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataRandomizer;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IGoldStandard;
+import de.clusteval.api.exceptions.RepositoryObjectDumpException;
+import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
+import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.r.RException;
+import de.clusteval.api.r.RLibraryInferior;
+import de.clusteval.api.repository.IRepository;
+import de.clusteval.utils.FileUtils;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import org.apache.commons.cli.CommandLine;
@@ -31,6 +33,7 @@ import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
 import org.openide.util.Exceptions;
 
@@ -106,8 +109,8 @@ public abstract class DataRandomizer extends AbstractDataSetProvider implements 
         try {
             return this.getClass().getConstructor(this.getClass()).newInstance(this);
         } catch (IllegalArgumentException | SecurityException |
-                 InstantiationException | IllegalAccessException |
-                 InvocationTargetException | NoSuchMethodException e) {
+                InstantiationException | IllegalAccessException |
+                InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
         this.log.warn("Cloning instance of class " + this.getClass().getSimpleName() + " failed");
@@ -141,8 +144,8 @@ public abstract class DataRandomizer extends AbstractDataSetProvider implements 
      * @param cliArguments
      * @return The generated {@link DataSet}.
      * @throws DataRandomizeException This exception is thrown, if the passed
-     * arguments are not valid, or parsing of the written data set/ gold
-     * standard or config files fails.
+     *                                arguments are not valid, or parsing of the written data set/ gold
+     *                                standard or config files fails.
      * @throws DataRandomizeException
      */
     // TODO: remove onlySimulate attribute
@@ -170,7 +173,8 @@ public abstract class DataRandomizer extends AbstractDataSetProvider implements 
                     + "_" + this.dataConfig.getGoldstandardConfig().toString() + getDataSetFileNamePostFix());
 
             return dataConfig;
-        } catch (Exception e) {
+        } catch (ParseException | InterruptedException | RException |
+                RepositoryObjectDumpException | RegisterException | UnknownDistanceMeasureException e) {
             throw new DataRandomizeException(e);
         }
     }
@@ -219,8 +223,8 @@ public abstract class DataRandomizer extends AbstractDataSetProvider implements 
             return generator;
 
         } catch (InstantiationException | IllegalAccessException |
-                 IllegalArgumentException | SecurityException |
-                 InvocationTargetException | NoSuchMethodException e) {
+                IllegalArgumentException | SecurityException |
+                InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         } catch (NullPointerException e) {
             Exceptions.printStackTrace(e);

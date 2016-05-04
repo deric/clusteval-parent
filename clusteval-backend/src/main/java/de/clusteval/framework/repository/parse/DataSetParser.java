@@ -16,12 +16,15 @@
  */
 package de.clusteval.framework.repository.parse;
 
+import de.clusteval.api.data.AbsoluteDataSet;
 import de.clusteval.api.data.AbsoluteDataSetFormat;
+import de.clusteval.api.data.DataSetAttributeParser;
 import de.clusteval.api.data.DataSetFormat;
 import de.clusteval.api.data.DataSetTypeFactory;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.data.IDataSetType;
+import de.clusteval.api.data.RelativeDataSet;
 import de.clusteval.api.data.RelativeDataSetFormat;
 import de.clusteval.api.data.WEBSITE_VISIBILITY;
 import de.clusteval.api.exceptions.DataSetNotFoundException;
@@ -49,13 +52,9 @@ import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationM
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
-import de.clusteval.api.data.AbsoluteDataSet;
-import de.clusteval.data.dataset.DataSet;
-import de.clusteval.api.data.DataSetAttributeParser;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
-import de.clusteval.api.data.RelativeDataSet;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
 import de.clusteval.framework.repository.RunResultRepository;
@@ -74,7 +73,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author deric
  */
-class DataSetParser extends RepositoryObjectParser<DataSet> {
+class DataSetParser extends RepositoryObjectParser<IDataSet> {
 
     public DataSetParser() {
         this.loadConfigFile = false;
@@ -173,7 +172,7 @@ class DataSetParser extends RepositoryObjectParser<DataSet> {
 
             final long changeDate = absPath.lastModified();
 
-            LoggerFactory.getLogger(DataSet.class).debug("Parsing dataset \"" + absPath + "\"");
+            LoggerFactory.getLogger(IDataSet.class).debug("Parsing dataset \"" + absPath + "\"");
 
             /*
              * Either the format is absolute or relative
@@ -186,7 +185,7 @@ class DataSetParser extends RepositoryObjectParser<DataSet> {
                         dsType, websiteVisibility);
             }
             result = repo.getRegisteredObject(result);
-            LoggerFactory.getLogger(DataSet.class).debug("Dataset parsed");
+            LoggerFactory.getLogger(IDataSet.class).debug("Dataset parsed");
         } catch (IOException e) {
             throw new UnknownDataSetFormatException(e);
         }

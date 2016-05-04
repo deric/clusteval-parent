@@ -12,8 +12,13 @@
  */
 package de.clusteval.data.dataset.generator;
 
+import de.clusteval.api.data.AbsoluteDataSet;
+import de.clusteval.api.data.AbsoluteDataSetFormat;
+import de.clusteval.api.data.AbstractDataSetProvider;
+import de.clusteval.api.data.DataSetFormat;
 import de.clusteval.api.data.DataSetTypeFactory;
 import de.clusteval.api.data.IDataConfig;
+import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetGenerator;
 import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.data.WEBSITE_VISIBILITY;
@@ -27,12 +32,6 @@ import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.RLibraryInferior;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.data.AbsoluteDataSet;
-import de.clusteval.api.data.AbstractDataSetProvider;
-import de.clusteval.data.dataset.DataSet;
-import de.clusteval.api.data.AbsoluteDataSetFormat;
-import de.clusteval.api.data.DataSetFormat;
-import de.clusteval.api.data.GoldStandard;
 import de.clusteval.api.repository.RepositoryObject;
 import de.clusteval.utils.FileUtils;
 import java.io.BufferedWriter;
@@ -186,7 +185,7 @@ public abstract class DataSetGenerator extends AbstractDataSetProvider implement
      * @throws RegisterException
      * @throws RepositoryObjectDumpException
      */
-    public DataSet generate(final String[] cliArguments)
+    public IDataSet generate(final String[] cliArguments)
             throws ParseException, DataSetGenerationException, GoldStandardGenerationException, InterruptedException,
                    RepositoryObjectDumpException, RegisterException, UnknownDistanceMeasureException, UnknownProviderException {
         CommandLineParser parser = new PosixParser();
@@ -203,7 +202,7 @@ public abstract class DataSetGenerator extends AbstractDataSetProvider implement
 
         // Ensure, that the dataset target file does not exist yet
         File targetFile = new File(
-                FileUtils.buildPath(this.repository.getBasePath(DataSet.class), this.folderName, this.fileName));
+                FileUtils.buildPath(this.repository.getBasePath(IDataSet.class), this.folderName, this.fileName));
 
         if (targetFile.exists()) {
             throw new ParseException("A dataset with the given name does already exist!");
@@ -212,11 +211,11 @@ public abstract class DataSetGenerator extends AbstractDataSetProvider implement
 
         generateDataSet();
 
-        DataSet dataSet = null;
+        IDataSet dataSet = null;
 
         try {
             // create the target file
-            File dataSetFile = new File(FileUtils.buildPath(this.repository.getBasePath(DataSet.class),
+            File dataSetFile = new File(FileUtils.buildPath(this.repository.getBasePath(IDataSet.class),
                     this.getFolderName(), this.getFileName()));
 
             dataSet = writeCoordsToFile(dataSetFile);
@@ -228,7 +227,7 @@ public abstract class DataSetGenerator extends AbstractDataSetProvider implement
 
         if (this.generatesGoldStandard()) {
             // Ensure, that the goldstandard target file does not exist yet
-            targetFile = new File(FileUtils.buildPath(this.repository.getBasePath(GoldStandard.class), this.folderName,
+            targetFile = new File(FileUtils.buildPath(this.repository.getBasePath(IGoldStandard.class), this.folderName,
                     this.fileName));
 
             if (targetFile.exists()) {
@@ -321,7 +320,7 @@ public abstract class DataSetGenerator extends AbstractDataSetProvider implement
      * @throws UnknownDataSetFormatException
      *
      */
-    protected DataSet writeCoordsToFile(final File dataSetFile)
+    protected IDataSet writeCoordsToFile(final File dataSetFile)
             throws IOException, UnknownDataSetFormatException, RegisterException, UnknownProviderException {
         // writer header
         try ( // dataset file

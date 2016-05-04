@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset;
 
+import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.framework.threading.SupervisorThread;
@@ -51,7 +52,7 @@ public class RunResultDataSetFinderThread extends DataSetFinderThread {
      */
     @Override
     protected void afterFind() {
-        this.repository.setInitialized(DataSet.class);
+        this.repository.setInitialized(IDataSet.class);
     }
 
 }

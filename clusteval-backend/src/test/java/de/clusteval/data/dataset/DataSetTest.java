@@ -10,16 +10,21 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset;
 
-import de.clusteval.api.data.DataSetAttributeFilterer;
-import de.clusteval.api.data.RelativeDataSet;
 import ch.qos.logback.classic.Level;
+import de.clusteval.api.Matrix;
 import de.clusteval.api.Precision;
+import de.clusteval.api.data.DataConfig;
+import de.clusteval.api.data.DataSetAttributeFilterer;
 import de.clusteval.api.data.DataSetFormat;
+import de.clusteval.api.data.DataSetFormatFactory;
 import de.clusteval.api.data.DataSetTypeFactory;
 import de.clusteval.api.data.DistanceMeasure;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetFormat;
+import de.clusteval.api.data.InputToStd;
+import de.clusteval.api.data.RelativeDataSet;
 import de.clusteval.api.data.RelativeDataSetFormat;
+import de.clusteval.api.data.StdToInput;
 import de.clusteval.api.data.WEBSITE_VISIBILITY;
 import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.api.exceptions.DatabaseConnectException;
@@ -51,11 +56,8 @@ import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
-import de.clusteval.api.data.DataConfig;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
-import de.clusteval.api.data.InputToStd;
-import de.clusteval.api.data.StdToInput;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
 import de.clusteval.framework.ClustevalBackendServer;
@@ -81,6 +83,7 @@ import junit.framework.Assert;
 import org.apache.commons.configuration.ConfigurationException;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 /**
@@ -101,7 +104,7 @@ public class DataSetTest extends AbstractClustEvalTest {
      * @throws UnknownRunDataStatisticException
      * @throws UnknownRunStatisticException
      * @throws UnknownDataStatisticException
-     *                                                          , UnknownRunResultPostprocessorException
+     * @throws UnknownRunResultPostprocessorException
      * @throws NoOptimizableProgramParameterException
      * @throws UnknownParameterOptimizationMethodException
      * @throws IncompatibleParameterOptimizationMethodException
@@ -118,7 +121,6 @@ public class DataSetTest extends AbstractClustEvalTest {
      * @throws UnknownClusteringQualityMeasureException
      * @throws UnknownParameterType
      * @throws FileNotFoundException
-     * @throws UnknownContextException
      * @throws ConfigurationException
      * @throws NumberFormatException
      * @throws DataConfigNotFoundException
@@ -156,13 +158,13 @@ public class DataSetTest extends AbstractClustEvalTest {
                                       UnknownDataRandomizerException {
         this.repositoryObject = Parser
                 .parseFromFile(
-                        DataSet.class,
+                        IDataSet.class,
                         new File(
                                 "testCaseRepository/data/datasets/DS1/Zachary_karate_club_similarities.txt")
                         .getAbsoluteFile());
 
         assertEquals(this.repositoryObject, this.getRepository()
-                .getRegisteredObject((DataSet) this.repositoryObject));
+                .getRegisteredObject((IDataSet) this.repositoryObject));
 
         // adding a data set equal to another one already registered does
         // not register the second object.
@@ -170,9 +172,9 @@ public class DataSetTest extends AbstractClustEvalTest {
                 (RelativeDataSet) this.repositoryObject);
         assertEquals(
                 this.getRepository().getRegisteredObject(
-                        (DataSet) this.repositoryObject), this.repositoryObject);
+                        (IDataSet) this.repositoryObject), this.repositoryObject);
         assertFalse(this.getRepository().getRegisteredObject(
-                (DataSet) this.repositoryObject) == this.repositoryObject);
+                (IDataSet) this.repositoryObject) == this.repositoryObject);
     }
 
     /**
@@ -260,7 +262,7 @@ public class DataSetTest extends AbstractClustEvalTest {
             runResultRepository.initialize();
             try {
                 Parser.parseFromFile(
-                        DataSet.class,
+                        IDataSet.class,
                         new File(
                                 "testCaseRepository/results/12_04_2012-14_05_42_tc_vs_DS1/inputs/DS1/testCaseDataSetNotPresentInParent.txt")
                         .getAbsoluteFile());
@@ -300,7 +302,6 @@ public class DataSetTest extends AbstractClustEvalTest {
      * @throws UnknownClusteringQualityMeasureException
      * @throws UnknownParameterType
      * @throws FileNotFoundException
-     * @throws UnknownContextException
      * @throws ConfigurationException
      * @throws NumberFormatException
      * @throws DataConfigNotFoundException
@@ -337,17 +338,17 @@ public class DataSetTest extends AbstractClustEvalTest {
 
         this.repositoryObject = Parser
                 .parseFromFile(
-                        DataSet.class,
+                        IDataSet.class,
                         new File(
                                 "testCaseRepository/data/datasets/DS1/Zachary_karate_club_similarities.txt")
                         .getAbsoluteFile());
 
-        Assert.assertEquals(this.repositoryObject, this.getRepository()
-                .getRegisteredObject((DataSet) this.repositoryObject));
+        assertEquals(this.repositoryObject, this.getRepository()
+                .getRegisteredObject((IDataSet) this.repositoryObject));
         this.repositoryObject.unregister();
         // is not registered anymore
-        Assert.assertTrue(this.getRepository().getRegisteredObject(
-                (DataSet) this.repositoryObject) == null);
+        assertTrue(this.getRepository().getRegisteredObject(
+                (IDataSet) this.repositoryObject) == null);
     }
 
     /**
@@ -418,7 +419,7 @@ public class DataSetTest extends AbstractClustEvalTest {
                                            UnknownDataRandomizerException {
         this.repositoryObject = Parser
                 .parseFromFile(
-                        DataSet.class,
+                        IDataSet.class,
                         new File(
                                 "testCaseRepository/data/datasets/DS1/Zachary_karate_club_similarities.txt")
                         .getAbsoluteFile());
@@ -465,7 +466,6 @@ public class DataSetTest extends AbstractClustEvalTest {
      * @throws RunException
      * @throws UnknownClusteringQualityMeasureException
      * @throws UnknownParameterType
-     * @throws UnknownContextException
      * @throws ConfigurationException
      * @throws NumberFormatException
      * @throws DataConfigNotFoundException
@@ -503,7 +503,7 @@ public class DataSetTest extends AbstractClustEvalTest {
                    UnknownDataRandomizerException, UnknownDataRandomizerException {
         this.repositoryObject = Parser
                 .parseFromFile(
-                        DataSet.class,
+                        IDataSet.class,
                         new File(
                                 "testCaseRepository/data/datasets/DS1/Zachary_karate_club_similarities2.txt")
                         .getAbsoluteFile());
@@ -537,7 +537,6 @@ public class DataSetTest extends AbstractClustEvalTest {
      * @throws UnknownClusteringQualityMeasureException
      * @throws UnknownParameterType
      * @throws FileNotFoundException
-     * @throws UnknownContextException
      * @throws ConfigurationException
      * @throws NumberFormatException
      * @throws DataConfigNotFoundException
@@ -574,13 +573,13 @@ public class DataSetTest extends AbstractClustEvalTest {
                                               UnknownDataRandomizerException {
         this.repositoryObject = Parser
                 .parseFromFile(
-                        DataSet.class,
+                        IDataSet.class,
                         new File(
                                 "testCaseRepository/data/datasets/DS1/Zachary_karate_club_similarities.txt")
                         .getAbsoluteFile());
-        IDataSetFormat dsFormat = ((DataSet) this.repositoryObject)
+        IDataSetFormat dsFormat = ((IDataSet) this.repositoryObject)
                 .getDataSetFormat();
-        Assert.assertEquals(DataSetFormat.parseFromString(getRepository(),
+        assertEquals(DataSetFormatFactory.parseFromString(getRepository(),
                 "RowSimDataSetFormat"), dsFormat);
     }
 
@@ -595,7 +594,7 @@ public class DataSetTest extends AbstractClustEvalTest {
      * @throws UnknownRunDataStatisticException
      * @throws UnknownRunStatisticException
      * @throws UnknownDataStatisticException
-     *                                                          , UnknownRunResultPostprocessorException
+     * @throws UnknownRunResultPostprocessorException
      * @throws NoOptimizableProgramParameterException
      * @throws UnknownParameterOptimizationMethodException
      * @throws IncompatibleParameterOptimizationMethodException
@@ -612,7 +611,6 @@ public class DataSetTest extends AbstractClustEvalTest {
      * @throws UnknownClusteringQualityMeasureException
      * @throws UnknownParameterType
      * @throws FileNotFoundException
-     * @throws UnknownContextException
      * @throws ConfigurationException
      * @throws NumberFormatException
      * @throws DataConfigNotFoundException
@@ -649,12 +647,12 @@ public class DataSetTest extends AbstractClustEvalTest {
                                           UnknownDataRandomizerException {
         this.repositoryObject = Parser
                 .parseFromFile(
-                        DataSet.class,
+                        IDataSet.class,
                         new File(
                                 "testCaseRepository/data/datasets/DS1/Zachary_karate_club_similarities.txt")
                         .getAbsoluteFile());
-        DataSet casted = (DataSet) this.repositoryObject;
-        Assert.assertEquals("DS1", casted.getMajorName());
+        IDataSet casted = (IDataSet) this.repositoryObject;
+        assertEquals("DS1", casted.getMajorName());
     }
 
     /**
@@ -668,7 +666,7 @@ public class DataSetTest extends AbstractClustEvalTest {
      * @throws UnknownRunDataStatisticException
      * @throws UnknownRunStatisticException
      * @throws UnknownDataStatisticException
-     *                                                          , UnknownRunResultPostprocessorException
+     * @throws UnknownRunResultPostprocessorException
      * @throws NoOptimizableProgramParameterException
      * @throws UnknownParameterOptimizationMethodException
      * @throws IncompatibleParameterOptimizationMethodException
@@ -685,7 +683,6 @@ public class DataSetTest extends AbstractClustEvalTest {
      * @throws UnknownClusteringQualityMeasureException
      * @throws UnknownParameterType
      * @throws FileNotFoundException
-     * @throws UnknownContextException
      * @throws ConfigurationException
      * @throws NumberFormatException
      * @throws DataConfigNotFoundException
@@ -722,13 +719,13 @@ public class DataSetTest extends AbstractClustEvalTest {
                                           UnknownDataRandomizerException {
         this.repositoryObject = Parser
                 .parseFromFile(
-                        DataSet.class,
+                        IDataSet.class,
                         new File(
                                 "testCaseRepository/data/datasets/DS1/Zachary_karate_club_similarities.txt")
                         .getAbsoluteFile());
-        DataSet casted = (DataSet) this.repositoryObject;
+        IDataSet casted = (IDataSet) this.repositoryObject;
 
-        Assert.assertEquals(casted.getMinorName(), casted.getAbsolutePath()
+        assertEquals(casted.getMinorName(), casted.getAbsolutePath()
                 .substring(casted.getAbsolutePath().lastIndexOf("/") + 1));
     }
 
@@ -760,7 +757,6 @@ public class DataSetTest extends AbstractClustEvalTest {
      * @throws RunException
      * @throws UnknownClusteringQualityMeasureException
      * @throws UnknownParameterType
-     * @throws UnknownContextException
      * @throws ConfigurationException
      * @throws NumberFormatException
      * @throws DataConfigNotFoundException
@@ -797,12 +793,12 @@ public class DataSetTest extends AbstractClustEvalTest {
                                          UnknownDataRandomizerException {
         this.repositoryObject = Parser
                 .parseFromFile(
-                        DataSet.class,
+                        IDataSet.class,
                         new File(
                                 "testCaseRepository/data/datasets/DS1/Zachary_karate_club_similarities.txt")
                         .getAbsoluteFile());
-        Assert.assertEquals("DS1/Zachary_karate_club_similarities.txt",
-                ((DataSet) this.repositoryObject).getFullName());
+        assertEquals("DS1/Zachary_karate_club_similarities.txt",
+                ((IDataSet) this.repositoryObject).getFullName());
     }
 
     /**
@@ -833,7 +829,6 @@ public class DataSetTest extends AbstractClustEvalTest {
      * @throws UnknownClusteringQualityMeasureException
      * @throws UnknownParameterType
      * @throws FileNotFoundException
-     * @throws UnknownContextException
      * @throws ConfigurationException
      * @throws NumberFormatException
      * @throws DataConfigNotFoundException
@@ -870,12 +865,12 @@ public class DataSetTest extends AbstractClustEvalTest {
                                       UnknownDataRandomizerException {
         this.repositoryObject = Parser
                 .parseFromFile(
-                        DataSet.class,
+                        IDataSet.class,
                         new File(
                                 "testCaseRepository/data/datasets/DS1/Zachary_karate_club_similarities.txt")
                         .getAbsoluteFile());
-        Assert.assertEquals("DS1/Zachary_karate_club_similarities.txt",
-                ((DataSet) this.repositoryObject).toString());
+        assertEquals("DS1/Zachary_karate_club_similarities.txt",
+                ((IDataSet) this.repositoryObject).toString());
     }
 
     /**
@@ -952,12 +947,12 @@ public class DataSetTest extends AbstractClustEvalTest {
                                             UnknownDataRandomizerException, InterruptedException, RException {
         this.repositoryObject = Parser
                 .parseFromFile(
-                        DataSet.class,
+                        IDataSet.class,
                         new File(
                                 "testCaseRepository/data/datasets/DS1/Zachary_karate_club_similarities.txt")
                         .getAbsoluteFile());
 
-        IDataSet standard = ((DataSet) this.repositoryObject)
+        IDataSet standard = ((IDataSet) this.repositoryObject)
                 .preprocessAndConvertTo(context,
                         DataSetFormat.parseFromString(getRepository(),
                                 "SimMatrixDataSetFormat"),
@@ -993,7 +988,7 @@ public class DataSetTest extends AbstractClustEvalTest {
      * @throws UnknownRunDataStatisticException
      * @throws UnknownRunStatisticException
      * @throws UnknownDataStatisticException
-     *                                                                     , UnknownRunResultPostprocessorException
+     * @throws UnknownRunResultPostprocessorException
      * @throws NoOptimizableProgramParameterException
      * @throws UnknownParameterOptimizationMethodException
      * @throws IncompatibleParameterOptimizationMethodException
@@ -1016,7 +1011,6 @@ public class DataSetTest extends AbstractClustEvalTest {
      * @throws DataSetConfigNotFoundException
      * @throws GoldStandardConfigurationException
      * @throws GoldStandardNotFoundException
-     * @throws UnknownContextException
      */
     @Test
     public void testGetSimilarityMatrix() throws NoRepositoryFoundException,
@@ -1048,11 +1042,11 @@ public class DataSetTest extends AbstractClustEvalTest {
                                                  UnknownDataRandomizerException, InterruptedException, RException {
         this.repositoryObject = Parser
                 .parseFromFile(
-                        DataSet.class,
+                        IDataSet.class,
                         new File(
                                 "testCaseRepository/data/datasets/rowSimTest/rowSimTestFile.sim")
                         .getAbsoluteFile());
-        RelativeDataSet standard = (RelativeDataSet) ((DataSet) this.repositoryObject)
+        RelativeDataSet standard = (RelativeDataSet) ((IDataSet) this.repositoryObject)
                 .preprocessAndConvertTo(context,
                         DataSetFormat.parseFromString(getRepository(),
                                 "SimMatrixDataSetFormat"),
@@ -1065,7 +1059,7 @@ public class DataSetTest extends AbstractClustEvalTest {
                                 new ArrayList<>()),
                         new StdToInput());
         standard.loadIntoMemory();
-        SimilarityMatrix simMatrix = standard.getDataSetContent();
+        Matrix simMatrix = standard.getDataSetContent();
         double[][] sims = new double[][]{new double[]{1.0, 0.6, 0.5},
         new double[]{0.6, 0.5, 0.1}, new double[]{0.5, 0.1, 0.8}};
         String[] ids = new String[]{"1", "2", "3"};
@@ -1114,7 +1108,6 @@ public class DataSetTest extends AbstractClustEvalTest {
      * @throws DataSetConfigNotFoundException
      * @throws GoldStandardConfigurationException
      * @throws GoldStandardNotFoundException
-     * @throws UnknownContextException
      */
     @Test
     public void testUnloadFromMemory() throws NoRepositoryFoundException,
@@ -1146,11 +1139,11 @@ public class DataSetTest extends AbstractClustEvalTest {
                                               UnknownDataRandomizerException, InterruptedException, RException {
         this.repositoryObject = Parser
                 .parseFromFile(
-                        DataSet.class,
+                        IDataSet.class,
                         new File(
                                 "testCaseRepository/data/datasets/DS1/Zachary_karate_club_similarities.txt")
                         .getAbsoluteFile());
-        IDataSet standard = ((DataSet) this.repositoryObject)
+        IDataSet standard = ((IDataSet) this.repositoryObject)
                 .preprocessAndConvertTo(context,
                         DataSetFormat.parseFromString(getRepository(),
                                 "SimMatrixDataSetFormat"),
@@ -1190,7 +1183,6 @@ public class DataSetTest extends AbstractClustEvalTest {
      * @throws SecurityException
      * @throws IllegalArgumentException
      * @throws RNotAvailableException
-     * @throws UnknownContextException
      */
     @Test
     public void testConvertTo() throws NoRepositoryFoundException,
@@ -1208,9 +1200,9 @@ public class DataSetTest extends AbstractClustEvalTest {
          */
         this.repositoryObject = this
                 .getRepository()
-                .getStaticObjectWithName(DataSet.class,
+                .getStaticObjectWithName(IDataSet.class,
                         "nora_cancer/all_expression_spearman.txt").clone();
-        IDataSet newDataSet = ((DataSet) this.repositoryObject)
+        IDataSet newDataSet = ((IDataSet) this.repositoryObject)
                 .preprocessAndConvertTo(context,
                         DataSetFormat.parseFromString(getRepository(),
                                 "SimMatrixDataSetFormat"),
@@ -1229,9 +1221,9 @@ public class DataSetTest extends AbstractClustEvalTest {
          */
         this.repositoryObject = this
                 .getRepository()
-                .getStaticObjectWithName(DataSet.class,
+                .getStaticObjectWithName(IDataSet.class,
                         "nora_cancer/all_expression_spearman.txt").clone();
-        newDataSet = ((DataSet) this.repositoryObject).preprocessAndConvertTo(context,
+        newDataSet = ((IDataSet) this.repositoryObject).preprocessAndConvertTo(context,
                 DataSetFormat.parseFromString(getRepository(),
                         "APRowSimDataSetFormat"),
                 new InputToStd(DistanceMeasure
@@ -1247,9 +1239,9 @@ public class DataSetTest extends AbstractClustEvalTest {
          */
         this.repositoryObject = this
                 .getRepository()
-                .getStaticObjectWithName(DataSet.class,
+                .getStaticObjectWithName(IDataSet.class,
                         "rowSimTest/rowSimTestFile.sim").clone();
-        ((DataSet) this.repositoryObject).preprocessAndConvertTo(context,
+        ((IDataSet) this.repositoryObject).preprocessAndConvertTo(context,
                 DataSetFormat.parseFromString(getRepository(),
                         "SimMatrixDataSetFormat"),
                 new InputToStd(DistanceMeasure
@@ -1268,9 +1260,9 @@ public class DataSetTest extends AbstractClustEvalTest {
          */
         this.repositoryObject = this
                 .getRepository()
-                .getStaticObjectWithName(DataSet.class,
+                .getStaticObjectWithName(IDataSet.class,
                         "rowSimTest/rowSimTestFile.sim").clone();
-        ((DataSet) this.repositoryObject).preprocessAndConvertTo(context,
+        ((IDataSet) this.repositoryObject).preprocessAndConvertTo(context,
                 DataSetFormat.parseFromString(getRepository(),
                         "APRowSimDataSetFormat"),
                 new InputToStd(DistanceMeasure
@@ -1280,10 +1272,10 @@ public class DataSetTest extends AbstractClustEvalTest {
                         new ArrayList<>(),
                         new ArrayList<>()),
                 new StdToInput());
-        Assert.assertTrue(new File(
+        assertTrue(new File(
                 "testCaseRepository/data/datasets/rowSimTest/rowSimTestFile.sim.strip.APRowSim")
                 .getAbsoluteFile().exists());
-        Assert.assertTrue(new File(
+        assertTrue(new File(
                 "testCaseRepository/data/datasets/rowSimTest/rowSimTestFile.sim.strip.APRowSim.map")
                 .getAbsoluteFile().exists());
 
@@ -1329,11 +1321,11 @@ public class DataSetTest extends AbstractClustEvalTest {
                    UnknownDataRandomizerException, InterruptedException, RException {
         this.repositoryObject = Parser
                 .parseFromFile(
-                        DataSet.class,
+                        IDataSet.class,
                         new File(
                                 "testCaseRepository/data/datasets/sfld/sfld_brown_et_al_amidohydrolases_protein_similarities_for_beh.txt")
                         .getAbsoluteFile());
-        ((DataSet) this.repositoryObject).preprocessAndConvertTo(context,
+        ((IDataSet) this.repositoryObject).preprocessAndConvertTo(context,
                 DataSetFormat.parseFromString(getRepository(),
                         "MatrixDataSetFormat"),
                 new InputToStd(DistanceMeasure
@@ -1377,7 +1369,6 @@ public class DataSetTest extends AbstractClustEvalTest {
      * @throws RunException
      * @throws UnknownClusteringQualityMeasureException
      * @throws UnknownParameterType
-     * @throws UnknownContextException
      * @throws ConfigurationException
      * @throws NumberFormatException
      * @throws DataConfigNotFoundException
@@ -1423,18 +1414,18 @@ public class DataSetTest extends AbstractClustEvalTest {
 
         this.repositoryObject = Parser
                 .parseFromFile(
-                        DataSet.class,
+                        IDataSet.class,
                         new File(
                                 "testCaseRepository/data/datasets/rowSimTest/rowSimTestFile.sim")
                         .getAbsoluteFile());
         DataSetAttributeFilterer filterer = new DataSetAttributeFilterer(
                 "testCaseRepository/data/datasets/rowSimTest/rowSimTestFile.sim");
         filterer.process();
-        ((DataSet) this.repositoryObject)
+        ((IDataSet) this.repositoryObject)
                 .setAbsolutePath(new File(
                         "testCaseRepository/data/datasets/rowSimTest/rowSimTestFile.sim.strip")
                         .getAbsoluteFile());
-        ((DataSet) this.repositoryObject).convertToStandardDirectly(context,
+        ((IDataSet) this.repositoryObject).convertToStandardDirectly(context,
                 new InputToStd(DistanceMeasure
                         .parseFromString(getRepository(),
                                 "EuclidianDistanceMeasure"),
@@ -1455,14 +1446,13 @@ public class DataSetTest extends AbstractClustEvalTest {
      * @throws DataSetNotFoundException
      * @throws InvalidDataSetFormatVersionException
      * @throws DataSetConfigurationException
-     * @throws DataSetConfigurationException
      * @throws RegisterException
      * @throws RNotAvailableException
      * @throws InvalidParameterException
      * @throws UnknownRunDataStatisticException
      * @throws UnknownRunStatisticException
      * @throws UnknownDataStatisticException
-     *                                                          , UnknownRunResultPostprocessorException
+     * @throws UnknownRunResultPostprocessorException
      * @throws NoOptimizableProgramParameterException
      * @throws UnknownParameterOptimizationMethodException
      * @throws IncompatibleParameterOptimizationMethodException
@@ -1477,7 +1467,6 @@ public class DataSetTest extends AbstractClustEvalTest {
      * @throws RunException
      * @throws UnknownClusteringQualityMeasureException
      * @throws UnknownParameterType
-     * @throws UnknownContextException
      * @throws ConfigurationException
      * @throws NumberFormatException
      * @throws DataConfigNotFoundException
@@ -1516,26 +1505,26 @@ public class DataSetTest extends AbstractClustEvalTest {
 
         this.repositoryObject = Parser
                 .parseFromFile(
-                        DataSet.class,
+                        IDataSet.class,
                         new File(
                                 "testCaseRepository/data/datasets/rowSimTest/rowSimTestFile.sim")
                         .getAbsoluteFile());
         DataSetAttributeFilterer filterer = new DataSetAttributeFilterer(
                 "testCaseRepository/data/datasets/rowSimTest/rowSimTestFile.sim");
         filterer.process();
-        ((DataSet) this.repositoryObject)
+        ((IDataSet) this.repositoryObject)
                 .setAbsolutePath(new File(
                         "testCaseRepository/data/datasets/rowSimTest/rowSimTestFile.sim.strip")
                         .getAbsoluteFile());
-        ((DataSet) this.repositoryObject).convertToStandardDirectly(context,
+        ((IDataSet) this.repositoryObject).convertToStandardDirectly(context,
                 new InputToStd(DistanceMeasure
                         .parseFromString(getRepository(),
                                 "EuclidianDistanceMeasure"),
                         Precision.DOUBLE,
                         new ArrayList<>(),
                         new ArrayList<>()));
-        IDataSet standard = ((DataSet) this.repositoryObject).getInStandardFormat();
-        Assert.assertEquals(DataSetFormat.parseFromString(getRepository(),
+        IDataSet standard = ((IDataSet) this.repositoryObject).getInStandardFormat();
+        assertEquals(DataSetFormat.parseFromString(getRepository(),
                 "SimMatrixDataSetFormat"), standard.getDataSetFormat());
     }
 
@@ -1570,7 +1559,7 @@ public class DataSetTest extends AbstractClustEvalTest {
                    UnknownDataRandomizerException, InterruptedException, RException {
         this.repositoryObject = Parser
                 .parseFromFile(
-                        DataSet.class,
+                        IDataSet.class,
                         new File(
                                 "testCaseRepository/data/datasets/bone_marrow_gene_expr/ALB_ALT_AML.1000genes.res.out2")
                         .getAbsoluteFile());
@@ -1586,9 +1575,9 @@ public class DataSetTest extends AbstractClustEvalTest {
                                 new ArrayList<>(),
                                 new ArrayList<>()),
                         new StdToInput());
-        Assert.assertEquals("MatrixDataSetFormat", newDataSet
+        assertEquals("MatrixDataSetFormat", newDataSet
                 .getDataSetFormat().getClass().getSimpleName());
-        Assert.assertEquals(context.getStandardInputFormat().getClass()
+        assertEquals(context.getStandardInputFormat().getClass()
                 .getSimpleName(), newDataSet.getInStandardFormat()
                 .getDataSetFormat().getClass().getSimpleName());
     }
@@ -1624,7 +1613,7 @@ public class DataSetTest extends AbstractClustEvalTest {
                    UnknownDataRandomizerException, InterruptedException, RException {
         this.repositoryObject = Parser
                 .parseFromFile(
-                        DataSet.class,
+                        IDataSet.class,
                         new File(
                                 "testCaseRepository/data/datasets/bone_marrow_gene_expr/ALB_ALT_AML.1000genes.res.out2.SimMatrix")
                         .getAbsoluteFile());

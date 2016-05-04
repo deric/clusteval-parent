@@ -22,6 +22,7 @@ import ch.qos.logback.core.FileAppender;
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.Pair;
 import de.clusteval.api.Triple;
+import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.exceptions.DataSetGenerationException;
 import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.api.exceptions.DatabaseConnectException;
@@ -47,6 +48,7 @@ import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.opt.InvalidOptimizationParameterException;
 import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
+import de.clusteval.api.program.IProgram;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.InvalidRepositoryException;
@@ -54,6 +56,7 @@ import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.repository.RepositoryController;
 import de.clusteval.api.run.IScheduler;
 import de.clusteval.api.run.IterationRunnable;
 import de.clusteval.api.run.IterationWrapper;
@@ -63,7 +66,6 @@ import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationM
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
-import de.clusteval.data.dataset.DataSet;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
@@ -74,11 +76,9 @@ import de.clusteval.data.randomizer.DataRandomizer;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
 import de.clusteval.framework.repository.MyRengine;
 import de.clusteval.framework.repository.Repository;
-import de.clusteval.api.repository.RepositoryController;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
 import de.clusteval.framework.threading.SupervisorThread;
-import de.clusteval.program.Program;
 import de.clusteval.run.InvalidRunModeException;
 import de.clusteval.run.Run;
 import de.clusteval.run.RunException;
@@ -724,7 +724,7 @@ public class ClustevalBackendServer implements IBackendServer {
     @Override
     public Collection<String> getDataSets() {
         Collection<String> result = new HashSet<>();
-        for (DataSet dataSet : this.repository.getCollectionStaticEntities(DataSet.class)) {
+        for (IDataSet dataSet : this.repository.getCollectionStaticEntities(IDataSet.class)) {
             result.add(dataSet.getFullName());
         }
         return result;
@@ -738,7 +738,7 @@ public class ClustevalBackendServer implements IBackendServer {
     @Override
     public Collection<String> getPrograms() {
         Collection<String> result = new HashSet<String>();
-        for (Program program : this.repository.getCollectionStaticEntities(Program.class)) {
+        for (IProgram program : this.repository.getCollectionStaticEntities(IProgram.class)) {
             result.add(program.getMajorName());
         }
         return result;

@@ -18,8 +18,12 @@ package de.clusteval.framework.repository.parse;
 
 import de.clusteval.api.IDistanceMeasure;
 import de.clusteval.api.Precision;
+import de.clusteval.api.data.DataSetConfig;
 import de.clusteval.api.data.DistanceMeasure;
 import de.clusteval.api.data.IDataPreprocessor;
+import de.clusteval.api.data.IDataSet;
+import de.clusteval.api.data.InputToStd;
+import de.clusteval.api.data.StdToInput;
 import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigurationException;
@@ -45,13 +49,9 @@ import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationM
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
-import de.clusteval.data.dataset.DataSet;
-import de.clusteval.api.data.DataSetConfig;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
-import de.clusteval.api.data.InputToStd;
-import de.clusteval.api.data.StdToInput;
 import de.clusteval.data.preprocessing.DataPreprocessor;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
@@ -76,7 +76,7 @@ class DataSetConfigParser extends RepositoryObjectParser<DataSetConfig> {
     protected String datasetName;
     protected String datasetFile;
 
-    protected DataSet dataSet;
+    protected IDataSet dataSet;
     protected InputToStd configInputToStandard;
     protected StdToInput configStandardToInput;
 
@@ -178,7 +178,7 @@ class DataSetConfigParser extends RepositoryObjectParser<DataSetConfig> {
         }
     }
 
-    protected DataSet getDataSet()
+    protected IDataSet getDataSet()
             throws DataSetNotFoundException, UnknownDataSetFormatException, DataSetConfigurationException,
                    NoDataSetException, NumberFormatException, RegisterException, NoRepositoryFoundException,
                    GoldStandardNotFoundException, GoldStandardConfigurationException,
@@ -192,9 +192,9 @@ class DataSetConfigParser extends RepositoryObjectParser<DataSetConfig> {
                    NoOptimizableProgramParameterException, UnknownDataStatisticException, UnknownRunStatisticException,
                    UnknownRunDataStatisticException, UnknownRunResultPostprocessorException, UnknownDataRandomizerException, UnknownProviderException {
         if (repo instanceof RunResultRepository) {
-            return repo.getStaticObjectWithName(DataSet.class, datasetName + "/" + datasetFile);
+            return repo.getStaticObjectWithName(IDataSet.class, datasetName + "/" + datasetFile);
         }
-        return Parser.parseFromFile(DataSet.class,
-                new File(FileUtils.buildPath(repo.getBasePath(DataSet.class), datasetName, datasetFile)));
+        return Parser.parseFromFile(IDataSet.class,
+                new File(FileUtils.buildPath(repo.getBasePath(IDataSet.class), datasetName, datasetFile)));
     }
 }

@@ -10,9 +10,10 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset;
 
+import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetConfig;
-import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.ISupervisorThread;
 import de.clusteval.utils.Finder;
 import de.clusteval.utils.FinderThread;
@@ -49,7 +50,7 @@ public class RunResultDataSetConfigFinderThread extends FinderThread<IDataSetCon
      */
     @Override
     protected void beforeFind() {
-        if (!this.repository.isInitialized(DataSet.class)) {
+        if (!this.repository.isInitialized(IDataSet.class)) {
             this.supervisorThread.getThread(RunResultDataSetFinderThread.class)
                     .waitFor();
         }

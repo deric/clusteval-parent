@@ -20,7 +20,6 @@ import de.clusteval.api.cluster.ClusteringEvaluationParameters;
 import de.clusteval.api.cluster.ClusteringQualitySet;
 import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.data.DataConfig;
-import de.clusteval.data.dataset.DataSet;
 import de.clusteval.api.data.DataSetConfig;
 import de.clusteval.api.data.DataSetFormat;
 import de.clusteval.api.data.GoldStandard;
@@ -38,13 +37,13 @@ import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.IProgramParameter;
 import de.clusteval.api.program.ParameterSet;
 import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.repository.RepositoryController;
 import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.RunResultFormat;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
 import de.clusteval.data.statistics.DataStatistic;
-import de.clusteval.api.repository.RepositoryController;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.program.DoubleProgramParameter;
 import de.clusteval.program.IntegerProgramParameter;
@@ -2112,7 +2111,7 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
                     + getObjectId(object
                     .getRepository()
                     .getParent()
-                    .getStaticObjectWithName(DataSet.class,
+                    .getStaticObjectWithName(IDataSet.class,
                     object.getFullName())),
                     object.getChecksum() + "",
                     getDataSetTypeId(object.getDataSetType().getClass()
@@ -2467,7 +2466,7 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
      * @see de.wiwie.wiutils.utils.SQLCommunicator#unregister(data.dataset.DataSet)
      */
     @Override
-    protected int unregister(DataSet object) {
+    protected int unregister(IDataSet object) {
         try {
             this.delete(this.getTableDatasets(),
                     new String[]{object.getAbsolutePath()},

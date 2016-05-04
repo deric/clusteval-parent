@@ -13,7 +13,6 @@
 package de.clusteval.framework.threading;
 
 import de.clusteval.api.data.DataConfig;
-import de.clusteval.data.dataset.DataSet;
 import de.clusteval.api.data.DataSetConfig;
 import de.clusteval.api.data.DataSetFormat;
 import de.clusteval.api.data.DistanceMeasure;

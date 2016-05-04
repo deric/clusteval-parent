@@ -18,7 +18,6 @@ import de.clusteval.api.SQLConfig;
 import de.clusteval.api.SQLConfig.DB_TYPE;
 import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.data.DataConfig;
-import de.clusteval.data.dataset.DataSet;
 import de.clusteval.api.data.DataSetConfig;
 import de.clusteval.api.data.DataSetFormat;
 import de.clusteval.api.data.GoldStandard;
@@ -454,8 +453,8 @@ public abstract class SQLCommunicator implements Database {
     @Override
     public boolean register(final IRepositoryObject object, final boolean updateOnly) {
         int result;
-        if (object instanceof DataSet) {
-            result = this.register((DataSet) object, updateOnly);
+        if (object instanceof IDataSet) {
+            result = this.register((IDataSet) object, updateOnly);
         } else if (object instanceof ClusteringRun) {
             result = this.register((ClusteringRun) object, updateOnly);
         } else if (object instanceof ClusteringRunResult) {
@@ -513,8 +512,8 @@ public abstract class SQLCommunicator implements Database {
     @Override
     public boolean unregister(final IRepositoryObject object) {
         int result;
-        if (object instanceof DataSet) {
-            result = this.unregister((DataSet) object);
+        if (object instanceof IDataSet) {
+            result = this.unregister((IDataSet) object);
         } else if (object instanceof ClusteringRun) {
             result = this.unregister((ClusteringRun) object);
         } else if (object instanceof ClusteringRunResult) {
@@ -684,7 +683,7 @@ public abstract class SQLCommunicator implements Database {
 
     protected abstract boolean unregisterDataSetTypeClass(final Class<? extends IDataSetType> object);
 
-    protected abstract int unregister(final DataSet object);
+    protected abstract int unregister(final IDataSet object);
 
     protected abstract int unregister(final Run object);
 

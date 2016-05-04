@@ -18,6 +18,9 @@ package de.clusteval.framework.repository.parse;
 
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.cluster.ClusteringEvaluationParameters;
+import de.clusteval.api.data.DataConfig;
+import de.clusteval.api.data.GoldStandard;
+import de.clusteval.api.data.GoldStandardConfig;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetConfig;
@@ -47,7 +50,7 @@ import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.IRepositoryObject;
-import de.clusteval.api.repository.RepositoryObject;
+import de.clusteval.api.repository.RepositoryController;
 import de.clusteval.api.run.IRun;
 import de.clusteval.api.stats.IDataStatistic;
 import de.clusteval.api.stats.UnknownDataStatisticException;
@@ -55,21 +58,16 @@ import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationM
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
-import de.clusteval.api.data.DataConfig;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
-import de.clusteval.data.dataset.DataSet;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.data.dataset.RunResultDataSetConfig;
-import de.clusteval.api.data.GoldStandard;
-import de.clusteval.api.data.GoldStandardConfig;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.randomizer.DataRandomizer;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
 import de.clusteval.data.statistics.DataStatistic;
-import de.clusteval.api.repository.RepositoryController;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.program.ProgramConfig;
 import de.clusteval.run.AnalysisRun;
@@ -1019,7 +1017,7 @@ class ParameterOptimizationRunParser extends ExecutionRunParser<ParameterOptimiz
     }
 }
 
-class RepositoryObjectParser<T extends RepositoryObject> extends Parser<T> {
+class RepositoryObjectParser<T extends IRepositoryObject> extends Parser<T> {
 
     // the members of the RepositoryObject class
     protected boolean loadConfigFile = true;
@@ -1177,7 +1175,7 @@ class RunResultDataSetConfigParser extends DataSetConfigParser {
      * @see de.clusteval.framework.repository.DataSetConfigParser#getDataSet()
      */
     @Override
-    protected DataSet getDataSet() {
-        return repo.getStaticObjectWithName(DataSet.class, datasetName + "/" + datasetFile);
+    protected IDataSet getDataSet() {
+        return repo.getStaticObjectWithName(IDataSet.class, datasetName + "/" + datasetFile);
     }
 }

@@ -15,14 +15,19 @@ package de.clusteval.framework.repository;
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.IContext;
 import de.clusteval.api.IDistanceMeasure;
-import de.clusteval.data.dataset.DataSet;
+import de.clusteval.api.data.GoldStandard;
+import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataPreprocessor;
 import de.clusteval.api.data.IDataRandomizer;
+import de.clusteval.api.data.IDataSet;
+import de.clusteval.api.data.IDataSetConfig;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.data.IDataSetGenerator;
 import de.clusteval.api.data.IDataSetType;
+import de.clusteval.api.data.IGoldStandardConfig;
 import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.opt.IParameterOptimizationMethod;
+import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRProgram;
 import de.clusteval.api.r.InvalidRepositoryException;
@@ -31,17 +36,14 @@ import de.clusteval.api.repository.DynamicRepositoryEntityMap;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.StaticRepositoryEntity;
 import de.clusteval.api.repository.StaticRepositoryEntityMap;
+import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.IRunResultFormat;
 import de.clusteval.api.run.IRunResultPostprocessor;
 import de.clusteval.api.stats.IDataStatistic;
 import de.clusteval.api.stats.IRunDataStatistic;
 import de.clusteval.api.stats.IRunStatistic;
 import de.clusteval.cluster.Clustering;
-import de.clusteval.api.data.DataConfig;
-import de.clusteval.api.data.DataSetConfig;
 import de.clusteval.data.dataset.DataSetRegisterException;
-import de.clusteval.api.data.GoldStandard;
-import de.clusteval.api.data.GoldStandardConfig;
 import de.clusteval.data.preprocessing.DataPreprocessor;
 import de.clusteval.data.randomizer.DataRandomizer;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
@@ -54,9 +56,7 @@ import de.clusteval.framework.threading.SupervisorThread;
 import de.clusteval.program.DoubleProgramParameter;
 import de.clusteval.program.IntegerProgramParameter;
 import de.clusteval.program.Program;
-import de.clusteval.program.ProgramConfig;
 import de.clusteval.program.StringProgramParameter;
-import de.clusteval.run.Run;
 import de.clusteval.run.result.RunResult;
 import de.clusteval.run.result.postprocessing.RunResultPostprocessor;
 import de.clusteval.run.statistics.RunStatistic;
@@ -129,23 +129,23 @@ public class RunResultRepository extends Repository implements IRepository {
         this.staticRepositoryEntities = new StaticRepositoryEntityMap();
         this.dynamicRepositoryEntities = new DynamicRepositoryEntityMap();
 
-        this.createAndAddStaticEntity(DataConfig.class,
+        this.createAndAddStaticEntity(IDataConfig.class,
                 FileUtils.buildPath(this.basePath, "configs"));
-        this.createAndAddStaticEntity(DataSetConfig.class,
+        this.createAndAddStaticEntity(IDataSetConfig.class,
                 FileUtils.buildPath(this.basePath, "configs"));
-        this.createAndAddStaticEntity(GoldStandardConfig.class,
+        this.createAndAddStaticEntity(IGoldStandardConfig.class,
                 FileUtils.buildPath(this.basePath, "configs"));
-        this.createAndAddStaticEntity(ProgramConfig.class,
+        this.createAndAddStaticEntity(IProgramConfig.class,
                 FileUtils.buildPath(this.basePath, "configs"));
-        this.createAndAddStaticEntity(Run.class,
+        this.createAndAddStaticEntity(IRun.class,
                 FileUtils.buildPath(this.basePath, "configs"));
 
         this.staticRepositoryEntities.put(
-                DataSet.class,
+                IDataSet.class,
                 new RunResultRepositoryDataSetObjectEntity(this,
                         this.parent != null
                         ? this.parent.getStaticEntities()
-                                .get(DataSet.class) : null, FileUtils
+                                .get(IDataSet.class) : null, FileUtils
                         .buildPath(this.basePath, "inputs")));
 
         this.staticRepositoryEntities.put(
@@ -328,7 +328,7 @@ public class RunResultRepository extends Repository implements IRepository {
 
 class RunResultRepositoryDataSetObjectEntity
         extends
-        StaticRepositoryEntity<DataSet> {
+        StaticRepositoryEntity<IDataSet> {
 
     /**
      * @param repository
@@ -336,7 +336,7 @@ class RunResultRepositoryDataSetObjectEntity
      * @param basePath
      */
     public RunResultRepositoryDataSetObjectEntity(Repository repository,
-            StaticRepositoryEntity<DataSet> parent, String basePath) {
+            StaticRepositoryEntity<IDataSet> parent, String basePath) {
         super(repository, parent, basePath);
     }
 
@@ -348,9 +348,9 @@ class RunResultRepositoryDataSetObjectEntity
      * clusteval.framework.repository.RepositoryObject)
      */
     @Override
-    public boolean register(DataSet object) throws RegisterException {
-        DataSet dataSetInParentRepository = object.getRepository().getParent()
-                .getStaticObjectWithName(DataSet.class, object.getFullName());
+    public boolean register(IDataSet object) throws RegisterException {
+        IDataSet dataSetInParentRepository = object.getRepository().getParent()
+                .getStaticObjectWithName(IDataSet.class, object.getFullName());
         if (dataSetInParentRepository != null) {
             return super.register(object);
         }

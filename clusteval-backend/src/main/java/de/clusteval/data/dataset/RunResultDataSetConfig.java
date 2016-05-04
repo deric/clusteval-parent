@@ -11,10 +11,11 @@
 package de.clusteval.data.dataset;
 
 import de.clusteval.api.data.DataSetConfig;
-import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.InputToStd;
 import de.clusteval.api.data.StdToInput;
+import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.repository.IRepository;
 import java.io.File;
 
 /**
@@ -33,7 +34,7 @@ public class RunResultDataSetConfig extends DataSetConfig {
      * @throws RegisterException
      */
     public RunResultDataSetConfig(IRepository repository, long changeDate,
-            File absPath, DataSet ds,
+            File absPath, IDataSet ds,
             InputToStd configInputToStandard,
             StdToInput configStandardToInput)
             throws RegisterException {

@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.data.preprocessing;
 
+import de.clusteval.api.data.DataSetAttributeFilterer;
 import de.clusteval.api.data.IDataPreprocessor;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.exceptions.DataSetNotFoundException;
@@ -40,8 +41,6 @@ import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationM
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
-import de.clusteval.data.dataset.DataSet;
-import de.clusteval.api.data.DataSetAttributeFilterer;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
@@ -95,7 +94,7 @@ public class RangeNormalizationDataPreprocesserTest extends AbstractClustEvalTes
         File f = new File(
                 "testCaseRepository/data/datasets/synthetic/cassini250");
 
-        DataSet ds = Parser.parseFromFile(DataSet.class, f);
+        IDataSet ds = Parser.parseFromFile(IDataSet.class, f);
 
         DataSetAttributeFilterer filterer = new DataSetAttributeFilterer(
                 f.getAbsolutePath());

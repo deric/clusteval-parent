@@ -21,7 +21,10 @@ import de.clusteval.api.IContext;
 import de.clusteval.api.Triple;
 import de.clusteval.api.cluster.ClustEvalValue;
 import de.clusteval.api.cluster.ClusteringQualitySet;
+import de.clusteval.api.data.DataConfig;
+import de.clusteval.api.data.GoldStandard;
 import de.clusteval.api.data.IDataConfig;
+import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigurationException;
@@ -57,14 +60,11 @@ import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
-import de.clusteval.api.data.DataConfig;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
-import de.clusteval.data.dataset.DataSet;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
-import de.clusteval.api.data.GoldStandard;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.randomizer.DataRandomizeException;
 import de.clusteval.data.randomizer.DataRandomizer;
@@ -228,7 +228,7 @@ public class RobustnessAnalysisRun extends ClusteringRun {
             // generate randomized data sets
             // the directory, the new data sets will be stored in
             String dataSetBasePath = this.getRepository().getParent()
-                    .getBasePath(DataSet.class);
+                    .getBasePath(IDataSet.class);
             File newDataSetDir = new File(FileUtils.buildPath(dataSetBasePath,
                     this.getRunIdentificationString()));
             newDataSetDir.mkdir();
@@ -297,11 +297,11 @@ public class RobustnessAnalysisRun extends ClusteringRun {
                                         .getGoldstandard().getAbsolutePath())
                                         .delete();
 
-                                DataSet ds = this
+                                IDataSet ds = this
                                         .getRepository()
                                         .getParent()
                                         .getStaticObjectWithName(
-                                                DataSet.class,
+                                                IDataSet.class,
                                                 targetDataSetFile
                                                 .getParentFile()
                                                 .getName()
@@ -441,7 +441,7 @@ public class RobustnessAnalysisRun extends ClusteringRun {
             // generate randomized data sets
             // the directory, the new data sets will be stored in
             String dataSetBasePath = this.getRepository().getBasePath(
-                    DataSet.class);
+                    IDataSet.class);
             File newDataSetDir = new File(FileUtils.buildPath(dataSetBasePath,
                     this.getRunIdentificationString()));
             newDataSetDir.mkdir();
@@ -527,7 +527,6 @@ public class RobustnessAnalysisRun extends ClusteringRun {
      * @throws IncompatibleDataSetConfigPreprocessorException
      * @throws UnknownDataPreprocessorException
      * @throws UnknownRunDataStatisticException
-     * @throws UnknownDataSetTypeException
      * @throws RepositoryConfigurationException
      * @throws RepositoryConfigNotFoundException
      * @throws UnknownRunStatisticException

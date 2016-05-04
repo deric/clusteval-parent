@@ -14,7 +14,6 @@ import de.clusteval.api.AbsContext;
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.data.DataConfig;
-import de.clusteval.data.dataset.DataSet;
 import de.clusteval.api.data.DataSetConfig;
 import de.clusteval.api.data.DataSetFormat;
 import de.clusteval.api.data.GoldStandard;
@@ -722,7 +721,7 @@ public class StubSQLCommunicator_pg extends SQLCommunicator {
      * @see de.wiwie.wiutils.utils.SQLCommunicator#unregister(data.dataset.DataSet)
      */
     @Override
-    protected int unregister(DataSet object) {
+    protected int unregister(IDataSet object) {
         return -1;
     }
 
