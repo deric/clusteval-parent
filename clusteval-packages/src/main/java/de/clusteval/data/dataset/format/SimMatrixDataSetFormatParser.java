@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset.format;
 
+import com.google.common.util.concurrent.Striped;
 import de.clusteval.api.FormatVersion;
 import de.clusteval.api.Matrix;
 import de.clusteval.api.Precision;
@@ -21,21 +22,26 @@ import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.data.RelativeDataSet;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.program.RegisterException;
-import de.clusteval.framework.ClustevalBackendServer;
+import de.clusteval.utils.TextFileParser.OUTPUT_MODE;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
 import de.wiwie.wiutils.utils.parse.SimFileMatrixParser;
 import de.wiwie.wiutils.utils.parse.SimFileParser.SIM_FILE_FORMAT;
-import de.clusteval.utils.TextFileParser.OUTPUT_MODE;
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.IOException;
 import java.util.Map;
+import java.util.concurrent.locks.Lock;
 
 /**
  * @author Christian Wiwie
  */
 @FormatVersion(version = 1)
 public class SimMatrixDataSetFormatParser extends DataSetFormatParser {
+
+    private final Striped<Lock> locks;
+
+    public SimMatrixDataSetFormatParser() {
+        locks = Striped.lock(5);
+    }
 
     /*
      * (non-Javadoc)
@@ -47,9 +53,10 @@ public class SimMatrixDataSetFormatParser extends DataSetFormatParser {
             throws IllegalArgumentException, IOException,
                    InvalidDataSetFormatVersionException {
 
-        File sourceFile = ClustevalBackendServer.getCommonFile(new File(dataSet
-                .getAbsolutePath()));
-        synchronized (sourceFile) {
+
+        Lock l = locks.get(dataSet.getAbsolutePath());
+        l.lock();
+        try {
             // TODO: symmetry
             final SimFileMatrixParser p;
 
@@ -62,6 +69,8 @@ public class SimMatrixDataSetFormatParser extends DataSetFormatParser {
             } catch (IOException e) {
                 throw new InvalidDataSetFormatVersionException(e.getMessage());
             }
+        } finally {
+            l.unlock();
         }
     }
 
