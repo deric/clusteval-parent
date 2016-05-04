@@ -29,7 +29,7 @@ import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.program.Program;
-import de.wiwie.wiutils.utils.StringExt;
+import de.clusteval.utils.StringExt;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;

@@ -15,7 +15,7 @@ import de.clusteval.api.IDistanceMeasure;
 import de.clusteval.api.Precision;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.r.RNotAvailableException;
-import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
+import de.clusteval.api.data.InputToStd;
 import de.clusteval.utils.AbstractClustEvalTest;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,7 +35,7 @@ public class EuclidianDistanceMeasureTest extends AbstractClustEvalTest {
                 getRepository(), "EuclidianDistanceMeasure");
         assertTrue(measure != null);
 
-        ConversionInputToStandardConfiguration config = new ConversionInputToStandardConfiguration(
+        InputToStd config = new InputToStd(
                 measure, Precision.FLOAT,
                 new ArrayList<>(),
                 new ArrayList<>());

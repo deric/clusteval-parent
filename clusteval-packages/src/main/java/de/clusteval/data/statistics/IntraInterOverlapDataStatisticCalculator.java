@@ -10,23 +10,23 @@
  ***************************************************************************** */
 package de.clusteval.data.statistics;
 
+import de.clusteval.api.Matrix;
+import de.clusteval.api.Pair;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
+import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataSetConfig;
 import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.data.IGoldStandardConfig;
+import de.clusteval.api.data.RelativeDataSet;
+import de.clusteval.api.data.RelativeDataSetFormat;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.program.RegisterException;
-import de.clusteval.cluster.Clustering;
-import de.clusteval.data.dataset.RelativeDataSet;
-import de.clusteval.api.data.RelativeDataSetFormat;
-import de.clusteval.utils.ArraysExt;
-import de.clusteval.api.Pair;
-import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.repository.IRepository;
-import de.wiwie.wiutils.utils.SimilarityMatrix;
+import de.clusteval.cluster.Clustering;
+import de.clusteval.utils.ArraysExt;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -109,7 +109,7 @@ public class IntraInterOverlapDataStatisticCalculator extends
             if (!dataSet.isInMemory()) {
                 dataSet.loadIntoMemory();
             }
-            SimilarityMatrix simMatrix = dataSet.getDataSetContent();
+            Matrix simMatrix = dataSet.getDataSetContent();
             if (dataSet.isInMemory()) {
                 dataSet.unloadFromMemory();
             }

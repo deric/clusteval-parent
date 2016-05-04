@@ -22,7 +22,7 @@ import de.clusteval.api.data.DistanceMeasureFactory;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.r.RNotAvailableException;
-import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
+import de.clusteval.api.data.InputToStd;
 import java.util.ArrayList;
 import java.util.Arrays;
 import org.junit.After;
@@ -54,7 +54,7 @@ public class EuclidianDistanceMeasureTest extends AbstractTest {
 
         assertTrue(measure != null);
 
-        ConversionInputToStandardConfiguration config = new ConversionInputToStandardConfiguration(
+        InputToStd config = new InputToStd(
                 measure, Precision.FLOAT,
                 new ArrayList<>(),
                 new ArrayList<>());

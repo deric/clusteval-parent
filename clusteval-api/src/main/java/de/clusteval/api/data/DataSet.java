@@ -10,17 +10,11 @@
  *     Christian Wiwie - initial API and implementation
  *****************************************************************************
  */
-package de.clusteval.data.dataset;
+package de.clusteval.api.data;
 
+import com.google.common.util.concurrent.Striped;
 import de.clusteval.api.IContext;
 import de.clusteval.api.Precision;
-import de.clusteval.api.data.IConversionConfiguration;
-import de.clusteval.api.data.IConversionInputToStandardConfiguration;
-import de.clusteval.api.data.IDataPreprocessor;
-import de.clusteval.api.data.IDataSet;
-import de.clusteval.api.data.IDataSetFormat;
-import de.clusteval.api.data.IDataSetType;
-import de.clusteval.api.data.WEBSITE_VISIBILITY;
 import de.clusteval.api.exceptions.FormatConversionException;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
@@ -32,13 +26,9 @@ import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.IRepositoryObject;
 import de.clusteval.api.repository.RepositoryEvent;
 import de.clusteval.api.repository.RepositoryMoveEvent;
+import de.clusteval.api.repository.RepositoryObject;
 import de.clusteval.api.repository.RepositoryRemoveEvent;
 import de.clusteval.api.repository.RepositoryReplaceEvent;
-import de.clusteval.api.data.AbsoluteDataSetFormat;
-import de.clusteval.data.dataset.format.DataSetFormatParser;
-import de.clusteval.api.data.RelativeDataSetFormat;
-import de.clusteval.framework.ClustevalBackendServer;
-import de.clusteval.api.repository.RepositoryObject;
 import de.clusteval.utils.NamedDoubleAttribute;
 import de.clusteval.utils.NamedIntegerAttribute;
 import java.io.File;
@@ -46,6 +36,7 @@ import java.io.IOException;
 import java.security.InvalidParameterException;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.locks.Lock;
 
 /**
  * A wrapper class for a dataset on the filesystem.
@@ -111,6 +102,8 @@ public abstract class DataSet extends RepositoryObject implements IDataSet, IRep
 
     protected WEBSITE_VISIBILITY websiteVisibility;
 
+    protected Striped<Lock> locks;
+
     /**
      * Instantiates a new dataset object.
      *
@@ -157,6 +150,7 @@ public abstract class DataSet extends RepositoryObject implements IDataSet, IRep
                 this.datasetType.addListener(this);
             }
         }
+        locks = Striped.lock(15);
     }
 
     /*
@@ -176,7 +170,6 @@ public abstract class DataSet extends RepositoryObject implements IDataSet, IRep
         }
     }
 
-    @SuppressWarnings("unused")
     private void createAndRegisterInternalAttributes() throws RegisterException {
         new NamedDoubleAttribute(this.repository, this.getAbsolutePath()
                 + ":meanSimilarity", new Double(Float.NEGATIVE_INFINITY));
@@ -400,9 +393,9 @@ public abstract class DataSet extends RepositoryObject implements IDataSet, IRep
                    RNotAvailableException, InterruptedException, RException, UnknownProviderException {
 
         // only one conversion process at a time
-        File sourceFile = ClustevalBackendServer.getCommonFile(new File(this
-                .getAbsolutePath()));
-        synchronized (sourceFile) {
+        Lock l = locks.get(this.getAbsolutePath());
+        l.lock();
+        try {
             IDataSet result = null;
             IDataSetFormat sourceFormat = this.getDataSetFormat();
 
@@ -501,6 +494,8 @@ public abstract class DataSet extends RepositoryObject implements IDataSet, IRep
                 e1.printStackTrace();
             }
             return null;
+        } finally {
+            l.unlock();
         }
     }
 

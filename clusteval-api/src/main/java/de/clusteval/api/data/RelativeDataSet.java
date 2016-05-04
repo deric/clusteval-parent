@@ -8,41 +8,30 @@
  * Contributors:
  *     Christian Wiwie - initial API and implementation
  ***************************************************************************** */
-package de.clusteval.data.dataset;
+package de.clusteval.api.data;
 
-import de.clusteval.api.data.DataMatrix;
+import de.clusteval.api.Matrix;
 import de.clusteval.api.Precision;
-import de.clusteval.api.data.IDataSetType;
-import de.clusteval.api.data.WEBSITE_VISIBILITY;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
-import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
-import de.clusteval.api.data.AbsoluteDataSetFormat;
+import de.clusteval.api.repository.IRepository;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
 /**
- *
- * An absolute dataset contains data in terms of absolute coordinates, that
- * means similarities between object pairs can be calculated by looking at the
- * absolute coordinates of two objects.
+ * A relative dataset contains data in terms of pairwise similarities or
+ * distances between object pairs. From these no absolute coordinates of the
+ * objects can be deduced. Thus a relative dataset can never be converted to an
+ * absolute dataset (lossfree).
  *
  * @author Christian Wiwie
  *
  */
-public class AbsoluteDataSet extends DataSet {
+public class RelativeDataSet extends DataSet implements IDataSet {
 
-    /**
-     * This variable holds the contents of the dataset, after
-     * {@link #loadIntoMemory()} and before {@link #unloadFromMemory()} was
-     * invoked.
-     * <p>
-     * For absolute datasets the stored data are absolute coordinates. These are
-     * stored in a matrix form (see {@link DataMatrix}).
-     */
-    private DataMatrix dataMatrix;
+    private Matrix similarities;
 
     /**
      *
@@ -52,10 +41,10 @@ public class AbsoluteDataSet extends DataSet {
      *                          Whether this dataset should be registered in the repository.
      * @param changeDate
      *                          The change date of this dataset is used for equality checks.
-     * @param alias
-     *                          A short alias name for this data set.
      * @param absPath
      *                          The absolute path of this dataset.
+     * @param alias
+     *                          A short alias name for this data set.
      * @param dsFormat
      *                          The format of this dataset.
      * @param dsType
@@ -63,20 +52,19 @@ public class AbsoluteDataSet extends DataSet {
      * @param websiteVisibility
      * @throws RegisterException
      */
-    public AbsoluteDataSet(IRepository repository, final boolean register,
+    public RelativeDataSet(IRepository repository, final boolean register,
             long changeDate, File absPath, final String alias,
-            AbsoluteDataSetFormat dsFormat, IDataSetType dsType,
+            RelativeDataSetFormat dsFormat, IDataSetType dsType,
             final WEBSITE_VISIBILITY websiteVisibility)
             throws RegisterException {
-        super(repository, register, changeDate, absPath, alias, dsFormat,
-                dsType, websiteVisibility);
+        super(repository, register, changeDate, absPath, alias, dsFormat, dsType, websiteVisibility);
     }
 
     /**
      * @param dataset
      * @throws RegisterException
      */
-    public AbsoluteDataSet(AbsoluteDataSet dataset) throws RegisterException {
+    public RelativeDataSet(RelativeDataSet dataset) throws RegisterException {
         super(dataset);
     }
 
@@ -86,9 +74,9 @@ public class AbsoluteDataSet extends DataSet {
      * @see data.dataset.DataSet#clone()
      */
     @Override
-    public AbsoluteDataSet clone() {
+    public RelativeDataSet clone() {
         try {
-            return new AbsoluteDataSet(this);
+            return new RelativeDataSet(this);
         } catch (RegisterException e) {
             e.printStackTrace();
             // should not occur
@@ -99,26 +87,25 @@ public class AbsoluteDataSet extends DataSet {
     /*
      * (non-Javadoc)
      *
-     * @see data.dataset.DataSet#loadIntoMemory()
+     * @see data.dataset.DataSet#getDataSetFormat()
      */
     @Override
-    public boolean loadIntoMemory(Precision precision)
-            throws IllegalArgumentException, IOException,
-                   InvalidDataSetFormatVersionException {
-        if (!isInMemory()) {
-            this.dataMatrix = this.getDataSetFormat().parse(this, precision);
-        }
-        return true;
+    public RelativeDataSetFormat getDataSetFormat() {
+        return (RelativeDataSetFormat) super.getDataSetFormat();
     }
 
     /*
      * (non-Javadoc)
      *
-     * @see data.dataset.DataSet#getDataSetContent()
+     * @see data.dataset.DataSet#loadIntoMemory()
      */
     @Override
-    public DataMatrix getDataSetContent() {
-        return this.dataMatrix;
+    public boolean loadIntoMemory(Precision precision) throws IllegalArgumentException, IOException,
+                                                              InvalidDataSetFormatVersionException {
+        if (!isInMemory()) {
+            this.similarities = getDataSetFormat().parse(this, precision);
+        }
+        return true;
     }
 
     /*
@@ -129,11 +116,11 @@ public class AbsoluteDataSet extends DataSet {
      */
     @Override
     public boolean setDataSetContent(Object newContent) {
-        if (!(newContent instanceof DataMatrix)) {
+        if (!(newContent instanceof Matrix)) {
             return false;
         }
 
-        this.dataMatrix = (DataMatrix) newContent;
+        this.similarities = (Matrix) newContent;
         return true;
     }
 
@@ -144,7 +131,17 @@ public class AbsoluteDataSet extends DataSet {
      */
     @Override
     public boolean isInMemory() {
-        return this.dataMatrix != null;
+        return this.similarities != null;
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see data.dataset.DataSet#getDataSetContent()
+     */
+    @Override
+    public Matrix getDataSetContent() {
+        return similarities;
     }
 
     /*
@@ -154,18 +151,8 @@ public class AbsoluteDataSet extends DataSet {
      */
     @Override
     public boolean unloadFromMemory() {
-        this.dataMatrix = null;
+        this.similarities = null;
         return true;
-    }
-
-    /*
-     * (non-Javadoc)
-     *
-     * @see data.dataset.DataSet#getDataSetFormat()
-     */
-    @Override
-    public AbsoluteDataSetFormat getDataSetFormat() {
-        return (AbsoluteDataSetFormat) super.getDataSetFormat();
     }
 
     /*
@@ -175,6 +162,11 @@ public class AbsoluteDataSet extends DataSet {
      */
     @Override
     public List<String> getIds() {
-        return Arrays.asList(this.dataMatrix.getIds());
+        String[] result = new String[this.similarities.getIds().size()];
+        for (String id : this.similarities.getIds().keySet()) {
+            result[this.similarities.getIds().get(id)] = id;
+        }
+        return Arrays.asList(result);
     }
+
 }

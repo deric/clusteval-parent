@@ -8,9 +8,10 @@
  * Contributors:
  *     Christian Wiwie - initial API and implementation
  ***************************************************************************** */
-package de.clusteval.data.dataset;
+package de.clusteval.api.data;
 
-import de.wiwie.wiutils.utils.parse.TextFileParser;
+import de.clusteval.api.data.DataSetAttributeParser;
+import de.clusteval.utils.TextFileParser;
 import java.io.IOException;
 
 /**

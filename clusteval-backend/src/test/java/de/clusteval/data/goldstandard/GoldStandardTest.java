@@ -12,6 +12,7 @@
  */
 package de.clusteval.data.goldstandard;
 
+import de.clusteval.api.data.GoldStandard;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.api.cluster.IClustering;

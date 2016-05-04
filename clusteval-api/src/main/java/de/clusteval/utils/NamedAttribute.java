@@ -13,8 +13,8 @@
 package de.clusteval.utils;
 
 import de.clusteval.api.program.INamedAttribute;
-import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RepositoryObject;
 import java.io.File;
 
@@ -79,6 +79,7 @@ public abstract class NamedAttribute<T> extends RepositoryObject implements INam
     /**
      * @return The name of this attribute.
      */
+    @Override
     public String getName() {
         return this.name;
     }

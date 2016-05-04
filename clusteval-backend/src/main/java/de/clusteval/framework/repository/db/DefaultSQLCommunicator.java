@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.framework.repository.db;
 
+import de.clusteval.api.AbsContext;
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.Database;
 import de.clusteval.api.Pair;
@@ -17,7 +18,13 @@ import de.clusteval.api.SQLConfig;
 import de.clusteval.api.cluster.ClusteringEvaluationParameters;
 import de.clusteval.api.cluster.ClusteringQualitySet;
 import de.clusteval.api.cluster.IClustering;
+import de.clusteval.api.data.DataConfig;
+import de.clusteval.data.dataset.DataSet;
+import de.clusteval.api.data.DataSetConfig;
+import de.clusteval.api.data.DataSetFormat;
 import de.clusteval.api.data.DataSetTypeFactory;
+import de.clusteval.api.data.GoldStandard;
+import de.clusteval.api.data.GoldStandardConfig;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetConfig;
@@ -33,19 +40,12 @@ import de.clusteval.api.program.IProgramParameter;
 import de.clusteval.api.program.ParameterSet;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.IRun;
+import de.clusteval.api.run.RunResultFormat;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
-import de.clusteval.api.AbsContext;
-import de.clusteval.data.DataConfig;
-import de.clusteval.data.dataset.DataSet;
-import de.clusteval.data.dataset.DataSetConfig;
-import de.clusteval.api.data.DataSetFormat;
-import de.clusteval.data.dataset.type.DataSetType;
-import de.clusteval.data.goldstandard.GoldStandard;
-import de.clusteval.data.goldstandard.GoldStandardConfig;
 import de.clusteval.data.statistics.DataStatistic;
-import de.clusteval.framework.repository.RepositoryController;
+import de.clusteval.api.repository.RepositoryController;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.program.DoubleProgramParameter;
 import de.clusteval.program.IntegerProgramParameter;
@@ -70,7 +70,6 @@ import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.run.result.RunAnalysisRunResult;
 import de.clusteval.run.result.RunDataAnalysisRunResult;
 import de.clusteval.run.result.RunResult;
-import de.clusteval.api.run.RunResultFormat;
 import de.clusteval.run.statistics.RunDataStatistic;
 import de.clusteval.run.statistics.RunStatistic;
 import de.clusteval.utils.FileUtils;
@@ -1762,7 +1761,7 @@ public class DefaultSQLCommunicator extends SQLCommunicator implements Database 
      * @see de.wiwie.wiutils.utils.SQLCommunicator#registerDataSetFormat(java.lang.Class)
      */
     @Override
-    protected boolean registerDataSetTypeClass(Class<? extends DataSetType> object) {
+    protected boolean registerDataSetTypeClass(Class<? extends IDataSetType> object) {
         try {
             DataSetTypeFactory dsf = DataSetTypeFactory.getInstance();
             IDataSetType type = dsf.getProvider(object.getSimpleName());
@@ -3410,7 +3409,7 @@ public class DefaultSQLCommunicator extends SQLCommunicator implements Database 
      */
     @Override
     protected boolean unregisterDataSetTypeClass(
-            Class<? extends DataSetType> object) {
+            Class<? extends IDataSetType> object) {
         try {
             this.delete(
                     this.getTableDataSetTypes(),

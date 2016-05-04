@@ -5,7 +5,7 @@ import de.clusteval.api.factory.DataStatisticFactory;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.stats.IDataStatistic;
-import de.clusteval.data.DataConfig;
+import de.clusteval.api.data.DataConfig;
 import de.clusteval.data.statistics.DataStatisticCalculator;
 import de.clusteval.utils.FileUtils;
 import de.clusteval.utils.StatisticCalculator;

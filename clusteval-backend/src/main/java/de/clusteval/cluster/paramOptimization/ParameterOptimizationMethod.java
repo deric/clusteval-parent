@@ -29,7 +29,7 @@ import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.IRun;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
-import de.clusteval.data.DataConfig;
+import de.clusteval.api.data.DataConfig;
 import de.clusteval.api.data.DataSetFormat;
 import de.clusteval.api.repository.RepositoryObject;
 import de.clusteval.framework.repository.parse.Parser;

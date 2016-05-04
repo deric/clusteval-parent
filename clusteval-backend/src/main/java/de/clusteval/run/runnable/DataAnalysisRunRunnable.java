@@ -18,7 +18,7 @@ import de.clusteval.api.exceptions.RunIterationException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.run.IScheduler;
 import de.clusteval.api.stats.IDataStatistic;
-import de.clusteval.data.DataConfig;
+import de.clusteval.api.data.DataConfig;
 import de.clusteval.run.DataAnalysisRun;
 import de.clusteval.run.Run;
 import de.clusteval.run.result.DataAnalysisRunResult;

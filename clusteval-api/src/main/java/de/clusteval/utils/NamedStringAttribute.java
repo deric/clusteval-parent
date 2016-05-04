@@ -14,12 +14,13 @@ package de.clusteval.utils;
 
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
+import de.clusteval.utils.NamedAttribute;
 
 /**
  * @author Christian Wiwie
  *
  */
-public class NamedDoubleAttribute extends NamedAttribute<Double> {
+public class NamedStringAttribute extends NamedAttribute<String> {
 
     /**
      * @param repository
@@ -27,8 +28,8 @@ public class NamedDoubleAttribute extends NamedAttribute<Double> {
      * @param value
      * @throws RegisterException
      */
-    public NamedDoubleAttribute(final IRepository repository, final String name,
-            final Double value) throws RegisterException {
+    public NamedStringAttribute(final IRepository repository, final String name,
+            final String value) throws RegisterException {
         super(repository, name, value);
         this.register();
     }
@@ -39,30 +40,30 @@ public class NamedDoubleAttribute extends NamedAttribute<Double> {
      * @param other The object to clone.
      * @throws RegisterException
      */
-    public NamedDoubleAttribute(final NamedDoubleAttribute other)
+    public NamedStringAttribute(final NamedStringAttribute other)
             throws RegisterException {
         super(other);
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.wiwie.wiutils.utils.NamedAttribute#cloneValue(java.lang.Object)
+     * (non-Javadoc)
+     *
+     * @see de.wiwie.wiutils.utils.NamedAttribute#cloneValue(java.lang.Object)
      */
     @Override
-    public Double cloneValue(Double value) {
+    public String cloneValue(String value) {
         return value;
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see framework.repository.RepositoryObject#clone()
+     * (non-Javadoc)
+     *
+     * @see framework.repository.RepositoryObject#clone()
      */
     @Override
-    public NamedDoubleAttribute clone() {
+    public NamedStringAttribute clone() {
         try {
-            return new NamedDoubleAttribute(this);
+            return new NamedStringAttribute(this);
         } catch (RegisterException e) {
             // should not occur
             e.printStackTrace();
@@ -70,18 +71,17 @@ public class NamedDoubleAttribute extends NamedAttribute<Double> {
         return null;
     }
 
+
     /* (non-Javadoc)
-	 * @see de.clusteval.framework.repository.RepositoryObject#register()
+     * @see de.clusteval.framework.repository.RepositoryObject#register()
      */
     @Override
     public boolean register() throws RegisterException {
-        this.repository.lookupAdd(this);
-        return true;
-        //return this.repository.register(this);
+        return this.repository.register(this);
     }
 
     /* (non-Javadoc)
-	 * @see de.clusteval.framework.repository.RepositoryObject#unregister()
+     * @see de.clusteval.framework.repository.RepositoryObject#unregister()
      */
     @Override
     public boolean unregister() {

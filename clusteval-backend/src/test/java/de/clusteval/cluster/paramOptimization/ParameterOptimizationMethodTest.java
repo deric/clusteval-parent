@@ -42,10 +42,10 @@ import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
-import de.clusteval.data.DataConfig;
-import de.clusteval.data.dataset.RelativeDataSet;
-import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
-import de.clusteval.data.dataset.format.ConversionStandardToInputConfiguration;
+import de.clusteval.api.data.DataConfig;
+import de.clusteval.api.data.RelativeDataSet;
+import de.clusteval.api.data.InputToStd;
+import de.clusteval.api.data.StdToInput;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
@@ -91,16 +91,15 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
                 DataConfig.class, "synthetic_cassini250");
         IDataSet ds = dataConfig.getDatasetConfig().getDataSet();
         IDataSetFormat internal = DataSetFormatFactory.parseFromString("SimMatrixDataSetFormat");
-        ds = ds.preprocessAndConvertTo(
-                context,
+        ds = ds.preprocessAndConvertTo(context,
                 internal,
-                new ConversionInputToStandardConfiguration(DistanceMeasure
+                new InputToStd(DistanceMeasure
                         .parseFromString(getRepository(),
                                 "EuclidianDistanceMeasure"),
                         Precision.DOUBLE,
                         new ArrayList<>(),
                         new ArrayList<>()),
-                new ConversionStandardToInputConfiguration());
+                new StdToInput());
         ds.loadIntoMemory();
         if (ds instanceof RelativeDataSet) {
             RelativeDataSet dataSet = (RelativeDataSet) ds;
@@ -227,16 +226,15 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
                 DataConfig.class, "synthetic_cassini250");
         IDataSet ds = dataConfig.getDatasetConfig().getDataSet();
         IDataSetFormat internal = DataSetFormatFactory.parseFromString("SimMatrixDataSetFormat");
-        ds = ds.preprocessAndConvertTo(
-                context,
+        ds = ds.preprocessAndConvertTo(context,
                 internal,
-                new ConversionInputToStandardConfiguration(DistanceMeasure
+                new InputToStd(DistanceMeasure
                         .parseFromString(getRepository(),
                                 "EuclidianDistanceMeasure"),
                         Precision.DOUBLE,
                         new ArrayList<>(),
                         new ArrayList<>()),
-                new ConversionStandardToInputConfiguration());
+                new StdToInput());
         ds.loadIntoMemory();
         if (ds instanceof RelativeDataSet) {
             RelativeDataSet dataSet = (RelativeDataSet) ds;
@@ -346,16 +344,15 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
                 DataConfig.class, "synthetic_cassini250");
         IDataSet ds = dataConfig.getDatasetConfig().getDataSet();
         IDataSetFormat internal = DataSetFormatFactory.parseFromString("SimMatrixDataSetFormat");
-        ds = ds.preprocessAndConvertTo(
-                context,
+        ds = ds.preprocessAndConvertTo(context,
                 internal,
-                new ConversionInputToStandardConfiguration(DistanceMeasure
+                new InputToStd(DistanceMeasure
                         .parseFromString(getRepository(),
                                 "EuclidianDistanceMeasure"),
                         Precision.DOUBLE,
                         new ArrayList<>(),
                         new ArrayList<>()),
-                new ConversionStandardToInputConfiguration());
+                new StdToInput());
         ds.loadIntoMemory();
         if (ds instanceof RelativeDataSet) {
             RelativeDataSet dataSet = (RelativeDataSet) ds;
@@ -438,16 +435,15 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
                 DataConfig.class, "baechler2003");
         IDataSet ds = dataConfig.getDatasetConfig().getDataSet();
         IDataSetFormat internal = DataSetFormatFactory.parseFromString("SimMatrixDataSetFormat");
-        ds = ds.preprocessAndConvertTo(
-                context,
+        ds = ds.preprocessAndConvertTo(context,
                 internal,
-                new ConversionInputToStandardConfiguration(DistanceMeasure
+                new InputToStd(DistanceMeasure
                         .parseFromString(getRepository(),
                                 "SpearmanCorrelationRDistanceMeasure"),
                         Precision.DOUBLE,
                         new ArrayList<>(),
                         new ArrayList<>()),
-                new ConversionStandardToInputConfiguration());
+                new StdToInput());
         ds.loadIntoMemory();
         if (ds instanceof RelativeDataSet) {
             RelativeDataSet dataSet = (RelativeDataSet) ds;

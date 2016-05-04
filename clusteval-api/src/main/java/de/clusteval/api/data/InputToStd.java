@@ -8,7 +8,7 @@
  * Contributors:
  *     Christian Wiwie - initial API and implementation
  ***************************************************************************** */
-package de.clusteval.data.dataset.format;
+package de.clusteval.api.data;
 
 import de.clusteval.api.IDistanceMeasure;
 import de.clusteval.api.Precision;
@@ -21,7 +21,7 @@ import java.util.List;
  * @author Christian Wiwie
  *
  */
-public class ConversionInputToStandardConfiguration implements IConversionInputToStandardConfiguration {
+public class InputToStd implements IConversionInputToStandardConfiguration {
 
     protected static List<IDataPreprocessor> clonePreprocessors(List<IDataPreprocessor> preprocessors) {
         List<IDataPreprocessor> result = new ArrayList<>();
@@ -48,7 +48,7 @@ public class ConversionInputToStandardConfiguration implements IConversionInputT
      * @param preprocessorsAfterDistance
      *
      */
-    public ConversionInputToStandardConfiguration(
+    public InputToStd(
             final IDistanceMeasure distanceMeasure,
             final Precision similarityPrecision,
             final List<IDataPreprocessor> preprocessorsBeforeDistance,
@@ -66,7 +66,7 @@ public class ConversionInputToStandardConfiguration implements IConversionInputT
      *
      * @param other The object to clone.
      */
-    public ConversionInputToStandardConfiguration(final ConversionInputToStandardConfiguration other) {
+    public InputToStd(final InputToStd other) {
         super();
 
         this.similarityPrecision = other.similarityPrecision;
@@ -82,8 +82,8 @@ public class ConversionInputToStandardConfiguration implements IConversionInputT
      * @see java.lang.Object#clone()
      */
     @Override
-    public ConversionInputToStandardConfiguration clone() {
-        return new ConversionInputToStandardConfiguration(this);
+    public InputToStd clone() {
+        return new InputToStd(this);
     }
 
     @Override
@@ -123,11 +123,11 @@ public class ConversionInputToStandardConfiguration implements IConversionInputT
      */
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof ConversionInputToStandardConfiguration)) {
+        if (!(obj instanceof InputToStd)) {
             return false;
         }
 
-        ConversionInputToStandardConfiguration other = (ConversionInputToStandardConfiguration) obj;
+        InputToStd other = (InputToStd) obj;
 
         return this.distanceMeasureAbsoluteToRelative
                 .equals(other.distanceMeasureAbsoluteToRelative)

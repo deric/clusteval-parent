@@ -8,10 +8,8 @@
  * Contributors:
  *     Christian Wiwie - initial API and implementation
  ***************************************************************************** */
-package de.clusteval.data.dataset.format;
+package de.clusteval.api.data;
 
-import de.clusteval.api.data.IDataSet;
-import de.clusteval.api.data.IDataSetFormatParser;
 import de.clusteval.api.repository.RepositoryObject;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -47,7 +45,7 @@ public abstract class DataSetFormatParser extends RepositoryObject implements ID
     /**
      * The Enum DATASETFORMAT_SUFFIX.
      */
-    protected static enum DATASETFORMAT_SUFFIX {
+    public static enum DATASETFORMAT_SUFFIX {
 
         /** The Row sim. */
         RowSim,

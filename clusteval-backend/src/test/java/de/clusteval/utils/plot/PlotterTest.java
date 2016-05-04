@@ -46,16 +46,16 @@ import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
-import de.clusteval.data.DataConfig;
+import de.clusteval.api.data.DataConfig;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
 import de.clusteval.data.dataset.DataSet;
-import de.clusteval.data.dataset.DataSetConfig;
+import de.clusteval.api.data.DataSetConfig;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
-import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
-import de.clusteval.data.dataset.format.ConversionStandardToInputConfiguration;
+import de.clusteval.api.data.InputToStd;
+import de.clusteval.api.data.StdToInput;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
@@ -122,30 +122,29 @@ public class PlotterTest extends AbstractClustEvalTest {
             targetFile.delete();
         }
 
-        ds = ds.preprocessAndConvertTo(
-                context,
+        ds = ds.preprocessAndConvertTo(context,
                 DataSetFormat.parseFromString(getRepository(),
                         "SimMatrixDataSetFormat"),
-                new ConversionInputToStandardConfiguration(DistanceMeasure
+                new InputToStd(DistanceMeasure
                         .parseFromString(getRepository(),
                                 "EuclidianDistanceMeasure"),
                         Precision.DOUBLE,
                         new ArrayList<>(),
                         new ArrayList<>()),
-                new ConversionStandardToInputConfiguration());
+                new StdToInput());
 
         DataSetConfig dsc = new DataSetConfig(
                 getRepository(),
                 System.currentTimeMillis(),
                 new File(
                         "testCaseRepository/results/04_07_2013-14_41_00_paper_run_synthetic/configs/synthetic_cassini250.dsconfig"),
-                ds, new ConversionInputToStandardConfiguration(DistanceMeasure
+                ds, new InputToStd(DistanceMeasure
                         .parseFromString(getRepository(),
                                 "EuclidianDistanceMeasure"),
                         Precision.DOUBLE,
                         new ArrayList<>(),
                         new ArrayList<>()),
-                new ConversionStandardToInputConfiguration());
+                new StdToInput());
 
         DataConfig dc = new DataConfig(
                 getRepository(),
@@ -201,30 +200,29 @@ public class PlotterTest extends AbstractClustEvalTest {
             targetFile.delete();
         }
 
-        ds = ds.preprocessAndConvertTo(
-                context,
+        ds = ds.preprocessAndConvertTo(context,
                 DataSetFormat.parseFromString(getRepository(),
                         "SimMatrixDataSetFormat"),
-                new ConversionInputToStandardConfiguration(DistanceMeasure
+                new InputToStd(DistanceMeasure
                         .parseFromString(getRepository(),
                                 "EuclidianDistanceMeasure"),
                         Precision.DOUBLE,
                         new ArrayList<>(),
                         new ArrayList<>()),
-                new ConversionStandardToInputConfiguration());
+                new StdToInput());
 
         IDataSetConfig dsc = new DataSetConfig(
                 getRepository(),
                 System.currentTimeMillis(),
                 new File(
                         "testCaseRepository/results/04_07_2013-14_41_00_paper_run_synthetic/configs/synthetic_cassini250.dsconfig"),
-                ds, new ConversionInputToStandardConfiguration(DistanceMeasure
+                ds, new InputToStd(DistanceMeasure
                         .parseFromString(getRepository(),
                                 "EuclidianDistanceMeasure"),
                         Precision.DOUBLE,
                         new ArrayList<>(),
                         new ArrayList<>()),
-                new ConversionStandardToInputConfiguration());
+                new StdToInput());
 
         DataConfig dc = new DataConfig(
                 getRepository(),

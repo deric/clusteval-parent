@@ -1,7 +1,5 @@
-package de.wiwie.wiutils.utils.parse;
+package de.clusteval.utils;
 
-import de.clusteval.utils.FileUtils;
-import de.wiwie.wiutils.utils.StringExt;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;

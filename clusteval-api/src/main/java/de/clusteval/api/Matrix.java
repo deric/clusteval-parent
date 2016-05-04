@@ -16,7 +16,11 @@
  */
 package de.clusteval.api;
 
+import de.clusteval.utils.RangeCreationException;
+import java.util.Map;
+
 /**
+ * A matrix interface
  *
  * @author deric
  */
@@ -41,4 +45,31 @@ public interface Matrix {
     int getColumns();
 
     double[][] toArray();
+
+    Map<String, Integer> getIds();
+
+    String[] getIdsArray();
+
+    double getMaxValue();
+
+    double getMinValue();
+
+    double getMean();
+
+    double[] getQuantiles(final int numberOfQuantiles) throws RangeCreationException;
+
+    void scaleBy(double factor);
+
+    /**
+     * @param numberBuckets
+     * @param idToClass
+     * @return
+     */
+    Pair<double[], int[][]> toIntraInterDistributionArray(int numberBuckets, Map<String, Integer> idToClass);
+
+    /**
+     * @param numberBuckets
+     * @return
+     */
+    public Pair<double[], int[]> toDistributionArray(int numberBuckets);
 }

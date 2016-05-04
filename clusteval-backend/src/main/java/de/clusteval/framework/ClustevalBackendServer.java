@@ -74,7 +74,7 @@ import de.clusteval.data.randomizer.DataRandomizer;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
 import de.clusteval.framework.repository.MyRengine;
 import de.clusteval.framework.repository.Repository;
-import de.clusteval.framework.repository.RepositoryController;
+import de.clusteval.api.repository.RepositoryController;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
 import de.clusteval.framework.threading.SupervisorThread;

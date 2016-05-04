@@ -35,9 +35,9 @@ import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.cluster.Clustering;
-import de.clusteval.data.DataConfig;
-import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
-import de.clusteval.data.dataset.format.ConversionStandardToInputConfiguration;
+import de.clusteval.api.data.DataConfig;
+import de.clusteval.api.data.InputToStd;
+import de.clusteval.api.data.StdToInput;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
 import de.clusteval.utils.AbstractClustEvalTest;
@@ -82,16 +82,15 @@ public class DunnIndexRClusteringQualityMeasureTest extends AbstractClustEvalTes
                     DataConfig.class, "dunnIndexMatrixTest");
             IDataSetConfig dsc = dc.getDatasetConfig();
             IDataSet ds = dsc.getDataSet();
-            ds.preprocessAndConvertTo(
-                    context,
+            ds.preprocessAndConvertTo(context,
                     DataSetFormatFactory.parseFromString("SimMatrixDataSetFormat"),
-                    new ConversionInputToStandardConfiguration(DistanceMeasure
+                    new InputToStd(DistanceMeasure
                             .parseFromString(getRepository(),
                                     "EuclidianDistanceMeasure"),
                             Precision.DOUBLE,
                             new ArrayList<>(),
                             new ArrayList<>()),
-                    new ConversionStandardToInputConfiguration());
+                    new StdToInput());
             ds.getInStandardFormat().loadIntoMemory();
             ClusteringQualityMeasure measure = ClusteringQualityMeasure
                     .parseFromString(getRepository(),

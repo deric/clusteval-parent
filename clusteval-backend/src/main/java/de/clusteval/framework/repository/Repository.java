@@ -12,6 +12,7 @@
  */
 package de.clusteval.framework.repository;
 
+import de.clusteval.api.repository.RepositoryController;
 import de.clusteval.api.repository.RepositoryObject;
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.Database;
@@ -60,7 +61,7 @@ import de.clusteval.api.stats.IDataStatistic;
 import de.clusteval.api.stats.IRunDataStatistic;
 import de.clusteval.api.stats.IRunStatistic;
 import de.clusteval.cluster.Clustering;
-import de.clusteval.data.DataConfig;
+import de.clusteval.api.data.DataConfig;
 import de.clusteval.data.goldstandard.format.GoldStandardFormat;
 import de.clusteval.data.statistics.DataStatistic;
 import de.clusteval.data.statistics.DataStatisticCalculator;

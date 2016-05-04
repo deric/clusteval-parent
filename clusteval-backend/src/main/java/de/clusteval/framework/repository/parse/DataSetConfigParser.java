@@ -46,12 +46,12 @@ import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
 import de.clusteval.data.dataset.DataSet;
-import de.clusteval.data.dataset.DataSetConfig;
+import de.clusteval.api.data.DataSetConfig;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
-import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
-import de.clusteval.data.dataset.format.ConversionStandardToInputConfiguration;
+import de.clusteval.api.data.InputToStd;
+import de.clusteval.api.data.StdToInput;
 import de.clusteval.data.preprocessing.DataPreprocessor;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
@@ -77,8 +77,8 @@ class DataSetConfigParser extends RepositoryObjectParser<DataSetConfig> {
     protected String datasetFile;
 
     protected DataSet dataSet;
-    protected ConversionInputToStandardConfiguration configInputToStandard;
-    protected ConversionStandardToInputConfiguration configStandardToInput;
+    protected InputToStd configInputToStandard;
+    protected StdToInput configStandardToInput;
 
     /**
      * (non-Javadoc)
@@ -166,9 +166,9 @@ class DataSetConfigParser extends RepositoryObjectParser<DataSetConfig> {
                 preprocessorAfterDistance = new ArrayList<>();
             }
 
-            configInputToStandard = new ConversionInputToStandardConfiguration(distanceMeasure, similarityPrecision,
+            configInputToStandard = new InputToStd(distanceMeasure, similarityPrecision,
                     preprocessorBeforeDistance, preprocessorAfterDistance);
-            configStandardToInput = new ConversionStandardToInputConfiguration();
+            configStandardToInput = new StdToInput();
 
             result = new DataSetConfig(repo, changeDate, absPath, dataSet, configInputToStandard,
                     configStandardToInput);

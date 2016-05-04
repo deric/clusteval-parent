@@ -49,13 +49,13 @@ import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationM
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
-import de.clusteval.data.dataset.AbsoluteDataSet;
+import de.clusteval.api.data.AbsoluteDataSet;
 import de.clusteval.data.dataset.DataSet;
-import de.clusteval.data.dataset.DataSetAttributeParser;
+import de.clusteval.api.data.DataSetAttributeParser;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
-import de.clusteval.data.dataset.RelativeDataSet;
+import de.clusteval.api.data.RelativeDataSet;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
 import de.clusteval.framework.repository.RunResultRepository;

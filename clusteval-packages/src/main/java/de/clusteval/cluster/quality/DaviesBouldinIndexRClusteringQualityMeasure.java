@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.cluster.quality;
 
+import de.clusteval.api.Matrix;
 import de.clusteval.api.cluster.ClusteringEvaluationParameters;
 import de.clusteval.api.cluster.ClustEvalValue;
 import de.clusteval.api.cluster.Cluster;
@@ -23,9 +24,8 @@ import de.clusteval.api.r.RExpr;
 import de.clusteval.api.r.RLibraryRequirement;
 import de.clusteval.api.r.ROperationNotSupported;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.data.dataset.RelativeDataSet;
+import de.clusteval.api.data.RelativeDataSet;
 import de.clusteval.utils.ArraysExt;
-import de.wiwie.wiutils.utils.SimilarityMatrix;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -78,7 +78,7 @@ public class DaviesBouldinIndexRClusteringQualityMeasure extends ClusteringQuali
         RelativeDataSet dataSet = (RelativeDataSet) (dataConfig
                 .getDatasetConfig().getDataSet().getInStandardFormat());
 
-        SimilarityMatrix simMatrix = dataSet.getDataSetContent();
+        Matrix simMatrix = dataSet.getDataSetContent();
 
         /*
          * Create an array with all the cluster ids for every item

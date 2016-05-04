@@ -10,21 +10,15 @@
  *     Christian Wiwie - initial API and implementation
  *****************************************************************************
  */
-package de.clusteval.data;
+package de.clusteval.api.data;
 
-import de.clusteval.api.data.IDataConfig;
-import de.clusteval.api.data.IDataSetConfig;
-import de.clusteval.api.data.IGoldStandardConfig;
 import de.clusteval.api.exceptions.RepositoryObjectDumpException;
-import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.repository.DumpableRepositoryObject;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RepositoryEvent;
 import de.clusteval.api.repository.RepositoryRemoveEvent;
 import de.clusteval.api.repository.RepositoryReplaceEvent;
-import de.clusteval.cluster.quality.ClusteringQualityMeasure;
-import de.clusteval.data.dataset.DataSetConfig;
-import de.clusteval.data.goldstandard.GoldStandardConfig;
-import de.clusteval.framework.repository.DumpableRepositoryObject;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;

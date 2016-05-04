@@ -8,17 +8,15 @@
  * Contributors:
  *     Christian Wiwie - initial API and implementation
  ***************************************************************************** */
-package de.clusteval.data.dataset.format;
-
-import de.clusteval.api.data.IConversionStandardToInputConfiguration;
+package de.clusteval.api.data;
 
 /**
  * @author Christian Wiwie
  *
  */
-public class ConversionStandardToInputConfiguration implements IConversionStandardToInputConfiguration {
+public class StdToInput implements IConversionStandardToInputConfiguration {
 
-    public ConversionStandardToInputConfiguration() {
+    public StdToInput() {
         super();
     }
 
@@ -29,8 +27,7 @@ public class ConversionStandardToInputConfiguration implements IConversionStanda
      *              The object to clone.
      */
     @SuppressWarnings("unused")
-    public ConversionStandardToInputConfiguration(
-            final ConversionStandardToInputConfiguration other) {
+    public StdToInput(final StdToInput other) {
         super();
     }
 
@@ -40,8 +37,8 @@ public class ConversionStandardToInputConfiguration implements IConversionStanda
      * @see java.lang.Object#clone()
      */
     @Override
-    public ConversionStandardToInputConfiguration clone() {
-        return new ConversionStandardToInputConfiguration(this);
+    public StdToInput clone() {
+        return new StdToInput(this);
     }
 
 }

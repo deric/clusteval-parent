@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset;
 
+import de.clusteval.api.data.DataSetAttributeParser;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;

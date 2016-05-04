@@ -15,7 +15,7 @@ import de.clusteval.api.IDistanceMeasure;
 import de.clusteval.api.Precision;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.r.RNotAvailableException;
-import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
+import de.clusteval.api.data.InputToStd;
 import de.clusteval.utils.AbstractClustEvalTest;
 import de.clusteval.utils.ArraysExt;
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ public class SpearmanCorrelationDistanceMeasureTest extends AbstractClustEvalTes
                 getRepository(), "SpearmanCorrelationRDistanceMeasure");
         assertTrue(measure != null);
 
-        ConversionInputToStandardConfiguration config = new ConversionInputToStandardConfiguration(
+        InputToStd config = new InputToStd(
                 measure, Precision.FLOAT,
                 new ArrayList<>(),
                 new ArrayList<>());

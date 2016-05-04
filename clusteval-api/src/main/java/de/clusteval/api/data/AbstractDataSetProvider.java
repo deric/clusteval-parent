@@ -8,22 +8,13 @@
  * Contributors:
  *     Christian Wiwie - initial API and implementation
  ***************************************************************************** */
-package de.clusteval.data.dataset;
+package de.clusteval.api.data;
 
 import de.clusteval.api.Precision;
-import de.clusteval.api.data.IDataConfig;
-import de.clusteval.api.data.IDataSet;
-import de.clusteval.api.data.IDataSetConfig;
-import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.exceptions.RepositoryObjectDumpException;
 import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
-import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
-import de.clusteval.data.DataConfig;
-import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
-import de.clusteval.data.dataset.format.ConversionStandardToInputConfiguration;
-import de.clusteval.api.data.DistanceMeasure;
-import de.clusteval.data.goldstandard.GoldStandardConfig;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RepositoryObject;
 import de.clusteval.utils.FileUtils;
 import java.io.File;
@@ -73,10 +64,10 @@ public abstract class AbstractDataSetProvider extends RepositoryObject {
                 FileUtils.buildPath(repository.getBasePath(IDataSetConfig.class), configFileName + ".dsconfig"));
         IDataSetConfig dsConfig = new DataSetConfig(this.repository, System.currentTimeMillis(), dsConfigFile,
                 newDataSet,
-                new ConversionInputToStandardConfiguration(
+                new InputToStd(
                         DistanceMeasure.parseFromString(repository, "EuclidianDistanceMeasure"),
                         Precision.DOUBLE, new ArrayList<>(), new ArrayList<>()),
-                new ConversionStandardToInputConfiguration());
+                new StdToInput());
 
         dsConfig.dumpToFile();
 

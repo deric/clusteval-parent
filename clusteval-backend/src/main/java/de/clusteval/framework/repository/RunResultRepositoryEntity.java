@@ -3,6 +3,7 @@
  */
 package de.clusteval.framework.repository;
 
+import de.clusteval.api.repository.RepositoryController;
 import de.clusteval.api.repository.StaticRepositoryEntity;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.run.result.ParameterOptimizationResult;

@@ -101,4 +101,13 @@ public interface IClustering extends IRepositoryObject, Iterable<Cluster> {
      * @return True if this item was contained in this clustering.
      */
     boolean removeClusterItem(final ClusterItem item, final Cluster cluster);
+
+    /**
+     * Add a cluster to this clustering.
+     *
+     * @param cluster The cluster to add.
+     * @return true, if the cluster is added and hasn't been in the clustering
+     *         before.
+     */
+    boolean addCluster(final Cluster cluster);
 }

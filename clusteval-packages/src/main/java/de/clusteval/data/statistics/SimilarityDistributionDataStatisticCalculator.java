@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.data.statistics;
 
+import de.clusteval.api.Matrix;
 import de.clusteval.api.Pair;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataSetConfig;
@@ -17,11 +18,10 @@ import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.data.dataset.RelativeDataSet;
+import de.clusteval.api.data.RelativeDataSet;
 import de.clusteval.api.data.RelativeDataSetFormat;
 import de.clusteval.utils.ArraysExt;
 import de.clusteval.utils.FileUtils;
-import de.wiwie.wiutils.utils.SimilarityMatrix;
 import java.io.File;
 
 /**
@@ -79,7 +79,7 @@ public class SimilarityDistributionDataStatisticCalculator
             if (!dataSet.isInMemory()) {
                 dataSet.loadIntoMemory();
             }
-            SimilarityMatrix simMatrix = dataSet.getDataSetContent();
+            Matrix simMatrix = dataSet.getDataSetContent();
             if (dataSet.isInMemory()) {
                 dataSet.unloadFromMemory();
             }

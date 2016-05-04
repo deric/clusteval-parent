@@ -10,16 +10,17 @@
  ***************************************************************************** */
 package de.clusteval.data.preprocessing;
 
+import de.clusteval.api.Matrix;
+import de.clusteval.api.data.AbsoluteDataSet;
+import de.clusteval.api.data.DataSet;
 import de.clusteval.api.data.IDataSet;
+import de.clusteval.api.data.RelativeDataSet;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.data.dataset.AbsoluteDataSet;
-import de.clusteval.data.dataset.DataSet;
-import de.clusteval.data.dataset.RelativeDataSet;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
 import java.io.File;
 import java.io.IOException;
@@ -73,7 +74,7 @@ public class RemoveZeroSamplesDataPreprocessor extends DataPreprocessor {
         DataSet newDataSet = null;
         try {
             dataSet.loadIntoMemory();
-            SimilarityMatrix matrix = dataSet.getDataSetContent();
+            Matrix matrix = dataSet.getDataSetContent();
             rEngine.assign("matrix", matrix.toArray());
             rEngine.assign("ids", matrix.getIdsArray());
             rEngine.eval("row.names(matrix) <- ids");

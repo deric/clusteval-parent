@@ -1,12 +1,13 @@
 package de.wiwie.wiutils.utils.parse;
 
+import de.clusteval.utils.TextFileParser;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import de.clusteval.utils.ArraysExt;
-import de.wiwie.wiutils.utils.StringExt;
+import de.clusteval.utils.StringExt;
 import de.wiwie.wiutils.utils.text.TextFileValueUniqueListParser;
 
 // TODO: Auto-generated Javadoc

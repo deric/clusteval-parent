@@ -16,6 +16,7 @@
  */
 package de.clusteval.data.randomizer;
 
+import de.clusteval.api.Matrix;
 import de.clusteval.api.Pair;
 import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.data.AbsoluteDataSetFormat;
@@ -35,11 +36,10 @@ import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.data.dataset.AbsoluteDataSet;
-import de.clusteval.data.dataset.RelativeDataSet;
-import de.clusteval.data.goldstandard.GoldStandard;
+import de.clusteval.api.data.AbsoluteDataSet;
+import de.clusteval.api.data.RelativeDataSet;
+import de.clusteval.api.data.GoldStandard;
 import de.clusteval.utils.FileUtils;
-import de.wiwie.wiutils.utils.SimilarityMatrix;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -321,7 +321,7 @@ public class RemoveAndAddNoiseDataRandomizer extends DataRandomizer implements I
 
             if (!this.onlySimulate) {
                 dataSet.loadIntoMemory();
-                SimilarityMatrix matrix = dataSet.getDataSetContent();
+                Matrix matrix = dataSet.getDataSetContent();
                 String[] ids = matrix.getIdsArray();
                 goldStandard.loadIntoMemory();
                 IClustering gsClustering = goldStandard.getClustering();

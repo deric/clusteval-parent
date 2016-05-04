@@ -10,6 +10,8 @@
  ***************************************************************************** */
 package de.clusteval.data.goldstandard;
 
+import de.clusteval.api.data.GoldStandardConfig;
+import de.clusteval.api.data.GoldStandard;
 import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;

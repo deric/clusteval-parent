@@ -11,9 +11,9 @@
 package de.clusteval.data;
 
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.data.dataset.DataSetConfig;
+import de.clusteval.api.data.DataSetConfig;
 import de.clusteval.data.dataset.RunResultDataSetConfigFinderThread;
-import de.clusteval.data.goldstandard.GoldStandardConfig;
+import de.clusteval.api.data.GoldStandardConfig;
 import de.clusteval.data.goldstandard.GoldStandardConfigFinderThread;
 import de.clusteval.framework.threading.SupervisorThread;
 

@@ -12,15 +12,15 @@
  */
 package de.clusteval.program.r;
 
+import de.clusteval.api.Matrix;
 import de.clusteval.api.data.IDataConfig;
+import de.clusteval.api.data.RelativeDataSet;
 import de.clusteval.api.program.IProgramConfig;
-import de.clusteval.api.r.RNotAvailableException;
-import de.clusteval.api.r.RException;
-import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
-import de.clusteval.data.dataset.RelativeDataSet;
+import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RLibraryNotLoadedException;
-import de.wiwie.wiutils.utils.SimilarityMatrix;
+import de.clusteval.api.r.RNotAvailableException;
+import de.clusteval.api.repository.IRepository;
 import java.io.File;
 import java.util.Map;
 
@@ -33,8 +33,8 @@ public abstract class RelativeDataRProgram extends RProgram {
     /**
      * @param repository the repository this program should be registered at.
      * @param changeDate The change date of this program is used for equality
-     * checks.
-     * @param absPath The absolute path of this program.
+     *                   checks.
+     * @param absPath    The absolute path of this program.
      * @throws RegisterException
      */
     public RelativeDataRProgram(IRepository repository, long changeDate,
@@ -83,10 +83,10 @@ public abstract class RelativeDataRProgram extends RProgram {
      * .DataConfig)
      */
     @Override
-    public SimilarityMatrix extractDataSetContent(IDataConfig dataConfig) {
+    public Matrix extractDataSetContent(IDataConfig dataConfig) {
         RelativeDataSet dataSet = (RelativeDataSet) (dataConfig
                 .getDatasetConfig().getDataSet().getInStandardFormat());
-        SimilarityMatrix simMatrix = dataSet.getDataSetContent();
+        Matrix simMatrix = dataSet.getDataSetContent();
         this.ids = dataSet.getIds().toArray(new String[0]);
         this.x = simMatrix.toArray();
         return simMatrix;

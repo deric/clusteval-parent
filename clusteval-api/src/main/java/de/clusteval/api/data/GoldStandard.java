@@ -10,24 +10,24 @@
  *     Christian Wiwie - initial API and implementation
  *****************************************************************************
  */
-package de.clusteval.data.goldstandard;
+package de.clusteval.api.data;
 
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.api.cluster.IClustering;
-import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.exceptions.GoldStandardNotFoundException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
-import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
-import de.clusteval.cluster.Clustering;
-import de.clusteval.framework.repository.RepositoryController;
+import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.repository.RepositoryController;
 import de.clusteval.api.repository.RepositoryObject;
-import de.wiwie.wiutils.utils.text.TextFileMapParser;
+import de.clusteval.utils.TextFileMapParser;
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import org.openide.util.Exceptions;
 
 /**
  * A wrapper class for a goldstandard on the filesystem.
@@ -44,7 +44,7 @@ public class GoldStandard extends RepositoryObject implements IGoldStandard {
      *
      * @see {@link Clustering}
      */
-    protected Clustering clustering;
+    protected IClustering clustering;
 
     /**
      * Instantiates a new goldstandard object.
@@ -193,17 +193,22 @@ public class GoldStandard extends RepositoryObject implements IGoldStandard {
                     }
                 }
             }
-
-            this.clustering = new Clustering(this.repository,
-                    this.absPath.lastModified(), this.absPath);
+            Class c = repository.getLookup().lookup(IClustering.class).getClass();
+            clustering = (IClustering) c.newInstance();
+            clustering.init(this.repository, this.absPath.lastModified(), this.absPath);
             for (String clusterId : clusterMap.keySet()) {
                 this.clustering.addCluster(clusterMap.get(clusterId));
             }
             return true;
-        } catch (Exception e) {
+        } catch (IOException | NumberFormatException | UnknownGoldStandardFormatException e) {
             e.printStackTrace();
             throw new UnknownGoldStandardFormatException(e.getMessage());
+        } catch (InstantiationException ex) {
+            Exceptions.printStackTrace(ex);
+        } catch (IllegalAccessException ex) {
+            Exceptions.printStackTrace(ex);
         }
+        return false;
     }
 
     /**

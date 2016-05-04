@@ -10,16 +10,16 @@
  ***************************************************************************** */
 package de.clusteval.cluster.quality;
 
+import de.clusteval.api.Matrix;
 import de.clusteval.api.cluster.ClustEvalValue;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.api.cluster.ClusteringEvaluationParameters;
 import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.data.IDataConfig;
+import de.clusteval.api.data.RelativeDataSet;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.data.dataset.RelativeDataSet;
-import de.wiwie.wiutils.utils.SimilarityMatrix;
 import java.io.File;
 import java.util.HashSet;
 import java.util.Map;
@@ -72,7 +72,7 @@ public class SilhouetteValueClusteringQualityMeasure extends ClusteringQualityMe
         RelativeDataSet dataSet = (RelativeDataSet) (dataConfig
                 .getDatasetConfig().getDataSet().getInStandardFormat());
 
-        SimilarityMatrix simMatrix = dataSet.getDataSetContent();
+        Matrix simMatrix = dataSet.getDataSetContent();
 
         double result = 0.0;
 
@@ -84,7 +84,7 @@ public class SilhouetteValueClusteringQualityMeasure extends ClusteringQualityMe
         return ClustEvalValue.getForDouble(result);
     }
 
-    private double getQualityOfDatum(final SimilarityMatrix simMatrix,
+    private double getQualityOfDatum(final Matrix simMatrix,
             final IClustering clustering, final ClusterItem item) {
         Set<Cluster> ownClusters = item.getFuzzyClusters().keySet();
         Set<Cluster> otherClusters = new HashSet<>(clustering.getClusters());
@@ -112,7 +112,7 @@ public class SilhouetteValueClusteringQualityMeasure extends ClusteringQualityMe
     }
 
     private double getAverageDissimilarityToFuzzyClusters(
-            final SimilarityMatrix simMatrix, final ClusterItem item,
+            final Matrix simMatrix, final ClusterItem item,
             final Set<Cluster> clusters) {
         double result = 0.0;
 
@@ -124,7 +124,7 @@ public class SilhouetteValueClusteringQualityMeasure extends ClusteringQualityMe
     }
 
     private double getAverageDissimilarityToFuzzyCluster(
-            final SimilarityMatrix simMatrix, final ClusterItem item,
+            final Matrix simMatrix, final ClusterItem item,
             final Cluster fuzzyCluster) {
         double result = 0.0;
 

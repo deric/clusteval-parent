@@ -10,6 +10,8 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset;
 
+import de.clusteval.api.data.DataSetAttributeFilterer;
+import de.clusteval.api.data.RelativeDataSet;
 import ch.qos.logback.classic.Level;
 import de.clusteval.api.Precision;
 import de.clusteval.api.data.DataSetFormat;
@@ -49,11 +51,11 @@ import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
-import de.clusteval.data.DataConfig;
+import de.clusteval.api.data.DataConfig;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
-import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
-import de.clusteval.data.dataset.format.ConversionStandardToInputConfiguration;
+import de.clusteval.api.data.InputToStd;
+import de.clusteval.api.data.StdToInput;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
 import de.clusteval.framework.ClustevalBackendServer;
@@ -956,18 +958,17 @@ public class DataSetTest extends AbstractClustEvalTest {
                         .getAbsoluteFile());
 
         IDataSet standard = ((DataSet) this.repositoryObject)
-                .preprocessAndConvertTo(
-                        context,
+                .preprocessAndConvertTo(context,
                         DataSetFormat.parseFromString(getRepository(),
                                 "SimMatrixDataSetFormat"),
-                        new ConversionInputToStandardConfiguration(
+                        new InputToStd(
                                 DistanceMeasure.parseFromString(
                                         getRepository(),
                                         "EuclidianDistanceMeasure"),
                                 Precision.DOUBLE,
                                 new ArrayList<>(),
                                 new ArrayList<>()),
-                        new ConversionStandardToInputConfiguration());
+                        new StdToInput());
         Assert.assertFalse(standard.isInMemory());
         standard.loadIntoMemory();
         Assert.assertTrue(standard.isInMemory());
@@ -1052,18 +1053,17 @@ public class DataSetTest extends AbstractClustEvalTest {
                                 "testCaseRepository/data/datasets/rowSimTest/rowSimTestFile.sim")
                         .getAbsoluteFile());
         RelativeDataSet standard = (RelativeDataSet) ((DataSet) this.repositoryObject)
-                .preprocessAndConvertTo(
-                        context,
+                .preprocessAndConvertTo(context,
                         DataSetFormat.parseFromString(getRepository(),
                                 "SimMatrixDataSetFormat"),
-                        new ConversionInputToStandardConfiguration(
+                        new InputToStd(
                                 DistanceMeasure.parseFromString(
                                         getRepository(),
                                         "EuclidianDistanceMeasure"),
                                 Precision.DOUBLE,
                                 new ArrayList<>(),
                                 new ArrayList<>()),
-                        new ConversionStandardToInputConfiguration());
+                        new StdToInput());
         standard.loadIntoMemory();
         SimilarityMatrix simMatrix = standard.getDataSetContent();
         double[][] sims = new double[][]{new double[]{1.0, 0.6, 0.5},
@@ -1151,18 +1151,17 @@ public class DataSetTest extends AbstractClustEvalTest {
                                 "testCaseRepository/data/datasets/DS1/Zachary_karate_club_similarities.txt")
                         .getAbsoluteFile());
         IDataSet standard = ((DataSet) this.repositoryObject)
-                .preprocessAndConvertTo(
-                        context,
+                .preprocessAndConvertTo(context,
                         DataSetFormat.parseFromString(getRepository(),
                                 "SimMatrixDataSetFormat"),
-                        new ConversionInputToStandardConfiguration(
+                        new InputToStd(
                                 DistanceMeasure.parseFromString(
                                         getRepository(),
                                         "EuclidianDistanceMeasure"),
                                 Precision.DOUBLE,
                                 new ArrayList<>(),
                                 new ArrayList<>()),
-                        new ConversionStandardToInputConfiguration());
+                        new StdToInput());
         standard.loadIntoMemory();
         Assert.assertTrue(standard.isInMemory());
         standard.unloadFromMemory();
@@ -1212,18 +1211,17 @@ public class DataSetTest extends AbstractClustEvalTest {
                 .getStaticObjectWithName(DataSet.class,
                         "nora_cancer/all_expression_spearman.txt").clone();
         IDataSet newDataSet = ((DataSet) this.repositoryObject)
-                .preprocessAndConvertTo(
-                        context,
+                .preprocessAndConvertTo(context,
                         DataSetFormat.parseFromString(getRepository(),
                                 "SimMatrixDataSetFormat"),
-                        new ConversionInputToStandardConfiguration(
+                        new InputToStd(
                                 DistanceMeasure.parseFromString(
                                         getRepository(),
                                         "EuclidianDistanceMeasure"),
                                 Precision.DOUBLE,
                                 new ArrayList<>(),
                                 new ArrayList<>()),
-                        new ConversionStandardToInputConfiguration());
+                        new StdToInput());
         Assert.assertEquals(this.repositoryObject.getAbsolutePath(),
                 newDataSet.getAbsolutePath());
         /*
@@ -1233,17 +1231,16 @@ public class DataSetTest extends AbstractClustEvalTest {
                 .getRepository()
                 .getStaticObjectWithName(DataSet.class,
                         "nora_cancer/all_expression_spearman.txt").clone();
-        newDataSet = ((DataSet) this.repositoryObject).preprocessAndConvertTo(
-                context,
+        newDataSet = ((DataSet) this.repositoryObject).preprocessAndConvertTo(context,
                 DataSetFormat.parseFromString(getRepository(),
                         "APRowSimDataSetFormat"),
-                new ConversionInputToStandardConfiguration(DistanceMeasure
+                new InputToStd(DistanceMeasure
                         .parseFromString(getRepository(),
                                 "EuclidianDistanceMeasure"),
                         Precision.DOUBLE,
                         new ArrayList<>(),
                         new ArrayList<>()),
-                new ConversionStandardToInputConfiguration());
+                new StdToInput());
 
         /*
          * convertTo(SimMatrixDataSetFormat) is a special case
@@ -1252,17 +1249,16 @@ public class DataSetTest extends AbstractClustEvalTest {
                 .getRepository()
                 .getStaticObjectWithName(DataSet.class,
                         "rowSimTest/rowSimTestFile.sim").clone();
-        ((DataSet) this.repositoryObject).preprocessAndConvertTo(
-                context,
+        ((DataSet) this.repositoryObject).preprocessAndConvertTo(context,
                 DataSetFormat.parseFromString(getRepository(),
                         "SimMatrixDataSetFormat"),
-                new ConversionInputToStandardConfiguration(DistanceMeasure
+                new InputToStd(DistanceMeasure
                         .parseFromString(getRepository(),
                                 "EuclidianDistanceMeasure"),
                         Precision.DOUBLE,
                         new ArrayList<>(),
                         new ArrayList<>()),
-                new ConversionStandardToInputConfiguration());
+                new StdToInput());
         Assert.assertTrue(new File(
                 "testCaseRepository/data/datasets/rowSimTest/rowSimTestFile.sim.strip.SimMatrix")
                 .getAbsoluteFile().exists());
@@ -1274,17 +1270,16 @@ public class DataSetTest extends AbstractClustEvalTest {
                 .getRepository()
                 .getStaticObjectWithName(DataSet.class,
                         "rowSimTest/rowSimTestFile.sim").clone();
-        ((DataSet) this.repositoryObject).preprocessAndConvertTo(
-                context,
+        ((DataSet) this.repositoryObject).preprocessAndConvertTo(context,
                 DataSetFormat.parseFromString(getRepository(),
                         "APRowSimDataSetFormat"),
-                new ConversionInputToStandardConfiguration(DistanceMeasure
+                new InputToStd(DistanceMeasure
                         .parseFromString(getRepository(),
                                 "EuclidianDistanceMeasure"),
                         Precision.DOUBLE,
                         new ArrayList<>(),
                         new ArrayList<>()),
-                new ConversionStandardToInputConfiguration());
+                new StdToInput());
         Assert.assertTrue(new File(
                 "testCaseRepository/data/datasets/rowSimTest/rowSimTestFile.sim.strip.APRowSim")
                 .getAbsoluteFile().exists());
@@ -1338,17 +1333,16 @@ public class DataSetTest extends AbstractClustEvalTest {
                         new File(
                                 "testCaseRepository/data/datasets/sfld/sfld_brown_et_al_amidohydrolases_protein_similarities_for_beh.txt")
                         .getAbsoluteFile());
-        ((DataSet) this.repositoryObject).preprocessAndConvertTo(
-                context,
+        ((DataSet) this.repositoryObject).preprocessAndConvertTo(context,
                 DataSetFormat.parseFromString(getRepository(),
                         "MatrixDataSetFormat"),
-                new ConversionInputToStandardConfiguration(DistanceMeasure
+                new InputToStd(DistanceMeasure
                         .parseFromString(getRepository(),
                                 "EuclidianDistanceMeasure"),
                         Precision.DOUBLE,
                         new ArrayList<>(),
                         new ArrayList<>()),
-                new ConversionStandardToInputConfiguration());
+                new StdToInput());
     }
 
     /**
@@ -1440,9 +1434,8 @@ public class DataSetTest extends AbstractClustEvalTest {
                 .setAbsolutePath(new File(
                         "testCaseRepository/data/datasets/rowSimTest/rowSimTestFile.sim.strip")
                         .getAbsoluteFile());
-        ((DataSet) this.repositoryObject).convertToStandardDirectly(
-                context,
-                new ConversionInputToStandardConfiguration(DistanceMeasure
+        ((DataSet) this.repositoryObject).convertToStandardDirectly(context,
+                new InputToStd(DistanceMeasure
                         .parseFromString(getRepository(),
                                 "EuclidianDistanceMeasure"),
                         Precision.DOUBLE,
@@ -1534,9 +1527,8 @@ public class DataSetTest extends AbstractClustEvalTest {
                 .setAbsolutePath(new File(
                         "testCaseRepository/data/datasets/rowSimTest/rowSimTestFile.sim.strip")
                         .getAbsoluteFile());
-        ((DataSet) this.repositoryObject).convertToStandardDirectly(
-                context,
-                new ConversionInputToStandardConfiguration(DistanceMeasure
+        ((DataSet) this.repositoryObject).convertToStandardDirectly(context,
+                new InputToStd(DistanceMeasure
                         .parseFromString(getRepository(),
                                 "EuclidianDistanceMeasure"),
                         Precision.DOUBLE,
@@ -1583,18 +1575,17 @@ public class DataSetTest extends AbstractClustEvalTest {
                                 "testCaseRepository/data/datasets/bone_marrow_gene_expr/ALB_ALT_AML.1000genes.res.out2")
                         .getAbsoluteFile());
         IDataSet newDataSet = ((IDataSet) this.repositoryObject)
-                .preprocessAndConvertTo(
-                        context,
+                .preprocessAndConvertTo(context,
                         DataSetFormat.parseFromString(getRepository(),
                                 "MatrixDataSetFormat"),
-                        new ConversionInputToStandardConfiguration(
+                        new InputToStd(
                                 DistanceMeasure.parseFromString(
                                         getRepository(),
                                         "EuclidianDistanceMeasure"),
                                 Precision.DOUBLE,
                                 new ArrayList<>(),
                                 new ArrayList<>()),
-                        new ConversionStandardToInputConfiguration());
+                        new StdToInput());
         Assert.assertEquals("MatrixDataSetFormat", newDataSet
                 .getDataSetFormat().getClass().getSimpleName());
         Assert.assertEquals(context.getStandardInputFormat().getClass()
@@ -1638,17 +1629,16 @@ public class DataSetTest extends AbstractClustEvalTest {
                                 "testCaseRepository/data/datasets/bone_marrow_gene_expr/ALB_ALT_AML.1000genes.res.out2.SimMatrix")
                         .getAbsoluteFile());
         IDataSet newDataSet = ((IDataSet) this.repositoryObject)
-                .preprocessAndConvertTo(
-                        context,
+                .preprocessAndConvertTo(context,
                         context.getStandardInputFormat(),
-                        new ConversionInputToStandardConfiguration(
+                        new InputToStd(
                                 DistanceMeasure.parseFromString(
                                         getRepository(),
                                         "EuclidianDistanceMeasure"),
                                 Precision.DOUBLE,
                                 new ArrayList<>(),
                                 new ArrayList<>()),
-                        new ConversionStandardToInputConfiguration());
+                        new StdToInput());
         Assert.assertEquals(context.getStandardInputFormat().getClass()
                 .getSimpleName(), newDataSet.getDataSetFormat().getClass()
                 .getSimpleName());
@@ -1673,15 +1663,14 @@ public class DataSetTest extends AbstractClustEvalTest {
         IDataSet ds = dataConfig.getDatasetConfig().getDataSet();
         IDataSetFormat internal = DataSetFormat.parseFromString(getRepository(),
                 "SimMatrixDataSetFormat");
-        ds = ds.preprocessAndConvertTo(
-                context,
+        ds = ds.preprocessAndConvertTo(context,
                 internal,
-                new ConversionInputToStandardConfiguration(DistanceMeasure
+                new InputToStd(DistanceMeasure
                         .parseFromString(getRepository(),
                                 "EuclidianDistanceMeasure"),
                         Precision.DOUBLE,
                         new ArrayList<>(),
                         new ArrayList<>()),
-                new ConversionStandardToInputConfiguration());
+                new StdToInput());
     }
 }

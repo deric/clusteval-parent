@@ -8,18 +8,16 @@
  * Contributors:
  *     Christian Wiwie - initial API and implementation
  ***************************************************************************** */
-package de.clusteval.data.goldstandard;
+package de.clusteval.api.data;
 
-import de.clusteval.api.data.IGoldStandard;
-import de.clusteval.api.data.IGoldStandardConfig;
 import de.clusteval.api.exceptions.RepositoryObjectDumpException;
-import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.repository.DumpableRepositoryObject;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RepositoryEvent;
 import de.clusteval.api.repository.RepositoryMoveEvent;
 import de.clusteval.api.repository.RepositoryRemoveEvent;
 import de.clusteval.api.repository.RepositoryReplaceEvent;
-import de.clusteval.framework.repository.DumpableRepositoryObject;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;

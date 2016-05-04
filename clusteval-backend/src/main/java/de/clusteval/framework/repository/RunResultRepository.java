@@ -12,31 +12,38 @@
  */
 package de.clusteval.framework.repository;
 
+import de.clusteval.api.ClusteringEvaluation;
+import de.clusteval.api.IContext;
+import de.clusteval.api.IDistanceMeasure;
+import de.clusteval.data.dataset.DataSet;
+import de.clusteval.api.data.IDataPreprocessor;
+import de.clusteval.api.data.IDataRandomizer;
+import de.clusteval.api.data.IDataSetFormat;
+import de.clusteval.api.data.IDataSetGenerator;
+import de.clusteval.api.data.IDataSetType;
 import de.clusteval.api.exceptions.DatabaseConnectException;
+import de.clusteval.api.opt.IParameterOptimizationMethod;
+import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.r.IRProgram;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.repository.DynamicRepositoryEntityMap;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.StaticRepositoryEntity;
 import de.clusteval.api.repository.StaticRepositoryEntityMap;
+import de.clusteval.api.run.IRunResultFormat;
+import de.clusteval.api.run.IRunResultPostprocessor;
+import de.clusteval.api.stats.IDataStatistic;
+import de.clusteval.api.stats.IRunDataStatistic;
+import de.clusteval.api.stats.IRunStatistic;
 import de.clusteval.cluster.Clustering;
-import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
-import de.clusteval.cluster.quality.ClusteringQualityMeasure;
-import de.clusteval.api.AbsContext;
-import de.clusteval.data.DataConfig;
-import de.clusteval.data.dataset.DataSet;
-import de.clusteval.data.dataset.DataSetConfig;
+import de.clusteval.api.data.DataConfig;
+import de.clusteval.api.data.DataSetConfig;
 import de.clusteval.data.dataset.DataSetRegisterException;
-import de.clusteval.api.data.DataSetFormat;
-import de.clusteval.data.dataset.generator.DataSetGenerator;
-import de.clusteval.data.dataset.type.DataSetType;
-import de.clusteval.api.data.DistanceMeasure;
-import de.clusteval.data.goldstandard.GoldStandard;
-import de.clusteval.data.goldstandard.GoldStandardConfig;
+import de.clusteval.api.data.GoldStandard;
+import de.clusteval.api.data.GoldStandardConfig;
 import de.clusteval.data.preprocessing.DataPreprocessor;
 import de.clusteval.data.randomizer.DataRandomizer;
-import de.clusteval.data.statistics.DataStatistic;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
 import de.clusteval.framework.repository.db.RunResultSQLCommunicator;
@@ -49,18 +56,15 @@ import de.clusteval.program.IntegerProgramParameter;
 import de.clusteval.program.Program;
 import de.clusteval.program.ProgramConfig;
 import de.clusteval.program.StringProgramParameter;
-import de.clusteval.program.r.RProgram;
 import de.clusteval.run.Run;
 import de.clusteval.run.result.RunResult;
-import de.clusteval.api.run.RunResultFormat;
 import de.clusteval.run.result.postprocessing.RunResultPostprocessor;
-import de.clusteval.run.statistics.RunDataStatistic;
 import de.clusteval.run.statistics.RunStatistic;
+import de.clusteval.utils.FileUtils;
 import de.clusteval.utils.Finder;
 import de.clusteval.utils.NamedDoubleAttribute;
 import de.clusteval.utils.NamedIntegerAttribute;
 import de.clusteval.utils.NamedStringAttribute;
-import de.clusteval.utils.FileUtils;
 import java.io.FileNotFoundException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -201,60 +205,60 @@ public class RunResultRepository extends Repository implements IRepository {
                                 .get(StringProgramParameter.class)
                               : null, null));
 
-        this.dynamicRepositoryEntities.put(DistanceMeasure.class,
+        this.dynamicRepositoryEntities.put(IDistanceMeasure.class,
                 this.parent.getDynamicEntities()
-                .get(DistanceMeasure.class));
+                .get(IDistanceMeasure.class));
 
-        this.dynamicRepositoryEntities.put(DataSetGenerator.class,
+        this.dynamicRepositoryEntities.put(IDataSetGenerator.class,
                 this.parent.getDynamicEntities()
-                .get(DataSetGenerator.class));
+                .get(IDataSetGenerator.class));
 
         this.dynamicRepositoryEntities
-                .put(DataRandomizer.class,
+                .put(IDataRandomizer.class,
                         this.parent.getDynamicEntities()
                         .get(DataRandomizer.class));
 
-        this.dynamicRepositoryEntities.put(DataPreprocessor.class,
+        this.dynamicRepositoryEntities.put(IDataPreprocessor.class,
                 this.parent.getDynamicEntities()
                 .get(DataPreprocessor.class));
 
-        this.dynamicRepositoryEntities.put(RunResultPostprocessor.class,
+        this.dynamicRepositoryEntities.put(IRunResultPostprocessor.class,
                 this.parent.getDynamicEntities()
                 .get(RunResultPostprocessor.class));
 
-        this.dynamicRepositoryEntities.put(DataStatistic.class,
-                this.parent.getDynamicEntities().get(DataStatistic.class));
+        this.dynamicRepositoryEntities.put(IDataStatistic.class,
+                this.parent.getDynamicEntities().get(IDataStatistic.class));
 
         this.dynamicRepositoryEntities.put(RunStatistic.class,
-                this.parent.getDynamicEntities().get(RunStatistic.class));
+                this.parent.getDynamicEntities().get(IRunStatistic.class));
 
-        this.dynamicRepositoryEntities.put(RunDataStatistic.class,
+        this.dynamicRepositoryEntities.put(IRunDataStatistic.class,
                 this.parent.getDynamicEntities()
-                .get(RunDataStatistic.class));
+                .get(IRunDataStatistic.class));
 
-        this.dynamicRepositoryEntities.put(ClusteringQualityMeasure.class,
+        this.dynamicRepositoryEntities.put(ClusteringEvaluation.class,
                 this.parent.getDynamicEntities()
-                .get(ClusteringQualityMeasure.class));
+                .get(ClusteringEvaluation.class));
 
-        this.dynamicRepositoryEntities.put(RProgram.class,
-                this.parent.getDynamicEntities().get(RProgram.class));
+        this.dynamicRepositoryEntities.put(IRProgram.class,
+                this.parent.getDynamicEntities().get(IRProgram.class));
 
-        this.dynamicRepositoryEntities.put(AbsContext.class,
-                this.parent.getDynamicEntities().get(AbsContext.class));
+        this.dynamicRepositoryEntities.put(IContext.class,
+                this.parent.getDynamicEntities().get(IContext.class));
 
-        this.dynamicRepositoryEntities.put(ParameterOptimizationMethod.class,
+        this.dynamicRepositoryEntities.put(IParameterOptimizationMethod.class,
                 this.parent.getDynamicEntities()
-                .get(ParameterOptimizationMethod.class));
+                .get(IParameterOptimizationMethod.class));
 
-        this.dynamicRepositoryEntities.put(DataSetType.class,
-                this.parent.getDynamicEntities().get(DataSetType.class));
+        this.dynamicRepositoryEntities.put(IDataSetType.class,
+                this.parent.getDynamicEntities().get(IDataSetType.class));
 
-        this.dynamicRepositoryEntities.put(DataSetFormat.class,
-                this.parent.getDynamicEntities().get(DataSetFormat.class));
+        this.dynamicRepositoryEntities.put(IDataSetFormat.class,
+                this.parent.getDynamicEntities().get(IDataSetFormat.class));
 
-        this.dynamicRepositoryEntities.put(RunResultFormat.class,
+        this.dynamicRepositoryEntities.put(IRunResultFormat.class,
                 this.parent.getDynamicEntities()
-                .get(RunResultFormat.class));
+                .get(IRunResultFormat.class));
 
         this.goldStandardFormats = new ConcurrentHashMap<>();
 

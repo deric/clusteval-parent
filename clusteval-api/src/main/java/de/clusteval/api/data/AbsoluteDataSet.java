@@ -8,34 +8,37 @@
  * Contributors:
  *     Christian Wiwie - initial API and implementation
  ***************************************************************************** */
-package de.clusteval.data.dataset;
+package de.clusteval.api.data;
 
 import de.clusteval.api.Precision;
-import de.clusteval.api.data.IDataSet;
-import de.clusteval.api.data.IDataSetType;
-import de.clusteval.api.data.RelativeDataSetFormat;
-import de.clusteval.api.data.WEBSITE_VISIBILITY;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.IRepository;
-import de.wiwie.wiutils.utils.SimilarityMatrix;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
 /**
- * A relative dataset contains data in terms of pairwise similarities or
- * distances between object pairs. From these no absolute coordinates of the
- * objects can be deduced. Thus a relative dataset can never be converted to an
- * absolute dataset (lossfree).
+ *
+ * An absolute dataset contains data in terms of absolute coordinates, that
+ * means similarities between object pairs can be calculated by looking at the
+ * absolute coordinates of two objects.
  *
  * @author Christian Wiwie
  *
  */
-public class RelativeDataSet extends DataSet implements IDataSet {
+public class AbsoluteDataSet extends DataSet {
 
-    private SimilarityMatrix similarities;
+    /**
+     * This variable holds the contents of the dataset, after
+     * {@link #loadIntoMemory()} and before {@link #unloadFromMemory()} was
+     * invoked.
+     * <p>
+     * For absolute datasets the stored data are absolute coordinates. These are
+     * stored in a matrix form (see {@link DataMatrix}).
+     */
+    private DataMatrix dataMatrix;
 
     /**
      *
@@ -45,10 +48,10 @@ public class RelativeDataSet extends DataSet implements IDataSet {
      *                          Whether this dataset should be registered in the repository.
      * @param changeDate
      *                          The change date of this dataset is used for equality checks.
-     * @param absPath
-     *                          The absolute path of this dataset.
      * @param alias
      *                          A short alias name for this data set.
+     * @param absPath
+     *                          The absolute path of this dataset.
      * @param dsFormat
      *                          The format of this dataset.
      * @param dsType
@@ -56,19 +59,20 @@ public class RelativeDataSet extends DataSet implements IDataSet {
      * @param websiteVisibility
      * @throws RegisterException
      */
-    public RelativeDataSet(IRepository repository, final boolean register,
+    public AbsoluteDataSet(IRepository repository, final boolean register,
             long changeDate, File absPath, final String alias,
-            RelativeDataSetFormat dsFormat, IDataSetType dsType,
+            AbsoluteDataSetFormat dsFormat, IDataSetType dsType,
             final WEBSITE_VISIBILITY websiteVisibility)
             throws RegisterException {
-        super(repository, register, changeDate, absPath, alias, dsFormat, dsType, websiteVisibility);
+        super(repository, register, changeDate, absPath, alias, dsFormat,
+                dsType, websiteVisibility);
     }
 
     /**
      * @param dataset
      * @throws RegisterException
      */
-    public RelativeDataSet(RelativeDataSet dataset) throws RegisterException {
+    public AbsoluteDataSet(AbsoluteDataSet dataset) throws RegisterException {
         super(dataset);
     }
 
@@ -78,9 +82,9 @@ public class RelativeDataSet extends DataSet implements IDataSet {
      * @see data.dataset.DataSet#clone()
      */
     @Override
-    public RelativeDataSet clone() {
+    public AbsoluteDataSet clone() {
         try {
-            return new RelativeDataSet(this);
+            return new AbsoluteDataSet(this);
         } catch (RegisterException e) {
             e.printStackTrace();
             // should not occur
@@ -91,25 +95,26 @@ public class RelativeDataSet extends DataSet implements IDataSet {
     /*
      * (non-Javadoc)
      *
-     * @see data.dataset.DataSet#getDataSetFormat()
+     * @see data.dataset.DataSet#loadIntoMemory()
      */
     @Override
-    public RelativeDataSetFormat getDataSetFormat() {
-        return (RelativeDataSetFormat) super.getDataSetFormat();
+    public boolean loadIntoMemory(Precision precision)
+            throws IllegalArgumentException, IOException,
+                   InvalidDataSetFormatVersionException {
+        if (!isInMemory()) {
+            this.dataMatrix = this.getDataSetFormat().parse(this, precision);
+        }
+        return true;
     }
 
     /*
      * (non-Javadoc)
      *
-     * @see data.dataset.DataSet#loadIntoMemory()
+     * @see data.dataset.DataSet#getDataSetContent()
      */
     @Override
-    public boolean loadIntoMemory(Precision precision) throws IllegalArgumentException, IOException,
-                                                              InvalidDataSetFormatVersionException {
-        if (!isInMemory()) {
-            this.similarities = (SimilarityMatrix) this.getDataSetFormat().parse(this, precision);
-        }
-        return true;
+    public DataMatrix getDataSetContent() {
+        return this.dataMatrix;
     }
 
     /*
@@ -120,11 +125,11 @@ public class RelativeDataSet extends DataSet implements IDataSet {
      */
     @Override
     public boolean setDataSetContent(Object newContent) {
-        if (!(newContent instanceof SimilarityMatrix)) {
+        if (!(newContent instanceof DataMatrix)) {
             return false;
         }
 
-        this.similarities = (SimilarityMatrix) newContent;
+        this.dataMatrix = (DataMatrix) newContent;
         return true;
     }
 
@@ -135,17 +140,7 @@ public class RelativeDataSet extends DataSet implements IDataSet {
      */
     @Override
     public boolean isInMemory() {
-        return this.similarities != null;
-    }
-
-    /*
-     * (non-Javadoc)
-     *
-     * @see data.dataset.DataSet#getDataSetContent()
-     */
-    @Override
-    public SimilarityMatrix getDataSetContent() {
-        return this.similarities;
+        return this.dataMatrix != null;
     }
 
     /*
@@ -155,8 +150,18 @@ public class RelativeDataSet extends DataSet implements IDataSet {
      */
     @Override
     public boolean unloadFromMemory() {
-        this.similarities = null;
+        this.dataMatrix = null;
         return true;
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see data.dataset.DataSet#getDataSetFormat()
+     */
+    @Override
+    public AbsoluteDataSetFormat getDataSetFormat() {
+        return (AbsoluteDataSetFormat) super.getDataSetFormat();
     }
 
     /*
@@ -166,11 +171,6 @@ public class RelativeDataSet extends DataSet implements IDataSet {
      */
     @Override
     public List<String> getIds() {
-        String[] result = new String[this.similarities.getIds().size()];
-        for (String id : this.similarities.getIds().keySet()) {
-            result[this.similarities.getIds().get(id)] = id;
-        }
-        return Arrays.asList(result);
+        return Arrays.asList(this.dataMatrix.getIds());
     }
-
 }

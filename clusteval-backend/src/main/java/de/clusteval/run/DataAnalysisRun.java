@@ -17,7 +17,7 @@ import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.IRunRunnable;
 import de.clusteval.api.run.IScheduler;
 import de.clusteval.api.stats.IDataStatistic;
-import de.clusteval.data.DataConfig;
+import de.clusteval.api.data.DataConfig;
 import de.clusteval.framework.threading.RunSchedulerThread;
 import de.clusteval.run.runnable.DataAnalysisRunRunnable;
 import de.clusteval.run.runnable.RunRunnable;

@@ -12,22 +12,21 @@
  */
 package de.clusteval.framework.threading;
 
+import de.clusteval.api.data.DataConfig;
+import de.clusteval.data.dataset.DataSet;
+import de.clusteval.api.data.DataSetConfig;
 import de.clusteval.api.data.DataSetFormat;
 import de.clusteval.api.data.DistanceMeasure;
+import de.clusteval.api.data.GoldStandardConfig;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.RunResultFormat;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethodFinderThread;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
-import de.clusteval.data.DataConfig;
 import de.clusteval.data.DataConfigFinderThread;
-import de.clusteval.data.dataset.DataSet;
-import de.clusteval.data.dataset.DataSetConfig;
 import de.clusteval.data.dataset.DataSetConfigFinderThread;
 import de.clusteval.data.dataset.DataSetFinderThread;
 import de.clusteval.data.dataset.generator.DataSetGenerator;
 import de.clusteval.data.dataset.generator.DataSetGeneratorFinderThread;
-import de.clusteval.data.dataset.type.DataSetType;
-import de.clusteval.data.goldstandard.GoldStandardConfig;
 import de.clusteval.data.goldstandard.GoldStandardConfigFinderThread;
 import de.clusteval.data.preprocessing.DataPreprocessorFinderThread;
 import de.clusteval.data.randomizer.DataRandomizerFinderThread;
@@ -53,12 +52,6 @@ import java.util.Map;
  * detail threads of the following type are created, started and kept alive:
  *
  * <ul>
- * <li><b>DataSetFormatFinderThread</b>: A thread which checks
- * {@link IRepository#dataSetFormatBasePath} for new dataset formats (see
- * {@link DataSetFormat}).</li>
- * <li><b>DataSetTypeFinderThread</b>: A thread which checks
- * {@link IRepository#dataSetTypeBasePath} for new dataset types (see
- * {@link DataSetType}).</li>
  * <li><b>DataSetFinderThread</b>: A thread which checks
  * {@link IRepository#basePath} for new datasets (see {@link DataSet}).</li>
  * <li><b>DistanceMeasureFinderThread</b>: A thread which checks

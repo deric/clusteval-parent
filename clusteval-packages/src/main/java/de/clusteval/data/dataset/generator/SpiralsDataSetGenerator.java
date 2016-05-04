@@ -17,7 +17,7 @@ import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RLibraryRequirement;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.data.goldstandard.GoldStandard;
+import de.clusteval.api.data.GoldStandard;
 import de.clusteval.utils.FileUtils;
 import java.io.BufferedWriter;
 import java.io.File;

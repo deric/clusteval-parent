@@ -12,14 +12,14 @@
  */
 package de.clusteval.utils;
 
-import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.repository.IRepository;
 
 /**
  * @author Christian Wiwie
  *
  */
-public class NamedStringAttribute extends NamedAttribute<String> {
+public class NamedDoubleAttribute extends NamedAttribute<Double> {
 
     /**
      * @param repository
@@ -27,8 +27,8 @@ public class NamedStringAttribute extends NamedAttribute<String> {
      * @param value
      * @throws RegisterException
      */
-    public NamedStringAttribute(final IRepository repository, final String name,
-            final String value) throws RegisterException {
+    public NamedDoubleAttribute(final IRepository repository, final String name,
+            final Double value) throws RegisterException {
         super(repository, name, value);
         this.register();
     }
@@ -39,7 +39,7 @@ public class NamedStringAttribute extends NamedAttribute<String> {
      * @param other The object to clone.
      * @throws RegisterException
      */
-    public NamedStringAttribute(final NamedStringAttribute other)
+    public NamedDoubleAttribute(final NamedDoubleAttribute other)
             throws RegisterException {
         super(other);
     }
@@ -50,7 +50,7 @@ public class NamedStringAttribute extends NamedAttribute<String> {
      * @see de.wiwie.wiutils.utils.NamedAttribute#cloneValue(java.lang.Object)
      */
     @Override
-    public String cloneValue(String value) {
+    public Double cloneValue(Double value) {
         return value;
     }
 
@@ -60,9 +60,9 @@ public class NamedStringAttribute extends NamedAttribute<String> {
      * @see framework.repository.RepositoryObject#clone()
      */
     @Override
-    public NamedStringAttribute clone() {
+    public NamedDoubleAttribute clone() {
         try {
-            return new NamedStringAttribute(this);
+            return new NamedDoubleAttribute(this);
         } catch (RegisterException e) {
             // should not occur
             e.printStackTrace();
@@ -70,13 +70,14 @@ public class NamedStringAttribute extends NamedAttribute<String> {
         return null;
     }
 
-
     /* (non-Javadoc)
      * @see de.clusteval.framework.repository.RepositoryObject#register()
      */
     @Override
     public boolean register() throws RegisterException {
-        return this.repository.register(this);
+        this.repository.lookupAdd(this);
+        return true;
+        //return this.repository.register(this);
     }
 
     /* (non-Javadoc)

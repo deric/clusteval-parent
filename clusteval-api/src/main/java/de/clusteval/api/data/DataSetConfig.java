@@ -10,21 +10,16 @@
  *     Christian Wiwie - initial API and implementation
  *****************************************************************************
  */
-package de.clusteval.data.dataset;
+package de.clusteval.api.data;
 
-import de.clusteval.api.data.IDataPreprocessor;
-import de.clusteval.api.data.IDataSet;
-import de.clusteval.api.data.IDataSetConfig;
 import de.clusteval.api.exceptions.RepositoryObjectDumpException;
-import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.repository.DumpableRepositoryObject;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RepositoryEvent;
 import de.clusteval.api.repository.RepositoryMoveEvent;
 import de.clusteval.api.repository.RepositoryRemoveEvent;
 import de.clusteval.api.repository.RepositoryReplaceEvent;
-import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
-import de.clusteval.data.dataset.format.ConversionStandardToInputConfiguration;
-import de.clusteval.framework.repository.DumpableRepositoryObject;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -62,14 +57,14 @@ public class DataSetConfig extends DumpableRepositoryObject implements IDataSetC
      * converted from its original input format to the internal standard format
      * of the framework.
      */
-    protected ConversionInputToStandardConfiguration configInputToStandard;
+    protected InputToStd configInputToStandard;
 
     /**
      * This variable holds the configuration needed, when {@link #dataset} is
      * converted from the internal standard format of the framework to the input
      * format of a program.
      */
-    protected ConversionStandardToInputConfiguration configStandardToInput;
+    protected StdToInput configStandardToInput;
 
     /**
      * Instantiates a new dataset configuration.
@@ -90,8 +85,8 @@ public class DataSetConfig extends DumpableRepositoryObject implements IDataSetC
      */
     public DataSetConfig(final IRepository repository, final long changeDate,
             final File absPath, final IDataSet ds,
-            final ConversionInputToStandardConfiguration configInputToStandard,
-            final ConversionStandardToInputConfiguration configStandardToInput)
+            final InputToStd configInputToStandard,
+            final StdToInput configStandardToInput)
             throws RegisterException {
         super(repository, false, changeDate, absPath);
 
@@ -231,7 +226,7 @@ public class DataSetConfig extends DumpableRepositoryObject implements IDataSetC
      * @see #configInputToStandard
      */
     @Override
-    public ConversionInputToStandardConfiguration getConversionInputToStandardConfiguration() {
+    public InputToStd getConversionInputToStandardConfiguration() {
         return this.configInputToStandard;
     }
 
@@ -240,7 +235,7 @@ public class DataSetConfig extends DumpableRepositoryObject implements IDataSetC
      *         input format of the clustering method.
      * @see #configStandardToInput
      */
-    public ConversionStandardToInputConfiguration getConversionStandardToInputConfiguration() {
+    public StdToInput getConversionStandardToInputConfiguration() {
         return this.configStandardToInput;
     }
 

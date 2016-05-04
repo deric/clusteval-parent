@@ -12,11 +12,11 @@
  */
 package de.clusteval.utils.parse;
 
-import de.clusteval.data.dataset.DataSetAttributeFilterer;
+import de.clusteval.api.data.DataSetAttributeFilterer;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
 import de.wiwie.wiutils.utils.parse.SimFileMatrixParser;
 import de.wiwie.wiutils.utils.parse.SimFileParser.SIM_FILE_FORMAT;
-import de.wiwie.wiutils.utils.parse.TextFileParser.OUTPUT_MODE;
+import de.clusteval.utils.TextFileParser.OUTPUT_MODE;
 import java.io.File;
 import java.io.IOException;
 import junitx.framework.FileAssert;

@@ -12,16 +12,17 @@
  */
 package de.clusteval.utils.plot;
 
+import de.clusteval.api.Matrix;
+import de.clusteval.api.data.AbsoluteDataSet;
+import de.clusteval.api.data.DataConfig;
+import de.clusteval.api.data.DataMatrix;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataSet;
+import de.clusteval.api.data.RelativeDataSet;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
-import de.clusteval.data.DataConfig;
-import de.clusteval.data.dataset.AbsoluteDataSet;
-import de.clusteval.api.data.DataMatrix;
-import de.clusteval.data.dataset.RelativeDataSet;
 import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.utils.ArraysExt;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
@@ -228,7 +229,7 @@ public abstract class Plotter {
                     if (!wasLoaded) {
                         absStandard.loadIntoMemory();
                     }
-                    SimilarityMatrix dataMatrix;
+                    Matrix dataMatrix;
 
                     try {
                         dataMatrix = absStandard.getDataSetContent();

@@ -2,7 +2,7 @@ package de.wiwie.wiutils.utils.text;
 
 import java.io.IOException;
 
-import de.wiwie.wiutils.utils.parse.TextFileParser;
+import de.clusteval.utils.TextFileParser;
 
 // TODO: Auto-generated Javadoc
 /**

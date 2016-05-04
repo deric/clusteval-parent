@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.wiwie.wiutils.utils.parse.TextFileParser;
+import de.clusteval.utils.TextFileParser;
 
 // TODO: Auto-generated Javadoc
 /**

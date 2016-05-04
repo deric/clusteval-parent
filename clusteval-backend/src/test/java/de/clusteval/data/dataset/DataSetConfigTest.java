@@ -10,6 +10,8 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset;
 
+import de.clusteval.api.data.DataSetConfig;
+import de.clusteval.api.data.RelativeDataSet;
 import de.clusteval.api.Precision;
 import de.clusteval.api.data.DistanceMeasure;
 import de.clusteval.api.data.IDataSet;
@@ -40,8 +42,8 @@ import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationM
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
-import de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration;
-import de.clusteval.data.dataset.format.ConversionStandardToInputConfiguration;
+import de.clusteval.api.data.InputToStd;
+import de.clusteval.api.data.StdToInput;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.data.randomizer.UnknownDataRandomizerException;
 import de.clusteval.framework.repository.parse.Parser;
@@ -495,8 +497,7 @@ public class DataSetConfigTest extends AbstractClustEvalTest {
                         new File(
                                 "testCaseRepository/data/datasets/configs/astral_1.dsconfig")
                         .getAbsoluteFile());
-        Assert.assertEquals(
-                new DataSetConfig(
+        Assert.assertEquals(new DataSetConfig(
                         getRepository(),
                         new File(
                                 "testCaseRepository/data/datasets/configs/astral_1.dsconfig")
@@ -509,14 +510,14 @@ public class DataSetConfigTest extends AbstractClustEvalTest {
                                 new File(
                                         "testCaseRepository/data/datasets/astral_1_161/blastResults.txt")
                                 .getAbsoluteFile()),
-                        new ConversionInputToStandardConfiguration(
+                        new InputToStd(
                                 DistanceMeasure.parseFromString(
                                         getRepository(),
                                         "EuclidianDistanceMeasure"),
                                 Precision.DOUBLE,
                                 new ArrayList<>(),
                                 new ArrayList<>()),
-                        new ConversionStandardToInputConfiguration()), gsConfig);
+                        new StdToInput()), gsConfig);
     }
 
     /**

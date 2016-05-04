@@ -28,7 +28,7 @@ import de.clusteval.api.program.ParameterSet;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RepositoryObject;
-import de.wiwie.wiutils.utils.parse.TextFileParser;
+import de.clusteval.utils.TextFileParser;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -274,6 +274,7 @@ public class Clustering extends RepositoryObject implements Iterable<Cluster>, I
     /**
      * @return A set with all cluster items contained in this clustering.
      */
+    @Override
     public Set<ClusterItem> getClusterItems() {
         return this.itemToCluster.keySet();
     }
@@ -283,6 +284,7 @@ public class Clustering extends RepositoryObject implements Iterable<Cluster>, I
      * @param id The id of the cluster item.
      * @return The cluster item with the given id.
      */
+    @Override
     public ClusterItem getClusterItemWithId(final String id) {
         return this.itemIdToItem.get(id);
     }

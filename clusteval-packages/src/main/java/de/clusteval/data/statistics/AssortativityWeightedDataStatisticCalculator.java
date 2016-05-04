@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.data.statistics;
 
+import de.clusteval.api.Matrix;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataSetConfig;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
@@ -19,9 +20,8 @@ import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RExpr;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.data.dataset.RelativeDataSet;
+import de.clusteval.api.data.RelativeDataSet;
 import de.clusteval.utils.ArraysExt;
-import de.wiwie.wiutils.utils.SimilarityMatrix;
 import java.io.File;
 import java.io.IOException;
 
@@ -78,7 +78,7 @@ public class AssortativityWeightedDataStatisticCalculator
         if (!dataSet.isInMemory()) {
             dataSet.loadIntoMemory();
         }
-        SimilarityMatrix simMatrix = dataSet.getDataSetContent();
+        Matrix simMatrix = dataSet.getDataSetContent();
         if (dataSet.isInMemory()) {
             dataSet.unloadFromMemory();
         }

@@ -14,7 +14,7 @@ import de.clusteval.api.Pair;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.utils.ArraysExt;
-import de.wiwie.wiutils.utils.StringExt;
+import de.clusteval.utils.StringExt;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;

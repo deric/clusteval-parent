@@ -11,21 +11,22 @@
 package de.clusteval.framework.repository.db;
 
 import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
+import de.clusteval.api.AbsContext;
+import de.clusteval.api.data.DataConfig;
+import de.clusteval.data.dataset.DataSet;
+import de.clusteval.api.data.DataSetConfig;
+import de.clusteval.api.data.DataSetFormat;
+import de.clusteval.api.data.GoldStandard;
+import de.clusteval.api.data.GoldStandardConfig;
+import de.clusteval.api.data.IDataSetType;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.IRepositoryObject;
+import de.clusteval.api.repository.RepositoryObject;
+import de.clusteval.api.run.RunResultFormat;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
-import de.clusteval.api.AbsContext;
-import de.clusteval.data.DataConfig;
-import de.clusteval.data.dataset.DataSet;
-import de.clusteval.data.dataset.DataSetConfig;
-import de.clusteval.api.data.DataSetFormat;
-import de.clusteval.data.dataset.type.DataSetType;
-import de.clusteval.data.goldstandard.GoldStandard;
-import de.clusteval.data.goldstandard.GoldStandardConfig;
 import de.clusteval.data.statistics.DataStatistic;
-import de.clusteval.api.repository.RepositoryObject;
 import de.clusteval.program.DoubleProgramParameter;
 import de.clusteval.program.IntegerProgramParameter;
 import de.clusteval.program.Program;
@@ -49,7 +50,6 @@ import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.run.result.RunAnalysisRunResult;
 import de.clusteval.run.result.RunDataAnalysisRunResult;
 import de.clusteval.run.result.RunResult;
-import de.clusteval.api.run.RunResultFormat;
 import de.clusteval.run.statistics.RunDataStatistic;
 import de.clusteval.run.statistics.RunStatistic;
 import de.clusteval.utils.Statistic;
@@ -658,9 +658,9 @@ public abstract class SQLCommunicator_pg {
         } else if (DataSetFormat.class.isAssignableFrom(c)) {
             return this
                     .registerDataSetFormatClass((Class<? extends DataSetFormat>) c);
-        } else if (DataSetType.class.isAssignableFrom(c)) {
+        } else if (IDataSetType.class.isAssignableFrom(c)) {
             return this
-                    .registerDataSetTypeClass((Class<? extends DataSetType>) c);
+                    .registerDataSetTypeClass((Class<? extends IDataSetType>) c);
         } else if (DataStatistic.class.isAssignableFrom(c)) {
             return this
                     .registerDataStatisticClass((Class<? extends DataStatistic>) c);
@@ -690,9 +690,9 @@ public abstract class SQLCommunicator_pg {
         } else if (DataSetFormat.class.isAssignableFrom(c)) {
             return this
                     .unregisterDataSetFormatClass((Class<? extends DataSetFormat>) c);
-        } else if (DataSetType.class.isAssignableFrom(c)) {
+        } else if (IDataSetType.class.isAssignableFrom(c)) {
             return this
-                    .unregisterDataSetTypeClass((Class<? extends DataSetType>) c);
+                    .unregisterDataSetTypeClass((Class<? extends IDataSetType>) c);
         } else if (DataStatistic.class.isAssignableFrom(c)) {
             return this
                     .unregisterDataStatisticClass((Class<? extends DataStatistic>) c);
@@ -769,7 +769,7 @@ public abstract class SQLCommunicator_pg {
             final Class<? extends RunDataStatistic> object);
 
     protected abstract boolean unregisterDataSetTypeClass(
-            final Class<? extends DataSetType> object);
+            final Class<? extends IDataSetType> object);
 
     protected abstract int unregister(final DataSet object);
 
@@ -1124,7 +1124,7 @@ public abstract class SQLCommunicator_pg {
             Class<? extends RunResultFormat> runResultFormat);
 
     protected abstract boolean registerDataSetTypeClass(
-            Class<? extends DataSetType> object);
+            Class<? extends IDataSetType> object);
 
     protected abstract int getDataSetTypeId(
             final String dataSetTypeClassSimpleName) throws SQLException;

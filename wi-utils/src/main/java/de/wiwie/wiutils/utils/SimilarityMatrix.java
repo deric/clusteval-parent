@@ -3,13 +3,13 @@
  */
 package de.wiwie.wiutils.utils;
 
-import de.clusteval.utils.RangeCreationException;
-import de.clusteval.utils.ArraysExt;
 import cern.colt.function.tdouble.DoubleProcedure;
 import cern.colt.matrix.tdouble.impl.SparseDoubleMatrix2D;
 import de.clusteval.api.Matrix;
 import de.clusteval.api.Pair;
 import de.clusteval.api.Precision;
+import de.clusteval.utils.ArraysExt;
+import de.clusteval.utils.RangeCreationException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -411,9 +411,7 @@ public class SimilarityMatrix implements Matrix {
      *
      */
     public Map<Double, Integer> toDistribution(int numberBuckets) {
-
-        DistributionBuilder builder = new DistributionBuilder(this,
-                numberBuckets);
+        DistributionBuilder builder = new DistributionBuilder(this, numberBuckets);
 
         for (int i = 0; i < this.getRows(); i++) {
             for (int j = 0; j < this.getColumns(); j++) {

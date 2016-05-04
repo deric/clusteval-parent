@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset.format;
 
+import de.clusteval.api.data.DataSetFormatParser;
 import de.clusteval.api.FormatVersion;
 import de.clusteval.api.Precision;
 import de.clusteval.api.data.IConversionConfiguration;
@@ -20,13 +21,13 @@ import de.clusteval.api.data.WEBSITE_VISIBILITY;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.program.RegisterException;
-import de.clusteval.data.dataset.DataSetAttributeParser;
-import de.clusteval.data.dataset.RelativeDataSet;
+import de.clusteval.api.data.DataSetAttributeParser;
+import de.clusteval.api.data.RelativeDataSet;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
 import de.wiwie.wiutils.utils.parse.SimFileMatrixParser;
 import de.wiwie.wiutils.utils.parse.SimFileParser;
 import de.wiwie.wiutils.utils.parse.SimFileParser.SIM_FILE_FORMAT;
-import de.wiwie.wiutils.utils.parse.TextFileParser.OUTPUT_MODE;
+import de.clusteval.utils.TextFileParser.OUTPUT_MODE;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;

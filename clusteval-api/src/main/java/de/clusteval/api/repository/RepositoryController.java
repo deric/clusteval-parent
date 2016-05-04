@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.clusteval.framework.repository;
+package de.clusteval.api.repository;
 
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.r.InvalidRepositoryException;

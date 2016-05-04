@@ -12,6 +12,7 @@
  */
 package de.clusteval.data.dataset.format;
 
+import de.clusteval.api.data.DataSetFormatParser;
 import de.clusteval.api.data.RelativeDataSetFormat;
 import de.clusteval.api.data.DataSetFormat;
 import de.clusteval.api.FormatVersion;
@@ -25,8 +26,8 @@ import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.RegisterException;
-import de.clusteval.data.dataset.DataSetAttributeFilterer;
-import de.clusteval.data.dataset.RelativeDataSet;
+import de.clusteval.api.data.DataSetAttributeFilterer;
+import de.clusteval.api.data.RelativeDataSet;
 import de.costmatrixcreation.main.Args;
 import de.costmatrixcreation.main.Config;
 import de.costmatrixcreation.main.Creator;
@@ -35,7 +36,7 @@ import de.wiwie.wiutils.utils.parse.SimFileMatrixParser;
 import de.wiwie.wiutils.utils.parse.SimFileParser.ID_FILE_FORMAT;
 import de.wiwie.wiutils.utils.parse.SimFileParser.SIM_FILE_FORMAT;
 import de.wiwie.wiutils.utils.parse.SimilarityFileNormalizer;
-import de.wiwie.wiutils.utils.parse.TextFileParser.OUTPUT_MODE;
+import de.clusteval.utils.TextFileParser.OUTPUT_MODE;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
