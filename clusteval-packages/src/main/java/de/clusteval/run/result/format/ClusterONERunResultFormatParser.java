@@ -18,7 +18,7 @@ import java.util.Map;
  * @author Christian Wiwie
  *
  */
-public class clusterONERunResultFormatParser extends RunResultFormatParser {
+public class ClusterONERunResultFormatParser extends RunResultFormatParser {
 
     /**
      * @param internalParams
@@ -26,7 +26,7 @@ public class clusterONERunResultFormatParser extends RunResultFormatParser {
      * @param absFilePath
      * @throws IOException
      */
-    public clusterONERunResultFormatParser(final Map<String, String> internalParams,
+    public ClusterONERunResultFormatParser(final Map<String, String> internalParams,
             final Map<String, String> params, final String absFilePath)
             throws IOException {
         super(internalParams, params, absFilePath);

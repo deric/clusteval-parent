@@ -11,9 +11,7 @@
 package de.clusteval.api.run;
 
 import de.clusteval.api.program.RegisterException;
-import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RepositoryObject;
-import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 
 /**
@@ -30,18 +28,8 @@ import java.lang.reflect.InvocationTargetException;
  */
 public abstract class RunResultFormat extends RepositoryObject implements IRunResultFormat {
 
-    /**
-     * Instantiates a new runresult format.
-     *
-     * @param repo
-     * @param register
-     * @param changeDate
-     * @param absPath
-     * @throws RegisterException
-     */
-    public RunResultFormat(final IRepository repo, final boolean register,
-            final long changeDate, final File absPath) throws RegisterException {
-        super(repo, register, changeDate, absPath);
+    public RunResultFormat() {
+        super();
     }
 
     /**

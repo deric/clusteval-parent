@@ -10,27 +10,22 @@
  ***************************************************************************** */
 package de.clusteval.run.result.format;
 
-import de.clusteval.api.run.RunResultFormat;
 import de.clusteval.api.program.RegisterException;
-import de.clusteval.api.repository.IRepository;
-import java.io.File;
+import de.clusteval.api.run.IRunResultFormat;
+import de.clusteval.api.run.RunResultFormat;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * @author Christian Wiwie
  *
  */
+@ServiceProvider(service = IRunResultFormat.class)
 public class APRunResultFormat extends RunResultFormat {
 
-    /**
-     * @param repo
-     * @param register
-     * @param changeDate
-     * @param absPath
-     * @throws RegisterException
-     */
-    public APRunResultFormat(IRepository repo, boolean register,
-            long changeDate, File absPath) throws RegisterException {
-        super(repo, register, changeDate, absPath);
+    public static final String NAME = "AP run result";
+
+    public APRunResultFormat() {
+        super();
     }
 
     /**
@@ -40,5 +35,10 @@ public class APRunResultFormat extends RunResultFormat {
     public APRunResultFormat(final APRunResultFormat other)
             throws RegisterException {
         super(other);
+    }
+
+    @Override
+    public String getName() {
+        return NAME;
     }
 }

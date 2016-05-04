@@ -10,27 +10,22 @@
  ***************************************************************************** */
 package de.clusteval.run.result.format;
 
-import de.clusteval.api.run.RunResultFormat;
 import de.clusteval.api.program.RegisterException;
-import de.clusteval.api.repository.IRepository;
-import java.io.File;
+import de.clusteval.api.run.IRunResultFormat;
+import de.clusteval.api.run.RunResultFormat;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * @author Christian Wiwie
  *
  */
-public class clusterONERunResultFormat extends RunResultFormat {
+@ServiceProvider(service = IRunResultFormat.class)
+public class ClusterONERunResultFormat extends RunResultFormat {
 
-    /**
-     * @param repo
-     * @param register
-     * @param changeDate
-     * @param absPath
-     * @throws RegisterException
-     */
-    public clusterONERunResultFormat(IRepository repo, boolean register,
-            long changeDate, File absPath) throws RegisterException {
-        super(repo, register, changeDate, absPath);
+    public static final String NAME = "clusterONE result";
+
+    public ClusterONERunResultFormat() {
+        super();
     }
 
     /**
@@ -40,9 +35,14 @@ public class clusterONERunResultFormat extends RunResultFormat {
      *              The object to clone.
      * @throws RegisterException
      */
-    public clusterONERunResultFormat(final clusterONERunResultFormat other)
+    public ClusterONERunResultFormat(final ClusterONERunResultFormat other)
             throws RegisterException {
         super(other);
+    }
+
+    @Override
+    public String getName() {
+        return NAME;
     }
 
 }
