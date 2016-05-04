@@ -10,12 +10,11 @@
  ***************************************************************************** */
 package de.clusteval.program.r;
 
+import de.clusteval.api.ContextFactory;
 import de.clusteval.api.IContext;
+import de.clusteval.api.data.DataSetFormatFactory;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataSetFormat;
-import de.clusteval.api.exceptions.UnknownContextException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
-import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.IProgram;
 import de.clusteval.api.program.IProgramConfig;
@@ -27,13 +26,10 @@ import de.clusteval.api.r.RLibraryRequirement;
 import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.IRunResultFormat;
+import de.clusteval.api.run.RunResultFormatFactory;
 import de.clusteval.cluster.Clustering;
-import de.clusteval.api.AbsContext;
-import de.clusteval.api.data.DataSetFormat;
-import de.clusteval.api.run.RunResultFormat;
 import de.clusteval.utils.FileUtils;
 import java.io.File;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -110,33 +106,20 @@ public class SpectralClusteringRProgram extends AbsoluteAndRelativeDataRProgram 
         return Clustering.clusterIdsToFuzzyCoeff(clusterIds);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.clusteval.program.r.RProgram#getCompatibleDataSetFormats()
-     */
     @Override
-    public Set<IDataSetFormat> getCompatibleDataSetFormats()
-            throws UnknownDataSetFormatException, UnknownProviderException {
-        return new HashSet<>(DataSetFormat.parseFromString(
-                repository, new String[]{"SimMatrixDataSetFormat",
-                    "MatrixDataSetFormat"}));
-    }
-
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.clusteval.program.r.RProgram#getRunResultFormat()
-     */
-    @Override
-    public IRunResultFormat getRunResultFormat() throws UnknownRunResultFormatException {
-        return RunResultFormat.parseFromString(repository,
-                "TabSeparatedRunResultFormat");
+    public Set<IDataSetFormat> getCompatibleDataSetFormats() throws UnknownProviderException {
+        return DataSetFormatFactory.parseFromString(repository,
+                new String[]{"MatrixDataSetFormat", "SimMatrixDataSetFormat"});
     }
 
     @Override
-    public IContext getContext() throws UnknownContextException {
-        return AbsContext.parseFromString(repository, "ClusteringContext");
+    public IRunResultFormat getRunResultFormat() throws UnknownProviderException {
+        return RunResultFormatFactory.parseFromString(repository, "TabSeparatedRunResultFormat");
+    }
+
+    @Override
+    public IContext getContext() throws UnknownProviderException {
+        return ContextFactory.parseFromString(repository, "ClusteringContext");
     }
 
     /*

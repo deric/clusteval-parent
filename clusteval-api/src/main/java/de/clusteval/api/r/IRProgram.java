@@ -44,14 +44,14 @@ public interface IRProgram extends IRepositoryObject {
      *         as input.
      * @throws UnknownDataSetFormatException
      */
-    Set<IDataSetFormat> getCompatibleDataSetFormats() throws UnknownDataSetFormatException, UnknownProviderException;
+    Set<IDataSetFormat> getCompatibleDataSetFormats() throws UnknownProviderException;
 
     /**
      * @return The runresult formats, the results of this r program will be
      *         generated in.
      * @throws UnknownRunResultFormatException
      */
-    IRunResultFormat getRunResultFormat() throws UnknownRunResultFormatException;
+    IRunResultFormat getRunResultFormat() throws UnknownProviderException;
 
     IRProgram clone();
 

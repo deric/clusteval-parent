@@ -10,12 +10,14 @@
  ***************************************************************************** */
 package de.clusteval.api.exceptions;
 
+import de.clusteval.api.factory.UnknownProviderException;
+
 /**
  * The Class UnknownRunResultFormatException.
  *
  * @author Christian Wiwie
  */
-public class UnknownRunResultFormatException extends ClustEvalException {
+public class UnknownRunResultFormatException extends UnknownProviderException {
 
     /**
      *

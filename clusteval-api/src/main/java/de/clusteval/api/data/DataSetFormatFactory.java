@@ -18,8 +18,12 @@ package de.clusteval.api.data;
 
 import de.clusteval.api.factory.ServiceFactory;
 import de.clusteval.api.factory.UnknownProviderException;
+import de.clusteval.api.repository.IRepository;
+import java.io.File;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.Set;
 import org.openide.util.Lookup;
 
 /**
@@ -48,5 +52,19 @@ public class DataSetFormatFactory extends ServiceFactory<IDataSetFormat> {
 
     public static IDataSetFormat parseFromString(String name) throws UnknownProviderException {
         return getInstance().getProvider(name);
+    }
+
+    public static IDataSetFormat parseFromString(IRepository repo, String name) throws UnknownProviderException {
+        IDataSetFormat inst = getInstance().getProvider(name);
+        inst.init(repo, System.currentTimeMillis(), new File(name));
+        return inst;
+    }
+
+    public static Set<IDataSetFormat> parseFromString(IRepository repo, String[] names) throws UnknownProviderException {
+        Set<IDataSetFormat> res = new HashSet<>();
+        for (String name : names) {
+            res.add(parseFromString(repo, name));
+        }
+        return res;
     }
 }

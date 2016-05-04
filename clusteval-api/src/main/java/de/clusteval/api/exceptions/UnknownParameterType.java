@@ -10,11 +10,13 @@
  ***************************************************************************** */
 package de.clusteval.api.exceptions;
 
+import de.clusteval.api.factory.UnknownProviderException;
+
 /**
  * @author Christian Wiwie
  *
  */
-public class UnknownParameterType extends ClustEvalException {
+public class UnknownParameterType extends UnknownProviderException {
 
     private static final long serialVersionUID = 5304614654945037236L;
 

@@ -19,6 +19,7 @@ package de.clusteval.api.factory;
 import de.clusteval.api.exceptions.ClustEvalException;
 
 /**
+ * Thrown in case that class with requested name was not found on class path.
  *
  * @author deric
  */

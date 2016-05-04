@@ -10,11 +10,13 @@
  ***************************************************************************** */
 package de.clusteval.api.exceptions;
 
+import de.clusteval.api.factory.UnknownProviderException;
+
 /**
  * @author Christian Wiwie
  *
  */
-public class UnknownRunResultPostprocessorException extends Exception {
+public class UnknownRunResultPostprocessorException extends UnknownProviderException {
 
     private static final long serialVersionUID = 2579604548304742773L;
     /**

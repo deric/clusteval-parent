@@ -18,6 +18,7 @@ package de.clusteval.api.program;
 
 import de.clusteval.api.IContext;
 import de.clusteval.api.data.IDataConfig;
+import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RLibraryNotLoadedException;
 import de.clusteval.api.r.RNotAvailableException;
@@ -87,9 +88,9 @@ public interface IProgram extends IRepositoryObject {
     /**
      * @return The context of this program. A run can only perform this program,
      *         if it has the same context.
-     * @throws UnknownContextException
+     * @throws de.clusteval.api.factory.UnknownProviderException
      */
-    IContext getContext();
+    IContext getContext() throws UnknownProviderException;
 
     public IProgram duplicate();
 
