@@ -17,7 +17,7 @@ import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.stats.IDataStatistic;
 import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.run.DataAnalysisRun;
-import de.clusteval.utils.Statistic;
+import de.clusteval.api.stats.Statistic;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;

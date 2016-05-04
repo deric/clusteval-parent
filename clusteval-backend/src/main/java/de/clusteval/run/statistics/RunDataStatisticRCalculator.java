@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.run.statistics;
 
+import de.clusteval.api.stats.RunDataStatistic;
 import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigurationException;
@@ -21,7 +22,6 @@ import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.exceptions.RunResultParseException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
-import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.exceptions.UnknownProgramParameterException;
 import de.clusteval.api.exceptions.UnknownProgramTypeException;
@@ -149,10 +149,9 @@ public abstract class RunDataStatisticRCalculator<T extends RunDataStatistic> ex
                    UnknownDataStatisticException, UnknownProgramTypeException,
                    UnknownRProgramException,
                    IncompatibleParameterOptimizationMethodException,
-                   UnknownDistanceMeasureException, UnknownRunStatisticException,
                    AnalysisRunResultException, RepositoryConfigNotFoundException,
                    RepositoryConfigurationException, RegisterException,
                    NoDataSetException,
-                   UnknownRunDataStatisticException, RunResultParseException,
+                   RunResultParseException,
                    REngineException, REXPMismatchException;
 }

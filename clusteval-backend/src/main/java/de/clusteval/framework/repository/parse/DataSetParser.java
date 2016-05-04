@@ -19,7 +19,7 @@ package de.clusteval.framework.repository.parse;
 import de.clusteval.api.data.AbsoluteDataSet;
 import de.clusteval.api.data.AbsoluteDataSetFormat;
 import de.clusteval.api.data.DataSetAttributeParser;
-import de.clusteval.api.data.DataSetFormat;
+import de.clusteval.api.data.DataSetFormatFactory;
 import de.clusteval.api.data.DataSetTypeFactory;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetFormat;
@@ -36,7 +36,6 @@ import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
-import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.exceptions.UnknownParameterType;
 import de.clusteval.api.exceptions.UnknownProgramParameterException;
 import de.clusteval.api.exceptions.UnknownProgramTypeException;
@@ -56,11 +55,8 @@ import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
-import de.clusteval.data.randomizer.UnknownDataRandomizerException;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.run.RunException;
-import de.clusteval.run.statistics.UnknownRunDataStatisticException;
-import de.clusteval.run.statistics.UnknownRunStatisticException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -96,11 +92,11 @@ class DataSetParser extends RepositoryObjectParser<IDataSet> {
                    GoldStandardNotFoundException, GoldStandardConfigurationException, DataSetConfigurationException,
                    DataSetNotFoundException, DataSetConfigNotFoundException, GoldStandardConfigNotFoundException,
                    NoDataSetException, DataConfigurationException, DataConfigNotFoundException, NumberFormatException,
-                   UnknownDistanceMeasureException, UnknownDataPreprocessorException,
+                   UnknownDataPreprocessorException,
                    IncompatibleDataSetConfigPreprocessorException, IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
-                   UnknownDataStatisticException, UnknownRunStatisticException, UnknownRunDataStatisticException,
-                   UnknownRunResultPostprocessorException, UnknownDataRandomizerException, UnknownProviderException {
+                   UnknownDataStatisticException,
+                   UnknownRunResultPostprocessorException, UnknownProviderException {
         super.parseFromFile(absPath);
 
         try {
@@ -136,10 +132,10 @@ class DataSetParser extends RepositoryObjectParser<IDataSet> {
             IDataSetFormat dsFormat;
             if (attributeValues.containsKey("dataSetFormat")) {
                 if (attributeValues.containsKey("dataSetFormatVersion")) {
-                    dsFormat = DataSetFormat.parseFromString(repo, attributeValues.get("dataSetFormat"),
+                    dsFormat = DataSetFormatFactory.parseFromString(repo, attributeValues.get("dataSetFormat"),
                             Integer.parseInt(attributeValues.get("dataSetFormatVersion")));
                 } else {
-                    dsFormat = DataSetFormat.parseFromString(repo, attributeValues.get("datasetFormat"));
+                    dsFormat = DataSetFormatFactory.parseFromString(repo, attributeValues.get("datasetFormat"));
                 }
             } else {
                 throw new DataSetConfigurationException("No format specified for dataset " + absPath.getAbsolutePath());

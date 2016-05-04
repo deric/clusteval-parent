@@ -22,7 +22,6 @@ import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
-import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.exceptions.UnknownParameterType;
 import de.clusteval.api.exceptions.UnknownProgramParameterException;
 import de.clusteval.api.exceptions.UnknownProgramTypeException;
@@ -47,8 +46,6 @@ import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
 import de.clusteval.run.RunException;
-import de.clusteval.run.statistics.UnknownRunDataStatisticException;
-import de.clusteval.run.statistics.UnknownRunStatisticException;
 import de.clusteval.utils.AbstractClustEvalTest;
 import java.io.File;
 import java.io.IOException;
@@ -80,13 +77,12 @@ public class TestFuzzyCoefficientThresholdRunResultPostprocessor
                               IncompatibleContextException, UnknownRunResultFormatException,
                               InvalidOptimizationParameterException,
                               UnknownProgramParameterException, UnknownProgramTypeException,
-                              UnknownRProgramException, UnknownDistanceMeasureException,
+                              UnknownRProgramException,
                               IncompatibleDataSetConfigPreprocessorException,
                               IncompatibleParameterOptimizationMethodException,
                               UnknownParameterOptimizationMethodException,
                               NoOptimizableProgramParameterException,
-                              UnknownDataStatisticException, UnknownRunStatisticException,
-                              UnknownRunDataStatisticException,
+                              UnknownDataStatisticException,
                               UnknownRunResultPostprocessorException {
 
         Clustering clustering = new Clustering(this.getRepository(),

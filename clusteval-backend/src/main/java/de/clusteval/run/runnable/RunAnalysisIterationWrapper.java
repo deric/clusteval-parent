@@ -3,7 +3,7 @@
  */
 package de.clusteval.run.runnable;
 
-import de.clusteval.run.statistics.RunStatistic;
+import de.clusteval.api.stats.RunStatistic;
 
 /**
  * @author Christian Wiwie

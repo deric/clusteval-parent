@@ -8,7 +8,7 @@ import java.util.Map;
 
 import de.clusteval.data.statistics.DataStatistic;
 import de.clusteval.data.statistics.DataStatisticCalculator;
-import de.clusteval.run.statistics.RunDataStatistic;
+import de.clusteval.api.stats.RunDataStatistic;
 import de.clusteval.run.statistics.RunDataStatisticCalculator;
 
 /**

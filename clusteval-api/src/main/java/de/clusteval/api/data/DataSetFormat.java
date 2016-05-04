@@ -16,16 +16,14 @@ import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.RNotAvailableException;
-import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RepositoryObject;
 import de.clusteval.utils.FileUtils;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.security.InvalidParameterException;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -58,8 +56,8 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
      *                       The list of dataset formats to clone.
      * @return The cloned list of dataset formats.
      */
-    public static List<IDataSetFormat> cloneDataSetFormats(final List<IDataSetFormat> dataSetFormats) {
-        List<IDataSetFormat> result = new ArrayList<>();
+    public static Set<IDataSetFormat> cloneDataSetFormats(final Set<IDataSetFormat> dataSetFormats) {
+        Set<IDataSetFormat> result = new HashSet<>();
 
         for (IDataSetFormat dataSetFormat : dataSetFormats) {
             result.add(dataSetFormat.clone());
@@ -81,77 +79,6 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
      * format specification changes, the framework can recognize this.
      */
     private int version;
-
-    /**
-     * This method parses a dataset format from the given string, containing a
-     * dataset format class name and a given dataset format version.
-     *
-     * @param repository
-     *                      The repository where to look up the dataset format class.
-     * @param datasetFormat
-     *                      The dataset format class name as string.
-     * @param formatVersion
-     *                      The version of the dataset format.
-     * @return The parsed dataset format.
-     * @throws UnknownDataSetFormatException
-     */
-    public static IDataSetFormat parseFromString(final IRepository repository,
-            String datasetFormat, final int formatVersion) throws UnknownDataSetFormatException, UnknownProviderException {
-
-        DataSetFormatFactory factory = DataSetFormatFactory.getInstance();
-        if (factory.hasProvider(datasetFormat)) {
-            IDataSetFormat format = factory.getProvider(datasetFormat);
-
-            format.init(repository, System.currentTimeMillis(), new File(datasetFormat));
-            return format;
-        }
-
-        throw new UnknownDataSetFormatException("\"" + datasetFormat + "\" "
-                + "is not a known dataset format. Supported formats are "
-                + factory.getAll().toString());
-    }
-
-    /**
-     * This method parses a dataset format from the given string, containing a
-     * dataset format class name.
-     *
-     * @param repository
-     *                      The repository where to look up the dataset format class.
-     * @param datasetFormat
-     *                      The dataset format class name as string.
-     * @return The parsed dataset format.
-     * @throws UnknownDataSetFormatException
-     */
-    public static IDataSetFormat parseFromString(final IRepository repository,
-            String datasetFormat) throws UnknownDataSetFormatException, UnknownProviderException {
-        return parseFromString(repository, datasetFormat,
-                repository.getCurrentDataSetFormatVersion(datasetFormat));
-    }
-
-    /**
-     * This method parses several dataset formats from a string array.
-     *
-     * <p>
-     * This is a convenience method for
-     * {@link #parseFromString(IRepository, String)}.
-     *
-     * @param repo
-     *                       the repo
-     * @param datasetFormats
-     *                       the dataset formats
-     * @return the list
-     * @throws UnknownDataSetFormatException
-     *                                                           the unknown data set format exception
-     * @throws de.clusteval.api.factory.UnknownProviderException
-     */
-    public static List<IDataSetFormat> parseFromString(final IRepository repo,
-            String[] datasetFormats) throws UnknownDataSetFormatException, UnknownProviderException {
-        List<IDataSetFormat> result = new LinkedList<>();
-        for (String dsFormat : datasetFormats) {
-            result.add(parseFromString(repo, dsFormat));
-        }
-        return result;
-    }
 
     /**
      * @param dataSet

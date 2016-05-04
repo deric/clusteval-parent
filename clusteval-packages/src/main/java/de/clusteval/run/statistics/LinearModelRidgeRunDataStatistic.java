@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.run.statistics;
 
+import de.clusteval.api.stats.RunDataStatistic;
 import de.clusteval.api.Pair;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.RLibraryRequirement;

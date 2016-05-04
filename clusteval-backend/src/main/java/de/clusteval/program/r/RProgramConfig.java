@@ -11,14 +11,15 @@
 package de.clusteval.program.r;
 
 import de.clusteval.api.data.IDataSetFormat;
-import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.program.IProgramParameter;
+import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.IRunResultFormat;
 import de.clusteval.program.Program;
 import de.clusteval.program.ProgramConfig;
 import java.io.File;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Objects of this class encapsulate the configuration of rprograms.
@@ -65,7 +66,7 @@ public class RProgramConfig extends ProgramConfig {
     public RProgramConfig(IRepository repository, final boolean register,
             long changeDate, File absPath, Program program,
             IRunResultFormat outputFormat,
-            List<IDataSetFormat> compatibleDataSetFormats,
+            Set<IDataSetFormat> compatibleDataSetFormats,
             List<IProgramParameter<?>> params,
             List<IProgramParameter<?>> optimizableParameters,
             boolean expectsNormalizedDataSet, int maxExecutionTimeMinutes)

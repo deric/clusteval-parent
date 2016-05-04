@@ -212,7 +212,7 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
              * either they are directly compatible or the dataset can be
              * converted to another compatible DataSetFormat.
              */
-            List<IDataSetFormat> compatibleDsFormats = programConfig.getCompatibleDataSetFormats();
+            Set<IDataSetFormat> compatibleDsFormats = programConfig.getCompatibleDataSetFormats();
             boolean found = false;
             // try to find a compatible format we can use and convert
             for (IDataSetFormat compFormat : compatibleDsFormats) {

@@ -16,6 +16,7 @@
  */
 package de.clusteval.api.data;
 
+import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.factory.ServiceFactory;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.repository.IRepository;
@@ -67,4 +68,29 @@ public class DataSetFormatFactory extends ServiceFactory<IDataSetFormat> {
         }
         return res;
     }
+
+    /**
+     * This method parses a dataset format from the given string, containing a
+     * dataset format class name and a given dataset format version.
+     *
+     * @param repository
+     *                      The repository where to look up the dataset format class.
+     * @param datasetFormat
+     *                      The dataset format class name as string.
+     * @param formatVersion
+     *                      The version of the dataset format.
+     * @return The parsed dataset format.
+     * @throws UnknownDataSetFormatException
+     */
+    public static IDataSetFormat parseFromString(final IRepository repository,
+            String datasetFormat, final int formatVersion) throws UnknownProviderException {
+
+        IDataSetFormat format = parseFromString(repository, datasetFormat);
+        if (format.getVersion() != formatVersion) {
+            throw new UnknownProviderException("could not find requested version " + formatVersion + " of " + datasetFormat);
+        }
+
+        return format;
+    }
+
 }

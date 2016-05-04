@@ -18,26 +18,29 @@ import de.clusteval.api.Precision;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.api.cluster.ClusteringEvaluationParameters;
-import de.clusteval.api.data.DataSetFormat;
-import de.clusteval.api.data.DistanceMeasure;
+import de.clusteval.api.data.DataConfig;
+import de.clusteval.api.data.DataSetFormatFactory;
+import de.clusteval.api.data.DistanceMeasureFactory;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetConfig;
+import de.clusteval.api.data.InputToStd;
+import de.clusteval.api.data.StdToInput;
 import de.clusteval.api.exceptions.FormatConversionException;
+import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
-import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
+import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RCalculationException;
+import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.cluster.Clustering;
-import de.clusteval.api.data.DataConfig;
-import de.clusteval.api.data.InputToStd;
-import de.clusteval.api.data.StdToInput;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
 import de.clusteval.utils.AbstractClustEvalTest;
 import java.io.File;
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import static org.junit.Assert.assertEquals;
@@ -58,8 +61,7 @@ public class DaviesBouldinIndexRClusteringQualityMeasureTest extends AbstractClu
                               RepositoryConfigNotFoundException,
                               RepositoryConfigurationException, NoRepositoryFoundException,
                               RegisterException, NoSuchAlgorithmException,
-                              FormatConversionException, UnknownDistanceMeasureException,
-                              RNotAvailableException,
+                              FormatConversionException, RNotAvailableException,
                               RCalculationException {
         try {
 
@@ -81,9 +83,9 @@ public class DaviesBouldinIndexRClusteringQualityMeasureTest extends AbstractClu
             IDataSetConfig dsc = dc.getDatasetConfig();
             IDataSet ds = dsc.getDataSet();
             ds.preprocessAndConvertTo(context,
-                    DataSetFormat.parseFromString(this.getRepository(),
+                    DataSetFormatFactory.parseFromString(this.getRepository(),
                             "SimMatrixDataSetFormat"),
-                    new InputToStd(DistanceMeasure
+                    new InputToStd(DistanceMeasureFactory
                             .parseFromString(getRepository(),
                                     "EuclidianDistanceMeasure"),
                             Precision.DOUBLE,
@@ -100,7 +102,10 @@ public class DaviesBouldinIndexRClusteringQualityMeasureTest extends AbstractClu
             ds.getInStandardFormat().unloadFromMemory();
             System.out.println("Davies Bouldin Index: " + quality);
             assertEquals(0.49195985498493144, quality, DELTA);
-        } catch (Exception e) {
+        } catch (UnknownProviderException | RegisterException |
+                FormatConversionException | IOException | InvalidDataSetFormatVersionException |
+                RNotAvailableException | InterruptedException | RException | IllegalArgumentException |
+                UnknownClusteringQualityMeasureException e) {
             assertTrue(false);
         }
 

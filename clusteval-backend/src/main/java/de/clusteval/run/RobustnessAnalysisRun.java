@@ -22,8 +22,10 @@ import de.clusteval.api.Triple;
 import de.clusteval.api.cluster.ClustEvalValue;
 import de.clusteval.api.cluster.ClusteringQualitySet;
 import de.clusteval.api.data.DataConfig;
+import de.clusteval.api.data.DataRandomizeException;
 import de.clusteval.api.data.GoldStandard;
 import de.clusteval.api.data.IDataConfig;
+import de.clusteval.api.data.IDataRandomizer;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
@@ -35,7 +37,6 @@ import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.exceptions.RunResultParseException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
-import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.exceptions.UnknownParameterType;
 import de.clusteval.api.exceptions.UnknownProgramParameterException;
@@ -66,9 +67,6 @@ import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
-import de.clusteval.data.randomizer.DataRandomizeException;
-import de.clusteval.data.randomizer.DataRandomizer;
-import de.clusteval.data.randomizer.UnknownDataRandomizerException;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
 import de.clusteval.framework.threading.RunSchedulerThread;
@@ -79,8 +77,6 @@ import de.clusteval.run.result.postprocessing.RunResultPostprocessor;
 import de.clusteval.run.runnable.ExecutionRunRunnable;
 import de.clusteval.run.runnable.RobustnessAnalysisRunRunnable;
 import de.clusteval.run.runnable.RunRunnable;
-import de.clusteval.run.statistics.UnknownRunDataStatisticException;
-import de.clusteval.run.statistics.UnknownRunStatisticException;
 import de.clusteval.utils.FileUtils;
 import de.clusteval.utils.InvalidConfigurationFileException;
 import java.io.File;
@@ -108,7 +104,7 @@ public class RobustnessAnalysisRun extends ClusteringRun {
      */
     protected List<String> uniqueRunAnalysisRunIdentifiers;
 
-    protected DataRandomizer randomizer;
+    protected IDataRandomizer randomizer;
 
     protected List<ParameterSet> distortionParams;
 
@@ -141,7 +137,7 @@ public class RobustnessAnalysisRun extends ClusteringRun {
             List<ClusteringEvaluation> qualityMeasures,
             List<Map<IProgramParameter<?>, String>> parameterValues,
             final List<RunResultPostprocessor> postProcessors,
-            final DataRandomizer randomizer,
+            final IDataRandomizer randomizer,
             final List<ParameterSet> randomizerParams,
             final int numberOfRandomizedDataSets,
             final Map<String, Integer> maxExecutionTimes)
@@ -520,17 +516,13 @@ public class RobustnessAnalysisRun extends ClusteringRun {
 
     /**
      * @param repository
-     * @throws UnknownDataRandomizerException
      * @throws UnknownRunResultPostprocessorException
      * @throws InterruptedException
      * @throws IncompatibleContextException
      * @throws IncompatibleDataSetConfigPreprocessorException
      * @throws UnknownDataPreprocessorException
-     * @throws UnknownRunDataStatisticException
      * @throws RepositoryConfigurationException
      * @throws RepositoryConfigNotFoundException
-     * @throws UnknownRunStatisticException
-     * @throws UnknownDistanceMeasureException
      * @throws IncompatibleParameterOptimizationMethodException
      * @throws UnknownRProgramException
      * @throws UnknownProgramTypeException
@@ -587,14 +579,13 @@ public class RobustnessAnalysisRun extends ClusteringRun {
                    RunException, UnknownDataStatisticException,
                    UnknownProgramTypeException, UnknownRProgramException,
                    IncompatibleParameterOptimizationMethodException,
-                   UnknownDistanceMeasureException, UnknownRunStatisticException,
                    RepositoryConfigNotFoundException,
                    RepositoryConfigurationException,
-                   UnknownRunDataStatisticException, UnknownDataPreprocessorException,
+                   UnknownDataPreprocessorException,
                    IncompatibleDataSetConfigPreprocessorException,
                    IncompatibleContextException, InterruptedException,
                    UnknownRunResultPostprocessorException,
-                   UnknownDataRandomizerException, UnknownProviderException {
+                   UnknownProviderException {
 
         List<String> programConfigNames = new ArrayList<>();
         for (IProgramConfig programConfig : programConfigs) {

@@ -21,6 +21,7 @@ import de.clusteval.api.exceptions.UnknownProgramParameterException;
 import de.clusteval.api.repository.IRepositoryObject;
 import de.clusteval.api.run.IRunResultFormat;
 import java.util.List;
+import java.util.Set;
 
 /**
  * A program configuration encapsulates a program together with options and
@@ -78,7 +79,7 @@ public interface IProgramConfig extends IRepositoryObject {
      * @return The compatible dataset input formats of the encapsulated program.
      * @see #compatibleDataSetFormats
      */
-    List<IDataSetFormat> getCompatibleDataSetFormats();
+    Set<IDataSetFormat> getCompatibleDataSetFormats();
 
     /**
      *

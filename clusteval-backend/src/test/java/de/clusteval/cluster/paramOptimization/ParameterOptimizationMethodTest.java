@@ -19,16 +19,19 @@ import de.clusteval.api.Precision;
 import de.clusteval.api.cluster.ClustEvalValue;
 import de.clusteval.api.cluster.ClusteringEvaluationParameters;
 import de.clusteval.api.cluster.ClusteringQualitySet;
+import de.clusteval.api.data.DataConfig;
 import de.clusteval.api.data.DataSetFormatFactory;
-import de.clusteval.api.data.DistanceMeasure;
+import de.clusteval.api.data.DistanceMeasureFactory;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetFormat;
+import de.clusteval.api.data.InputToStd;
+import de.clusteval.api.data.RelativeDataSet;
+import de.clusteval.api.data.StdToInput;
 import de.clusteval.api.exceptions.FormatConversionException;
 import de.clusteval.api.exceptions.InternalAttributeException;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.RunResultParseException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
-import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.opt.NoParameterSetFoundException;
 import de.clusteval.api.opt.ParameterOptimizationException;
@@ -42,10 +45,6 @@ import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.cluster.quality.ClusteringQualityMeasure;
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
-import de.clusteval.api.data.DataConfig;
-import de.clusteval.api.data.RelativeDataSet;
-import de.clusteval.api.data.InputToStd;
-import de.clusteval.api.data.StdToInput;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
@@ -79,7 +78,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
                    RepositoryConfigurationException, RunResultParseException,
                    InternalAttributeException, RegisterException,
                    ParameterOptimizationException, FormatConversionException,
-                   UnknownDistanceMeasureException, NoParameterSetFoundException,
+                   NoParameterSetFoundException,
                    RNotAvailableException,
                    InterruptedException, ParameterSetAlreadyEvaluatedException, RException, UnknownProviderException {
 
@@ -93,7 +92,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
         IDataSetFormat internal = DataSetFormatFactory.parseFromString("SimMatrixDataSetFormat");
         ds = ds.preprocessAndConvertTo(context,
                 internal,
-                new InputToStd(DistanceMeasure
+                new InputToStd(DistanceMeasureFactory
                         .parseFromString(getRepository(),
                                 "EuclidianDistanceMeasure"),
                         Precision.DOUBLE,
@@ -214,7 +213,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
                    RepositoryConfigurationException, RunResultParseException,
                    InternalAttributeException, RegisterException,
                    ParameterOptimizationException, FormatConversionException,
-                   UnknownDistanceMeasureException, NoParameterSetFoundException,
+                   NoParameterSetFoundException,
                    RNotAvailableException,
                    InterruptedException, ParameterSetAlreadyEvaluatedException, RException, UnknownProviderException {
 
@@ -228,7 +227,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
         IDataSetFormat internal = DataSetFormatFactory.parseFromString("SimMatrixDataSetFormat");
         ds = ds.preprocessAndConvertTo(context,
                 internal,
-                new InputToStd(DistanceMeasure
+                new InputToStd(DistanceMeasureFactory
                         .parseFromString(getRepository(),
                                 "EuclidianDistanceMeasure"),
                         Precision.DOUBLE,
@@ -332,7 +331,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
                    RepositoryConfigurationException, RunResultParseException,
                    InternalAttributeException, RegisterException,
                    ParameterOptimizationException, FormatConversionException,
-                   UnknownDistanceMeasureException, NoParameterSetFoundException,
+                   NoParameterSetFoundException,
                    RNotAvailableException,
                    InterruptedException, RException, UnknownProviderException {
 
@@ -346,7 +345,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
         IDataSetFormat internal = DataSetFormatFactory.parseFromString("SimMatrixDataSetFormat");
         ds = ds.preprocessAndConvertTo(context,
                 internal,
-                new InputToStd(DistanceMeasure
+                new InputToStd(DistanceMeasureFactory
                         .parseFromString(getRepository(),
                                 "EuclidianDistanceMeasure"),
                         Precision.DOUBLE,
@@ -423,8 +422,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
                    RepositoryConfigurationException, RunResultParseException,
                    InternalAttributeException, RegisterException,
                    ParameterOptimizationException, FormatConversionException,
-                   UnknownDistanceMeasureException, NoParameterSetFoundException,
-                   RNotAvailableException,
+                   NoParameterSetFoundException, RNotAvailableException,
                    InterruptedException, ParameterSetAlreadyEvaluatedException, RException, UnknownProviderException {
 
         ClustevalBackendServer.logLevel(Level.INFO);
@@ -437,7 +435,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
         IDataSetFormat internal = DataSetFormatFactory.parseFromString("SimMatrixDataSetFormat");
         ds = ds.preprocessAndConvertTo(context,
                 internal,
-                new InputToStd(DistanceMeasure
+                new InputToStd(DistanceMeasureFactory
                         .parseFromString(getRepository(),
                                 "SpearmanCorrelationRDistanceMeasure"),
                         Precision.DOUBLE,

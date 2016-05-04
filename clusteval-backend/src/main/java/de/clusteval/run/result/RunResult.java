@@ -23,7 +23,6 @@ import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.exceptions.RunResultParseException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
-import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.exceptions.UnknownParameterType;
 import de.clusteval.api.exceptions.UnknownProgramParameterException;
@@ -38,6 +37,7 @@ import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.repository.RepositoryController;
 import de.clusteval.api.repository.RepositoryObject;
 import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.IRunResult;
@@ -50,8 +50,6 @@ import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
-import de.clusteval.data.randomizer.UnknownDataRandomizerException;
-import de.clusteval.api.repository.RepositoryController;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
@@ -64,8 +62,6 @@ import de.clusteval.run.Run;
 import de.clusteval.run.RunAnalysisRun;
 import de.clusteval.run.RunDataAnalysisRun;
 import de.clusteval.run.RunException;
-import de.clusteval.run.statistics.UnknownRunDataStatisticException;
-import de.clusteval.run.statistics.UnknownRunStatisticException;
 import de.clusteval.utils.FileUtils;
 import de.clusteval.utils.InvalidConfigurationFileException;
 import java.io.File;
@@ -119,24 +115,19 @@ public abstract class RunResult extends RepositoryObject implements IRunResult {
      * @throws UnknownProgramTypeException
      * @throws UnknownRProgramException
      * @throws IncompatibleParameterOptimizationMethodException
-     * @throws UnknownDistanceMeasureException
-     * @throws UnknownRunStatisticException
      * @throws RepositoryConfigurationException
      * @throws RepositoryConfigNotFoundException
      * @throws ConfigurationException
      * @throws RegisterException
      * @throws NoDataSetException
      * @throws NumberFormatException
-     * @throws UnknownRunDataStatisticException
      * @throws RunResultParseException
      * @throws UnknownDataPreprocessorException
      * @throws IncompatibleDataSetConfigPreprocessorException
-     * @throws UnknownContextException
      * @throws IncompatibleContextException
      * @throws UnknownParameterType
      * @throws InterruptedException
      * @throws UnknownRunResultPostprocessorException
-     * @throws UnknownDataRandomizerException
      */
     // TODO: we cannot move this method into Parser#RunResultParser, because
     // ParameterOptimizationRun.parseFromRunResultFolder() returns several
@@ -157,13 +148,13 @@ public abstract class RunResult extends RepositoryObject implements IRunResult {
                    DataSetConfigNotFoundException, GoldStandardConfigNotFoundException, DataConfigurationException,
                    DataConfigNotFoundException, RunException, UnknownDataStatisticException,
                    UnknownProgramTypeException, UnknownRProgramException,
-                   IncompatibleParameterOptimizationMethodException, UnknownDistanceMeasureException,
-                   UnknownRunStatisticException, RepositoryConfigNotFoundException, RepositoryConfigurationException,
+                   IncompatibleParameterOptimizationMethodException,
+                   RepositoryConfigNotFoundException, RepositoryConfigurationException,
                    ConfigurationException, RegisterException, NumberFormatException,
-                   NoDataSetException, UnknownRunDataStatisticException, RunResultParseException,
+                   NoDataSetException, RunResultParseException,
                    UnknownDataPreprocessorException, IncompatibleDataSetConfigPreprocessorException,
                    IncompatibleContextException, UnknownParameterType, InterruptedException,
-                   UnknownRunResultPostprocessorException, UnknownDataRandomizerException, FileNotFoundException, UnknownProviderException {
+                   UnknownRunResultPostprocessorException, FileNotFoundException, UnknownProviderException {
         try {
             Logger log = LoggerFactory.getLogger(RunResult.class);
             log.debug("Parsing run result from '" + runResultFolder + "'");

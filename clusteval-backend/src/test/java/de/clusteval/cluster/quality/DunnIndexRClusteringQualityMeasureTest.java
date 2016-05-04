@@ -18,15 +18,17 @@ import de.clusteval.api.Precision;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.api.cluster.ClusteringEvaluationParameters;
+import de.clusteval.api.data.DataConfig;
 import de.clusteval.api.data.DataSetFormatFactory;
-import de.clusteval.api.data.DistanceMeasure;
+import de.clusteval.api.data.DistanceMeasureFactory;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetConfig;
+import de.clusteval.api.data.InputToStd;
+import de.clusteval.api.data.StdToInput;
 import de.clusteval.api.exceptions.FormatConversionException;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
-import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.InvalidRepositoryException;
@@ -35,9 +37,6 @@ import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.cluster.Clustering;
-import de.clusteval.api.data.DataConfig;
-import de.clusteval.api.data.InputToStd;
-import de.clusteval.api.data.StdToInput;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
 import de.clusteval.utils.AbstractClustEvalTest;
@@ -61,7 +60,7 @@ public class DunnIndexRClusteringQualityMeasureTest extends AbstractClustEvalTes
                               RepositoryConfigNotFoundException,
                               RepositoryConfigurationException, NoRepositoryFoundException,
                               RegisterException, NoSuchAlgorithmException,
-                              FormatConversionException, UnknownDistanceMeasureException,
+                              FormatConversionException,
                               RNotAvailableException,
                               RCalculationException, InterruptedException, RException, UnknownProviderException {
         try {
@@ -84,7 +83,7 @@ public class DunnIndexRClusteringQualityMeasureTest extends AbstractClustEvalTes
             IDataSet ds = dsc.getDataSet();
             ds.preprocessAndConvertTo(context,
                     DataSetFormatFactory.parseFromString("SimMatrixDataSetFormat"),
-                    new InputToStd(DistanceMeasure
+                    new InputToStd(DistanceMeasureFactory
                             .parseFromString(getRepository(),
                                     "EuclidianDistanceMeasure"),
                             Precision.DOUBLE,
@@ -103,7 +102,7 @@ public class DunnIndexRClusteringQualityMeasureTest extends AbstractClustEvalTes
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (UnknownDataSetFormatException | IllegalArgumentException |
-                 InvalidDataSetFormatVersionException | UnknownClusteringQualityMeasureException | IOException e) {
+                InvalidDataSetFormatVersionException | UnknownClusteringQualityMeasureException | IOException e) {
             e.printStackTrace();
         }
 

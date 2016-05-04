@@ -18,7 +18,7 @@ import de.clusteval.api.run.IScheduler;
 import de.clusteval.framework.threading.RunSchedulerThread;
 import de.clusteval.run.runnable.RunAnalysisRunRunnable;
 import de.clusteval.run.runnable.RunRunnable;
-import de.clusteval.run.statistics.RunStatistic;
+import de.clusteval.api.stats.RunStatistic;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;

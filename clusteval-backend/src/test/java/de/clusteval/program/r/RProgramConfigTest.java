@@ -21,7 +21,7 @@ import de.clusteval.framework.repository.config.RepositoryConfigurationException
 import de.clusteval.program.ProgramConfig;
 import de.clusteval.utils.AbstractClustEvalTest;
 import java.io.FileNotFoundException;
-import java.util.List;
+import java.util.Set;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import org.junit.Test;
@@ -40,9 +40,9 @@ public class RProgramConfigTest extends AbstractClustEvalTest {
         ProgramConfig programConfig = this.getRepository().getStaticObjectWithName(ProgramConfig.class,
                 "KMeans_Clustering");
         assertNotNull("failed to load KMeans_Clustering config", programConfig);
-        List<IDataSetFormat> dataSetFormats = programConfig.getCompatibleDataSetFormats();
+        Set<IDataSetFormat> dataSetFormats = programConfig.getCompatibleDataSetFormats();
         assertEquals(1, dataSetFormats.size());
-        IDataSetFormat format = dataSetFormats.get(0);
+        IDataSetFormat format = dataSetFormats.iterator().next();
         assertEquals("MatrixDataSetFormat", format.getClass().getSimpleName());
     }
 

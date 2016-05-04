@@ -17,6 +17,7 @@
 package de.clusteval.api.data;
 
 import de.clusteval.api.Pair;
+import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.repository.IRepositoryObject;
 import org.apache.commons.cli.CommandLine;
@@ -29,12 +30,22 @@ import org.apache.commons.cli.ParseException;
  */
 public interface IDataRandomizer extends IRepositoryObject {
 
+    String getName();
+
     /**
      * @return A wrapper object keeping the options of your dataset generator.
      *         The options returned by this method are going to be used and interpreted
      *         in your subclass implementation in {@link #generateDataSet()} .
      */
     Options getOptions();
+
+    /**
+     * @return A wrapper object keeping all options of your dataset generator
+     *         together with the default options of all dataset generators. The options
+     *         returned by this method are going to be used and interpreted in your
+     *         subclass implementation in {@link #randomizeDataConfig()} .
+     */
+    Options getAllOptions();
 
     /**
      * This method is responsible for interpreting the arguments passed to this
@@ -61,5 +72,24 @@ public interface IDataRandomizer extends IRepositoryObject {
      * generation process, this exception is thrown.
      */
     Pair<IDataSet, IGoldStandard> randomizeDataConfig() throws InterruptedException, RException;
+
+    IDataConfig randomize(final String[] cliArguments) throws DataRandomizeException, UnknownProviderException;
+
+    /**
+     * This method has to be invoked with command line arguments for this
+     * generator. Valid arguments are defined by the options returned by
+     * {@link #getOptions()}.
+     *
+     * @param cliArguments
+     * @return The generated {@link DataSet}.
+     * @throws DataRandomizeException This exception is thrown, if the passed
+     *                                arguments are not valid, or parsing of the written data set/ gold
+     *                                standard or config files fails.
+     * @throws DataRandomizeException
+     */
+    // TODO: remove onlySimulate attribute
+    IDataConfig randomize(final String[] cliArguments, final boolean onlySimulate) throws DataRandomizeException, UnknownProviderException;
+
+    IDataRandomizer clone();
 
 }

@@ -16,7 +16,7 @@
  */
 package de.clusteval.run.runnable;
 
-import de.clusteval.run.statistics.RunDataStatistic;
+import de.clusteval.api.stats.RunDataStatistic;
 
 /**
  * @author Christian Wiwie

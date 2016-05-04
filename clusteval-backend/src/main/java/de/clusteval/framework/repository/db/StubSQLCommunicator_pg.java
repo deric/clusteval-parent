@@ -54,9 +54,9 @@ import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.run.result.RunAnalysisRunResult;
 import de.clusteval.run.result.RunDataAnalysisRunResult;
 import de.clusteval.run.result.RunResult;
-import de.clusteval.run.statistics.RunDataStatistic;
-import de.clusteval.run.statistics.RunStatistic;
-import de.clusteval.utils.Statistic;
+import de.clusteval.api.stats.RunDataStatistic;
+import de.clusteval.api.stats.RunStatistic;
+import de.clusteval.api.stats.Statistic;
 import java.sql.SQLException;
 
 /**

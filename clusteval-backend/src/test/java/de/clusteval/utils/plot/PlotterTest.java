@@ -15,8 +15,8 @@ import de.clusteval.api.IContext;
 import de.clusteval.api.Precision;
 import de.clusteval.api.data.DataConfig;
 import de.clusteval.api.data.DataSetConfig;
-import de.clusteval.api.data.DataSetFormat;
-import de.clusteval.api.data.DistanceMeasure;
+import de.clusteval.api.data.DataSetFormatFactory;
+import de.clusteval.api.data.DistanceMeasureFactory;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetConfig;
 import de.clusteval.api.data.InputToStd;
@@ -32,7 +32,6 @@ import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
-import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.exceptions.UnknownParameterType;
 import de.clusteval.api.exceptions.UnknownProgramParameterException;
 import de.clusteval.api.exceptions.UnknownProgramTypeException;
@@ -56,13 +55,10 @@ import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
-import de.clusteval.data.randomizer.UnknownDataRandomizerException;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
 import de.clusteval.framework.repository.parse.Parser;
 import de.clusteval.run.RunException;
-import de.clusteval.run.statistics.UnknownRunDataStatisticException;
-import de.clusteval.run.statistics.UnknownRunStatisticException;
 import de.clusteval.utils.AbstractClustEvalTest;
 import java.io.File;
 import java.io.IOException;
@@ -82,7 +78,7 @@ public class PlotterTest extends AbstractClustEvalTest {
     public void testIsoMDS() throws RepositoryAlreadyExistsException,
                                     InvalidRepositoryException, RepositoryConfigNotFoundException,
                                     RepositoryConfigurationException, UnknownDataSetFormatException,
-                                    RegisterException, UnknownDistanceMeasureException,
+                                    RegisterException,
                                     InvalidDataSetFormatVersionException, IllegalArgumentException,
                                     IOException, REngineException, FormatConversionException,
                                     DataSetNotFoundException, DataSetConfigurationException,
@@ -102,10 +98,9 @@ public class PlotterTest extends AbstractClustEvalTest {
                                     IncompatibleParameterOptimizationMethodException,
                                     UnknownParameterOptimizationMethodException,
                                     NoOptimizableProgramParameterException,
-                                    UnknownDataStatisticException, UnknownRunStatisticException,
-                                    UnknownRunDataStatisticException,
+                                    UnknownDataStatisticException,
                                     UnknownRunResultPostprocessorException,
-                                    UnknownDataRandomizerException, RException, UnknownProviderException {
+                                    RException, UnknownProviderException {
         IContext context = ContextFactory.parseFromString(getRepository(),
                 "ClusteringContext");
 
@@ -119,11 +114,9 @@ public class PlotterTest extends AbstractClustEvalTest {
         }
 
         ds = ds.preprocessAndConvertTo(context,
-                DataSetFormat.parseFromString(getRepository(),
+                DataSetFormatFactory.parseFromString(getRepository(),
                         "SimMatrixDataSetFormat"),
-                new InputToStd(DistanceMeasure
-                        .parseFromString(getRepository(),
-                                "EuclidianDistanceMeasure"),
+                new InputToStd(DistanceMeasureFactory.parseFromString(getRepository(), "EuclidianDistanceMeasure"),
                         Precision.DOUBLE,
                         new ArrayList<>(),
                         new ArrayList<>()),
@@ -134,7 +127,7 @@ public class PlotterTest extends AbstractClustEvalTest {
                 System.currentTimeMillis(),
                 new File(
                         "testCaseRepository/results/04_07_2013-14_41_00_paper_run_synthetic/configs/synthetic_cassini250.dsconfig"),
-                ds, new InputToStd(DistanceMeasure
+                ds, new InputToStd(DistanceMeasureFactory
                         .parseFromString(getRepository(),
                                 "EuclidianDistanceMeasure"),
                         Precision.DOUBLE,
@@ -157,9 +150,7 @@ public class PlotterTest extends AbstractClustEvalTest {
     public void testPCA() throws RepositoryAlreadyExistsException,
                                  InvalidRepositoryException, RepositoryConfigNotFoundException,
                                  RepositoryConfigurationException, UnknownDataSetFormatException,
-                                 RegisterException,
-                                 UnknownDistanceMeasureException,
-                                 InvalidDataSetFormatVersionException, IllegalArgumentException,
+                                 RegisterException, InvalidDataSetFormatVersionException, IllegalArgumentException,
                                  IOException, REngineException, FormatConversionException,
                                  DataSetNotFoundException, DataSetConfigurationException,
                                  NoDataSetException, NoRepositoryFoundException,
@@ -178,10 +169,9 @@ public class PlotterTest extends AbstractClustEvalTest {
                                  IncompatibleParameterOptimizationMethodException,
                                  UnknownParameterOptimizationMethodException,
                                  NoOptimizableProgramParameterException,
-                                 UnknownDataStatisticException, UnknownRunStatisticException,
-                                 UnknownRunDataStatisticException,
+                                 UnknownDataStatisticException,
                                  UnknownRunResultPostprocessorException,
-                                 UnknownDataRandomizerException, RException, UnknownProviderException {
+                                 RException, UnknownProviderException {
         IContext context = ContextFactory.parseFromString(getRepository(), "ClusteringContext");
 
         IDataSet ds = Parser
@@ -197,9 +187,9 @@ public class PlotterTest extends AbstractClustEvalTest {
         }
 
         ds = ds.preprocessAndConvertTo(context,
-                DataSetFormat.parseFromString(getRepository(),
+                DataSetFormatFactory.parseFromString(getRepository(),
                         "SimMatrixDataSetFormat"),
-                new InputToStd(DistanceMeasure
+                new InputToStd(DistanceMeasureFactory
                         .parseFromString(getRepository(),
                                 "EuclidianDistanceMeasure"),
                         Precision.DOUBLE,
@@ -212,7 +202,7 @@ public class PlotterTest extends AbstractClustEvalTest {
                 System.currentTimeMillis(),
                 new File(
                         "testCaseRepository/results/04_07_2013-14_41_00_paper_run_synthetic/configs/synthetic_cassini250.dsconfig"),
-                ds, new InputToStd(DistanceMeasure
+                ds, new InputToStd(DistanceMeasureFactory
                         .parseFromString(getRepository(),
                                 "EuclidianDistanceMeasure"),
                         Precision.DOUBLE,

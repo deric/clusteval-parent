@@ -25,7 +25,7 @@ import de.clusteval.api.r.RException;
 import de.clusteval.api.run.IterationRunnable;
 import de.clusteval.api.stats.IStatistic;
 import de.clusteval.data.statistics.StatisticCalculateException;
-import de.clusteval.run.statistics.RunStatistic;
+import de.clusteval.api.stats.RunStatistic;
 import de.clusteval.utils.FileUtils;
 import de.clusteval.utils.StatisticCalculator;
 import java.io.BufferedWriter;

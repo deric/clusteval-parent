@@ -17,15 +17,14 @@ import de.clusteval.api.exceptions.GoldStandardNotFoundException;
 import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
-import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.repository.RepositoryObject;
 import de.clusteval.api.repository.RepositoryReplaceEvent;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.framework.repository.Repository;
-import de.clusteval.api.repository.RepositoryObject;
 import java.io.File;
 import java.io.IOException;
 import org.apache.commons.io.FileUtils;
@@ -285,7 +284,6 @@ public final class RepositoryObjectTest extends AbstractClustEvalTest {
      * @throws UnknownDataSetFormatException
      * @throws DataSetConfigNotFoundException
      * @throws GoldStandardConfigNotFoundException
-     * @throws UnknownDistanceMeasureException
      * @throws RegisterException
      * @throws NoDataSetException
      * @throws UnknownDataPreprocessorException
@@ -294,16 +292,16 @@ public final class RepositoryObjectTest extends AbstractClustEvalTest {
      */
     @SuppressWarnings("unused")
     @Test
-    public void testNotifyRepositoryEvent() throws IOException,
-                                                   NoRepositoryFoundException, GoldStandardNotFoundException,
-                                                   GoldStandardConfigurationException, DataSetNotFoundException,
-                                                   DataSetConfigurationException, UnknownDataSetFormatException,
-                                                   DataSetConfigNotFoundException,
-                                                   GoldStandardConfigNotFoundException,
-                                                   UnknownDistanceMeasureException, RegisterException,
-                                                   NoDataSetException,
-                                                   NumberFormatException, UnknownDataPreprocessorException,
-                                                   IncompatibleDataSetConfigPreprocessorException {
+    public void testNotifyRepositoryEvent()
+            throws IOException,
+                   NoRepositoryFoundException, GoldStandardNotFoundException,
+                   GoldStandardConfigurationException, DataSetNotFoundException,
+                   DataSetConfigurationException, UnknownDataSetFormatException,
+                   DataSetConfigNotFoundException,
+                   GoldStandardConfigNotFoundException,
+                   RegisterException, NoDataSetException,
+                   NumberFormatException, UnknownDataPreprocessorException,
+                   IncompatibleDataSetConfigPreprocessorException {
 
         /*
          * Create two stub repository objects

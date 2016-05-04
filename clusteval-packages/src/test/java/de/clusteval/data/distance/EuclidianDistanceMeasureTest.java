@@ -19,10 +19,9 @@ package de.clusteval.data.distance;
 import de.clusteval.api.IDistanceMeasure;
 import de.clusteval.api.Precision;
 import de.clusteval.api.data.DistanceMeasureFactory;
-import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
+import de.clusteval.api.data.InputToStd;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.r.RNotAvailableException;
-import de.clusteval.api.data.InputToStd;
 import java.util.ArrayList;
 import java.util.Arrays;
 import org.junit.After;
@@ -48,8 +47,7 @@ public class EuclidianDistanceMeasureTest extends AbstractTest {
     }
 
     // @Test
-    public void test() throws UnknownDistanceMeasureException,
-                              RNotAvailableException, InterruptedException, UnknownProviderException {
+    public void test() throws RNotAvailableException, InterruptedException, UnknownProviderException {
         IDistanceMeasure measure = DistanceMeasureFactory.parseFromString("euclidean");
 
         assertTrue(measure != null);

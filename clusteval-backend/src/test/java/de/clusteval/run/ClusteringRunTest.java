@@ -22,7 +22,6 @@ import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
-import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.exceptions.UnknownParameterType;
 import de.clusteval.api.exceptions.UnknownProgramParameterException;
 import de.clusteval.api.exceptions.UnknownProgramTypeException;
@@ -35,6 +34,7 @@ import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.r.UnknownRProgramException;
+import de.clusteval.api.repository.RepositoryController;
 import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
@@ -44,15 +44,11 @@ import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
-import de.clusteval.data.randomizer.UnknownDataRandomizerException;
 import de.clusteval.framework.repository.Repository;
-import de.clusteval.api.repository.RepositoryController;
 import de.clusteval.framework.repository.config.DefaultRepositoryConfig;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
 import de.clusteval.framework.repository.parse.Parser;
-import de.clusteval.run.statistics.UnknownRunDataStatisticException;
-import de.clusteval.run.statistics.UnknownRunStatisticException;
 import de.clusteval.utils.AbstractClustEvalTest;
 import java.io.File;
 import java.io.IOException;
@@ -76,8 +72,6 @@ public class ClusteringRunTest extends AbstractClustEvalTest {
      * @throws IncompatibleContextException
      * @throws IncompatibleDataSetConfigPreprocessorException
      * @throws UnknownDataPreprocessorException
-     * @throws UnknownDataSetTypeException
-     * @throws UnknownDistanceMeasureException
      * @throws UnknownRProgramException
      * @throws UnknownProgramTypeException
      * @throws RunException
@@ -88,7 +82,6 @@ public class ClusteringRunTest extends AbstractClustEvalTest {
      * @throws UnknownRunResultFormatException
      * @throws IOException
      * @throws UnknownParameterType
-     * @throws UnknownContextException
      * @throws RegisterException
      * @throws ConfigurationException
      * @throws DataConfigNotFoundException
@@ -101,8 +94,6 @@ public class ClusteringRunTest extends AbstractClustEvalTest {
      * @throws GoldStandardConfigurationException
      * @throws GoldStandardNotFoundException
      * @throws UnknownDataSetFormatException
-     * @throws UnknownRunDataStatisticException
-     * @throws UnknownRunStatisticException
      * @throws UnknownDataStatisticException
      * @throws NoOptimizableProgramParameterException
      * @throws UnknownParameterOptimizationMethodException
@@ -120,11 +111,11 @@ public class ClusteringRunTest extends AbstractClustEvalTest {
                    UnknownParameterType, IOException, UnknownRunResultFormatException,
                    UnknownClusteringQualityMeasureException, UnknownProgramParameterException, NoRepositoryFoundException,
                    InvalidOptimizationParameterException, RunException, UnknownProgramTypeException, UnknownRProgramException,
-                   UnknownDistanceMeasureException, UnknownDataPreprocessorException,
+                   UnknownDataPreprocessorException,
                    IncompatibleDataSetConfigPreprocessorException, IncompatibleContextException,
                    IncompatibleParameterOptimizationMethodException, UnknownParameterOptimizationMethodException,
-                   NoOptimizableProgramParameterException, UnknownDataStatisticException, UnknownRunStatisticException,
-                   UnknownRunDataStatisticException, UnknownRunResultPostprocessorException, UnknownDataRandomizerException,
+                   NoOptimizableProgramParameterException, UnknownDataStatisticException,
+                   UnknownRunResultPostprocessorException,
                    DatabaseConnectException, UnknownProviderException {
         ClusteringRun run = Parser.parseFromFile(ClusteringRun.class,
                 new File("testCaseRepository/runs/all_vs_DS1_clustering.run").getAbsoluteFile());

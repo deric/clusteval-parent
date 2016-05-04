@@ -24,7 +24,6 @@ import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.exceptions.RunResultParseException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
-import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.exceptions.UnknownParameterType;
 import de.clusteval.api.exceptions.UnknownProgramParameterException;
@@ -52,7 +51,6 @@ import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
-import de.clusteval.data.randomizer.UnknownDataRandomizerException;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
@@ -61,8 +59,6 @@ import de.clusteval.run.InvalidRunModeException;
 import de.clusteval.run.ParameterOptimizationRun;
 import de.clusteval.run.Run;
 import de.clusteval.run.RunException;
-import de.clusteval.run.statistics.UnknownRunDataStatisticException;
-import de.clusteval.run.statistics.UnknownRunStatisticException;
 import de.clusteval.utils.FileUtils;
 import de.clusteval.utils.InvalidConfigurationFileException;
 import java.io.File;
@@ -132,27 +128,21 @@ public class ParameterOptimizationResult extends ExecutionRunResult implements I
      * @throws UnknownProgramTypeException
      * @throws UnknownRProgramException
      * @throws IncompatibleParameterOptimizationMethodException
-     * @throws UnknownDistanceMeasureException
-     * @throws UnknownRunStatisticException
      * @return The parameter optimization run result parsed from the given
      *         runresult folder.
      * @throws RepositoryConfigurationException
      * @throws RepositoryConfigNotFoundException
      * @throws ConfigurationException
      * @throws RegisterException
-     * @throws UnknownDataSetTypeException
      * @throws NoDataSetException
      * @throws NumberFormatException
-     * @throws UnknownRunDataStatisticException
      * @throws RunResultParseException
      * @throws UnknownDataPreprocessorException
      * @throws IncompatibleDataSetConfigPreprocessorException
-     * @throws UnknownContextException
      * @throws IncompatibleContextException
      * @throws UnknownParameterType
      * @throws InterruptedException
      * @throws UnknownRunResultPostprocessorException
-     * @throws UnknownDataRandomizerException
      */
     public static Run parseFromRunResultFolder2(final IRepository parentRepository, final File runResultFolder,
             final List<ParameterOptimizationResult> result, final boolean parseClusterings,
@@ -167,13 +157,13 @@ public class ParameterOptimizationResult extends ExecutionRunResult implements I
                    DataSetConfigNotFoundException, GoldStandardConfigNotFoundException, DataConfigurationException,
                    DataConfigNotFoundException, RunException, UnknownDataStatisticException,
                    UnknownProgramTypeException, UnknownRProgramException,
-                   IncompatibleParameterOptimizationMethodException, UnknownDistanceMeasureException,
-                   UnknownRunStatisticException, RepositoryConfigNotFoundException, RepositoryConfigurationException,
+                   IncompatibleParameterOptimizationMethodException,
+                   RepositoryConfigNotFoundException, RepositoryConfigurationException,
                    ConfigurationException, RegisterException, NumberFormatException,
-                   NoDataSetException, UnknownRunDataStatisticException, RunResultParseException,
+                   NoDataSetException, RunResultParseException,
                    UnknownDataPreprocessorException, IncompatibleDataSetConfigPreprocessorException,
                    IncompatibleContextException, UnknownParameterType, InterruptedException,
-                   UnknownRunResultPostprocessorException, UnknownDataRandomizerException, FileNotFoundException, UnknownProviderException {
+                   UnknownRunResultPostprocessorException, FileNotFoundException, UnknownProviderException {
         try {
             IRepository childRepository = new RunResultRepository(runResultFolder.getAbsolutePath(), parentRepository);
             childRepository.initialize();

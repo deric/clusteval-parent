@@ -19,7 +19,7 @@ package de.clusteval.framework.repository.parse;
 import de.clusteval.api.IDistanceMeasure;
 import de.clusteval.api.Precision;
 import de.clusteval.api.data.DataSetConfig;
-import de.clusteval.api.data.DistanceMeasure;
+import de.clusteval.api.data.DistanceMeasureFactory;
 import de.clusteval.api.data.IDataPreprocessor;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.InputToStd;
@@ -33,7 +33,6 @@ import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
-import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.exceptions.UnknownParameterType;
 import de.clusteval.api.exceptions.UnknownProgramParameterException;
 import de.clusteval.api.exceptions.UnknownProgramTypeException;
@@ -54,11 +53,8 @@ import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.data.preprocessing.DataPreprocessor;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
-import de.clusteval.data.randomizer.UnknownDataRandomizerException;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.run.RunException;
-import de.clusteval.run.statistics.UnknownRunDataStatisticException;
-import de.clusteval.run.statistics.UnknownRunStatisticException;
 import de.clusteval.utils.FileUtils;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -97,11 +93,11 @@ class DataSetConfigParser extends RepositoryObjectParser<DataSetConfig> {
                    GoldStandardNotFoundException, GoldStandardConfigurationException, DataSetConfigurationException,
                    DataSetNotFoundException, DataSetConfigNotFoundException, GoldStandardConfigNotFoundException,
                    NoDataSetException, DataConfigurationException, DataConfigNotFoundException, NumberFormatException,
-                   UnknownDistanceMeasureException, UnknownDataPreprocessorException,
+                   UnknownDataPreprocessorException,
                    IncompatibleDataSetConfigPreprocessorException, IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
-                   UnknownDataStatisticException, UnknownRunStatisticException, UnknownRunDataStatisticException,
-                   UnknownRunResultPostprocessorException, UnknownDataRandomizerException, UnknownProviderException {
+                   UnknownDataStatisticException,
+                   UnknownRunResultPostprocessorException, UnknownProviderException {
         super.parseFromFile(absPath);
 
         log.debug("Parsing dataset config \"" + absPath + "\"");
@@ -114,10 +110,10 @@ class DataSetConfigParser extends RepositoryObjectParser<DataSetConfig> {
 
             IDistanceMeasure distanceMeasure;
             if (getProps().containsKey("distanceMeasureAbsoluteToRelative")) {
-                distanceMeasure = DistanceMeasure.parseFromString(repo,
+                distanceMeasure = DistanceMeasureFactory.parseFromString(repo,
                         getProps().getString("distanceMeasureAbsoluteToRelative"));
             } else {
-                distanceMeasure = DistanceMeasure.parseFromString(repo, "EuclidianDistanceMeasure");
+                distanceMeasure = DistanceMeasureFactory.parseFromString(repo, "EuclidianDistanceMeasure");
             }
 
             Precision similarityPrecision = Precision.DOUBLE;
@@ -186,11 +182,10 @@ class DataSetConfigParser extends RepositoryObjectParser<DataSetConfig> {
                    DataConfigNotFoundException, ConfigurationException, FileNotFoundException,
                    UnknownParameterType, UnknownClusteringQualityMeasureException, RunException, IncompatibleContextException,
                    UnknownRunResultFormatException, InvalidOptimizationParameterException, UnknownProgramParameterException,
-                   UnknownProgramTypeException, UnknownRProgramException, UnknownDistanceMeasureException,
+                   UnknownProgramTypeException, UnknownRProgramException,
                    UnknownDataPreprocessorException, IncompatibleDataSetConfigPreprocessorException,
                    IncompatibleParameterOptimizationMethodException, UnknownParameterOptimizationMethodException,
-                   NoOptimizableProgramParameterException, UnknownDataStatisticException, UnknownRunStatisticException,
-                   UnknownRunDataStatisticException, UnknownRunResultPostprocessorException, UnknownDataRandomizerException, UnknownProviderException {
+                   NoOptimizableProgramParameterException, UnknownDataStatisticException, UnknownRunResultPostprocessorException, UnknownProviderException {
         if (repo instanceof RunResultRepository) {
             return repo.getStaticObjectWithName(IDataSet.class, datasetName + "/" + datasetFile);
         }

@@ -16,7 +16,6 @@
  */
 package de.clusteval.api.data;
 
-import de.clusteval.api.IDistanceMeasure;
 import de.clusteval.api.factory.ServiceFactory;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.repository.IRepository;
@@ -29,32 +28,32 @@ import org.openide.util.Lookup;
  *
  * @author deric
  */
-public class DistanceMeasureFactory extends ServiceFactory<IDistanceMeasure> {
+public class DataRandomizerFactory extends ServiceFactory<IDataRandomizer> {
 
-    private static DistanceMeasureFactory instance;
+    private static DataRandomizerFactory instance;
 
-    public static DistanceMeasureFactory getInstance() {
+    public static DataRandomizerFactory getInstance() {
         if (instance == null) {
-            instance = new DistanceMeasureFactory();
+            instance = new DataRandomizerFactory();
         }
         return instance;
     }
 
-    private DistanceMeasureFactory() {
+    private DataRandomizerFactory() {
         providers = new LinkedHashMap<>();
-        Collection<? extends IDistanceMeasure> list = Lookup.getDefault().lookupAll(IDistanceMeasure.class);
-        for (IDistanceMeasure c : list) {
+        Collection<? extends IDataRandomizer> list = Lookup.getDefault().lookupAll(IDataRandomizer.class);
+        for (IDataRandomizer c : list) {
             providers.put(c.getName(), c);
         }
         sort();
     }
 
-    public static IDistanceMeasure parseFromString(String name) throws UnknownProviderException {
+    public static IDataRandomizer parseFromString(String name) throws UnknownProviderException {
         return getInstance().getProvider(name);
     }
 
-    public static IDistanceMeasure parseFromString(IRepository repo, String name) throws UnknownProviderException {
-        IDistanceMeasure inst = getInstance().getProvider(name);
+    public static IDataRandomizer parseFromString(IRepository repo, String name) throws UnknownProviderException {
+        IDataRandomizer inst = getInstance().getProvider(name);
         inst.init(repo, System.currentTimeMillis(), new File(name));
         return inst;
     }

@@ -7,7 +7,7 @@ import de.clusteval.api.repository.DynamicRepositoryEntity;
 import java.util.HashMap;
 import java.util.Map;
 
-import de.clusteval.run.statistics.RunStatistic;
+import de.clusteval.api.stats.RunStatistic;
 import de.clusteval.run.statistics.RunStatisticCalculator;
 
 /**

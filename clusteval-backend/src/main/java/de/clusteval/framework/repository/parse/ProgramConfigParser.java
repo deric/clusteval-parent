@@ -18,7 +18,7 @@ package de.clusteval.framework.repository.parse;
 
 import de.clusteval.api.ContextFactory;
 import de.clusteval.api.IContext;
-import de.clusteval.api.data.DataSetFormat;
+import de.clusteval.api.data.DataSetFormatFactory;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
@@ -29,7 +29,6 @@ import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
-import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.exceptions.UnknownParameterType;
 import de.clusteval.api.exceptions.UnknownProgramParameterException;
 import de.clusteval.api.exceptions.UnknownProgramTypeException;
@@ -52,7 +51,6 @@ import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
-import de.clusteval.data.randomizer.UnknownDataRandomizerException;
 import de.clusteval.program.Program;
 import de.clusteval.program.ProgramConfig;
 import de.clusteval.program.ProgramParameter;
@@ -60,8 +58,6 @@ import de.clusteval.program.StandaloneProgram;
 import de.clusteval.program.r.RProgram;
 import de.clusteval.program.r.RProgramConfig;
 import de.clusteval.run.RunException;
-import de.clusteval.run.statistics.UnknownRunDataStatisticException;
-import de.clusteval.run.statistics.UnknownRunStatisticException;
 import de.clusteval.utils.FileUtils;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -97,11 +93,11 @@ class ProgramConfigParser extends RepositoryObjectParser<ProgramConfig> {
                    GoldStandardNotFoundException, GoldStandardConfigurationException, DataSetConfigurationException,
                    DataSetNotFoundException, DataSetConfigNotFoundException, GoldStandardConfigNotFoundException,
                    NoDataSetException, DataConfigurationException, DataConfigNotFoundException, NumberFormatException,
-                   UnknownDistanceMeasureException, UnknownDataPreprocessorException,
+                   UnknownDataPreprocessorException,
                    IncompatibleDataSetConfigPreprocessorException, IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
-                   UnknownDataStatisticException, UnknownRunStatisticException, UnknownRunDataStatisticException,
-                   UnknownRunResultPostprocessorException, UnknownDataRandomizerException, UnknownProviderException {
+                   UnknownDataStatisticException,
+                   UnknownRunResultPostprocessorException, UnknownProviderException {
         super.parseFromFile(absPath);
 
         log.debug("Parsing program config \"" + absPath + "\"");
@@ -131,7 +127,7 @@ class ProgramConfigParser extends RepositoryObjectParser<ProgramConfig> {
         String[] compatibleDataSetFormatsStr;
 
         IRunResultFormat runresultFormat;
-        List<IDataSetFormat> compatibleDataSetFormats;
+        Set<IDataSetFormat> compatibleDataSetFormats;
         boolean expectsNormalizedDataSet = false;
         if (type.equals("standalone")) {
             String program = FileUtils.buildPath(repo.getBasePath(Program.class), getProps().getString("program"));
@@ -148,7 +144,7 @@ class ProgramConfigParser extends RepositoryObjectParser<ProgramConfig> {
 
             compatibleDataSetFormatsStr = getProps().getStringArray("compatibleDataSetFormats");
 
-            compatibleDataSetFormats = DataSetFormat.parseFromString(repo, compatibleDataSetFormatsStr);
+            compatibleDataSetFormats = DataSetFormatFactory.parseFromString(repo, compatibleDataSetFormatsStr);
 
             if (getProps().containsKey("expectsNormalizedDataSet")) {
                 expectsNormalizedDataSet = getProps().getBoolean("expectsNormalizedDataSet");
@@ -176,7 +172,7 @@ class ProgramConfigParser extends RepositoryObjectParser<ProgramConfig> {
             programP = RProgram.parseFromString(repo, type);
 
             RProgram rProgram = (RProgram) programP;
-            compatibleDataSetFormats = new ArrayList<>(rProgram.getCompatibleDataSetFormats());
+            compatibleDataSetFormats = rProgram.getCompatibleDataSetFormats();
             runresultFormat = rProgram.getRunResultFormat();
         } else {
             throw new UnknownProgramTypeException("The type " + type + " is unknown.");

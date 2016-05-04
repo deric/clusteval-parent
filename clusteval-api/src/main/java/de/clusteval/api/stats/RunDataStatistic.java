@@ -10,35 +10,45 @@
  *     Christian Wiwie - initial API and implementation
  *****************************************************************************
  */
-package de.clusteval.api.data;
+package de.clusteval.api.stats;
 
-import de.clusteval.api.IDistanceMeasure;
 import de.clusteval.api.program.RegisterException;
-import de.clusteval.api.r.RLibraryInferior;
-import de.clusteval.api.repository.RepositoryObject;
+import de.clusteval.api.repository.IRepository;
+import java.io.File;
 import java.lang.reflect.InvocationTargetException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
+ * A run-data statistic is a {@link Statistic}, which summarizes relationships
+ * of clustering run results and data set properties. Run-data statistics are
+ * assessed by a {@link RunDataAnalysisRun}.
+ * <p/>
  *
- * @author deric
+ *
+ * @author Christian Wiwie
+ *
  */
-public abstract class DistanceMeasure extends RepositoryObject implements RLibraryInferior, IDistanceMeasure {
+public abstract class RunDataStatistic extends Statistic implements IRunDataStatistic {
 
-    protected static final Logger LOG = LoggerFactory.getLogger(DistanceMeasure.class);
-
-    public DistanceMeasure() {
-        super();
+    /**
+     * @param repository
+     * @param register
+     * @param changeDate
+     * @param absPath
+     * @throws RegisterException
+     */
+    public RunDataStatistic(IRepository repository, boolean register,
+            long changeDate, File absPath) throws RegisterException {
+        super(repository, register, changeDate, absPath);
     }
 
     /**
-     * The copy constructor of this distance measures.
+     * The copy constructor of run data statistics.
      *
      * @param other The object to clone.
      * @throws RegisterException
      */
-    public DistanceMeasure(final DistanceMeasure other) throws RegisterException {
+    public RunDataStatistic(final RunDataStatistic other)
+            throws RegisterException {
         super(other);
     }
 
@@ -48,13 +58,12 @@ public abstract class DistanceMeasure extends RepositoryObject implements RLibra
      * @see java.lang.Object#clone()
      */
     @Override
-    public final DistanceMeasure clone() {
+    public final RunDataStatistic clone() {
         try {
             return this.getClass().getConstructor(this.getClass())
                     .newInstance(this);
-        } catch (IllegalArgumentException | SecurityException |
-                 InstantiationException | IllegalAccessException |
-                 InvocationTargetException | NoSuchMethodException e) {
+        } catch (IllegalArgumentException | SecurityException | InstantiationException |
+                 IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
         this.log.warn("Cloning instance of class "

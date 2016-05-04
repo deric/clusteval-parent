@@ -12,7 +12,7 @@ package de.clusteval.api.data;
 
 import de.clusteval.api.Precision;
 import de.clusteval.api.exceptions.RepositoryObjectDumpException;
-import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
+import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RepositoryObject;
@@ -58,14 +58,14 @@ public abstract class AbstractDataSetProvider extends RepositoryObject {
 
     protected IDataConfig writeConfigFiles(final IDataSet newDataSet,
             final IGoldStandard newGoldStandard, final String configFileName)
-            throws RepositoryObjectDumpException, RegisterException, UnknownDistanceMeasureException {
+            throws RepositoryObjectDumpException, RegisterException, UnknownProviderException {
         // write dataset config file
         File dsConfigFile = new File(
                 FileUtils.buildPath(repository.getBasePath(IDataSetConfig.class), configFileName + ".dsconfig"));
         IDataSetConfig dsConfig = new DataSetConfig(this.repository, System.currentTimeMillis(), dsConfigFile,
                 newDataSet,
                 new InputToStd(
-                        DistanceMeasure.parseFromString(repository, "EuclidianDistanceMeasure"),
+                        DistanceMeasureFactory.parseFromString(repository, "EuclidianDistanceMeasure"),
                         Precision.DOUBLE, new ArrayList<>(), new ArrayList<>()),
                 new StdToInput());
 

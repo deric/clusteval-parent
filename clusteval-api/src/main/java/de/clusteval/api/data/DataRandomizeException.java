@@ -1,7 +1,7 @@
 /**
  * 
  */
-package de.clusteval.data.randomizer;
+package de.clusteval.api.data;
 
 import de.clusteval.api.exceptions.ClustEvalException;
 

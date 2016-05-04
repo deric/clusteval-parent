@@ -12,23 +12,24 @@
  */
 package de.clusteval.program;
 
+import de.clusteval.api.data.DataSetFormat;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.exceptions.UnknownProgramParameterException;
 import de.clusteval.api.program.IProgram;
 import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.IProgramParameter;
-import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RepositoryEvent;
+import de.clusteval.api.repository.RepositoryObject;
 import de.clusteval.api.repository.RepositoryRemoveEvent;
 import de.clusteval.api.repository.RepositoryReplaceEvent;
 import de.clusteval.api.run.IRunResultFormat;
-import de.clusteval.api.data.DataSetFormat;
-import de.clusteval.api.repository.RepositoryObject;
 import de.clusteval.run.ParameterOptimizationRun;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * A program configuration encapsulates a program together with options and
@@ -116,7 +117,7 @@ public class ProgramConfig extends RepositoryObject implements IProgramConfig {
      * This list holds all dataset formats that are compatible with the
      * encapsulated program, i.e. input formats this program is able to read.
      */
-    protected List<IDataSetFormat> compatibleDataSetFormats;
+    protected Set<IDataSetFormat> compatibleDataSetFormats;
 
     /**
      * The output format of the program
@@ -186,7 +187,7 @@ public class ProgramConfig extends RepositoryObject implements IProgramConfig {
             final File absPath,
             final IProgram program,
             final IRunResultFormat outputFormat,
-            final List<IDataSetFormat> compatibleDataSetFormats,
+            final Set<IDataSetFormat> compatibleDataSetFormats,
             final String invocationFormat,
             final String invocationFormatWithoutGoldStandard,
             final String invocationFormatParameterOptimization,
@@ -388,7 +389,7 @@ public class ProgramConfig extends RepositoryObject implements IProgramConfig {
      * @see #compatibleDataSetFormats
      */
     @Override
-    public List<IDataSetFormat> getCompatibleDataSetFormats() {
+    public Set<IDataSetFormat> getCompatibleDataSetFormats() {
         return compatibleDataSetFormats;
     }
 

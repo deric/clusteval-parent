@@ -10,17 +10,11 @@
  *     Christian Wiwie - initial API and implementation
  *****************************************************************************
  */
-package de.clusteval.data.randomizer;
+package de.clusteval.api.data;
 
 import de.clusteval.api.Pair;
-import de.clusteval.api.data.AbstractDataSetProvider;
-import de.clusteval.api.data.DataConfig;
-import de.clusteval.api.data.IDataConfig;
-import de.clusteval.api.data.IDataRandomizer;
-import de.clusteval.api.data.IDataSet;
-import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.exceptions.RepositoryObjectDumpException;
-import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
+import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RLibraryInferior;
@@ -35,36 +29,10 @@ import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
-import org.openide.util.Exceptions;
 
 /**
- * <p>
- * {@code
  *
- * A data randomizer MyDataRandomizer can be added to ClustEval by
- *
- * 1. extending this class with your own class MyDataRandomizer. You have to provide your own implementations for the following methods, otherwise the framework will not be able to load your runresult format.
- *
- *   * :java:ref:`DataRandomizer(Repository, boolean, long, File)`: The constructor of your class. This constructor has to be implemented and public, otherwise the framework will not be able to load your runresult format.
- *   * :java:ref:`DataRandomizer(DataRandomizer)`: The copy constructor of your class taking another instance of your class. This constructor has to be implemented and public.
- *   * :java:ref:`getOptions()`: This method returns an :java:ref:`Options` object that encapsulates all parameters that this randomizer has. These can be set by the user in the client.
- *   * :java:ref:`handleOptions(CommandLine)`: This method handles the values that the user set for the parameters specified in :java:ref:`getOptions()`.
- *   * :java:ref:`getDataSetFileNamePostFix()`: This method makes sure, that randomized data sets of the same data configuration do not end up with the same file name and overwrite each other. A good advice is to integrate the randomizer parameter values or a timestamp.
- *   * :java:ref:`randomizeDataConfig()`: This is the core of your randomizer; In this method the #dataConfig attribute is randomized and a distorted data set and gold standard is returned.
- *
- * 2. Creating a jar file named MyDataRandomizer.jar containing the MyDataRandomizer.class compiled on your machine in the correct folder structure corresponding to the packages:
- *
- *   * de/clusteval/data/randomizer/MyDataRandomizer.class
- *
- * 3. Putting the MyDataRandomizer.jar into the corresponding folder of the repository:
- *
- *   * <REPOSITORY ROOT>/supp/randomizers
- *   * The backend server will recognize and try to load the new class automatically the next time, the :java:ref:`DataRandomizerFinderThread` checks the filesystem.
- *
- * }
- *
- * @author Christian Wiwie
- *
+ * @author deric
  */
 public abstract class DataRandomizer extends AbstractDataSetProvider implements RLibraryInferior, IDataRandomizer {
 
@@ -105,7 +73,7 @@ public abstract class DataRandomizer extends AbstractDataSetProvider implements 
      * @see framework.repository.RepositoryObject#clone()
      */
     @Override
-    public DataRandomizer clone() {
+    public IDataRandomizer clone() {
         try {
             return this.getClass().getConstructor(this.getClass()).newInstance(this);
         } catch (IllegalArgumentException | SecurityException |
@@ -132,7 +100,7 @@ public abstract class DataRandomizer extends AbstractDataSetProvider implements 
         return options;
     }
 
-    public IDataConfig randomize(final String[] cliArguments) throws DataRandomizeException {
+    public IDataConfig randomize(final String[] cliArguments) throws DataRandomizeException, UnknownProviderException {
         return randomize(cliArguments, false);
     }
 
@@ -149,7 +117,7 @@ public abstract class DataRandomizer extends AbstractDataSetProvider implements 
      * @throws DataRandomizeException
      */
     // TODO: remove onlySimulate attribute
-    public IDataConfig randomize(final String[] cliArguments, final boolean onlySimulate) throws DataRandomizeException {
+    public IDataConfig randomize(final String[] cliArguments, final boolean onlySimulate) throws DataRandomizeException, UnknownProviderException {
         try {
             this.onlySimulate = onlySimulate;
             CommandLineParser parser = new PosixParser();
@@ -174,7 +142,7 @@ public abstract class DataRandomizer extends AbstractDataSetProvider implements 
 
             return dataConfig;
         } catch (ParseException | InterruptedException | RException |
-                RepositoryObjectDumpException | RegisterException | UnknownDistanceMeasureException e) {
+                RepositoryObjectDumpException | RegisterException e) {
             throw new DataRandomizeException(e);
         }
     }
@@ -202,33 +170,5 @@ public abstract class DataRandomizer extends AbstractDataSetProvider implements 
         OptionBuilder.withDescription("A unique id (infix) for the generated files.");
         option = OptionBuilder.create("uniqueId");
         options.addOption(option);
-    }
-
-    /**
-     * Parses a dataconfig randomizer from string.
-     *
-     * @param repository     the repository
-     * @param dataRandomizer The simple name of the dataset randomizer class.
-     * @return the clustering quality measure
-     * @throws UnknownDataRandomizerException
-     */
-    public static DataRandomizer parseFromString(final IRepository repository, String dataRandomizer)
-            throws UnknownDataRandomizerException {
-
-        Class<? extends DataRandomizer> c = repository.getRegisteredClass(DataRandomizer.class,
-                "de.clusteval.data.randomizer." + dataRandomizer);
-        try {
-            DataRandomizer generator = c.getConstructor(IRepository.class, boolean.class, long.class, File.class)
-                    .newInstance(repository, false, System.currentTimeMillis(), new File(dataRandomizer));
-            return generator;
-
-        } catch (InstantiationException | IllegalAccessException |
-                IllegalArgumentException | SecurityException |
-                InvocationTargetException | NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (NullPointerException e) {
-            Exceptions.printStackTrace(e);
-        }
-        throw new UnknownDataRandomizerException("\"" + dataRandomizer + "\" is not a known data randomizer.");
     }
 }

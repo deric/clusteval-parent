@@ -28,7 +28,6 @@ import de.clusteval.data.dataset.generator.DataSetGenerator;
 import de.clusteval.data.dataset.generator.DataSetGeneratorFinderThread;
 import de.clusteval.data.goldstandard.GoldStandardConfigFinderThread;
 import de.clusteval.data.preprocessing.DataPreprocessorFinderThread;
-import de.clusteval.data.randomizer.DataRandomizerFinderThread;
 import de.clusteval.data.statistics.DataStatistic;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.program.ProgramConfig;
@@ -40,9 +39,9 @@ import de.clusteval.run.RunFinderThread;
 import de.clusteval.run.result.RunResult;
 import de.clusteval.run.result.RunResultFinderThread;
 import de.clusteval.run.result.postprocessing.RunResultPostprocessorFinderThread;
-import de.clusteval.run.statistics.RunDataStatistic;
+import de.clusteval.api.stats.RunDataStatistic;
 import de.clusteval.run.statistics.RunDataStatisticFinderThread;
-import de.clusteval.run.statistics.RunStatistic;
+import de.clusteval.api.stats.RunStatistic;
 import java.util.Map;
 
 /**
@@ -156,7 +155,7 @@ public class RepositorySupervisorThread extends SupervisorThread {
                         RProgramFinderThread.class,
                         ProgramConfigFinderThread.class, RunFinderThread.class,
                         DataSetGeneratorFinderThread.class,
-                        DataRandomizerFinderThread.class,
+                        //DataRandomizerFinderThread.class,
                         RunResultFinderThread.class) : createList(
                         // normal elements
                         //DataSetFormatFinderThread.class,
@@ -177,8 +176,8 @@ public class RepositorySupervisorThread extends SupervisorThread {
                         DataConfigFinderThread.class,
                         RProgramFinderThread.class,
                         ProgramConfigFinderThread.class, RunFinderThread.class,
-                        DataSetGeneratorFinderThread.class,
-                        DataRandomizerFinderThread.class), threadSleepTimes,
+                        DataSetGeneratorFinderThread.class
+                ), threadSleepTimes,
                 checkOnce);
 
         this.threads.put(RunSchedulerThread.class, new RunSchedulerThread(this,

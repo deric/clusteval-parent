@@ -22,7 +22,6 @@ import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
-import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.exceptions.UnknownParameterType;
 import de.clusteval.api.exceptions.UnknownProgramParameterException;
 import de.clusteval.api.exceptions.UnknownProgramTypeException;
@@ -44,13 +43,10 @@ import de.clusteval.data.DataConfigurationException;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
-import de.clusteval.data.randomizer.UnknownDataRandomizerException;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
 import de.clusteval.framework.repository.parse.Parser;
 import de.clusteval.run.RunException;
-import de.clusteval.run.statistics.UnknownRunDataStatisticException;
-import de.clusteval.run.statistics.UnknownRunStatisticException;
 import de.clusteval.utils.AbstractClustEvalTest;
 import java.io.File;
 import java.io.IOException;
@@ -67,31 +63,31 @@ public class RemoveZeroSamplesDataPreprocesserTest
         AbstractClustEvalTest {
 
     @Test
-    public void test() throws RepositoryAlreadyExistsException,
-                              InvalidRepositoryException, RepositoryConfigNotFoundException,
-                              RepositoryConfigurationException, DataSetNotFoundException,
-                              UnknownDataSetFormatException, DataSetConfigurationException,
-                              NoDataSetException, NumberFormatException, RegisterException,
-                              NoRepositoryFoundException, UnknownProviderException,
-                              UnknownDataPreprocessorException, IOException,
-                              InterruptedException, GoldStandardNotFoundException,
-                              GoldStandardConfigurationException, DataSetConfigNotFoundException,
-                              GoldStandardConfigNotFoundException, DataConfigurationException,
-                              DataConfigNotFoundException, ConfigurationException,
-                              UnknownParameterType,
-                              UnknownClusteringQualityMeasureException, RunException,
-                              IncompatibleContextException, UnknownRunResultFormatException,
-                              InvalidOptimizationParameterException,
-                              UnknownProgramParameterException, UnknownProgramTypeException,
-                              UnknownRProgramException, UnknownDistanceMeasureException,
-                              IncompatibleDataSetConfigPreprocessorException,
-                              IncompatibleParameterOptimizationMethodException,
-                              UnknownParameterOptimizationMethodException,
-                              NoOptimizableProgramParameterException,
-                              UnknownDataStatisticException, UnknownRunStatisticException,
-                              UnknownRunDataStatisticException,
-                              UnknownRunResultPostprocessorException,
-                              UnknownDataRandomizerException, RException {
+    public void test()
+            throws RepositoryAlreadyExistsException,
+                   InvalidRepositoryException, RepositoryConfigNotFoundException,
+                   RepositoryConfigurationException, DataSetNotFoundException,
+                   UnknownDataSetFormatException, DataSetConfigurationException,
+                   NoDataSetException, NumberFormatException, RegisterException,
+                   NoRepositoryFoundException, UnknownProviderException,
+                   UnknownDataPreprocessorException, IOException,
+                   InterruptedException, GoldStandardNotFoundException,
+                   GoldStandardConfigurationException, DataSetConfigNotFoundException,
+                   GoldStandardConfigNotFoundException, DataConfigurationException,
+                   DataConfigNotFoundException, ConfigurationException,
+                   UnknownParameterType,
+                   UnknownClusteringQualityMeasureException, RunException,
+                   IncompatibleContextException, UnknownRunResultFormatException,
+                   InvalidOptimizationParameterException,
+                   UnknownProgramParameterException, UnknownProgramTypeException,
+                   UnknownRProgramException,
+                   IncompatibleDataSetConfigPreprocessorException,
+                   IncompatibleParameterOptimizationMethodException,
+                   UnknownParameterOptimizationMethodException,
+                   NoOptimizableProgramParameterException,
+                   UnknownDataStatisticException,
+                   UnknownRunResultPostprocessorException,
+                   RException {
 
         File f = new File(
                 "testCaseRepository/data/datasets/sfld/sfld_brown_et_al_amidohydrolases_protein_similarities_for_beh.txt.SimMatrix");

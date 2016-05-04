@@ -19,7 +19,7 @@ package de.clusteval.run.runnable;
 import de.clusteval.api.factory.StatisticCalculatorFactory;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.stats.IStatisticCalculator;
-import de.clusteval.run.statistics.RunDataStatistic;
+import de.clusteval.api.stats.RunDataStatistic;
 import de.clusteval.utils.FileUtils;
 import de.clusteval.utils.StatisticCalculator;
 import java.lang.reflect.InvocationTargetException;

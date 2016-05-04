@@ -31,7 +31,6 @@ import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.exceptions.RunResultParseException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
-import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.exceptions.UnknownParameterType;
 import de.clusteval.api.exceptions.UnknownProgramParameterException;
@@ -60,7 +59,6 @@ import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
-import de.clusteval.data.randomizer.UnknownDataRandomizerException;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RunResultRepository;
@@ -71,8 +69,6 @@ import de.clusteval.run.InvalidRunModeException;
 import de.clusteval.run.ParameterOptimizationRun;
 import de.clusteval.run.RunException;
 import de.clusteval.run.result.ParameterOptimizationResult;
-import de.clusteval.run.statistics.UnknownRunDataStatisticException;
-import de.clusteval.run.statistics.UnknownRunStatisticException;
 import de.clusteval.utils.FileUtils;
 import de.clusteval.utils.InvalidConfigurationFileException;
 import de.clusteval.utils.ProgressPrinter;
@@ -127,14 +123,12 @@ public class ClustQualityEval {
                    UnknownDataStatisticException, UnknownProgramTypeException,
                    UnknownRProgramException,
                    IncompatibleParameterOptimizationMethodException,
-                   UnknownDistanceMeasureException, UnknownRunStatisticException,
-                   UnknownRunDataStatisticException,
                    UnknownDataPreprocessorException,
                    IncompatibleDataSetConfigPreprocessorException,
                    IncompatibleContextException, InvalidDataSetFormatVersionException,
                    RNotAvailableException, FormatConversionException,
                    UnknownRunResultPostprocessorException,
-                   UnknownDataRandomizerException, DatabaseConnectException, RException, FileNotFoundException, UnknownProviderException {
+                   DatabaseConnectException, RException, FileNotFoundException, UnknownProviderException {
         super();
         ClustevalBackendServer.logLevel(Level.INFO);
         ClustevalBackendServer.getBackendServerConfiguration().setNoDatabase(
@@ -498,14 +492,12 @@ public class ClustQualityEval {
                    UnknownDataStatisticException, UnknownProgramTypeException,
                    UnknownRProgramException,
                    IncompatibleParameterOptimizationMethodException,
-                   UnknownDistanceMeasureException, UnknownRunStatisticException,
-                   UnknownRunDataStatisticException,
                    UnknownDataPreprocessorException,
                    IncompatibleDataSetConfigPreprocessorException,
                    IncompatibleContextException, InvalidDataSetFormatVersionException,
                    RNotAvailableException, FormatConversionException,
                    UnknownRunResultPostprocessorException,
-                   UnknownDataRandomizerException, DatabaseConnectException, RException, FileNotFoundException, UnknownProviderException {
+                   DatabaseConnectException, RException, FileNotFoundException, UnknownProviderException {
         new ClustQualityEval(args[0], args[1], Arrays.copyOfRange(args, 2,
                 args.length));
     }

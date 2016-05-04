@@ -10,29 +10,29 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset.format;
 
-import de.clusteval.api.data.DataSetFormatParser;
-import de.clusteval.api.data.RelativeDataSetFormat;
-import de.clusteval.api.data.DataSetFormat;
 import de.clusteval.api.FormatVersion;
 import de.clusteval.api.IDistanceMeasure;
 import de.clusteval.api.Pair;
 import de.clusteval.api.Precision;
+import de.clusteval.api.data.AbsoluteDataSet;
+import de.clusteval.api.data.DataMatrix;
+import de.clusteval.api.data.DataSetAttributeParser;
+import de.clusteval.api.data.DataSetFormatFactory;
+import de.clusteval.api.data.DataSetFormatParser;
 import de.clusteval.api.data.IConversionConfiguration;
 import de.clusteval.api.data.IConversionInputToStandardConfiguration;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetFormat;
+import de.clusteval.api.data.RelativeDataSet;
+import de.clusteval.api.data.RelativeDataSetFormat;
 import de.clusteval.api.data.WEBSITE_VISIBILITY;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.RNotAvailableException;
-import de.clusteval.api.data.AbsoluteDataSet;
-import de.clusteval.api.data.DataMatrix;
-import de.clusteval.api.data.DataSetAttributeParser;
-import de.clusteval.api.data.RelativeDataSet;
-import de.wiwie.wiutils.utils.SimilarityMatrix;
 import de.clusteval.utils.TextFileParser;
+import de.wiwie.wiutils.utils.SimilarityMatrix;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
@@ -67,7 +67,7 @@ public class MatrixDataSetFormatParser extends DataSetFormatParser {
         RelativeDataSet newDataSet = new RelativeDataSet(
                 dataSet.getRepository(), false, System.currentTimeMillis(),
                 targetFile, dataSet.getAlias(),
-                (RelativeDataSetFormat) DataSetFormat.parseFromString(
+                (RelativeDataSetFormat) DataSetFormatFactory.parseFromString(
                         dataSet.getRepository(), "SimMatrixDataSetFormat"),
                 dataSet.getDataSetType(), WEBSITE_VISIBILITY.HIDE);
 

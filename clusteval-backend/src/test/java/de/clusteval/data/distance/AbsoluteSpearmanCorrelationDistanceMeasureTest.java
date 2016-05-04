@@ -10,12 +10,12 @@
  ***************************************************************************** */
 package de.clusteval.data.distance;
 
-import de.clusteval.api.data.DistanceMeasure;
 import de.clusteval.api.IDistanceMeasure;
 import de.clusteval.api.Precision;
-import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
-import de.clusteval.api.r.RNotAvailableException;
+import de.clusteval.api.data.DistanceMeasureFactory;
 import de.clusteval.api.data.InputToStd;
+import de.clusteval.api.factory.UnknownProviderException;
+import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.utils.AbstractClustEvalTest;
 import de.clusteval.utils.ArraysExt;
 import java.util.ArrayList;
@@ -29,9 +29,9 @@ import org.junit.Test;
 public class AbsoluteSpearmanCorrelationDistanceMeasureTest extends AbstractClustEvalTest {
 
     @Test
-    public void test() throws UnknownDistanceMeasureException,
-                              RNotAvailableException, InterruptedException {
-        IDistanceMeasure measure = DistanceMeasure.parseFromString(
+    public void test() throws
+            RNotAvailableException, InterruptedException, UnknownProviderException {
+        IDistanceMeasure measure = DistanceMeasureFactory.parseFromString(
                 getRepository(), "AbsoluteSpearmanCorrelationRDistanceMeasure");
         Assert.assertTrue(measure != null);
 

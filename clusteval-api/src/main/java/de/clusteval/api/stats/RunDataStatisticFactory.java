@@ -14,48 +14,57 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.clusteval.api.data;
+package de.clusteval.api.stats;
 
-import de.clusteval.api.IDistanceMeasure;
 import de.clusteval.api.factory.ServiceFactory;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.repository.IRepository;
 import java.io.File;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.Set;
 import org.openide.util.Lookup;
 
 /**
  *
  * @author deric
  */
-public class DistanceMeasureFactory extends ServiceFactory<IDistanceMeasure> {
+public class RunDataStatisticFactory extends ServiceFactory<IRunDataStatistic> {
 
-    private static DistanceMeasureFactory instance;
+    private static RunDataStatisticFactory instance;
 
-    public static DistanceMeasureFactory getInstance() {
+    public static RunDataStatisticFactory getInstance() {
         if (instance == null) {
-            instance = new DistanceMeasureFactory();
+            instance = new RunDataStatisticFactory();
         }
         return instance;
     }
 
-    private DistanceMeasureFactory() {
+    private RunDataStatisticFactory() {
         providers = new LinkedHashMap<>();
-        Collection<? extends IDistanceMeasure> list = Lookup.getDefault().lookupAll(IDistanceMeasure.class);
-        for (IDistanceMeasure c : list) {
+        Collection<? extends IRunDataStatistic> list = Lookup.getDefault().lookupAll(IRunDataStatistic.class);
+        for (IRunDataStatistic c : list) {
             providers.put(c.getName(), c);
         }
         sort();
     }
 
-    public static IDistanceMeasure parseFromString(String name) throws UnknownProviderException {
+    public static IRunDataStatistic parseFromString(String name) throws UnknownProviderException {
         return getInstance().getProvider(name);
     }
 
-    public static IDistanceMeasure parseFromString(IRepository repo, String name) throws UnknownProviderException {
-        IDistanceMeasure inst = getInstance().getProvider(name);
+    public static IRunDataStatistic parseFromString(IRepository repo, String name) throws UnknownProviderException {
+        IRunDataStatistic inst = getInstance().getProvider(name);
         inst.init(repo, System.currentTimeMillis(), new File(name));
         return inst;
+    }
+
+    public static Set<IRunDataStatistic> parseFromString(IRepository repo, String[] names) throws UnknownProviderException {
+        Set<IRunDataStatistic> res = new HashSet<>();
+        for (String name : names) {
+            res.add(parseFromString(repo, name));
+        }
+        return res;
     }
 }

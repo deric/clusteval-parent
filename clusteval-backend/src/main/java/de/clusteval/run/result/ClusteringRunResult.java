@@ -24,7 +24,6 @@ import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
-import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.exceptions.UnknownParameterType;
 import de.clusteval.api.exceptions.UnknownProgramParameterException;
@@ -58,7 +57,6 @@ import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
-import de.clusteval.data.randomizer.UnknownDataRandomizerException;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
@@ -67,8 +65,6 @@ import de.clusteval.run.ClusteringRun;
 import de.clusteval.run.InvalidRunModeException;
 import de.clusteval.run.Run;
 import de.clusteval.run.RunException;
-import de.clusteval.run.statistics.UnknownRunDataStatisticException;
-import de.clusteval.run.statistics.UnknownRunStatisticException;
 import de.clusteval.utils.FileUtils;
 import de.clusteval.utils.InvalidConfigurationFileException;
 import java.io.File;
@@ -408,13 +404,13 @@ public class ClusteringRunResult extends ExecutionRunResult implements IClusteri
                    DataSetConfigNotFoundException, GoldStandardConfigNotFoundException, DataConfigurationException,
                    DataConfigNotFoundException, RunException, UnknownDataStatisticException,
                    UnknownProgramTypeException, UnknownRProgramException,
-                   IncompatibleParameterOptimizationMethodException, UnknownDistanceMeasureException,
-                   UnknownRunStatisticException, RepositoryConfigNotFoundException, RepositoryConfigurationException,
+                   IncompatibleParameterOptimizationMethodException,
+                   RepositoryConfigNotFoundException, RepositoryConfigurationException,
                    ConfigurationException, RegisterException, NumberFormatException,
-                   NoDataSetException, UnknownRunDataStatisticException, UnknownDataPreprocessorException,
+                   NoDataSetException, UnknownDataPreprocessorException,
                    IncompatibleDataSetConfigPreprocessorException,
                    IncompatibleContextException, UnknownParameterType, InterruptedException,
-                   UnknownRunResultPostprocessorException, UnknownDataRandomizerException, UnknownProviderException {
+                   UnknownRunResultPostprocessorException, UnknownProviderException {
 
         IRepository childRepository;
         try {

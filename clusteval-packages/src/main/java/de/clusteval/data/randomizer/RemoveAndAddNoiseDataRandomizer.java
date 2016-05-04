@@ -19,14 +19,17 @@ package de.clusteval.data.randomizer;
 import de.clusteval.api.Matrix;
 import de.clusteval.api.Pair;
 import de.clusteval.api.cluster.IClustering;
+import de.clusteval.api.data.AbsoluteDataSet;
 import de.clusteval.api.data.AbsoluteDataSetFormat;
 import de.clusteval.api.data.DataMatrix;
-import de.clusteval.api.data.DataSetFormat;
+import de.clusteval.api.data.DataRandomizer;
 import de.clusteval.api.data.DataSetFormatFactory;
 import de.clusteval.api.data.DataSetTypeFactory;
+import de.clusteval.api.data.GoldStandard;
 import de.clusteval.api.data.IDataRandomizer;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IGoldStandard;
+import de.clusteval.api.data.RelativeDataSet;
 import de.clusteval.api.data.RelativeDataSetFormat;
 import de.clusteval.api.data.WEBSITE_VISIBILITY;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
@@ -36,9 +39,6 @@ import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.data.AbsoluteDataSet;
-import de.clusteval.api.data.RelativeDataSet;
-import de.clusteval.api.data.GoldStandard;
 import de.clusteval.utils.FileUtils;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -61,6 +61,7 @@ public class RemoveAndAddNoiseDataRandomizer extends DataRandomizer implements I
 
     protected double addPercentage;
 
+    public static final String NAME = "RemoveAndAddNoiseDataRandomizer";
     /**
      * @param other
      * @throws RegisterException
@@ -81,6 +82,11 @@ public class RemoveAndAddNoiseDataRandomizer extends DataRandomizer implements I
             boolean register, long changeDate, File absPath)
             throws RegisterException {
         super(repository, register, changeDate, absPath);
+    }
+
+    @Override
+    public String getName() {
+        return NAME;
     }
 
     /*
@@ -267,7 +273,7 @@ public class RemoveAndAddNoiseDataRandomizer extends DataRandomizer implements I
                         this.repository, false, dataSetFile.lastModified(),
                         dataSetFile, this.onlySimulate ? newAlias
                                 + System.currentTimeMillis() : newAlias,
-                        (AbsoluteDataSetFormat) DataSetFormat
+                        (AbsoluteDataSetFormat) DataSetFormatFactory
                         .parseFromString(repository,
                                 "MatrixDataSetFormat"),
                         DataSetTypeFactory.parseFromString("SyntheticDataSetType"),
@@ -450,4 +456,5 @@ public class RemoveAndAddNoiseDataRandomizer extends DataRandomizer implements I
     protected String getDataSetFileNamePostFix() {
         return "remove_" + removePercentage + "_noise_" + addPercentage;
     }
+
 }

@@ -15,7 +15,7 @@ package de.clusteval.data.dataset.generator;
 import de.clusteval.api.data.AbsoluteDataSet;
 import de.clusteval.api.data.AbsoluteDataSetFormat;
 import de.clusteval.api.data.AbstractDataSetProvider;
-import de.clusteval.api.data.DataSetFormat;
+import de.clusteval.api.data.DataSetFormatFactory;
 import de.clusteval.api.data.DataSetTypeFactory;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataSet;
@@ -27,7 +27,6 @@ import de.clusteval.api.exceptions.GoldStandardGenerationException;
 import de.clusteval.api.exceptions.RepositoryObjectDumpException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownDataSetGeneratorException;
-import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.RLibraryInferior;
@@ -187,7 +186,7 @@ public abstract class DataSetGenerator extends AbstractDataSetProvider implement
      */
     public IDataSet generate(final String[] cliArguments)
             throws ParseException, DataSetGenerationException, GoldStandardGenerationException, InterruptedException,
-                   RepositoryObjectDumpException, RegisterException, UnknownDistanceMeasureException, UnknownProviderException {
+                   RepositoryObjectDumpException, RegisterException, UnknownProviderException {
         CommandLineParser parser = new PosixParser();
 
         Options options = this.getAllOptions();
@@ -348,7 +347,7 @@ public abstract class DataSetGenerator extends AbstractDataSetProvider implement
         }
 
         return new AbsoluteDataSet(this.repository, true, dataSetFile.lastModified(), dataSetFile, getAlias(),
-                (AbsoluteDataSetFormat) DataSetFormat.parseFromString(repository, "MatrixDataSetFormat"),
+                (AbsoluteDataSetFormat) DataSetFormatFactory.parseFromString(repository, "MatrixDataSetFormat"),
                 DataSetTypeFactory.parseFromString("SyntheticDataSetType"), WEBSITE_VISIBILITY.HIDE);
 
     }

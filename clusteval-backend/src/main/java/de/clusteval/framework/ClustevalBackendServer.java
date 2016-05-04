@@ -22,6 +22,10 @@ import ch.qos.logback.core.FileAppender;
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.Pair;
 import de.clusteval.api.Triple;
+import de.clusteval.api.data.DataRandomizeException;
+import de.clusteval.api.data.DataRandomizer;
+import de.clusteval.api.data.DataRandomizerFactory;
+import de.clusteval.api.data.IDataRandomizer;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.exceptions.DataSetGenerationException;
 import de.clusteval.api.exceptions.DataSetNotFoundException;
@@ -38,7 +42,6 @@ import de.clusteval.api.exceptions.RepositoryObjectDumpException;
 import de.clusteval.api.exceptions.RunResultParseException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownDataSetGeneratorException;
-import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.exceptions.UnknownParameterType;
 import de.clusteval.api.exceptions.UnknownProgramParameterException;
@@ -71,9 +74,6 @@ import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.data.dataset.generator.DataSetGenerator;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
-import de.clusteval.data.randomizer.DataRandomizeException;
-import de.clusteval.data.randomizer.DataRandomizer;
-import de.clusteval.data.randomizer.UnknownDataRandomizerException;
 import de.clusteval.framework.repository.MyRengine;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
@@ -91,8 +91,6 @@ import de.clusteval.run.runnable.ExecutionIterationRunnable;
 import de.clusteval.run.runnable.ExecutionRunRunnable;
 import de.clusteval.run.runnable.RunAnalysisIterationRunnable;
 import de.clusteval.run.runnable.RunAnalysisRunRunnable;
-import de.clusteval.run.statistics.UnknownRunDataStatisticException;
-import de.clusteval.run.statistics.UnknownRunStatisticException;
 import de.clusteval.utils.FileUtils;
 import de.clusteval.utils.InvalidConfigurationFileException;
 import de.clusteval.utils.MyHighlightingCompositeConverter;
@@ -772,14 +770,14 @@ public class ClustevalBackendServer implements IBackendServer {
     @SuppressWarnings("unused")
     @Override
     public Collection<String> getRunResumes() throws RemoteException {
-        Collection<String> result = new HashSet<String>(this.repository.getRunResumes());
+        Collection<String> result = new HashSet<>(this.repository.getRunResumes());
         return result;
     }
 
     @SuppressWarnings("unused")
     @Override
     public Collection<String> getRunResults() throws RemoteException {
-        Collection<String> result = new HashSet<String>(this.repository.getRunResultIdentifier());
+        Collection<String> result = new HashSet<>(this.repository.getRunResultIdentifier());
         return result;
     }
 
@@ -822,12 +820,7 @@ public class ClustevalBackendServer implements IBackendServer {
                 NoRepositoryFoundException | GoldStandardNotFoundException |
                 InvalidOptimizationParameterException | RunException |
                 UnknownDataStatisticException | UnknownProgramTypeException |
-                UnknownRProgramException | IncompatibleParameterOptimizationMethodException |
-                UnknownDistanceMeasureException | UnknownRunStatisticException |
-                RepositoryConfigNotFoundException | RepositoryConfigurationException |
-                ConfigurationException | RegisterException | NumberFormatException | NoDataSetException | UnknownRunDataStatisticException |
-                RunResultParseException | UnknownDataPreprocessorException |
-                IncompatibleDataSetConfigPreprocessorException | IncompatibleContextException | UnknownParameterType | InterruptedException | UnknownRunResultPostprocessorException | UnknownDataRandomizerException e) {
+                UnknownRProgramException | IncompatibleParameterOptimizationMethodException | RepositoryConfigNotFoundException | RepositoryConfigurationException | ConfigurationException | RegisterException | NumberFormatException | NoDataSetException | RunResultParseException | UnknownDataPreprocessorException | IncompatibleDataSetConfigPreprocessorException | IncompatibleContextException | UnknownParameterType | InterruptedException | UnknownRunResultPostprocessorException e) {
             e.printStackTrace();
         } catch (UnknownProviderException ex) {
             Exceptions.printStackTrace(ex);
@@ -927,7 +920,7 @@ public class ClustevalBackendServer implements IBackendServer {
         } catch (UnknownDataSetGeneratorException | ParseException |
                 DataSetGenerationException | GoldStandardGenerationException |
                 InterruptedException | RepositoryObjectDumpException |
-                RegisterException | UnknownDistanceMeasureException e) {
+                RegisterException e) {
             e.printStackTrace();
         } catch (UnknownProviderException ex) {
             Exceptions.printStackTrace(ex);
@@ -1005,11 +998,10 @@ public class ClustevalBackendServer implements IBackendServer {
     public Options getOptionsForDataRandomizer(String randomizerName) {
         try {
 
-            DataRandomizer randomizer = DataRandomizer.parseFromString(repository, randomizerName);
+            IDataRandomizer randomizer = DataRandomizerFactory.parseFromString(repository, randomizerName);
             return randomizer.getAllOptions();
-        } catch (SecurityException | IllegalArgumentException |
-                UnknownDataRandomizerException e) {
-            e.printStackTrace();
+        } catch (UnknownProviderException ex) {
+            Exceptions.printStackTrace(ex);
         }
         return null;
     }
@@ -1024,10 +1016,10 @@ public class ClustevalBackendServer implements IBackendServer {
     @Override
     public boolean randomizeDataConfig(String randomizerName, String[] args) throws RemoteException {
         try {
-            DataRandomizer randomizer = DataRandomizer.parseFromString(this.repository, randomizerName);
+            IDataRandomizer randomizer = DataRandomizerFactory.parseFromString(this.repository, randomizerName);
             randomizer.randomize(args);
-        } catch (UnknownDataRandomizerException | DataRandomizeException e) {
-            e.printStackTrace();
+        } catch (UnknownProviderException | DataRandomizeException ex) {
+            Exceptions.printStackTrace(ex);
         }
         return false;
     }

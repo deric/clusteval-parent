@@ -17,7 +17,6 @@ import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.run.IRunRunnable;
 import de.clusteval.api.run.IScheduler;
-import de.clusteval.data.randomizer.UnknownDataRandomizerException;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
 import de.clusteval.run.Run;
@@ -46,14 +45,13 @@ public class KMeansClusteringRProgramTest extends AbstractClustEvalTest {
      * @throws IOException
      * @throws RunRunnableInitializationException
      * @throws java.lang.InterruptedException
-     * @throws de.clusteval.data.randomizer.UnknownDataRandomizerException
      * @throws RunInitializationException
      */
     @Test
     public void testApplyToRelativeDataSet()
             throws RepositoryAlreadyExistsException, InvalidRepositoryException, RepositoryConfigNotFoundException,
                    RepositoryConfigurationException, IOException, RunRunnableInitializationException, InterruptedException,
-                   UnknownDataRandomizerException, RunInitializationException {
+                   RunInitializationException {
         IScheduler scheduler = this.getRepository().getSupervisorThread().getRunScheduler();
 
         Run run = this.getRepository().getStaticObjectWithName(Run.class, "test_kmeans_sfld_layered_f2");

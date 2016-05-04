@@ -10,7 +10,7 @@
  *     Christian Wiwie - initial API and implementation
  *****************************************************************************
  */
-package de.clusteval.utils;
+package de.clusteval.api.stats;
 
 import de.clusteval.api.r.RLibraryInferior;
 import de.clusteval.api.repository.IRepository;

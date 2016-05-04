@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.run.statistics;
 
+import de.clusteval.api.stats.RunStatistic;
 import cern.colt.matrix.tlong.LongMatrix2D;
 import cern.colt.matrix.tlong.impl.SparseLongMatrix2D;
 import de.clusteval.api.program.RegisterException;

@@ -14,7 +14,6 @@ package de.clusteval.data.dataset.format;
 
 import de.clusteval.api.data.DataSetFormatParser;
 import de.clusteval.api.data.RelativeDataSetFormat;
-import de.clusteval.api.data.DataSetFormat;
 import de.clusteval.api.FormatVersion;
 import de.clusteval.api.Precision;
 import de.clusteval.api.data.IConversionConfiguration;
@@ -27,6 +26,7 @@ import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.data.DataSetAttributeFilterer;
+import de.clusteval.api.data.DataSetFormatFactory;
 import de.clusteval.api.data.RelativeDataSet;
 import de.costmatrixcreation.main.Args;
 import de.costmatrixcreation.main.Config;
@@ -156,7 +156,7 @@ public class BLASTDataSetFormatParser extends DataSetFormatParser {
 
             this.log.debug("done");
         }
-        RelativeDataSetFormat targetFormat = (RelativeDataSetFormat) DataSetFormat
+        RelativeDataSetFormat targetFormat = (RelativeDataSetFormat) DataSetFormatFactory
                 .parseFromString(dataSet.getRepository(),
                         "SimMatrixDataSetFormat");
         return new RelativeDataSet(dataSet.getRepository(), false,

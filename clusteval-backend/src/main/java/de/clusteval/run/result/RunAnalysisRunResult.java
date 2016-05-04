@@ -21,7 +21,6 @@ import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.exceptions.RunResultParseException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
-import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.exceptions.UnknownParameterType;
 import de.clusteval.api.exceptions.UnknownProgramParameterException;
@@ -47,7 +46,6 @@ import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
-import de.clusteval.data.randomizer.UnknownDataRandomizerException;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
@@ -56,12 +54,10 @@ import de.clusteval.run.InvalidRunModeException;
 import de.clusteval.run.Run;
 import de.clusteval.run.RunAnalysisRun;
 import de.clusteval.run.RunException;
-import de.clusteval.run.statistics.RunStatistic;
-import de.clusteval.run.statistics.UnknownRunDataStatisticException;
-import de.clusteval.run.statistics.UnknownRunStatisticException;
+import de.clusteval.api.stats.RunStatistic;
 import de.clusteval.utils.FileUtils;
 import de.clusteval.utils.InvalidConfigurationFileException;
-import de.clusteval.utils.Statistic;
+import de.clusteval.api.stats.Statistic;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -127,10 +123,10 @@ public class RunAnalysisRunResult extends AnalysisRunResult<String, RunStatistic
      */
     @Override
     protected Map<String, List<RunStatistic>> cloneStatistics(Map<String, List<RunStatistic>> statistics) {
-        final Map<String, List<RunStatistic>> result = new HashMap<String, List<RunStatistic>>();
+        final Map<String, List<RunStatistic>> result = new HashMap<>();
 
         for (Map.Entry<String, List<RunStatistic>> entry : statistics.entrySet()) {
-            List<RunStatistic> newList = new ArrayList<RunStatistic>();
+            List<RunStatistic> newList = new ArrayList<>();
 
             for (RunStatistic elem : entry.getValue()) {
                 newList.add(elem.clone());
@@ -168,10 +164,7 @@ public class RunAnalysisRunResult extends AnalysisRunResult<String, RunStatistic
      * @return The run analysis runresult parsed from the runresult folder.
      *
      * @throws RepositoryAlreadyExistsException
-     * @throws RepositoryAlreadyExistsException
      * @throws InvalidRepositoryException
-     * @throws UnknownRunStatisticException
-     * @throws UnknownDistanceMeasureException
      * @throws IncompatibleParameterOptimizationMethodException
      * @throws UnknownRProgramException
      * @throws UnknownProgramTypeException
@@ -201,19 +194,15 @@ public class RunAnalysisRunResult extends AnalysisRunResult<String, RunStatistic
      * @throws RepositoryConfigNotFoundException
      * @throws ConfigurationException
      * @throws RegisterException
-     * @throws UnknownDataSetTypeException
      * @throws NoDataSetException
      * @throws NumberFormatException
-     * @throws UnknownRunDataStatisticException
      * @throws RunResultParseException
      * @throws UnknownDataPreprocessorException
      * @throws IncompatibleDataSetConfigPreprocessorException
-     * @throws UnknownContextException
      * @throws IncompatibleContextException
      * @throws UnknownParameterType
      * @throws InterruptedException
      * @throws UnknownRunResultPostprocessorException
-     * @throws UnknownDataRandomizerException
      */
     public static RunAnalysisRunResult parseFromRunResultFolder(final IRepository repository, final File runResultFolder)
             throws RepositoryAlreadyExistsException, InvalidRepositoryException, GoldStandardConfigurationException,
@@ -225,13 +214,13 @@ public class RunAnalysisRunResult extends AnalysisRunResult<String, RunStatistic
                    UnknownProgramParameterException, NoRepositoryFoundException, GoldStandardNotFoundException,
                    InvalidOptimizationParameterException, RunException, UnknownDataStatisticException,
                    UnknownProgramTypeException, UnknownRProgramException, IncompatibleParameterOptimizationMethodException,
-                   UnknownDistanceMeasureException, UnknownRunStatisticException, UnknownGoldStandardFormatException,
+                   UnknownGoldStandardFormatException,
                    RepositoryConfigNotFoundException, RepositoryConfigurationException, ConfigurationException,
                    RegisterException, NumberFormatException, NoDataSetException,
-                   UnknownRunDataStatisticException, RunResultParseException, UnknownDataPreprocessorException,
+                   RunResultParseException, UnknownDataPreprocessorException,
                    IncompatibleDataSetConfigPreprocessorException, IncompatibleContextException,
                    UnknownParameterType, InterruptedException, UnknownRunResultPostprocessorException,
-                   UnknownDataRandomizerException, FileNotFoundException, UnknownProviderException {
+                   FileNotFoundException, UnknownProviderException {
         try {
             IRepository childRepository = new RunResultRepository(runResultFolder.getAbsolutePath(), repository);
             childRepository.initialize();

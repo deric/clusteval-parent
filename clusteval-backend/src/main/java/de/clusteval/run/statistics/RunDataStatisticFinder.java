@@ -12,6 +12,7 @@
  */
 package de.clusteval.run.statistics;
 
+import de.clusteval.api.stats.RunDataStatistic;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.stats.IRunDataStatistic;

@@ -20,7 +20,6 @@ import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
-import de.clusteval.api.exceptions.UnknownDistanceMeasureException;
 import de.clusteval.api.exceptions.UnknownParameterType;
 import de.clusteval.api.exceptions.UnknownProgramParameterException;
 import de.clusteval.api.exceptions.UnknownProgramTypeException;
@@ -34,6 +33,7 @@ import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.r.UnknownRProgramException;
+import de.clusteval.api.repository.RepositoryController;
 import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
@@ -43,22 +43,18 @@ import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
-import de.clusteval.data.randomizer.UnknownDataRandomizerException;
 import de.clusteval.framework.repository.Repository;
-import de.clusteval.api.repository.RepositoryController;
 import de.clusteval.framework.repository.config.DefaultRepositoryConfig;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
 import de.clusteval.framework.repository.parse.Parser;
-import de.clusteval.run.statistics.UnknownRunDataStatisticException;
-import de.clusteval.run.statistics.UnknownRunStatisticException;
 import de.clusteval.utils.AbstractClustEvalTest;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import junit.framework.Assert;
 import org.apache.commons.configuration.ConfigurationException;
+import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 /**
@@ -84,13 +80,11 @@ public class ParameterOptimizationRunTest extends AbstractClustEvalTest {
                               InvalidOptimizationParameterException, RunException,
                               UnknownProgramTypeException, UnknownRProgramException,
                               IncompatibleParameterOptimizationMethodException,
-                              UnknownDistanceMeasureException, UnknownProviderException,
+                              UnknownProviderException,
                               UnknownDataPreprocessorException,
                               IncompatibleDataSetConfigPreprocessorException,
                               IncompatibleContextException, UnknownDataStatisticException,
-                              UnknownRunStatisticException, UnknownRunDataStatisticException,
-                              UnknownRunResultPostprocessorException,
-                              UnknownDataRandomizerException {
+                              UnknownRunResultPostprocessorException {
         ParameterOptimizationRun run = Parser.parseFromFile(
                 ParameterOptimizationRun.class, new File(
                         "testCaseRepository/runs/testTwiceTheParam.run")
@@ -101,7 +95,7 @@ public class ParameterOptimizationRunTest extends AbstractClustEvalTest {
 
         List<List<IProgramParameter<?>>> expected = new ArrayList<>();
         expected.add(paramList);
-        Assert.assertEquals(expected, run.optimizationParameters);
+        assertEquals(expected, run.optimizationParameters);
     }
 
     /**
@@ -118,7 +112,6 @@ public class ParameterOptimizationRunTest extends AbstractClustEvalTest {
      * @throws DataConfigNotFoundException
      * @throws RegisterException
      * @throws ConfigurationException
-     * @throws UnknownContextException
      * @throws UnknownParameterType
      * @throws IncompatibleParameterOptimizationMethodException
      * @throws UnknownParameterOptimizationMethodException
@@ -132,8 +125,6 @@ public class ParameterOptimizationRunTest extends AbstractClustEvalTest {
      * @throws UnknownProgramTypeException
      * @throws UnknownRProgramException
      * @throws IncompatibleContextException
-     * @throws UnknownDistanceMeasureException
-     * @throws UnknownDataSetTypeException
      * @throws UnknownDataPreprocessorException
      * @throws IncompatibleDataSetConfigPreprocessorException
      * @throws IOException
@@ -142,8 +133,6 @@ public class ParameterOptimizationRunTest extends AbstractClustEvalTest {
      * @throws RepositoryConfigNotFoundException
      * @throws InvalidRepositoryException
      * @throws RepositoryAlreadyExistsException
-     * @throws UnknownRunDataStatisticException
-     * @throws UnknownRunStatisticException
      * @throws UnknownDataStatisticException
      * @throws DatabaseConnectException
      */
@@ -164,15 +153,14 @@ public class ParameterOptimizationRunTest extends AbstractClustEvalTest {
                                        UnknownProgramParameterException, UnknownRunResultFormatException,
                                        NoRepositoryFoundException, InvalidOptimizationParameterException,
                                        UnknownProgramTypeException, UnknownRProgramException,
-                                       IncompatibleContextException, UnknownDistanceMeasureException,
+                                       IncompatibleContextException,
                                        UnknownProviderException, UnknownDataPreprocessorException,
                                        IncompatibleDataSetConfigPreprocessorException, IOException,
                                        InterruptedException, RepositoryAlreadyExistsException,
                                        InvalidRepositoryException, RepositoryConfigNotFoundException,
                                        RepositoryConfigurationException, UnknownDataStatisticException,
-                                       UnknownRunStatisticException, UnknownRunDataStatisticException,
                                        UnknownRunResultPostprocessorException,
-                                       UnknownDataRandomizerException, DatabaseConnectException {
+                                       DatabaseConnectException {
         ParameterOptimizationRun run = Parser.parseFromFile(
                 ParameterOptimizationRun.class, new File(
                         "testCaseRepository/runs/baechler2003.run")
@@ -192,23 +180,23 @@ public class ParameterOptimizationRunTest extends AbstractClustEvalTest {
                             "testCaseRepository/runs/baechler2003.run")
                     .getAbsoluteFile());
 
-            Assert.assertEquals(run2.logFilePath, run.logFilePath);
-            Assert.assertEquals(run2.runIdentString, run.runIdentString);
-            Assert.assertEquals(run2.startTime, run.startTime);
-            Assert.assertEquals(run2.progress, run.progress);
-            Assert.assertEquals(run2.context, run.context);
-            Assert.assertEquals(run2.results, run.results);
-            Assert.assertEquals(run2.runnables, run.runnables);
-            Assert.assertEquals(run2.dataConfigs, run.dataConfigs);
-            Assert.assertEquals(run2.optimizationMethods,
+            assertEquals(run2.logFilePath, run.logFilePath);
+            assertEquals(run2.runIdentString, run.runIdentString);
+            assertEquals(run2.startTime, run.startTime);
+            assertEquals(run2.progress, run.progress);
+            assertEquals(run2.context, run.context);
+            assertEquals(run2.results, run.results);
+            assertEquals(run2.runnables, run.runnables);
+            assertEquals(run2.dataConfigs, run.dataConfigs);
+            assertEquals(run2.optimizationMethods,
                     run.optimizationMethods);
-            Assert.assertEquals(run2.optimizationParameters,
+            assertEquals(run2.optimizationParameters,
                     run.optimizationParameters);
-            Assert.assertEquals(run2.parameterValues, run.parameterValues);
-            Assert.assertEquals(run2.programConfigs, run.programConfigs);
-            Assert.assertEquals(run2.qualityMeasures, run.qualityMeasures);
-            Assert.assertEquals(run2.runPairs, run.runPairs);
-            Assert.assertEquals(run2.status, run.status);
+            assertEquals(run2.parameterValues, run.parameterValues);
+            assertEquals(run2.programConfigs, run.programConfigs);
+            assertEquals(run2.qualityMeasures, run.qualityMeasures);
+            assertEquals(run2.runPairs, run.runPairs);
+            assertEquals(run2.status, run.status);
         } finally {
             newRepo.terminateSupervisorThread();
         }
