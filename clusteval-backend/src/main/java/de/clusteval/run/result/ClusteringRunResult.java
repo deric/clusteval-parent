@@ -50,7 +50,6 @@ import de.clusteval.api.run.result.RunResultNotFoundException;
 import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
-import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
@@ -341,61 +340,10 @@ public class ClusteringRunResult extends ExecutionRunResult implements IClusteri
         return result;
     }
 
-    /**
-     * @param parentRepository
-     * @param runResultFolder
-     * @param result
-     * @param register
-     * @throws IOException
-     * @throws UnknownRunResultFormatException
-     * @throws UnknownDataSetFormatException
-     * @throws UnknownClusteringQualityMeasureException
-     * @throws InvalidRunModeException
-     * @throws UnknownParameterOptimizationMethodException
-     * @throws NoOptimizableProgramParameterException
-     * @throws UnknownProgramParameterException
-     * @throws UnknownGoldStandardFormatException
-     * @throws InvalidConfigurationFileException
-     * @throws InvalidRepositoryException
-     * @throws RepositoryAlreadyExistsException
-     * @throws NoRepositoryFoundException
-     * @throws GoldStandardNotFoundException
-     * @throws InvalidOptimizationParameterException
-     * @throws GoldStandardConfigurationException
-     * @throws DataSetNotFoundException
-     * @throws DataSetConfigurationException
-     * @throws GoldStandardConfigNotFoundException
-     * @throws DataSetConfigNotFoundException
-     * @throws DataConfigNotFoundException
-     * @throws DataConfigurationException
-     * @throws RunException
-     * @throws UnknownDataStatisticException
-     * @throws UnknownProgramTypeException
-     * @throws UnknownRProgramException
-     * @throws IncompatibleParameterOptimizationMethodException
-     * @throws UnknownDistanceMeasureException
-     * @throws UnknownRunStatisticException
-     * @return The parameter optimization run result parsed from the given
-     *         runresult folder.
-     * @throws RepositoryConfigurationException
-     * @throws RepositoryConfigNotFoundException
-     * @throws ConfigurationException
-     * @throws RegisterException
-     * @throws NoDataSetException
-     * @throws NumberFormatException
-     * @throws UnknownRunDataStatisticException
-     * @throws UnknownDataPreprocessorException
-     * @throws IncompatibleDataSetConfigPreprocessorException
-     * @throws IncompatibleContextException
-     * @throws UnknownParameterType
-     * @throws InterruptedException
-     * @throws UnknownRunResultPostprocessorException
-     * @throws UnknownDataRandomizerException
-     */
     public static Run parseFromRunResultFolder(final IRepository parentRepository, final File runResultFolder,
             final List<ExecutionRunResult> result, final boolean register)
             throws IOException, UnknownRunResultFormatException, UnknownDataSetFormatException,
-                   UnknownClusteringQualityMeasureException, InvalidRunModeException,
+                   InvalidRunModeException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
                    UnknownProgramParameterException, UnknownGoldStandardFormatException,
                    InvalidConfigurationFileException, RepositoryAlreadyExistsException, InvalidRepositoryException,

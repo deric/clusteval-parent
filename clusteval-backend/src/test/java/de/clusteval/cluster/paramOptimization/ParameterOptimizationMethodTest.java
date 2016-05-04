@@ -13,11 +13,14 @@
 package de.clusteval.cluster.paramOptimization;
 
 import ch.qos.logback.classic.Level;
+import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.ContextFactory;
 import de.clusteval.api.IContext;
 import de.clusteval.api.Precision;
 import de.clusteval.api.cluster.ClustEvalValue;
+import de.clusteval.api.cluster.ClusteringEvaluationFactory;
 import de.clusteval.api.cluster.ClusteringEvaluationParameters;
+import de.clusteval.api.cluster.ClusteringQualityMeasure;
 import de.clusteval.api.cluster.ClusteringQualitySet;
 import de.clusteval.api.data.DataConfig;
 import de.clusteval.api.data.DataSetFormatFactory;
@@ -43,8 +46,6 @@ import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
-import de.clusteval.cluster.quality.ClusteringQualityMeasure;
-import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
@@ -70,7 +71,6 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
     @Test
     public void testTransClustCassini250()
             throws UnknownParameterOptimizationMethodException,
-                   UnknownClusteringQualityMeasureException,
                    UnknownDataSetFormatException,
                    InvalidDataSetFormatVersionException, IllegalArgumentException,
                    IOException, RepositoryAlreadyExistsException,
@@ -485,7 +485,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
         ProgramConfig programConfig = getRepository().getStaticObjectWithName(
                 ProgramConfig.class, "TransClust_2");
 
-        ClusteringQualityMeasure f2 = ClusteringQualityMeasure.parseFromString(getRepository(), "TransClustF2ClusteringQualityMeasure",
+        ClusteringEvaluation f2 = ClusteringEvaluationFactory.parseFromString(getRepository(), "TransClustF2ClusteringQualityMeasure",
                 new ClusteringEvaluationParameters());
         ParameterOptimizationMethod method = ParameterOptimizationMethod
                 .parseFromString(

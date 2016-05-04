@@ -42,7 +42,6 @@ import de.clusteval.api.stats.IDataStatistic;
 import de.clusteval.api.stats.IStatistic;
 import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
-import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
@@ -145,56 +144,12 @@ public class DataAnalysisRunResult extends AnalysisRunResult<IDataConfig, IDataS
         return null;
     }
 
-    /**
+    /*
      * @param parentRepository
      * @param runResultFolder
      * @return The data analysis run result parsed from the given runresult
-     *         folder.
+     * folder.
      *
-     * @throws RepositoryAlreadyExistsException
-     * @throws InvalidRepositoryException
-     * @throws UnknownRunStatisticException
-     * @throws UnknownDistanceMeasureException
-     * @throws IncompatibleParameterOptimizationMethodException
-     * @throws UnknownRProgramException
-     * @throws UnknownProgramTypeException
-     * @throws UnknownDataStatisticException
-     * @throws RunException
-     * @throws InvalidOptimizationParameterException
-     * @throws GoldStandardNotFoundException
-     * @throws NoRepositoryFoundException
-     * @throws UnknownProgramParameterException
-     * @throws NoOptimizableProgramParameterException
-     * @throws UnknownParameterOptimizationMethodException
-     * @throws InvalidRunModeException
-     * @throws UnknownClusteringQualityMeasureException
-     * @throws InvalidConfigurationFileException
-     * @throws UnknownDataSetFormatException
-     * @throws UnknownRunResultFormatException
-     * @throws IOException
-     * @throws DataConfigNotFoundException
-     * @throws DataConfigurationException
-     * @throws GoldStandardConfigNotFoundException
-     * @throws DataSetConfigNotFoundException
-     * @throws DataSetNotFoundException
-     * @throws DataSetConfigurationException
-     * @throws GoldStandardConfigurationException
-     * @throws UnknownGoldStandardFormatException
-     * @throws AnalysisRunResultException
-     * @throws RepositoryConfigurationException
-     * @throws RepositoryConfigNotFoundException
-     * @throws ConfigurationException
-     * @throws RegisterException
-     * @throws NoDataSetException
-     * @throws NumberFormatException
-     * @throws UnknownRunDataStatisticException
-     * @throws UnknownDataPreprocessorException
-     * @throws IncompatibleDataSetConfigPreprocessorException
-     * @throws IncompatibleContextException
-     * @throws UnknownParameterType
-     * @throws InterruptedException
-     * @throws UnknownRunResultPostprocessorException
-     * @throws UnknownDataRandomizerException
      */
     public static DataAnalysisRunResult parseFromRunResultFolder(final IRepository parentRepository,
             final File runResultFolder)
@@ -203,7 +158,7 @@ public class DataAnalysisRunResult extends AnalysisRunResult<IDataConfig, IDataS
                    DataSetConfigNotFoundException, GoldStandardConfigNotFoundException, DataConfigurationException,
                    DataConfigNotFoundException, IOException, UnknownRunResultFormatException,
                    UnknownDataSetFormatException, InvalidConfigurationFileException,
-                   UnknownClusteringQualityMeasureException, InvalidRunModeException,
+                   InvalidRunModeException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
                    UnknownProgramParameterException, NoRepositoryFoundException, GoldStandardNotFoundException,
                    InvalidOptimizationParameterException, RunException, UnknownDataStatisticException,

@@ -14,6 +14,7 @@ package de.clusteval.tools;
 
 import ch.qos.logback.classic.Level;
 import de.clusteval.api.ClusteringEvaluation;
+import de.clusteval.api.cluster.ClusteringEvaluationFactory;
 import de.clusteval.api.cluster.ClusteringEvaluationParameters;
 import de.clusteval.api.cluster.ClusteringQualitySet;
 import de.clusteval.api.data.DataConfig;
@@ -51,8 +52,6 @@ import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
-import de.clusteval.cluster.quality.ClusteringQualityMeasure;
-import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
@@ -85,6 +84,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import org.apache.commons.configuration.ConfigurationException;
+import org.openide.util.Exceptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -103,8 +103,7 @@ public class ClustQualityEval {
             final String dataConfigName, final String... qualityMeasures)
             throws RepositoryAlreadyExistsException,
                    InvalidRepositoryException, RepositoryConfigNotFoundException,
-                   RepositoryConfigurationException,
-                   UnknownClusteringQualityMeasureException, InterruptedException,
+                   RepositoryConfigurationException, InterruptedException,
                    UnknownDataSetFormatException, UnknownGoldStandardFormatException,
                    GoldStandardNotFoundException, GoldStandardConfigurationException,
                    DataSetConfigurationException, DataSetNotFoundException,
@@ -150,7 +149,7 @@ public class ClustQualityEval {
         this.dataConfig = this.repo.getStaticObjectWithName(DataConfig.class,
                 dataConfigName);
 
-        final List<ClusteringQualityMeasure> measures = new ArrayList<>();
+        final List<ClusteringEvaluation> measures = new ArrayList<>();
 
         if (qualityMeasures.length == 0) {
             log.error("Please add at least one quality measure to the command line arguments.");
@@ -168,7 +167,7 @@ public class ClustQualityEval {
                 params.put(paramNameValue[0], paramNameValue[1]);
             }
 
-            measures.add(ClusteringQualityMeasure.parseFromString(this.repo,
+            measures.add(ClusteringEvaluationFactory.parseFromString(this.repo,
                     measureSplit[0], params));
         }
 
@@ -347,12 +346,12 @@ public class ClustQualityEval {
                                     measures = new ArrayList<>();
                                     for (int i = 2; i < value.length; i++) {
                                         try {
-                                            measures.add(ClusteringQualityMeasure
+                                            measures.add(ClusteringEvaluationFactory
                                                     .parseFromString(parent,
                                                             value[i],
                                                             new ClusteringEvaluationParameters()));
-                                        } catch (UnknownClusteringQualityMeasureException e) {
-                                            e.printStackTrace();
+                                        } catch (UnknownProviderException ex) {
+                                            Exceptions.printStackTrace(ex);
                                             this.terminate();
                                         }
                                     }
@@ -451,7 +450,7 @@ public class ClustQualityEval {
                 StringBuilder sb = new StringBuilder();
                 sb.append(value[0]);
                 if (value[0].contains("qualityMeasures = ")) {
-                    for (ClusteringQualityMeasure m : measures) {
+                    for (ClusteringEvaluation m : measures) {
                         if (!value[0].contains(m.toString())) {
                             sb.append(",");
                             sb.append(m.toString());
@@ -472,8 +471,7 @@ public class ClustQualityEval {
     public static void main(String[] args)
             throws RepositoryAlreadyExistsException,
                    InvalidRepositoryException, RepositoryConfigNotFoundException,
-                   RepositoryConfigurationException,
-                   UnknownClusteringQualityMeasureException, InterruptedException,
+                   RepositoryConfigurationException, InterruptedException,
                    UnknownDataSetFormatException, UnknownGoldStandardFormatException,
                    GoldStandardNotFoundException, GoldStandardConfigurationException,
                    DataSetConfigurationException, DataSetNotFoundException,

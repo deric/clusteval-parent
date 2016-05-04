@@ -44,7 +44,6 @@ import de.clusteval.api.run.IRunResultFormat;
 import de.clusteval.api.run.RunResultFormatFactory;
 import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
-import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
@@ -85,8 +84,7 @@ class ProgramConfigParser extends RepositoryObjectParser<ProgramConfig> {
      */
     @Override
     public void parseFromFile(File absPath)
-            throws NoRepositoryFoundException, ConfigurationException,
-                   UnknownClusteringQualityMeasureException, RunException,
+            throws NoRepositoryFoundException, ConfigurationException, RunException,
                    UnknownDataSetFormatException, FileNotFoundException, RegisterException, UnknownParameterType,
                    IncompatibleContextException, UnknownRunResultFormatException, InvalidOptimizationParameterException,
                    UnknownProgramParameterException, UnknownProgramTypeException, UnknownRProgramException,

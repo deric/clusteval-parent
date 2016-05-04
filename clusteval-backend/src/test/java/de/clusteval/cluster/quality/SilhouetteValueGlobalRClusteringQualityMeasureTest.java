@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.cluster.quality;
 
+import de.clusteval.api.cluster.ClusteringQualityMeasure;
 import ch.qos.logback.classic.Level;
 import de.clusteval.api.ContextFactory;
 import de.clusteval.api.IContext;

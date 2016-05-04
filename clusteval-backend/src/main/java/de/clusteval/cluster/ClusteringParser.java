@@ -12,23 +12,25 @@
  */
 package de.clusteval.cluster;
 
-import de.clusteval.api.cluster.ClustEvalValue;
-import de.clusteval.api.cluster.ClusteringQualitySet;
-import de.clusteval.api.repository.IRepository;
-import de.clusteval.cluster.quality.ClusteringQualityMeasure;
-import de.clusteval.api.cluster.ClusteringEvaluationParameters;
-import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
-import de.clusteval.api.exceptions.NoRepositoryFoundException;
-import de.clusteval.api.repository.RepositoryController;
-import de.clusteval.api.program.ParameterSet;
+import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.Pair;
-import de.clusteval.utils.TextFileParser;
+import de.clusteval.api.cluster.ClustEvalValue;
+import de.clusteval.api.cluster.ClusteringEvaluationFactory;
+import de.clusteval.api.cluster.ClusteringEvaluationParameters;
+import de.clusteval.api.cluster.ClusteringQualitySet;
+import de.clusteval.api.exceptions.NoRepositoryFoundException;
+import de.clusteval.api.factory.UnknownProviderException;
+import de.clusteval.api.program.ParameterSet;
+import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.repository.RepositoryController;
 import de.clusteval.utils.TextFileMapParser;
+import de.clusteval.utils.TextFileParser;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import org.openide.util.Exceptions;
 
 /**
  * A parser for files containing parameter sets and clusterings.
@@ -67,7 +69,7 @@ public class ClusteringParser extends TextFileParser {
         super(absFilePath, new int[]{0}, new int[]{1});
         this.repository = repository;
         this.setLockTargetFile(true);
-        this.params = new ArrayList<String>();
+        this.params = new ArrayList<>();
         this.parseQualities = parseQualities;
     }
 
@@ -135,11 +137,11 @@ public class ClusteringParser extends TextFileParser {
                     Map<String, String> result = parser.getResult();
                     ClusteringQualitySet qualitySet = new ClusteringQualitySet();
                     for (String measure : result.keySet()) {
-                        ClusteringQualityMeasure clMeasure;
+                        ClusteringEvaluation clMeasure;
 
                         // TODO: ClusteringQualityMeasureParameters not
                         // initialized
-                        clMeasure = ClusteringQualityMeasure.parseFromString(this.repository, measure,
+                        clMeasure = ClusteringEvaluationFactory.parseFromString(this.repository, measure,
                                 new ClusteringEvaluationParameters());
                         qualitySet.put(clMeasure, ClustEvalValue
                                 .getForDouble(Double.parseDouble(result
@@ -148,8 +150,8 @@ public class ClusteringParser extends TextFileParser {
                     this.result.getSecond().setQualities(qualitySet);
                 } catch (IOException e) {
                     e.printStackTrace();
-                } catch (UnknownClusteringQualityMeasureException e) {
-                    e.printStackTrace();
+                } catch (UnknownProviderException ex) {
+                    Exceptions.printStackTrace(ex);
                 }
             }
         }

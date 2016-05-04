@@ -38,9 +38,10 @@ import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.IRunResult;
+import de.clusteval.api.stats.RunDataStatistic;
+import de.clusteval.api.stats.Statistic;
 import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
-import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
@@ -55,10 +56,8 @@ import de.clusteval.run.InvalidRunModeException;
 import de.clusteval.run.Run;
 import de.clusteval.run.RunDataAnalysisRun;
 import de.clusteval.run.RunException;
-import de.clusteval.api.stats.RunDataStatistic;
 import de.clusteval.utils.FileUtils;
 import de.clusteval.utils.InvalidConfigurationFileException;
-import de.clusteval.api.stats.Statistic;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -170,7 +169,6 @@ public class RunDataAnalysisRunResult extends AnalysisRunResult<Pair<List<String
      *         folder.
      * @throws RepositoryAlreadyExistsException
      * @throws InvalidRepositoryException
-     * @throws UnknownDistanceMeasureException
      * @throws IncompatibleParameterOptimizationMethodException
      * @throws UnknownRProgramException
      * @throws UnknownProgramTypeException
@@ -183,7 +181,6 @@ public class RunDataAnalysisRunResult extends AnalysisRunResult<Pair<List<String
      * @throws NoOptimizableProgramParameterException
      * @throws UnknownParameterOptimizationMethodException
      * @throws InvalidRunModeException
-     * @throws UnknownClusteringQualityMeasureException
      * @throws InvalidConfigurationFileException
      * @throws UnknownDataSetFormatException
      * @throws UnknownRunResultFormatException
@@ -195,7 +192,6 @@ public class RunDataAnalysisRunResult extends AnalysisRunResult<Pair<List<String
      * @throws DataSetNotFoundException
      * @throws DataSetConfigurationException
      * @throws GoldStandardConfigurationException
-     * @throws UnknownRunStatisticException
      * @throws UnknownGoldStandardFormatException
      * @throws RepositoryConfigurationException
      * @throws RepositoryConfigNotFoundException
@@ -203,7 +199,6 @@ public class RunDataAnalysisRunResult extends AnalysisRunResult<Pair<List<String
      * @throws RegisterException
      * @throws NoDataSetException
      * @throws NumberFormatException
-     * @throws UnknownRunDataStatisticException
      * @throws RunResultParseException
      * @throws UnknownDataPreprocessorException
      * @throws IncompatibleDataSetConfigPreprocessorException
@@ -219,7 +214,7 @@ public class RunDataAnalysisRunResult extends AnalysisRunResult<Pair<List<String
                    DataSetConfigNotFoundException, GoldStandardConfigNotFoundException, DataConfigurationException,
                    DataConfigNotFoundException, IOException, UnknownRunResultFormatException,
                    UnknownDataSetFormatException, InvalidConfigurationFileException,
-                   UnknownClusteringQualityMeasureException, InvalidRunModeException,
+                   InvalidRunModeException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
                    UnknownProgramParameterException, NoRepositoryFoundException, GoldStandardNotFoundException,
                    InvalidOptimizationParameterException, RunException, UnknownDataStatisticException,

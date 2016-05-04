@@ -10,12 +10,9 @@
  *     Christian Wiwie - initial API and implementation
  *****************************************************************************
  */
-package de.clusteval.cluster.quality;
+package de.clusteval.api.cluster;
 
 import de.clusteval.api.ClusteringEvaluation;
-import de.clusteval.api.cluster.ClustEvalValue;
-import de.clusteval.api.cluster.ClusteringEvaluationParameters;
-import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.program.RegisterException;
@@ -24,7 +21,6 @@ import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.r.ROperationNotSupported;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.cluster.Clustering;
 import de.clusteval.api.repository.RepositoryObject;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
@@ -46,59 +42,12 @@ import java.util.List;
  * (see {@link #isBetterThan} and {@link #isBetterThanHelper} ).
  * <p>
  *
- * {@code
- *
- * A clustering quality measure MyClusteringQualityMeasure can be added to ClustEval by
-
- 1. extending the class :java:ref:`ClusteringQualityMeasure` with your own class MyClusteringQualityMeasure. You have to provide your own implementations for the following methods, otherwise the framework will not be able to load your clustering quality measure.
-
-   * public :java:ref:`ClusteringQualityMeasure(Repository, boolean, long, File, ClusteringQualityMeasureParameters)` : The constructor for your distance measure. This constructor has to be implemented and public.
-   * public :java:ref:`ClusteringQualityMeasure(MyClusteringQualityMeasure)` : The copy constructor for your distance measure. This constructor has to be implemented and public.
-   * public :java:ref:`getAlias()` : This method returns a readable alias for this clustering quality measure which is used e.g. on the website.
-   * public :java:ref:`getMinimum()` : Returns the minimal value this measure can calculate.
-   * public :java:ref:`getMaximum()` : Returns the maximal value this measure can calculate.
-   * public :java:ref:`requiresGoldStandard()` : Indicates, whether this clustering quality measure requires a goldstandard to assess the quality of a given clustering.
-   * public :java:ref:`getQualityOfClustering(Clustering)` : This method is the core of your clustering quality measure. It assesses and returns the quality of the given clustering.
-   * public :java:ref:`isBetterThanHelper(ClustEvalValue)` : This method is used by sorting algorithms of the framework to compare clustering quality measure results and find the optimal parameter sets.
-
- 2. Creating a jar file named MyClusteringQualityMeasure.jar containing the MyClusteringQualityMeasure class compiled on your machine in the correct folder structure corresponding to the packages:
-
-   * de/clusteval/cluster/quality/MyClusteringQualityMeasure.class
-
- 3. Putting the MyClusteringQualityMeasure.jar into the clustering quality measure folder of the repository:
-
-   * <REPOSITORY ROOT>/supp/clustering/qualityMeasures
-   * The backend server will recognize and try to load the new clustering quality measure automatically the next time, the ClusteringQualityMeasureFinderThread checks the filesystem.
-
- }
  *
  * @author Christian Wiwie
  */
 public abstract class ClusteringQualityMeasure extends RepositoryObject implements ClusteringEvaluation {
 
     protected ClusteringEvaluationParameters parameters;
-
-    /**
-     *
-     * @param repo
-     * @param register
-     * @param changeDate
-     * @param absPath
-     * @param parameters
-     * @throws RegisterException
-     */
-    public ClusteringQualityMeasure(final IRepository repo,
-            final boolean register, final long changeDate, final File absPath,
-            final ClusteringEvaluationParameters parameters)
-            throws RegisterException {
-        super(repo, false, changeDate, absPath);
-
-        this.parameters = parameters;
-
-        if (register) {
-            this.register();
-        }
-    }
 
     /**
      * The copy constructor of clustering quality measures.
@@ -110,6 +59,15 @@ public abstract class ClusteringQualityMeasure extends RepositoryObject implemen
             throws RegisterException {
         super(other);
         this.parameters = other.parameters.clone();
+    }
+
+    public void init(final IRepository repo,
+            final long changeDate, final File absPath,
+            final ClusteringEvaluationParameters parameters)
+            throws RegisterException {
+        super.init(repo, changeDate, absPath);
+        this.parameters = parameters;
+
     }
 
     /**
@@ -138,42 +96,6 @@ public abstract class ClusteringQualityMeasure extends RepositoryObject implemen
         return getQualityOfClustering(clustering, clustering, dataConfig);
     }
 
-    /**
-     * Parses the from string.
-     *
-     * @param repository     the repository
-     * @param qualityMeasure the quality measure
-     * @param parameters
-     * @return the clustering quality measure
-     * @throws UnknownClusteringQualityMeasureException the unknown clustering
-     * quality measure exception
-     */
-    public static ClusteringQualityMeasure parseFromString(
-            final IRepository repository, String qualityMeasure,
-            ClusteringEvaluationParameters parameters)
-            throws UnknownClusteringQualityMeasureException {
-
-        Class<? extends ClusteringQualityMeasure> c = repository
-                .getRegisteredClass(ClusteringQualityMeasure.class,
-                        "de.clusteval.cluster.quality." + qualityMeasure);
-        try {
-            ClusteringQualityMeasure measure = c.getConstructor(IRepository.class, boolean.class, long.class, File.class,
-                    ClusteringEvaluationParameters.class).newInstance(
-                            repository, false, System.currentTimeMillis(),
-                            new File(qualityMeasure), parameters);
-
-            return measure;
-        } catch (InstantiationException | IllegalAccessException | IllegalArgumentException |
-                 SecurityException | InvocationTargetException | NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (NullPointerException e) {
-
-        }
-        throw new UnknownClusteringQualityMeasureException("\""
-                + qualityMeasure
-                + "\" is not a known clustering quality measure.");
-    }
-
     /*
      * (non-Javadoc)
      *
@@ -197,7 +119,7 @@ public abstract class ClusteringQualityMeasure extends RepositoryObject implemen
             return this.getClass().getConstructor(this.getClass())
                     .newInstance(this);
         } catch (IllegalArgumentException | SecurityException | InstantiationException |
-                 IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
         this.log.warn("Cloning instance of class "
@@ -253,6 +175,11 @@ public abstract class ClusteringQualityMeasure extends RepositoryObject implemen
             return false;
         }
         return isBetterThanHelper(quality1, quality2);
+    }
+
+    @Override
+    public void setParams(ClusteringEvaluationParameters params) {
+        this.parameters = params;
     }
 
 }

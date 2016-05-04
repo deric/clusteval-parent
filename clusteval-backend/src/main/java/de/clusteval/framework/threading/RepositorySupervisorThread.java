@@ -20,7 +20,7 @@ import de.clusteval.api.data.GoldStandardConfig;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.RunResultFormat;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethodFinderThread;
-import de.clusteval.cluster.quality.ClusteringQualityMeasure;
+import de.clusteval.api.cluster.ClusteringQualityMeasure;
 import de.clusteval.data.DataConfigFinderThread;
 import de.clusteval.data.dataset.DataSetConfigFinderThread;
 import de.clusteval.data.dataset.DataSetFinderThread;

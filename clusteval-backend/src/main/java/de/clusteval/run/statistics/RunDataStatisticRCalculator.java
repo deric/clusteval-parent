@@ -10,7 +10,6 @@
  ***************************************************************************** */
 package de.clusteval.run.statistics;
 
-import de.clusteval.api.stats.RunDataStatistic;
 import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigurationException;
@@ -36,9 +35,9 @@ import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.stats.RunDataStatistic;
 import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
-import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
@@ -138,7 +137,7 @@ public abstract class RunDataStatisticRCalculator<T extends RunDataStatistic> ex
                    DataSetNotFoundException, DataSetConfigNotFoundException,
                    GoldStandardConfigNotFoundException, DataConfigurationException,
                    DataConfigNotFoundException, UnknownRunResultFormatException,
-                   UnknownClusteringQualityMeasureException, InvalidRunModeException,
+                   InvalidRunModeException,
                    UnknownParameterOptimizationMethodException,
                    NoOptimizableProgramParameterException,
                    UnknownProgramParameterException, InternalAttributeException,

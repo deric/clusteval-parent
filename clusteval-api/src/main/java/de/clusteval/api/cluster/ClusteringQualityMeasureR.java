@@ -10,21 +10,18 @@
  *     Christian Wiwie - initial API and implementation
  *****************************************************************************
  */
-package de.clusteval.cluster.quality;
+package de.clusteval.api.cluster;
 
-import de.clusteval.api.cluster.ClusteringEvaluationParameters;
 import de.clusteval.api.ClusteringEvaluation;
-import de.clusteval.api.cluster.IClustering;
-import de.clusteval.api.cluster.ClustEvalValue;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
-import de.clusteval.api.r.RNotAvailableException;
-import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.RLibraryInferior;
+import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.r.ROperationNotSupported;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RepositoryObject;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;

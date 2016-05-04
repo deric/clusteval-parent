@@ -37,9 +37,10 @@ import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.IRunResult;
+import de.clusteval.api.stats.RunStatistic;
+import de.clusteval.api.stats.Statistic;
 import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
-import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
@@ -54,10 +55,8 @@ import de.clusteval.run.InvalidRunModeException;
 import de.clusteval.run.Run;
 import de.clusteval.run.RunAnalysisRun;
 import de.clusteval.run.RunException;
-import de.clusteval.api.stats.RunStatistic;
 import de.clusteval.utils.FileUtils;
 import de.clusteval.utils.InvalidConfigurationFileException;
-import de.clusteval.api.stats.Statistic;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -154,62 +153,12 @@ public class RunAnalysisRunResult extends AnalysisRunResult<String, RunStatistic
         return null;
     }
 
-    /**
-     * @param repository
-     *                        The repository in which we want to register the parsed
-     *                        runresult.
-     * @param runResultFolder
-     *                        The runresult folder from which we want to parse the
-     *                        runresult.
-     * @return The run analysis runresult parsed from the runresult folder.
-     *
-     * @throws RepositoryAlreadyExistsException
-     * @throws InvalidRepositoryException
-     * @throws IncompatibleParameterOptimizationMethodException
-     * @throws UnknownRProgramException
-     * @throws UnknownProgramTypeException
-     * @throws UnknownDataStatisticException
-     * @throws RunException
-     * @throws InvalidOptimizationParameterException
-     * @throws GoldStandardNotFoundException
-     * @throws NoRepositoryFoundException
-     * @throws UnknownProgramParameterException
-     * @throws NoOptimizableProgramParameterException
-     * @throws UnknownParameterOptimizationMethodException
-     * @throws InvalidRunModeException
-     * @throws UnknownClusteringQualityMeasureException
-     * @throws InvalidConfigurationFileException
-     * @throws UnknownDataSetFormatException
-     * @throws UnknownRunResultFormatException
-     * @throws IOException
-     * @throws DataConfigNotFoundException
-     * @throws DataConfigurationException
-     * @throws GoldStandardConfigNotFoundException
-     * @throws DataSetConfigNotFoundException
-     * @throws DataSetNotFoundException
-     * @throws DataSetConfigurationException
-     * @throws GoldStandardConfigurationException
-     * @throws UnknownGoldStandardFormatException
-     * @throws RepositoryConfigurationException
-     * @throws RepositoryConfigNotFoundException
-     * @throws ConfigurationException
-     * @throws RegisterException
-     * @throws NoDataSetException
-     * @throws NumberFormatException
-     * @throws RunResultParseException
-     * @throws UnknownDataPreprocessorException
-     * @throws IncompatibleDataSetConfigPreprocessorException
-     * @throws IncompatibleContextException
-     * @throws UnknownParameterType
-     * @throws InterruptedException
-     * @throws UnknownRunResultPostprocessorException
-     */
     public static RunAnalysisRunResult parseFromRunResultFolder(final IRepository repository, final File runResultFolder)
             throws RepositoryAlreadyExistsException, InvalidRepositoryException, GoldStandardConfigurationException,
                    DataSetConfigurationException, DataSetNotFoundException, DataSetConfigNotFoundException,
                    GoldStandardConfigNotFoundException, DataConfigurationException, DataConfigNotFoundException, IOException,
                    UnknownRunResultFormatException, UnknownDataSetFormatException, InvalidConfigurationFileException,
-                   UnknownClusteringQualityMeasureException, InvalidRunModeException,
+                   InvalidRunModeException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
                    UnknownProgramParameterException, NoRepositoryFoundException, GoldStandardNotFoundException,
                    InvalidOptimizationParameterException, RunException, UnknownDataStatisticException,
@@ -275,17 +224,12 @@ public class RunAnalysisRunResult extends AnalysisRunResult<String, RunStatistic
         return (RunAnalysisRun) super.getRun();
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.clusteval.run.result.RunResult#loadIntoMemory()
-     */
     @Override
     public void loadIntoMemory() throws RunResultParseException {
 
         for (final String uniqueRunIdentifier : this.getRun().getUniqueRunAnalysisRunIdentifiers()) {
 
-            List<RunStatistic> statistics = new ArrayList<RunStatistic>();
+            List<RunStatistic> statistics = new ArrayList<>();
             for (final Statistic runStatistic : this.getRun().getStatistics()) {
                 final File completeFile = new File(FileUtils.buildPath(absPath.getAbsolutePath(),
                         uniqueRunIdentifier + "_" + runStatistic.getIdentifier() + ".txt"));
@@ -303,21 +247,11 @@ public class RunAnalysisRunResult extends AnalysisRunResult<String, RunStatistic
         }
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.clusteval.run.result.RunResult#isInMemory()
-     */
     @Override
     public boolean isInMemory() {
         return this.statistics.isEmpty();
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.clusteval.run.result.RunResult#unloadFromMemory()
-     */
     @Override
     public void unloadFromMemory() {
         this.statistics.clear();

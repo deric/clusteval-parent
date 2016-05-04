@@ -25,7 +25,7 @@ import de.clusteval.api.repository.RepositoryObject;
 import de.clusteval.api.run.RunResultFormat;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
-import de.clusteval.cluster.quality.ClusteringQualityMeasure;
+import de.clusteval.api.cluster.ClusteringQualityMeasure;
 import de.clusteval.data.statistics.DataStatistic;
 import de.clusteval.program.DoubleProgramParameter;
 import de.clusteval.program.IntegerProgramParameter;

@@ -16,8 +16,9 @@
  */
 package de.clusteval.api;
 
-import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.cluster.ClustEvalValue;
+import de.clusteval.api.cluster.ClusteringEvaluationParameters;
+import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.r.IRengine;
@@ -31,6 +32,8 @@ import de.clusteval.api.repository.IRepositoryObject;
  * @author deric
  */
 public interface ClusteringEvaluation extends IRepositoryObject {
+
+    String getName();
 
     /**
      * This method has to be implemented in subclasses to indiciate, whether a
@@ -91,4 +94,5 @@ public interface ClusteringEvaluation extends IRepositoryObject {
                    IllegalArgumentException, InterruptedException, RException,
                    ROperationNotSupported, RNotAvailableException;
 
+    void setParams(ClusteringEvaluationParameters params);
 }

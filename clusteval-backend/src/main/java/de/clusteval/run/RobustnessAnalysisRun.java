@@ -60,7 +60,6 @@ import de.clusteval.api.run.IScheduler;
 import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
-import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
@@ -514,50 +513,6 @@ public class RobustnessAnalysisRun extends ClusteringRun {
         }
     }
 
-    /**
-     * @param repository
-     * @throws UnknownRunResultPostprocessorException
-     * @throws InterruptedException
-     * @throws IncompatibleContextException
-     * @throws IncompatibleDataSetConfigPreprocessorException
-     * @throws UnknownDataPreprocessorException
-     * @throws RepositoryConfigurationException
-     * @throws RepositoryConfigNotFoundException
-     * @throws IncompatibleParameterOptimizationMethodException
-     * @throws UnknownRProgramException
-     * @throws UnknownProgramTypeException
-     * @throws UnknownDataStatisticException
-     * @throws RunException
-     * @throws InvalidOptimizationParameterException
-     * @throws NoRepositoryFoundException
-     * @throws InvalidRepositoryException
-     * @throws RepositoryAlreadyExistsException
-     * @throws InvalidConfigurationFileException
-     * @throws UnknownProgramParameterException
-     * @throws NoOptimizableProgramParameterException
-     * @throws UnknownParameterOptimizationMethodException
-     * @throws InvalidRunModeException
-     * @throws UnknownClusteringQualityMeasureException
-     * @throws UnknownRunResultFormatException
-     * @throws IOException
-     * @throws UnknownParameterType
-     * @throws RegisterException
-     * @throws ConfigurationException
-     * @throws RunResultParseException
-     * @throws NumberFormatException
-     * @throws DataConfigNotFoundException
-     * @throws DataConfigurationException
-     * @throws NoDataSetException
-     * @throws GoldStandardConfigNotFoundException
-     * @throws DataSetConfigNotFoundException
-     * @throws DataSetNotFoundException
-     * @throws DataSetConfigurationException
-     * @throws GoldStandardConfigurationException
-     * @throws GoldStandardNotFoundException
-     * @throws UnknownGoldStandardFormatException
-     * @throws UnknownDataSetFormatException
-     *
-     */
     protected void findBestParamsAndInitParameterValues(
             final IRepository repository)
             throws UnknownDataSetFormatException,
@@ -569,7 +524,7 @@ public class RobustnessAnalysisRun extends ClusteringRun {
                    NumberFormatException, RunResultParseException,
                    ConfigurationException, RegisterException,
                    UnknownParameterType, IOException, UnknownRunResultFormatException,
-                   UnknownClusteringQualityMeasureException, InvalidRunModeException,
+                   InvalidRunModeException,
                    UnknownParameterOptimizationMethodException,
                    NoOptimizableProgramParameterException,
                    UnknownProgramParameterException,

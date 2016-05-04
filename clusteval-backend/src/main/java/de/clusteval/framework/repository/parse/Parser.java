@@ -17,7 +17,6 @@
 package de.clusteval.framework.repository.parse;
 
 import de.clusteval.api.ClusteringEvaluation;
-import de.clusteval.api.cluster.ClusteringEvaluationParameters;
 import de.clusteval.api.data.DataConfig;
 import de.clusteval.api.data.DataRandomizerFactory;
 import de.clusteval.api.data.GoldStandard;
@@ -54,11 +53,11 @@ import de.clusteval.api.repository.IRepositoryObject;
 import de.clusteval.api.repository.RepositoryController;
 import de.clusteval.api.run.IRun;
 import de.clusteval.api.stats.IDataStatistic;
+import de.clusteval.api.stats.RunDataStatistic;
+import de.clusteval.api.stats.RunStatistic;
 import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
-import de.clusteval.cluster.quality.ClusteringQualityMeasure;
-import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
@@ -82,8 +81,6 @@ import de.clusteval.run.RunDataAnalysisRun;
 import de.clusteval.run.RunException;
 import de.clusteval.run.result.postprocessing.RunResultPostprocessor;
 import de.clusteval.run.result.postprocessing.RunResultPostprocessorParameters;
-import de.clusteval.api.stats.RunDataStatistic;
-import de.clusteval.api.stats.RunStatistic;
 import de.clusteval.utils.FileUtils;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -155,7 +152,7 @@ public abstract class Parser<P extends IRepositoryObject> {
                    GoldStandardConfigNotFoundException, NoDataSetException, DataConfigurationException,
                    DataConfigNotFoundException, NumberFormatException, ConfigurationException,
                    FileNotFoundException, RegisterException, UnknownParameterType, NoRepositoryFoundException,
-                   UnknownClusteringQualityMeasureException, RunException, IncompatibleContextException,
+                   RunException, IncompatibleContextException,
                    UnknownRunResultFormatException, InvalidOptimizationParameterException, UnknownProgramParameterException,
                    UnknownProgramTypeException, UnknownRProgramException,
                    UnknownDataPreprocessorException,
@@ -174,7 +171,7 @@ public abstract class Parser<P extends IRepositoryObject> {
                    DataSetNotFoundException, DataSetConfigNotFoundException, GoldStandardConfigNotFoundException,
                    NoDataSetException, DataConfigurationException, DataConfigNotFoundException, NumberFormatException,
                    ConfigurationException, FileNotFoundException, RegisterException,
-                   UnknownParameterType, NoRepositoryFoundException, UnknownClusteringQualityMeasureException, RunException,
+                   UnknownParameterType, NoRepositoryFoundException, RunException,
                    IncompatibleContextException, UnknownRunResultFormatException, InvalidOptimizationParameterException,
                    UnknownProgramParameterException, UnknownProgramTypeException, UnknownRProgramException,
                    UnknownDataPreprocessorException,
@@ -210,7 +207,7 @@ public abstract class Parser<P extends IRepositoryObject> {
                    DataSetNotFoundException, DataSetConfigNotFoundException, GoldStandardConfigNotFoundException,
                    NoDataSetException, DataConfigurationException, DataConfigNotFoundException, NumberFormatException,
                    ConfigurationException, FileNotFoundException, RegisterException,
-                   UnknownParameterType, NoRepositoryFoundException, UnknownClusteringQualityMeasureException, RunException,
+                   UnknownParameterType, NoRepositoryFoundException, RunException,
                    IncompatibleContextException, UnknownRunResultFormatException, InvalidOptimizationParameterException,
                    UnknownProgramParameterException, UnknownProgramTypeException, UnknownRProgramException,
                    UnknownDataPreprocessorException,
@@ -226,8 +223,7 @@ public abstract class Parser<P extends IRepositoryObject> {
     protected P result;
 
     public abstract void parseFromFile(final File absPath)
-            throws NoRepositoryFoundException, ConfigurationException,
-                   UnknownClusteringQualityMeasureException, RunException,
+            throws NoRepositoryFoundException, ConfigurationException, RunException,
                    UnknownDataSetFormatException, FileNotFoundException, RegisterException, UnknownParameterType,
                    IncompatibleContextException, UnknownRunResultFormatException, InvalidOptimizationParameterException,
                    UnknownProgramParameterException, UnknownProgramTypeException, UnknownRProgramException,
@@ -259,8 +255,7 @@ class ClusteringRunParser extends ExecutionRunParser<ClusteringRun> {
      */
     @Override
     public void parseFromFile(File absPath)
-            throws ConfigurationException,
-                   NoRepositoryFoundException, UnknownClusteringQualityMeasureException, RunException,
+            throws ConfigurationException, NoRepositoryFoundException, RunException,
                    UnknownDataSetFormatException, FileNotFoundException, RegisterException, UnknownParameterType,
                    IncompatibleContextException, UnknownRunResultFormatException, InvalidOptimizationParameterException,
                    UnknownProgramParameterException, UnknownProgramTypeException, UnknownRProgramException,
@@ -294,8 +289,7 @@ class RobustnessAnalysisRunParser extends ExecutionRunParser<RobustnessAnalysisR
      */
     @Override
     public void parseFromFile(File absPath)
-            throws ConfigurationException,
-                   NoRepositoryFoundException, UnknownClusteringQualityMeasureException, RunException,
+            throws ConfigurationException, NoRepositoryFoundException, RunException,
                    UnknownDataSetFormatException, FileNotFoundException, RegisterException, UnknownParameterType,
                    IncompatibleContextException, UnknownRunResultFormatException, InvalidOptimizationParameterException,
                    UnknownProgramParameterException, UnknownProgramTypeException, UnknownRProgramException,
@@ -363,7 +357,7 @@ class RobustnessAnalysisRunParser extends ExecutionRunParser<RobustnessAnalysisR
                    RegisterException, NoRepositoryFoundException,
                    UnknownDataPreprocessorException, IncompatibleDataSetConfigPreprocessorException, ConfigurationException,
                    FileNotFoundException, UnknownParameterType,
-                   UnknownClusteringQualityMeasureException, IncompatibleContextException, UnknownRunResultFormatException,
+                   IncompatibleContextException, UnknownRunResultFormatException,
                    InvalidOptimizationParameterException, UnknownProgramParameterException, UnknownProgramTypeException,
                    UnknownRProgramException, IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
@@ -424,8 +418,7 @@ class DataAnalysisRunParser extends AnalysisRunParser<DataAnalysisRun> {
 
     @Override
     public void parseFromFile(File absPath)
-            throws NoRepositoryFoundException, ConfigurationException,
-                   UnknownClusteringQualityMeasureException, RunException,
+            throws NoRepositoryFoundException, ConfigurationException, RunException,
                    UnknownDataSetFormatException, FileNotFoundException, RegisterException, UnknownParameterType,
                    IncompatibleContextException, UnknownRunResultFormatException, InvalidOptimizationParameterException,
                    UnknownProgramParameterException, UnknownProgramTypeException, UnknownRProgramException,
@@ -491,8 +484,7 @@ class ExecutionRunParser<T extends ExecutionRun> extends RunParser<T> {
 
     @Override
     public void parseFromFile(final File absPath)
-            throws ConfigurationException,
-                   NoRepositoryFoundException, UnknownClusteringQualityMeasureException, RunException,
+            throws ConfigurationException, NoRepositoryFoundException, RunException,
                    UnknownDataSetFormatException, FileNotFoundException, RegisterException, UnknownParameterType,
                    IncompatibleContextException, UnknownRunResultFormatException, InvalidOptimizationParameterException,
                    UnknownProgramParameterException, UnknownProgramTypeException, UnknownRProgramException,
@@ -544,8 +536,7 @@ class ExecutionRunParser<T extends ExecutionRun> extends RunParser<T> {
                    NoOptimizableProgramParameterException, GoldStandardNotFoundException, GoldStandardConfigurationException,
                    DataSetConfigurationException, DataSetNotFoundException, DataSetConfigNotFoundException,
                    GoldStandardConfigNotFoundException, NoDataSetException, DataConfigurationException,
-                   DataConfigNotFoundException, NumberFormatException, UnknownClusteringQualityMeasureException,
-                   UnknownDataPreprocessorException,
+                   DataConfigNotFoundException, NumberFormatException, UnknownDataPreprocessorException,
                    IncompatibleDataSetConfigPreprocessorException, IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException, UnknownDataStatisticException,
                    UnknownRunResultPostprocessorException, UnknownProviderException {
@@ -583,43 +574,12 @@ class ExecutionRunParser<T extends ExecutionRun> extends RunParser<T> {
         return true;
     }
 
-    protected void parseQualityMeasures()
-            throws RunException, UnknownClusteringQualityMeasureException, ConfigurationException {
+    protected void parseQualityMeasures() throws RunException, ConfigurationException {
 
         if (getProps().getStringArray("qualityMeasures").length == 0) {
             throw new RunException("At least one quality measure must be specified");
         }
-        /**
-         * We catch the exceptions such that all quality measures are tried to
-         * be loaded once so that they are ALL registered as missing in the
-         * repository.
-         */
-        List<UnknownClusteringQualityMeasureException> thrownExceptions = new ArrayList<>();
-        for (String qualityMeasure : getProps().getStringArray("qualityMeasures")) {
-            try {
-                // parse parameters for this quality measure
-                ClusteringEvaluationParameters p = new ClusteringEvaluationParameters();
-                if (getProps().getSections().contains(qualityMeasure)) {
-                    Iterator<String> parameters = getProps().getKeys(qualityMeasure);
-                    while (parameters.hasNext()) {
-                        String param = parameters.next();
-                        String value = getProps().getString(param);
 
-                        p.put(param, value);
-                    }
-                }
-                ClusteringQualityMeasure measure = ClusteringQualityMeasure.parseFromString(repo, qualityMeasure, p);
-
-                qualityMeasures.add(measure);
-
-            } catch (UnknownClusteringQualityMeasureException e) {
-                thrownExceptions.add(e);
-            }
-        }
-        if (thrownExceptions.size() > 0) {
-            // just throw the first exception
-            throw thrownExceptions.get(0);
-        }
     }
 
     protected void parseDataConfigurations()
@@ -628,8 +588,7 @@ class ExecutionRunParser<T extends ExecutionRun> extends RunParser<T> {
                    DataSetNotFoundException, DataSetConfigNotFoundException, GoldStandardConfigNotFoundException,
                    NoDataSetException, DataConfigurationException, DataConfigNotFoundException, NumberFormatException,
                    RegisterException, NoRepositoryFoundException, UnknownDataPreprocessorException, IncompatibleDataSetConfigPreprocessorException, ConfigurationException,
-                   FileNotFoundException, UnknownParameterType,
-                   UnknownClusteringQualityMeasureException, IncompatibleContextException, UnknownRunResultFormatException,
+                   FileNotFoundException, UnknownParameterType, IncompatibleContextException, UnknownRunResultFormatException,
                    InvalidOptimizationParameterException, UnknownProgramParameterException, UnknownProgramTypeException,
                    UnknownRProgramException, IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
@@ -723,8 +682,7 @@ class GoldStandardConfigParser extends RepositoryObjectParser<GoldStandardConfig
      */
     @Override
     public void parseFromFile(File absPath)
-            throws NoRepositoryFoundException, ConfigurationException,
-                   UnknownClusteringQualityMeasureException, RunException,
+            throws NoRepositoryFoundException, ConfigurationException, RunException,
                    UnknownDataSetFormatException, FileNotFoundException, RegisterException, UnknownParameterType,
                    IncompatibleContextException, UnknownRunResultFormatException, InvalidOptimizationParameterException,
                    UnknownProgramParameterException, UnknownProgramTypeException, UnknownRProgramException,
@@ -766,8 +724,7 @@ class InternalParameterOptimizationRunParser extends ExecutionRunParser<Internal
      */
     @Override
     public void parseFromFile(File absPath)
-            throws ConfigurationException,
-                   NoRepositoryFoundException, UnknownClusteringQualityMeasureException, RunException,
+            throws ConfigurationException, NoRepositoryFoundException, RunException,
                    UnknownDataSetFormatException, FileNotFoundException, RegisterException, UnknownParameterType,
                    IncompatibleContextException, UnknownRunResultFormatException, InvalidOptimizationParameterException,
                    UnknownProgramParameterException, UnknownProgramTypeException, UnknownRProgramException,
@@ -801,7 +758,7 @@ class ParameterOptimizationRunParser extends ExecutionRunParser<ParameterOptimiz
     @Override
     public void parseFromFile(final File absPath)
             throws RegisterException, IncompatibleParameterOptimizationMethodException, NumberFormatException,
-                   UnknownParameterOptimizationMethodException, RunException, UnknownClusteringQualityMeasureException,
+                   UnknownParameterOptimizationMethodException, RunException,
                    NoOptimizableProgramParameterException, UnknownProgramParameterException, UnknownDataSetFormatException,
                    ConfigurationException, FileNotFoundException, UnknownParameterType,
                    UnknownRunResultFormatException, NoRepositoryFoundException, InvalidOptimizationParameterException,
@@ -828,10 +785,6 @@ class ParameterOptimizationRunParser extends ExecutionRunParser<ParameterOptimiz
             if (m.toString().equals(paramOptCriterion)) {
                 optimizationCriterion = m;
             }
-        }
-        if (optimizationCriterion == null) {
-            throw new UnknownClusteringQualityMeasureException(
-                    "The optimization criterion is not contained in the list of quality measures.");
         }
 
         String paramOptIterations = getProps().getString("optimizationIterations");
@@ -925,8 +878,7 @@ class ParameterOptimizationRunParser extends ExecutionRunParser<ParameterOptimiz
                    NoOptimizableProgramParameterException, GoldStandardNotFoundException, GoldStandardConfigurationException,
                    DataSetConfigurationException, DataSetNotFoundException, DataSetConfigNotFoundException,
                    GoldStandardConfigNotFoundException, NoDataSetException, DataConfigurationException,
-                   DataConfigNotFoundException, NumberFormatException, UnknownClusteringQualityMeasureException,
-                   UnknownDataPreprocessorException,
+                   DataConfigNotFoundException, NumberFormatException, UnknownDataPreprocessorException,
                    IncompatibleDataSetConfigPreprocessorException, IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException, UnknownDataStatisticException,
                    UnknownRunResultPostprocessorException, UnknownProviderException {
@@ -1025,8 +977,7 @@ class RepositoryObjectParser<T extends IRepositoryObject> extends Parser<T> {
 
     @Override
     public void parseFromFile(final File absPath)
-            throws NoRepositoryFoundException, ConfigurationException,
-                   UnknownClusteringQualityMeasureException, RunException,
+            throws NoRepositoryFoundException, ConfigurationException, RunException,
                    UnknownDataSetFormatException, FileNotFoundException, RegisterException, UnknownParameterType,
                    IncompatibleContextException, UnknownRunResultFormatException, InvalidOptimizationParameterException,
                    UnknownProgramParameterException, UnknownProgramTypeException, UnknownRProgramException,
@@ -1062,8 +1013,7 @@ class RunAnalysisRunParser extends AnalysisRunParser<RunAnalysisRun> {
 
     @Override
     public void parseFromFile(File absPath)
-            throws NoRepositoryFoundException, ConfigurationException,
-                   UnknownClusteringQualityMeasureException, RunException,
+            throws NoRepositoryFoundException, ConfigurationException, RunException,
                    UnknownDataSetFormatException, FileNotFoundException, RegisterException, UnknownParameterType,
                    IncompatibleContextException, UnknownRunResultFormatException, InvalidOptimizationParameterException,
                    UnknownProgramParameterException, UnknownProgramTypeException, UnknownRProgramException,
@@ -1097,8 +1047,7 @@ class RunDataAnalysisRunParser extends AnalysisRunParser<RunDataAnalysisRun> {
 
     @Override
     public void parseFromFile(File absPath)
-            throws NoRepositoryFoundException, ConfigurationException,
-                   UnknownClusteringQualityMeasureException, RunException,
+            throws NoRepositoryFoundException, ConfigurationException, RunException,
                    UnknownDataSetFormatException, FileNotFoundException, RegisterException, UnknownParameterType,
                    IncompatibleContextException, UnknownRunResultFormatException, InvalidOptimizationParameterException,
                    UnknownProgramParameterException, UnknownProgramTypeException, UnknownRProgramException,

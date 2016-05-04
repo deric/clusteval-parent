@@ -66,7 +66,6 @@ import de.clusteval.api.run.IterationWrapper;
 import de.clusteval.api.run.RUN_STATUS;
 import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
-import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
@@ -812,11 +811,7 @@ public class ClustevalBackendServer implements IBackendServer {
                 DataSetNotFoundException | DataSetConfigNotFoundException |
                 GoldStandardConfigNotFoundException | DataConfigurationException |
                 DataConfigNotFoundException | IOException | UnknownRunResultFormatException |
-                UnknownDataSetFormatException | UnknownClusteringQualityMeasureException |
-                InvalidRunModeException | UnknownParameterOptimizationMethodException |
-                NoOptimizableProgramParameterException | UnknownProgramParameterException |
-                UnknownGoldStandardFormatException | InvalidConfigurationFileException |
-                RepositoryAlreadyExistsException | InvalidRepositoryException |
+                UnknownDataSetFormatException | InvalidRunModeException | UnknownParameterOptimizationMethodException | NoOptimizableProgramParameterException | UnknownProgramParameterException | UnknownGoldStandardFormatException | InvalidConfigurationFileException | RepositoryAlreadyExistsException | InvalidRepositoryException |
                 NoRepositoryFoundException | GoldStandardNotFoundException |
                 InvalidOptimizationParameterException | RunException |
                 UnknownDataStatisticException | UnknownProgramTypeException |
