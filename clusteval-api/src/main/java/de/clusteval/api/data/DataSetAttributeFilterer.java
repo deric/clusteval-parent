@@ -10,7 +10,6 @@
  ***************************************************************************** */
 package de.clusteval.api.data;
 
-import de.clusteval.api.data.DataSetAttributeParser;
 import de.clusteval.utils.TextFileParser;
 import java.io.IOException;
 
@@ -30,46 +29,22 @@ public class DataSetAttributeFilterer extends TextFileParser {
         this.setLockTargetFile(true);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.wiwie.wiutils.utils.parse.TextFileParser#isLockingTargetFile()
-     */
     @Override
     public boolean isLockingTargetFile() {
         return super.isLockingTargetFile();
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.wiwie.wiutils.utils.parse.TextFileParser#processLine(java.lang.String[],
-     * java.lang.String[])
-     */
-    @SuppressWarnings("unused")
     @Override
     protected void processLine(String[] key, String[] value) {
         // do nothing
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.wiwie.wiutils.utils.parse.TextFileParser#checkLine(java.lang.String)
-     */
     @Override
     protected boolean checkLine(String line) {
         return !DataSetAttributeParser.attributeLinePrefixPattern.matcher(line)
                 .matches();
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.wiwie.wiutils.utils.parse.TextFileParser#getLineOutput(java.lang.String[],
-     * java.lang.String[])
-     */
-    @SuppressWarnings("unused")
     @Override
     protected String getLineOutput(String[] key, String[] value) {
         return value[0] + System.getProperty("line.separator");

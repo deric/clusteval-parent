@@ -40,6 +40,8 @@ public interface Matrix {
      */
     void setSimilarity(final int id1, final int id2, final double similarity);
 
+    double getSimilarity(final String id1, final String id2);
+
     int getRows();
 
     int getColumns();

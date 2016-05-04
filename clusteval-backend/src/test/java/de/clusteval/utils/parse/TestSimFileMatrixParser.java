@@ -20,12 +20,9 @@ import de.clusteval.utils.TextFileParser.OUTPUT_MODE;
 import java.io.File;
 import java.io.IOException;
 import junitx.framework.FileAssert;
-import org.junit.After;
-import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
@@ -50,26 +47,6 @@ public class TestSimFileMatrixParser {
                 + this.getClass().getSimpleName() + "." + name.getMethodName());
     }
 
-    /**
-     * @throws java.lang.Exception
-     */
-    @BeforeClass
-    public static void setUpBeforeClass() throws Exception {
-    }
-
-    /**
-     * @throws java.lang.Exception
-     */
-    @AfterClass
-    public static void tearDownAfterClass() throws Exception {
-    }
-
-    /**
-     * @throws java.lang.Exception
-     */
-    @After
-    public void tearDown() throws Exception {
-    }
 
     @Test
     public void testMatrixParsing() {

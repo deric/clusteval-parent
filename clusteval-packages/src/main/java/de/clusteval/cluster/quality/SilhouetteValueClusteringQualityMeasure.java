@@ -135,8 +135,8 @@ public class SilhouetteValueClusteringQualityMeasure extends ClusteringQualityMe
             if (otherItem.equals(item)) {
                 continue;
             }
-            result += (simMatrix.getMaxValue() - simMatrix.getSimilarity(
-                    itemId, otherItem.getId())) * other.getValue();
+            result += (simMatrix.getMaxValue()
+                    - simMatrix.getSimilarity(itemId, otherItem.getId())) * other.getValue();
         }
         // TODO
         if (fuzzyCluster.contains(item)) {
