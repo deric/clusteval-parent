@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.run.result.format;
 
+import de.clusteval.api.run.result.RunResultFormatParser;
 import de.clusteval.utils.FileUtils;
 import de.clusteval.utils.TextFileMapParser;
 import java.io.File;

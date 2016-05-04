@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.run.result.format;
 
+import de.clusteval.api.run.result.RunResultFormatParser;
 import java.io.IOException;
 import java.util.Map;
 

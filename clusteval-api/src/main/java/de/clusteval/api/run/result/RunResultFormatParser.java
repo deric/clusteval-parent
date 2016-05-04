@@ -8,11 +8,10 @@
  * Contributors:
  *     Christian Wiwie - initial API and implementation
  ***************************************************************************** */
-package de.clusteval.run.result.format;
+package de.clusteval.api.run.result;
 
 import de.clusteval.api.run.IClusteringRunResult;
 import de.clusteval.api.run.IRunResultFormatParser;
-import de.clusteval.run.result.ClusteringRunResult;
 import de.clusteval.utils.TextFileParser;
 import java.io.IOException;
 import java.util.Map;
@@ -28,7 +27,7 @@ public abstract class RunResultFormatParser extends TextFileParser implements IR
     protected Map<String, String> internalParams;
 
     /** The result. */
-    protected ClusteringRunResult result;
+    protected IClusteringRunResult result;
 
     /**
      * Instantiates a new run result format parser.

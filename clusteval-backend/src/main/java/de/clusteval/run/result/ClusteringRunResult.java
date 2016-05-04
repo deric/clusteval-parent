@@ -47,6 +47,7 @@ import de.clusteval.api.run.IRunResult;
 import de.clusteval.api.run.IRunResultFormat;
 import de.clusteval.api.run.IRunResultFormatParser;
 import de.clusteval.api.run.RunResultFormat;
+import de.clusteval.api.run.result.RunResultNotFoundException;
 import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
@@ -66,7 +67,6 @@ import de.clusteval.run.ClusteringRun;
 import de.clusteval.run.InvalidRunModeException;
 import de.clusteval.run.Run;
 import de.clusteval.run.RunException;
-import de.clusteval.run.result.format.RunResultNotFoundException;
 import de.clusteval.run.statistics.UnknownRunDataStatisticException;
 import de.clusteval.run.statistics.UnknownRunStatisticException;
 import de.clusteval.utils.FileUtils;
@@ -390,7 +390,6 @@ public class ClusteringRunResult extends ExecutionRunResult implements IClusteri
      * @throws UnknownRunDataStatisticException
      * @throws UnknownDataPreprocessorException
      * @throws IncompatibleDataSetConfigPreprocessorException
-     * @throws UnknownContextException
      * @throws IncompatibleContextException
      * @throws UnknownParameterType
      * @throws InterruptedException
