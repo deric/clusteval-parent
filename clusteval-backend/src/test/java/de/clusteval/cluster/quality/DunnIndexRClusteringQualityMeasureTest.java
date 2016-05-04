@@ -12,12 +12,13 @@
  */
 package de.clusteval.cluster.quality;
 
-import de.clusteval.api.cluster.ClusteringQualityMeasure;
+import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.ContextFactory;
 import de.clusteval.api.IContext;
 import de.clusteval.api.Precision;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
+import de.clusteval.api.cluster.ClusteringEvaluationFactory;
 import de.clusteval.api.cluster.ClusteringEvaluationParameters;
 import de.clusteval.api.data.DataConfig;
 import de.clusteval.api.data.DataSetFormatFactory;
@@ -92,7 +93,7 @@ public class DunnIndexRClusteringQualityMeasureTest extends AbstractClustEvalTes
                             new ArrayList<>()),
                     new StdToInput());
             ds.getInStandardFormat().loadIntoMemory();
-            ClusteringQualityMeasure measure = ClusteringQualityMeasure
+            ClusteringEvaluation measure = ClusteringEvaluationFactory
                     .parseFromString(getRepository(),
                             "DunnIndexRClusteringQualityMeasure",
                             new ClusteringEvaluationParameters());
@@ -103,7 +104,7 @@ public class DunnIndexRClusteringQualityMeasureTest extends AbstractClustEvalTes
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (UnknownDataSetFormatException | IllegalArgumentException |
-                InvalidDataSetFormatVersionException | UnknownClusteringQualityMeasureException | IOException e) {
+                 InvalidDataSetFormatVersionException | IOException e) {
             e.printStackTrace();
         }
 

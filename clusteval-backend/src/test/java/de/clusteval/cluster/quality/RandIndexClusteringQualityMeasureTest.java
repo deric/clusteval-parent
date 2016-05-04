@@ -10,13 +10,15 @@
  ***************************************************************************** */
 package de.clusteval.cluster.quality;
 
-import de.clusteval.api.cluster.ClusteringQualityMeasure;
 import de.clusteval.api.cluster.ClusteringEvaluationParameters;
 import ch.qos.logback.classic.Level;
+import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
+import de.clusteval.api.cluster.ClusteringEvaluationFactory;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
+import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RCalculationException;
 import de.clusteval.api.r.RNotAvailableException;
@@ -49,7 +51,7 @@ public class RandIndexClusteringQualityMeasureTest extends AbstractClustEvalTest
                    InvalidRepositoryException, RepositoryConfigNotFoundException,
                    RepositoryConfigurationException, NoRepositoryFoundException,
                    RegisterException, NoSuchAlgorithmException,
-                   RNotAvailableException, RCalculationException, InterruptedException, RException {
+                   RNotAvailableException, RCalculationException, InterruptedException, RException, UnknownProviderException {
         try {
             ClustevalBackendServer.logLevel(Level.WARN);
             Clustering goldStandard = new Clustering(this.getRepository(),
@@ -79,16 +81,14 @@ public class RandIndexClusteringQualityMeasureTest extends AbstractClustEvalTest
             cluster1.add(new ClusterItem("star6"), 1.0f);
             clustering.addCluster(cluster1);
 
-            ClusteringQualityMeasure measure = ClusteringQualityMeasure
+            ClusteringEvaluation measure = ClusteringEvaluationFactory
                     .parseFromString(getRepository(),
                             "RandIndexClusteringQualityMeasure",
                             new ClusteringEvaluationParameters());
             double quality = measure.getQualityOfClustering(clustering,
                     goldStandard, null).getValue();
             System.out.println(measure.getAlias() + " " + quality);
-        } catch (IllegalArgumentException | InvalidDataSetFormatVersionException |
-                 UnknownClusteringQualityMeasureException e) {
-            // TODO Auto-generated catch block
+        } catch (IllegalArgumentException | InvalidDataSetFormatVersionException e) {
             e.printStackTrace();
         }
     }
@@ -100,7 +100,7 @@ public class RandIndexClusteringQualityMeasureTest extends AbstractClustEvalTest
                    InvalidRepositoryException, RepositoryConfigNotFoundException,
                    RepositoryConfigurationException, NoRepositoryFoundException,
                    RegisterException, NoSuchAlgorithmException,
-                   RNotAvailableException, RCalculationException, InterruptedException, RException {
+                   RNotAvailableException, RCalculationException, InterruptedException, RException, UnknownProviderException {
         try {
             ClustevalBackendServer.logLevel(Level.WARN);
             Clustering goldStandard = new Clustering(this.getRepository(),
@@ -132,15 +132,14 @@ public class RandIndexClusteringQualityMeasureTest extends AbstractClustEvalTest
             cluster1.add(new ClusterItem("star7"), 1.0f);
             clustering.addCluster(cluster1);
 
-            ClusteringQualityMeasure measure = ClusteringQualityMeasure
+            ClusteringEvaluation measure = ClusteringEvaluationFactory
                     .parseFromString(getRepository(),
                             "RandIndexClusteringQualityMeasure",
                             new ClusteringEvaluationParameters());
             double quality = measure.getQualityOfClustering(clustering,
                     goldStandard, null).getValue();
             System.out.println(measure.getAlias() + " " + quality);
-        } catch (IllegalArgumentException | InvalidDataSetFormatVersionException |
-                 UnknownClusteringQualityMeasureException e) {
+        } catch (IllegalArgumentException | InvalidDataSetFormatVersionException e) {
             e.printStackTrace();
         }
     }

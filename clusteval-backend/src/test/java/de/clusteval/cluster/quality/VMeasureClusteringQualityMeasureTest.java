@@ -10,13 +10,15 @@
  ***************************************************************************** */
 package de.clusteval.cluster.quality;
 
-import de.clusteval.api.cluster.ClusteringQualityMeasure;
 import de.clusteval.api.cluster.ClusteringEvaluationParameters;
 import ch.qos.logback.classic.Level;
+import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
+import de.clusteval.api.cluster.ClusteringEvaluationFactory;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
+import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RCalculationException;
 import de.clusteval.api.r.RNotAvailableException;
@@ -45,7 +47,7 @@ public class VMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
                    RepositoryConfigNotFoundException,
                    RepositoryConfigurationException, NoRepositoryFoundException,
                    RegisterException, NoSuchAlgorithmException,
-                   RNotAvailableException, RCalculationException, InterruptedException, RException {
+                   RNotAvailableException, RCalculationException, InterruptedException, RException, UnknownProviderException {
         try {
             Clustering goldStandard = new Clustering(this.getRepository(),
                     System.currentTimeMillis(), new File(""));
@@ -99,22 +101,20 @@ public class VMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
             cluster3.add(new ClusterItem("star5"), 1.0f);
             clustering.addCluster(cluster3);
 
-            ClusteringQualityMeasure measure = ClusteringQualityMeasure
+            ClusteringEvaluation measure = ClusteringEvaluationFactory
                     .parseFromString(getRepository(),
                             "VMeasureClusteringQualityMeasure",
                             new ClusteringEvaluationParameters());
             double quality = measure.getQualityOfClustering(clustering,
                     goldStandard, null).getValue();
             System.out.println("V-Measure: " + quality);
-            measure = ClusteringQualityMeasure.parseFromString(getRepository(),
+            measure = ClusteringEvaluationFactory.parseFromString(getRepository(),
                     "TransClustFClusteringQualityMeasure",
                     new ClusteringEvaluationParameters());
             quality = measure.getQualityOfClustering(clustering, goldStandard,
                     null).getValue();
             System.out.println("F-Measure: " + quality);
-        } catch (IllegalArgumentException | InvalidDataSetFormatVersionException |
-                 UnknownClusteringQualityMeasureException e) {
-
+        } catch (IllegalArgumentException | InvalidDataSetFormatVersionException e) {
             e.printStackTrace();
         }
     }
@@ -125,7 +125,7 @@ public class VMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
                                RepositoryConfigNotFoundException,
                                RepositoryConfigurationException, NoRepositoryFoundException,
                                RegisterException, NoSuchAlgorithmException,
-                               RNotAvailableException, RCalculationException, InterruptedException, RException {
+                               RNotAvailableException, RCalculationException, InterruptedException, RException, UnknownProviderException {
         try {
             Clustering goldStandard = new Clustering(this.getRepository(),
                     System.currentTimeMillis(), new File(""));
@@ -179,21 +179,20 @@ public class VMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
             cluster3.add(new ClusterItem("star5"), 1.0f);
             clustering.addCluster(cluster3);
 
-            ClusteringQualityMeasure measure = ClusteringQualityMeasure
+            ClusteringEvaluation measure = ClusteringEvaluationFactory
                     .parseFromString(getRepository(),
                             "VMeasureClusteringQualityMeasure",
                             new ClusteringEvaluationParameters());
             double quality = measure.getQualityOfClustering(clustering,
                     goldStandard, null).getValue();
             System.out.println("V-Measure: " + quality);
-            measure = ClusteringQualityMeasure.parseFromString(getRepository(),
+            measure = ClusteringEvaluationFactory.parseFromString(getRepository(),
                     "TransClustFClusteringQualityMeasure",
                     new ClusteringEvaluationParameters());
             quality = measure.getQualityOfClustering(clustering, goldStandard,
                     null).getValue();
             System.out.println("F-Measure: " + quality);
-        } catch (IllegalArgumentException | InvalidDataSetFormatVersionException |
-                 UnknownClusteringQualityMeasureException e) {
+        } catch (IllegalArgumentException | InvalidDataSetFormatVersionException e) {
             e.printStackTrace();
         }
     }
@@ -209,7 +208,7 @@ public class VMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
                    InvalidRepositoryException, RepositoryConfigNotFoundException,
                    RepositoryConfigurationException, NoRepositoryFoundException,
                    RegisterException, NoSuchAlgorithmException,
-                   RNotAvailableException, RCalculationException, InterruptedException, RException {
+                   RNotAvailableException, RCalculationException, InterruptedException, RException, UnknownProviderException {
         try {
             ClustevalBackendServer.logLevel(Level.WARN);
             Clustering goldStandard = new Clustering(this.getRepository(),
@@ -239,21 +238,14 @@ public class VMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
             cluster1.add(new ClusterItem("star6"), 1.0f);
             clustering.addCluster(cluster1);
 
-            ClusteringQualityMeasure measure = ClusteringQualityMeasure
+            ClusteringEvaluation measure = ClusteringEvaluationFactory
                     .parseFromString(getRepository(),
                             "VMeasureClusteringQualityMeasure",
                             new ClusteringEvaluationParameters());
             double quality = measure.getQualityOfClustering(clustering,
                     goldStandard, null).getValue();
             System.out.println(measure.getAlias() + " " + quality);
-        } catch (IllegalArgumentException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (InvalidDataSetFormatVersionException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (UnknownClusteringQualityMeasureException e) {
-            // TODO Auto-generated catch block
+        } catch (IllegalArgumentException | InvalidDataSetFormatVersionException e) {
             e.printStackTrace();
         }
     }
@@ -265,7 +257,7 @@ public class VMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
                    InvalidRepositoryException, RepositoryConfigNotFoundException,
                    RepositoryConfigurationException, NoRepositoryFoundException,
                    RegisterException, NoSuchAlgorithmException,
-                   RNotAvailableException, RCalculationException, InterruptedException, RException {
+                   RNotAvailableException, RCalculationException, InterruptedException, RException, UnknownProviderException {
         try {
             ClustevalBackendServer.logLevel(Level.WARN);
             Clustering goldStandard = new Clustering(this.getRepository(),
@@ -300,15 +292,14 @@ public class VMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
             cluster2.add(new ClusterItem("star7"), 1.0f);
             clustering.addCluster(cluster2);
 
-            ClusteringQualityMeasure measure = ClusteringQualityMeasure
+            ClusteringEvaluation measure = ClusteringEvaluationFactory
                     .parseFromString(getRepository(),
                             "VMeasureClusteringQualityMeasure",
                             new ClusteringEvaluationParameters());
             double quality = measure.getQualityOfClustering(clustering,
                     goldStandard, null).getValue();
             System.out.println(measure.getAlias() + " " + quality);
-        } catch (IllegalArgumentException | InvalidDataSetFormatVersionException |
-                 UnknownClusteringQualityMeasureException e) {
+        } catch (IllegalArgumentException | InvalidDataSetFormatVersionException e) {
             e.printStackTrace();
         }
     }
@@ -320,7 +311,7 @@ public class VMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
                    InvalidRepositoryException, RepositoryConfigNotFoundException,
                    RepositoryConfigurationException, NoRepositoryFoundException,
                    RegisterException, NoSuchAlgorithmException,
-                   RNotAvailableException, RCalculationException, InterruptedException, RException {
+                   RNotAvailableException, RCalculationException, InterruptedException, RException, UnknownProviderException {
         try {
             ClustevalBackendServer.logLevel(Level.WARN);
             Clustering goldStandard = new Clustering(this.getRepository(),
@@ -349,15 +340,14 @@ public class VMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
             cluster2.add(new ClusterItem("star7"), 1.0f);
             clustering.addCluster(cluster2);
 
-            ClusteringQualityMeasure measure = ClusteringQualityMeasure
+            ClusteringEvaluation measure = ClusteringEvaluationFactory
                     .parseFromString(getRepository(),
                             "VMeasureClusteringQualityMeasure",
                             new ClusteringEvaluationParameters());
             double quality = measure.getQualityOfClustering(clustering,
                     goldStandard, null).getValue();
             System.out.println(measure.getAlias() + " " + quality);
-        } catch (IllegalArgumentException | InvalidDataSetFormatVersionException |
-                 UnknownClusteringQualityMeasureException e) {
+        } catch (IllegalArgumentException | InvalidDataSetFormatVersionException e) {
             e.printStackTrace();
         }
     }

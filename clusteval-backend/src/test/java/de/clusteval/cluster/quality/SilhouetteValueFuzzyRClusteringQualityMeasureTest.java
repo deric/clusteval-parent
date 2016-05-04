@@ -10,13 +10,14 @@
  ***************************************************************************** */
 package de.clusteval.cluster.quality;
 
-import de.clusteval.api.cluster.ClusteringQualityMeasure;
 import ch.qos.logback.classic.Level;
+import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.ContextFactory;
 import de.clusteval.api.IContext;
 import de.clusteval.api.Precision;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
+import de.clusteval.api.cluster.ClusteringEvaluationFactory;
 import de.clusteval.api.cluster.ClusteringEvaluationParameters;
 import de.clusteval.api.data.DataConfig;
 import de.clusteval.api.data.DataSetFormatFactory;
@@ -68,7 +69,7 @@ public class SilhouetteValueFuzzyRClusteringQualityMeasureTest extends AbstractC
                    RepositoryConfigurationException, NoRepositoryFoundException,
                    RegisterException, NoSuchAlgorithmException,
                    RNotAvailableException, RCalculationException,
-                   UnknownClusteringQualityMeasureException, InterruptedException, RException {
+                   InterruptedException, RException, UnknownProviderException {
         try {
             Clustering clustering = new Clustering(this.getRepository(),
                     System.currentTimeMillis(), new File(""));
@@ -82,7 +83,7 @@ public class SilhouetteValueFuzzyRClusteringQualityMeasureTest extends AbstractC
             cluster1.add(new ClusterItem("star6"), 1.0f);
             clustering.addCluster(cluster1);
 
-            ClusteringQualityMeasure measure = ClusteringQualityMeasure
+            ClusteringEvaluation measure = ClusteringEvaluationFactory
                     .parseFromString(getRepository(),
                             "SilhouetteValueFuzzyRClusteringQualityMeasure",
                             new ClusteringEvaluationParameters());
@@ -102,8 +103,7 @@ public class SilhouetteValueFuzzyRClusteringQualityMeasureTest extends AbstractC
                    RepositoryConfigurationException, NoRepositoryFoundException,
                    RegisterException, NoSuchAlgorithmException,
                    RNotAvailableException, RCalculationException,
-                   UnknownClusteringQualityMeasureException, FormatConversionException,
-                   InterruptedException, RException, UnknownProviderException {
+                   FormatConversionException, InterruptedException, RException, UnknownProviderException {
         try {
 
             IContext context = ContextFactory.parseFromString(getRepository(),
@@ -133,11 +133,11 @@ public class SilhouetteValueFuzzyRClusteringQualityMeasureTest extends AbstractC
                             new ArrayList<>()),
                     new StdToInput());
             ds.getInStandardFormat().loadIntoMemory();
-            ClusteringQualityMeasure measure = ClusteringQualityMeasure
+            ClusteringEvaluation measure = ClusteringEvaluationFactory
                     .parseFromString(getRepository(),
                             "SilhouetteValueFuzzyRClusteringQualityMeasure",
                             new ClusteringEvaluationParameters());
-            ClusteringQualityMeasure measureSil = ClusteringQualityMeasure
+            ClusteringEvaluation measureSil = ClusteringEvaluationFactory
                     .parseFromString(getRepository(),
                             "SilhouetteValueRClusteringQualityMeasure",
                             new ClusteringEvaluationParameters());
@@ -150,7 +150,7 @@ public class SilhouetteValueFuzzyRClusteringQualityMeasureTest extends AbstractC
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (UnknownDataSetFormatException | IllegalArgumentException |
-                InvalidDataSetFormatVersionException | IOException e) {
+                 InvalidDataSetFormatVersionException | IOException e) {
             e.printStackTrace();
         }
     }
@@ -162,8 +162,7 @@ public class SilhouetteValueFuzzyRClusteringQualityMeasureTest extends AbstractC
                    InvalidRepositoryException, RepositoryConfigNotFoundException,
                    RepositoryConfigurationException, NoRepositoryFoundException,
                    RegisterException, NoSuchAlgorithmException,
-                   RNotAvailableException, RCalculationException,
-                   UnknownClusteringQualityMeasureException, FormatConversionException,
+                   RNotAvailableException, RCalculationException, FormatConversionException,
                    InterruptedException, RException, UnknownProviderException {
         try {
 
@@ -197,7 +196,7 @@ public class SilhouetteValueFuzzyRClusteringQualityMeasureTest extends AbstractC
                             new ArrayList<>()),
                     new StdToInput());
             ds.getInStandardFormat().loadIntoMemory();
-            ClusteringQualityMeasure measure = ClusteringQualityMeasure
+            ClusteringEvaluation measure = ClusteringEvaluationFactory
                     .parseFromString(getRepository(),
                             "SilhouetteValueFuzzyRClusteringQualityMeasure",
                             new ClusteringEvaluationParameters());
@@ -208,7 +207,7 @@ public class SilhouetteValueFuzzyRClusteringQualityMeasureTest extends AbstractC
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (UnknownDataSetFormatException | IllegalArgumentException |
-                InvalidDataSetFormatVersionException | IOException e) {
+                 InvalidDataSetFormatVersionException | IOException e) {
             e.printStackTrace();
         }
     }
@@ -220,8 +219,7 @@ public class SilhouetteValueFuzzyRClusteringQualityMeasureTest extends AbstractC
                    InvalidRepositoryException, RepositoryConfigNotFoundException,
                    RepositoryConfigurationException, NoRepositoryFoundException,
                    RegisterException, NoSuchAlgorithmException,
-                   RNotAvailableException, RCalculationException,
-                   UnknownClusteringQualityMeasureException, FormatConversionException,
+                   RNotAvailableException, RCalculationException, FormatConversionException,
                    InterruptedException, RException, UnknownProviderException {
         try {
 
@@ -259,11 +257,11 @@ public class SilhouetteValueFuzzyRClusteringQualityMeasureTest extends AbstractC
             ClusteringEvaluationParameters params = new ClusteringEvaluationParameters();
             params.put("alpha", "0.0");
 
-            ClusteringQualityMeasure measure = ClusteringQualityMeasure
+            ClusteringEvaluation measure = ClusteringEvaluationFactory
                     .parseFromString(getRepository(),
                             "SilhouetteValueFuzzyRClusteringQualityMeasure",
                             params);
-            ClusteringQualityMeasure measureSil = ClusteringQualityMeasure
+            ClusteringEvaluation measureSil = ClusteringEvaluationFactory
                     .parseFromString(getRepository(),
                             "SilhouetteValueRClusteringQualityMeasure",
                             new ClusteringEvaluationParameters());
@@ -276,7 +274,7 @@ public class SilhouetteValueFuzzyRClusteringQualityMeasureTest extends AbstractC
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (UnknownDataSetFormatException | IllegalArgumentException |
-                InvalidDataSetFormatVersionException | IOException e) {
+                 InvalidDataSetFormatVersionException | IOException e) {
             e.printStackTrace();
         }
     }

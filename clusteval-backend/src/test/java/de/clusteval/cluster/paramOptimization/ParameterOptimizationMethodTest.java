@@ -20,7 +20,6 @@ import de.clusteval.api.Precision;
 import de.clusteval.api.cluster.ClustEvalValue;
 import de.clusteval.api.cluster.ClusteringEvaluationFactory;
 import de.clusteval.api.cluster.ClusteringEvaluationParameters;
-import de.clusteval.api.cluster.ClusteringQualityMeasure;
 import de.clusteval.api.cluster.ClusteringQualitySet;
 import de.clusteval.api.data.DataConfig;
 import de.clusteval.api.data.DataSetFormatFactory;
@@ -142,7 +141,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
         ProgramConfig programConfig = getRepository().getStaticObjectWithName(
                 ProgramConfig.class, "TransClust_2");
 
-        ClusteringQualityMeasure f2 = ClusteringQualityMeasure.parseFromString(getRepository(), "TransClustF2ClusteringQualityMeasure",
+        ClusteringEvaluation f2 = ClusteringEvaluationFactory.parseFromString(getRepository(), "TransClustF2ClusteringQualityMeasure",
                 new ClusteringEvaluationParameters());
         ParameterOptimizationMethod method = ParameterOptimizationMethod
                 .parseFromString(
@@ -205,7 +204,6 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
     @Test
     public void testResumeTransClustCassini250()
             throws UnknownParameterOptimizationMethodException,
-                   UnknownClusteringQualityMeasureException,
                    UnknownDataSetFormatException,
                    InvalidDataSetFormatVersionException, IllegalArgumentException,
                    IOException, RepositoryAlreadyExistsException,
@@ -277,7 +275,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
         ProgramConfig programConfig = getRepository().getStaticObjectWithName(
                 ProgramConfig.class, "TransClust_2");
 
-        ClusteringQualityMeasure f2 = ClusteringQualityMeasure.parseFromString(getRepository(), "TransClustF2ClusteringQualityMeasure",
+        ClusteringEvaluation f2 = ClusteringEvaluationFactory.parseFromString(getRepository(), "TransClustF2ClusteringQualityMeasure",
                 new ClusteringEvaluationParameters());
         ParameterOptimizationMethod method = ParameterOptimizationMethod
                 .parseFromString(
@@ -323,7 +321,6 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
     @Test
     public void testResumeTransClustCassini250LastLayer()
             throws UnknownParameterOptimizationMethodException,
-                   UnknownClusteringQualityMeasureException,
                    UnknownDataSetFormatException,
                    InvalidDataSetFormatVersionException, IllegalArgumentException,
                    IOException, RepositoryAlreadyExistsException,
@@ -395,7 +392,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
         ProgramConfig programConfig = getRepository().getStaticObjectWithName(
                 ProgramConfig.class, "TransClust_2");
 
-        ClusteringQualityMeasure f2 = ClusteringQualityMeasure.parseFromString(getRepository(), "TransClustF2ClusteringQualityMeasure",
+        ClusteringEvaluation f2 = ClusteringEvaluationFactory.parseFromString(getRepository(), "TransClustF2ClusteringQualityMeasure",
                 new ClusteringEvaluationParameters());
         ParameterOptimizationMethod method = ParameterOptimizationMethod
                 .parseFromString(
@@ -414,7 +411,6 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
     @Test
     public void testResumeTransClustBaechler2003()
             throws UnknownParameterOptimizationMethodException,
-                   UnknownClusteringQualityMeasureException,
                    UnknownDataSetFormatException,
                    InvalidDataSetFormatVersionException, IllegalArgumentException,
                    IOException, RepositoryAlreadyExistsException,
@@ -534,8 +530,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
 
     @Test
     public void testDivisiveNumberIterationsTwoParamsWithOptions()
-            throws UnknownClusteringQualityMeasureException,
-                   UnknownParameterOptimizationMethodException,
+            throws UnknownParameterOptimizationMethodException,
                    IllegalArgumentException,
                    SecurityException, IllegalAccessException, NoSuchFieldException,
                    InternalAttributeException, ParameterOptimizationException, UnknownProviderException {
@@ -603,7 +598,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
         ProgramConfig programConfig = getRepository().getStaticObjectWithName(
                 ProgramConfig.class, "Hierarchical_Clustering");
 
-        ClusteringQualityMeasure f2 = ClusteringQualityMeasure.parseFromString(getRepository(), "TransClustF2ClusteringQualityMeasure",
+        ClusteringEvaluation f2 = ClusteringEvaluationFactory.parseFromString(getRepository(), "TransClustF2ClusteringQualityMeasure",
                 new ClusteringEvaluationParameters());
         ParameterOptimizationMethod method = ParameterOptimizationMethod
                 .parseFromString(

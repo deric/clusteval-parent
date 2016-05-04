@@ -45,7 +45,6 @@ import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
-import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
@@ -85,8 +84,7 @@ class DataSetConfigParser extends RepositoryObjectParser<DataSetConfig> {
      */
     @Override
     public void parseFromFile(File absPath)
-            throws NoRepositoryFoundException, ConfigurationException,
-                   UnknownClusteringQualityMeasureException, RunException,
+            throws NoRepositoryFoundException, ConfigurationException, RunException,
                    UnknownDataSetFormatException, FileNotFoundException, RegisterException, UnknownParameterType,
                    IncompatibleContextException, UnknownRunResultFormatException, InvalidOptimizationParameterException,
                    UnknownProgramParameterException, UnknownProgramTypeException, UnknownRProgramException,
@@ -180,7 +178,7 @@ class DataSetConfigParser extends RepositoryObjectParser<DataSetConfig> {
                    GoldStandardNotFoundException, GoldStandardConfigurationException,
                    DataSetConfigNotFoundException, GoldStandardConfigNotFoundException, DataConfigurationException,
                    DataConfigNotFoundException, ConfigurationException, FileNotFoundException,
-                   UnknownParameterType, UnknownClusteringQualityMeasureException, RunException, IncompatibleContextException,
+                   UnknownParameterType, RunException, IncompatibleContextException,
                    UnknownRunResultFormatException, InvalidOptimizationParameterException, UnknownProgramParameterException,
                    UnknownProgramTypeException, UnknownRProgramException,
                    UnknownDataPreprocessorException, IncompatibleDataSetConfigPreprocessorException,

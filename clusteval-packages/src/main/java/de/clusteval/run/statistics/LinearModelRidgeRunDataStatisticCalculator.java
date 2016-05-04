@@ -50,7 +50,6 @@ import de.clusteval.api.run.IRunResult;
 import de.clusteval.api.stats.IDataStatistic;
 import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
-import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
@@ -137,14 +136,14 @@ public class LinearModelRidgeRunDataStatisticCalculator
                                 runIdentifier)), results, false, false, false);
                 runResults.addAll(results);
             } catch (IOException | UnknownRunResultFormatException | UnknownDataSetFormatException |
-                    UnknownClusteringQualityMeasureException | InvalidRunModeException | UnknownParameterOptimizationMethodException |
-                    NoOptimizableProgramParameterException | UnknownProgramParameterException | UnknownGoldStandardFormatException |
-                    InvalidConfigurationFileException | RepositoryAlreadyExistsException | InvalidRepositoryException |
-                    NoRepositoryFoundException | GoldStandardNotFoundException | InvalidOptimizationParameterException |
-                    GoldStandardConfigurationException | DataSetConfigurationException | DataSetNotFoundException |
-                    DataSetConfigNotFoundException | GoldStandardConfigNotFoundException | DataConfigurationException |
-                    DataConfigNotFoundException | RunException | UnknownDataStatisticException | UnknownProgramTypeException |
-                    UnknownRProgramException | IncompatibleParameterOptimizationMethodException | RepositoryConfigNotFoundException | RepositoryConfigurationException | ConfigurationException | RegisterException | NumberFormatException | NoDataSetException | RunResultParseException | UnknownDataPreprocessorException | IncompatibleDataSetConfigPreprocessorException | IncompatibleContextException | UnknownParameterType | InterruptedException | UnknownRunResultPostprocessorException e) {
+                     InvalidRunModeException | UnknownParameterOptimizationMethodException |
+                     NoOptimizableProgramParameterException | UnknownProgramParameterException | UnknownGoldStandardFormatException |
+                     InvalidConfigurationFileException | RepositoryAlreadyExistsException | InvalidRepositoryException |
+                     NoRepositoryFoundException | GoldStandardNotFoundException | InvalidOptimizationParameterException |
+                     GoldStandardConfigurationException | DataSetConfigurationException | DataSetNotFoundException |
+                     DataSetConfigNotFoundException | GoldStandardConfigNotFoundException | DataConfigurationException |
+                     DataConfigNotFoundException | RunException | UnknownDataStatisticException | UnknownProgramTypeException |
+                     UnknownRProgramException | IncompatibleParameterOptimizationMethodException | RepositoryConfigNotFoundException | RepositoryConfigurationException | ConfigurationException | RegisterException | NumberFormatException | NoDataSetException | RunResultParseException | UnknownDataPreprocessorException | IncompatibleDataSetConfigPreprocessorException | IncompatibleContextException | UnknownParameterType | InterruptedException | UnknownRunResultPostprocessorException e) {
                 Exceptions.printStackTrace(e);
             } catch (UnknownProviderException ex) {
                 Exceptions.printStackTrace(ex);
@@ -187,8 +186,8 @@ public class LinearModelRidgeRunDataStatisticCalculator
                 for (IDataConfig first : commonDataConfigs) {
                     commonDataConfigNames.add(first.getName());
                 }
-                commonDataConfigNames = new ArrayList<String>(
-                        new LinkedHashSet<String>(commonDataConfigNames));
+                commonDataConfigNames = new ArrayList<>(
+                        new LinkedHashSet<>(commonDataConfigNames));
 
                 /*
                  * Get data statistics calculated for dataconfigs

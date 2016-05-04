@@ -12,12 +12,13 @@
  */
 package de.clusteval.cluster.quality;
 
-import de.clusteval.api.cluster.ClusteringQualityMeasure;
+import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.ContextFactory;
 import de.clusteval.api.IContext;
 import de.clusteval.api.Precision;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
+import de.clusteval.api.cluster.ClusteringEvaluationFactory;
 import de.clusteval.api.cluster.ClusteringEvaluationParameters;
 import de.clusteval.api.data.DataConfig;
 import de.clusteval.api.data.DataSetFormatFactory;
@@ -94,7 +95,7 @@ public class DaviesBouldinIndexRClusteringQualityMeasureTest extends AbstractClu
                             new ArrayList<>()),
                     new StdToInput());
             ds.getInStandardFormat().loadIntoMemory();
-            ClusteringQualityMeasure measure = ClusteringQualityMeasure
+            ClusteringEvaluation measure = ClusteringEvaluationFactory
                     .parseFromString(getRepository(),
                             "DaviesBouldinIndexRClusteringQualityMeasure",
                             new ClusteringEvaluationParameters());
@@ -104,9 +105,8 @@ public class DaviesBouldinIndexRClusteringQualityMeasureTest extends AbstractClu
             System.out.println("Davies Bouldin Index: " + quality);
             assertEquals(0.49195985498493144, quality, DELTA);
         } catch (UnknownProviderException | RegisterException |
-                FormatConversionException | IOException | InvalidDataSetFormatVersionException |
-                RNotAvailableException | InterruptedException | RException | IllegalArgumentException |
-                UnknownClusteringQualityMeasureException e) {
+                 FormatConversionException | IOException | InvalidDataSetFormatVersionException |
+                 RNotAvailableException | InterruptedException | RException | IllegalArgumentException e) {
             assertTrue(false);
         }
 

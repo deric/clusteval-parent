@@ -48,7 +48,6 @@ import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
-import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
@@ -88,7 +87,7 @@ public class PlotterTest extends AbstractClustEvalTest {
                                     GoldStandardConfigurationException, DataSetConfigNotFoundException,
                                     GoldStandardConfigNotFoundException, DataConfigurationException,
                                     DataConfigNotFoundException, ConfigurationException,
-                                    UnknownParameterType, UnknownClusteringQualityMeasureException,
+                                    UnknownParameterType,
                                     RunException, IncompatibleContextException,
                                     UnknownRunResultFormatException,
                                     InvalidOptimizationParameterException,
@@ -159,7 +158,7 @@ public class PlotterTest extends AbstractClustEvalTest {
                                  GoldStandardConfigurationException, DataSetConfigNotFoundException,
                                  GoldStandardConfigNotFoundException, DataConfigurationException,
                                  DataConfigNotFoundException, ConfigurationException,
-                                 UnknownParameterType, UnknownClusteringQualityMeasureException,
+                                 UnknownParameterType,
                                  RunException, IncompatibleContextException,
                                  UnknownRunResultFormatException,
                                  InvalidOptimizationParameterException,

@@ -43,7 +43,6 @@ import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.IRunResult;
 import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
-import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
@@ -139,7 +138,7 @@ public abstract class RunResult extends RepositoryObject implements IRunResult {
             final List<IRunResult> result, final boolean parseClusterings, final boolean storeClusterings,
             final boolean register)
             throws IOException, UnknownRunResultFormatException, UnknownDataSetFormatException,
-                   UnknownClusteringQualityMeasureException, InvalidRunModeException,
+                   InvalidRunModeException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
                    UnknownProgramParameterException, UnknownGoldStandardFormatException,
                    InvalidConfigurationFileException, RepositoryAlreadyExistsException, InvalidRepositoryException,

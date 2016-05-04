@@ -10,13 +10,14 @@
  ***************************************************************************** */
 package de.clusteval.cluster.quality;
 
-import de.clusteval.api.cluster.ClusteringQualityMeasure;
 import ch.qos.logback.classic.Level;
+import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.ContextFactory;
 import de.clusteval.api.IContext;
 import de.clusteval.api.Precision;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
+import de.clusteval.api.cluster.ClusteringEvaluationFactory;
 import de.clusteval.api.cluster.ClusteringEvaluationParameters;
 import de.clusteval.api.data.DataConfig;
 import de.clusteval.api.data.DataSetFormatFactory;
@@ -67,8 +68,7 @@ public class SilhouetteValueGlobalRClusteringQualityMeasureTest extends
                    InvalidRepositoryException, RepositoryConfigNotFoundException,
                    RepositoryConfigurationException, NoRepositoryFoundException,
                    RegisterException, NoSuchAlgorithmException,
-                   RNotAvailableException, RCalculationException,
-                   UnknownClusteringQualityMeasureException, InterruptedException, RException {
+                   RNotAvailableException, RCalculationException, InterruptedException, RException, UnknownProviderException {
         try {
             Clustering clustering = new Clustering(this.getRepository(),
                     System.currentTimeMillis(), new File(""));
@@ -82,7 +82,7 @@ public class SilhouetteValueGlobalRClusteringQualityMeasureTest extends
             cluster1.add(new ClusterItem("star6"), 1.0f);
             clustering.addCluster(cluster1);
 
-            ClusteringQualityMeasure measure = ClusteringQualityMeasure
+            ClusteringEvaluation measure = ClusteringEvaluationFactory
                     .parseFromString(getRepository(),
                             "SilhouetteValueGlobalRClusteringQualityMeasure",
                             new ClusteringEvaluationParameters());
@@ -101,8 +101,7 @@ public class SilhouetteValueGlobalRClusteringQualityMeasureTest extends
                    InvalidRepositoryException, RepositoryConfigNotFoundException,
                    RepositoryConfigurationException, NoRepositoryFoundException,
                    RegisterException, NoSuchAlgorithmException,
-                   RNotAvailableException, RCalculationException,
-                   UnknownClusteringQualityMeasureException, FormatConversionException,
+                   RNotAvailableException, RCalculationException, FormatConversionException,
                    InterruptedException, RException, UnknownDataSetFormatException, UnknownProviderException {
         try {
 
@@ -133,7 +132,7 @@ public class SilhouetteValueGlobalRClusteringQualityMeasureTest extends
                             new ArrayList<>()),
                     new StdToInput());
             ds.getInStandardFormat().loadIntoMemory();
-            ClusteringQualityMeasure measure = ClusteringQualityMeasure
+            ClusteringEvaluation measure = ClusteringEvaluationFactory
                     .parseFromString(getRepository(),
                             "SilhouetteValueGlobalRClusteringQualityMeasure",
                             new ClusteringEvaluationParameters());
@@ -142,7 +141,7 @@ public class SilhouetteValueGlobalRClusteringQualityMeasureTest extends
             ds.getInStandardFormat().unloadFromMemory();
             assertEquals(0.3346755237978247, quality, DELTA);
         } catch (IllegalArgumentException | InvalidDataSetFormatVersionException |
-                IOException e) {
+                 IOException e) {
             Exceptions.printStackTrace(e);
         }
     }

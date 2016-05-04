@@ -68,9 +68,6 @@ import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.run.result.RunAnalysisRunResult;
 import de.clusteval.run.result.RunDataAnalysisRunResult;
 import de.clusteval.run.result.RunResult;
-import de.clusteval.run.statistics.RunDataStatistic;
-import de.clusteval.run.statistics.RunStatistic;
-import de.clusteval.utils.Statistic;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
@@ -1734,8 +1731,8 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
                         "" + object.getSimpleName(), format.getName()});
             return true;
         } catch (SQLException | IllegalArgumentException | SecurityException |
-                InstantiationException | IllegalAccessException |
-                InvocationTargetException | NoSuchMethodException e) {
+                 InstantiationException | IllegalAccessException |
+                 InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
         return false;
@@ -1760,8 +1757,8 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
                         "" + object.getSimpleName(), type.getName()});
             return true;
         } catch (SQLException | IllegalArgumentException | SecurityException |
-                InstantiationException | IllegalAccessException |
-                InvocationTargetException | NoSuchMethodException e) {
+                 InstantiationException | IllegalAccessException |
+                 InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
         return false;
@@ -1807,8 +1804,8 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
             this.objectIds.put(measure, id);
             return true;
         } catch (SQLException | IllegalArgumentException | SecurityException |
-                InstantiationException | IllegalAccessException |
-                InvocationTargetException | NoSuchMethodException e) {
+                 InstantiationException | IllegalAccessException |
+                 InvocationTargetException | NoSuchMethodException e) {
 
             e.printStackTrace();
         }
@@ -1865,7 +1862,7 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
                 e.printStackTrace();
                 statisticId = getStatisticId(object.getSimpleName());
             } catch (IllegalArgumentException | SecurityException | InstantiationException |
-                    IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                     IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
                 e.printStackTrace();
             }
             return true;

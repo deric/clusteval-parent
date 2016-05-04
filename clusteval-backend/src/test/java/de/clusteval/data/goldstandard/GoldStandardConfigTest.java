@@ -36,7 +36,6 @@ import de.clusteval.api.repository.RepositoryRemoveEvent;
 import de.clusteval.api.repository.RepositoryReplaceEvent;
 import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
-import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
@@ -72,8 +71,7 @@ public class GoldStandardConfigTest extends AbstractClustEvalTest {
                                       DataSetConfigNotFoundException, NoDataSetException,
                                       DataConfigurationException, DataConfigNotFoundException,
                                       NumberFormatException, ConfigurationException,
-                                      UnknownParameterType,
-                                      UnknownClusteringQualityMeasureException, RunException,
+                                      UnknownParameterType, RunException,
                                       IncompatibleContextException, UnknownRunResultFormatException,
                                       InvalidOptimizationParameterException,
                                       UnknownProgramParameterException, UnknownProgramTypeException,
@@ -117,8 +115,7 @@ public class GoldStandardConfigTest extends AbstractClustEvalTest {
                                         DataSetConfigNotFoundException, NoDataSetException,
                                         DataConfigurationException, DataConfigNotFoundException,
                                         NumberFormatException, ConfigurationException,
-                                        UnknownParameterType,
-                                        UnknownClusteringQualityMeasureException, RunException,
+                                        UnknownParameterType, RunException,
                                         IncompatibleContextException, UnknownRunResultFormatException,
                                         InvalidOptimizationParameterException,
                                         UnknownProgramParameterException, UnknownProgramTypeException,
@@ -156,14 +153,12 @@ public class GoldStandardConfigTest extends AbstractClustEvalTest {
                    DataSetNotFoundException, DataSetConfigNotFoundException,
                    NoDataSetException, DataConfigurationException,
                    DataConfigNotFoundException, NumberFormatException,
-                   ConfigurationException,
-                   UnknownParameterType, UnknownClusteringQualityMeasureException,
+                   ConfigurationException, UnknownParameterType,
                    RunException, IncompatibleContextException,
                    UnknownRunResultFormatException,
                    InvalidOptimizationParameterException,
                    UnknownProgramParameterException, UnknownProgramTypeException,
-                   UnknownRProgramException,
-                   UnknownProviderException, UnknownDataPreprocessorException,
+                   UnknownRProgramException, UnknownProviderException, UnknownDataPreprocessorException,
                    IncompatibleDataSetConfigPreprocessorException,
                    IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException,
@@ -240,14 +235,11 @@ public class GoldStandardConfigTest extends AbstractClustEvalTest {
                    DataSetNotFoundException, DataSetConfigNotFoundException,
                    NoDataSetException, DataConfigurationException,
                    DataConfigNotFoundException, NumberFormatException,
-                   ConfigurationException,
-                   UnknownParameterType, UnknownClusteringQualityMeasureException,
+                   ConfigurationException, UnknownParameterType,
                    RunException, IncompatibleContextException,
-                   UnknownRunResultFormatException,
-                   InvalidOptimizationParameterException,
+                   UnknownRunResultFormatException, InvalidOptimizationParameterException,
                    UnknownProgramParameterException, UnknownProgramTypeException,
-                   UnknownRProgramException,
-                   UnknownProviderException, UnknownDataPreprocessorException,
+                   UnknownRProgramException, UnknownProviderException, UnknownDataPreprocessorException,
                    IncompatibleDataSetConfigPreprocessorException,
                    IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException,
@@ -279,8 +271,7 @@ public class GoldStandardConfigTest extends AbstractClustEvalTest {
                                            DataSetConfigNotFoundException, NoDataSetException,
                                            DataConfigurationException, DataConfigNotFoundException,
                                            NumberFormatException, ConfigurationException,
-                                           UnknownParameterType,
-                                           UnknownClusteringQualityMeasureException, RunException,
+                                           UnknownParameterType, RunException,
                                            IncompatibleContextException, UnknownRunResultFormatException,
                                            InvalidOptimizationParameterException,
                                            UnknownProgramParameterException, UnknownProgramTypeException,
@@ -322,8 +313,7 @@ public class GoldStandardConfigTest extends AbstractClustEvalTest {
                    DataSetNotFoundException, DataSetConfigNotFoundException,
                    NoDataSetException, DataConfigurationException,
                    DataConfigNotFoundException, NumberFormatException,
-                   ConfigurationException,
-                   UnknownParameterType, UnknownClusteringQualityMeasureException,
+                   ConfigurationException, UnknownParameterType,
                    RunException, IncompatibleContextException,
                    UnknownRunResultFormatException,
                    InvalidOptimizationParameterException,
@@ -368,8 +358,7 @@ public class GoldStandardConfigTest extends AbstractClustEvalTest {
                                                       DataSetNotFoundException, DataSetConfigNotFoundException,
                                                       NoDataSetException, DataConfigurationException,
                                                       DataConfigNotFoundException, NumberFormatException,
-                                                      ConfigurationException,
-                                                      UnknownParameterType, UnknownClusteringQualityMeasureException,
+                                                      ConfigurationException, UnknownParameterType,
                                                       RunException, IncompatibleContextException,
                                                       UnknownRunResultFormatException,
                                                       InvalidOptimizationParameterException,
@@ -398,10 +387,8 @@ public class GoldStandardConfigTest extends AbstractClustEvalTest {
                    DataSetNotFoundException, DataSetConfigNotFoundException,
                    NoDataSetException, DataConfigurationException,
                    DataConfigNotFoundException, NumberFormatException,
-                   ConfigurationException,
-                   FileNotFoundException, UnknownParameterType,
-                   UnknownClusteringQualityMeasureException, RunException,
-                   IncompatibleContextException, UnknownRunResultFormatException,
+                   ConfigurationException, FileNotFoundException, UnknownParameterType,
+                   RunException, IncompatibleContextException, UnknownRunResultFormatException,
                    InvalidOptimizationParameterException,
                    UnknownProgramParameterException, UnknownProgramTypeException,
                    UnknownRProgramException,
@@ -435,9 +422,7 @@ public class GoldStandardConfigTest extends AbstractClustEvalTest {
                                       DataSetConfigNotFoundException, NoDataSetException,
                                       DataConfigurationException, DataConfigNotFoundException,
                                       NumberFormatException, ConfigurationException,
-                                      UnknownParameterType,
-                                      UnknownClusteringQualityMeasureException, RunException,
-                                      IncompatibleContextException, UnknownRunResultFormatException,
+                                      UnknownParameterType, RunException, IncompatibleContextException, UnknownRunResultFormatException,
                                       InvalidOptimizationParameterException,
                                       UnknownProgramParameterException, UnknownProgramTypeException,
                                       UnknownRProgramException,
@@ -448,10 +433,10 @@ public class GoldStandardConfigTest extends AbstractClustEvalTest {
                                       NoOptimizableProgramParameterException,
                                       UnknownDataStatisticException,
                                       UnknownRunResultPostprocessorException {
-        GoldStandardConfig gsConfig = Parser.parseFromFile(                        GoldStandardConfig.class,
-                        new File(
-                                "testCaseRepository/data/goldstandards/configs/DS1_1.gsconfig")
-                        .getAbsoluteFile());
+        GoldStandardConfig gsConfig = Parser.parseFromFile(GoldStandardConfig.class,
+                new File(
+                        "testCaseRepository/data/goldstandards/configs/DS1_1.gsconfig")
+                .getAbsoluteFile());
         assertEquals("DS1_1", gsConfig.toString());
 
     }

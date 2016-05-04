@@ -37,7 +37,6 @@ import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.RepositoryController;
 import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
-import de.clusteval.cluster.quality.UnknownClusteringQualityMeasureException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
@@ -62,44 +61,6 @@ import org.junit.Test;
  */
 public class ClusteringRunTest extends AbstractClustEvalTest {
 
-    /**
-     * @throws NumberFormatException
-     * @throws InterruptedException
-     * @throws RepositoryConfigurationException
-     * @throws RepositoryConfigNotFoundException
-     * @throws InvalidRepositoryException
-     * @throws RepositoryAlreadyExistsException
-     * @throws IncompatibleContextException
-     * @throws IncompatibleDataSetConfigPreprocessorException
-     * @throws UnknownDataPreprocessorException
-     * @throws UnknownRProgramException
-     * @throws UnknownProgramTypeException
-     * @throws RunException
-     * @throws InvalidOptimizationParameterException
-     * @throws NoRepositoryFoundException
-     * @throws UnknownProgramParameterException
-     * @throws UnknownClusteringQualityMeasureException
-     * @throws UnknownRunResultFormatException
-     * @throws IOException
-     * @throws UnknownParameterType
-     * @throws RegisterException
-     * @throws ConfigurationException
-     * @throws DataConfigNotFoundException
-     * @throws DataConfigurationException
-     * @throws NoDataSetException
-     * @throws GoldStandardConfigNotFoundException
-     * @throws DataSetConfigNotFoundException
-     * @throws DataSetNotFoundException
-     * @throws DataSetConfigurationException
-     * @throws GoldStandardConfigurationException
-     * @throws GoldStandardNotFoundException
-     * @throws UnknownDataSetFormatException
-     * @throws UnknownDataStatisticException
-     * @throws NoOptimizableProgramParameterException
-     * @throws UnknownParameterOptimizationMethodException
-     * @throws IncompatibleParameterOptimizationMethodException
-     * @throws DatabaseConnectException
-     */
     @Test
     public void testNewParser()
             throws InterruptedException, RepositoryAlreadyExistsException,
@@ -109,10 +70,9 @@ public class ClusteringRunTest extends AbstractClustEvalTest {
                    GoldStandardConfigNotFoundException, NoDataSetException, DataConfigurationException,
                    DataConfigNotFoundException, NumberFormatException, ConfigurationException, RegisterException,
                    UnknownParameterType, IOException, UnknownRunResultFormatException,
-                   UnknownClusteringQualityMeasureException, UnknownProgramParameterException, NoRepositoryFoundException,
+                   UnknownProgramParameterException, NoRepositoryFoundException,
                    InvalidOptimizationParameterException, RunException, UnknownProgramTypeException, UnknownRProgramException,
-                   UnknownDataPreprocessorException,
-                   IncompatibleDataSetConfigPreprocessorException, IncompatibleContextException,
+                   UnknownDataPreprocessorException, IncompatibleDataSetConfigPreprocessorException, IncompatibleContextException,
                    IncompatibleParameterOptimizationMethodException, UnknownParameterOptimizationMethodException,
                    NoOptimizableProgramParameterException, UnknownDataStatisticException,
                    UnknownRunResultPostprocessorException,

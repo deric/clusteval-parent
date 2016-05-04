@@ -10,11 +10,12 @@
  ***************************************************************************** */
 package de.clusteval.cluster.quality;
 
-import de.clusteval.api.cluster.ClusteringQualityMeasure;
 import de.clusteval.api.cluster.ClusteringEvaluationParameters;
 import ch.qos.logback.classic.Level;
+import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
+import de.clusteval.api.cluster.ClusteringEvaluationFactory;
 import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.exceptions.ClusteringParseException;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
@@ -29,6 +30,7 @@ import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.RException;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.api.data.DataConfig;
+import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
@@ -57,10 +59,9 @@ public class FMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
                    RepositoryConfigurationException, NoRepositoryFoundException,
                    RegisterException, NoSuchAlgorithmException,
                    RNotAvailableException, RCalculationException,
-                   UnknownClusteringQualityMeasureException,
                    UnknownGoldStandardFormatException, UnknownDataSetFormatException,
                    InvalidDataSetFormatVersionException, IOException,
-                   InterruptedException, IllegalArgumentException, RException {
+                   InterruptedException, IllegalArgumentException, RException, UnknownProviderException {
         ClustevalBackendServer.logLevel(Level.WARN);
         Clustering goldStandard = new Clustering(this.getRepository(),
                 System.currentTimeMillis(), new File(""));
@@ -89,7 +90,7 @@ public class FMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
         cluster1.add(new ClusterItem("star6"), 1.0f);
         clustering.addCluster(cluster1);
 
-        ClusteringQualityMeasure measure = ClusteringQualityMeasure
+        ClusteringEvaluation measure = ClusteringEvaluationFactory
                 .parseFromString(getRepository(),
                         "TransClustFClusteringQualityMeasure",
                         new ClusteringEvaluationParameters());
@@ -97,7 +98,7 @@ public class FMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
                 goldStandard, null).getValue();
         System.out.println(measure.getAlias() + " " + quality);
 
-        measure = ClusteringQualityMeasure.parseFromString(getRepository(),
+        measure = ClusteringEvaluationFactory.parseFromString(getRepository(),
                 "TransClustF2ClusteringQualityMeasure",
                 new ClusteringEvaluationParameters());
         quality = measure
@@ -113,10 +114,9 @@ public class FMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
                                             RepositoryConfigurationException, NoRepositoryFoundException,
                                             RegisterException, NoSuchAlgorithmException,
                                             RNotAvailableException, RCalculationException,
-                                            UnknownClusteringQualityMeasureException,
                                             UnknownGoldStandardFormatException, UnknownDataSetFormatException,
                                             InvalidDataSetFormatVersionException, IOException,
-                                            InterruptedException, IllegalArgumentException, RException {
+                                            InterruptedException, IllegalArgumentException, RException, UnknownProviderException {
         ClustevalBackendServer.logLevel(Level.WARN);
         Clustering goldStandard = new Clustering(this.getRepository(),
                 System.currentTimeMillis(), new File(""));
@@ -147,7 +147,7 @@ public class FMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
         cluster1.add(new ClusterItem("star7"), 1.0f);
         clustering.addCluster(cluster1);
 
-        ClusteringQualityMeasure measure = ClusteringQualityMeasure
+        ClusteringEvaluation measure = ClusteringEvaluationFactory
                 .parseFromString(getRepository(),
                         "TransClustFClusteringQualityMeasure",
                         new ClusteringEvaluationParameters());
@@ -156,7 +156,7 @@ public class FMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
         assertEquals(0.8444444444444444, quality, DELTA);
         System.out.println(measure.getAlias() + " " + quality);
 
-        measure = ClusteringQualityMeasure.parseFromString(getRepository(),
+        measure = ClusteringEvaluationFactory.parseFromString(getRepository(),
                 "TransClustF2ClusteringQualityMeasure",
                 new ClusteringEvaluationParameters());
         quality = measure
@@ -173,10 +173,9 @@ public class FMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
                                                     RepositoryConfigurationException, NoRepositoryFoundException,
                                                     RegisterException, NoSuchAlgorithmException,
                                                     RNotAvailableException, RCalculationException,
-                                                    UnknownClusteringQualityMeasureException,
                                                     UnknownGoldStandardFormatException, UnknownDataSetFormatException,
                                                     InvalidDataSetFormatVersionException, IOException,
-                                                    InterruptedException, IllegalArgumentException, RException {
+                                                    InterruptedException, IllegalArgumentException, RException, UnknownProviderException {
         ClustevalBackendServer.logLevel(Level.WARN);
         Clustering goldStandard = new Clustering(this.getRepository(),
                 System.currentTimeMillis(), new File(""));
@@ -210,7 +209,7 @@ public class FMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
         cluster1.add(new ClusterItem("star7"), 1.0f);
         clustering.addCluster(cluster1);
 
-        ClusteringQualityMeasure measure = ClusteringQualityMeasure
+        ClusteringEvaluation measure = ClusteringEvaluationFactory
                 .parseFromString(getRepository(),
                         "TransClustFClusteringQualityMeasure",
                         new ClusteringEvaluationParameters());
@@ -219,7 +218,7 @@ public class FMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
         assertEquals(0.8444444444444444, quality, DELTA);
         System.out.println(measure.getAlias() + " " + quality);
 
-        measure = ClusteringQualityMeasure.parseFromString(getRepository(),
+        measure = ClusteringEvaluationFactory.parseFromString(getRepository(),
                 "TransClustF2ClusteringQualityMeasure",
                 new ClusteringEvaluationParameters());
         quality = measure
@@ -237,10 +236,9 @@ public class FMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
                    RepositoryConfigurationException, NoRepositoryFoundException,
                    RegisterException, NoSuchAlgorithmException,
                    RNotAvailableException, RCalculationException,
-                   UnknownClusteringQualityMeasureException,
                    UnknownGoldStandardFormatException, UnknownDataSetFormatException,
                    InvalidDataSetFormatVersionException, IOException,
-                   InterruptedException, IllegalArgumentException, RException {
+                   InterruptedException, IllegalArgumentException, RException, UnknownProviderException {
         ClustevalBackendServer.logLevel(Level.WARN);
         Clustering goldStandard = new Clustering(this.getRepository(),
                 System.currentTimeMillis(), new File(""));
@@ -274,7 +272,7 @@ public class FMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
         cluster1.add(new ClusterItem("star8"), 1.0f);
         clustering.addCluster(cluster1);
 
-        ClusteringQualityMeasure measure = ClusteringQualityMeasure
+        ClusteringEvaluation measure = ClusteringEvaluationFactory
                 .parseFromString(getRepository(),
                         "TransClustFClusteringQualityMeasure",
                         new ClusteringEvaluationParameters());
@@ -283,7 +281,7 @@ public class FMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
         assertEquals(0.8444444444444444, quality, DELTA);
         System.out.println(measure.getAlias() + " " + quality);
 
-        measure = ClusteringQualityMeasure.parseFromString(getRepository(),
+        measure = ClusteringEvaluationFactory.parseFromString(getRepository(),
                 "TransClustF2ClusteringQualityMeasure",
                 new ClusteringEvaluationParameters());
         quality = measure
@@ -302,10 +300,9 @@ public class FMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
                    RepositoryConfigurationException, NoRepositoryFoundException,
                    RegisterException, NoSuchAlgorithmException,
                    RNotAvailableException, RCalculationException,
-                   UnknownClusteringQualityMeasureException,
                    UnknownGoldStandardFormatException, UnknownDataSetFormatException,
                    InvalidDataSetFormatVersionException, IOException,
-                   ClusteringParseException, InterruptedException, IllegalArgumentException, RException {
+                   ClusteringParseException, InterruptedException, IllegalArgumentException, RException, UnknownProviderException {
         ClustevalBackendServer.logLevel(Level.WARN);
 
         DataConfig dataConfig = this.getRepository().getStaticObjectWithName(
@@ -322,7 +319,7 @@ public class FMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
 
         clustering.loadIntoMemory();
 
-        ClusteringQualityMeasure measure = ClusteringQualityMeasure
+        ClusteringEvaluation measure = ClusteringEvaluationFactory
                 .parseFromString(getRepository(),
                         "TransClustFClusteringQualityMeasure",
                         new ClusteringEvaluationParameters());
@@ -338,10 +335,9 @@ public class FMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
                                          RepositoryConfigurationException, NoRepositoryFoundException,
                                          RegisterException, NoSuchAlgorithmException,
                                          RNotAvailableException, RCalculationException,
-                                         UnknownClusteringQualityMeasureException,
                                          UnknownGoldStandardFormatException, UnknownDataSetFormatException,
                                          InvalidDataSetFormatVersionException, IOException,
-                                         InterruptedException, IllegalArgumentException, RException {
+                                         InterruptedException, IllegalArgumentException, RException, UnknownProviderException {
         ClustevalBackendServer.logLevel(Level.WARN);
         Clustering goldStandard = new Clustering(this.getRepository(),
                 System.currentTimeMillis(), new File(""));
@@ -372,7 +368,7 @@ public class FMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
         cluster1.add(new ClusterItem("star7"), 1.0f);
         clustering.addCluster(cluster1);
 
-        ClusteringQualityMeasure measure = ClusteringQualityMeasure
+        ClusteringEvaluation measure = ClusteringEvaluationFactory
                 .parseFromString(getRepository(),
                         "TransClustFClusteringQualityMeasure",
                         new ClusteringEvaluationParameters());
@@ -380,7 +376,7 @@ public class FMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
                 goldStandard, null).getValue();
         System.out.println(measure.getAlias() + " " + quality);
 
-        measure = ClusteringQualityMeasure.parseFromString(getRepository(),
+        measure = ClusteringEvaluationFactory.parseFromString(getRepository(),
                 "TransClustF2ClusteringQualityMeasure",
                 new ClusteringEvaluationParameters());
         quality = measure
