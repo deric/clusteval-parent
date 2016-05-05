@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Normalize every sample of the dataset (rows of the data matrix) to variances
@@ -34,6 +35,7 @@ import java.util.Set;
  * @author Christian Wiwie
  *
  */
+@ServiceProvider(service = DataPreprocessor.class)
 public class SampleVarianceNormalizationDataPreprocessor extends DataPreprocessor {
 
     public SampleVarianceNormalizationDataPreprocessor() {

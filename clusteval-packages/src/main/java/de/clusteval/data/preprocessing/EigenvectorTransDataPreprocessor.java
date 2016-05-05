@@ -24,11 +24,13 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * @author Christian Wiwie
  *
  */
+@ServiceProvider(service = DataPreprocessor.class)
 public class EigenvectorTransDataPreprocessor extends DataPreprocessor {
 
     public EigenvectorTransDataPreprocessor() {
