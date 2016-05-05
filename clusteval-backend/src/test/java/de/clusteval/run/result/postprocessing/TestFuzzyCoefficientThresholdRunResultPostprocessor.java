@@ -40,7 +40,6 @@ import de.clusteval.data.DataConfigurationException;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
-import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
 import de.clusteval.run.RunException;
@@ -63,7 +62,7 @@ public class TestFuzzyCoefficientThresholdRunResultPostprocessor extends Abstrac
                               RepositoryConfigurationException, DataSetNotFoundException,
                               UnknownDataSetFormatException, DataSetConfigurationException,
                               NoDataSetException, NumberFormatException, RegisterException,
-                              NoRepositoryFoundException, UnknownDataPreprocessorException, IOException,
+                              NoRepositoryFoundException, IOException,
                               InterruptedException, GoldStandardNotFoundException,
                               GoldStandardConfigurationException, DataSetConfigNotFoundException,
                               GoldStandardConfigNotFoundException, DataConfigurationException,

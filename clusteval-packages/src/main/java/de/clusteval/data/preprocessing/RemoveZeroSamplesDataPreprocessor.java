@@ -12,6 +12,7 @@ package de.clusteval.data.preprocessing;
 
 import de.clusteval.api.Matrix;
 import de.clusteval.api.data.AbsoluteDataSet;
+import de.clusteval.api.data.DataPreprocessor;
 import de.clusteval.api.data.DataSet;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.RelativeDataSet;
@@ -20,7 +21,6 @@ import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
-import de.clusteval.api.repository.IRepository;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
 import java.io.File;
 import java.io.IOException;
@@ -34,17 +34,8 @@ import java.util.Set;
  */
 public class RemoveZeroSamplesDataPreprocessor extends DataPreprocessor {
 
-    /**
-     * @param repository
-     * @param register
-     * @param changeDate
-     * @param absPath
-     * @throws RegisterException
-     */
-    public RemoveZeroSamplesDataPreprocessor(IRepository repository,
-            boolean register, long changeDate, File absPath)
-            throws RegisterException {
-        super(repository, register, changeDate, absPath);
+    public RemoveZeroSamplesDataPreprocessor() {
+        super();
     }
 
     /**
@@ -54,6 +45,11 @@ public class RemoveZeroSamplesDataPreprocessor extends DataPreprocessor {
     public RemoveZeroSamplesDataPreprocessor(
             RemoveZeroSamplesDataPreprocessor other) throws RegisterException {
         super(other);
+    }
+
+    @Override
+    public String getName() {
+        return this.getClass().getSimpleName();
     }
 
     /*
@@ -93,7 +89,7 @@ public class RemoveZeroSamplesDataPreprocessor extends DataPreprocessor {
             newDataSet.writeToFile(false);
             newDataSet.unloadFromMemory();
         } catch (InvalidDataSetFormatVersionException | IllegalArgumentException |
-                IOException | UnknownDataSetFormatException e1) {
+                 IOException | UnknownDataSetFormatException e1) {
             e1.printStackTrace();
         } finally {
             rEngine.clear();

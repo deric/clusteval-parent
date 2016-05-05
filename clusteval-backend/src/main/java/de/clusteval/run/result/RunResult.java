@@ -47,7 +47,6 @@ import de.clusteval.data.DataConfigurationException;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
-import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
@@ -150,7 +149,7 @@ public abstract class RunResult extends RepositoryObject implements IRunResult {
                    RepositoryConfigNotFoundException, RepositoryConfigurationException,
                    ConfigurationException, RegisterException, NumberFormatException,
                    NoDataSetException, RunResultParseException,
-                   UnknownDataPreprocessorException, IncompatibleDataSetConfigPreprocessorException,
+                   IncompatibleDataSetConfigPreprocessorException,
                    IncompatibleContextException, UnknownParameterType, InterruptedException,
                    UnknownRunResultPostprocessorException, FileNotFoundException, UnknownProviderException {
         try {

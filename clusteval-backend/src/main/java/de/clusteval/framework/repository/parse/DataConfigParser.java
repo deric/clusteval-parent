@@ -47,7 +47,6 @@ import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.data.dataset.RunResultDataSetConfig;
-import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.run.RunException;
 import de.clusteval.utils.FileUtils;
@@ -78,7 +77,6 @@ class DataConfigParser extends RepositoryObjectParser<DataConfig> {
                    GoldStandardNotFoundException, GoldStandardConfigurationException, DataSetConfigurationException,
                    DataSetNotFoundException, DataSetConfigNotFoundException, GoldStandardConfigNotFoundException,
                    NoDataSetException, DataConfigurationException, DataConfigNotFoundException, NumberFormatException,
-                   UnknownDataPreprocessorException,
                    IncompatibleDataSetConfigPreprocessorException, IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
                    UnknownRunResultPostprocessorException, UnknownProviderException {

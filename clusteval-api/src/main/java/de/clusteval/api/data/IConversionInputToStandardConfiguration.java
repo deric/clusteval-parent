@@ -28,11 +28,11 @@ public interface IConversionInputToStandardConfiguration extends IConversionConf
 
     IConversionInputToStandardConfiguration clone();
 
-    List<IDataPreprocessor> getPreprocessorsBeforeDistance();
+    List<DataPreprocessor> getPreprocessorsBeforeDistance();
 
     IDistanceMeasure getDistanceMeasureAbsoluteToRelative();
 
-    List<IDataPreprocessor> getPreprocessorsAfterDistance();
+    List<DataPreprocessor> getPreprocessorsAfterDistance();
 
     Precision getSimilarityPrecision();
 }

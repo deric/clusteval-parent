@@ -71,7 +71,6 @@ import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.data.dataset.generator.DataSetGenerator;
-import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.framework.repository.MyRengine;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
@@ -813,7 +812,7 @@ public class ClustevalBackendServer implements IBackendServer {
                  UnknownDataSetFormatException | InvalidRunModeException | UnknownParameterOptimizationMethodException | NoOptimizableProgramParameterException | UnknownProgramParameterException | UnknownGoldStandardFormatException | InvalidConfigurationFileException | RepositoryAlreadyExistsException | InvalidRepositoryException |
                  NoRepositoryFoundException | GoldStandardNotFoundException |
                  InvalidOptimizationParameterException | RunException | UnknownProgramTypeException |
-                 UnknownRProgramException | IncompatibleParameterOptimizationMethodException | RepositoryConfigNotFoundException | RepositoryConfigurationException | ConfigurationException | RegisterException | NumberFormatException | NoDataSetException | RunResultParseException | UnknownDataPreprocessorException | IncompatibleDataSetConfigPreprocessorException | IncompatibleContextException | UnknownParameterType | InterruptedException | UnknownRunResultPostprocessorException e) {
+                 UnknownRProgramException | IncompatibleParameterOptimizationMethodException | RepositoryConfigNotFoundException | RepositoryConfigurationException | ConfigurationException | RegisterException | NumberFormatException | NoDataSetException | RunResultParseException | IncompatibleDataSetConfigPreprocessorException | IncompatibleContextException | UnknownParameterType | InterruptedException | UnknownRunResultPostprocessorException e) {
             e.printStackTrace();
         } catch (UnknownProviderException ex) {
             Exceptions.printStackTrace(ex);

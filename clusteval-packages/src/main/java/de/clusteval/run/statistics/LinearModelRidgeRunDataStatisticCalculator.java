@@ -54,7 +54,6 @@ import de.clusteval.data.DataConfigurationException;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
-import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.api.stats.DoubleValueDataStatistic;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
@@ -142,7 +141,7 @@ public class LinearModelRidgeRunDataStatisticCalculator
                      GoldStandardConfigurationException | DataSetConfigurationException | DataSetNotFoundException |
                      DataSetConfigNotFoundException | GoldStandardConfigNotFoundException | DataConfigurationException |
                      DataConfigNotFoundException | RunException | UnknownProgramTypeException |
-                     UnknownRProgramException | IncompatibleParameterOptimizationMethodException | RepositoryConfigNotFoundException | RepositoryConfigurationException | ConfigurationException | RegisterException | NumberFormatException | NoDataSetException | RunResultParseException | UnknownDataPreprocessorException | IncompatibleDataSetConfigPreprocessorException | IncompatibleContextException | UnknownParameterType | InterruptedException | UnknownRunResultPostprocessorException e) {
+                     UnknownRProgramException | IncompatibleParameterOptimizationMethodException | RepositoryConfigNotFoundException | RepositoryConfigurationException | ConfigurationException | RegisterException | NumberFormatException | NoDataSetException | RunResultParseException | IncompatibleDataSetConfigPreprocessorException | IncompatibleContextException | UnknownParameterType | InterruptedException | UnknownRunResultPostprocessorException e) {
                 Exceptions.printStackTrace(e);
             } catch (UnknownProviderException ex) {
                 Exceptions.printStackTrace(ex);

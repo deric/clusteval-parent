@@ -10,13 +10,11 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset;
 
-import de.clusteval.api.data.IDataPreprocessor;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetConfig;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.ISupervisorThread;
-import de.clusteval.data.preprocessing.DataPreprocessorFinderThread;
 import de.clusteval.utils.Finder;
 import de.clusteval.utils.FinderThread;
 
@@ -56,10 +54,6 @@ public class DataSetConfigFinderThread extends FinderThread<IDataSetConfig> {
                     .waitFor();
         }
 
-        if (!this.repository.isInitialized(IDataPreprocessor.class)) {
-            this.supervisorThread.getThread(DataPreprocessorFinderThread.class)
-                    .waitFor();
-        }
         super.beforeFind();
     }
 

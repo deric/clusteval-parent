@@ -46,7 +46,6 @@ import de.clusteval.data.DataConfigurationException;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
-import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
@@ -171,7 +170,6 @@ public class RunDataAnalysisRunResult extends AnalysisRunResult<Pair<List<String
      * @throws IncompatibleParameterOptimizationMethodException
      * @throws UnknownRProgramException
      * @throws UnknownProgramTypeException
-     * @throws UnknownDataStatisticException
      * @throws RunException
      * @throws InvalidOptimizationParameterException
      * @throws GoldStandardNotFoundException
@@ -199,7 +197,6 @@ public class RunDataAnalysisRunResult extends AnalysisRunResult<Pair<List<String
      * @throws NoDataSetException
      * @throws NumberFormatException
      * @throws RunResultParseException
-     * @throws UnknownDataPreprocessorException
      * @throws IncompatibleDataSetConfigPreprocessorException
      * @throws IncompatibleContextException
      * @throws UnknownParameterType
@@ -222,7 +219,7 @@ public class RunDataAnalysisRunResult extends AnalysisRunResult<Pair<List<String
                    UnknownGoldStandardFormatException, RepositoryConfigNotFoundException,
                    RepositoryConfigurationException, ConfigurationException, RegisterException,
                    NumberFormatException, NoDataSetException,
-                   RunResultParseException, UnknownDataPreprocessorException,
+                   RunResultParseException,
                    IncompatibleDataSetConfigPreprocessorException,
                    IncompatibleContextException, UnknownParameterType, InterruptedException,
                    UnknownRunResultPostprocessorException, FileNotFoundException, UnknownProviderException {

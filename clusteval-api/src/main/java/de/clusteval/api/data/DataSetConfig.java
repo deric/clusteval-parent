@@ -289,7 +289,7 @@ public class DataSetConfig extends DumpableRepositoryObject implements IDataSetC
             StringBuilder sb = new StringBuilder();
             if (!configInputToStandard.getPreprocessorsBeforeDistance()
                     .isEmpty()) {
-                for (IDataPreprocessor pre : configInputToStandard
+                for (DataPreprocessor pre : configInputToStandard
                         .getPreprocessorsBeforeDistance()) {
                     sb.append(pre.getClass().getSimpleName());
                     sb.append(",");
@@ -302,7 +302,7 @@ public class DataSetConfig extends DumpableRepositoryObject implements IDataSetC
             if (!configInputToStandard.getPreprocessorsAfterDistance()
                     .isEmpty()) {
                 sb = new StringBuilder();
-                for (IDataPreprocessor pre : configInputToStandard
+                for (DataPreprocessor pre : configInputToStandard
                         .getPreprocessorsAfterDistance()) {
                     sb.append(pre.getClass().getSimpleName());
                     sb.append(",");

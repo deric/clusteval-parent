@@ -43,7 +43,6 @@ import de.clusteval.data.DataConfigurationException;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
-import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.run.Run;
 import de.clusteval.run.RunException;
 import java.io.File;
@@ -70,7 +69,6 @@ class RunParser<T extends Run> extends RepositoryObjectParser<T> {
                    GoldStandardNotFoundException, GoldStandardConfigurationException, DataSetConfigurationException,
                    DataSetNotFoundException, DataSetConfigNotFoundException, GoldStandardConfigNotFoundException,
                    NoDataSetException, DataConfigurationException, DataConfigNotFoundException, NumberFormatException,
-                   UnknownDataPreprocessorException,
                    IncompatibleDataSetConfigPreprocessorException, IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
                    UnknownRunResultPostprocessorException, UnknownProviderException {

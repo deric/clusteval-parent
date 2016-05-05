@@ -63,7 +63,6 @@ import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.data.dataset.RunResultDataSetConfig;
-import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.program.ProgramConfig;
 import de.clusteval.run.AnalysisRun;
@@ -153,7 +152,6 @@ public abstract class Parser<P extends IRepositoryObject> {
                    RunException, IncompatibleContextException,
                    UnknownRunResultFormatException, InvalidOptimizationParameterException, UnknownProgramParameterException,
                    UnknownProgramTypeException, UnknownRProgramException,
-                   UnknownDataPreprocessorException,
                    IncompatibleDataSetConfigPreprocessorException, IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
                    UnknownRunResultPostprocessorException, UnknownProviderException {
@@ -171,7 +169,6 @@ public abstract class Parser<P extends IRepositoryObject> {
                    UnknownParameterType, NoRepositoryFoundException, RunException,
                    IncompatibleContextException, UnknownRunResultFormatException, InvalidOptimizationParameterException,
                    UnknownProgramParameterException, UnknownProgramTypeException, UnknownRProgramException,
-                   UnknownDataPreprocessorException,
                    IncompatibleDataSetConfigPreprocessorException, IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
                    UnknownRunResultPostprocessorException, UnknownProviderException {
@@ -206,7 +203,6 @@ public abstract class Parser<P extends IRepositoryObject> {
                    UnknownParameterType, NoRepositoryFoundException, RunException,
                    IncompatibleContextException, UnknownRunResultFormatException, InvalidOptimizationParameterException,
                    UnknownProgramParameterException, UnknownProgramTypeException, UnknownRProgramException,
-                   UnknownDataPreprocessorException,
                    IncompatibleDataSetConfigPreprocessorException, IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
                    UnknownRunResultPostprocessorException, UnknownProviderException {
@@ -225,7 +221,6 @@ public abstract class Parser<P extends IRepositoryObject> {
                    GoldStandardNotFoundException, GoldStandardConfigurationException, DataSetConfigurationException,
                    DataSetNotFoundException, DataSetConfigNotFoundException, GoldStandardConfigNotFoundException,
                    NoDataSetException, DataConfigurationException, DataConfigNotFoundException, NumberFormatException,
-                   UnknownDataPreprocessorException,
                    IncompatibleDataSetConfigPreprocessorException, IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
                    UnknownRunResultPostprocessorException, UnknownProviderException;
@@ -256,7 +251,6 @@ class ClusteringRunParser extends ExecutionRunParser<ClusteringRun> {
                    GoldStandardNotFoundException, GoldStandardConfigurationException, DataSetConfigurationException,
                    DataSetNotFoundException, DataSetConfigNotFoundException, GoldStandardConfigNotFoundException,
                    NoDataSetException, DataConfigurationException, DataConfigNotFoundException, NumberFormatException,
-                   UnknownDataPreprocessorException,
                    IncompatibleDataSetConfigPreprocessorException, IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
                    UnknownRunResultPostprocessorException, UnknownProviderException {
@@ -289,7 +283,6 @@ class RobustnessAnalysisRunParser extends ExecutionRunParser<RobustnessAnalysisR
                    GoldStandardNotFoundException, GoldStandardConfigurationException, DataSetConfigurationException,
                    DataSetNotFoundException, DataSetConfigNotFoundException, GoldStandardConfigNotFoundException,
                    NoDataSetException, DataConfigurationException, DataConfigNotFoundException, NumberFormatException,
-                   UnknownDataPreprocessorException,
                    IncompatibleDataSetConfigPreprocessorException, IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
                    UnknownRunResultPostprocessorException, UnknownProviderException {
@@ -347,7 +340,7 @@ class RobustnessAnalysisRunParser extends ExecutionRunParser<RobustnessAnalysisR
                    DataSetNotFoundException, DataSetConfigNotFoundException, GoldStandardConfigNotFoundException,
                    NoDataSetException, DataConfigurationException, DataConfigNotFoundException, NumberFormatException,
                    RegisterException, NoRepositoryFoundException,
-                   UnknownDataPreprocessorException, IncompatibleDataSetConfigPreprocessorException, ConfigurationException,
+                   IncompatibleDataSetConfigPreprocessorException, ConfigurationException,
                    FileNotFoundException, UnknownParameterType,
                    IncompatibleContextException, UnknownRunResultFormatException,
                    InvalidOptimizationParameterException, UnknownProgramParameterException, UnknownProgramTypeException,
@@ -416,7 +409,6 @@ class DataAnalysisRunParser extends AnalysisRunParser<DataAnalysisRun> {
                    GoldStandardNotFoundException, GoldStandardConfigurationException, DataSetConfigurationException,
                    DataSetNotFoundException, DataSetConfigNotFoundException, GoldStandardConfigNotFoundException,
                    NoDataSetException, DataConfigurationException, DataConfigNotFoundException, NumberFormatException,
-                   UnknownDataPreprocessorException,
                    IncompatibleDataSetConfigPreprocessorException, IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
                    UnknownRunResultPostprocessorException, UnknownProviderException {
@@ -463,7 +455,6 @@ class ExecutionRunParser<T extends ExecutionRun> extends RunParser<T> {
                    GoldStandardNotFoundException, GoldStandardConfigurationException, DataSetConfigurationException,
                    DataSetNotFoundException, DataSetConfigNotFoundException, GoldStandardConfigNotFoundException,
                    NoDataSetException, DataConfigurationException, DataConfigNotFoundException, NumberFormatException,
-                   UnknownDataPreprocessorException,
                    IncompatibleDataSetConfigPreprocessorException, IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
                    UnknownRunResultPostprocessorException, UnknownProviderException {
@@ -507,7 +498,7 @@ class ExecutionRunParser<T extends ExecutionRun> extends RunParser<T> {
                    NoOptimizableProgramParameterException, GoldStandardNotFoundException, GoldStandardConfigurationException,
                    DataSetConfigurationException, DataSetNotFoundException, DataSetConfigNotFoundException,
                    GoldStandardConfigNotFoundException, NoDataSetException, DataConfigurationException,
-                   DataConfigNotFoundException, NumberFormatException, UnknownDataPreprocessorException,
+                   DataConfigNotFoundException, NumberFormatException,
                    IncompatibleDataSetConfigPreprocessorException, IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException,
                    UnknownRunResultPostprocessorException, UnknownProviderException {
@@ -558,7 +549,7 @@ class ExecutionRunParser<T extends ExecutionRun> extends RunParser<T> {
                    GoldStandardNotFoundException, GoldStandardConfigurationException, DataSetConfigurationException,
                    DataSetNotFoundException, DataSetConfigNotFoundException, GoldStandardConfigNotFoundException,
                    NoDataSetException, DataConfigurationException, DataConfigNotFoundException, NumberFormatException,
-                   RegisterException, NoRepositoryFoundException, UnknownDataPreprocessorException, IncompatibleDataSetConfigPreprocessorException, ConfigurationException,
+                   RegisterException, NoRepositoryFoundException, IncompatibleDataSetConfigPreprocessorException, ConfigurationException,
                    FileNotFoundException, UnknownParameterType, IncompatibleContextException, UnknownRunResultFormatException,
                    InvalidOptimizationParameterException, UnknownProgramParameterException, UnknownProgramTypeException,
                    UnknownRProgramException, IncompatibleParameterOptimizationMethodException,
@@ -659,7 +650,6 @@ class GoldStandardConfigParser extends RepositoryObjectParser<GoldStandardConfig
                    GoldStandardNotFoundException, GoldStandardConfigurationException, DataSetConfigurationException,
                    DataSetNotFoundException, DataSetConfigNotFoundException, GoldStandardConfigNotFoundException,
                    NoDataSetException, DataConfigurationException, DataConfigNotFoundException, NumberFormatException,
-                   UnknownDataPreprocessorException,
                    IncompatibleDataSetConfigPreprocessorException, IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
                    UnknownRunResultPostprocessorException, UnknownProviderException {
@@ -701,7 +691,6 @@ class InternalParameterOptimizationRunParser extends ExecutionRunParser<Internal
                    GoldStandardNotFoundException, GoldStandardConfigurationException, DataSetConfigurationException,
                    DataSetNotFoundException, DataSetConfigNotFoundException, GoldStandardConfigNotFoundException,
                    NoDataSetException, DataConfigurationException, DataConfigNotFoundException, NumberFormatException,
-                   UnknownDataPreprocessorException,
                    IncompatibleDataSetConfigPreprocessorException, IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
                    UnknownRunResultPostprocessorException, UnknownProviderException {
@@ -735,7 +724,6 @@ class ParameterOptimizationRunParser extends ExecutionRunParser<ParameterOptimiz
                    GoldStandardNotFoundException, GoldStandardConfigurationException, DataSetConfigurationException,
                    DataSetNotFoundException, DataSetConfigNotFoundException, GoldStandardConfigNotFoundException,
                    NoDataSetException, DataConfigurationException, DataConfigNotFoundException,
-                   UnknownDataPreprocessorException,
                    IncompatibleDataSetConfigPreprocessorException,
                    UnknownRunResultPostprocessorException, UnknownProviderException {
 
@@ -847,7 +835,7 @@ class ParameterOptimizationRunParser extends ExecutionRunParser<ParameterOptimiz
                    NoOptimizableProgramParameterException, GoldStandardNotFoundException, GoldStandardConfigurationException,
                    DataSetConfigurationException, DataSetNotFoundException, DataSetConfigNotFoundException,
                    GoldStandardConfigNotFoundException, NoDataSetException, DataConfigurationException,
-                   DataConfigNotFoundException, NumberFormatException, UnknownDataPreprocessorException,
+                   DataConfigNotFoundException, NumberFormatException,
                    IncompatibleDataSetConfigPreprocessorException, IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException,
                    UnknownRunResultPostprocessorException, UnknownProviderException {
@@ -953,7 +941,6 @@ class RepositoryObjectParser<T extends IRepositoryObject> extends Parser<T> {
                    GoldStandardNotFoundException, GoldStandardConfigurationException, DataSetConfigurationException,
                    DataSetNotFoundException, DataSetConfigNotFoundException, GoldStandardConfigNotFoundException,
                    NoDataSetException, DataConfigurationException, DataConfigNotFoundException, NumberFormatException,
-                   UnknownDataPreprocessorException,
                    IncompatibleDataSetConfigPreprocessorException, IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
                    UnknownRunResultPostprocessorException, UnknownProviderException {
@@ -988,7 +975,6 @@ class RunAnalysisRunParser extends AnalysisRunParser<RunAnalysisRun> {
                    GoldStandardNotFoundException, GoldStandardConfigurationException, DataSetConfigurationException,
                    DataSetNotFoundException, DataSetConfigNotFoundException, GoldStandardConfigNotFoundException,
                    NoDataSetException, DataConfigurationException, DataConfigNotFoundException, NumberFormatException,
-                   UnknownDataPreprocessorException,
                    IncompatibleDataSetConfigPreprocessorException, IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
                    UnknownRunResultPostprocessorException, UnknownProviderException {
@@ -1021,7 +1007,6 @@ class RunDataAnalysisRunParser extends AnalysisRunParser<RunDataAnalysisRun> {
                    GoldStandardNotFoundException, GoldStandardConfigurationException, DataSetConfigurationException,
                    DataSetNotFoundException, DataSetConfigNotFoundException, GoldStandardConfigNotFoundException,
                    NoDataSetException, DataConfigurationException, DataConfigNotFoundException, NumberFormatException,
-                   UnknownDataPreprocessorException,
                    IncompatibleDataSetConfigPreprocessorException, IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
                    UnknownRunResultPostprocessorException, UnknownProviderException {

@@ -428,9 +428,9 @@ public abstract class DataSet extends RepositoryObject implements IDataSet, IRep
             // 13.04.2013: apply all data preprocessors before distance
             // conversion
             IDataSet preprocessed = this;
-            List<IDataPreprocessor> preprocessors = configInputToStandard
+            List<DataPreprocessor> preprocessors = configInputToStandard
                     .getPreprocessorsBeforeDistance();
-            for (IDataPreprocessor proc : preprocessors) {
+            for (DataPreprocessor proc : preprocessors) {
                 preprocessed = proc.preprocess(preprocessed);
             }
 
@@ -471,7 +471,7 @@ public abstract class DataSet extends RepositoryObject implements IDataSet, IRep
                 // conversion
                 this.log.debug("Apply preprocessors");
                 preprocessors = configInputToStandard.getPreprocessorsAfterDistance();
-                for (IDataPreprocessor proc : preprocessors) {
+                for (DataPreprocessor proc : preprocessors) {
                     result = proc.preprocess(result);
                 }
 

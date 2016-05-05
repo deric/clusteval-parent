@@ -48,7 +48,6 @@ import de.clusteval.data.DataConfigurationException;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
-import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.program.Program;
 import de.clusteval.program.ProgramConfig;
 import de.clusteval.program.ProgramParameter;
@@ -74,13 +73,6 @@ import org.apache.commons.configuration.ConfigurationException;
  */
 class ProgramConfigParser extends RepositoryObjectParser<ProgramConfig> {
 
-    /**
-     * (non-Javadoc)
-     *
-     * @see
-     * de.clusteval.framework.repository.RepositoryObjectParser#parseFromFile
-     * (java.io.File)
-     */
     @Override
     public void parseFromFile(File absPath)
             throws NoRepositoryFoundException, ConfigurationException, RunException,
@@ -90,7 +82,6 @@ class ProgramConfigParser extends RepositoryObjectParser<ProgramConfig> {
                    GoldStandardNotFoundException, GoldStandardConfigurationException, DataSetConfigurationException,
                    DataSetNotFoundException, DataSetConfigNotFoundException, GoldStandardConfigNotFoundException,
                    NoDataSetException, DataConfigurationException, DataConfigNotFoundException, NumberFormatException,
-                   UnknownDataPreprocessorException,
                    IncompatibleDataSetConfigPreprocessorException, IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
                    UnknownRunResultPostprocessorException, UnknownProviderException {

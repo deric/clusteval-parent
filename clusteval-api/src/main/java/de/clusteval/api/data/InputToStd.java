@@ -12,8 +12,6 @@ package de.clusteval.api.data;
 
 import de.clusteval.api.IDistanceMeasure;
 import de.clusteval.api.Precision;
-import de.clusteval.api.data.IConversionInputToStandardConfiguration;
-import de.clusteval.api.data.IDataPreprocessor;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,21 +21,21 @@ import java.util.List;
  */
 public class InputToStd implements IConversionInputToStandardConfiguration {
 
-    protected static List<IDataPreprocessor> clonePreprocessors(List<IDataPreprocessor> preprocessors) {
-        List<IDataPreprocessor> result = new ArrayList<>();
+    protected static List<DataPreprocessor> clonePreprocessors(List<DataPreprocessor> preprocessors) {
+        List<DataPreprocessor> result = new ArrayList<>();
 
-        for (IDataPreprocessor proc : preprocessors) {
+        for (DataPreprocessor proc : preprocessors) {
             result.add(proc.clone());
         }
 
         return result;
     }
 
-    protected List<IDataPreprocessor> preprocessorsBeforeDistance;
+    protected List<DataPreprocessor> preprocessorsBeforeDistance;
 
     protected IDistanceMeasure distanceMeasureAbsoluteToRelative;
 
-    protected List<IDataPreprocessor> preprocessorsAfterDistance;
+    protected List<DataPreprocessor> preprocessorsAfterDistance;
 
     protected Precision similarityPrecision;
 
@@ -51,8 +49,8 @@ public class InputToStd implements IConversionInputToStandardConfiguration {
     public InputToStd(
             final IDistanceMeasure distanceMeasure,
             final Precision similarityPrecision,
-            final List<IDataPreprocessor> preprocessorsBeforeDistance,
-            final List<IDataPreprocessor> preprocessorsAfterDistance) {
+            final List<DataPreprocessor> preprocessorsBeforeDistance,
+            final List<DataPreprocessor> preprocessorsAfterDistance) {
         super();
 
         this.similarityPrecision = similarityPrecision;
@@ -104,7 +102,7 @@ public class InputToStd implements IConversionInputToStandardConfiguration {
      * @return The preprocessors to apply to the dataset before it is converted
      *         to pairwise distances/similarities.
      */
-    public List<IDataPreprocessor> getPreprocessorsBeforeDistance() {
+    public List<DataPreprocessor> getPreprocessorsBeforeDistance() {
         return this.preprocessorsBeforeDistance;
     }
 
@@ -112,7 +110,7 @@ public class InputToStd implements IConversionInputToStandardConfiguration {
      * @return The preprocessors to apply to the dataset after it is converted
      *         to pairwise distances/similarities.
      */
-    public List<IDataPreprocessor> getPreprocessorsAfterDistance() {
+    public List<DataPreprocessor> getPreprocessorsAfterDistance() {
         return this.preprocessorsAfterDistance;
     }
 

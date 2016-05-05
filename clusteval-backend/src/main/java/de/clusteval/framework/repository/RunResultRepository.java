@@ -17,7 +17,7 @@ import de.clusteval.api.IContext;
 import de.clusteval.api.IDistanceMeasure;
 import de.clusteval.api.data.GoldStandard;
 import de.clusteval.api.data.IDataConfig;
-import de.clusteval.api.data.IDataPreprocessor;
+import de.clusteval.api.data.DataPreprocessor;
 import de.clusteval.api.data.IDataRandomizer;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetConfig;
@@ -44,7 +44,7 @@ import de.clusteval.api.stats.IRunDataStatistic;
 import de.clusteval.api.stats.IRunStatistic;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.data.dataset.DataSetRegisterException;
-import de.clusteval.data.preprocessing.DataPreprocessor;
+import de.clusteval.api.data.DataPreprocessor;
 import de.clusteval.api.data.DataRandomizer;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
@@ -218,7 +218,7 @@ public class RunResultRepository extends Repository implements IRepository {
                         this.parent.getDynamicEntities()
                         .get(DataRandomizer.class));
 
-        this.dynamicRepositoryEntities.put(IDataPreprocessor.class,
+        this.dynamicRepositoryEntities.put(DataPreprocessor.class,
                 this.parent.getDynamicEntities()
                 .get(DataPreprocessor.class));
 

@@ -38,6 +38,7 @@ import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.IRunResult;
+import de.clusteval.api.stats.DataStatistic;
 import de.clusteval.api.stats.IDataStatistic;
 import de.clusteval.api.stats.IStatistic;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
@@ -46,8 +47,6 @@ import de.clusteval.data.DataConfigurationException;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
-import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
-import de.clusteval.api.stats.DataStatistic;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
@@ -166,7 +165,6 @@ public class DataAnalysisRunResult extends AnalysisRunResult<IDataConfig, IDataS
                    UnknownGoldStandardFormatException, AnalysisRunResultException,
                    RepositoryConfigNotFoundException, RepositoryConfigurationException, ConfigurationException,
                    RegisterException, NumberFormatException, NoDataSetException,
-                   UnknownDataPreprocessorException,
                    IncompatibleDataSetConfigPreprocessorException,
                    IncompatibleContextException, UnknownParameterType, InterruptedException,
                    UnknownRunResultPostprocessorException, FileNotFoundException, UnknownProviderException {

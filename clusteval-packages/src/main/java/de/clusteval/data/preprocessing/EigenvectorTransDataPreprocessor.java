@@ -10,17 +10,16 @@
  ***************************************************************************** */
 package de.clusteval.data.preprocessing;
 
+import de.clusteval.api.data.AbsoluteDataSet;
+import de.clusteval.api.data.DataMatrix;
+import de.clusteval.api.data.DataPreprocessor;
 import de.clusteval.api.data.IDataSet;
+import de.clusteval.api.data.RelativeDataSet;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
-import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.data.AbsoluteDataSet;
-import de.clusteval.api.data.DataMatrix;
-import de.clusteval.api.data.RelativeDataSet;
-import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -32,17 +31,8 @@ import java.util.Set;
  */
 public class EigenvectorTransDataPreprocessor extends DataPreprocessor {
 
-    /**
-     * @param repository
-     * @param register
-     * @param changeDate
-     * @param absPath
-     * @throws RegisterException
-     */
-    public EigenvectorTransDataPreprocessor(IRepository repository,
-            boolean register, long changeDate, File absPath)
-            throws RegisterException {
-        super(repository, register, changeDate, absPath);
+    public EigenvectorTransDataPreprocessor() {
+        super();
     }
 
     /**
@@ -52,6 +42,11 @@ public class EigenvectorTransDataPreprocessor extends DataPreprocessor {
     public EigenvectorTransDataPreprocessor(DataPreprocessor other)
             throws RegisterException {
         super(other);
+    }
+
+    @Override
+    public String getName() {
+        return this.getClass().getSimpleName();
     }
 
     /*
@@ -75,7 +70,7 @@ public class EigenvectorTransDataPreprocessor extends DataPreprocessor {
             rEngine.assign("matrix", matrix.getData());
             rEngine.clear();
         } catch (InvalidDataSetFormatVersionException | IllegalArgumentException |
-                IOException | UnknownDataSetFormatException e1) {
+                 IOException | UnknownDataSetFormatException e1) {
             e1.printStackTrace();
         } finally {
             dataSet.unloadFromMemory();
@@ -92,7 +87,7 @@ public class EigenvectorTransDataPreprocessor extends DataPreprocessor {
      */
     @Override
     public Set<String> getCompatibleDataSetFormats() {
-        return new HashSet<String>(
+        return new HashSet<>(
                 Arrays.asList(new String[]{"MatrixDataSetFormat"}));
     }
 }

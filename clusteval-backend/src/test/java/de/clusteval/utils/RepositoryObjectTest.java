@@ -23,7 +23,6 @@ import de.clusteval.api.repository.RepositoryReplaceEvent;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
-import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.framework.repository.Repository;
 import java.io.File;
 import java.io.IOException;
@@ -234,14 +233,6 @@ public final class RepositoryObjectTest extends AbstractClustEvalTest {
         assertFalse(this.repositoryObject.removeListener(other));
     }
 
-    /**
-     * Test method for
-     * {@link framework.repository.RepositoryObject#removeListener(utils.RepositoryListener)}
-     * .
-     *
-     * @throws RegisterException
-     *
-     */
     @Test
     public void testRemoveListener() throws RegisterException {
 
@@ -300,7 +291,7 @@ public final class RepositoryObjectTest extends AbstractClustEvalTest {
                    DataSetConfigNotFoundException,
                    GoldStandardConfigNotFoundException,
                    RegisterException, NoDataSetException,
-                   NumberFormatException, UnknownDataPreprocessorException,
+                   NumberFormatException,
                    IncompatibleDataSetConfigPreprocessorException {
 
         /*

@@ -18,9 +18,10 @@ package de.clusteval.framework.repository.parse;
 
 import de.clusteval.api.IDistanceMeasure;
 import de.clusteval.api.Precision;
+import de.clusteval.api.data.DataPreprocessorFactory;
 import de.clusteval.api.data.DataSetConfig;
 import de.clusteval.api.data.DistanceMeasureFactory;
-import de.clusteval.api.data.IDataPreprocessor;
+import de.clusteval.api.data.DataPreprocessor;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.InputToStd;
 import de.clusteval.api.data.StdToInput;
@@ -49,8 +50,6 @@ import de.clusteval.data.DataConfigurationException;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
-import de.clusteval.data.preprocessing.DataPreprocessor;
-import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.run.RunException;
 import de.clusteval.utils.FileUtils;
@@ -90,7 +89,6 @@ class DataSetConfigParser extends RepositoryObjectParser<DataSetConfig> {
                    GoldStandardNotFoundException, GoldStandardConfigurationException, DataSetConfigurationException,
                    DataSetNotFoundException, DataSetConfigNotFoundException, GoldStandardConfigNotFoundException,
                    NoDataSetException, DataConfigurationException, DataConfigNotFoundException, NumberFormatException,
-                   UnknownDataPreprocessorException,
                    IncompatibleDataSetConfigPreprocessorException, IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
                    UnknownRunResultPostprocessorException, UnknownProviderException {
@@ -133,12 +131,12 @@ class DataSetConfigParser extends RepositoryObjectParser<DataSetConfig> {
             dataSet = this.getDataSet();
 
             // added 12.04.2013
-            List<IDataPreprocessor> preprocessorBeforeDistance;
+            List<DataPreprocessor> preprocessorBeforeDistance;
             if (getProps().containsKey("preprocessorBeforeDistance")) {
-                preprocessorBeforeDistance = DataPreprocessor.parseFromString(repo,
+                preprocessorBeforeDistance = DataPreprocessorFactory.parseFromString(repo,
                         getProps().getStringArray("preprocessorBeforeDistance"));
 
-                for (IDataPreprocessor proc : preprocessorBeforeDistance) {
+                for (DataPreprocessor proc : preprocessorBeforeDistance) {
                     if (!proc.getCompatibleDataSetFormats()
                             .contains(dataSet.getDataSetFormat().getClass().getSimpleName())) {
                         throw new IncompatibleDataSetConfigPreprocessorException("The data preprocessor "
@@ -150,9 +148,9 @@ class DataSetConfigParser extends RepositoryObjectParser<DataSetConfig> {
                 preprocessorBeforeDistance = new ArrayList<>();
             }
 
-            List<IDataPreprocessor> preprocessorAfterDistance;
+            List<DataPreprocessor> preprocessorAfterDistance;
             if (getProps().containsKey("preprocessorAfterDistance")) {
-                preprocessorAfterDistance = DataPreprocessor.parseFromString(repo,
+                preprocessorAfterDistance = DataPreprocessorFactory.parseFromString(repo,
                         getProps().getStringArray("preprocessorAfterDistance"));
             } else {
                 preprocessorAfterDistance = new ArrayList<>();
@@ -179,7 +177,7 @@ class DataSetConfigParser extends RepositoryObjectParser<DataSetConfig> {
                    UnknownParameterType, RunException, IncompatibleContextException,
                    UnknownRunResultFormatException, InvalidOptimizationParameterException, UnknownProgramParameterException,
                    UnknownProgramTypeException, UnknownRProgramException,
-                   UnknownDataPreprocessorException, IncompatibleDataSetConfigPreprocessorException,
+                   IncompatibleDataSetConfigPreprocessorException,
                    IncompatibleParameterOptimizationMethodException, UnknownParameterOptimizationMethodException,
                    NoOptimizableProgramParameterException, UnknownRunResultPostprocessorException, UnknownProviderException {
         if (repo instanceof RunResultRepository) {

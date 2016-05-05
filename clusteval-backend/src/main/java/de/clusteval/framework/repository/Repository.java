@@ -21,7 +21,7 @@ import de.clusteval.api.IDistanceMeasure;
 import de.clusteval.api.SQLConfig;
 import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.data.IDataConfig;
-import de.clusteval.api.data.IDataPreprocessor;
+import de.clusteval.api.data.DataPreprocessor;
 import de.clusteval.api.data.IDataRandomizer;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetConfig;
@@ -549,7 +549,7 @@ public class Repository implements IRepository {
         this.ensureFolder(this.generatorBasePath);
         this.ensureFolder(this.getBasePath(IDataSetGenerator.class));
         this.ensureFolder(this.getBasePath(IDataRandomizer.class));
-        this.ensureFolder(this.getBasePath(IDataPreprocessor.class));
+        this.ensureFolder(this.getBasePath(DataPreprocessor.class));
 
         return true;
     }
@@ -1414,7 +1414,7 @@ public class Repository implements IRepository {
 
         this.createAndAddDynamicEntity(IDataSetGenerator.class, FileUtils.buildPath(this.generatorBasePath, "dataset"));
         this.createAndAddDynamicEntity(IDataRandomizer.class, FileUtils.buildPath(this.randomizerBasePath, "data"));
-        this.createAndAddDynamicEntity(IDataPreprocessor.class,
+        this.createAndAddDynamicEntity(DataPreprocessor.class,
                 FileUtils.buildPath(this.supplementaryBasePath, "preprocessing"));
         this.createAndAddDynamicEntity(IRunResultPostprocessor.class,
                 FileUtils.buildPath(this.supplementaryBasePath, "postprocessing"));
@@ -1575,7 +1575,7 @@ public class Repository implements IRepository {
                 && isInitialized(IDataSet.class) && isInitialized(IGoldStandardConfig.class)
                 && isInitialized(IDataConfig.class) && isInitialized(IProgramConfig.class)
                 && isInitialized(IDataSetGenerator.class) && isInitialized(IContext.class)
-                && isInitialized(IDataPreprocessor.class) && isInitialized(IDistanceMeasure.class);
+                && isInitialized(DataPreprocessor.class) && isInitialized(IDistanceMeasure.class);
     }
 
     /**

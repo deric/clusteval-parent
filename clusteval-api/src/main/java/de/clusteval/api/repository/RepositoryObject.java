@@ -176,8 +176,8 @@ public abstract class RepositoryObject implements RepositoryListener, IRepositor
      *
      * @return true, if successful
      * @throws RegisterException An exception is thrown if something goes wrong
-     *                           during the registering process, that might be interesting to handle
-     *                           individually.
+     * during the registering process, that might be interesting to handle
+     * individually.
      */
     @Override
     public boolean register() throws RegisterException {
@@ -481,4 +481,5 @@ public abstract class RepositoryObject implements RepositoryListener, IRepositor
                 && ((this.absPath == null && other.absPath == null) || this.absPath
                 .equals(other.absPath));
     }
+
 }

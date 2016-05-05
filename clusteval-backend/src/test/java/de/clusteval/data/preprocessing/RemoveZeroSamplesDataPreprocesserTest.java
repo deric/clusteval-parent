@@ -10,8 +10,9 @@
  ***************************************************************************** */
 package de.clusteval.data.preprocessing;
 
+import de.clusteval.api.data.DataPreprocessorFactory;
 import de.clusteval.api.data.DataSetAttributeFilterer;
-import de.clusteval.api.data.IDataPreprocessor;
+import de.clusteval.api.data.DataPreprocessor;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
@@ -68,7 +69,7 @@ public class RemoveZeroSamplesDataPreprocesserTest
                    UnknownDataSetFormatException, DataSetConfigurationException,
                    NoDataSetException, NumberFormatException, RegisterException,
                    NoRepositoryFoundException, UnknownProviderException,
-                   UnknownDataPreprocessorException, IOException,
+                   IOException,
                    InterruptedException, GoldStandardNotFoundException,
                    GoldStandardConfigurationException, DataSetConfigNotFoundException,
                    GoldStandardConfigNotFoundException, DataConfigurationException,
@@ -97,7 +98,7 @@ public class RemoveZeroSamplesDataPreprocesserTest
         ds.setAbsolutePath(new File(
                 "testCaseRepository/data/datasets/sfld/sfld_brown_et_al_amidohydrolases_protein_similarities_for_beh.txt.SimMatrix.strip"));
 
-        IDataPreprocessor proc = DataPreprocessor.parseFromString(
+        DataPreprocessor proc = DataPreprocessorFactory.parseFromString(
                 this.getRepository(), "RemoveZeroSamplesDataPreprocessor");
 
         IDataSet newDs = proc.preprocess(ds);

@@ -10,17 +10,17 @@
  ***************************************************************************** */
 package de.clusteval.data.preprocessing;
 
+import de.clusteval.api.data.AbsoluteDataSet;
+import de.clusteval.api.data.DataMatrix;
+import de.clusteval.api.data.DataPreprocessor;
+import de.clusteval.api.data.DataSet;
 import de.clusteval.api.data.IDataSet;
+import de.clusteval.api.data.RelativeDataSet;
 import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
 import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
-import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.data.AbsoluteDataSet;
-import de.clusteval.api.data.DataMatrix;
-import de.clusteval.api.data.DataSet;
-import de.clusteval.api.data.RelativeDataSet;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -34,21 +34,10 @@ import java.util.Set;
  * @author Christian Wiwie
  *
  */
-public class SampleVarianceNormalizationDataPreprocessor
-        extends
-        DataPreprocessor {
+public class SampleVarianceNormalizationDataPreprocessor extends DataPreprocessor {
 
-    /**
-     * @param repository
-     * @param register
-     * @param changeDate
-     * @param absPath
-     * @throws RegisterException
-     */
-    public SampleVarianceNormalizationDataPreprocessor(IRepository repository,
-            boolean register, long changeDate, File absPath)
-            throws RegisterException {
-        super(repository, register, changeDate, absPath);
+    public SampleVarianceNormalizationDataPreprocessor() {
+        super();
     }
 
     /**
@@ -59,6 +48,11 @@ public class SampleVarianceNormalizationDataPreprocessor
             SampleVarianceNormalizationDataPreprocessor other)
             throws RegisterException {
         super(other);
+    }
+
+    @Override
+    public String getName() {
+        return this.getClass().getSimpleName();
     }
 
     /*
@@ -93,7 +87,7 @@ public class SampleVarianceNormalizationDataPreprocessor
             newDataSet.unloadFromMemory();
 
         } catch (InvalidDataSetFormatVersionException | IllegalArgumentException |
-                IOException | UnknownDataSetFormatException ex) {
+                 IOException | UnknownDataSetFormatException ex) {
             ex.printStackTrace();
         } finally {
             rEngine.clear();

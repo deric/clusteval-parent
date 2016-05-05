@@ -12,7 +12,6 @@
  */
 package de.clusteval.api.stats;
 
-import de.clusteval.api.stats.DataStatistic;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.IRepository;
 import java.io.File;

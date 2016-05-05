@@ -41,7 +41,6 @@ import de.clusteval.data.DataConfigurationException;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
-import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.config.DefaultRepositoryConfig;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
@@ -71,7 +70,7 @@ public class ClusteringRunTest extends AbstractClustEvalTest {
                    UnknownParameterType, IOException, UnknownRunResultFormatException,
                    UnknownProgramParameterException, NoRepositoryFoundException,
                    InvalidOptimizationParameterException, RunException, UnknownProgramTypeException, UnknownRProgramException,
-                   UnknownDataPreprocessorException, IncompatibleDataSetConfigPreprocessorException, IncompatibleContextException,
+                   IncompatibleDataSetConfigPreprocessorException, IncompatibleContextException,
                    IncompatibleParameterOptimizationMethodException, UnknownParameterOptimizationMethodException,
                    NoOptimizableProgramParameterException,
                    UnknownRunResultPostprocessorException,
