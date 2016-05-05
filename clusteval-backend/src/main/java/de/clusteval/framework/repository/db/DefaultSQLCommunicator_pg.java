@@ -16,7 +16,7 @@ import de.clusteval.api.AbsContext;
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.Pair;
 import de.clusteval.api.SQLConfig;
-import de.clusteval.api.cluster.ClusteringEvaluationParameters;
+import de.clusteval.api.cluster.ClusteringEvaluationFactory;
 import de.clusteval.api.cluster.ClusteringQualitySet;
 import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.data.DataConfig;
@@ -33,6 +33,8 @@ import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.data.IGoldStandardConfig;
 import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
+import de.clusteval.api.stats.DataStatisticFactory;
+import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.IProgramParameter;
 import de.clusteval.api.program.ParameterSet;
@@ -40,10 +42,15 @@ import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RepositoryController;
 import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.RunResultFormat;
+import de.clusteval.api.stats.IDataStatistic;
+import de.clusteval.api.stats.IRunDataStatistic;
+import de.clusteval.api.stats.IRunStatistic;
+import de.clusteval.api.stats.IStatistic;
+import de.clusteval.api.stats.RunDataStatisticFactory;
+import de.clusteval.api.stats.RunStatisticFactory;
+import de.clusteval.api.stats.Statistic;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
-import de.clusteval.cluster.quality.ClusteringQualityMeasure;
-import de.clusteval.data.statistics.DataStatistic;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.program.DoubleProgramParameter;
 import de.clusteval.program.IntegerProgramParameter;
@@ -78,6 +85,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.openide.util.Exceptions;
 
 /**
  * A default sql communicator is the standard implementation of the abstract
@@ -824,7 +832,7 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
                     new String[]{"repository_id", "run_id"}, new String[]{
                         "" + this.updateRepositoryId(), "" + run_id});
 
-            for (Statistic st : object.getStatistics()) {
+            for (IStatistic st : object.getStatistics()) {
                 int statistic_id = getStatisticId(st.getIdentifier());
                 insert(this.getTableRunsAnalysisStatistics(), new String[]{
                     "repository_id", "run_analysis_id", "statistic_id"},
@@ -1785,12 +1793,9 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
      * de.wiwie.wiutils.utils.SQLCommunicator#registerClusteringQualityMeasure(java.lang.Class)
      */
     @Override
-    protected boolean registerClusteringQualityMeasureClass(Class<? extends ClusteringQualityMeasure> object) {
+    protected boolean registerClusteringQualityMeasureClass(Class<? extends ClusteringEvaluation> object) {
         try {
-            ClusteringQualityMeasure measure = object.getConstructor(IRepository.class, boolean.class, long.class, File.class,
-                    ClusteringEvaluationParameters.class).newInstance(repository, false, System.currentTimeMillis(),
-                            new File(object.getSimpleName()),
-                            new ClusteringEvaluationParameters());
+            ClusteringEvaluation measure = ClusteringEvaluationFactory.getInstance().getProvider(object.getSimpleName());
             int id = insert(
                     this.getTableClusteringQualityMeasures(),
                     new String[]{"repository_id", "name", "min_value",
@@ -1803,22 +1808,14 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
                         measure.getAlias()});
             this.objectIds.put(measure, id);
             return true;
-        } catch (SQLException | IllegalArgumentException | SecurityException |
-                 InstantiationException | IllegalAccessException |
-                 InvocationTargetException | NoSuchMethodException e) {
-
+        } catch (SQLException | IllegalArgumentException | SecurityException e) {
             e.printStackTrace();
+        } catch (UnknownProviderException ex) {
+            Exceptions.printStackTrace(ex);
         }
         return false;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * de.wiwie.wiutils.utils.SQLCommunicator#registerParameterOptimizationMethod(java.lang.Class
-     * )
-     */
     @Override
     protected boolean registerParameterOptimizationMethodClass(
             Class<? extends ParameterOptimizationMethod> object) {
@@ -1837,17 +1834,12 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
     }
 
     @Override
-    protected boolean registerDataStatisticClass(
-            Class<? extends DataStatistic> object) {
+    protected boolean registerDataStatisticClass(Class<? extends IDataStatistic> object) {
 
         try {
             int statisticId;
             try {
-                DataStatistic statistic = object
-                        .getConstructor(IRepository.class, boolean.class,
-                                long.class, File.class).newInstance(repository,
-                                false, System.currentTimeMillis(),
-                                new File(object.getSimpleName()));
+                IDataStatistic statistic = DataStatisticFactory.getInstance().getProvider(object.getSimpleName());
                 statisticId = insert(
                         this.getTableStatistics(),
                         new String[]{"repository_id", "name", "alias"},
@@ -1861,9 +1853,8 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
             } catch (SQLException e) {
                 e.printStackTrace();
                 statisticId = getStatisticId(object.getSimpleName());
-            } catch (IllegalArgumentException | SecurityException | InstantiationException |
-                     IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-                e.printStackTrace();
+            } catch (UnknownProviderException ex) {
+                Exceptions.printStackTrace(ex);
             }
             return true;
         } catch (SQLException e) {
@@ -1873,23 +1864,13 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
         return false;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.wiwie.wiutils.utils.SQLCommunicator#registerRunStatistic(java.lang.Class)
-     */
     @Override
-    protected boolean registerRunStatisticClass(
-            Class<? extends RunStatistic> object) {
+    protected boolean registerRunStatisticClass(Class<? extends IRunStatistic> object) {
 
         try {
             int statisticId;
             try {
-                RunStatistic runStatistic = object
-                        .getConstructor(IRepository.class, boolean.class,
-                                long.class, File.class).newInstance(repository,
-                                false, System.currentTimeMillis(),
-                                new File(object.getSimpleName()));
+                IRunStatistic runStatistic = RunStatisticFactory.getInstance().getProvider(object.getSimpleName());
                 statisticId = insert(
                         this.getTableStatistics(),
                         new String[]{"repository_id", "name", "alias"},
@@ -1903,18 +1884,8 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
             } catch (SQLException e) {
                 e.printStackTrace();
                 statisticId = getStatisticId(object.getSimpleName());
-            } catch (IllegalArgumentException e) {
-                e.printStackTrace();
-            } catch (SecurityException e) {
-                e.printStackTrace();
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            } catch (NoSuchMethodException e) {
-                e.printStackTrace();
+            } catch (UnknownProviderException ex) {
+                Exceptions.printStackTrace(ex);
             }
             return true;
         } catch (SQLException e) {
@@ -1924,22 +1895,12 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
         return false;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.wiwie.wiutils.utils.SQLCommunicator#registerRunDataStatistic(java.lang.Class)
-     */
     @Override
-    protected boolean registerRunDataStatisticClass(
-            Class<? extends RunDataStatistic> object) {
+    protected boolean registerRunDataStatisticClass(Class<? extends IRunDataStatistic> object) {
         try {
             int statisticId;
             try {
-                RunDataStatistic runDataStatistic = object
-                        .getConstructor(IRepository.class, boolean.class,
-                                long.class, File.class).newInstance(repository,
-                                false, System.currentTimeMillis(),
-                                new File(object.getSimpleName()));
+                IRunDataStatistic runDataStatistic = RunDataStatisticFactory.getInstance().getProvider(object.getSimpleName());
                 statisticId = insert(
                         this.getTableStatistics(),
                         new String[]{"repository_id", "name", "alias"},
@@ -1952,18 +1913,10 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
             } catch (SQLException e) {
                 e.printStackTrace();
                 statisticId = getStatisticId(object.getSimpleName());
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException | SecurityException e) {
                 e.printStackTrace();
-            } catch (SecurityException e) {
-                e.printStackTrace();
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            } catch (NoSuchMethodException e) {
-                e.printStackTrace();
+            } catch (UnknownProviderException ex) {
+                Exceptions.printStackTrace(ex);
             }
             return true;
         } catch (SQLException e) {
@@ -3275,7 +3228,7 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
      * .lang.Class)
      */
     @Override
-    protected boolean unregisterDataStatisticClass(Class<? extends DataStatistic> object) {
+    protected boolean unregisterDataStatisticClass(Class<? extends IDataStatistic> object) {
         try {
             int statistic_id = getStatisticId(object.getSimpleName());
 
@@ -3290,16 +3243,9 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
         return false;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * framework.repository.SQLCommunicator#unregisterRunStatisticClass(java
-     * .lang.Class)
-     */
     @Override
     protected boolean unregisterRunStatisticClass(
-            Class<? extends RunStatistic> object) {
+            Class<? extends IRunStatistic> object) {
         try {
             int statistic_id = getStatisticId(object.getSimpleName());
 
@@ -3324,7 +3270,7 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
      */
     @Override
     protected boolean unregisterRunDataStatisticClass(
-            Class<? extends RunDataStatistic> object) {
+            Class<? extends IRunDataStatistic> object) {
         try {
             int statistic_id = getStatisticId(object.getSimpleName());
 

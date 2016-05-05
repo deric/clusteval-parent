@@ -15,7 +15,7 @@ import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.Database;
 import de.clusteval.api.Pair;
 import de.clusteval.api.SQLConfig;
-import de.clusteval.api.cluster.ClusteringEvaluationParameters;
+import de.clusteval.api.cluster.ClusteringEvaluationFactory;
 import de.clusteval.api.cluster.ClusteringQualitySet;
 import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.data.DataConfig;
@@ -33,6 +33,7 @@ import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.data.IGoldStandardConfig;
 import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
+import de.clusteval.api.stats.DataStatisticFactory;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.IProgramParameter;
@@ -41,10 +42,11 @@ import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RepositoryController;
 import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.RunResultFormat;
+import de.clusteval.api.stats.IDataStatistic;
+import de.clusteval.api.stats.IRunDataStatistic;
+import de.clusteval.api.stats.IRunStatistic;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
-import de.clusteval.api.cluster.ClusteringQualityMeasure;
-import de.clusteval.data.statistics.DataStatistic;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.program.DoubleProgramParameter;
 import de.clusteval.program.IntegerProgramParameter;
@@ -69,8 +71,8 @@ import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.run.result.RunAnalysisRunResult;
 import de.clusteval.run.result.RunDataAnalysisRunResult;
 import de.clusteval.run.result.RunResult;
-import de.clusteval.api.stats.RunDataStatistic;
-import de.clusteval.api.stats.RunStatistic;
+import de.clusteval.api.stats.RunDataStatisticFactory;
+import de.clusteval.api.stats.RunStatisticFactory;
 import de.clusteval.utils.FileUtils;
 import de.clusteval.api.stats.Statistic;
 import java.io.File;
@@ -81,6 +83,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import org.openide.util.Exceptions;
 
 /**
  * A default sql communicator is the standard implementation of the abstract
@@ -1748,7 +1751,7 @@ public class DefaultSQLCommunicator extends SQLCommunicator implements Database 
         } catch (SQLException e) {
             this.exceptionHandler.handleException(e);
         } catch (IllegalArgumentException | SecurityException | InstantiationException |
-                IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                 IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
         return false;
@@ -1794,20 +1797,10 @@ public class DefaultSQLCommunicator extends SQLCommunicator implements Database 
         return "" + (float) d;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * de.wiwie.wiutils.utils.SQLCommunicator#registerClusteringQualityMeasure(java.lang.Class)
-     */
     @Override
-    protected boolean registerClusteringQualityMeasureClass(
-            Class<? extends ClusteringQualityMeasure> object) {
+    protected boolean registerClusteringQualityMeasureClass(Class<? extends ClusteringEvaluation> object) {
         try {
-            ClusteringQualityMeasure measure = object.getConstructor(IRepository.class, boolean.class, long.class, File.class,
-                    ClusteringEvaluationParameters.class).newInstance(repository, false, System.currentTimeMillis(),
-                            new File(object.getSimpleName()),
-                            new ClusteringEvaluationParameters());
+            ClusteringEvaluation measure = ClusteringEvaluationFactory.getInstance().getProvider(object.getSimpleName());
             int id = insert(
                     this.getTableClusteringQualityMeasures(),
                     new String[]{"repository_id", "name", "min_value",
@@ -1823,9 +1816,8 @@ public class DefaultSQLCommunicator extends SQLCommunicator implements Database 
         } catch (SQLException e) {
             this.exceptionHandler.handleException(e);
             e.printStackTrace();
-        } catch (IllegalArgumentException | SecurityException | InstantiationException |
-                IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-            e.printStackTrace();
+        } catch (UnknownProviderException ex) {
+            Exceptions.printStackTrace(ex);
         }
         return false;
     }
@@ -1855,16 +1847,13 @@ public class DefaultSQLCommunicator extends SQLCommunicator implements Database 
     }
 
     @Override
-    protected boolean registerDataStatisticClass(Class<? extends DataStatistic> object) {
+    protected boolean registerDataStatisticClass(Class<? extends IDataStatistic> object) {
 
         try {
             int statisticId;
             try {
-                DataStatistic statistic = object
-                        .getConstructor(IRepository.class, boolean.class,
-                                long.class, File.class).newInstance(repository,
-                                false, System.currentTimeMillis(),
-                                new File(object.getSimpleName()));
+                IDataStatistic statistic = DataStatisticFactory.getInstance()
+                        .getProvider(object.getSimpleName());
                 statisticId = insert(
                         this.getTableStatistics(),
                         new String[]{"repository_id", "name", "alias"},
@@ -1879,10 +1868,8 @@ public class DefaultSQLCommunicator extends SQLCommunicator implements Database 
                 this.exceptionHandler.handleException(e);
                 e.printStackTrace();
                 statisticId = getStatisticId(object.getSimpleName());
-            } catch (IllegalArgumentException | SecurityException |
-                    InstantiationException | IllegalAccessException |
-                    InvocationTargetException | NoSuchMethodException e) {
-                e.printStackTrace();
+            } catch (UnknownProviderException ex) {
+                Exceptions.printStackTrace(ex);
             }
             return true;
         } catch (SQLException e) {
@@ -1892,23 +1879,15 @@ public class DefaultSQLCommunicator extends SQLCommunicator implements Database 
         return false;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.wiwie.wiutils.utils.SQLCommunicator#registerRunStatistic(java.lang.Class)
-     */
     @Override
     protected boolean registerRunStatisticClass(
-            Class<? extends RunStatistic> object) {
+            Class<? extends IRunStatistic> object) {
 
         try {
             int statisticId;
             try {
-                RunStatistic runStatistic = object
-                        .getConstructor(IRepository.class, boolean.class,
-                                long.class, File.class).newInstance(repository,
-                                false, System.currentTimeMillis(),
-                                new File(object.getSimpleName()));
+                IRunStatistic runStatistic = RunStatisticFactory.getInstance()
+                        .getProvider(object.getSimpleName());
                 statisticId = insert(
                         this.getTableStatistics(),
                         new String[]{"repository_id", "name", "alias"},
@@ -1923,10 +1902,8 @@ public class DefaultSQLCommunicator extends SQLCommunicator implements Database 
                 this.exceptionHandler.handleException(e);
                 e.printStackTrace();
                 statisticId = getStatisticId(object.getSimpleName());
-            } catch (IllegalArgumentException | SecurityException |
-                    InstantiationException | IllegalAccessException |
-                    InvocationTargetException | NoSuchMethodException e) {
-                e.printStackTrace();
+            } catch (UnknownProviderException ex) {
+                Exceptions.printStackTrace(ex);
             }
             return true;
         } catch (SQLException e) {
@@ -1943,15 +1920,12 @@ public class DefaultSQLCommunicator extends SQLCommunicator implements Database 
      */
     @Override
     protected boolean registerRunDataStatisticClass(
-            Class<? extends RunDataStatistic> object) {
+            Class<? extends IRunDataStatistic> object) {
         try {
             int statisticId;
             try {
-                RunDataStatistic runDataStatistic = object
-                        .getConstructor(IRepository.class, boolean.class,
-                                long.class, File.class).newInstance(repository,
-                                false, System.currentTimeMillis(),
-                                new File(object.getSimpleName()));
+                IRunDataStatistic runDataStatistic = RunDataStatisticFactory.getInstance()
+                        .getProvider(object.getSimpleName());
                 statisticId = insert(
                         this.getTableStatistics(),
                         new String[]{"repository_id", "name", "alias"},
@@ -1965,9 +1939,8 @@ public class DefaultSQLCommunicator extends SQLCommunicator implements Database 
                 this.exceptionHandler.handleException(e);
                 e.printStackTrace();
                 statisticId = getStatisticId(object.getSimpleName());
-            } catch (IllegalArgumentException | SecurityException | InstantiationException |
-                    IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-                e.printStackTrace();
+            } catch (UnknownProviderException ex) {
+                Exceptions.printStackTrace(ex);
             }
             return true;
         } catch (SQLException e) {
@@ -3332,7 +3305,7 @@ public class DefaultSQLCommunicator extends SQLCommunicator implements Database 
      */
     @Override
     protected boolean unregisterDataStatisticClass(
-            Class<? extends DataStatistic> object) {
+            Class<? extends IDataStatistic> object) {
         try {
             int statistic_id = getStatisticId(object.getSimpleName());
 
@@ -3357,7 +3330,7 @@ public class DefaultSQLCommunicator extends SQLCommunicator implements Database 
      */
     @Override
     protected boolean unregisterRunStatisticClass(
-            Class<? extends RunStatistic> object) {
+            Class<? extends IRunStatistic> object) {
         try {
             int statistic_id = getStatisticId(object.getSimpleName());
 
@@ -3383,7 +3356,7 @@ public class DefaultSQLCommunicator extends SQLCommunicator implements Database 
      */
     @Override
     protected boolean unregisterRunDataStatisticClass(
-            Class<? extends RunDataStatistic> object) {
+            Class<? extends IRunDataStatistic> object) {
         try {
             int statistic_id = getStatisticId(object.getSimpleName());
 

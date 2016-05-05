@@ -14,8 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.clusteval.api.factory;
+package de.clusteval.api.stats;
 
+import de.clusteval.api.factory.ServiceFactory;
 import de.clusteval.api.stats.IDataStatistic;
 import java.util.Collection;
 import java.util.LinkedHashMap;

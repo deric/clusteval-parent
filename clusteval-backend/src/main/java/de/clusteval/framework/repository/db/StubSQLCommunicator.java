@@ -28,10 +28,11 @@ import de.clusteval.api.data.IGoldStandardConfig;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.RunResultFormat;
+import de.clusteval.api.stats.IDataStatistic;
+import de.clusteval.api.stats.IRunDataStatistic;
+import de.clusteval.api.stats.IRunStatistic;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
-import de.clusteval.api.cluster.ClusteringQualityMeasure;
-import de.clusteval.data.statistics.DataStatistic;
 import de.clusteval.program.DoubleProgramParameter;
 import de.clusteval.program.IntegerProgramParameter;
 import de.clusteval.program.Program;
@@ -55,8 +56,6 @@ import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.run.result.RunAnalysisRunResult;
 import de.clusteval.run.result.RunDataAnalysisRunResult;
 import de.clusteval.run.result.RunResult;
-import de.clusteval.api.stats.RunDataStatistic;
-import de.clusteval.api.stats.RunStatistic;
 import de.clusteval.api.stats.Statistic;
 import java.sql.SQLException;
 
@@ -1416,7 +1415,7 @@ public class StubSQLCommunicator extends SQLCommunicator {
      */
     @Override
     protected boolean unregisterDataStatisticClass(
-            Class<? extends DataStatistic> object) {
+            Class<? extends IDataStatistic> object) {
         return false;
     }
 
@@ -1429,7 +1428,7 @@ public class StubSQLCommunicator extends SQLCommunicator {
      */
     @Override
     protected boolean unregisterRunStatisticClass(
-            Class<? extends RunStatistic> object) {
+            Class<? extends IRunStatistic> object) {
         return false;
     }
 
@@ -1442,7 +1441,7 @@ public class StubSQLCommunicator extends SQLCommunicator {
      */
     @Override
     protected boolean unregisterRunDataStatisticClass(
-            Class<? extends RunDataStatistic> object) {
+            Class<? extends IRunDataStatistic> object) {
         return false;
     }
 
@@ -1494,7 +1493,7 @@ public class StubSQLCommunicator extends SQLCommunicator {
      */
     @Override
     protected boolean registerClusteringQualityMeasureClass(
-            Class<? extends ClusteringQualityMeasure> clusteringQualityMeasure) {
+            Class<? extends ClusteringEvaluation> clusteringQualityMeasure) {
         return false;
     }
 
@@ -1507,7 +1506,7 @@ public class StubSQLCommunicator extends SQLCommunicator {
      */
     @Override
     protected boolean registerDataStatisticClass(
-            Class<? extends DataStatistic> dataStatistic) {
+            Class<? extends IDataStatistic> dataStatistic) {
         return false;
     }
 
@@ -1520,7 +1519,7 @@ public class StubSQLCommunicator extends SQLCommunicator {
      */
     @Override
     protected boolean registerRunStatisticClass(
-            Class<? extends RunStatistic> runStatistic) {
+            Class<? extends IRunStatistic> runStatistic) {
         return false;
     }
 
@@ -1533,7 +1532,7 @@ public class StubSQLCommunicator extends SQLCommunicator {
      */
     @Override
     protected boolean registerRunDataStatisticClass(
-            Class<? extends RunDataStatistic> runDataStatistic) {
+            Class<? extends IRunDataStatistic> runDataStatistic) {
         return false;
     }
 

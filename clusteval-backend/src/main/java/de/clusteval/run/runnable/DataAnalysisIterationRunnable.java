@@ -1,7 +1,7 @@
 package de.clusteval.run.runnable;
 
 import de.clusteval.api.data.IDataConfig;
-import de.clusteval.api.factory.DataStatisticFactory;
+import de.clusteval.api.stats.DataStatisticFactory;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.stats.IDataStatistic;

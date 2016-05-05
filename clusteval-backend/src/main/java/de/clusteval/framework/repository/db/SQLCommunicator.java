@@ -35,6 +35,9 @@ import de.clusteval.api.run.RunResultFormat;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
 import de.clusteval.api.cluster.ClusteringQualityMeasure;
+import de.clusteval.api.stats.IDataStatistic;
+import de.clusteval.api.stats.IRunDataStatistic;
+import de.clusteval.api.stats.IRunStatistic;
 import de.clusteval.data.statistics.DataStatistic;
 import de.clusteval.program.DoubleProgramParameter;
 import de.clusteval.program.IntegerProgramParameter;
@@ -673,13 +676,13 @@ public abstract class SQLCommunicator implements Database {
             final Class<? extends ClusteringEvaluation> object);
 
     protected abstract boolean unregisterDataStatisticClass(
-            final Class<? extends DataStatistic> object);
+            final Class<? extends IDataStatistic> object);
 
     protected abstract boolean unregisterRunStatisticClass(
-            final Class<? extends RunStatistic> object);
+            final Class<? extends IRunStatistic> object);
 
     protected abstract boolean unregisterRunDataStatisticClass(
-            final Class<? extends RunDataStatistic> object);
+            final Class<? extends IRunDataStatistic> object);
 
     protected abstract boolean unregisterDataSetTypeClass(final Class<? extends IDataSetType> object);
 
@@ -986,23 +989,22 @@ public abstract class SQLCommunicator implements Database {
             Class<? extends ParameterOptimizationMethod> paramOptMethod);
 
     protected abstract boolean registerClusteringQualityMeasureClass(
-            Class<? extends ClusteringQualityMeasure> clusteringQualityMeasure);
+            Class<? extends ClusteringEvaluation> clusteringQualityMeasure);
 
     protected abstract boolean registerDataStatisticClass(
-            Class<? extends DataStatistic> dataStatistic);
+            Class<? extends IDataStatistic> dataStatistic);
 
     protected abstract boolean registerRunStatisticClass(
-            Class<? extends RunStatistic> runStatistic);
+            Class<? extends IRunStatistic> runStatistic);
 
     protected abstract boolean registerRunDataStatisticClass(
-            Class<? extends RunDataStatistic> runDataStatistic);
+            Class<? extends IRunDataStatistic> runDataStatistic);
 
     protected abstract boolean registerRunResultFormatClass(
             Class<? extends RunResultFormat> runResultFormat);
 
     protected abstract boolean registerDataSetTypeClass(
             Class<? extends IDataSetType> object);
-
 
     protected abstract String getTableDataSetFormats();
 
