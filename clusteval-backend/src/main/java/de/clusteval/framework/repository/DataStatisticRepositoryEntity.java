@@ -4,7 +4,7 @@
 package de.clusteval.framework.repository;
 
 import de.clusteval.api.repository.DynamicRepositoryEntity;
-import de.clusteval.data.statistics.DataStatistic;
+import de.clusteval.api.stats.DataStatistic;
 import de.clusteval.data.statistics.DataStatisticCalculator;
 import java.util.HashMap;
 import java.util.Map;

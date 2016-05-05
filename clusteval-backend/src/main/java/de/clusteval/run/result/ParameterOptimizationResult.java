@@ -40,7 +40,6 @@ import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.IRunResult;
-import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
@@ -103,7 +102,7 @@ public class ParameterOptimizationResult extends ExecutionRunResult implements I
                    NoRepositoryFoundException, GoldStandardNotFoundException, InvalidOptimizationParameterException,
                    GoldStandardConfigurationException, DataSetConfigurationException, DataSetNotFoundException,
                    DataSetConfigNotFoundException, GoldStandardConfigNotFoundException, DataConfigurationException,
-                   DataConfigNotFoundException, RunException, UnknownDataStatisticException,
+                   DataConfigNotFoundException, RunException,
                    UnknownProgramTypeException, UnknownRProgramException,
                    IncompatibleParameterOptimizationMethodException,
                    RepositoryConfigNotFoundException, RepositoryConfigurationException,

@@ -28,7 +28,7 @@ import de.clusteval.data.dataset.generator.DataSetGenerator;
 import de.clusteval.data.dataset.generator.DataSetGeneratorFinderThread;
 import de.clusteval.data.goldstandard.GoldStandardConfigFinderThread;
 import de.clusteval.data.preprocessing.DataPreprocessorFinderThread;
-import de.clusteval.data.statistics.DataStatistic;
+import de.clusteval.api.stats.DataStatistic;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.program.ProgramConfig;
 import de.clusteval.program.ProgramConfigFinderThread;

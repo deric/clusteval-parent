@@ -35,7 +35,6 @@ import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.r.UnknownRProgramException;
-import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
@@ -80,7 +79,6 @@ public class RangeNormalizationDataPreprocesserTest extends AbstractClustEvalTes
                               IncompatibleParameterOptimizationMethodException,
                               UnknownParameterOptimizationMethodException,
                               NoOptimizableProgramParameterException,
-                              UnknownDataStatisticException,
                               UnknownRunResultPostprocessorException,
                               RException {
 

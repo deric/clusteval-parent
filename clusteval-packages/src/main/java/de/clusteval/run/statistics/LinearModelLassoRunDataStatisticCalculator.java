@@ -27,7 +27,7 @@ import de.clusteval.api.r.RExpr;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.IRunResult;
 import de.clusteval.api.stats.IDataStatistic;
-import de.clusteval.data.statistics.DoubleValueDataStatistic;
+import de.clusteval.api.stats.DoubleValueDataStatistic;
 import de.clusteval.run.result.DataAnalysisRunResult;
 import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.utils.FileUtils;

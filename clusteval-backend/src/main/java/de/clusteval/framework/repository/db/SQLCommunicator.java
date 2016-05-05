@@ -38,7 +38,7 @@ import de.clusteval.api.cluster.ClusteringQualityMeasure;
 import de.clusteval.api.stats.IDataStatistic;
 import de.clusteval.api.stats.IRunDataStatistic;
 import de.clusteval.api.stats.IRunStatistic;
-import de.clusteval.data.statistics.DataStatistic;
+import de.clusteval.api.stats.DataStatistic;
 import de.clusteval.program.DoubleProgramParameter;
 import de.clusteval.program.IntegerProgramParameter;
 import de.clusteval.program.Program;

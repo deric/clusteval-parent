@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.data.statistics;
 
+import de.clusteval.api.stats.DoubleValueDataStatistic;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.RLibraryRequirement;
 import de.clusteval.api.repository.IRepository;

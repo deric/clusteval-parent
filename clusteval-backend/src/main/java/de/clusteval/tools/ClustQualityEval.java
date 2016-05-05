@@ -49,7 +49,6 @@ import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.data.DataConfigNotFoundException;
@@ -119,7 +118,7 @@ public class ClustQualityEval {
                    UnknownProgramParameterException,
                    InvalidConfigurationFileException, NoRepositoryFoundException,
                    InvalidOptimizationParameterException, RunException,
-                   UnknownDataStatisticException, UnknownProgramTypeException,
+                   UnknownProgramTypeException,
                    UnknownRProgramException,
                    IncompatibleParameterOptimizationMethodException,
                    UnknownDataPreprocessorException,
@@ -279,7 +278,7 @@ public class ClustQualityEval {
                                 qualsMap.put(iterationNumber, allQuals);
 
                             } catch (IOException | UnknownGoldStandardFormatException |
-                                    UnknownDataSetFormatException | InvalidDataSetFormatVersionException e) {
+                                     UnknownDataSetFormatException | InvalidDataSetFormatVersionException e) {
                                 e.printStackTrace();
                             }
                         }
@@ -487,7 +486,7 @@ public class ClustQualityEval {
                    UnknownProgramParameterException,
                    InvalidConfigurationFileException, NoRepositoryFoundException,
                    InvalidOptimizationParameterException, RunException,
-                   UnknownDataStatisticException, UnknownProgramTypeException,
+                   UnknownProgramTypeException,
                    UnknownRProgramException,
                    IncompatibleParameterOptimizationMethodException,
                    UnknownDataPreprocessorException,

@@ -36,7 +36,6 @@ import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.stats.RunDataStatistic;
-import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
@@ -145,7 +144,7 @@ public abstract class RunDataStatisticRCalculator<T extends RunDataStatistic> ex
                    RepositoryAlreadyExistsException, InvalidRepositoryException,
                    NoRepositoryFoundException, GoldStandardNotFoundException,
                    InvalidOptimizationParameterException, RunException,
-                   UnknownDataStatisticException, UnknownProgramTypeException,
+                   UnknownProgramTypeException,
                    UnknownRProgramException,
                    IncompatibleParameterOptimizationMethodException,
                    AnalysisRunResultException, RepositoryConfigNotFoundException,

@@ -39,7 +39,6 @@ import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.IRunResult;
 import de.clusteval.api.stats.RunStatistic;
 import de.clusteval.api.stats.Statistic;
-import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
@@ -161,7 +160,7 @@ public class RunAnalysisRunResult extends AnalysisRunResult<String, RunStatistic
                    InvalidRunModeException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
                    UnknownProgramParameterException, NoRepositoryFoundException, GoldStandardNotFoundException,
-                   InvalidOptimizationParameterException, RunException, UnknownDataStatisticException,
+                   InvalidOptimizationParameterException, RunException,
                    UnknownProgramTypeException, UnknownRProgramException, IncompatibleParameterOptimizationMethodException,
                    UnknownGoldStandardFormatException,
                    RepositoryConfigNotFoundException, RepositoryConfigurationException, ConfigurationException,

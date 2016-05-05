@@ -51,7 +51,6 @@ import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.r.UnknownRProgramException;
-import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
@@ -104,7 +103,6 @@ public class DataSetTest extends AbstractClustEvalTest {
                                       IncompatibleParameterOptimizationMethodException,
                                       UnknownParameterOptimizationMethodException,
                                       NoOptimizableProgramParameterException,
-                                      UnknownDataStatisticException,
                                       UnknownRunResultPostprocessorException {
         this.repositoryObject = Parser
                 .parseFromFile(
@@ -156,7 +154,6 @@ public class DataSetTest extends AbstractClustEvalTest {
                    IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException,
                    NoOptimizableProgramParameterException,
-                   UnknownDataStatisticException,
                    UnknownRunResultPostprocessorException {
         try {
             Repository runResultRepository = new RunResultRepository(
@@ -197,7 +194,6 @@ public class DataSetTest extends AbstractClustEvalTest {
                                         IncompatibleParameterOptimizationMethodException,
                                         UnknownParameterOptimizationMethodException,
                                         NoOptimizableProgramParameterException,
-                                        UnknownDataStatisticException,
                                         UnknownRunResultPostprocessorException {
 
         this.repositoryObject = Parser
@@ -233,7 +229,6 @@ public class DataSetTest extends AbstractClustEvalTest {
                                            IncompatibleParameterOptimizationMethodException,
                                            UnknownParameterOptimizationMethodException,
                                            NoOptimizableProgramParameterException,
-                                           UnknownDataStatisticException,
                                            UnknownRunResultPostprocessorException {
         this.repositoryObject = Parser
                 .parseFromFile(
@@ -277,7 +272,6 @@ public class DataSetTest extends AbstractClustEvalTest {
                    IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException,
                    NoOptimizableProgramParameterException,
-                   UnknownDataStatisticException,
                    UnknownRunResultPostprocessorException {
         this.repositoryObject = Parser
                 .parseFromFile(
@@ -306,7 +300,6 @@ public class DataSetTest extends AbstractClustEvalTest {
                                               IncompatibleParameterOptimizationMethodException,
                                               UnknownParameterOptimizationMethodException,
                                               NoOptimizableProgramParameterException,
-                                              UnknownDataStatisticException,
                                               UnknownRunResultPostprocessorException {
         this.repositoryObject = Parser
                 .parseFromFile(
@@ -339,7 +332,6 @@ public class DataSetTest extends AbstractClustEvalTest {
                                           IncompatibleParameterOptimizationMethodException,
                                           UnknownParameterOptimizationMethodException,
                                           NoOptimizableProgramParameterException,
-                                          UnknownDataStatisticException,
                                           UnknownRunResultPostprocessorException {
         this.repositoryObject = Parser
                 .parseFromFile(
@@ -370,7 +362,6 @@ public class DataSetTest extends AbstractClustEvalTest {
                                           IncompatibleParameterOptimizationMethodException,
                                           UnknownParameterOptimizationMethodException,
                                           NoOptimizableProgramParameterException,
-                                          UnknownDataStatisticException,
                                           UnknownRunResultPostprocessorException {
         this.repositoryObject = Parser
                 .parseFromFile(
@@ -402,7 +393,6 @@ public class DataSetTest extends AbstractClustEvalTest {
                                          IncompatibleParameterOptimizationMethodException,
                                          UnknownParameterOptimizationMethodException,
                                          NoOptimizableProgramParameterException,
-                                         UnknownDataStatisticException,
                                          UnknownRunResultPostprocessorException {
         this.repositoryObject = Parser
                 .parseFromFile(
@@ -432,7 +422,6 @@ public class DataSetTest extends AbstractClustEvalTest {
                                       IncompatibleParameterOptimizationMethodException,
                                       UnknownParameterOptimizationMethodException,
                                       NoOptimizableProgramParameterException,
-                                      UnknownDataStatisticException,
                                       UnknownRunResultPostprocessorException {
         this.repositoryObject = Parser
                 .parseFromFile(
@@ -467,7 +456,6 @@ public class DataSetTest extends AbstractClustEvalTest {
                    IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException,
                    NoOptimizableProgramParameterException,
-                   UnknownDataStatisticException,
                    UnknownRunResultPostprocessorException,
                    InterruptedException, RException {
         this.repositoryObject = Parser
@@ -517,7 +505,6 @@ public class DataSetTest extends AbstractClustEvalTest {
                                                  IncompatibleParameterOptimizationMethodException,
                                                  UnknownParameterOptimizationMethodException,
                                                  NoOptimizableProgramParameterException,
-                                                 UnknownDataStatisticException,
                                                  UnknownRunResultPostprocessorException,
                                                  InterruptedException, RException {
         this.repositoryObject = Parser
@@ -570,7 +557,6 @@ public class DataSetTest extends AbstractClustEvalTest {
                    IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException,
                    NoOptimizableProgramParameterException,
-                   UnknownDataStatisticException,
                    UnknownRunResultPostprocessorException,
                    InterruptedException, RException {
         this.repositoryObject = Parser
@@ -750,7 +736,6 @@ public class DataSetTest extends AbstractClustEvalTest {
                    IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException,
                    NoOptimizableProgramParameterException,
-                   UnknownDataStatisticException,
                    UnknownRunResultPostprocessorException,
                    InterruptedException, RException {
         this.repositoryObject = Parser
@@ -791,7 +776,6 @@ public class DataSetTest extends AbstractClustEvalTest {
                                                IncompatibleParameterOptimizationMethodException,
                                                UnknownParameterOptimizationMethodException,
                                                NoOptimizableProgramParameterException,
-                                               UnknownDataStatisticException,
                                                UnknownRunResultPostprocessorException,
                                                InterruptedException {
 
@@ -846,7 +830,6 @@ public class DataSetTest extends AbstractClustEvalTest {
                                                  IncompatibleParameterOptimizationMethodException,
                                                  UnknownParameterOptimizationMethodException,
                                                  NoOptimizableProgramParameterException,
-                                                 UnknownDataStatisticException,
                                                  UnknownRunResultPostprocessorException,
                                                  InterruptedException {
 
@@ -898,7 +881,7 @@ public class DataSetTest extends AbstractClustEvalTest {
                    IncompatibleDataSetConfigPreprocessorException,
                    IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException,
-                   NoOptimizableProgramParameterException, UnknownDataStatisticException,
+                   NoOptimizableProgramParameterException,
                    UnknownRunResultPostprocessorException, InterruptedException, RException {
         this.repositoryObject = Parser
                 .parseFromFile(
@@ -949,7 +932,6 @@ public class DataSetTest extends AbstractClustEvalTest {
                    IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException,
                    NoOptimizableProgramParameterException,
-                   UnknownDataStatisticException,
                    UnknownRunResultPostprocessorException,
                    InterruptedException, RException {
         this.repositoryObject = Parser

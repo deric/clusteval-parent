@@ -15,7 +15,7 @@ import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.run.IRunResult;
 import de.clusteval.api.stats.IStatistic;
-import de.clusteval.data.statistics.DataStatistic;
+import de.clusteval.api.stats.DataStatistic;
 import de.clusteval.run.AnalysisRun;
 import de.clusteval.run.Run;
 import de.clusteval.utils.ProgressPrinter;

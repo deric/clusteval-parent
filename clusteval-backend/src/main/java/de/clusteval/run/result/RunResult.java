@@ -41,7 +41,6 @@ import de.clusteval.api.repository.RepositoryController;
 import de.clusteval.api.repository.RepositoryObject;
 import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.IRunResult;
-import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
@@ -145,7 +144,7 @@ public abstract class RunResult extends RepositoryObject implements IRunResult {
                    NoRepositoryFoundException, GoldStandardNotFoundException, InvalidOptimizationParameterException,
                    GoldStandardConfigurationException, DataSetConfigurationException, DataSetNotFoundException,
                    DataSetConfigNotFoundException, GoldStandardConfigNotFoundException, DataConfigurationException,
-                   DataConfigNotFoundException, RunException, UnknownDataStatisticException,
+                   DataConfigNotFoundException, RunException,
                    UnknownProgramTypeException, UnknownRProgramException,
                    IncompatibleParameterOptimizationMethodException,
                    RepositoryConfigNotFoundException, RepositoryConfigurationException,

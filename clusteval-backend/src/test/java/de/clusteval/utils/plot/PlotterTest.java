@@ -46,7 +46,6 @@ import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.r.UnknownRProgramException;
-import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
@@ -97,7 +96,6 @@ public class PlotterTest extends AbstractClustEvalTest {
                                     IncompatibleParameterOptimizationMethodException,
                                     UnknownParameterOptimizationMethodException,
                                     NoOptimizableProgramParameterException,
-                                    UnknownDataStatisticException,
                                     UnknownRunResultPostprocessorException,
                                     RException, UnknownProviderException {
         IContext context = ContextFactory.parseFromString(getRepository(),
@@ -168,7 +166,6 @@ public class PlotterTest extends AbstractClustEvalTest {
                                  IncompatibleParameterOptimizationMethodException,
                                  UnknownParameterOptimizationMethodException,
                                  NoOptimizableProgramParameterException,
-                                 UnknownDataStatisticException,
                                  UnknownRunResultPostprocessorException,
                                  RException, UnknownProviderException {
         IContext context = ContextFactory.parseFromString(getRepository(), "ClusteringContext");

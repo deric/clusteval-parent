@@ -41,7 +41,6 @@ import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
@@ -252,7 +251,7 @@ public class ParameterImportanceRunStatisticCalculator
 
             return new ParameterImportanceRunStatistic(repository, false,
                     changeDate, absPath, paramImportances);
-        } catch (IOException | UnknownRunResultFormatException | UnknownDataSetFormatException | InvalidRunModeException | UnknownParameterOptimizationMethodException | NoOptimizableProgramParameterException | UnknownProgramParameterException | UnknownGoldStandardFormatException | InvalidConfigurationFileException | RepositoryAlreadyExistsException | InvalidRepositoryException | NoRepositoryFoundException | GoldStandardNotFoundException | InvalidOptimizationParameterException | GoldStandardConfigurationException | DataSetConfigurationException | DataSetNotFoundException | DataSetConfigNotFoundException | GoldStandardConfigNotFoundException | DataConfigurationException | DataConfigNotFoundException | RunException | UnknownDataStatisticException | UnknownProgramTypeException | UnknownRProgramException | IncompatibleParameterOptimizationMethodException | RepositoryConfigNotFoundException | RepositoryConfigurationException | ConfigurationException | RegisterException | NumberFormatException | NoDataSetException | RunResultParseException | UnknownDataPreprocessorException | IncompatibleDataSetConfigPreprocessorException | IncompatibleContextException | UnknownParameterType | InterruptedException | UnknownRunResultPostprocessorException e) {
+        } catch (IOException | UnknownRunResultFormatException | UnknownDataSetFormatException | InvalidRunModeException | UnknownParameterOptimizationMethodException | NoOptimizableProgramParameterException | UnknownProgramParameterException | UnknownGoldStandardFormatException | InvalidConfigurationFileException | RepositoryAlreadyExistsException | InvalidRepositoryException | NoRepositoryFoundException | GoldStandardNotFoundException | InvalidOptimizationParameterException | GoldStandardConfigurationException | DataSetConfigurationException | DataSetNotFoundException | DataSetConfigNotFoundException | GoldStandardConfigNotFoundException | DataConfigurationException | DataConfigNotFoundException | RunException | UnknownProgramTypeException | UnknownRProgramException | IncompatibleParameterOptimizationMethodException | RepositoryConfigNotFoundException | RepositoryConfigurationException | ConfigurationException | RegisterException | NumberFormatException | NoDataSetException | RunResultParseException | UnknownDataPreprocessorException | IncompatibleDataSetConfigPreprocessorException | IncompatibleContextException | UnknownParameterType | InterruptedException | UnknownRunResultPostprocessorException e) {
             throw new RunStatisticCalculateException(e);
         } catch (UnknownProviderException ex) {
             Exceptions.printStackTrace(ex);

@@ -33,7 +33,6 @@ import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.r.UnknownRProgramException;
-import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.data.DataConfigNotFoundException;
@@ -56,9 +55,7 @@ import org.junit.Test;
  * @author Christian Wiwie
  *
  */
-public class TestFuzzyCoefficientThresholdRunResultPostprocessor
-        extends
-        AbstractClustEvalTest {
+public class TestFuzzyCoefficientThresholdRunResultPostprocessor extends AbstractClustEvalTest {
 
     @Test
     public void test() throws RepositoryAlreadyExistsException,
@@ -80,7 +77,6 @@ public class TestFuzzyCoefficientThresholdRunResultPostprocessor
                               IncompatibleParameterOptimizationMethodException,
                               UnknownParameterOptimizationMethodException,
                               NoOptimizableProgramParameterException,
-                              UnknownDataStatisticException,
                               UnknownRunResultPostprocessorException {
 
         Clustering clustering = new Clustering(this.getRepository(),

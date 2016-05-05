@@ -55,7 +55,6 @@ import de.clusteval.api.run.IRun;
 import de.clusteval.api.stats.IDataStatistic;
 import de.clusteval.api.stats.RunDataStatistic;
 import de.clusteval.api.stats.RunStatistic;
-import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
 import de.clusteval.data.DataConfigNotFoundException;
@@ -65,7 +64,6 @@ import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.data.dataset.RunResultDataSetConfig;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
-import de.clusteval.data.statistics.DataStatistic;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.program.ProgramConfig;
 import de.clusteval.run.AnalysisRun;
@@ -158,7 +156,6 @@ public abstract class Parser<P extends IRepositoryObject> {
                    UnknownDataPreprocessorException,
                    IncompatibleDataSetConfigPreprocessorException, IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
-                   UnknownDataStatisticException,
                    UnknownRunResultPostprocessorException, UnknownProviderException {
         Parser<T> parser = getParserForClass(c);
         parser.parseFromFile(absPath);
@@ -177,7 +174,6 @@ public abstract class Parser<P extends IRepositoryObject> {
                    UnknownDataPreprocessorException,
                    IncompatibleDataSetConfigPreprocessorException, IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
-                   UnknownDataStatisticException,
                    UnknownRunResultPostprocessorException, UnknownProviderException {
         String runMode = Parser.getModeOfRun(file);
         switch (runMode) {
@@ -213,7 +209,6 @@ public abstract class Parser<P extends IRepositoryObject> {
                    UnknownDataPreprocessorException,
                    IncompatibleDataSetConfigPreprocessorException, IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
-                   UnknownDataStatisticException,
                    UnknownRunResultPostprocessorException, UnknownProviderException {
         RunParser<? extends Run> p = (RunParser<Run>) getParserForClass(Run.class);
         p.parseFromFile(absPath);
@@ -233,7 +228,6 @@ public abstract class Parser<P extends IRepositoryObject> {
                    UnknownDataPreprocessorException,
                    IncompatibleDataSetConfigPreprocessorException, IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
-                   UnknownDataStatisticException,
                    UnknownRunResultPostprocessorException, UnknownProviderException;
 
     public P getResult() {
@@ -265,7 +259,6 @@ class ClusteringRunParser extends ExecutionRunParser<ClusteringRun> {
                    UnknownDataPreprocessorException,
                    IncompatibleDataSetConfigPreprocessorException, IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
-                   UnknownDataStatisticException,
                    UnknownRunResultPostprocessorException, UnknownProviderException {
         super.parseFromFile(absPath);
 
@@ -299,7 +292,6 @@ class RobustnessAnalysisRunParser extends ExecutionRunParser<RobustnessAnalysisR
                    UnknownDataPreprocessorException,
                    IncompatibleDataSetConfigPreprocessorException, IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
-                   UnknownDataStatisticException,
                    UnknownRunResultPostprocessorException, UnknownProviderException {
         super.parseFromFile(absPath);
 
@@ -361,7 +353,6 @@ class RobustnessAnalysisRunParser extends ExecutionRunParser<RobustnessAnalysisR
                    InvalidOptimizationParameterException, UnknownProgramParameterException, UnknownProgramTypeException,
                    UnknownRProgramException, IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
-                   UnknownDataStatisticException,
                    UnknownRunResultPostprocessorException, UnknownProviderException {
 
         if (this.repo instanceof RunResultRepository) {
@@ -428,7 +419,6 @@ class DataAnalysisRunParser extends AnalysisRunParser<DataAnalysisRun> {
                    UnknownDataPreprocessorException,
                    IncompatibleDataSetConfigPreprocessorException, IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
-                   UnknownDataStatisticException,
                    UnknownRunResultPostprocessorException, UnknownProviderException {
         super.parseFromFile(absPath);
 
@@ -447,24 +437,6 @@ class DataAnalysisRunParser extends AnalysisRunParser<DataAnalysisRun> {
         for (String dataConfig : list) {
             dataConfigs.add(repo.getRegisteredObject(Parser.parseFromFile(DataConfig.class,
                     new File(FileUtils.buildPath(repo.getBasePath(IDataConfig.class), dataConfig + ".dataconfig")))));
-        }
-
-        /**
-         * We catch the exceptions such that all statistics are tried to be
-         * loaded once so that they are ALL registered as missing in the
-         * repository.
-         */
-        List<UnknownDataStatisticException> thrownExceptions = new ArrayList<>();
-        for (String dataStatistic : getProps().getStringArray("dataStatistics")) {
-            try {
-                dataStatistics.add(DataStatistic.parseFromString(repo, dataStatistic));
-            } catch (UnknownDataStatisticException e) {
-                thrownExceptions.add(e);
-            }
-        }
-        if (thrownExceptions.size() > 0) {
-            // just throw the first exception
-            throw thrownExceptions.get(0);
         }
 
         result = new DataAnalysisRun(repo, context, changeDate, absPath, dataConfigs, dataStatistics);
@@ -494,7 +466,6 @@ class ExecutionRunParser<T extends ExecutionRun> extends RunParser<T> {
                    UnknownDataPreprocessorException,
                    IncompatibleDataSetConfigPreprocessorException, IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
-                   UnknownDataStatisticException,
                    UnknownRunResultPostprocessorException, UnknownProviderException {
         super.parseFromFile(absPath);
 
@@ -538,7 +509,7 @@ class ExecutionRunParser<T extends ExecutionRun> extends RunParser<T> {
                    GoldStandardConfigNotFoundException, NoDataSetException, DataConfigurationException,
                    DataConfigNotFoundException, NumberFormatException, UnknownDataPreprocessorException,
                    IncompatibleDataSetConfigPreprocessorException, IncompatibleParameterOptimizationMethodException,
-                   UnknownParameterOptimizationMethodException, UnknownDataStatisticException,
+                   UnknownParameterOptimizationMethodException,
                    UnknownRunResultPostprocessorException, UnknownProviderException {
 
         String[] list = getProps().getStringArray("programConfig");
@@ -592,7 +563,6 @@ class ExecutionRunParser<T extends ExecutionRun> extends RunParser<T> {
                    InvalidOptimizationParameterException, UnknownProgramParameterException, UnknownProgramTypeException,
                    UnknownRProgramException, IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
-                   UnknownDataStatisticException,
                    UnknownRunResultPostprocessorException, UnknownProviderException {
         String[] list = getProps().getStringArray("dataConfig");
         if (list.length == 0) {
@@ -692,7 +662,7 @@ class GoldStandardConfigParser extends RepositoryObjectParser<GoldStandardConfig
                    UnknownDataPreprocessorException,
                    IncompatibleDataSetConfigPreprocessorException, IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
-                   UnknownDataStatisticException, UnknownRunResultPostprocessorException, UnknownProviderException {
+                   UnknownRunResultPostprocessorException, UnknownProviderException {
         super.parseFromFile(absPath);
 
         log.debug("Parsing goldstandard config \"" + absPath + "\"");
@@ -734,7 +704,6 @@ class InternalParameterOptimizationRunParser extends ExecutionRunParser<Internal
                    UnknownDataPreprocessorException,
                    IncompatibleDataSetConfigPreprocessorException, IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
-                   UnknownDataStatisticException,
                    UnknownRunResultPostprocessorException, UnknownProviderException {
         super.parseFromFile(absPath);
 
@@ -767,7 +736,7 @@ class ParameterOptimizationRunParser extends ExecutionRunParser<ParameterOptimiz
                    DataSetNotFoundException, DataSetConfigNotFoundException, GoldStandardConfigNotFoundException,
                    NoDataSetException, DataConfigurationException, DataConfigNotFoundException,
                    UnknownDataPreprocessorException,
-                   IncompatibleDataSetConfigPreprocessorException, UnknownDataStatisticException,
+                   IncompatibleDataSetConfigPreprocessorException,
                    UnknownRunResultPostprocessorException, UnknownProviderException {
 
         this.optimizationParameters = new ArrayList<>();
@@ -880,7 +849,7 @@ class ParameterOptimizationRunParser extends ExecutionRunParser<ParameterOptimiz
                    GoldStandardConfigNotFoundException, NoDataSetException, DataConfigurationException,
                    DataConfigNotFoundException, NumberFormatException, UnknownDataPreprocessorException,
                    IncompatibleDataSetConfigPreprocessorException, IncompatibleParameterOptimizationMethodException,
-                   UnknownParameterOptimizationMethodException, UnknownDataStatisticException,
+                   UnknownParameterOptimizationMethodException,
                    UnknownRunResultPostprocessorException, UnknownProviderException {
 
         /*
@@ -987,7 +956,6 @@ class RepositoryObjectParser<T extends IRepositoryObject> extends Parser<T> {
                    UnknownDataPreprocessorException,
                    IncompatibleDataSetConfigPreprocessorException, IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
-                   UnknownDataStatisticException,
                    UnknownRunResultPostprocessorException, UnknownProviderException {
 
         if (!absPath.exists()) {
@@ -1023,7 +991,6 @@ class RunAnalysisRunParser extends AnalysisRunParser<RunAnalysisRun> {
                    UnknownDataPreprocessorException,
                    IncompatibleDataSetConfigPreprocessorException, IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
-                   UnknownDataStatisticException,
                    UnknownRunResultPostprocessorException, UnknownProviderException {
         super.parseFromFile(absPath);
 
@@ -1057,7 +1024,6 @@ class RunDataAnalysisRunParser extends AnalysisRunParser<RunDataAnalysisRun> {
                    UnknownDataPreprocessorException,
                    IncompatibleDataSetConfigPreprocessorException, IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
-                   UnknownDataStatisticException,
                    UnknownRunResultPostprocessorException, UnknownProviderException {
         super.parseFromFile(absPath);
 

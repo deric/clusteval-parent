@@ -37,7 +37,6 @@ import de.clusteval.api.opt.InvalidOptimizationParameterException;
 import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.UnknownRProgramException;
-import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
@@ -74,7 +73,6 @@ class RunParser<T extends Run> extends RepositoryObjectParser<T> {
                    UnknownDataPreprocessorException,
                    IncompatibleDataSetConfigPreprocessorException, IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
-                   UnknownDataStatisticException,
                    UnknownRunResultPostprocessorException, UnknownProviderException {
         super.parseFromFile(absPath);
 

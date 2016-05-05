@@ -34,7 +34,6 @@ import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.RepositoryRemoveEvent;
 import de.clusteval.api.repository.RepositoryReplaceEvent;
-import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
@@ -81,7 +80,6 @@ public class GoldStandardConfigTest extends AbstractClustEvalTest {
                                       IncompatibleParameterOptimizationMethodException,
                                       UnknownParameterOptimizationMethodException,
                                       NoOptimizableProgramParameterException,
-                                      UnknownDataStatisticException,
                                       UnknownRunResultPostprocessorException {
         this.repositoryObject = Parser
                 .parseFromFile(
@@ -125,7 +123,6 @@ public class GoldStandardConfigTest extends AbstractClustEvalTest {
                                         IncompatibleParameterOptimizationMethodException,
                                         UnknownParameterOptimizationMethodException,
                                         NoOptimizableProgramParameterException,
-                                        UnknownDataStatisticException,
                                         UnknownRunResultPostprocessorException {
         this.repositoryObject = Parser
                 .parseFromFile(
@@ -163,7 +160,7 @@ public class GoldStandardConfigTest extends AbstractClustEvalTest {
                    IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException,
                    NoOptimizableProgramParameterException,
-                   UnknownDataStatisticException, UnknownRunResultPostprocessorException {
+                   UnknownRunResultPostprocessorException {
 
         /*
          * REPLACE
@@ -244,7 +241,7 @@ public class GoldStandardConfigTest extends AbstractClustEvalTest {
                    IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException,
                    NoOptimizableProgramParameterException,
-                   UnknownDataStatisticException, UnknownRunResultPostprocessorException {
+                   UnknownRunResultPostprocessorException {
         // create empty file
         File f = new File(
                 "testCaseRepository/data/goldstandards/configs/goldStandardConfigTest.gsconfig")
@@ -281,7 +278,6 @@ public class GoldStandardConfigTest extends AbstractClustEvalTest {
                                            IncompatibleParameterOptimizationMethodException,
                                            UnknownParameterOptimizationMethodException,
                                            NoOptimizableProgramParameterException,
-                                           UnknownDataStatisticException,
                                            UnknownRunResultPostprocessorException {
         GoldStandardConfig gsConfig = Parser
                 .parseFromFile(
@@ -324,7 +320,6 @@ public class GoldStandardConfigTest extends AbstractClustEvalTest {
                    IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException,
                    NoOptimizableProgramParameterException,
-                   UnknownDataStatisticException,
                    UnknownRunResultPostprocessorException {
 
         File f = new File(
@@ -369,7 +364,6 @@ public class GoldStandardConfigTest extends AbstractClustEvalTest {
                                                       IncompatibleParameterOptimizationMethodException,
                                                       UnknownParameterOptimizationMethodException,
                                                       NoOptimizableProgramParameterException,
-                                                      UnknownDataStatisticException,
                                                       UnknownRunResultPostprocessorException {
         Parser.parseFromFile(
                 GoldStandardConfig.class,
@@ -397,7 +391,6 @@ public class GoldStandardConfigTest extends AbstractClustEvalTest {
                    IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException,
                    NoOptimizableProgramParameterException,
-                   UnknownDataStatisticException,
                    UnknownRunResultPostprocessorException {
         GoldStandardConfig gsConfig = Parser
                 .parseFromFile(
@@ -431,7 +424,6 @@ public class GoldStandardConfigTest extends AbstractClustEvalTest {
                                       IncompatibleParameterOptimizationMethodException,
                                       UnknownParameterOptimizationMethodException,
                                       NoOptimizableProgramParameterException,
-                                      UnknownDataStatisticException,
                                       UnknownRunResultPostprocessorException {
         GoldStandardConfig gsConfig = Parser.parseFromFile(GoldStandardConfig.class,
                 new File(

@@ -17,7 +17,9 @@
 package de.clusteval.api.stats;
 
 import de.clusteval.api.factory.ServiceFactory;
-import de.clusteval.api.stats.IDataStatistic;
+import de.clusteval.api.factory.UnknownProviderException;
+import de.clusteval.api.repository.IRepository;
+import java.io.File;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import org.openide.util.Lookup;
@@ -44,5 +46,15 @@ public class DataStatisticFactory extends ServiceFactory<IDataStatistic> {
             providers.put(c.getName(), c);
         }
         sort();
+    }
+
+    public static IDataStatistic parseFromString(String name) throws UnknownProviderException {
+        return getInstance().getProvider(name);
+    }
+
+    public static IDataStatistic parseFromString(IRepository repo, String name) throws UnknownProviderException {
+        IDataStatistic inst = getInstance().getProvider(name);
+        inst.init(repo, System.currentTimeMillis(), new File(name));
+        return inst;
     }
 }

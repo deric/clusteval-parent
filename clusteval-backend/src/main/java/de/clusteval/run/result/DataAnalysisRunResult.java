@@ -40,7 +40,6 @@ import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.IRunResult;
 import de.clusteval.api.stats.IDataStatistic;
 import de.clusteval.api.stats.IStatistic;
-import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
@@ -48,7 +47,7 @@ import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.data.preprocessing.UnknownDataPreprocessorException;
-import de.clusteval.data.statistics.DataStatistic;
+import de.clusteval.api.stats.DataStatistic;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
@@ -161,7 +160,7 @@ public class DataAnalysisRunResult extends AnalysisRunResult<IDataConfig, IDataS
                    InvalidRunModeException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
                    UnknownProgramParameterException, NoRepositoryFoundException, GoldStandardNotFoundException,
-                   InvalidOptimizationParameterException, RunException, UnknownDataStatisticException,
+                   InvalidOptimizationParameterException, RunException,
                    UnknownProgramTypeException, UnknownRProgramException,
                    IncompatibleParameterOptimizationMethodException,
                    UnknownGoldStandardFormatException, AnalysisRunResultException,

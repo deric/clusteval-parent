@@ -47,7 +47,6 @@ import de.clusteval.api.run.IRunResultFormat;
 import de.clusteval.api.run.IRunResultFormatParser;
 import de.clusteval.api.run.RunResultFormat;
 import de.clusteval.api.run.result.RunResultNotFoundException;
-import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.data.DataConfigNotFoundException;
@@ -172,7 +171,7 @@ public class ClusteringRunResult extends ExecutionRunResult implements IClusteri
      *                       for parsing parameters.
      * @return the clustering result
      * @throws NoRunResultFormatParserException the no run result format parser
-     *                                          exception
+     * exception
      * @throws RunResultNotFoundException
      * @throws RegisterException
      */
@@ -350,7 +349,7 @@ public class ClusteringRunResult extends ExecutionRunResult implements IClusteri
                    NoRepositoryFoundException, GoldStandardNotFoundException, InvalidOptimizationParameterException,
                    GoldStandardConfigurationException, DataSetConfigurationException, DataSetNotFoundException,
                    DataSetConfigNotFoundException, GoldStandardConfigNotFoundException, DataConfigurationException,
-                   DataConfigNotFoundException, RunException, UnknownDataStatisticException,
+                   DataConfigNotFoundException, RunException,
                    UnknownProgramTypeException, UnknownRProgramException,
                    IncompatibleParameterOptimizationMethodException,
                    RepositoryConfigNotFoundException, RepositoryConfigurationException,

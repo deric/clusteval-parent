@@ -38,7 +38,6 @@ import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.RepositoryRemoveEvent;
 import de.clusteval.api.repository.RepositoryReplaceEvent;
-import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
@@ -84,7 +83,6 @@ public class DataSetConfigTest extends AbstractClustEvalTest {
                                       IncompatibleParameterOptimizationMethodException,
                                       UnknownParameterOptimizationMethodException,
                                       NoOptimizableProgramParameterException,
-                                      UnknownDataStatisticException,
                                       UnknownRunResultPostprocessorException,
                                       UnknownProviderException {
         this.repositoryObject = Parser
@@ -127,7 +125,6 @@ public class DataSetConfigTest extends AbstractClustEvalTest {
                                         IncompatibleParameterOptimizationMethodException,
                                         UnknownParameterOptimizationMethodException,
                                         NoOptimizableProgramParameterException,
-                                        UnknownDataStatisticException,
                                         UnknownRunResultPostprocessorException,
                                         UnknownProviderException {
         this.repositoryObject = Parser
@@ -164,7 +161,6 @@ public class DataSetConfigTest extends AbstractClustEvalTest {
                    IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException,
                    NoOptimizableProgramParameterException,
-                   UnknownDataStatisticException,
                    UnknownRunResultPostprocessorException {
 
         /*
@@ -247,7 +243,7 @@ public class DataSetConfigTest extends AbstractClustEvalTest {
                    IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException,
                    NoOptimizableProgramParameterException,
-                   UnknownDataStatisticException, UnknownRunResultPostprocessorException, IOException {
+                   UnknownRunResultPostprocessorException, IOException {
         // create empty file
         File f = new File(
                 "testCaseRepository/data/datasets/configs/testDataSetConfig.dsconfig")
@@ -276,8 +272,7 @@ public class DataSetConfigTest extends AbstractClustEvalTest {
                    UnknownRProgramException,
                    IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException,
-                   NoOptimizableProgramParameterException,
-                   UnknownDataStatisticException {
+                   NoOptimizableProgramParameterException {
         DataSetConfig gsConfig = Parser
                 .parseFromFile(
                         DataSetConfig.class,
@@ -325,7 +320,6 @@ public class DataSetConfigTest extends AbstractClustEvalTest {
                    IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException,
                    NoOptimizableProgramParameterException,
-                   UnknownDataStatisticException,
                    UnknownRunResultPostprocessorException, IOException {
 
         File f = new File(
@@ -361,7 +355,6 @@ public class DataSetConfigTest extends AbstractClustEvalTest {
                    IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException,
                    NoOptimizableProgramParameterException,
-                   UnknownDataStatisticException,
                    UnknownRunResultPostprocessorException {
         Parser.parseFromFile(DataSetConfig.class, new File(
                 "testCaseRepository/data/datasets/configs/DS1_12.gsconfig")
@@ -387,7 +380,6 @@ public class DataSetConfigTest extends AbstractClustEvalTest {
                                         IncompatibleParameterOptimizationMethodException,
                                         UnknownParameterOptimizationMethodException,
                                         NoOptimizableProgramParameterException,
-                                        UnknownDataStatisticException,
                                         UnknownRunResultPostprocessorException {
         DataSetConfig dsConfig = Parser
                 .parseFromFile(
@@ -425,7 +417,6 @@ public class DataSetConfigTest extends AbstractClustEvalTest {
                                         IncompatibleParameterOptimizationMethodException,
                                         UnknownParameterOptimizationMethodException,
                                         NoOptimizableProgramParameterException,
-                                        UnknownDataStatisticException,
                                         UnknownRunResultPostprocessorException {
         DataSetConfig dsConfig = Parser
                 .parseFromFile(
@@ -472,7 +463,7 @@ public class DataSetConfigTest extends AbstractClustEvalTest {
                    IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException,
                    NoOptimizableProgramParameterException,
-                   UnknownDataStatisticException, UnknownRunResultPostprocessorException {
+                   UnknownRunResultPostprocessorException {
         DataSetConfig gsConfig = Parser
                 .parseFromFile(
                         DataSetConfig.class,

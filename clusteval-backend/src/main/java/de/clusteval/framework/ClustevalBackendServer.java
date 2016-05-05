@@ -64,7 +64,6 @@ import de.clusteval.api.run.IScheduler;
 import de.clusteval.api.run.IterationRunnable;
 import de.clusteval.api.run.IterationWrapper;
 import de.clusteval.api.run.RUN_STATUS;
-import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
@@ -808,14 +807,13 @@ public class ClustevalBackendServer implements IBackendServer {
                 result.put(Pair.getPair(dataConfig, programConfig), measureToOptimalQuality);
             }
         } catch (GoldStandardConfigurationException | DataSetConfigurationException |
-                DataSetNotFoundException | DataSetConfigNotFoundException |
-                GoldStandardConfigNotFoundException | DataConfigurationException |
-                DataConfigNotFoundException | IOException | UnknownRunResultFormatException |
-                UnknownDataSetFormatException | InvalidRunModeException | UnknownParameterOptimizationMethodException | NoOptimizableProgramParameterException | UnknownProgramParameterException | UnknownGoldStandardFormatException | InvalidConfigurationFileException | RepositoryAlreadyExistsException | InvalidRepositoryException |
-                NoRepositoryFoundException | GoldStandardNotFoundException |
-                InvalidOptimizationParameterException | RunException |
-                UnknownDataStatisticException | UnknownProgramTypeException |
-                UnknownRProgramException | IncompatibleParameterOptimizationMethodException | RepositoryConfigNotFoundException | RepositoryConfigurationException | ConfigurationException | RegisterException | NumberFormatException | NoDataSetException | RunResultParseException | UnknownDataPreprocessorException | IncompatibleDataSetConfigPreprocessorException | IncompatibleContextException | UnknownParameterType | InterruptedException | UnknownRunResultPostprocessorException e) {
+                 DataSetNotFoundException | DataSetConfigNotFoundException |
+                 GoldStandardConfigNotFoundException | DataConfigurationException |
+                 DataConfigNotFoundException | IOException | UnknownRunResultFormatException |
+                 UnknownDataSetFormatException | InvalidRunModeException | UnknownParameterOptimizationMethodException | NoOptimizableProgramParameterException | UnknownProgramParameterException | UnknownGoldStandardFormatException | InvalidConfigurationFileException | RepositoryAlreadyExistsException | InvalidRepositoryException |
+                 NoRepositoryFoundException | GoldStandardNotFoundException |
+                 InvalidOptimizationParameterException | RunException | UnknownProgramTypeException |
+                 UnknownRProgramException | IncompatibleParameterOptimizationMethodException | RepositoryConfigNotFoundException | RepositoryConfigurationException | ConfigurationException | RegisterException | NumberFormatException | NoDataSetException | RunResultParseException | UnknownDataPreprocessorException | IncompatibleDataSetConfigPreprocessorException | IncompatibleContextException | UnknownParameterType | InterruptedException | UnknownRunResultPostprocessorException e) {
             e.printStackTrace();
         } catch (UnknownProviderException ex) {
             Exceptions.printStackTrace(ex);
@@ -913,9 +911,9 @@ public class ClustevalBackendServer implements IBackendServer {
             DataSetGenerator generator = DataSetGenerator.parseFromString(this.repository, generatorName);
             generator.generate(args);
         } catch (UnknownDataSetGeneratorException | ParseException |
-                DataSetGenerationException | GoldStandardGenerationException |
-                InterruptedException | RepositoryObjectDumpException |
-                RegisterException e) {
+                 DataSetGenerationException | GoldStandardGenerationException |
+                 InterruptedException | RepositoryObjectDumpException |
+                 RegisterException e) {
             e.printStackTrace();
         } catch (UnknownProviderException ex) {
             Exceptions.printStackTrace(ex);

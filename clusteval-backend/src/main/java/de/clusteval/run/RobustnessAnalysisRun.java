@@ -57,7 +57,6 @@ import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.IRunResult;
 import de.clusteval.api.run.IScheduler;
-import de.clusteval.api.stats.UnknownDataStatisticException;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.data.DataConfigNotFoundException;
@@ -531,7 +530,7 @@ public class RobustnessAnalysisRun extends ClusteringRun {
                    InvalidConfigurationFileException,
                    RepositoryAlreadyExistsException, InvalidRepositoryException,
                    NoRepositoryFoundException, InvalidOptimizationParameterException,
-                   RunException, UnknownDataStatisticException,
+                   RunException,
                    UnknownProgramTypeException, UnknownRProgramException,
                    IncompatibleParameterOptimizationMethodException,
                    RepositoryConfigNotFoundException,
