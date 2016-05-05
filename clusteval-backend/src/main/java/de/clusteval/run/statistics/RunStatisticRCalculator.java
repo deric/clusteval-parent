@@ -15,12 +15,11 @@ import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigurationException;
 import de.clusteval.api.exceptions.GoldStandardNotFoundException;
 import de.clusteval.api.exceptions.InternalAttributeException;
-import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
+import de.clusteval.api.exceptions.InvalidDataSetFormatException;
 import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.exceptions.RunResultParseException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.exceptions.UnknownProgramParameterException;
 import de.clusteval.api.exceptions.UnknownProgramTypeException;
@@ -124,9 +123,9 @@ public abstract class RunStatisticRCalculator<T extends RunStatistic> extends Ru
 
     protected abstract T calculateResultHelper(final IRengine rEngine)
             throws IncompatibleDataConfigDataStatisticException,
-                   UnknownGoldStandardFormatException, UnknownDataSetFormatException,
+                   UnknownGoldStandardFormatException,
                    IllegalArgumentException, IOException,
-                   InvalidDataSetFormatVersionException, ConfigurationException,
+                   InvalidDataSetFormatException, ConfigurationException,
                    GoldStandardConfigurationException, DataSetConfigurationException,
                    DataSetNotFoundException, DataSetConfigNotFoundException,
                    GoldStandardConfigNotFoundException, DataConfigurationException,

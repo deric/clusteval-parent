@@ -16,8 +16,7 @@ import com.google.common.util.concurrent.Striped;
 import de.clusteval.api.IContext;
 import de.clusteval.api.Precision;
 import de.clusteval.api.exceptions.FormatConversionException;
-import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.exceptions.InvalidDataSetFormatException;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.RException;
@@ -37,6 +36,7 @@ import java.security.InvalidParameterException;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
+import org.openide.util.Exceptions;
 
 /**
  * A wrapper class for a dataset on the filesystem.
@@ -311,14 +311,13 @@ public abstract class DataSet extends RepositoryObject implements IDataSet, IRep
      *
      * @return true, if successful
      * @throws UnknownDataSetFormatException
-     * @throws InvalidDataSetFormatVersionException
+     * @throws InvalidDataSetFormatException
      * @throws IOException
      * @throws IllegalArgumentException
      */
     @Override
     public boolean loadIntoMemory() throws IllegalArgumentException,
-                                           IOException, InvalidDataSetFormatVersionException,
-                                           UnknownDataSetFormatException {
+                                           IOException, InvalidDataSetFormatException {
         return this.loadIntoMemory(Precision.DOUBLE);
     }
 
@@ -335,14 +334,14 @@ public abstract class DataSet extends RepositoryObject implements IDataSet, IRep
      * @param precision
      * @return true, if successful
      * @throws UnknownDataSetFormatException
-     * @throws InvalidDataSetFormatVersionException
+     * @throws InvalidDataSetFormatException
      * @throws IOException
      * @throws IllegalArgumentException
      */
     @Override
     public abstract boolean loadIntoMemory(Precision precision)
-            throws UnknownDataSetFormatException, IllegalArgumentException,
-                   IOException, InvalidDataSetFormatVersionException;
+            throws IllegalArgumentException,
+                   IOException, InvalidDataSetFormatException;
 
     /**
      * This method writes the contents of this dataset to the file denoted by
@@ -378,7 +377,7 @@ public abstract class DataSet extends RepositoryObject implements IDataSet, IRep
      * @return The dataset in the target format.
      * @throws FormatConversionException
      * @throws IOException
-     * @throws InvalidDataSetFormatVersionException
+     * @throws InvalidDataSetFormatException
      * @throws RegisterException
      * @throws RNotAvailableException
      * @throws InterruptedException
@@ -389,7 +388,7 @@ public abstract class DataSet extends RepositoryObject implements IDataSet, IRep
             final IConversionInputToStandardConfiguration configInputToStandard,
             final IConversionConfiguration configStandardToInput)
             throws FormatConversionException, IOException,
-                   InvalidDataSetFormatVersionException, RegisterException,
+                   InvalidDataSetFormatException, RegisterException,
                    RNotAvailableException, InterruptedException, RException, UnknownProviderException {
 
         // only one conversion process at a time
@@ -460,9 +459,9 @@ public abstract class DataSet extends RepositoryObject implements IDataSet, IRep
                 try {
                     result = preprocessed.convertToStandardDirectly(context,
                             configInputToStandard);
-                } catch (IOException | InvalidDataSetFormatVersionException |
-                        RegisterException | UnknownDataSetFormatException |
-                        InvalidParameterException | RNotAvailableException | InterruptedException e) {
+                } catch (IOException | InvalidDataSetFormatException |
+                         RegisterException |
+                         InvalidParameterException | RNotAvailableException | InterruptedException e) {
                     e.printStackTrace();
                     // throw e;
                 }
@@ -490,8 +489,9 @@ public abstract class DataSet extends RepositoryObject implements IDataSet, IRep
                 }
 
                 return result;
-            } catch (UnknownDataSetFormatException e1) {
-                e1.printStackTrace();
+            } catch (UnknownProviderException ex) {
+                Exceptions.printStackTrace(ex);
+                this.log.error("unknown format", ex);
             }
             return null;
         } finally {
@@ -512,8 +512,8 @@ public abstract class DataSet extends RepositoryObject implements IDataSet, IRep
      *                              during the conversion from the internal standard format to the target
      *                              format.
      * @return The dataset in the target format.
-     * @throws IOException                          Signals that an I/O exception has occurred.
-     * @throws InvalidDataSetFormatVersionException
+     * @throws IOException Signals that an I/O exception has occurred.
+     * @throws InvalidDataSetFormatException
      * @throws RegisterException
      * @throws UnknownDataSetFormatException
      * @throws FormatConversionException
@@ -521,8 +521,8 @@ public abstract class DataSet extends RepositoryObject implements IDataSet, IRep
     public IDataSet convertStandardToDirectly(final IContext context,
             final IDataSetFormat targetFormat,
             final IConversionConfiguration configStandardToInput)
-            throws IOException, InvalidDataSetFormatVersionException,
-                   RegisterException, UnknownDataSetFormatException,
+            throws IOException, InvalidDataSetFormatException,
+                   RegisterException,
                    FormatConversionException {
 
         IDataSet result = null;
@@ -572,10 +572,9 @@ public abstract class DataSet extends RepositoryObject implements IDataSet, IRep
      *                              during the conversion from the original format to the internal standard
      *                              format.
      * @return The dataset in the target format.
-     * @throws IOException                          Signals that an I/O exception has occurred.
-     * @throws InvalidDataSetFormatVersionException
+     * @throws IOException Signals that an I/O exception has occurred.
+     * @throws InvalidDataSetFormatException
      * @throws RegisterException
-     * @throws UnknownDataSetFormatException
      * @throws RNotAvailableException
      * @throws InvalidParameterException
      * @throws InterruptedException
@@ -583,9 +582,8 @@ public abstract class DataSet extends RepositoryObject implements IDataSet, IRep
     @Override
     public IDataSet convertToStandardDirectly(final IContext context,
             final IConversionInputToStandardConfiguration configInputToStandard)
-            throws IOException, InvalidDataSetFormatVersionException,
-                   RegisterException, UnknownDataSetFormatException,
-                   InvalidParameterException, RNotAvailableException,
+            throws IOException, InvalidDataSetFormatException,
+                   RegisterException, InvalidParameterException, RNotAvailableException,
                    InterruptedException, UnknownProviderException {
         IDataSet result;
 

@@ -23,7 +23,6 @@ import de.clusteval.api.exceptions.IncompatibleContextException;
 import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.exceptions.UnknownParameterType;
 import de.clusteval.api.exceptions.UnknownProgramParameterException;
@@ -340,8 +339,7 @@ public class ClusteringRunResult extends ExecutionRunResult implements IClusteri
 
     public static Run parseFromRunResultFolder(final IRepository parentRepository, final File runResultFolder,
             final List<ExecutionRunResult> result, final boolean register)
-            throws IOException, UnknownRunResultFormatException, UnknownDataSetFormatException,
-                   InvalidRunModeException,
+            throws IOException, UnknownRunResultFormatException, InvalidRunModeException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
                    UnknownProgramParameterException, UnknownGoldStandardFormatException,
                    InvalidConfigurationFileException, RepositoryAlreadyExistsException, InvalidRepositoryException,

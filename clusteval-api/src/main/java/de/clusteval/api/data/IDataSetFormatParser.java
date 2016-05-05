@@ -17,8 +17,7 @@
 package de.clusteval.api.data;
 
 import de.clusteval.api.Precision;
-import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.exceptions.InvalidDataSetFormatException;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.RNotAvailableException;
@@ -48,18 +47,16 @@ public interface IDataSetFormatParser extends IRepositoryObject {
      * @return The converted dataset.
      * @throws IOException
      * Signals that an I/O exception has occurred.
-     * @throws InvalidDataSetFormatVersionException
+     * @throws InvalidDataSetFormatException
      * @throws RegisterException
-     * @throws UnknownDataSetFormatException
+     * @throws UnknownProviderException
      * @throws RNotAvailableException
      * @throws InterruptedException
      * @throws InvalidParameterException
      */
     IDataSet convertToStandardFormat(IDataSet dataSet, IConversionInputToStandardConfiguration config)
-            throws IOException,
-                   InvalidDataSetFormatVersionException, RegisterException,
-                   UnknownDataSetFormatException, RNotAvailableException,
-                   InvalidParameterException, InterruptedException, UnknownProviderException;
+            throws IOException, InvalidDataSetFormatException, RegisterException,
+                   RNotAvailableException, InvalidParameterException, InterruptedException, UnknownProviderException;
 
     /**
      * @param dataSet
@@ -68,10 +65,10 @@ public interface IDataSetFormatParser extends IRepositoryObject {
      *                  The precision with which to store the similarities in memory.
      * @return A wrapper object containing the contents of the dataset
      * @throws IllegalArgumentException
-     * @throws InvalidDataSetFormatVersionException
+     * @throws InvalidDataSetFormatException
      * @throws IOException
      */
-    Object parse(IDataSet dataSet, Precision precision) throws IOException, InvalidDataSetFormatVersionException;
+    Object parse(IDataSet dataSet, Precision precision) throws IOException, InvalidDataSetFormatException;
 
     void writeToFileHelper(IDataSet dataSet, BufferedWriter writer) throws IOException;
 
@@ -105,12 +102,10 @@ public interface IDataSetFormatParser extends IRepositoryObject {
      * @return The converted dataset.
      * @throws IOException
      * Signals that an I/O exception has occurred.
-     * @throws InvalidDataSetFormatVersionException
+     * @throws InvalidDataSetFormatException
      * @throws RegisterException
-     * @throws UnknownDataSetFormatException
      */
     IDataSet convertToThisFormat(IDataSet dataSet, IDataSetFormat dataSetFormat, IConversionConfiguration config)
-            throws IOException, InvalidDataSetFormatVersionException,
-                   RegisterException, UnknownDataSetFormatException;
+            throws IOException, InvalidDataSetFormatException, RegisterException, UnknownProviderException;
 
 }

@@ -19,8 +19,7 @@ import de.clusteval.api.data.DataMatrix;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.RelativeDataSet;
-import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.exceptions.InvalidDataSetFormatException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
 import de.clusteval.run.result.ParameterOptimizationResult;
@@ -94,15 +93,14 @@ public abstract class Plotter {
      *
      * @param dataConfig
      * @throws UnknownDataSetFormatException
-     * @throws InvalidDataSetFormatVersionException
+     * @throws InvalidDataSetFormatException
      * @throws IllegalArgumentException
      * @throws IOException
      * @throws REngineException
      * @throws InterruptedException
      */
     public static void assessAndWriteIsoMDSCoordinates(
-            final DataConfig dataConfig) throws UnknownDataSetFormatException,
-                                                InvalidDataSetFormatVersionException, IllegalArgumentException,
+            final DataConfig dataConfig) throws InvalidDataSetFormatException, IllegalArgumentException,
                                                 IOException, REngineException, InterruptedException {
 
         try {
@@ -178,7 +176,7 @@ public abstract class Plotter {
 
     /**
      * @param dataConfig
-     * @throws InvalidDataSetFormatVersionException
+     * @throws InvalidDataSetFormatException
      * @throws IllegalArgumentException
      * @throws IOException
      * @throws REngineException
@@ -186,9 +184,9 @@ public abstract class Plotter {
      * @throws InterruptedException
      */
     public static void assessAndWritePCACoordinates(final IDataConfig dataConfig)
-            throws InvalidDataSetFormatVersionException,
+            throws InvalidDataSetFormatException,
                    IllegalArgumentException, IOException, REngineException,
-                   UnknownDataSetFormatException, InterruptedException {
+                   InterruptedException {
 
         try {
             IRengine rEngine = dataConfig.getRepository().getRengineForCurrentThread();

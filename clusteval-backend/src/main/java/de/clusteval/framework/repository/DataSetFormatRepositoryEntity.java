@@ -3,10 +3,10 @@
  */
 package de.clusteval.framework.repository;
 
-import de.clusteval.api.repository.DynamicRepositoryEntity;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.data.IDataSetFormatParser;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.factory.UnknownProviderException;
+import de.clusteval.api.repository.DynamicRepositoryEntity;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -50,12 +50,12 @@ public class DataSetFormatRepositoryEntity extends DynamicRepositoryEntity<IData
      *                    version.
      *
      * @return The current version for the given dataset format class.
-     * @throws UnknownDataSetFormatException
+     * @throws UnknownProviderException
      */
     public int getCurrentDataSetFormatVersion(final String formatClass)
-            throws UnknownDataSetFormatException {
+            throws UnknownProviderException {
         if (!dataSetFormatCurrentVersions.containsKey(formatClass)) {
-            throw new UnknownDataSetFormatException("\"" + formatClass
+            throw new UnknownProviderException("\"" + formatClass
                     + "\" is not a known dataset format.");
         }
         return dataSetFormatCurrentVersions.get(formatClass);

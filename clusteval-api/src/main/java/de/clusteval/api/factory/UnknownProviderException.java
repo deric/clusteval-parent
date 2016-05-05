@@ -25,6 +25,8 @@ import de.clusteval.api.exceptions.ClustEvalException;
  */
 public class UnknownProviderException extends ClustEvalException {
 
+    private static final long serialVersionUID = -6510886071068527706L;
+
     public UnknownProviderException(String message) {
         super(message);
     }

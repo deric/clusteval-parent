@@ -29,9 +29,8 @@ import de.clusteval.api.data.IDataSetConfig;
 import de.clusteval.api.data.InputToStd;
 import de.clusteval.api.data.StdToInput;
 import de.clusteval.api.exceptions.FormatConversionException;
-import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
+import de.clusteval.api.exceptions.InvalidDataSetFormatException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.InvalidRepositoryException;
@@ -73,7 +72,7 @@ public class CVNNClusteringQualityMeasureTest extends AbstractClustEvalTest {
                    RegisterException, NoSuchAlgorithmException,
                    RNotAvailableException, RCalculationException,
                    FormatConversionException,
-                   InterruptedException, RException, UnknownDataSetFormatException, UnknownProviderException {
+                   InterruptedException, RException, UnknownProviderException {
         try {
             Clustering clustering = new Clustering(this.getRepository(),
                     System.currentTimeMillis(), new File(""));
@@ -113,7 +112,7 @@ public class CVNNClusteringQualityMeasureTest extends AbstractClustEvalTest {
             System.out.println(quality);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        } catch (IllegalArgumentException | InvalidDataSetFormatVersionException | IOException e) {
+        } catch (IllegalArgumentException | InvalidDataSetFormatException | IOException e) {
             Exceptions.printStackTrace(e);
         }
     }
@@ -126,7 +125,7 @@ public class CVNNClusteringQualityMeasureTest extends AbstractClustEvalTest {
                                          RegisterException, NoSuchAlgorithmException,
                                          RNotAvailableException, RCalculationException,
                                          FormatConversionException,
-                                         InterruptedException, RException, UnknownProviderException {
+                                         InterruptedException, RException {
         try {
 
             IContext context = ContextFactory.parseFromString(getRepository(),
@@ -165,8 +164,7 @@ public class CVNNClusteringQualityMeasureTest extends AbstractClustEvalTest {
             System.out.println(quality);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        } catch (UnknownDataSetFormatException | IOException |
-                 IllegalArgumentException | InvalidDataSetFormatVersionException e) {
+        } catch (IOException | IllegalArgumentException | InvalidDataSetFormatException | UnknownProviderException e) {
             Exceptions.printStackTrace(e);
         }
     }

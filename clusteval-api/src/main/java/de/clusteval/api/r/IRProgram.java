@@ -18,8 +18,6 @@ package de.clusteval.api.r;
 
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataSetFormat;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
-import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.repository.IRepositoryObject;
@@ -42,14 +40,14 @@ public interface IRProgram extends IRepositoryObject {
     /**
      * @return A set containing dataset formats, which this r program can take
      *         as input.
-     * @throws UnknownDataSetFormatException
+     * @throws UnknownProviderException
      */
     Set<IDataSetFormat> getCompatibleDataSetFormats() throws UnknownProviderException;
 
     /**
      * @return The runresult formats, the results of this r program will be
      *         generated in.
-     * @throws UnknownRunResultFormatException
+     * @throws UnknownProviderException
      */
     IRunResultFormat getRunResultFormat() throws UnknownProviderException;
 

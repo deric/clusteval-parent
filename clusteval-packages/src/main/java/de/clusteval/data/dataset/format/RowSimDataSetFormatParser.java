@@ -22,8 +22,7 @@ import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.data.RelativeDataSet;
 import de.clusteval.api.data.RelativeDataSetFormat;
 import de.clusteval.api.data.WEBSITE_VISIBILITY;
-import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.exceptions.InvalidDataSetFormatException;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.utils.TextFileParser.OUTPUT_MODE;
@@ -53,13 +52,13 @@ public class RowSimDataSetFormatParser extends DataSetFormatParser {
     public IDataSet convertToStandardFormat(IDataSet dataSet,
             IConversionInputToStandardConfiguration config)
             throws IOException,
-                   InvalidDataSetFormatVersionException, RegisterException,
-                   UnknownDataSetFormatException, UnknownProviderException {
+                   InvalidDataSetFormatException, RegisterException,
+                   UnknownProviderException {
         switch (dataSet.getDataSetFormat().getVersion()) {
             case 1:
                 return convertToStandardFormat_v1(dataSet, config);
             default:
-                throw new InvalidDataSetFormatVersionException("Version "
+                throw new InvalidDataSetFormatException("Version "
                         + dataSet.getDataSetFormat().getVersion()
                         + " is unknown for DataSetFormat "
                         + dataSet.getDataSetFormat());
@@ -72,11 +71,10 @@ public class RowSimDataSetFormatParser extends DataSetFormatParser {
      * @return The converted dataset.
      * @throws IOException
      * @throws RegisterException
-     * @throws UnknownDataSetFormatException
      */
     protected IDataSet convertToStandardFormat_v1(IDataSet dataSet,
             IConversionInputToStandardConfiguration config)
-            throws IOException, RegisterException, UnknownDataSetFormatException, UnknownProviderException {
+            throws IOException, RegisterException, UnknownProviderException {
         // ID_ID_SIM -> SIM_MATRIX
 
         // check if file already exists
@@ -118,13 +116,13 @@ public class RowSimDataSetFormatParser extends DataSetFormatParser {
     @Override
     public IDataSet convertToThisFormat(IDataSet dataSet,
             IDataSetFormat dataSetFormat, IConversionConfiguration config)
-            throws IOException, InvalidDataSetFormatVersionException,
-                   RegisterException, UnknownDataSetFormatException {
+            throws IOException, InvalidDataSetFormatException,
+                   RegisterException, UnknownProviderException {
         switch (dataSetFormat.getVersion()) {
             case 1:
                 return convertToThisFormat_v1(dataSet, dataSetFormat);
             default:
-                throw new InvalidDataSetFormatVersionException("Version "
+                throw new InvalidDataSetFormatException("Version "
                         + dataSet.getDataSetFormat().getVersion()
                         + " is unknown for DataSetFormat "
                         + dataSet.getDataSetFormat());
@@ -132,8 +130,7 @@ public class RowSimDataSetFormatParser extends DataSetFormatParser {
     }
 
     protected IDataSet convertToThisFormat_v1(IDataSet dataSet,
-            IDataSetFormat dataSetFormat) throws IOException, RegisterException,
-                                                 UnknownDataSetFormatException {
+            IDataSetFormat dataSetFormat) throws IOException, RegisterException, UnknownProviderException {
         // SIM_MATRIX -> ID_ID_SIM
 
         // check if file already exists
@@ -197,7 +194,7 @@ public class RowSimDataSetFormatParser extends DataSetFormatParser {
          * @param outputFormat
          *                      the output format
          * @throws IOException
-         *                     Signals that an I/O exception has occurred.
+         * Signals that an I/O exception has occurred.
          */
         public APSimFileConverter(String absFilePath,
                 SIM_FILE_FORMAT simFileFormat, String absIdFilePath,
@@ -304,12 +301,12 @@ public class RowSimDataSetFormatParser extends DataSetFormatParser {
      */
     @Override
     public SimilarityMatrix parse(IDataSet dataSet, Precision precision)
-            throws IOException, InvalidDataSetFormatVersionException {
+            throws IOException, InvalidDataSetFormatException {
         switch (dataSet.getDataSetFormat().getVersion()) {
             case 1:
                 return parse_v1(dataSet, precision);
             default:
-                throw new InvalidDataSetFormatVersionException("Version "
+                throw new InvalidDataSetFormatException("Version "
                         + dataSet.getDataSetFormat().getVersion()
                         + " is unknown for DataSetFormat "
                         + dataSet.getDataSetFormat());

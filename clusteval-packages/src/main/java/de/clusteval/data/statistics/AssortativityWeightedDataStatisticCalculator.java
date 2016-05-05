@@ -13,14 +13,13 @@ package de.clusteval.data.statistics;
 import de.clusteval.api.Matrix;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataSetConfig;
-import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.data.RelativeDataSet;
+import de.clusteval.api.exceptions.InvalidDataSetFormatException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RExpr;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.data.RelativeDataSet;
 import de.clusteval.utils.ArraysExt;
 import java.io.File;
 import java.io.IOException;
@@ -67,9 +66,8 @@ public class AssortativityWeightedDataStatisticCalculator
     @Override
     protected AssortativityWeightedDataStatistic calculateResultHelper(
             final IRengine rEngine)
-            throws IllegalArgumentException, IOException, InvalidDataSetFormatVersionException,
-                   RegisterException,
-                   UnknownDataSetFormatException, InterruptedException, RException {
+            throws IllegalArgumentException, IOException, InvalidDataSetFormatException,
+                   RegisterException, InterruptedException, RException {
 
         IDataSetConfig dataSetConfig = dataConfig.getDatasetConfig();
         RelativeDataSet dataSet = (RelativeDataSet) (dataSetConfig.getDataSet()

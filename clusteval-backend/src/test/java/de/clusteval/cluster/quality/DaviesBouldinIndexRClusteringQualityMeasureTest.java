@@ -28,7 +28,7 @@ import de.clusteval.api.data.IDataSetConfig;
 import de.clusteval.api.data.InputToStd;
 import de.clusteval.api.data.StdToInput;
 import de.clusteval.api.exceptions.FormatConversionException;
-import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
+import de.clusteval.api.exceptions.InvalidDataSetFormatException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.RegisterException;
@@ -105,7 +105,7 @@ public class DaviesBouldinIndexRClusteringQualityMeasureTest extends AbstractClu
             System.out.println("Davies Bouldin Index: " + quality);
             assertEquals(0.49195985498493144, quality, DELTA);
         } catch (UnknownProviderException | RegisterException |
-                 FormatConversionException | IOException | InvalidDataSetFormatVersionException |
+                 FormatConversionException | IOException | InvalidDataSetFormatException |
                  RNotAvailableException | InterruptedException | RException | IllegalArgumentException e) {
             assertTrue(false);
         }

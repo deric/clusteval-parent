@@ -12,7 +12,7 @@ package de.clusteval.api.data;
 
 import de.clusteval.api.Matrix;
 import de.clusteval.api.Precision;
-import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
+import de.clusteval.api.exceptions.InvalidDataSetFormatException;
 import de.clusteval.api.program.RegisterException;
 import java.io.IOException;
 
@@ -40,7 +40,7 @@ public abstract class RelativeDataSetFormat extends DataSetFormat {
 
     @Override
     public final Matrix parse(final IDataSet dataSet, Precision precision)
-            throws IllegalArgumentException, IOException, InvalidDataSetFormatVersionException {
+            throws IllegalArgumentException, IOException, InvalidDataSetFormatException {
         return (Matrix) super.parse(dataSet, precision);
     }
 }

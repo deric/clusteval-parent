@@ -17,8 +17,7 @@
 package de.clusteval.api.data;
 
 import de.clusteval.api.Precision;
-import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.exceptions.InvalidDataSetFormatException;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.RNotAvailableException;
@@ -42,7 +41,7 @@ public interface IDataSetFormat extends IRepositoryObject {
     String getName();
 
     Object parse(final IDataSet dataSet, Precision precision)
-            throws IllegalArgumentException, IOException, InvalidDataSetFormatVersionException;
+            throws IllegalArgumentException, IOException, InvalidDataSetFormatException;
 
     /**
      * @param dataSet
@@ -68,18 +67,16 @@ public interface IDataSetFormat extends IRepositoryObject {
      * @return The converted dataset.
      * @throws IOException
      * Signals that an I/O exception has occurred.
-     * @throws InvalidDataSetFormatVersionException
+     * @throws InvalidDataSetFormatException
      * @throws RegisterException
-     * @throws UnknownDataSetFormatException
      * @throws RNotAvailableException
      * @throws InterruptedException
      * @throws InvalidParameterException
      */
     IDataSet convertToStandardFormat(IDataSet dataSet, IConversionInputToStandardConfiguration config)
             throws IOException,
-                   InvalidDataSetFormatVersionException, RegisterException,
-                   UnknownDataSetFormatException, RNotAvailableException,
-                   InvalidParameterException, InterruptedException, UnknownProviderException;
+                   InvalidDataSetFormatException, RegisterException,
+                   RNotAvailableException, InvalidParameterException, InterruptedException, UnknownProviderException;
 
     /**
      *
@@ -169,13 +166,13 @@ public interface IDataSetFormat extends IRepositoryObject {
      * @return The converted dataset.
      * @throws IOException
      * Signals that an I/O exception has occurred.
-     * @throws InvalidDataSetFormatVersionException
+     * @throws InvalidDataSetFormatException
      * @throws RegisterException
      * @throws UnknownDataSetFormatException
      */
     IDataSet convertToThisFormat(IDataSet dataSet, IDataSetFormat dataSetFormat, IConversionConfiguration config)
-            throws IOException, InvalidDataSetFormatVersionException,
-                   RegisterException, UnknownDataSetFormatException;
+            throws IOException, InvalidDataSetFormatException,
+                   RegisterException;
 
     /**
      *

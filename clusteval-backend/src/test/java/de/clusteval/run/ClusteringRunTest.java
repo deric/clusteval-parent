@@ -21,7 +21,6 @@ import de.clusteval.api.exceptions.IncompatibleContextException;
 import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownParameterType;
 import de.clusteval.api.exceptions.UnknownProgramParameterException;
 import de.clusteval.api.exceptions.UnknownProgramTypeException;
@@ -63,7 +62,7 @@ public class ClusteringRunTest extends AbstractClustEvalTest {
     public void testNewParser()
             throws InterruptedException, RepositoryAlreadyExistsException,
                    InvalidRepositoryException, RepositoryConfigNotFoundException, RepositoryConfigurationException,
-                   UnknownDataSetFormatException, GoldStandardNotFoundException, GoldStandardConfigurationException,
+                   GoldStandardNotFoundException, GoldStandardConfigurationException,
                    DataSetConfigurationException, DataSetNotFoundException, DataSetConfigNotFoundException,
                    GoldStandardConfigNotFoundException, NoDataSetException, DataConfigurationException,
                    DataConfigNotFoundException, NumberFormatException, ConfigurationException, RegisterException,

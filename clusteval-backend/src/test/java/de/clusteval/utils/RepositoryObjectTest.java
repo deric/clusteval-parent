@@ -16,7 +16,6 @@ import de.clusteval.api.exceptions.GoldStandardConfigurationException;
 import de.clusteval.api.exceptions.GoldStandardNotFoundException;
 import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.RepositoryObject;
 import de.clusteval.api.repository.RepositoryReplaceEvent;
@@ -272,12 +271,10 @@ public final class RepositoryObjectTest extends AbstractClustEvalTest {
      * @throws GoldStandardConfigurationException
      * @throws DataSetConfigurationException
      * @throws DataSetNotFoundException
-     * @throws UnknownDataSetFormatException
      * @throws DataSetConfigNotFoundException
      * @throws GoldStandardConfigNotFoundException
      * @throws RegisterException
      * @throws NoDataSetException
-     * @throws UnknownDataPreprocessorException
      * @throws NumberFormatException
      * @throws IncompatibleDataSetConfigPreprocessorException
      */
@@ -287,8 +284,7 @@ public final class RepositoryObjectTest extends AbstractClustEvalTest {
             throws IOException,
                    NoRepositoryFoundException, GoldStandardNotFoundException,
                    GoldStandardConfigurationException, DataSetNotFoundException,
-                   DataSetConfigurationException, UnknownDataSetFormatException,
-                   DataSetConfigNotFoundException,
+                   DataSetConfigurationException, DataSetConfigNotFoundException,
                    GoldStandardConfigNotFoundException,
                    RegisterException, NoDataSetException,
                    NumberFormatException,

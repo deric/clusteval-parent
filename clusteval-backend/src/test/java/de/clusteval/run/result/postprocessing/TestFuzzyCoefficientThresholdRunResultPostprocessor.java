@@ -21,7 +21,6 @@ import de.clusteval.api.exceptions.IncompatibleContextException;
 import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownParameterType;
 import de.clusteval.api.exceptions.UnknownProgramParameterException;
 import de.clusteval.api.exceptions.UnknownProgramTypeException;
@@ -60,7 +59,7 @@ public class TestFuzzyCoefficientThresholdRunResultPostprocessor extends Abstrac
     public void test() throws RepositoryAlreadyExistsException,
                               InvalidRepositoryException, RepositoryConfigNotFoundException,
                               RepositoryConfigurationException, DataSetNotFoundException,
-                              UnknownDataSetFormatException, DataSetConfigurationException,
+                              DataSetConfigurationException,
                               NoDataSetException, NumberFormatException, RegisterException,
                               NoRepositoryFoundException, IOException,
                               InterruptedException, GoldStandardNotFoundException,

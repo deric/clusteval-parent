@@ -19,8 +19,7 @@ package de.clusteval.api.data;
 import de.clusteval.api.IContext;
 import de.clusteval.api.Precision;
 import de.clusteval.api.exceptions.FormatConversionException;
-import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.exceptions.InvalidDataSetFormatException;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.RException;
@@ -92,12 +91,11 @@ public interface IDataSet extends IRepositoryObject {
      *
      * @return true, if successful
      * @throws UnknownDataSetFormatException
-     * @throws InvalidDataSetFormatVersionException
+     * @throws InvalidDataSetFormatException
      * @throws IOException
      * @throws IllegalArgumentException
      */
-    boolean loadIntoMemory() throws IllegalArgumentException, IOException, InvalidDataSetFormatVersionException,
-                                    UnknownDataSetFormatException;
+    boolean loadIntoMemory() throws IllegalArgumentException, IOException, InvalidDataSetFormatException;
 
     IDataSetType getDataSetType();
 
@@ -142,8 +140,8 @@ public interface IDataSet extends IRepositoryObject {
      *                              during the conversion from the original format to the internal standard
      *                              format.
      * @return The dataset in the target format.
-     * @throws IOException                          Signals that an I/O exception has occurred.
-     * @throws InvalidDataSetFormatVersionException
+     * @throws IOException Signals that an I/O exception has occurred.
+     * @throws InvalidDataSetFormatException
      * @throws RegisterException
      * @throws UnknownDataSetFormatException
      * @throws RNotAvailableException
@@ -151,8 +149,8 @@ public interface IDataSet extends IRepositoryObject {
      * @throws InterruptedException
      */
     IDataSet convertToStandardDirectly(final IContext context, final IConversionInputToStandardConfiguration configInputToStandard)
-            throws IOException, InvalidDataSetFormatVersionException,
-                   RegisterException, UnknownDataSetFormatException,
+            throws IOException, InvalidDataSetFormatException,
+                   RegisterException,
                    InvalidParameterException, RNotAvailableException,
                    InterruptedException, UnknownProviderException;
 
@@ -169,17 +167,16 @@ public interface IDataSet extends IRepositoryObject {
      *                              during the conversion from the internal standard format to the target
      *                              format.
      * @return The dataset in the target format.
-     * @throws IOException                          Signals that an I/O exception has occurred.
-     * @throws InvalidDataSetFormatVersionException
+     * @throws IOException Signals that an I/O exception has occurred.
+     * @throws InvalidDataSetFormatException
      * @throws RegisterException
-     * @throws UnknownDataSetFormatException
      * @throws FormatConversionException
      */
     IDataSet convertStandardToDirectly(final IContext context,
             final IDataSetFormat targetFormat,
             final IConversionConfiguration configStandardToInput)
-            throws IOException, InvalidDataSetFormatVersionException,
-                   RegisterException, UnknownDataSetFormatException,
+            throws IOException, InvalidDataSetFormatException,
+                   RegisterException, UnknownProviderException,
                    FormatConversionException;
 
     /**
@@ -201,17 +198,18 @@ public interface IDataSet extends IRepositoryObject {
      * @return The dataset in the target format.
      * @throws FormatConversionException
      * @throws IOException
-     * @throws InvalidDataSetFormatVersionException
+     * @throws InvalidDataSetFormatException
      * @throws RegisterException
      * @throws RNotAvailableException
      * @throws InterruptedException
+     * @throws de.clusteval.api.factory.UnknownProviderException
      */
     public IDataSet preprocessAndConvertTo(final IContext context,
             final IDataSetFormat targetFormat,
             final IConversionInputToStandardConfiguration configInputToStandard,
             final IConversionConfiguration configStandardToInput)
             throws FormatConversionException, IOException,
-                   InvalidDataSetFormatVersionException, RegisterException,
+                   InvalidDataSetFormatException, RegisterException,
                    RNotAvailableException, InterruptedException, RException, UnknownProviderException;
 
     /**
@@ -251,12 +249,10 @@ public interface IDataSet extends IRepositoryObject {
      *
      * @param precision
      * @return true, if successful
-     * @throws UnknownDataSetFormatException
-     * @throws InvalidDataSetFormatVersionException
+     * @throws InvalidDataSetFormatException
      * @throws IOException
      * @throws IllegalArgumentException
      */
     boolean loadIntoMemory(Precision precision)
-            throws UnknownDataSetFormatException, IllegalArgumentException,
-                   IOException, InvalidDataSetFormatVersionException;
+            throws IllegalArgumentException, IOException, InvalidDataSetFormatException, UnknownProviderException;
 }

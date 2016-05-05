@@ -36,7 +36,6 @@ import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.exceptions.RunResultParseException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.exceptions.UnknownParameterType;
 import de.clusteval.api.exceptions.UnknownProgramParameterException;
@@ -513,8 +512,7 @@ public class RobustnessAnalysisRun extends ClusteringRun {
 
     protected void findBestParamsAndInitParameterValues(
             final IRepository repository)
-            throws UnknownDataSetFormatException,
-                   UnknownGoldStandardFormatException, GoldStandardNotFoundException,
+            throws UnknownGoldStandardFormatException, GoldStandardNotFoundException,
                    GoldStandardConfigurationException, DataSetConfigurationException,
                    DataSetNotFoundException, DataSetConfigNotFoundException,
                    GoldStandardConfigNotFoundException, NoDataSetException,
@@ -529,8 +527,7 @@ public class RobustnessAnalysisRun extends ClusteringRun {
                    InvalidConfigurationFileException,
                    RepositoryAlreadyExistsException, InvalidRepositoryException,
                    NoRepositoryFoundException, InvalidOptimizationParameterException,
-                   RunException,
-                   UnknownProgramTypeException, UnknownRProgramException,
+                   RunException, UnknownProgramTypeException, UnknownRProgramException,
                    IncompatibleParameterOptimizationMethodException,
                    RepositoryConfigNotFoundException,
                    RepositoryConfigurationException,

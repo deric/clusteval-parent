@@ -10,16 +10,15 @@
  ***************************************************************************** */
 package de.clusteval.data.statistics;
 
-import de.clusteval.api.stats.DataStatisticCalculator;
-import de.clusteval.api.stats.DataStatistic;
 import de.clusteval.api.data.IDataConfig;
-import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.exceptions.InvalidDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.stats.DataStatistic;
+import de.clusteval.api.stats.DataStatisticCalculator;
 import java.io.File;
 import java.io.IOException;
 import org.openide.util.Exceptions;
@@ -74,9 +73,9 @@ public abstract class DataStatisticRCalculator<T extends DataStatistic> extends 
                 return calculateResultHelper(rEngine);
 
             } catch (IncompatibleDataConfigDataStatisticException |
-                    UnknownGoldStandardFormatException | UnknownDataSetFormatException |
-                    IllegalArgumentException | IOException | InvalidDataSetFormatVersionException |
-                    RegisterException | RException | InterruptedException e) {
+                     UnknownGoldStandardFormatException |
+                     IllegalArgumentException | IOException | InvalidDataSetFormatException |
+                     RegisterException | RException | InterruptedException e) {
                 throw new DataStatisticCalculateException(e);
             } finally {
                 rEngine.clear();
@@ -89,9 +88,9 @@ public abstract class DataStatisticRCalculator<T extends DataStatistic> extends 
 
     protected abstract T calculateResultHelper(final IRengine rEngine)
             throws IncompatibleDataConfigDataStatisticException,
-                   UnknownGoldStandardFormatException, UnknownDataSetFormatException,
+                   UnknownGoldStandardFormatException,
                    IllegalArgumentException, IOException,
-                   InvalidDataSetFormatVersionException, RegisterException,
+                   InvalidDataSetFormatException, RegisterException,
                    RException, InterruptedException;
 
     /*

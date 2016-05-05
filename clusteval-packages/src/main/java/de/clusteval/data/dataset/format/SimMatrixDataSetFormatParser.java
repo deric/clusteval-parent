@@ -20,7 +20,7 @@ import de.clusteval.api.data.IConversionInputToStandardConfiguration;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.data.RelativeDataSet;
-import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
+import de.clusteval.api.exceptions.InvalidDataSetFormatException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.utils.TextFileParser.OUTPUT_MODE;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
@@ -51,7 +51,7 @@ public class SimMatrixDataSetFormatParser extends DataSetFormatParser {
     @Override
     public SimilarityMatrix parse(IDataSet dataSet, Precision precision)
             throws IllegalArgumentException, IOException,
-                   InvalidDataSetFormatVersionException {
+                   InvalidDataSetFormatException {
 
 
         Lock l = locks.get(dataSet.getAbsolutePath());
@@ -67,7 +67,7 @@ public class SimMatrixDataSetFormatParser extends DataSetFormatParser {
                 p.process();
                 return p.getSimilarities();
             } catch (IOException e) {
-                throw new InvalidDataSetFormatVersionException(e.getMessage());
+                throw new InvalidDataSetFormatException(e.getMessage());
             }
         } finally {
             l.unlock();
@@ -85,7 +85,7 @@ public class SimMatrixDataSetFormatParser extends DataSetFormatParser {
     @Override
     public IDataSet convertToStandardFormat(IDataSet dataSet,
             IConversionInputToStandardConfiguration config)
-            throws IOException, InvalidDataSetFormatVersionException, RegisterException {
+            throws IOException, InvalidDataSetFormatException, RegisterException {
         return null;
     }
 
@@ -101,7 +101,7 @@ public class SimMatrixDataSetFormatParser extends DataSetFormatParser {
     @Override
     public IDataSet convertToThisFormat(IDataSet dataSet,
             IDataSetFormat dataSetFormat, IConversionConfiguration config)
-            throws IOException, InvalidDataSetFormatVersionException,
+            throws IOException, InvalidDataSetFormatException,
                    RegisterException {
         return null;
     }

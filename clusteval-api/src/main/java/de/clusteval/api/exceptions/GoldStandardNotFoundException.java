@@ -16,9 +16,6 @@ package de.clusteval.api.exceptions;
  */
 public class GoldStandardNotFoundException extends GoldStandardException {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = -2215573555406810759L;
 
     /**

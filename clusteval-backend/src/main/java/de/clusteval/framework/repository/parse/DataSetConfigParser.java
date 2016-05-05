@@ -18,10 +18,10 @@ package de.clusteval.framework.repository.parse;
 
 import de.clusteval.api.IDistanceMeasure;
 import de.clusteval.api.Precision;
+import de.clusteval.api.data.DataPreprocessor;
 import de.clusteval.api.data.DataPreprocessorFactory;
 import de.clusteval.api.data.DataSetConfig;
 import de.clusteval.api.data.DistanceMeasureFactory;
-import de.clusteval.api.data.DataPreprocessor;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.InputToStd;
 import de.clusteval.api.data.StdToInput;
@@ -33,7 +33,6 @@ import de.clusteval.api.exceptions.IncompatibleContextException;
 import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownParameterType;
 import de.clusteval.api.exceptions.UnknownProgramParameterException;
 import de.clusteval.api.exceptions.UnknownProgramTypeException;
@@ -73,17 +72,10 @@ class DataSetConfigParser extends RepositoryObjectParser<DataSetConfig> {
     protected InputToStd configInputToStandard;
     protected StdToInput configStandardToInput;
 
-    /**
-     * (non-Javadoc)
-     *
-     * @see
-     * de.clusteval.framework.repository.RepositoryObjectParser#parseFromFile
-     * (java.io.File)
-     */
     @Override
     public void parseFromFile(File absPath)
             throws NoRepositoryFoundException, ConfigurationException, RunException,
-                   UnknownDataSetFormatException, FileNotFoundException, RegisterException, UnknownParameterType,
+                   FileNotFoundException, RegisterException, UnknownParameterType,
                    IncompatibleContextException, UnknownRunResultFormatException, InvalidOptimizationParameterException,
                    UnknownProgramParameterException, UnknownProgramTypeException, UnknownRProgramException,
                    GoldStandardNotFoundException, GoldStandardConfigurationException, DataSetConfigurationException,
@@ -169,7 +161,7 @@ class DataSetConfigParser extends RepositoryObjectParser<DataSetConfig> {
     }
 
     protected IDataSet getDataSet()
-            throws DataSetNotFoundException, UnknownDataSetFormatException, DataSetConfigurationException,
+            throws DataSetNotFoundException, DataSetConfigurationException,
                    NoDataSetException, NumberFormatException, RegisterException, NoRepositoryFoundException,
                    GoldStandardNotFoundException, GoldStandardConfigurationException,
                    DataSetConfigNotFoundException, GoldStandardConfigNotFoundException, DataConfigurationException,

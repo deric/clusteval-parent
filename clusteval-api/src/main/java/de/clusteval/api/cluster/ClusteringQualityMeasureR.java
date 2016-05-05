@@ -14,7 +14,7 @@ package de.clusteval.api.cluster;
 
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.data.IDataConfig;
-import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
+import de.clusteval.api.exceptions.InvalidDataSetFormatException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
@@ -90,7 +90,7 @@ public abstract class ClusteringQualityMeasureR extends RepositoryObject impleme
     public ClustEvalValue getQualityOfClustering(
             IClustering clustering, IClustering goldStandard,
             IDataConfig dataConfig, final IRengine rEngine)
-            throws InvalidDataSetFormatVersionException,
+            throws InvalidDataSetFormatException,
                    IllegalArgumentException, InterruptedException, RException,
                    ROperationNotSupported, RNotAvailableException {
         try {
@@ -121,7 +121,7 @@ public abstract class ClusteringQualityMeasureR extends RepositoryObject impleme
     @Override
     public ClustEvalValue getQualityOfClustering(IClustering clustering, IClustering gsClustering, IDataConfig dataConfig)
             throws RNotAvailableException, ROperationNotSupported,
-                   InvalidDataSetFormatVersionException, IllegalArgumentException,
+                   InvalidDataSetFormatException, IllegalArgumentException,
                    InterruptedException {
         try {
             IRengine rEngine = repository.getRengineForCurrentThread();

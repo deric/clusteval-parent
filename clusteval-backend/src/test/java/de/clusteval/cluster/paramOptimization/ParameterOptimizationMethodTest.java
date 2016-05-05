@@ -31,9 +31,8 @@ import de.clusteval.api.data.RelativeDataSet;
 import de.clusteval.api.data.StdToInput;
 import de.clusteval.api.exceptions.FormatConversionException;
 import de.clusteval.api.exceptions.InternalAttributeException;
-import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
+import de.clusteval.api.exceptions.InvalidDataSetFormatException;
 import de.clusteval.api.exceptions.RunResultParseException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.opt.NoParameterSetFoundException;
 import de.clusteval.api.opt.ParameterOptimizationException;
@@ -70,8 +69,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
     @Test
     public void testTransClustCassini250()
             throws UnknownParameterOptimizationMethodException,
-                   UnknownDataSetFormatException,
-                   InvalidDataSetFormatVersionException, IllegalArgumentException,
+                   InvalidDataSetFormatException, IllegalArgumentException,
                    IOException, RepositoryAlreadyExistsException,
                    InvalidRepositoryException, RepositoryConfigNotFoundException,
                    RepositoryConfigurationException, RunResultParseException,
@@ -204,8 +202,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
     @Test
     public void testResumeTransClustCassini250()
             throws UnknownParameterOptimizationMethodException,
-                   UnknownDataSetFormatException,
-                   InvalidDataSetFormatVersionException, IllegalArgumentException,
+                   InvalidDataSetFormatException, IllegalArgumentException,
                    IOException, RepositoryAlreadyExistsException,
                    InvalidRepositoryException, RepositoryConfigNotFoundException,
                    RepositoryConfigurationException, RunResultParseException,
@@ -321,8 +318,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
     @Test
     public void testResumeTransClustCassini250LastLayer()
             throws UnknownParameterOptimizationMethodException,
-                   UnknownDataSetFormatException,
-                   InvalidDataSetFormatVersionException, IllegalArgumentException,
+                   InvalidDataSetFormatException, IllegalArgumentException,
                    IOException, RepositoryAlreadyExistsException,
                    InvalidRepositoryException, RepositoryConfigNotFoundException,
                    RepositoryConfigurationException, RunResultParseException,
@@ -411,8 +407,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
     @Test
     public void testResumeTransClustBaechler2003()
             throws UnknownParameterOptimizationMethodException,
-                   UnknownDataSetFormatException,
-                   InvalidDataSetFormatVersionException, IllegalArgumentException,
+                   InvalidDataSetFormatException, IllegalArgumentException,
                    IOException, RepositoryAlreadyExistsException,
                    InvalidRepositoryException, RepositoryConfigNotFoundException,
                    RepositoryConfigurationException, RunResultParseException,

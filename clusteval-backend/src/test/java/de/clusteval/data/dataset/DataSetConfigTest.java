@@ -25,7 +25,6 @@ import de.clusteval.api.exceptions.IncompatibleContextException;
 import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownParameterType;
 import de.clusteval.api.exceptions.UnknownProgramParameterException;
 import de.clusteval.api.exceptions.UnknownProgramTypeException;
@@ -51,7 +50,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import junit.framework.Assert;
 import org.apache.commons.configuration.ConfigurationException;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -66,7 +64,7 @@ public class DataSetConfigTest extends AbstractClustEvalTest {
 
     public void testRegister() throws DataSetConfigurationException,
                                       NoRepositoryFoundException, DataSetNotFoundException,
-                                      UnknownDataSetFormatException, DataSetConfigNotFoundException,
+                                      DataSetConfigNotFoundException,
                                       RegisterException, NoDataSetException,
                                       NumberFormatException,
                                       IncompatibleDataSetConfigPreprocessorException,
@@ -108,7 +106,7 @@ public class DataSetConfigTest extends AbstractClustEvalTest {
 
     public void testUnregister() throws DataSetConfigurationException,
                                         NoRepositoryFoundException, DataSetNotFoundException,
-                                        UnknownDataSetFormatException, DataSetConfigNotFoundException,
+                                        DataSetConfigNotFoundException,
                                         RegisterException, NoDataSetException,
                                         NumberFormatException,
                                         IncompatibleDataSetConfigPreprocessorException,
@@ -144,7 +142,7 @@ public class DataSetConfigTest extends AbstractClustEvalTest {
     public void testNotifyRepositoryEvent()
             throws NoRepositoryFoundException,
                    DataSetNotFoundException, DataSetConfigurationException,
-                   UnknownDataSetFormatException, DataSetConfigNotFoundException,
+                   DataSetConfigNotFoundException,
                    RegisterException, UnknownProviderException, NoDataSetException,
                    NumberFormatException,
                    IncompatibleDataSetConfigPreprocessorException,
@@ -184,7 +182,7 @@ public class DataSetConfigTest extends AbstractClustEvalTest {
         DataSetConfig gsConfig2 = new DataSetConfig(gsConfig);
 
         gsConfig.notify(new RepositoryReplaceEvent(gsConfig, gsConfig2));
-        Assert.assertTrue(child.notified);
+        assertTrue(child.notified);
 
         /*
          * Now check, whether DataSet configs update their references correctly,
@@ -195,8 +193,8 @@ public class DataSetConfigTest extends AbstractClustEvalTest {
 
         gsConfig.notify(new RepositoryReplaceEvent(gs, gs2));
 
-        Assert.assertFalse(gsConfig.getDataSet() == gs);
-        Assert.assertTrue(gsConfig.getDataSet() == gs2);
+        assertFalse(gsConfig.getDataSet() == gs);
+        assertTrue(gsConfig.getDataSet() == gs2);
 
         /*
          * REMOVE
@@ -226,8 +224,7 @@ public class DataSetConfigTest extends AbstractClustEvalTest {
     @Test(expected = DataSetConfigurationException.class)
     public void testParseFromFileDataSetNameMissing()
             throws DataSetConfigurationException, NoRepositoryFoundException,
-                   DataSetNotFoundException, UnknownDataSetFormatException,
-                   DataSetConfigNotFoundException,
+                   DataSetNotFoundException, DataSetConfigNotFoundException,
                    RegisterException, UnknownProviderException, NoDataSetException,
                    NumberFormatException,
                    IncompatibleDataSetConfigPreprocessorException,
@@ -256,7 +253,7 @@ public class DataSetConfigTest extends AbstractClustEvalTest {
     public void testParseFromFile()
             throws DataSetConfigurationException,
                    NoRepositoryFoundException, DataSetNotFoundException,
-                   UnknownDataSetFormatException, DataSetConfigNotFoundException,
+                   DataSetConfigNotFoundException,
                    RegisterException, UnknownProviderException, NoDataSetException,
                    NumberFormatException,
                    IncompatibleDataSetConfigPreprocessorException,
@@ -303,11 +300,9 @@ public class DataSetConfigTest extends AbstractClustEvalTest {
     @Test(expected = DataSetConfigurationException.class)
     public void testParseFromFileDataSetFileMissing()
             throws DataSetConfigurationException, NoRepositoryFoundException,
-                   DataSetNotFoundException, UnknownDataSetFormatException,
-                   DataSetConfigNotFoundException,
+                   DataSetNotFoundException, DataSetConfigNotFoundException,
                    RegisterException, UnknownProviderException, NoDataSetException,
-                   NumberFormatException,
-                   IncompatibleDataSetConfigPreprocessorException,
+                   NumberFormatException, IncompatibleDataSetConfigPreprocessorException,
                    GoldStandardNotFoundException, GoldStandardConfigurationException,
                    GoldStandardConfigNotFoundException, DataConfigurationException,
                    DataConfigNotFoundException, ConfigurationException,
@@ -337,8 +332,7 @@ public class DataSetConfigTest extends AbstractClustEvalTest {
     @Test(expected = FileNotFoundException.class)
     public void testParseFromNotExistingFile()
             throws NoRepositoryFoundException, DataSetNotFoundException,
-                   DataSetConfigurationException, UnknownDataSetFormatException,
-                   DataSetConfigNotFoundException,
+                   DataSetConfigurationException, DataSetConfigNotFoundException,
                    RegisterException, UnknownProviderException, NoDataSetException,
                    NumberFormatException,
                    IncompatibleDataSetConfigPreprocessorException,
@@ -361,25 +355,26 @@ public class DataSetConfigTest extends AbstractClustEvalTest {
     }
 
     @Test
-    public void testGetDataSet() throws DataSetConfigurationException,
-                                        NoRepositoryFoundException, DataSetNotFoundException,
-                                        UnknownDataSetFormatException, DataSetConfigNotFoundException,
-                                        RegisterException, UnknownProviderException, NoDataSetException,
-                                        NumberFormatException,
-                                        IncompatibleDataSetConfigPreprocessorException,
-                                        GoldStandardNotFoundException, GoldStandardConfigurationException,
-                                        GoldStandardConfigNotFoundException, DataConfigurationException,
-                                        DataConfigNotFoundException, ConfigurationException,
-                                        FileNotFoundException, UnknownParameterType,
-                                        RunException, IncompatibleContextException,
-                                        UnknownRunResultFormatException,
-                                        InvalidOptimizationParameterException,
-                                        UnknownProgramParameterException, UnknownProgramTypeException,
-                                        UnknownRProgramException,
-                                        IncompatibleParameterOptimizationMethodException,
-                                        UnknownParameterOptimizationMethodException,
-                                        NoOptimizableProgramParameterException,
-                                        UnknownRunResultPostprocessorException {
+    public void testGetDataSet()
+            throws DataSetConfigurationException,
+                   NoRepositoryFoundException, DataSetNotFoundException,
+                   DataSetConfigNotFoundException,
+                   RegisterException, UnknownProviderException, NoDataSetException,
+                   NumberFormatException,
+                   IncompatibleDataSetConfigPreprocessorException,
+                   GoldStandardNotFoundException, GoldStandardConfigurationException,
+                   GoldStandardConfigNotFoundException, DataConfigurationException,
+                   DataConfigNotFoundException, ConfigurationException,
+                   FileNotFoundException, UnknownParameterType,
+                   RunException, IncompatibleContextException,
+                   UnknownRunResultFormatException,
+                   InvalidOptimizationParameterException,
+                   UnknownProgramParameterException, UnknownProgramTypeException,
+                   UnknownRProgramException,
+                   IncompatibleParameterOptimizationMethodException,
+                   UnknownParameterOptimizationMethodException,
+                   NoOptimizableProgramParameterException,
+                   UnknownRunResultPostprocessorException {
         DataSetConfig dsConfig = Parser
                 .parseFromFile(
                         DataSetConfig.class,
@@ -397,26 +392,27 @@ public class DataSetConfigTest extends AbstractClustEvalTest {
     }
 
     @Test
-    public void testSetDataSet() throws DataSetConfigurationException,
-                                        NoRepositoryFoundException, DataSetNotFoundException,
-                                        UnknownDataSetFormatException, DataSetConfigNotFoundException,
-                                        RegisterException,
-                                        UnknownProviderException, NoDataSetException,
-                                        NumberFormatException,
-                                        IncompatibleDataSetConfigPreprocessorException,
-                                        GoldStandardNotFoundException, GoldStandardConfigurationException,
-                                        GoldStandardConfigNotFoundException, DataConfigurationException,
-                                        DataConfigNotFoundException, ConfigurationException,
-                                        FileNotFoundException, UnknownParameterType,
-                                        RunException, IncompatibleContextException,
-                                        UnknownRunResultFormatException,
-                                        InvalidOptimizationParameterException,
-                                        UnknownProgramParameterException, UnknownProgramTypeException,
-                                        UnknownRProgramException,
-                                        IncompatibleParameterOptimizationMethodException,
-                                        UnknownParameterOptimizationMethodException,
-                                        NoOptimizableProgramParameterException,
-                                        UnknownRunResultPostprocessorException {
+    public void testSetDataSet()
+            throws DataSetConfigurationException,
+                   NoRepositoryFoundException, DataSetNotFoundException,
+                   DataSetConfigNotFoundException,
+                   RegisterException,
+                   UnknownProviderException, NoDataSetException,
+                   NumberFormatException,
+                   IncompatibleDataSetConfigPreprocessorException,
+                   GoldStandardNotFoundException, GoldStandardConfigurationException,
+                   GoldStandardConfigNotFoundException, DataConfigurationException,
+                   DataConfigNotFoundException, ConfigurationException,
+                   FileNotFoundException, UnknownParameterType,
+                   RunException, IncompatibleContextException,
+                   UnknownRunResultFormatException,
+                   InvalidOptimizationParameterException,
+                   UnknownProgramParameterException, UnknownProgramTypeException,
+                   UnknownRProgramException,
+                   IncompatibleParameterOptimizationMethodException,
+                   UnknownParameterOptimizationMethodException,
+                   NoOptimizableProgramParameterException,
+                   UnknownRunResultPostprocessorException {
         DataSetConfig dsConfig = Parser
                 .parseFromFile(
                         DataSetConfig.class,
@@ -439,15 +435,14 @@ public class DataSetConfigTest extends AbstractClustEvalTest {
                                 "testCaseRepository/data/datasets/DS1/Zachary_karate_club_similarities.txt")
                         .getAbsoluteFile());
         dsConfig.setDataSet(override);
-        Assert.assertEquals(override, dsConfig.getDataSet());
+        assertEquals(override, dsConfig.getDataSet());
     }
 
     @Test
     public void testToString()
             throws DataSetConfigurationException,
                    NoRepositoryFoundException, DataSetNotFoundException,
-                   UnknownDataSetFormatException, DataSetConfigNotFoundException,
-                   RegisterException, UnknownProviderException, NoDataSetException,
+                   DataSetConfigNotFoundException, RegisterException, UnknownProviderException, NoDataSetException,
                    NumberFormatException,
                    IncompatibleDataSetConfigPreprocessorException,
                    GoldStandardNotFoundException, GoldStandardConfigurationException,

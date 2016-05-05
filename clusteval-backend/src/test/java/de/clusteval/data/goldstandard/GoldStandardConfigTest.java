@@ -21,7 +21,6 @@ import de.clusteval.api.exceptions.IncompatibleContextException;
 import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownParameterType;
 import de.clusteval.api.exceptions.UnknownProgramParameterException;
 import de.clusteval.api.exceptions.UnknownProgramTypeException;
@@ -64,7 +63,7 @@ public class GoldStandardConfigTest extends AbstractClustEvalTest {
     public void testRegister() throws GoldStandardConfigurationException,
                                       IOException, NoRepositoryFoundException,
                                       GoldStandardNotFoundException, GoldStandardConfigNotFoundException,
-                                      RegisterException, UnknownDataSetFormatException,
+                                      RegisterException,
                                       DataSetConfigurationException, DataSetNotFoundException,
                                       DataSetConfigNotFoundException, NoDataSetException,
                                       DataConfigurationException, DataConfigNotFoundException,
@@ -107,7 +106,7 @@ public class GoldStandardConfigTest extends AbstractClustEvalTest {
     public void testUnregister() throws GoldStandardConfigurationException,
                                         IOException, NoRepositoryFoundException,
                                         GoldStandardNotFoundException, GoldStandardConfigNotFoundException,
-                                        RegisterException, UnknownDataSetFormatException,
+                                        RegisterException,
                                         DataSetConfigurationException, DataSetNotFoundException,
                                         DataSetConfigNotFoundException, NoDataSetException,
                                         DataConfigurationException, DataConfigNotFoundException,
@@ -145,7 +144,7 @@ public class GoldStandardConfigTest extends AbstractClustEvalTest {
                    NoRepositoryFoundException, GoldStandardNotFoundException,
                    GoldStandardConfigurationException,
                    GoldStandardConfigNotFoundException, RegisterException,
-                   UnknownDataSetFormatException, DataSetConfigurationException,
+                   DataSetConfigurationException,
                    DataSetNotFoundException, DataSetConfigNotFoundException,
                    NoDataSetException, DataConfigurationException,
                    DataConfigNotFoundException, NumberFormatException,
@@ -227,7 +226,7 @@ public class GoldStandardConfigTest extends AbstractClustEvalTest {
             throws GoldStandardConfigurationException, IOException,
                    NoRepositoryFoundException, GoldStandardNotFoundException,
                    GoldStandardConfigNotFoundException, RegisterException,
-                   UnknownDataSetFormatException, DataSetConfigurationException,
+                   DataSetConfigurationException,
                    DataSetNotFoundException, DataSetConfigNotFoundException,
                    NoDataSetException, DataConfigurationException,
                    DataConfigNotFoundException, NumberFormatException,
@@ -262,7 +261,7 @@ public class GoldStandardConfigTest extends AbstractClustEvalTest {
     public void testParseFromFile() throws GoldStandardConfigurationException,
                                            IOException, NoRepositoryFoundException,
                                            GoldStandardNotFoundException, GoldStandardConfigNotFoundException,
-                                           RegisterException, UnknownDataSetFormatException,
+                                           RegisterException,
                                            DataSetConfigurationException, DataSetNotFoundException,
                                            DataSetConfigNotFoundException, NoDataSetException,
                                            DataConfigurationException, DataConfigNotFoundException,
@@ -304,7 +303,7 @@ public class GoldStandardConfigTest extends AbstractClustEvalTest {
             throws GoldStandardConfigurationException, IOException,
                    NoRepositoryFoundException, GoldStandardNotFoundException,
                    GoldStandardConfigNotFoundException, RegisterException,
-                   UnknownDataSetFormatException, DataSetConfigurationException,
+                   DataSetConfigurationException,
                    DataSetNotFoundException, DataSetConfigNotFoundException,
                    NoDataSetException, DataConfigurationException,
                    DataConfigNotFoundException, NumberFormatException,
@@ -348,7 +347,7 @@ public class GoldStandardConfigTest extends AbstractClustEvalTest {
                                                       NoRepositoryFoundException, GoldStandardNotFoundException,
                                                       GoldStandardConfigurationException,
                                                       GoldStandardConfigNotFoundException, RegisterException,
-                                                      UnknownDataSetFormatException, DataSetConfigurationException,
+                                                      DataSetConfigurationException,
                                                       DataSetNotFoundException, DataSetConfigNotFoundException,
                                                       NoDataSetException, DataConfigurationException,
                                                       DataConfigNotFoundException, NumberFormatException,
@@ -376,7 +375,7 @@ public class GoldStandardConfigTest extends AbstractClustEvalTest {
             throws GoldStandardConfigurationException,
                    NoRepositoryFoundException, GoldStandardNotFoundException,
                    GoldStandardConfigNotFoundException, RegisterException,
-                   UnknownDataSetFormatException, DataSetConfigurationException,
+                   DataSetConfigurationException,
                    DataSetNotFoundException, DataSetConfigNotFoundException,
                    NoDataSetException, DataConfigurationException,
                    DataConfigNotFoundException, NumberFormatException,
@@ -409,7 +408,7 @@ public class GoldStandardConfigTest extends AbstractClustEvalTest {
     public void testToString() throws GoldStandardConfigurationException,
                                       IOException, NoRepositoryFoundException,
                                       GoldStandardNotFoundException, GoldStandardConfigNotFoundException,
-                                      RegisterException, UnknownDataSetFormatException,
+                                      RegisterException,
                                       DataSetConfigurationException, DataSetNotFoundException,
                                       DataSetConfigNotFoundException, NoDataSetException,
                                       DataConfigurationException, DataConfigNotFoundException,

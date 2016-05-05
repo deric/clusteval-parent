@@ -12,14 +12,13 @@ package de.clusteval.cluster.paramOptimization;
 
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.data.IDataConfig;
-import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.data.RelativeDataSet;
+import de.clusteval.api.exceptions.InvalidDataSetFormatException;
 import de.clusteval.api.opt.ParameterOptimizationException;
 import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.IProgramParameter;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.data.RelativeDataSet;
 import de.clusteval.run.ParameterOptimizationRun;
 import de.clusteval.utils.RangeCreationException;
 import java.io.File;
@@ -108,8 +107,7 @@ public class TransClustQuantileParameterOptimizationMethod
             throw new ParameterOptimizationException(
                     "Could not create parameter range for the next iteration: "
                     + e1.getMessage());
-        } catch (IllegalArgumentException | IOException |
-                InvalidDataSetFormatVersionException | UnknownDataSetFormatException e) {
+        } catch (IllegalArgumentException | IOException | InvalidDataSetFormatException e) {
             e.printStackTrace();
         }
     }

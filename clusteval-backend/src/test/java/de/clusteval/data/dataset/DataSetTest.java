@@ -32,11 +32,10 @@ import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigurationException;
 import de.clusteval.api.exceptions.GoldStandardNotFoundException;
 import de.clusteval.api.exceptions.IncompatibleContextException;
-import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
+import de.clusteval.api.exceptions.InvalidDataSetFormatException;
 import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownParameterType;
 import de.clusteval.api.exceptions.UnknownProgramParameterException;
 import de.clusteval.api.exceptions.UnknownProgramTypeException;
@@ -83,25 +82,26 @@ import org.junit.Test;
  */
 public class DataSetTest extends AbstractClustEvalTest {
 
-    public void testRegister() throws UnknownDataSetFormatException,
-                                      NoRepositoryFoundException, DataSetNotFoundException,
-                                      DataSetConfigurationException, RegisterException,
-                                      UnknownProviderException, NoDataSetException,
-                                      GoldStandardNotFoundException, GoldStandardConfigurationException,
-                                      DataSetConfigNotFoundException,
-                                      GoldStandardConfigNotFoundException, DataConfigurationException,
-                                      DataConfigNotFoundException, NumberFormatException,
-                                      ConfigurationException,
-                                      FileNotFoundException, UnknownParameterType, RunException,
-                                      IncompatibleContextException, UnknownRunResultFormatException,
-                                      InvalidOptimizationParameterException,
-                                      UnknownProgramParameterException, UnknownProgramTypeException,
-                                      UnknownRProgramException,
-                                      IncompatibleDataSetConfigPreprocessorException,
-                                      IncompatibleParameterOptimizationMethodException,
-                                      UnknownParameterOptimizationMethodException,
-                                      NoOptimizableProgramParameterException,
-                                      UnknownRunResultPostprocessorException {
+    public void testRegister()
+            throws
+            NoRepositoryFoundException, DataSetNotFoundException,
+            DataSetConfigurationException, RegisterException,
+            UnknownProviderException, NoDataSetException,
+            GoldStandardNotFoundException, GoldStandardConfigurationException,
+            DataSetConfigNotFoundException,
+            GoldStandardConfigNotFoundException, DataConfigurationException,
+            DataConfigNotFoundException, NumberFormatException,
+            ConfigurationException,
+            FileNotFoundException, UnknownParameterType, RunException,
+            IncompatibleContextException, UnknownRunResultFormatException,
+            InvalidOptimizationParameterException,
+            UnknownProgramParameterException, UnknownProgramTypeException,
+            UnknownRProgramException,
+            IncompatibleDataSetConfigPreprocessorException,
+            IncompatibleParameterOptimizationMethodException,
+            UnknownParameterOptimizationMethodException,
+            NoOptimizableProgramParameterException,
+            UnknownRunResultPostprocessorException {
         this.repositoryObject = Parser
                 .parseFromFile(
                         IDataSet.class,
@@ -134,7 +134,7 @@ public class DataSetTest extends AbstractClustEvalTest {
                    InvalidRepositoryException, RepositoryConfigNotFoundException,
                    RepositoryConfigurationException, NoRepositoryFoundException,
                    DataSetNotFoundException, DataSetConfigurationException,
-                   UnknownDataSetFormatException, RegisterException,
+                   RegisterException,
                    UnknownProviderException, NoDataSetException,
                    NoSuchAlgorithmException, InterruptedException,
                    GoldStandardNotFoundException, GoldStandardConfigurationException,
@@ -174,24 +174,24 @@ public class DataSetTest extends AbstractClustEvalTest {
         }
     }
 
-    public void testUnregister() throws UnknownDataSetFormatException,
-                                        NoRepositoryFoundException, DataSetNotFoundException,
-                                        DataSetConfigurationException, RegisterException,
-                                        UnknownProviderException, NoDataSetException,
-                                        GoldStandardNotFoundException, GoldStandardConfigurationException,
-                                        DataSetConfigNotFoundException,
-                                        GoldStandardConfigNotFoundException, DataConfigurationException,
-                                        DataConfigNotFoundException, NumberFormatException,
-                                        ConfigurationException, FileNotFoundException, UnknownParameterType, RunException,
-                                        IncompatibleContextException, UnknownRunResultFormatException,
-                                        InvalidOptimizationParameterException,
-                                        UnknownProgramParameterException, UnknownProgramTypeException,
-                                        UnknownRProgramException,
-                                        IncompatibleDataSetConfigPreprocessorException,
-                                        IncompatibleParameterOptimizationMethodException,
-                                        UnknownParameterOptimizationMethodException,
-                                        NoOptimizableProgramParameterException,
-                                        UnknownRunResultPostprocessorException {
+    public void testUnregister() throws
+            NoRepositoryFoundException, DataSetNotFoundException,
+            DataSetConfigurationException, RegisterException,
+            UnknownProviderException, NoDataSetException,
+            GoldStandardNotFoundException, GoldStandardConfigurationException,
+            DataSetConfigNotFoundException,
+            GoldStandardConfigNotFoundException, DataConfigurationException,
+            DataConfigNotFoundException, NumberFormatException,
+            ConfigurationException, FileNotFoundException, UnknownParameterType, RunException,
+            IncompatibleContextException, UnknownRunResultFormatException,
+            InvalidOptimizationParameterException,
+            UnknownProgramParameterException, UnknownProgramTypeException,
+            UnknownRProgramException,
+            IncompatibleDataSetConfigPreprocessorException,
+            IncompatibleParameterOptimizationMethodException,
+            UnknownParameterOptimizationMethodException,
+            NoOptimizableProgramParameterException,
+            UnknownRunResultPostprocessorException {
 
         this.repositoryObject = Parser
                 .parseFromFile(
@@ -209,24 +209,24 @@ public class DataSetTest extends AbstractClustEvalTest {
     }
 
     @Test
-    public void testParseFromFile() throws UnknownDataSetFormatException,
-                                           NoRepositoryFoundException, DataSetNotFoundException,
-                                           DataSetConfigurationException, RegisterException,
-                                           UnknownProviderException, NoDataSetException,
-                                           GoldStandardNotFoundException, GoldStandardConfigurationException,
-                                           DataSetConfigNotFoundException,
-                                           GoldStandardConfigNotFoundException, DataConfigurationException,
-                                           DataConfigNotFoundException, NumberFormatException,
-                                           ConfigurationException, FileNotFoundException, UnknownParameterType,
-                                           RunException, IncompatibleContextException, UnknownRunResultFormatException,
-                                           InvalidOptimizationParameterException,
-                                           UnknownProgramParameterException, UnknownProgramTypeException,
-                                           UnknownRProgramException,
-                                           IncompatibleDataSetConfigPreprocessorException,
-                                           IncompatibleParameterOptimizationMethodException,
-                                           UnknownParameterOptimizationMethodException,
-                                           NoOptimizableProgramParameterException,
-                                           UnknownRunResultPostprocessorException {
+    public void testParseFromFile() throws
+            NoRepositoryFoundException, DataSetNotFoundException,
+            DataSetConfigurationException, RegisterException,
+            UnknownProviderException, NoDataSetException,
+            GoldStandardNotFoundException, GoldStandardConfigurationException,
+            DataSetConfigNotFoundException,
+            GoldStandardConfigNotFoundException, DataConfigurationException,
+            DataConfigNotFoundException, NumberFormatException,
+            ConfigurationException, FileNotFoundException, UnknownParameterType,
+            RunException, IncompatibleContextException, UnknownRunResultFormatException,
+            InvalidOptimizationParameterException,
+            UnknownProgramParameterException, UnknownProgramTypeException,
+            UnknownRProgramException,
+            IncompatibleDataSetConfigPreprocessorException,
+            IncompatibleParameterOptimizationMethodException,
+            UnknownParameterOptimizationMethodException,
+            NoOptimizableProgramParameterException,
+            UnknownRunResultPostprocessorException {
         this.repositoryObject = Parser
                 .parseFromFile(
                         IDataSet.class,
@@ -251,7 +251,7 @@ public class DataSetTest extends AbstractClustEvalTest {
 
     @Test(expected = FileNotFoundException.class)
     public void testParseFromNotExistingFile()
-            throws UnknownDataSetFormatException, NoRepositoryFoundException,
+            throws NoRepositoryFoundException,
                    DataSetNotFoundException, DataSetNotFoundException,
                    DataSetConfigurationException, RegisterException,
                    UnknownProviderException, NoDataSetException,
@@ -279,7 +279,7 @@ public class DataSetTest extends AbstractClustEvalTest {
 
     @Test
     public void testGetDataSetFormat() throws NoRepositoryFoundException,
-                                              UnknownDataSetFormatException, DataSetNotFoundException,
+                                              DataSetNotFoundException,
                                               DataSetConfigurationException, RegisterException,
                                               UnknownProviderException, NoDataSetException,
                                               GoldStandardNotFoundException, GoldStandardConfigurationException,
@@ -310,7 +310,7 @@ public class DataSetTest extends AbstractClustEvalTest {
 
     @Test
     public void testGetMajorName() throws NoRepositoryFoundException,
-                                          UnknownDataSetFormatException, DataSetNotFoundException,
+                                          DataSetNotFoundException,
                                           DataSetConfigurationException, RegisterException,
                                           UnknownProviderException, NoDataSetException,
                                           GoldStandardNotFoundException, GoldStandardConfigurationException,
@@ -339,7 +339,7 @@ public class DataSetTest extends AbstractClustEvalTest {
 
     @Test
     public void testGetMinorName() throws NoRepositoryFoundException,
-                                          UnknownDataSetFormatException, DataSetNotFoundException,
+                                          DataSetNotFoundException,
                                           DataSetConfigurationException, RegisterException,
                                           UnknownProviderException, NoDataSetException,
                                           GoldStandardNotFoundException, GoldStandardConfigurationException,
@@ -370,7 +370,7 @@ public class DataSetTest extends AbstractClustEvalTest {
 
     @Test
     public void testGetFullName() throws NoRepositoryFoundException,
-                                         UnknownDataSetFormatException, DataSetNotFoundException,
+                                         DataSetNotFoundException,
                                          DataSetConfigurationException, RegisterException,
                                          UnknownProviderException, NoDataSetException,
                                          GoldStandardNotFoundException, GoldStandardConfigurationException,
@@ -399,7 +399,7 @@ public class DataSetTest extends AbstractClustEvalTest {
 
     @Test
     public void testToString() throws NoRepositoryFoundException,
-                                      UnknownDataSetFormatException, DataSetNotFoundException,
+                                      DataSetNotFoundException,
                                       DataSetConfigurationException, RegisterException,
                                       UnknownProviderException, NoDataSetException,
                                       GoldStandardNotFoundException, GoldStandardConfigurationException,
@@ -429,9 +429,9 @@ public class DataSetTest extends AbstractClustEvalTest {
     @Test
     public void testLoadIntoMemory()
             throws NoRepositoryFoundException,
-                   UnknownDataSetFormatException, FormatConversionException,
+                   FormatConversionException,
                    IOException, DataSetNotFoundException,
-                   InvalidDataSetFormatVersionException,
+                   InvalidDataSetFormatException,
                    DataSetConfigurationException, RegisterException,
                    UnknownProviderException, NoDataSetException,
                    InstantiationException, IllegalAccessException,
@@ -477,9 +477,9 @@ public class DataSetTest extends AbstractClustEvalTest {
 
     @Test
     public void testGetSimilarityMatrix() throws NoRepositoryFoundException,
-                                                 UnknownDataSetFormatException, FormatConversionException,
+                                                 FormatConversionException,
                                                  IOException, DataSetNotFoundException,
-                                                 InvalidDataSetFormatVersionException,
+                                                 InvalidDataSetFormatException,
                                                  DataSetConfigurationException, RegisterException,
                                                  UnknownProviderException, NoDataSetException,
                                                  InstantiationException, IllegalAccessException,
@@ -531,9 +531,9 @@ public class DataSetTest extends AbstractClustEvalTest {
     @Test
     public void testUnloadFromMemory()
             throws NoRepositoryFoundException,
-                   UnknownDataSetFormatException, FormatConversionException,
+                   FormatConversionException,
                    IOException, DataSetNotFoundException,
-                   InvalidDataSetFormatVersionException,
+                   InvalidDataSetFormatException,
                    DataSetConfigurationException, RegisterException,
                    UnknownProviderException, NoDataSetException,
                    InstantiationException, IllegalAccessException,
@@ -588,7 +588,7 @@ public class DataSetTest extends AbstractClustEvalTest {
      * @throws IOException
      * @throws FormatConversionException
      * @throws DataSetNotFoundException
-     * @throws InvalidDataSetFormatVersionException
+     * @throws InvalidDataSetFormatException
      * @throws DataSetConfigurationException
      * @throws RegisterException
      * @throws IllegalAccessException
@@ -601,9 +601,9 @@ public class DataSetTest extends AbstractClustEvalTest {
      */
     @Test
     public void testConvertTo() throws NoRepositoryFoundException,
-                                       UnknownDataSetFormatException, FormatConversionException,
+                                       FormatConversionException,
                                        IOException, DataSetNotFoundException,
-                                       InvalidDataSetFormatVersionException,
+                                       InvalidDataSetFormatException,
                                        DataSetConfigurationException, RegisterException,
                                        UnknownProviderException, NoDataSetException,
                                        InstantiationException, IllegalAccessException,
@@ -707,9 +707,9 @@ public class DataSetTest extends AbstractClustEvalTest {
 
     @Test(expected = FormatConversionException.class)
     public void testConvertToRelativeToAbsolute()
-            throws NoRepositoryFoundException, UnknownDataSetFormatException,
+            throws NoRepositoryFoundException,
                    FormatConversionException, IOException, DataSetNotFoundException,
-                   InvalidDataSetFormatVersionException,
+                   InvalidDataSetFormatException,
                    DataSetConfigurationException, RegisterException,
                    UnknownProviderException, NoDataSetException,
                    InstantiationException, IllegalAccessException,
@@ -751,8 +751,8 @@ public class DataSetTest extends AbstractClustEvalTest {
 
     @Test
     public void testConvertToDirectly() throws NoRepositoryFoundException,
-                                               UnknownDataSetFormatException, IOException,
-                                               DataSetNotFoundException, InvalidDataSetFormatVersionException,
+                                               IOException,
+                                               DataSetNotFoundException, InvalidDataSetFormatException,
                                                DataSetConfigurationException, RegisterException,
                                                UnknownProviderException, NoDataSetException,
                                                InvalidParameterException, RNotAvailableException, GoldStandardNotFoundException,
@@ -804,8 +804,8 @@ public class DataSetTest extends AbstractClustEvalTest {
 
     @Test
     public void testGetInStandardFormat() throws NoRepositoryFoundException,
-                                                 UnknownDataSetFormatException, IOException,
-                                                 DataSetNotFoundException, InvalidDataSetFormatVersionException,
+                                                 IOException,
+                                                 DataSetNotFoundException, InvalidDataSetFormatException,
                                                  DataSetConfigurationException, RegisterException,
                                                  UnknownProviderException, NoDataSetException,
                                                  InvalidParameterException,
@@ -853,9 +853,9 @@ public class DataSetTest extends AbstractClustEvalTest {
 
     @Test
     public void testConvertToAbsoluteToAbsolute()
-            throws NoRepositoryFoundException, UnknownDataSetFormatException,
+            throws NoRepositoryFoundException,
                    FormatConversionException, IOException, DataSetNotFoundException,
-                   InvalidDataSetFormatVersionException,
+                   InvalidDataSetFormatException,
                    DataSetConfigurationException, RegisterException,
                    UnknownProviderException, NoDataSetException,
                    InstantiationException, IllegalAccessException,
@@ -903,9 +903,9 @@ public class DataSetTest extends AbstractClustEvalTest {
 
     @Test
     public void testConvertToStandardToStandard()
-            throws NoRepositoryFoundException, UnknownDataSetFormatException,
+            throws NoRepositoryFoundException,
                    FormatConversionException, IOException, DataSetNotFoundException,
-                   InvalidDataSetFormatVersionException,
+                   InvalidDataSetFormatException,
                    DataSetConfigurationException, RegisterException,
                    UnknownProviderException, NoDataSetException,
                    InstantiationException, IllegalAccessException,
@@ -956,8 +956,8 @@ public class DataSetTest extends AbstractClustEvalTest {
     public void testConvertMatrixToSimMatrix()
             throws RepositoryAlreadyExistsException,
                    InvalidRepositoryException, RepositoryConfigNotFoundException,
-                   RepositoryConfigurationException, UnknownDataSetFormatException,
-                   InvalidDataSetFormatVersionException, RegisterException,
+                   RepositoryConfigurationException,
+                   InvalidDataSetFormatException, RegisterException,
                    FormatConversionException, IOException, RNotAvailableException,
                    InterruptedException, RException, UnknownProviderException {
         ClustevalBackendServer.logLevel(Level.INFO);

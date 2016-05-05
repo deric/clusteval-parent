@@ -20,7 +20,7 @@ import de.clusteval.api.cluster.ClustEvalValue;
 import de.clusteval.api.cluster.ClusteringEvaluationParameters;
 import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.data.IDataConfig;
-import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
+import de.clusteval.api.exceptions.InvalidDataSetFormatException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RNotAvailableException;
@@ -82,13 +82,13 @@ public interface ClusteringEvaluation extends IRepositoryObject {
     ClustEvalValue getQualityOfClusteringHelper(
             IClustering clustering, IClustering goldStandard,
             IDataConfig dataConfig, final IRengine rEngine)
-            throws InvalidDataSetFormatVersionException,
+            throws InvalidDataSetFormatException,
                    IllegalArgumentException, InterruptedException, RException,
                    ROperationNotSupported, RNotAvailableException;
 
     ClustEvalValue getQualityOfClustering(
             IClustering clustering, IClustering gsClustering, IDataConfig dataConfig)
-            throws InvalidDataSetFormatVersionException,
+            throws InvalidDataSetFormatException,
                    IllegalArgumentException, InterruptedException, RException,
                    ROperationNotSupported, RNotAvailableException;
 

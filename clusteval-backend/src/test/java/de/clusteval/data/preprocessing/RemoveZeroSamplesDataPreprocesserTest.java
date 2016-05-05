@@ -10,9 +10,9 @@
  ***************************************************************************** */
 package de.clusteval.data.preprocessing;
 
+import de.clusteval.api.data.DataPreprocessor;
 import de.clusteval.api.data.DataPreprocessorFactory;
 import de.clusteval.api.data.DataSetAttributeFilterer;
-import de.clusteval.api.data.DataPreprocessor;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
@@ -22,7 +22,6 @@ import de.clusteval.api.exceptions.IncompatibleContextException;
 import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownParameterType;
 import de.clusteval.api.exceptions.UnknownProgramParameterException;
 import de.clusteval.api.exceptions.UnknownProgramTypeException;
@@ -66,7 +65,7 @@ public class RemoveZeroSamplesDataPreprocesserTest
             throws RepositoryAlreadyExistsException,
                    InvalidRepositoryException, RepositoryConfigNotFoundException,
                    RepositoryConfigurationException, DataSetNotFoundException,
-                   UnknownDataSetFormatException, DataSetConfigurationException,
+                   DataSetConfigurationException,
                    NoDataSetException, NumberFormatException, RegisterException,
                    NoRepositoryFoundException, UnknownProviderException,
                    IOException,

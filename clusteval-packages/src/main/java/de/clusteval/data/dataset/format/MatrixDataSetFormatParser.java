@@ -26,8 +26,7 @@ import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.data.RelativeDataSet;
 import de.clusteval.api.data.RelativeDataSetFormat;
 import de.clusteval.api.data.WEBSITE_VISIBILITY;
-import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.exceptions.InvalidDataSetFormatException;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.RNotAvailableException;
@@ -57,9 +56,7 @@ public class MatrixDataSetFormatParser extends DataSetFormatParser {
     @Override
     public IDataSet convertToStandardFormat(IDataSet dataSet,
             IConversionInputToStandardConfiguration config)
-            throws IOException,
-                   RegisterException, UnknownDataSetFormatException,
-                   InvalidParameterException, RNotAvailableException,
+            throws IOException, RegisterException, InvalidParameterException, RNotAvailableException,
                    InterruptedException, UnknownProviderException {
 
         File targetFile = new File(dataSet.getAbsolutePath() + ".SimMatrix");
@@ -139,8 +136,8 @@ public class MatrixDataSetFormatParser extends DataSetFormatParser {
     @Override
     public IDataSet convertToThisFormat(IDataSet dataSet,
             IDataSetFormat dataSetFormat, IConversionConfiguration config)
-            throws InvalidDataSetFormatVersionException {
-        throw new InvalidDataSetFormatVersionException(
+            throws InvalidDataSetFormatException {
+        throw new InvalidDataSetFormatException(
                 "Cannot convert to this format");
     }
 

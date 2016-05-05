@@ -25,7 +25,6 @@ import de.clusteval.api.data.WEBSITE_VISIBILITY;
 import de.clusteval.api.exceptions.DataSetGenerationException;
 import de.clusteval.api.exceptions.GoldStandardGenerationException;
 import de.clusteval.api.exceptions.RepositoryObjectDumpException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownDataSetGeneratorException;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.RegisterException;
@@ -218,7 +217,7 @@ public abstract class DataSetGenerator extends AbstractDataSetProvider implement
                     this.getFolderName(), this.getFileName()));
 
             dataSet = writeCoordsToFile(dataSetFile);
-        } catch (IOException | UnknownDataSetFormatException | RegisterException e) {
+        } catch (IOException | RegisterException e) {
             throw new DataSetGenerationException("The dataset could not be generated!");
         }
 
@@ -316,11 +315,11 @@ public abstract class DataSetGenerator extends AbstractDataSetProvider implement
      * @return
      * @throws IOException
      * @throws RegisterException
-     * @throws UnknownDataSetFormatException
+     * @throws UnknownProviderException
      *
      */
     protected IDataSet writeCoordsToFile(final File dataSetFile)
-            throws IOException, UnknownDataSetFormatException, RegisterException, UnknownProviderException {
+            throws IOException, RegisterException, UnknownProviderException {
         // writer header
         try ( // dataset file
                 BufferedWriter writer = new BufferedWriter(new FileWriter(dataSetFile))) {

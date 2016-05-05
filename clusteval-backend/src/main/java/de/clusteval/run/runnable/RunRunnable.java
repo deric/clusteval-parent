@@ -13,9 +13,8 @@ package de.clusteval.run.runnable;
 import de.clusteval.api.exceptions.IncompatibleDataSetFormatException;
 import de.clusteval.api.exceptions.IncompleteGoldStandardException;
 import de.clusteval.api.exceptions.InternalAttributeException;
-import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
+import de.clusteval.api.exceptions.InvalidDataSetFormatException;
 import de.clusteval.api.exceptions.RunIterationException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.RegisterException;
@@ -242,7 +241,7 @@ public abstract class RunRunnable<IR extends IterationRunnable, IW extends Itera
      *
      * @throws IOException
      * @throws IllegalArgumentException
-     * @throws InvalidDataSetFormatVersionException
+     * @throws InvalidDataSetFormatException
      * @throws UnknownDataSetFormatException
      * @throws RegisterException
      * @throws InternalAttributeException
@@ -252,12 +251,12 @@ public abstract class RunRunnable<IR extends IterationRunnable, IW extends Itera
      * @throws InterruptedException
      */
     @SuppressWarnings("unused")
-    protected void beforeRun() throws UnknownDataSetFormatException,
-                                      InvalidDataSetFormatVersionException, IllegalArgumentException,
-                                      IOException, RegisterException, InternalAttributeException,
-                                      IncompatibleDataSetFormatException,
-                                      UnknownGoldStandardFormatException,
-                                      IncompleteGoldStandardException, InterruptedException, UnknownProviderException {
+    protected void beforeRun() throws
+            InvalidDataSetFormatException, IllegalArgumentException,
+            IOException, RegisterException, InternalAttributeException,
+            IncompatibleDataSetFormatException,
+            UnknownGoldStandardFormatException,
+            IncompleteGoldStandardException, InterruptedException, UnknownProviderException {
         this.futures.clear();
     }
 

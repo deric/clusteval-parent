@@ -32,7 +32,7 @@ import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.data.RelativeDataSet;
 import de.clusteval.api.data.RelativeDataSetFormat;
 import de.clusteval.api.data.WEBSITE_VISIBILITY;
-import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
+import de.clusteval.api.exceptions.InvalidDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.RegisterException;
@@ -285,8 +285,7 @@ public class RemoveAndAddNoiseDataRandomizer extends DataRandomizer implements I
 
                 return new Pair<>(newDs, newGsObject);
 
-            } catch (IOException | UnknownProviderException | RegisterException |
-                    InvalidDataSetFormatVersionException | IllegalArgumentException | UnknownGoldStandardFormatException e) {
+            } catch (IOException | UnknownProviderException | RegisterException | InvalidDataSetFormatException | IllegalArgumentException | UnknownGoldStandardFormatException e) {
                 e.printStackTrace();
             } finally {
                 rEngine.clear();
@@ -434,8 +433,7 @@ public class RemoveAndAddNoiseDataRandomizer extends DataRandomizer implements I
 
             return new Pair<>(newDs, newGsObject);
 
-        } catch (IOException | UnknownProviderException | RegisterException |
-                InvalidDataSetFormatVersionException | IllegalArgumentException | UnknownGoldStandardFormatException e) {
+        } catch (IOException | UnknownProviderException | RegisterException | InvalidDataSetFormatException | IllegalArgumentException | UnknownGoldStandardFormatException e) {
             e.printStackTrace();
         } finally {
             rEngine.clear();

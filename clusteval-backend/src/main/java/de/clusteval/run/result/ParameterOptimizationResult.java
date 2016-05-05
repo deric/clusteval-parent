@@ -23,7 +23,6 @@ import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.exceptions.RunResultParseException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.exceptions.UnknownParameterType;
 import de.clusteval.api.exceptions.UnknownProgramParameterException;
@@ -93,8 +92,7 @@ public class ParameterOptimizationResult extends ExecutionRunResult implements I
     public static Run parseFromRunResultFolder2(final IRepository parentRepository, final File runResultFolder,
             final List<ParameterOptimizationResult> result, final boolean parseClusterings,
             final boolean storeClusterings, final boolean register)
-            throws IOException, UnknownRunResultFormatException,
-                   UnknownDataSetFormatException, InvalidRunModeException,
+            throws IOException, UnknownRunResultFormatException, InvalidRunModeException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
                    UnknownProgramParameterException, UnknownGoldStandardFormatException,
                    InvalidConfigurationFileException, RepositoryAlreadyExistsException, InvalidRepositoryException,

@@ -31,9 +31,8 @@ import de.clusteval.api.exceptions.FormatConversionException;
 import de.clusteval.api.exceptions.IncompatibleDataSetFormatException;
 import de.clusteval.api.exceptions.IncompleteGoldStandardException;
 import de.clusteval.api.exceptions.InternalAttributeException;
-import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
+import de.clusteval.api.exceptions.InvalidDataSetFormatException;
 import de.clusteval.api.exceptions.RunIterationException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.opt.NoParameterSetFoundException;
@@ -240,7 +239,7 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
                     // found a convertable compatible format
                     found = true;
                     break;
-                } catch (InvalidDataSetFormatVersionException | RNotAvailableException | FormatConversionException e) {
+                } catch (InvalidDataSetFormatException | RNotAvailableException | FormatConversionException e) {
                     e.printStackTrace();
                 }
             }
@@ -263,7 +262,7 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
      * @throws UnknownGoldStandardFormatException
      * @throws UnknownDataSetFormatException
      * @throws IncompleteGoldStandardException
-     * @throws InvalidDataSetFormatVersionException
+     * @throws InvalidDataSetFormatException
      * @throws IllegalArgumentException
      */
     protected void checkCompatibilityDataSetGoldStandard(IDataSetConfig dataSetConfig,
@@ -465,8 +464,8 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
      * @throws InternalAttributeException
      * @throws RegisterException
      * @throws NoParameterSetFoundException
-     *                                      This exception is thrown, if no parameter set was found that
-     *                                      was not already evaluated before.
+     * This exception is thrown, if no parameter set was found that
+     * was not already evaluated before.
      *
      */
     protected String[] parseInvocationLineAndEffectiveParameters(final ExecutionIterationWrapper iterationWrapper)
@@ -574,8 +573,8 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
      * @throws InternalAttributeException
      * @throws RegisterException
      * @throws NoParameterSetFoundException
-     *                                      This exception is thrown, if no parameter set was found that
-     *                                      was not already evaluated before.
+     * This exception is thrown, if no parameter set was found that
+     * was not already evaluated before.
      */
     @SuppressWarnings("unused")
     protected String[] replaceRunParameters(String[] invocation, final Map<String, String> effectiveParams)
@@ -947,7 +946,7 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
      * @param convertedResult
      *                        The clustering result converted to the default format, such
      *                        that it can be parsed.
-     * @throws InvalidDataSetFormatVersionException
+     * @throws InvalidDataSetFormatException
      * @throws RunResultNotFoundException
      */
     private List<Pair<ParameterSet, ClusteringQualitySet>> assessQualities(final ClusteringRunResult convertedResult,
@@ -1206,7 +1205,7 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
      * is invoked and to be unloaded after return of this method.
      *
      * @throws UnknownDataSetFormatException
-     * @throws InvalidDataSetFormatVersionException
+     * @throws InvalidDataSetFormatException
      * @throws IOException
      * @throws IllegalArgumentException
      */
@@ -1248,7 +1247,7 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
     @SuppressWarnings("unused")
     @Override
     protected void beforeRun()
-            throws UnknownDataSetFormatException, InvalidDataSetFormatVersionException, IllegalArgumentException,
+            throws InvalidDataSetFormatException, IllegalArgumentException,
                    IOException, RegisterException, InternalAttributeException, IncompatibleDataSetFormatException,
                    UnknownGoldStandardFormatException, IncompleteGoldStandardException, InterruptedException, UnknownProviderException {
         try {

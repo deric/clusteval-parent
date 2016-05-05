@@ -21,7 +21,6 @@ import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.exceptions.RunResultParseException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.exceptions.UnknownParameterType;
 import de.clusteval.api.exceptions.UnknownProgramParameterException;
@@ -155,7 +154,7 @@ public class DataAnalysisRunResult extends AnalysisRunResult<IDataConfig, IDataS
                    GoldStandardConfigurationException, DataSetConfigurationException, DataSetNotFoundException,
                    DataSetConfigNotFoundException, GoldStandardConfigNotFoundException, DataConfigurationException,
                    DataConfigNotFoundException, IOException, UnknownRunResultFormatException,
-                   UnknownDataSetFormatException, InvalidConfigurationFileException,
+                   InvalidConfigurationFileException,
                    InvalidRunModeException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
                    UnknownProgramParameterException, NoRepositoryFoundException, GoldStandardNotFoundException,

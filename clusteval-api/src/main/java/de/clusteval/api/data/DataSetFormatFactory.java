@@ -16,7 +16,6 @@
  */
 package de.clusteval.api.data;
 
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.factory.ServiceFactory;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.repository.IRepository;
@@ -80,7 +79,7 @@ public class DataSetFormatFactory extends ServiceFactory<IDataSetFormat> {
      * @param formatVersion
      *                      The version of the dataset format.
      * @return The parsed dataset format.
-     * @throws UnknownDataSetFormatException
+     * @throws de.clusteval.api.factory.UnknownProviderException
      */
     public static IDataSetFormat parseFromString(final IRepository repository,
             String datasetFormat, final int formatVersion) throws UnknownProviderException {

@@ -15,8 +15,7 @@ import de.clusteval.api.data.DataMatrix;
 import de.clusteval.api.data.DataPreprocessor;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.RelativeDataSet;
-import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.exceptions.InvalidDataSetFormatException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
@@ -71,8 +70,7 @@ public class EigenvectorTransDataPreprocessor extends DataPreprocessor {
             IRengine rEngine = repository.getRengineForCurrentThread();
             rEngine.assign("matrix", matrix.getData());
             rEngine.clear();
-        } catch (InvalidDataSetFormatVersionException | IllegalArgumentException |
-                 IOException | UnknownDataSetFormatException e1) {
+        } catch (InvalidDataSetFormatException | IllegalArgumentException | IOException e1) {
             e1.printStackTrace();
         } finally {
             dataSet.unloadFromMemory();

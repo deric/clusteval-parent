@@ -10,29 +10,28 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset.format;
 
-import de.clusteval.api.data.DataSetFormatParser;
-import de.clusteval.api.data.RelativeDataSetFormat;
 import de.clusteval.api.FormatVersion;
 import de.clusteval.api.Precision;
+import de.clusteval.api.data.DataSetAttributeFilterer;
+import de.clusteval.api.data.DataSetFormatFactory;
+import de.clusteval.api.data.DataSetFormatParser;
 import de.clusteval.api.data.IConversionConfiguration;
 import de.clusteval.api.data.IConversionInputToStandardConfiguration;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetFormat;
+import de.clusteval.api.data.RelativeDataSet;
+import de.clusteval.api.data.RelativeDataSetFormat;
 import de.clusteval.api.data.WEBSITE_VISIBILITY;
-import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.exceptions.InvalidDataSetFormatException;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.RegisterException;
-import de.clusteval.api.data.DataSetAttributeFilterer;
-import de.clusteval.api.data.DataSetFormatFactory;
-import de.clusteval.api.data.RelativeDataSet;
 import de.clusteval.utils.ArraysExt;
+import de.clusteval.utils.TextFileParser;
+import de.clusteval.utils.TextFileParser.OUTPUT_MODE;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
 import de.wiwie.wiutils.utils.parse.SimFileMatrixParser;
 import de.wiwie.wiutils.utils.parse.SimFileParser.SIM_FILE_FORMAT;
 import de.wiwie.wiutils.utils.parse.SimilarityFileNormalizer;
-import de.clusteval.utils.TextFileParser;
-import de.clusteval.utils.TextFileParser.OUTPUT_MODE;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
@@ -56,14 +55,13 @@ public class TransClustSimMatrixDataSetFormatParser extends DataSetFormatParser 
     @Override
     public IDataSet convertToStandardFormat(IDataSet dataSet,
             IConversionInputToStandardConfiguration config)
-            throws IOException,
-                   InvalidDataSetFormatVersionException, RegisterException,
-                   UnknownDataSetFormatException, UnknownProviderException {
+            throws IOException, InvalidDataSetFormatException, RegisterException,
+                   UnknownProviderException {
         switch (dataSet.getDataSetFormat().getVersion()) {
             case 1:
                 return convertToStandardFormat_v1(dataSet, config);
             default:
-                throw new InvalidDataSetFormatVersionException("Version "
+                throw new InvalidDataSetFormatException("Version "
                         + dataSet.getDataSetFormat().getVersion()
                         + " is unknown for DataSetFormat "
                         + dataSet.getDataSetFormat());
@@ -73,7 +71,7 @@ public class TransClustSimMatrixDataSetFormatParser extends DataSetFormatParser 
     @SuppressWarnings("unused")
     protected IDataSet convertToStandardFormat_v1(IDataSet dataSet,
             IConversionInputToStandardConfiguration config)
-            throws IOException, RegisterException, UnknownDataSetFormatException, UnknownProviderException {
+            throws IOException, RegisterException, UnknownProviderException {
         // check if file already exists
         String resultFileName = dataSet.getAbsolutePath();
         resultFileName = removeResultFileNameSuffix(resultFileName);
@@ -214,12 +212,12 @@ public class TransClustSimMatrixDataSetFormatParser extends DataSetFormatParser 
      */
     @Override
     public SimilarityMatrix parse(IDataSet dataSet, Precision precision)
-            throws IOException, InvalidDataSetFormatVersionException {
+            throws IOException, InvalidDataSetFormatException {
         switch (dataSet.getDataSetFormat().getVersion()) {
             case 1:
                 return parse_v1(dataSet, precision);
             default:
-                throw new InvalidDataSetFormatVersionException("Version "
+                throw new InvalidDataSetFormatException("Version "
                         + dataSet.getDataSetFormat().getVersion()
                         + " is unknown for DataSetFormat "
                         + dataSet.getDataSetFormat());

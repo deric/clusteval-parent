@@ -12,29 +12,19 @@
  */
 package de.clusteval.api.exceptions;
 
-import de.clusteval.api.factory.UnknownProviderException;
 
 /**
- *
  * @author Christian Wiwie
+ *
  */
-public class UnknownDataSetFormatException extends UnknownProviderException {
+public class InvalidDataSetFormatException extends DataSetException {
 
-    private static final long serialVersionUID = 1233665166180254125L;
-
-    /**
-     * Instantiates a new unknown data set format exception.
-     *
-     * @param string the string
-     */
-    public UnknownDataSetFormatException(String string) {
-        super(string);
-    }
+    private static final long serialVersionUID = -6502244551092326961L;
 
     /**
-     * @param t
+     * @param message
      */
-    public UnknownDataSetFormatException(Throwable t) {
-        super(t);
+    public InvalidDataSetFormatException(final String message) {
+        super(message);
     }
 }

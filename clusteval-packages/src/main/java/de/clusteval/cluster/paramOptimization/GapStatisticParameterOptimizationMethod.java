@@ -13,9 +13,11 @@
 package de.clusteval.cluster.paramOptimization;
 
 import de.clusteval.api.ClusteringEvaluation;
+import de.clusteval.api.data.AbsoluteDataSet;
+import de.clusteval.api.data.AbsoluteDataSetFormat;
+import de.clusteval.api.data.DataSetFormat;
 import de.clusteval.api.data.IDataConfig;
-import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.exceptions.InvalidDataSetFormatException;
 import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.IProgramParameter;
 import de.clusteval.api.program.ParameterSet;
@@ -25,9 +27,6 @@ import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RExpr;
 import de.clusteval.api.r.RLibraryRequirement;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.data.AbsoluteDataSet;
-import de.clusteval.api.data.AbsoluteDataSetFormat;
-import de.clusteval.api.data.DataSetFormat;
 import de.clusteval.run.ParameterOptimizationRun;
 import java.io.File;
 import java.io.IOException;
@@ -132,8 +131,7 @@ public class GapStatisticParameterOptimizationMethod extends ParameterOptimizati
 
             return res;
 
-        } catch (IllegalArgumentException | InvalidDataSetFormatVersionException |
-                IOException | UnknownDataSetFormatException e) {
+        } catch (IllegalArgumentException | InvalidDataSetFormatException | IOException e) {
             e.printStackTrace();
         } catch (RException ex) {
             Exceptions.printStackTrace(ex);

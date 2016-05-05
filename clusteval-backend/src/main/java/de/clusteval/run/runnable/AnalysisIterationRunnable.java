@@ -17,17 +17,16 @@
 package de.clusteval.run.runnable;
 
 import de.clusteval.api.exceptions.FormatConversionException;
-import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.exceptions.InvalidDataSetFormatException;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.run.IterationRunnable;
 import de.clusteval.api.stats.IStatistic;
-import de.clusteval.api.stats.StatisticCalculateException;
 import de.clusteval.api.stats.RunStatistic;
-import de.clusteval.utils.FileUtils;
+import de.clusteval.api.stats.StatisticCalculateException;
 import de.clusteval.api.stats.StatisticCalculator;
+import de.clusteval.utils.FileUtils;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -83,7 +82,7 @@ public abstract class AnalysisIterationRunnable<S extends IStatistic, IW extends
      * @return
      * @throws FormatConversionException
      * @throws IOException
-     * @throws InvalidDataSetFormatVersionException
+     * @throws InvalidDataSetFormatException
      * @throws RegisterException
      * @throws SecurityException
      * @throws NoSuchMethodException
@@ -95,10 +94,10 @@ public abstract class AnalysisIterationRunnable<S extends IStatistic, IW extends
      */
     protected abstract StatisticCalculator<S> getStatisticCalculator()
             throws FormatConversionException, IOException,
-                   InvalidDataSetFormatVersionException, RegisterException,
+                   InvalidDataSetFormatException, RegisterException,
                    SecurityException, NoSuchMethodException, IllegalArgumentException,
                    InstantiationException, IllegalAccessException,
-                   InvocationTargetException, UnknownDataSetFormatException, UnknownProviderException;
+                   InvocationTargetException, UnknownProviderException;
 
     /**
      * A helper method for {@link #doRun()}. It returns the absolute path to the
@@ -139,8 +138,9 @@ public abstract class AnalysisIterationRunnable<S extends IStatistic, IW extends
 
             calc.writeOutputTo(new File(output));
         } catch (IOException | SecurityException | IllegalArgumentException | NoSuchMethodException |
-                InstantiationException | IllegalAccessException | InvocationTargetException |
-                StatisticCalculateException | InvalidDataSetFormatVersionException | UnknownDataSetFormatException | RegisterException | FormatConversionException e) {
+                 InstantiationException | IllegalAccessException | InvocationTargetException |
+                 StatisticCalculateException | InvalidDataSetFormatException |
+                 RegisterException | FormatConversionException e) {
             e.printStackTrace();
         } catch (RException | UnknownProviderException ex) {
             Exceptions.printStackTrace(ex);

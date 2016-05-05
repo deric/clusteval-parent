@@ -10,24 +10,24 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset.format;
 
-import de.clusteval.api.data.DataSetFormatParser;
 import de.clusteval.api.FormatVersion;
 import de.clusteval.api.Precision;
+import de.clusteval.api.data.DataSetAttributeParser;
+import de.clusteval.api.data.DataSetFormatParser;
 import de.clusteval.api.data.IConversionConfiguration;
 import de.clusteval.api.data.IConversionInputToStandardConfiguration;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetFormat;
-import de.clusteval.api.data.WEBSITE_VISIBILITY;
-import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
-import de.clusteval.api.program.RegisterException;
-import de.clusteval.api.data.DataSetAttributeParser;
 import de.clusteval.api.data.RelativeDataSet;
+import de.clusteval.api.data.WEBSITE_VISIBILITY;
+import de.clusteval.api.exceptions.InvalidDataSetFormatException;
+import de.clusteval.api.factory.UnknownProviderException;
+import de.clusteval.api.program.RegisterException;
+import de.clusteval.utils.TextFileParser.OUTPUT_MODE;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
 import de.wiwie.wiutils.utils.parse.SimFileMatrixParser;
 import de.wiwie.wiutils.utils.parse.SimFileParser;
 import de.wiwie.wiutils.utils.parse.SimFileParser.SIM_FILE_FORMAT;
-import de.clusteval.utils.TextFileParser.OUTPUT_MODE;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -56,13 +56,12 @@ public class APRowSimDataSetFormatParser extends DataSetFormatParser {
     @Override
     public IDataSet convertToThisFormat(IDataSet dataSet,
             IDataSetFormat dataSetFormat, IConversionConfiguration config)
-            throws IOException, InvalidDataSetFormatVersionException,
-                   RegisterException, UnknownDataSetFormatException {
+            throws IOException, InvalidDataSetFormatException, RegisterException, UnknownProviderException {
         switch (dataSetFormat.getVersion()) {
             case 1:
                 return convertToThisFormat_v1(dataSet, dataSetFormat, config);
             default:
-                throw new InvalidDataSetFormatVersionException("Version "
+                throw new InvalidDataSetFormatException("Version "
                         + dataSet.getDataSetFormat().getVersion()
                         + " is unknown for DataSetFormat "
                         + dataSet.getDataSetFormat());
@@ -71,7 +70,7 @@ public class APRowSimDataSetFormatParser extends DataSetFormatParser {
 
     protected IDataSet convertToThisFormat_v1(IDataSet dataSet,
             IDataSetFormat dataSetFormat, IConversionConfiguration config)
-            throws IOException, RegisterException, UnknownDataSetFormatException {
+            throws IOException, RegisterException, UnknownProviderException {
 
         // check if file already exists
         String absResultFilePath = dataSet.getAbsolutePath();

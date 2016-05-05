@@ -19,7 +19,6 @@ import de.clusteval.api.exceptions.IncompatibleContextException;
 import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownParameterType;
 import de.clusteval.api.exceptions.UnknownProgramParameterException;
 import de.clusteval.api.exceptions.UnknownProgramTypeException;
@@ -61,8 +60,7 @@ import org.junit.Test;
 public class ParameterOptimizationRunTest extends AbstractClustEvalTest {
 
     @Test
-    public void test() throws UnknownDataSetFormatException,
-                              GoldStandardNotFoundException, GoldStandardConfigurationException,
+    public void test() throws GoldStandardNotFoundException, GoldStandardConfigurationException,
                               DataSetConfigurationException, DataSetNotFoundException,
                               DataSetConfigNotFoundException,
                               GoldStandardConfigNotFoundException, NoDataSetException,
@@ -94,29 +92,29 @@ public class ParameterOptimizationRunTest extends AbstractClustEvalTest {
     }
 
     @Test
-    public void testNewParser() throws UnknownDataSetFormatException,
-                                       GoldStandardNotFoundException, GoldStandardConfigurationException,
-                                       DataSetConfigurationException, DataSetNotFoundException,
-                                       DataSetConfigNotFoundException,
-                                       GoldStandardConfigNotFoundException, NoDataSetException,
-                                       NumberFormatException, DataConfigurationException,
-                                       DataConfigNotFoundException, RegisterException,
-                                       ConfigurationException,
-                                       UnknownParameterType,
-                                       IncompatibleParameterOptimizationMethodException,
-                                       UnknownParameterOptimizationMethodException, RunException,
-                                       NoOptimizableProgramParameterException,
-                                       UnknownProgramParameterException, UnknownRunResultFormatException,
-                                       NoRepositoryFoundException, InvalidOptimizationParameterException,
-                                       UnknownProgramTypeException, UnknownRProgramException,
-                                       IncompatibleContextException,
-                                       UnknownProviderException,
-                                       IncompatibleDataSetConfigPreprocessorException, IOException,
-                                       InterruptedException, RepositoryAlreadyExistsException,
-                                       InvalidRepositoryException, RepositoryConfigNotFoundException,
-                                       RepositoryConfigurationException,
-                                       UnknownRunResultPostprocessorException,
-                                       DatabaseConnectException {
+    public void testNewParser() throws
+            GoldStandardNotFoundException, GoldStandardConfigurationException,
+            DataSetConfigurationException, DataSetNotFoundException,
+            DataSetConfigNotFoundException,
+            GoldStandardConfigNotFoundException, NoDataSetException,
+            NumberFormatException, DataConfigurationException,
+            DataConfigNotFoundException, RegisterException,
+            ConfigurationException,
+            UnknownParameterType,
+            IncompatibleParameterOptimizationMethodException,
+            UnknownParameterOptimizationMethodException, RunException,
+            NoOptimizableProgramParameterException,
+            UnknownProgramParameterException, UnknownRunResultFormatException,
+            NoRepositoryFoundException, InvalidOptimizationParameterException,
+            UnknownProgramTypeException, UnknownRProgramException,
+            IncompatibleContextException,
+            UnknownProviderException,
+            IncompatibleDataSetConfigPreprocessorException, IOException,
+            InterruptedException, RepositoryAlreadyExistsException,
+            InvalidRepositoryException, RepositoryConfigNotFoundException,
+            RepositoryConfigurationException,
+            UnknownRunResultPostprocessorException,
+            DatabaseConnectException {
         ParameterOptimizationRun run = Parser.parseFromFile(
                 ParameterOptimizationRun.class, new File(
                         "testCaseRepository/runs/baechler2003.run")

@@ -26,7 +26,6 @@ import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.exceptions.RunResultParseException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.exceptions.UnknownParameterType;
 import de.clusteval.api.exceptions.UnknownProgramParameterException;
@@ -133,7 +132,7 @@ public class LinearModelRidgeRunDataStatisticCalculator
                                 this.repository.getBasePath(IRunResult.class),
                                 runIdentifier)), results, false, false, false);
                 runResults.addAll(results);
-            } catch (IOException | UnknownRunResultFormatException | UnknownDataSetFormatException |
+            } catch (IOException | UnknownRunResultFormatException |
                      InvalidRunModeException | UnknownParameterOptimizationMethodException |
                      NoOptimizableProgramParameterException | UnknownProgramParameterException | UnknownGoldStandardFormatException |
                      InvalidConfigurationFileException | RepositoryAlreadyExistsException | InvalidRepositoryException |

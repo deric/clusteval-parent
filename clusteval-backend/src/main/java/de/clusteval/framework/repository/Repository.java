@@ -12,16 +12,15 @@
  */
 package de.clusteval.framework.repository;
 
-import de.clusteval.api.repository.RepositoryController;
-import de.clusteval.api.repository.RepositoryObject;
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.Database;
 import de.clusteval.api.IContext;
 import de.clusteval.api.IDistanceMeasure;
 import de.clusteval.api.SQLConfig;
 import de.clusteval.api.cluster.IClustering;
-import de.clusteval.api.data.IDataConfig;
+import de.clusteval.api.data.DataConfig;
 import de.clusteval.api.data.DataPreprocessor;
+import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataRandomizer;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetConfig;
@@ -33,11 +32,12 @@ import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.data.IGoldStandardConfig;
 import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.exceptions.InternalAttributeException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.opt.IParameterOptimizationMethod;
 import de.clusteval.api.program.INamedAttribute;
 import de.clusteval.api.program.IProgram;
 import de.clusteval.api.program.IProgramConfig;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRProgram;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.InvalidRepositoryException;
@@ -49,7 +49,8 @@ import de.clusteval.api.repository.DynamicRepositoryEntityMap;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.IRepositoryConfig;
 import de.clusteval.api.repository.IRepositoryObject;
-import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.repository.RepositoryController;
+import de.clusteval.api.repository.RepositoryObject;
 import de.clusteval.api.repository.StaticRepositoryEntity;
 import de.clusteval.api.repository.StaticRepositoryEntityMap;
 import de.clusteval.api.run.IRun;
@@ -57,14 +58,17 @@ import de.clusteval.api.run.IRunResult;
 import de.clusteval.api.run.IRunResultFormat;
 import de.clusteval.api.run.IRunResultFormatParser;
 import de.clusteval.api.run.IRunResultPostprocessor;
+import de.clusteval.api.run.RunResultFormat;
+import de.clusteval.api.run.result.RunResultFormatParser;
+import de.clusteval.api.stats.DataStatistic;
+import de.clusteval.api.stats.DataStatisticCalculator;
 import de.clusteval.api.stats.IDataStatistic;
 import de.clusteval.api.stats.IRunDataStatistic;
 import de.clusteval.api.stats.IRunStatistic;
+import de.clusteval.api.stats.RunDataStatistic;
+import de.clusteval.api.stats.RunStatistic;
 import de.clusteval.cluster.Clustering;
-import de.clusteval.api.data.DataConfig;
 import de.clusteval.data.goldstandard.format.GoldStandardFormat;
-import de.clusteval.api.stats.DataStatistic;
-import de.clusteval.api.stats.DataStatisticCalculator;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.framework.repository.config.DefaultRepositoryConfig;
 import de.clusteval.framework.repository.config.RepositoryConfig;
@@ -84,17 +88,13 @@ import de.clusteval.program.ProgramParameter;
 import de.clusteval.program.StringProgramParameter;
 import de.clusteval.run.Run;
 import de.clusteval.run.result.RunResult;
-import de.clusteval.api.run.RunResultFormat;
-import de.clusteval.api.run.result.RunResultFormatParser;
-import de.clusteval.api.stats.RunDataStatistic;
 import de.clusteval.run.statistics.RunDataStatisticCalculator;
-import de.clusteval.api.stats.RunStatistic;
 import de.clusteval.run.statistics.RunStatisticCalculator;
+import de.clusteval.utils.FileUtils;
 import de.clusteval.utils.Finder;
 import de.clusteval.utils.NamedDoubleAttribute;
 import de.clusteval.utils.NamedIntegerAttribute;
 import de.clusteval.utils.NamedStringAttribute;
-import de.clusteval.utils.FileUtils;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.lang.reflect.ParameterizedType;
@@ -933,7 +933,7 @@ public class Repository implements IRepository {
      * @throws UnknownDataSetFormatException
      */
     @Override
-    public int getCurrentDataSetFormatVersion(final String formatClass) throws UnknownDataSetFormatException {
+    public int getCurrentDataSetFormatVersion(final String formatClass) throws UnknownProviderException {
         return ((DataSetFormatRepositoryEntity) this.dynamicRepositoryEntities.get(IDataSetFormat.class))
                 .getCurrentDataSetFormatVersion(formatClass);
     }

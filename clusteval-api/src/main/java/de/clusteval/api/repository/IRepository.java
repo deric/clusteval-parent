@@ -16,16 +16,16 @@
  */
 package de.clusteval.api.repository;
 
-import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.Database;
 import de.clusteval.api.SQLConfig;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.data.IDataSetFormatParser;
 import de.clusteval.api.exceptions.InternalAttributeException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.INamedAttribute;
 import de.clusteval.api.program.IProgramConfig;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RException;
@@ -132,7 +132,7 @@ public interface IRepository {
 
     <T extends IRepositoryObject> Collection<Class<? extends T>> getClasses(Class<T> c);
 
-    int getCurrentDataSetFormatVersion(final String formatClass) throws UnknownDataSetFormatException;
+    int getCurrentDataSetFormatVersion(final String formatClass) throws UnknownProviderException;
 
     IRengine getRengineForCurrentThread() throws RException;
 

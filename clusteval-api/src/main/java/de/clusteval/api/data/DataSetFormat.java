@@ -11,8 +11,7 @@
 package de.clusteval.api.data;
 
 import de.clusteval.api.Precision;
-import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.exceptions.InvalidDataSetFormatException;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.RNotAvailableException;
@@ -86,13 +85,13 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
      * @param precision
      * @return A wrapper object containing the contents of the dataset
      * @throws IllegalArgumentException
-     * @throws InvalidDataSetFormatVersionException
+     * @throws InvalidDataSetFormatException
      * @throws IOException
      */
     @Override
     public Object parse(final IDataSet dataSet, Precision precision)
             throws IllegalArgumentException, IOException,
-                   InvalidDataSetFormatVersionException {
+                   InvalidDataSetFormatException {
         final IDataSetFormatParser parser = getDataSetFormatParser();
         if (parser == null) {
             throw new IllegalArgumentException("Operation only supported for the standard dataset format");
@@ -130,10 +129,9 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
      *                The configuration to use to convert the passed dataset.
      * @return The converted dataset.
      * @throws IOException
-     *                                              Signals that an I/O exception has occurred.
-     * @throws InvalidDataSetFormatVersionException
+     * Signals that an I/O exception has occurred.
+     * @throws InvalidDataSetFormatException
      * @throws RegisterException
-     * @throws UnknownDataSetFormatException
      * @throws RNotAvailableException
      * @throws InterruptedException
      * @throws InvalidParameterException
@@ -142,8 +140,8 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
     public final IDataSet convertToStandardFormat(IDataSet dataSet,
             IConversionInputToStandardConfiguration config)
             throws IOException,
-                   InvalidDataSetFormatVersionException, RegisterException,
-                   UnknownDataSetFormatException, RNotAvailableException,
+                   InvalidDataSetFormatException, RegisterException,
+                   RNotAvailableException,
                    InvalidParameterException, InterruptedException, UnknownProviderException {
         final IDataSetFormatParser parser = getDataSetFormatParser();
         if (parser == null) {
@@ -173,14 +171,13 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
      *                      The configuration to use to convert the passed dataset.
      * @return The converted dataset.
      * @throws IOException
-     *                                              Signals that an I/O exception has occurred.
-     * @throws InvalidDataSetFormatVersionException
+     * Signals that an I/O exception has occurred.
+     * @throws InvalidDataSetFormatException
      * @throws RegisterException
      * @throws UnknownDataSetFormatException
      */
     public final IDataSet convertToThisFormat(IDataSet dataSet, IDataSetFormat dataSetFormat, IConversionConfiguration config)
-            throws IOException, InvalidDataSetFormatVersionException,
-                   RegisterException, UnknownDataSetFormatException {
+            throws IOException, InvalidDataSetFormatException, RegisterException {
         final IDataSetFormatParser parser = getDataSetFormatParser();
         if (parser == null) {
             throw new IllegalArgumentException(
@@ -255,7 +252,7 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
             return this.getClass().getConstructor(this.getClass())
                     .newInstance(this);
         } catch (IllegalArgumentException | SecurityException | InstantiationException |
-                IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                 IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
         this.log.warn("Cloning instance of class "

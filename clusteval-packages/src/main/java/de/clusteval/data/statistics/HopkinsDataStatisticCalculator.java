@@ -10,17 +10,16 @@
  ***************************************************************************** */
 package de.clusteval.data.statistics;
 
+import de.clusteval.api.data.AbsoluteDataSet;
+import de.clusteval.api.data.DataMatrix;
 import de.clusteval.api.data.IDataConfig;
-import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.exceptions.InvalidDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RExpr;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.data.AbsoluteDataSet;
-import de.clusteval.api.data.DataMatrix;
 import de.clusteval.utils.ArraysExt;
 import java.io.File;
 import java.io.IOException;
@@ -68,9 +67,9 @@ public class HopkinsDataStatisticCalculator
     @Override
     protected HopkinsDataStatistic calculateResultHelper(final IRengine rEngine)
             throws IncompatibleDataConfigDataStatisticException,
-                   UnknownGoldStandardFormatException, UnknownDataSetFormatException,
+                   UnknownGoldStandardFormatException,
                    IllegalArgumentException, IOException,
-                   InvalidDataSetFormatVersionException, RegisterException,
+                   InvalidDataSetFormatException, RegisterException,
                    InterruptedException, RException {
         // check whether throw exception here or in constructor
         if (!(dataConfig.getDatasetConfig().getDataSet().getOriginalDataSet() instanceof AbsoluteDataSet)) {

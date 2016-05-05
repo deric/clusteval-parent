@@ -27,11 +27,10 @@ import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigurationException;
 import de.clusteval.api.exceptions.GoldStandardNotFoundException;
 import de.clusteval.api.exceptions.IncompatibleContextException;
-import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
+import de.clusteval.api.exceptions.InvalidDataSetFormatException;
 import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownParameterType;
 import de.clusteval.api.exceptions.UnknownProgramParameterException;
 import de.clusteval.api.exceptions.UnknownProgramTypeException;
@@ -74,9 +73,9 @@ public class PlotterTest extends AbstractClustEvalTest {
     @Test
     public void testIsoMDS() throws RepositoryAlreadyExistsException,
                                     InvalidRepositoryException, RepositoryConfigNotFoundException,
-                                    RepositoryConfigurationException, UnknownDataSetFormatException,
+                                    RepositoryConfigurationException,
                                     RegisterException,
-                                    InvalidDataSetFormatVersionException, IllegalArgumentException,
+                                    InvalidDataSetFormatException, IllegalArgumentException,
                                     IOException, REngineException, FormatConversionException,
                                     DataSetNotFoundException, DataSetConfigurationException,
                                     NoDataSetException, NoRepositoryFoundException,
@@ -145,8 +144,8 @@ public class PlotterTest extends AbstractClustEvalTest {
     @Test
     public void testPCA() throws RepositoryAlreadyExistsException,
                                  InvalidRepositoryException, RepositoryConfigNotFoundException,
-                                 RepositoryConfigurationException, UnknownDataSetFormatException,
-                                 RegisterException, InvalidDataSetFormatVersionException, IllegalArgumentException,
+                                 RepositoryConfigurationException,
+                                 RegisterException, InvalidDataSetFormatException, IllegalArgumentException,
                                  IOException, REngineException, FormatConversionException,
                                  DataSetNotFoundException, DataSetConfigurationException,
                                  NoDataSetException, NoRepositoryFoundException,

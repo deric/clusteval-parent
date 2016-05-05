@@ -18,7 +18,7 @@ import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.data.IDataConfig;
-import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
+import de.clusteval.api.exceptions.InvalidDataSetFormatException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
@@ -94,7 +94,7 @@ public class JaccardIndexRClusteringQualityMeasure extends ClusteringQualityMeas
     public ClustEvalValue getQualityOfClusteringHelper(
             IClustering clustering, IClustering gsClustering,
             IDataConfig dataConfig, final IRengine rEngine)
-            throws InvalidDataSetFormatVersionException,
+            throws InvalidDataSetFormatException,
                    IllegalArgumentException, InterruptedException, RException,
                    ROperationNotSupported, RNotAvailableException {
 

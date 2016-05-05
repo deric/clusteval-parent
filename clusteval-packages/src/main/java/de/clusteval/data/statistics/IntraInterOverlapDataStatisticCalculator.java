@@ -10,7 +10,6 @@
  ***************************************************************************** */
 package de.clusteval.data.statistics;
 
-import de.clusteval.api.stats.DataStatisticCalculator;
 import de.clusteval.api.Matrix;
 import de.clusteval.api.Pair;
 import de.clusteval.api.cluster.Cluster;
@@ -21,11 +20,11 @@ import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.data.IGoldStandardConfig;
 import de.clusteval.api.data.RelativeDataSet;
 import de.clusteval.api.data.RelativeDataSetFormat;
-import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.exceptions.InvalidDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.stats.DataStatisticCalculator;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.utils.ArraysExt;
 import java.io.File;
@@ -137,8 +136,8 @@ public class IntraInterOverlapDataStatisticCalculator extends
                     changeDate, absPath, overlap);
             return lastResult;
         } catch (IncompatibleDataConfigDataStatisticException | UnknownGoldStandardFormatException |
-                IllegalArgumentException | IOException | InvalidDataSetFormatVersionException |
-                UnknownDataSetFormatException | RegisterException e) {
+                 IllegalArgumentException | IOException | InvalidDataSetFormatException |
+                 RegisterException e) {
             throw new DataStatisticCalculateException(e);
         }
     }

@@ -21,8 +21,7 @@ import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.data.IGoldStandardConfig;
 import de.clusteval.api.data.RelativeDataSet;
 import de.clusteval.api.data.RelativeDataSetFormat;
-import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.exceptions.InvalidDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
@@ -138,8 +137,7 @@ public class IntraInterDistributionDataStatisticCalculator extends
             return lastResult;
         } catch (IncompatibleDataConfigDataStatisticException |
                  UnknownGoldStandardFormatException | IllegalArgumentException |
-                 IOException | InvalidDataSetFormatVersionException |
-                 UnknownDataSetFormatException | RegisterException e) {
+                 IOException | InvalidDataSetFormatException | RegisterException e) {
             throw new DataStatisticCalculateException(e);
         }
     }

@@ -11,7 +11,7 @@
 package de.clusteval.api.data;
 
 import de.clusteval.api.Precision;
-import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
+import de.clusteval.api.exceptions.InvalidDataSetFormatException;
 import de.clusteval.api.program.RegisterException;
 import java.io.IOException;
 
@@ -40,7 +40,7 @@ public abstract class AbsoluteDataSetFormat extends DataSetFormat {
     @Override
     public final DataMatrix parse(final IDataSet dataSet, Precision precision)
             throws IllegalArgumentException,
-                   IOException, InvalidDataSetFormatVersionException {
+                   IOException, InvalidDataSetFormatException {
         return (DataMatrix) super.parse(dataSet, precision);
     }
 }

@@ -16,8 +16,7 @@ import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataSetConfig;
 import de.clusteval.api.data.RelativeDataSet;
 import de.clusteval.api.data.RelativeDataSetFormat;
-import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.exceptions.InvalidDataSetFormatException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
@@ -74,8 +73,8 @@ public class NodeDegreeDistributionDataStatisticCalculator
     @Override
     protected NodeDegreeDistributionDataStatistic calculateResultHelper(
             final IRengine rEngine)
-            throws IllegalArgumentException, IOException, InvalidDataSetFormatVersionException,
-                   RegisterException, UnknownDataSetFormatException {
+            throws IllegalArgumentException, IOException, InvalidDataSetFormatException,
+                   RegisterException {
         IDataSetConfig dataSetConfig = dataConfig.getDatasetConfig();
         RelativeDataSet dataSet = (RelativeDataSet) (dataSetConfig.getDataSet()
                 .getInStandardFormat());

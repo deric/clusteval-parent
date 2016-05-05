@@ -27,9 +27,8 @@ import de.clusteval.api.data.IDataSetConfig;
 import de.clusteval.api.data.InputToStd;
 import de.clusteval.api.data.StdToInput;
 import de.clusteval.api.exceptions.FormatConversionException;
-import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
+import de.clusteval.api.exceptions.InvalidDataSetFormatException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.InvalidRepositoryException;
@@ -90,7 +89,7 @@ public class SilhouetteValueFuzzyRClusteringQualityMeasureTest extends AbstractC
             double quality = measure.getQualityOfClustering(clustering, null,
                     null).getValue();
             Assert.assertEquals(-1.0, quality, 0.0);
-        } catch (IllegalArgumentException | InvalidDataSetFormatVersionException e) {
+        } catch (IllegalArgumentException | InvalidDataSetFormatException e) {
             e.printStackTrace();
         }
     }
@@ -149,8 +148,7 @@ public class SilhouetteValueFuzzyRClusteringQualityMeasureTest extends AbstractC
             assertEquals(qualitySil, quality, 0.0);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        } catch (UnknownDataSetFormatException | IllegalArgumentException |
-                 InvalidDataSetFormatVersionException | IOException e) {
+        } catch (IllegalArgumentException | InvalidDataSetFormatException | IOException e) {
             e.printStackTrace();
         }
     }
@@ -206,8 +204,7 @@ public class SilhouetteValueFuzzyRClusteringQualityMeasureTest extends AbstractC
             Assert.assertEquals(0.014446969720531404, quality, 0.0);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        } catch (UnknownDataSetFormatException | IllegalArgumentException |
-                 InvalidDataSetFormatVersionException | IOException e) {
+        } catch (IllegalArgumentException | InvalidDataSetFormatException | IOException e) {
             e.printStackTrace();
         }
     }
@@ -273,8 +270,7 @@ public class SilhouetteValueFuzzyRClusteringQualityMeasureTest extends AbstractC
             Assert.assertEquals(qualitySil, quality, 0.0);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        } catch (UnknownDataSetFormatException | IllegalArgumentException |
-                 InvalidDataSetFormatVersionException | IOException e) {
+        } catch (IllegalArgumentException | InvalidDataSetFormatException | IOException e) {
             e.printStackTrace();
         }
     }

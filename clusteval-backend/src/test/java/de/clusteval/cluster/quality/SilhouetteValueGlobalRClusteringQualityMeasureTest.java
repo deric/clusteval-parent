@@ -27,9 +27,8 @@ import de.clusteval.api.data.IDataSetConfig;
 import de.clusteval.api.data.InputToStd;
 import de.clusteval.api.data.StdToInput;
 import de.clusteval.api.exceptions.FormatConversionException;
-import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
+import de.clusteval.api.exceptions.InvalidDataSetFormatException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.InvalidRepositoryException;
@@ -89,7 +88,7 @@ public class SilhouetteValueGlobalRClusteringQualityMeasureTest extends
             double quality = measure.getQualityOfClustering(clustering, null,
                     null).getValue();
             assertEquals(-1.0, quality, DELTA);
-        } catch (IllegalArgumentException | InvalidDataSetFormatVersionException e) {
+        } catch (IllegalArgumentException | InvalidDataSetFormatException e) {
             e.printStackTrace();
         }
     }
@@ -102,7 +101,7 @@ public class SilhouetteValueGlobalRClusteringQualityMeasureTest extends
                    RepositoryConfigurationException, NoRepositoryFoundException,
                    RegisterException, NoSuchAlgorithmException,
                    RNotAvailableException, RCalculationException, FormatConversionException,
-                   InterruptedException, RException, UnknownDataSetFormatException, UnknownProviderException {
+                   InterruptedException, RException, UnknownProviderException {
         try {
 
             IContext context = ContextFactory.parseFromString(getRepository(),
@@ -140,7 +139,7 @@ public class SilhouetteValueGlobalRClusteringQualityMeasureTest extends
                     dc).getValue();
             ds.getInStandardFormat().unloadFromMemory();
             assertEquals(0.3346755237978247, quality, DELTA);
-        } catch (IllegalArgumentException | InvalidDataSetFormatVersionException |
+        } catch (IllegalArgumentException | InvalidDataSetFormatException |
                  IOException e) {
             Exceptions.printStackTrace(e);
         }

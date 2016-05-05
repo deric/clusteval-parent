@@ -21,8 +21,7 @@ import de.clusteval.api.cluster.ClusteringQualitySet;
 import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.exceptions.ClusteringParseException;
-import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.exceptions.InvalidDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.program.ParameterSet;
 import de.clusteval.api.program.RegisterException;
@@ -666,12 +665,12 @@ public class Clustering extends RepositoryObject implements Iterable<Cluster>, I
      * format exception
      * @throws IOException Signals that an I/O exception has occurred.
      * @throws UnknownDataSetFormatException
-     * @throws InvalidDataSetFormatVersionException
+     * @throws InvalidDataSetFormatException
      */
     public ClusteringQualitySet assessQuality(final IDataConfig dataConfig,
             final List<ClusteringEvaluation> qualityMeasures)
             throws UnknownGoldStandardFormatException, IOException,
-                   UnknownDataSetFormatException, InvalidDataSetFormatVersionException {
+                   InvalidDataSetFormatException {
         // added: 30.07.2014: assume all ids of the dataset missing in the
         // clustering to be singletons
         for (String id : dataConfig.getDatasetConfig().getDataSet()
@@ -715,13 +714,13 @@ public class Clustering extends RepositoryObject implements Iterable<Cluster>, I
                 // .unloadFromMemory();
                 // we rethrow some exceptions, since they mean, that we
                 // cannot calculate ANY quality measures for this data
-            } catch (InvalidDataSetFormatVersionException e) {
+            } catch (InvalidDataSetFormatException e) {
                 throw e;
             } catch (Exception e) {
+                this.log.error(e.getMessage(), e);
                 // all the remaining exceptions are catched, because they
                 // mean, that the quality measure calculation is flawed
-                quality = ClustEvalValue
-                        .getForDouble(Double.NaN);
+                quality = ClustEvalValue.getForDouble(Double.NaN);
             }
             resultSet.put(qualityMeasure, quality);
         }

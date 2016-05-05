@@ -20,10 +20,9 @@ import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.exceptions.IncompatibleDataSetFormatException;
 import de.clusteval.api.exceptions.IncompleteGoldStandardException;
 import de.clusteval.api.exceptions.InternalAttributeException;
-import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
+import de.clusteval.api.exceptions.InvalidDataSetFormatException;
 import de.clusteval.api.exceptions.RunIterationException;
 import de.clusteval.api.exceptions.RunResultParseException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.opt.IDivergingParameterOptimizationMethod;
@@ -168,9 +167,8 @@ public class ParameterOptimizationRunRunnable extends ExecutionRunRunnable {
      * @see run.runnable.ExecutionRunRunnable#beforeRun()
      */
     @Override
-    protected void beforeRun() throws IllegalArgumentException,
-                                      UnknownDataSetFormatException, IOException,
-                                      InvalidDataSetFormatVersionException, RegisterException,
+    protected void beforeRun() throws IllegalArgumentException, IOException,
+                                      InvalidDataSetFormatException, RegisterException,
                                       InternalAttributeException, IncompatibleDataSetFormatException,
                                       UnknownGoldStandardFormatException,
                                       IncompleteGoldStandardException, InterruptedException, UnknownProviderException {

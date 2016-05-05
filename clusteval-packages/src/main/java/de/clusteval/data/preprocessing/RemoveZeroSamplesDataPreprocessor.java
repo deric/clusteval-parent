@@ -16,8 +16,7 @@ import de.clusteval.api.data.DataPreprocessor;
 import de.clusteval.api.data.DataSet;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.RelativeDataSet;
-import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.exceptions.InvalidDataSetFormatException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
@@ -90,8 +89,8 @@ public class RemoveZeroSamplesDataPreprocessor extends DataPreprocessor {
             newDataSet.setDataSetContent(newMatrix);
             newDataSet.writeToFile(false);
             newDataSet.unloadFromMemory();
-        } catch (InvalidDataSetFormatVersionException | IllegalArgumentException |
-                 IOException | UnknownDataSetFormatException e1) {
+        } catch (InvalidDataSetFormatException | IllegalArgumentException |
+                 IOException e1) {
             e1.printStackTrace();
         } finally {
             rEngine.clear();

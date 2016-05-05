@@ -35,7 +35,6 @@ import de.clusteval.api.exceptions.IncompatibleContextException;
 import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownParameterType;
 import de.clusteval.api.exceptions.UnknownProgramParameterException;
 import de.clusteval.api.exceptions.UnknownProgramTypeException;
@@ -82,7 +81,7 @@ class DataSetParser extends RepositoryObjectParser<IDataSet> {
     @Override
     public void parseFromFile(File absPath)
             throws NoRepositoryFoundException, ConfigurationException, RunException,
-                   UnknownDataSetFormatException, FileNotFoundException, RegisterException, UnknownParameterType,
+                   FileNotFoundException, RegisterException, UnknownParameterType,
                    IncompatibleContextException, UnknownRunResultFormatException, InvalidOptimizationParameterException,
                    UnknownProgramParameterException, UnknownProgramTypeException, UnknownRProgramException,
                    GoldStandardNotFoundException, GoldStandardConfigurationException, DataSetConfigurationException,
@@ -177,7 +176,7 @@ class DataSetParser extends RepositoryObjectParser<IDataSet> {
             result = repo.getRegisteredObject(result);
             LoggerFactory.getLogger(IDataSet.class).debug("Dataset parsed");
         } catch (IOException e) {
-            throw new UnknownDataSetFormatException(e);
+            throw new UnknownProviderException(e);
         }
     }
 

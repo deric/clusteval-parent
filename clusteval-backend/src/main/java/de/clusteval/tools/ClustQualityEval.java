@@ -26,12 +26,11 @@ import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigurationException;
 import de.clusteval.api.exceptions.GoldStandardNotFoundException;
 import de.clusteval.api.exceptions.IncompatibleContextException;
-import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
+import de.clusteval.api.exceptions.InvalidDataSetFormatException;
 import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.exceptions.RunResultParseException;
-import de.clusteval.api.exceptions.UnknownDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.exceptions.UnknownParameterType;
 import de.clusteval.api.exceptions.UnknownProgramParameterException;
@@ -102,7 +101,7 @@ public class ClustQualityEval {
             throws RepositoryAlreadyExistsException,
                    InvalidRepositoryException, RepositoryConfigNotFoundException,
                    RepositoryConfigurationException, InterruptedException,
-                   UnknownDataSetFormatException, UnknownGoldStandardFormatException,
+                   UnknownGoldStandardFormatException,
                    GoldStandardNotFoundException, GoldStandardConfigurationException,
                    DataSetConfigurationException, DataSetNotFoundException,
                    DataSetConfigNotFoundException,
@@ -121,7 +120,7 @@ public class ClustQualityEval {
                    UnknownRProgramException,
                    IncompatibleParameterOptimizationMethodException,
                    IncompatibleDataSetConfigPreprocessorException,
-                   IncompatibleContextException, InvalidDataSetFormatVersionException,
+                   IncompatibleContextException, InvalidDataSetFormatException,
                    RNotAvailableException, FormatConversionException,
                    UnknownRunResultPostprocessorException,
                    DatabaseConnectException, RException, FileNotFoundException, UnknownProviderException {
@@ -275,8 +274,7 @@ public class ClustQualityEval {
                                 allQuals.putAll(quals);
                                 qualsMap.put(iterationNumber, allQuals);
 
-                            } catch (IOException | UnknownGoldStandardFormatException |
-                                     UnknownDataSetFormatException | InvalidDataSetFormatVersionException e) {
+                            } catch (IOException | InvalidDataSetFormatException e) {
                                 e.printStackTrace();
                             }
                         }
@@ -469,7 +467,7 @@ public class ClustQualityEval {
             throws RepositoryAlreadyExistsException,
                    InvalidRepositoryException, RepositoryConfigNotFoundException,
                    RepositoryConfigurationException, InterruptedException,
-                   UnknownDataSetFormatException, UnknownGoldStandardFormatException,
+                   UnknownGoldStandardFormatException,
                    GoldStandardNotFoundException, GoldStandardConfigurationException,
                    DataSetConfigurationException, DataSetNotFoundException,
                    DataSetConfigNotFoundException,
@@ -488,7 +486,7 @@ public class ClustQualityEval {
                    UnknownRProgramException,
                    IncompatibleParameterOptimizationMethodException,
                    IncompatibleDataSetConfigPreprocessorException,
-                   IncompatibleContextException, InvalidDataSetFormatVersionException,
+                   IncompatibleContextException, InvalidDataSetFormatException,
                    RNotAvailableException, FormatConversionException,
                    UnknownRunResultPostprocessorException,
                    DatabaseConnectException, RException, FileNotFoundException, UnknownProviderException {
