@@ -49,6 +49,10 @@ public abstract class ClusteringQualityMeasure extends RepositoryObject implemen
 
     protected ClusteringEvaluationParameters parameters;
 
+    public ClusteringQualityMeasure() {
+        super();
+    }
+
     /**
      * The copy constructor of clustering quality measures.
      *
@@ -119,7 +123,7 @@ public abstract class ClusteringQualityMeasure extends RepositoryObject implemen
             return this.getClass().getConstructor(this.getClass())
                     .newInstance(this);
         } catch (IllegalArgumentException | SecurityException | InstantiationException |
-                IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                 IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
         this.log.warn("Cloning instance of class "

@@ -10,12 +10,12 @@
  ***************************************************************************** */
 package de.clusteval.cluster.quality;
 
+import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.cluster.ClusteringQualityMeasureR;
 import de.clusteval.api.Matrix;
 import de.clusteval.api.cluster.ClustEvalValue;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
-import de.clusteval.api.cluster.ClusteringEvaluationParameters;
 import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.program.RegisterException;
@@ -23,32 +23,22 @@ import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RExpr;
 import de.clusteval.api.r.RLibraryRequirement;
-import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.data.RelativeDataSet;
 import de.clusteval.utils.ArraysExt;
-import java.io.File;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * @author Christian Wiwie
  */
 @RLibraryRequirement(requiredRLibraries = {"cluster"})
+@ServiceProvider(service = ClusteringEvaluation.class)
 public class SilhouetteValueRClusteringQualityMeasure extends ClusteringQualityMeasureR {
 
-    /**
-     * @param repo
-     * @param register
-     * @param changeDate
-     * @param absPath
-     * @throws RegisterException
-     */
-    public SilhouetteValueRClusteringQualityMeasure(IRepository repo,
-            boolean register, long changeDate, File absPath,
-            ClusteringEvaluationParameters parameters)
-            throws RegisterException {
-        super(repo, register, changeDate, absPath, parameters);
+    public SilhouetteValueRClusteringQualityMeasure() {
+        super();
     }
 
     /**
@@ -64,24 +54,11 @@ public class SilhouetteValueRClusteringQualityMeasure extends ClusteringQualityM
         super(other);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see cluster.quality.ClusteringQualityMeasure#getAlias()
-     */
     @Override
-    public String getAlias() {
+    public String getName() {
         return "Silhouette Value (R)";
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * cluster.quality.ClusteringQualityMeasure#getQualityOfClustering(cluster
-     * .Clustering, data.goldstandard.GoldStandard)
-     */
-    @SuppressWarnings("unused")
     @Override
     public ClustEvalValue getQualityOfClusteringHelper(
             final IClustering clustering, IClustering gsClustering,

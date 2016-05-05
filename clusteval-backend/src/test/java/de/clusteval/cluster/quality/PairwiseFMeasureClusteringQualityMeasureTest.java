@@ -89,7 +89,7 @@ public class PairwiseFMeasureClusteringQualityMeasureTest
                             new ClusteringEvaluationParameters());
             double quality = measure.getQualityOfClustering(clustering,
                     goldStandard, null).getValue();
-            System.out.println(measure.getAlias() + " " + quality);
+            System.out.println(measure.getName() + " " + quality);
         } catch (IllegalArgumentException | InvalidDataSetFormatVersionException e) {
             e.printStackTrace();
         }
@@ -140,7 +140,7 @@ public class PairwiseFMeasureClusteringQualityMeasureTest
                             new ClusteringEvaluationParameters());
             double quality = measure.getQualityOfClustering(clustering,
                     goldStandard, null).getValue();
-            System.out.println(measure.getAlias() + " " + quality);
+            System.out.println(measure.getName() + " " + quality);
         } catch (IllegalArgumentException | InvalidDataSetFormatVersionException e) {
             e.printStackTrace();
         }

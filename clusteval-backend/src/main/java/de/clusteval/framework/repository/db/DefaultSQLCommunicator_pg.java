@@ -1805,7 +1805,7 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
                         replaceInfinity(measure.getMinimum()),
                         replaceInfinity(measure.getMaximum()),
                         "" + (measure.requiresGoldstandard() ? 1 : 0),
-                        measure.getAlias()});
+                        measure.getName()});
             this.objectIds.put(measure, id);
             return true;
         } catch (SQLException | IllegalArgumentException | SecurityException e) {

@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.cluster.quality;
 
+import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.cluster.ClusteringQualityMeasureR;
 import de.clusteval.api.cluster.ClusteringEvaluationParameters;
 import de.clusteval.api.cluster.ClustEvalValue;
@@ -31,13 +32,19 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * @author Christian Wiwie
  *
  */
 @RLibraryRequirement(requiredRLibraries = {"clv"})
+@ServiceProvider(service = ClusteringEvaluation.class)
 public class JaccardIndexRClusteringQualityMeasure extends ClusteringQualityMeasureR {
+
+    public JaccardIndexRClusteringQualityMeasure() {
+        super();
+    }
 
     /**
      * @param repo
@@ -69,10 +76,10 @@ public class JaccardIndexRClusteringQualityMeasure extends ClusteringQualityMeas
     /*
      * (non-Javadoc)
      *
-     * @see cluster.quality.ClusteringQualityMeasure#getAlias()
+     * @see cluster.quality.ClusteringQualityMeasure#getName()
      */
     @Override
-    public String getAlias() {
+    public String getName() {
         return "Jaccard Index (R)";
     }
 

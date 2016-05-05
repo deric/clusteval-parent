@@ -10,35 +10,26 @@
  ***************************************************************************** */
 package de.clusteval.cluster.quality;
 
+import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.cluster.ClusteringQualityMeasure;
-import de.clusteval.api.cluster.ClusteringEvaluationParameters;
 import de.clusteval.api.cluster.ClustEvalValue;
 import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.program.RegisterException;
-import de.clusteval.api.repository.IRepository;
-import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * @author Christian Wiwie
  *
  */
+@ServiceProvider(service = ClusteringEvaluation.class)
 public class FPRClusteringQualityMeasure extends ClusteringQualityMeasure {
 
-    /**
-     * @param repo
-     * @param register
-     * @param changeDate
-     * @param absPath
-     * @throws RegisterException
-     */
-    public FPRClusteringQualityMeasure(IRepository repo, boolean register,
-            long changeDate, File absPath,
-            ClusteringEvaluationParameters parameters) throws RegisterException {
-        super(repo, register, changeDate, absPath, parameters);
+    public FPRClusteringQualityMeasure() {
+        super();
     }
 
     /**
@@ -56,10 +47,10 @@ public class FPRClusteringQualityMeasure extends ClusteringQualityMeasure {
     /*
      * (non-Javadoc)
      *
-     * @see cluster.quality.ClusteringQualityMeasure#getAlias()
+     * @see cluster.quality.ClusteringQualityMeasure#getName()
      */
     @Override
-    public String getAlias() {
+    public String getName() {
         return "False Positive Rate";
     }
 

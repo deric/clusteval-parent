@@ -96,7 +96,7 @@ public class FMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
                         new ClusteringEvaluationParameters());
         double quality = measure.getQualityOfClustering(clustering,
                 goldStandard, null).getValue();
-        System.out.println(measure.getAlias() + " " + quality);
+        System.out.println(measure.getName() + " " + quality);
 
         measure = ClusteringEvaluationFactory.parseFromString(getRepository(),
                 "TransClustF2ClusteringQualityMeasure",
@@ -104,7 +104,7 @@ public class FMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
         quality = measure
                 .getQualityOfClustering(clustering, goldStandard, null)
                 .getValue();
-        System.out.println(measure.getAlias() + " " + quality);
+        System.out.println(measure.getName() + " " + quality);
     }
 
     @Test
@@ -154,7 +154,7 @@ public class FMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
         double quality = measure.getQualityOfClustering(clustering,
                 goldStandard, null).getValue();
         assertEquals(0.8444444444444444, quality, DELTA);
-        System.out.println(measure.getAlias() + " " + quality);
+        System.out.println(measure.getName() + " " + quality);
 
         measure = ClusteringEvaluationFactory.parseFromString(getRepository(),
                 "TransClustF2ClusteringQualityMeasure",
@@ -163,7 +163,7 @@ public class FMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
                 .getQualityOfClustering(clustering, goldStandard, null)
                 .getValue();
         assertEquals(0.9027777777777778, quality, DELTA);
-        System.out.println(measure.getAlias() + " " + quality);
+        System.out.println(measure.getName() + " " + quality);
     }
 
     @Test
@@ -216,7 +216,7 @@ public class FMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
         double quality = measure.getQualityOfClustering(clustering,
                 goldStandard, null).getValue();
         assertEquals(0.8444444444444444, quality, DELTA);
-        System.out.println(measure.getAlias() + " " + quality);
+        System.out.println(measure.getName() + " " + quality);
 
         measure = ClusteringEvaluationFactory.parseFromString(getRepository(),
                 "TransClustF2ClusteringQualityMeasure",
@@ -225,7 +225,7 @@ public class FMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
                 .getQualityOfClustering(clustering, goldStandard, null)
                 .getValue();
         assertEquals(0.9027777777777778, quality, DELTA);
-        System.out.println(measure.getAlias() + " " + quality);
+        System.out.println(measure.getName() + " " + quality);
     }
 
     @Test
@@ -279,7 +279,7 @@ public class FMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
         double quality = measure.getQualityOfClustering(clustering,
                 goldStandard, null).getValue();
         assertEquals(0.8444444444444444, quality, DELTA);
-        System.out.println(measure.getAlias() + " " + quality);
+        System.out.println(measure.getName() + " " + quality);
 
         measure = ClusteringEvaluationFactory.parseFromString(getRepository(),
                 "TransClustF2ClusteringQualityMeasure",
@@ -288,7 +288,7 @@ public class FMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
                 .getQualityOfClustering(clustering, goldStandard, null)
                 .getValue();
         assertEquals(0.9027777777777778, quality, DELTA);
-        System.out.println(measure.getAlias() + " " + quality);
+        System.out.println(measure.getName() + " " + quality);
     }
 
     // TODO: find another clustering file
@@ -325,7 +325,7 @@ public class FMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
                         new ClusteringEvaluationParameters());
         double quality = measure.getQualityOfClustering(clustering,
                 goldStandard.getClustering(), dataConfig).getValue();
-        System.out.println(measure.getAlias() + " " + quality);
+        System.out.println(measure.getName() + " " + quality);
     }
 
     @Test
@@ -374,7 +374,7 @@ public class FMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
                         new ClusteringEvaluationParameters());
         double quality = measure.getQualityOfClustering(clustering,
                 goldStandard, null).getValue();
-        System.out.println(measure.getAlias() + " " + quality);
+        System.out.println(measure.getName() + " " + quality);
 
         measure = ClusteringEvaluationFactory.parseFromString(getRepository(),
                 "TransClustF2ClusteringQualityMeasure",
@@ -382,7 +382,7 @@ public class FMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
         quality = measure
                 .getQualityOfClustering(clustering, goldStandard, null)
                 .getValue();
-        System.out.println(measure.getAlias() + " " + quality);
+        System.out.println(measure.getName() + " " + quality);
     }
 
 }

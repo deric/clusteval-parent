@@ -37,6 +37,10 @@ public abstract class ClusteringQualityMeasureR extends RepositoryObject impleme
 
     protected ClusteringEvaluationParameters parameters;
 
+    public ClusteringQualityMeasureR() {
+        super();
+    }
+
     /**
      * Instantiates a new R clustering quality measure.
      *
@@ -68,6 +72,11 @@ public abstract class ClusteringQualityMeasureR extends RepositoryObject impleme
      */
     public ClusteringQualityMeasureR(final ClusteringQualityMeasureR other) throws RegisterException {
         super(other);
+    }
+
+    @Override
+    public void setParams(ClusteringEvaluationParameters params) {
+        this.parameters = params;
     }
 
     /*

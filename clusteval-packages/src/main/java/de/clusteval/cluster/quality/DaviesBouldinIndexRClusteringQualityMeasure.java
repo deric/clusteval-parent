@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.cluster.quality;
 
+import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.cluster.ClusteringQualityMeasureR;
 import de.clusteval.api.Matrix;
 import de.clusteval.api.cluster.ClusteringEvaluationParameters;
@@ -31,12 +32,18 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * @author Christian Wiwie
  */
 @RLibraryRequirement(requiredRLibraries = {"clv"})
+@ServiceProvider(service = ClusteringEvaluation.class)
 public class DaviesBouldinIndexRClusteringQualityMeasure extends ClusteringQualityMeasureR {
+
+    public DaviesBouldinIndexRClusteringQualityMeasure() {
+        super();
+    }
 
     /**
      * @param repo
@@ -66,7 +73,7 @@ public class DaviesBouldinIndexRClusteringQualityMeasure extends ClusteringQuali
     }
 
     @Override
-    public String getAlias() {
+    public String getName() {
         return "Davies Bouldin Index (R)";
     }
 

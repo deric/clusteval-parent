@@ -10,37 +10,27 @@
  ***************************************************************************** */
 package de.clusteval.cluster.quality;
 
+import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.cluster.ClusteringQualityMeasure;
 import de.clusteval.api.cluster.ClustEvalValue;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
-import de.clusteval.api.cluster.ClusteringEvaluationParameters;
 import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.program.RegisterException;
-import de.clusteval.api.repository.IRepository;
-import java.io.File;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * @author Christian Wiwie
  */
+@ServiceProvider(service = ClusteringEvaluation.class)
 public class TransClustF2ClusteringQualityMeasure extends ClusteringQualityMeasure {
 
-    /**
-     * @param repo
-     * @param register
-     * @param changeDate
-     * @param absPath
-     * @throws RegisterException
-     */
-    public TransClustF2ClusteringQualityMeasure(IRepository repo,
-            boolean register, long changeDate, File absPath,
-            ClusteringEvaluationParameters parameters)
-            throws RegisterException {
-        super(repo, register, changeDate, absPath, parameters);
+    public TransClustF2ClusteringQualityMeasure() {
+        super();
     }
 
     /**
@@ -57,7 +47,7 @@ public class TransClustF2ClusteringQualityMeasure extends ClusteringQualityMeasu
     }
 
     @Override
-    public String getAlias() {
+    public String getName() {
         return "F2-Score";
     }
 

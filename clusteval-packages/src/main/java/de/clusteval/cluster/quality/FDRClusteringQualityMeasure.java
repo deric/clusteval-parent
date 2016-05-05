@@ -10,35 +10,26 @@
  ***************************************************************************** */
 package de.clusteval.cluster.quality;
 
+import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.cluster.ClusteringQualityMeasure;
-import de.clusteval.api.cluster.ClusteringEvaluationParameters;
 import de.clusteval.api.cluster.ClustEvalValue;
 import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.program.RegisterException;
-import de.clusteval.api.repository.IRepository;
-import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * @author Christian Wiwie
  *
  */
+@ServiceProvider(service = ClusteringEvaluation.class)
 public class FDRClusteringQualityMeasure extends ClusteringQualityMeasure {
 
-    /**
-     * @param repo
-     * @param register
-     * @param changeDate
-     * @param absPath
-     * @throws RegisterException
-     */
-    public FDRClusteringQualityMeasure(IRepository repo, boolean register,
-            long changeDate, File absPath,
-            ClusteringEvaluationParameters parameters) throws RegisterException {
-        super(repo, register, changeDate, absPath, parameters);
+    public FDRClusteringQualityMeasure() {
+        super();
     }
 
     /**
@@ -53,23 +44,11 @@ public class FDRClusteringQualityMeasure extends ClusteringQualityMeasure {
         super(other);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see cluster.quality.ClusteringQualityMeasure#getAlias()
-     */
     @Override
-    public String getAlias() {
+    public String getName() {
         return "False Discovery Rate";
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * cluster.quality.ClusteringQualityMeasure#getQualityOfClustering(cluster
-     * .Clustering, data.DataConfig)
-     */
     @Override
     public ClustEvalValue getQualityOfClustering(
             IClustering clustering, IClustering gsClustering, IDataConfig dataConfig) {
@@ -94,8 +73,7 @@ public class FDRClusteringQualityMeasure extends ClusteringQualityMeasure {
          * Ensure, that clustering contains only objects, that are also in the
          * goldstandard.
          */
-        gsClusterItems = new HashSet<>(
-                gsClustering.getClusterItems());
+        gsClusterItems = new HashSet<>(gsClustering.getClusterItems());
         clusterItems.removeAll(gsClusterItems);
         for (ClusterItem onlyInClustering : clusterItems) {
             clustering.removeClusterItem(onlyInClustering);

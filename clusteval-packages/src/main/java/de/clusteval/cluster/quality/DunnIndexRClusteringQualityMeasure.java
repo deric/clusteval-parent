@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.cluster.quality;
 
+import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.cluster.ClusteringQualityMeasureR;
 import de.clusteval.api.Matrix;
 import de.clusteval.api.cluster.ClusteringEvaluationParameters;
@@ -30,12 +31,18 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * @author Christian Wiwie
  */
 @RLibraryRequirement(requiredRLibraries = {"clv"})
+@ServiceProvider(service = ClusteringEvaluation.class)
 public class DunnIndexRClusteringQualityMeasure extends ClusteringQualityMeasureR {
+
+    public DunnIndexRClusteringQualityMeasure() {
+        super();
+    }
 
     /**
      * @param repo
@@ -64,24 +71,11 @@ public class DunnIndexRClusteringQualityMeasure extends ClusteringQualityMeasure
         super(other);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see cluster.quality.ClusteringQualityMeasure#getAlias()
-     */
     @Override
-    public String getAlias() {
+    public String getName() {
         return "Dunn Index (R)";
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * cluster.quality.ClusteringQualityMeasure#getQualityOfClustering(cluster
-     * .Clustering, data.goldstandard.GoldStandard)
-     */
-    @SuppressWarnings("unused")
     @Override
     public ClustEvalValue getQualityOfClusteringHelper(
             final IClustering clustering, IClustering gsClustering,

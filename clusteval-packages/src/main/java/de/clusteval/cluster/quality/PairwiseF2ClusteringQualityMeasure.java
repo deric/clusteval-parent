@@ -10,39 +10,28 @@
  ***************************************************************************** */
 package de.clusteval.cluster.quality;
 
+import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.cluster.ClusteringQualityMeasure;
-import de.clusteval.api.cluster.ClusteringEvaluationParameters;
 import de.clusteval.api.cluster.ClustEvalValue;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.program.RegisterException;
-import de.clusteval.api.repository.IRepository;
-import java.io.File;
 import java.io.Serializable;
 import java.util.Map;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * The Class F2ClusteringQualityMeasure.
  *
  * @author Christian Wiwie
  */
-public class PairwiseF2ClusteringQualityMeasure extends
-        ClusteringQualityMeasure implements Serializable {
+@ServiceProvider(service = ClusteringEvaluation.class)
+public class PairwiseF2ClusteringQualityMeasure extends ClusteringQualityMeasure implements Serializable {
 
-    /**
-     * @param repo
-     * @param register
-     * @param changeDate
-     * @param absPath
-     * @throws RegisterException
-     */
-    public PairwiseF2ClusteringQualityMeasure(IRepository repo,
-            boolean register, long changeDate, File absPath,
-            ClusteringEvaluationParameters parameters)
-            throws RegisterException {
-        super(repo, register, changeDate, absPath, parameters);
+    public PairwiseF2ClusteringQualityMeasure() {
+        super();
     }
 
     /**
@@ -59,7 +48,7 @@ public class PairwiseF2ClusteringQualityMeasure extends
     }
 
     @Override
-    public String getAlias() {
+    public String getName() {
         return "Pairwise F2-Score";
     }
 

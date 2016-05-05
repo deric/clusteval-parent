@@ -33,8 +33,6 @@ import de.clusteval.api.repository.IRepositoryObject;
  */
 public interface ClusteringEvaluation extends IRepositoryObject {
 
-    String getName();
-
     /**
      * This method has to be implemented in subclasses to indiciate, whether a
      * quality measure supports validating fuzzy clusterings.
@@ -79,7 +77,7 @@ public interface ClusteringEvaluation extends IRepositoryObject {
      *
      * @return The alias of this clustering quality measure.
      */
-    String getAlias();
+    String getName();
 
     ClustEvalValue getQualityOfClusteringHelper(
             IClustering clustering, IClustering goldStandard,

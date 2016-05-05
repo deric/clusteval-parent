@@ -1810,7 +1810,7 @@ public class DefaultSQLCommunicator extends SQLCommunicator implements Database 
                         replaceInfinity(measure.getMinimum()),
                         replaceInfinity(measure.getMaximum()),
                         "" + (measure.requiresGoldstandard() ? 1 : 0),
-                        measure.getAlias()});
+                        measure.getName()});
             this.objectIds.put(measure, id);
             return true;
         } catch (SQLException e) {

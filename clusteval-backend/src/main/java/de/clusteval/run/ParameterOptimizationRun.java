@@ -340,7 +340,7 @@ public class ParameterOptimizationRun extends ExecutionRun {
                         }
 
                         for (ClusteringEvaluation measure : bestQuals.keySet()) {
-                            qualities.put(measure.getAlias(),
+                            qualities.put(measure.getName(),
                                     Pair.getPair(bestParamsMap.get(measure), bestQuals.get(measure).toString()));
                         }
                     }
