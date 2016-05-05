@@ -3,6 +3,8 @@
  */
 package de.clusteval.data.statistics;
 
+import de.clusteval.api.stats.StatisticCalculateException;
+
 
 /**
  * @author Christian Wiwie

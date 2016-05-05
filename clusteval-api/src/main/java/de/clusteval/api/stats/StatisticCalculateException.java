@@ -1,7 +1,7 @@
 /**
  *
  */
-package de.clusteval.data.statistics;
+package de.clusteval.api.stats;
 
 import de.clusteval.api.exceptions.ClustEvalException;
 

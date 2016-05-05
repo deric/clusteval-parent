@@ -21,7 +21,7 @@ import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.stats.IStatisticCalculator;
 import de.clusteval.api.stats.RunStatistic;
 import de.clusteval.utils.FileUtils;
-import de.clusteval.utils.StatisticCalculator;
+import de.clusteval.api.stats.StatisticCalculator;
 import java.lang.reflect.InvocationTargetException;
 
 /**

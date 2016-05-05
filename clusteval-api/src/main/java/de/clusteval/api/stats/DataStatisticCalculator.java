@@ -8,13 +8,11 @@
  * Contributors:
  *     Christian Wiwie - initial API and implementation
  ***************************************************************************** */
-package de.clusteval.data.statistics;
+package de.clusteval.api.stats;
 
-import de.clusteval.api.stats.DataStatistic;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.utils.StatisticCalculator;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 
@@ -70,7 +68,7 @@ public abstract class DataStatisticCalculator<T extends DataStatistic> extends S
                     .getConstructor(DataStatisticCalculator.class)
                     .newInstance(this);
         } catch (IllegalArgumentException | SecurityException | InstantiationException |
-                IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                 IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
         this.log.warn("Cloning instance of class "
@@ -78,23 +76,13 @@ public abstract class DataStatisticCalculator<T extends DataStatistic> extends S
         return null;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.wiwie.wiutils.utils.StatisticCalculator#calculate()
-     */
     @Override
     public T calculate() throws StatisticCalculateException {
         return super.calculate();
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.wiwie.wiutils.utils.StatisticCalculator#calculate()
-     */
     @Override
-    protected abstract T calculateResult() throws DataStatisticCalculateException;
+    protected abstract T calculateResult() throws StatisticCalculateException;
 
     @Override
     public T getStatistic() {

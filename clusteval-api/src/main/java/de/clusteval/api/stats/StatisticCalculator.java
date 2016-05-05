@@ -10,18 +10,14 @@
  *     Christian Wiwie - initial API and implementation
  *****************************************************************************
  */
-package de.clusteval.utils;
+package de.clusteval.api.stats;
 
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.stats.IStatistic;
-import de.clusteval.data.statistics.RunStatisticCalculateException;
-import de.clusteval.data.statistics.StatisticCalculateException;
 import de.clusteval.api.repository.RepositoryObject;
 import java.io.File;
-import org.rosuda.REngine.REngineException;
 
 /**
  * Together with every statistic class comes a calculator class, which is a
@@ -100,8 +96,7 @@ public abstract class StatisticCalculator<T extends IStatistic> extends Reposito
      * @throws RNotAvailableException
      * @throws InterruptedException
      */
-    public abstract void writeOutputTo(final File absFolderPath)
-            throws RException, InterruptedException;
+    public abstract void writeOutputTo(final File absFolderPath) throws RException, InterruptedException;
 
     /**
      * @return The statistic calculated during the last {@link #calculate()}

@@ -3,6 +3,7 @@
  */
 package de.clusteval.data.statistics;
 
+import de.clusteval.api.stats.StatisticCalculateException;
 import de.clusteval.api.exceptions.ClustEvalException;
 
 /**

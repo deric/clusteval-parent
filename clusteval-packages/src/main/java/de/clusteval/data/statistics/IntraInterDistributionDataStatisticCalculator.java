@@ -19,15 +19,20 @@ import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataSetConfig;
 import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.data.IGoldStandardConfig;
+import de.clusteval.api.data.RelativeDataSet;
+import de.clusteval.api.data.RelativeDataSetFormat;
+import de.clusteval.api.exceptions.InvalidDataSetFormatVersionException;
+import de.clusteval.api.exceptions.UnknownDataSetFormatException;
+import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.data.RelativeDataSet;
-import de.clusteval.api.data.RelativeDataSetFormat;
+import de.clusteval.api.stats.DataStatisticCalculator;
 import de.clusteval.utils.ArraysExt;
 import de.clusteval.utils.FileUtils;
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -131,7 +136,10 @@ public class IntraInterDistributionDataStatisticCalculator extends
                     false, changeDate, absPath,
                     intraVsInterDistribution.getFirst(), intraDistr, interDistr);
             return lastResult;
-        } catch (Exception e) {
+        } catch (IncompatibleDataConfigDataStatisticException |
+                 UnknownGoldStandardFormatException | IllegalArgumentException |
+                 IOException | InvalidDataSetFormatVersionException |
+                 UnknownDataSetFormatException | RegisterException e) {
             throw new DataStatisticCalculateException(e);
         }
     }

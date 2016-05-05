@@ -64,7 +64,7 @@ import de.clusteval.cluster.Clustering;
 import de.clusteval.api.data.DataConfig;
 import de.clusteval.data.goldstandard.format.GoldStandardFormat;
 import de.clusteval.api.stats.DataStatistic;
-import de.clusteval.data.statistics.DataStatisticCalculator;
+import de.clusteval.api.stats.DataStatisticCalculator;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.framework.repository.config.DefaultRepositoryConfig;
 import de.clusteval.framework.repository.config.RepositoryConfig;

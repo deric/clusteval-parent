@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.data.statistics;
 
+import de.clusteval.api.stats.DataStatisticCalculator;
 import de.clusteval.api.Matrix;
 import de.clusteval.api.Pair;
 import de.clusteval.api.data.IDataConfig;
