@@ -25,6 +25,8 @@ import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.stats.DataStatisticCalculator;
+import de.clusteval.api.stats.IncompatibleDataConfigDataStatisticException;
+import de.clusteval.api.stats.StatisticCalculateException;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.utils.ArraysExt;
 import java.io.File;
@@ -77,7 +79,7 @@ public class IntraInterOverlapDataStatisticCalculator extends
      */
     @Override
     protected IntraInterOverlapDataStatistic calculateResult()
-            throws DataStatisticCalculateException {
+            throws StatisticCalculateException {
         try {
             if (!dataConfig.hasGoldStandardConfig()) {
                 throw new IncompatibleDataConfigDataStatisticException(
@@ -138,7 +140,7 @@ public class IntraInterOverlapDataStatisticCalculator extends
         } catch (IncompatibleDataConfigDataStatisticException | UnknownGoldStandardFormatException |
                  IllegalArgumentException | IOException | InvalidDataSetFormatException |
                  RegisterException e) {
-            throw new DataStatisticCalculateException(e);
+            throw new StatisticCalculateException(e);
         }
     }
 

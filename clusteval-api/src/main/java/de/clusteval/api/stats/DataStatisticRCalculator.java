@@ -8,7 +8,7 @@
  * Contributors:
  *     Christian Wiwie - initial API and implementation
  ***************************************************************************** */
-package de.clusteval.data.statistics;
+package de.clusteval.api.stats;
 
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.exceptions.InvalidDataSetFormatException;
@@ -17,8 +17,6 @@ import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.stats.DataStatistic;
-import de.clusteval.api.stats.DataStatisticCalculator;
 import java.io.File;
 import java.io.IOException;
 import org.openide.util.Exceptions;
@@ -65,7 +63,7 @@ public abstract class DataStatisticRCalculator<T extends DataStatistic> extends 
      * de.clusteval.data.statistics.DataStatisticCalculator#calculateResult()
      */
     @Override
-    protected final T calculateResult() throws DataStatisticCalculateException {
+    protected final T calculateResult() throws StatisticCalculateException {
         try {
             IRengine rEngine = repository.getRengineForCurrentThread();
             try {
@@ -76,7 +74,7 @@ public abstract class DataStatisticRCalculator<T extends DataStatistic> extends 
                      UnknownGoldStandardFormatException |
                      IllegalArgumentException | IOException | InvalidDataSetFormatException |
                      RegisterException | RException | InterruptedException e) {
-                throw new DataStatisticCalculateException(e);
+                throw new StatisticCalculateException(e);
             } finally {
                 rEngine.clear();
             }

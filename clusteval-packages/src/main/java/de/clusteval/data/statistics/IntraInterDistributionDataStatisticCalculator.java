@@ -28,6 +28,8 @@ import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.stats.DataStatisticCalculator;
+import de.clusteval.api.stats.IncompatibleDataConfigDataStatisticException;
+import de.clusteval.api.stats.StatisticCalculateException;
 import de.clusteval.utils.ArraysExt;
 import de.clusteval.utils.FileUtils;
 import java.io.File;
@@ -80,7 +82,7 @@ public class IntraInterDistributionDataStatisticCalculator extends
      */
     @Override
     protected IntraInterDistributionDataStatistic calculateResult()
-            throws DataStatisticCalculateException {
+            throws StatisticCalculateException {
         try {
             if (!dataConfig.hasGoldStandardConfig()) {
                 throw new IncompatibleDataConfigDataStatisticException(
@@ -138,7 +140,7 @@ public class IntraInterDistributionDataStatisticCalculator extends
         } catch (IncompatibleDataConfigDataStatisticException |
                  UnknownGoldStandardFormatException | IllegalArgumentException |
                  IOException | InvalidDataSetFormatException | RegisterException e) {
-            throw new DataStatisticCalculateException(e);
+            throw new StatisticCalculateException(e);
         }
     }
 

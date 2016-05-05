@@ -10,7 +10,6 @@
  ***************************************************************************** */
 package de.clusteval.data.statistics;
 
-import de.clusteval.api.stats.DataStatisticCalculator;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.api.cluster.IClustering;
@@ -19,6 +18,8 @@ import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.stats.DataStatisticCalculator;
+import de.clusteval.api.stats.StatisticCalculateException;
 import java.io.File;
 import java.util.Iterator;
 import java.util.List;
@@ -65,7 +66,7 @@ public class ClassSizeDistributionDataStatisticCalculator
      */
     @Override
     protected ClassSizeDistributionDataStatistic calculateResult()
-            throws DataStatisticCalculateException {
+            throws StatisticCalculateException {
         try {
             IDataSet ds = dataConfig.getDatasetConfig().getDataSet();
             ds.loadIntoMemory();
@@ -98,7 +99,7 @@ public class ClassSizeDistributionDataStatisticCalculator
             lastResult = result;
             return result;
         } catch (Exception e) {
-            throw new DataStatisticCalculateException(e);
+            throw new StatisticCalculateException(e);
         }
     }
 

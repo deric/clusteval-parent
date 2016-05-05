@@ -10,6 +10,8 @@
  ***************************************************************************** */
 package de.clusteval.data.statistics;
 
+import de.clusteval.api.stats.IncompatibleDataConfigDataStatisticException;
+import de.clusteval.api.stats.DataStatisticRCalculator;
 import de.clusteval.api.data.AbsoluteDataSet;
 import de.clusteval.api.data.DataMatrix;
 import de.clusteval.api.data.IDataConfig;

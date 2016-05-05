@@ -22,7 +22,7 @@ import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.cluster.Clustering;
-import de.clusteval.data.statistics.RunStatisticCalculateException;
+import de.clusteval.api.stats.RunStatisticCalculateException;
 import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.run.result.RunResult;
 import de.clusteval.utils.ArraysExt;

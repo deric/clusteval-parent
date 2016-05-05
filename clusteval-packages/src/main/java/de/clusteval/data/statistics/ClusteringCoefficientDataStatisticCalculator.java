@@ -10,16 +10,17 @@
  ***************************************************************************** */
 package de.clusteval.data.statistics;
 
-import de.clusteval.api.stats.DataStatisticCalculator;
 import de.clusteval.api.Matrix;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataSetConfig;
+import de.clusteval.api.data.RelativeDataSet;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RExpr;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.data.RelativeDataSet;
+import de.clusteval.api.stats.DataStatisticCalculator;
+import de.clusteval.api.stats.StatisticCalculateException;
 import de.clusteval.utils.ArraysExt;
 import java.io.File;
 import org.openide.util.Exceptions;
@@ -59,7 +60,7 @@ public class ClusteringCoefficientDataStatisticCalculator
     }
 
     @Override
-    protected ClusteringCoefficientDataStatistic calculateResult() throws DataStatisticCalculateException {
+    protected ClusteringCoefficientDataStatistic calculateResult() throws StatisticCalculateException {
         try {
             IRengine rEngine = repository.getRengineForCurrentThread();
             try {
@@ -89,7 +90,7 @@ public class ClusteringCoefficientDataStatisticCalculator
                         false, changeDate, absPath, result.asDouble());
 
             } catch (Exception e) {
-                throw new DataStatisticCalculateException(e);
+                throw new StatisticCalculateException(e);
             } finally {
                 rEngine.clear();
             }

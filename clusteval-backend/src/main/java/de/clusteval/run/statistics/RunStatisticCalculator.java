@@ -13,7 +13,7 @@ package de.clusteval.run.statistics;
 import de.clusteval.api.stats.RunStatistic;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
-import de.clusteval.data.statistics.RunStatisticCalculateException;
+import de.clusteval.api.stats.RunStatisticCalculateException;
 import de.clusteval.api.stats.StatisticCalculateException;
 import de.clusteval.api.stats.StatisticCalculator;
 import java.io.File;

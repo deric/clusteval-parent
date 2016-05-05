@@ -40,8 +40,8 @@ import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
 import de.clusteval.data.dataset.DataSetConfigNotFoundException;
 import de.clusteval.data.dataset.DataSetConfigurationException;
-import de.clusteval.data.statistics.IncompatibleDataConfigDataStatisticException;
-import de.clusteval.data.statistics.RunDataStatisticCalculateException;
+import de.clusteval.api.stats.IncompatibleDataConfigDataStatisticException;
+import de.clusteval.api.stats.RunStatisticCalculateException;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.framework.repository.config.RepositoryConfigurationException;
 import de.clusteval.run.InvalidRunModeException;
@@ -99,7 +99,7 @@ public abstract class RunDataStatisticRCalculator<T extends RunDataStatistic> ex
      */
     @Override
     protected final T calculateResult()
-            throws RunDataStatisticCalculateException {
+            throws RunStatisticCalculateException {
         try {
             try {
                 IRengine rEngine = repository.getRengineForCurrentThread();
@@ -122,7 +122,7 @@ public abstract class RunDataStatisticRCalculator<T extends RunDataStatistic> ex
                 throw new RNotAvailableException(e.getMessage());
             }
         } catch (Exception e) {
-            throw new RunDataStatisticCalculateException(e);
+            throw new RunStatisticCalculateException(e);
         }
     }
 

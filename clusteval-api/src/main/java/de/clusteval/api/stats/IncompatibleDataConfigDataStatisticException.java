@@ -8,13 +8,15 @@
  * Contributors:
  *     Christian Wiwie - initial API and implementation
  ***************************************************************************** */
-package de.clusteval.data.statistics;
+package de.clusteval.api.stats;
+
+import de.clusteval.api.exceptions.ClustEvalException;
 
 /**
  * @author Christian Wiwie
  *
  */
-public class IncompatibleDataConfigDataStatisticException extends Exception {
+public class IncompatibleDataConfigDataStatisticException extends ClustEvalException {
 
     private static final long serialVersionUID = 2509073724735078060L;
 

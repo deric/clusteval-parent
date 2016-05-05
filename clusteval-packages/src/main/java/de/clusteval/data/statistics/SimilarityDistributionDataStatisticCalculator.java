@@ -10,17 +10,18 @@
  ***************************************************************************** */
 package de.clusteval.data.statistics;
 
-import de.clusteval.api.stats.DataStatisticCalculator;
 import de.clusteval.api.Matrix;
 import de.clusteval.api.Pair;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataSetConfig;
+import de.clusteval.api.data.RelativeDataSet;
+import de.clusteval.api.data.RelativeDataSetFormat;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.data.RelativeDataSet;
-import de.clusteval.api.data.RelativeDataSetFormat;
+import de.clusteval.api.stats.DataStatisticCalculator;
+import de.clusteval.api.stats.StatisticCalculateException;
 import de.clusteval.utils.ArraysExt;
 import de.clusteval.utils.FileUtils;
 import java.io.File;
@@ -70,8 +71,7 @@ public class SimilarityDistributionDataStatisticCalculator
      * @see data.statistics.DataStatisticCalculator#calculate(data.DataConfig)
      */
     @Override
-    protected SimilarityDistributionDataStatistic calculateResult()
-            throws DataStatisticCalculateException {
+    protected SimilarityDistributionDataStatistic calculateResult() throws StatisticCalculateException {
         try {
             IDataSetConfig dataSetConfig = dataConfig.getDatasetConfig();
             RelativeDataSet dataSet = (RelativeDataSet) (dataSetConfig
@@ -98,7 +98,7 @@ public class SimilarityDistributionDataStatisticCalculator
             lastResult = result;
             return result;
         } catch (Exception e) {
-            throw new DataStatisticCalculateException(e);
+            throw new StatisticCalculateException(e);
         }
     }
 

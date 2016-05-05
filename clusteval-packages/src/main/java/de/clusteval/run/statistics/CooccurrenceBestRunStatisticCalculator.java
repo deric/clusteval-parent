@@ -18,7 +18,7 @@ import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.cluster.Clustering;
-import de.clusteval.data.statistics.RunStatisticCalculateException;
+import de.clusteval.api.stats.RunStatisticCalculateException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.program.ParameterSet;
 import de.clusteval.api.r.IRengine;

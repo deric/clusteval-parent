@@ -18,6 +18,7 @@ import de.clusteval.api.exceptions.InvalidDataSetFormatException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.stats.DataStatisticCalculator;
+import de.clusteval.api.stats.StatisticCalculateException;
 import java.io.File;
 import java.io.IOException;
 
@@ -62,7 +63,7 @@ public class NumberOfSamplesDataStatisticCalculator
      */
     @Override
     protected NumberOfSamplesDataStatistic calculateResult()
-            throws DataStatisticCalculateException {
+            throws StatisticCalculateException {
         try {
             IDataSetConfig dataSetConfig = dataConfig.getDatasetConfig();
             RelativeDataSet dataSet = (RelativeDataSet) (dataSetConfig
@@ -79,7 +80,7 @@ public class NumberOfSamplesDataStatisticCalculator
             return new NumberOfSamplesDataStatistic(repository, false,
                     changeDate, absPath, simMatrix.getIds().size());
         } catch (IllegalArgumentException | IOException | InvalidDataSetFormatException | RegisterException e) {
-            throw new DataStatisticCalculateException(e);
+            throw new StatisticCalculateException(e);
         }
     }
 
