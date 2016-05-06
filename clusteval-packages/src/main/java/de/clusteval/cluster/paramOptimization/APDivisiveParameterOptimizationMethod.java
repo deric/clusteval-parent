@@ -15,14 +15,15 @@ import de.clusteval.api.cluster.ClusteringQualitySet;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.exceptions.InternalAttributeException;
 import de.clusteval.api.exceptions.RunResultParseException;
+import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.opt.IDivergingParameterOptimizationMethod;
 import de.clusteval.api.opt.NoParameterSetFoundException;
 import de.clusteval.api.opt.ParameterOptimizationException;
 import de.clusteval.api.opt.ParameterOptimizationRun;
+import de.clusteval.api.opt.ParameterSet;
 import de.clusteval.api.opt.ParameterSetAlreadyEvaluatedException;
 import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.IProgramParameter;
-import de.clusteval.api.opt.ParameterSet;
 import de.clusteval.api.program.ProgramParameter;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.IRepository;
@@ -150,10 +151,9 @@ public class APDivisiveParameterOptimizationMethod extends DivisiveParameterOpti
      * getNextParameterSet()
      */
     @Override
-    public ParameterSet getNextParameterSet(
-            final ParameterSet forcedParameterSet)
+    public ParameterSet getNextParameterSet(final ParameterSet forcedParameterSet)
             throws InternalAttributeException, RegisterException,
-                   NoParameterSetFoundException, InterruptedException {
+                   NoParameterSetFoundException, InterruptedException, UnknownProviderException {
         ParameterSet iterationParamSet = null;
         ParameterSet preferenceParamSet = null;
 
@@ -219,8 +219,7 @@ public class APDivisiveParameterOptimizationMethod extends DivisiveParameterOpti
                     dataConfig, iterationParams, optimizationCriterion,
                     (int) Math.pow(this.numberTriesOnNotTerminated,
                             iterationParams.size()), isResume);
-            this.iterationParamMethod.reset(new File(this.getResult()
-                    .getAbsolutePath()));
+            this.iterationParamMethod.reset(new File(this.getResult().getAbsolutePath()));
             iterationParamSet = this.iterationParamMethod.next(
                     forcedParameterSet,
                     this.iterationParamMethod.getStartedCount() + 1);

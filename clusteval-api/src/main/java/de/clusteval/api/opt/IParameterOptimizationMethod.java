@@ -17,8 +17,9 @@
 package de.clusteval.api.opt;
 
 import de.clusteval.api.exceptions.InternalAttributeException;
-import de.clusteval.api.repository.IRepositoryObject;
+import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.repository.IRepositoryObject;
 
 /**
  *
@@ -61,10 +62,10 @@ public interface IParameterOptimizationMethod extends IRepositoryObject {
      * @throws InterruptedException
      * @throws ParameterSetAlreadyEvaluatedException
      */
-    ParameterSet getNextParameterSet(
-            ParameterSet forcedParameterSet) throws InternalAttributeException,
-                                                    RegisterException, NoParameterSetFoundException,
-                                                    InterruptedException, ParameterSetAlreadyEvaluatedException;
+    ParameterSet getNextParameterSet(ParameterSet forcedParameterSet)
+            throws InternalAttributeException, RegisterException,
+                   NoParameterSetFoundException, InterruptedException,
+                   ParameterSetAlreadyEvaluatedException, UnknownProviderException;
 
     /**
      * @return True, if there are more iterations together with parameter sets

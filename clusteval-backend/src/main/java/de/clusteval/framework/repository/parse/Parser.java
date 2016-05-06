@@ -19,6 +19,8 @@ package de.clusteval.framework.repository.parse;
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.data.DataConfig;
 import de.clusteval.api.data.DataRandomizerFactory;
+import de.clusteval.api.data.DataSetConfigNotFoundException;
+import de.clusteval.api.data.DataSetConfigurationException;
 import de.clusteval.api.data.GoldStandard;
 import de.clusteval.api.data.GoldStandardConfig;
 import de.clusteval.api.data.IDataConfig;
@@ -41,42 +43,41 @@ import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.opt.InvalidOptimizationParameterException;
+import de.clusteval.api.opt.ParameterOptimizationMethod;
+import de.clusteval.api.opt.ParameterOptimizationRun;
+import de.clusteval.api.opt.ParameterSet;
 import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
 import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.IProgramParameter;
-import de.clusteval.api.opt.ParameterSet;
 import de.clusteval.api.program.ProgramConfig;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.IRepositoryObject;
 import de.clusteval.api.repository.RepositoryController;
+import de.clusteval.api.run.ExecutionRun;
 import de.clusteval.api.run.IRun;
+import de.clusteval.api.run.IRunResultPostprocessor;
 import de.clusteval.api.run.IncompatibleParameterOptimizationMethodException;
-import de.clusteval.api.opt.ParameterOptimizationRun;
+import de.clusteval.api.run.Run;
+import de.clusteval.api.run.RunException;
 import de.clusteval.api.run.result.RunResultPostprocessor;
 import de.clusteval.api.run.result.RunResultPostprocessorParameters;
 import de.clusteval.api.stats.IDataStatistic;
 import de.clusteval.api.stats.RunDataStatistic;
 import de.clusteval.api.stats.RunStatistic;
-import de.clusteval.api.opt.ParameterOptimizationMethod;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
-import de.clusteval.api.data.DataSetConfigNotFoundException;
-import de.clusteval.api.data.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.data.dataset.RunResultDataSetConfig;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.run.AnalysisRun;
 import de.clusteval.run.ClusteringRun;
 import de.clusteval.run.DataAnalysisRun;
-import de.clusteval.api.run.ExecutionRun;
 import de.clusteval.run.InternalParameterOptimizationRun;
 import de.clusteval.run.RobustnessAnalysisRun;
-import de.clusteval.api.run.Run;
 import de.clusteval.run.RunAnalysisRun;
 import de.clusteval.run.RunDataAnalysisRun;
-import de.clusteval.api.run.RunException;
 import de.clusteval.utils.FileUtils;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -99,7 +100,8 @@ import org.slf4j.LoggerFactory;
  * @param <P>
  *
  */
-public abstract class Parser<P extends IRepositoryObject> {
+//TODO should implement parser interface
+public abstract class Parser<P extends IRepositoryObject> { // implements IParser<P> {
 
     /**
      * TODO: this is completely wrong approach - we should get parser for some child class
@@ -159,7 +161,7 @@ public abstract class Parser<P extends IRepositoryObject> {
         return parser.getResult();
     }
 
-    public static Run parseRunFromFile(final File file)
+    public static IRun parseRunFromFile(final File file)
             throws
             GoldStandardNotFoundException, GoldStandardConfigurationException, DataSetConfigurationException,
             DataSetNotFoundException, DataSetConfigNotFoundException, GoldStandardConfigNotFoundException,
@@ -442,7 +444,7 @@ class ExecutionRunParser<T extends ExecutionRun> extends RunParser<T> {
     protected List<ClusteringEvaluation> qualityMeasures;
     protected List<Map<IProgramParameter<?>, String>> runParamValues;
     protected Map<IProgramParameter<?>, String> paramMap;
-    protected List<RunResultPostprocessor> postprocessor;
+    protected List<IRunResultPostprocessor> postprocessor;
     protected Map<String, Integer> maxExecutionTimes;
 
     @Override

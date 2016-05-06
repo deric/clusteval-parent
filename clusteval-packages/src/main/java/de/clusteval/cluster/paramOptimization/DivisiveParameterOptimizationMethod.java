@@ -10,22 +10,23 @@
  ***************************************************************************** */
 package de.clusteval.cluster.paramOptimization;
 
-import de.clusteval.api.opt.ParameterOptimizationMethod;
 import de.clusteval.api.ClusteringEvaluation;
+import de.clusteval.api.data.DataSetFormat;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.exceptions.InternalAttributeException;
+import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.opt.NoParameterSetFoundException;
 import de.clusteval.api.opt.ParameterOptimizationException;
+import de.clusteval.api.opt.ParameterOptimizationMethod;
+import de.clusteval.api.opt.ParameterOptimizationRun;
+import de.clusteval.api.opt.ParameterSet;
+import de.clusteval.api.program.DoubleProgramParameter;
 import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.IProgramParameter;
-import de.clusteval.api.opt.ParameterSet;
-import de.clusteval.api.program.RegisterException;
-import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.data.DataSetFormat;
-import de.clusteval.api.program.DoubleProgramParameter;
 import de.clusteval.api.program.IntegerProgramParameter;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.program.StringProgramParameter;
-import de.clusteval.api.opt.ParameterOptimizationRun;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.utils.ArraysExt;
 import de.clusteval.utils.RangeCreationException;
 import java.io.File;
@@ -218,7 +219,7 @@ public class DivisiveParameterOptimizationMethod extends ParameterOptimizationMe
     public ParameterSet getNextParameterSet(
             final ParameterSet forcedParameterSet)
             throws InternalAttributeException, RegisterException,
-                   NoParameterSetFoundException, InterruptedException {
+                   NoParameterSetFoundException, InterruptedException, UnknownProviderException {
 
         this.increaseCurrentPos();
 
@@ -290,35 +291,16 @@ public class DivisiveParameterOptimizationMethod extends ParameterOptimizationMe
         return true;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * cluster.paramOptimization.ParameterOptimizationMethod#getTotalIterationCount
-     * ()
-     */
     @Override
     public int getTotalIterationCount() {
         return (int) ArraysExt.product(this.iterationPerParameter);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see cluster.paramOptimization.ParameterOptimizationMethod#
-     * getCompatibleDataSetFormatBaseClasses()
-     */
     @Override
     public List<Class<? extends DataSetFormat>> getCompatibleDataSetFormatBaseClasses() {
         return new ArrayList<>();
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see cluster.paramOptimization.ParameterOptimizationMethod#
-     * getCompatibleProgramClasses()
-     */
     @Override
     public List<String> getCompatibleProgramNames() {
         return new ArrayList<>();

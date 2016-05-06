@@ -45,7 +45,10 @@ import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.r.UnknownRProgramException;
+import de.clusteval.api.repository.IParser;
 import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.repository.ParserFactory;
+import de.clusteval.api.repository.RepositoryConfigurationException;
 import de.clusteval.api.repository.RepositoryController;
 import de.clusteval.api.repository.RepositoryFactory;
 import de.clusteval.api.run.result.RunResult;
@@ -164,23 +167,22 @@ public class RunResultFactory extends ServiceFactory<IRunResult> {
         return result;
     }
 
-    public static Run parseFromRunResultFolder2(final IRepository parentRepository, final File runResultFolder,
+    public static IRun parseFromRunResultFolder2(final IRepository parentRepository, final File runResultFolder,
             final List<IRunResult> result, final boolean parseClusterings,
             final boolean storeClusterings, final boolean register)
-            throws IOException, UnknownRunResultFormatException, InvalidRunModeException,
+            throws IOException, UnknownRunResultFormatException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
                    UnknownProgramParameterException, UnknownGoldStandardFormatException,
                    InvalidConfigurationFileException, RepositoryAlreadyExistsException, InvalidRepositoryException,
                    NoRepositoryFoundException, GoldStandardNotFoundException, InvalidOptimizationParameterException,
                    GoldStandardConfigurationException, DataSetConfigurationException, DataSetNotFoundException,
-                   DataSetConfigNotFoundException, GoldStandardConfigNotFoundException, DataConfigurationException,
-                   DataConfigNotFoundException, RunException,
+                   DataSetConfigNotFoundException, GoldStandardConfigNotFoundException,
+                   RunException,
                    UnknownProgramTypeException, UnknownRProgramException,
                    IncompatibleParameterOptimizationMethodException,
-                   RepositoryConfigNotFoundException, RepositoryConfigurationException,
+                   RepositoryConfigurationException,
                    ConfigurationException, RegisterException, NumberFormatException,
                    NoDataSetException, RunResultParseException,
-                   IncompatibleDataSetConfigPreprocessorException,
                    IncompatibleContextException, UnknownParameterType, InterruptedException,
                    UnknownRunResultPostprocessorException, FileNotFoundException, UnknownProviderException {
         try {
@@ -203,7 +205,9 @@ public class RunResultFactory extends ServiceFactory<IRunResult> {
                 if (runFile == null) {
                     return null;
                 }
-                final Run run = Parser.parseRunFromFile(runFile);
+                //TODO: make it work!
+                IParser parser = ParserFactory.findParser(runFile);
+                final IRun run = parser.parseRunFromFile(runFile);
 
                 if (run instanceof ParameterOptimizationRun) {
                     final ParameterOptimizationRun paramRun = (ParameterOptimizationRun) run;
@@ -306,20 +310,18 @@ public class RunResultFactory extends ServiceFactory<IRunResult> {
             final List<IRunResult> result, final boolean parseClusterings, final boolean storeClusterings,
             final boolean register)
             throws IOException, UnknownRunResultFormatException,
-                   InvalidRunModeException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
                    UnknownProgramParameterException, UnknownGoldStandardFormatException,
                    InvalidConfigurationFileException, RepositoryAlreadyExistsException, InvalidRepositoryException,
                    NoRepositoryFoundException, GoldStandardNotFoundException, InvalidOptimizationParameterException,
                    GoldStandardConfigurationException, DataSetConfigurationException, DataSetNotFoundException,
-                   DataSetConfigNotFoundException, GoldStandardConfigNotFoundException, DataConfigurationException,
-                   DataConfigNotFoundException, RunException,
+                   DataSetConfigNotFoundException, GoldStandardConfigNotFoundException,
+                   RunException,
                    UnknownProgramTypeException, UnknownRProgramException,
                    IncompatibleParameterOptimizationMethodException,
-                   RepositoryConfigNotFoundException, RepositoryConfigurationException,
+                   RepositoryConfigurationException,
                    ConfigurationException, RegisterException, NumberFormatException,
                    NoDataSetException, RunResultParseException,
-                   IncompatibleDataSetConfigPreprocessorException,
                    IncompatibleContextException, UnknownParameterType, InterruptedException,
                    UnknownRunResultPostprocessorException, FileNotFoundException, UnknownProviderException {
         try {
@@ -328,7 +330,9 @@ public class RunResultFactory extends ServiceFactory<IRunResult> {
             RepositoryController ctrl = RepositoryController.getInstance();
             IRepository childRepository = ctrl.getRepositoryForExactPath(runResultFolder.getAbsolutePath());
             if (childRepository == null) {
-                childRepository = new RunResultRepository(runResultFolder.getAbsolutePath(), parentRepository);
+                childRepository = RepositoryFactory.parseFromString("RunResultRepository");
+                childRepository.init(runResultFolder.getAbsolutePath(), parentRepository, null);
+                childRepository.initialize();
             }
             childRepository.initialize();
             try {
@@ -347,27 +351,30 @@ public class RunResultFactory extends ServiceFactory<IRunResult> {
                 if (runFile == null) {
                     return null;
                 }
-                final IRun run = Parser.parseRunFromFile(runFile);
 
-                if (run instanceof ClusteringRun) {
-                    return ClusteringRunResult.parseFromRunResultFolder((ClusteringRun) run, childRepository,
-                            runResultFolder, result, register);
-                } else if (run instanceof ParameterOptimizationRun) {
-                    return ParameterOptimizationResult.parseFromRunResultFolder((ParameterOptimizationRun) run,
-                            childRepository, runResultFolder, result, parseClusterings, storeClusterings, register);
-                } else if (run instanceof DataAnalysisRun) {
-                    DataAnalysisRunResult.parseFromRunResultFolder((DataAnalysisRun) run, childRepository,
-                            runResultFolder, result, register);
-                    return run;
-                } else if (run instanceof RunDataAnalysisRun) {
-                    RunDataAnalysisRunResult.parseFromRunResultFolder((RunDataAnalysisRun) run, childRepository,
-                            runResultFolder, result, register);
-                    return run;
-                } else if (run instanceof RunAnalysisRun) {
-                    RunAnalysisRunResult.parseFromRunResultFolder((RunAnalysisRun) run, childRepository,
-                            runResultFolder, result, register);
-                    return run;
-                }
+                IParser parser = ParserFactory.findParser(runFile);
+                final IRun run = parser.parseRunFromFile(runFile);
+                //TODO write an interface for finding appropriate Run class
+                /*
+                 * if (run instanceof ClusteringRun) {
+                 * return ClusteringRunResult.parseFromRunResultFolder((ClusteringRun) run, childRepository,
+                 * runResultFolder, result, register);
+                 * } else if (run instanceof ParameterOptimizationRun) {
+                 * return ParameterOptimizationResult.parseFromRunResultFolder((ParameterOptimizationRun) run,
+                 * childRepository, runResultFolder, result, parseClusterings, storeClusterings, register);
+                 * } else if (run instanceof DataAnalysisRun) {
+                 * DataAnalysisRunResult.parseFromRunResultFolder((DataAnalysisRun) run, childRepository,
+                 * runResultFolder, result, register);
+                 * return run;
+                 * } else if (run instanceof RunDataAnalysisRun) {
+                 * RunDataAnalysisRunResult.parseFromRunResultFolder((RunDataAnalysisRun) run, childRepository,
+                 * runResultFolder, result, register);
+                 * return run;
+                 * } else if (run instanceof RunAnalysisRun) {
+                 * RunAnalysisRunResult.parseFromRunResultFolder((RunAnalysisRun) run, childRepository,
+                 * runResultFolder, result, register);
+                 * return run;
+                 * } */
                 return run;
             } finally {
                 childRepository.terminateSupervisorThread();

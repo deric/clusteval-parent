@@ -24,6 +24,7 @@ import de.clusteval.api.run.NoRunResultFormatParserException;
 import de.clusteval.api.run.RUN_STATUS;
 import de.clusteval.api.run.Run;
 import de.clusteval.api.run.RunInitializationException;
+import de.clusteval.api.run.RunResultFactory;
 import de.clusteval.api.run.RunRunnable;
 import de.clusteval.api.run.RunRunnableInitializationException;
 import de.clusteval.api.run.result.RunResult;
@@ -537,13 +538,12 @@ public class RunSchedulerThread extends ClustevalThread implements IScheduler {
                 } else {
                     ArrayList<ParameterOptimizationResult> results = new ArrayList<ParameterOptimizationResult>();
                     try {
-                        run = ParameterOptimizationResult
-                                .parseFromRunResultFolder2(
-                                        repository,
-                                        new File(FileUtils.buildPath(repository
-                                                .getBasePath(RunResult.class),
-                                                runId)), results, false, false,
-                                        false).clone();
+                        run = RunResultFactory.parseFromRunResultFolder2(
+                                repository,
+                                new File(FileUtils.buildPath(repository
+                                        .getBasePath(RunResult.class),
+                                        runId)), results, false, false,
+                                false).clone();
                         run.setStatus(RUN_STATUS.SCHEDULED);
 
                         if (!this.clientToRunResumes.containsKey(clientId)) {

@@ -54,6 +54,8 @@ import de.clusteval.api.repository.DynamicRepositoryEntityMap;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.IRepositoryConfig;
 import de.clusteval.api.repository.IRepositoryObject;
+import de.clusteval.api.repository.RepositoryConfig;
+import de.clusteval.api.repository.RepositoryConfigurationException;
 import de.clusteval.api.repository.RepositoryController;
 import de.clusteval.api.repository.RepositoryObject;
 import de.clusteval.api.repository.StaticRepositoryEntity;
@@ -78,9 +80,6 @@ import de.clusteval.cluster.Clustering;
 import de.clusteval.data.goldstandard.format.GoldStandardFormat;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.framework.repository.config.DefaultRepositoryConfig;
-import de.clusteval.api.repository.RepositoryConfig;
-import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
-import de.clusteval.api.repository.RepositoryConfigurationException;
 import de.clusteval.framework.repository.db.DefaultSQLCommunicator;
 import de.clusteval.framework.repository.db.RunResultSQLCommunicator;
 import de.clusteval.framework.repository.db.SQLCommunicator;
@@ -335,7 +334,7 @@ public class Repository implements IRepository {
      */
     public Repository(final String basePath, final IRepository parent)
             throws FileNotFoundException, RepositoryAlreadyExistsException, InvalidRepositoryException,
-                   RepositoryConfigNotFoundException, RepositoryConfigurationException, DatabaseConnectException {
+                   RepositoryConfigurationException, DatabaseConnectException {
         this(basePath, parent, null);
     }
 
@@ -355,13 +354,13 @@ public class Repository implements IRepository {
      */
     public Repository(final String basePath, final IRepository parent, final RepositoryConfig overrideConfig)
             throws FileNotFoundException, RepositoryAlreadyExistsException, InvalidRepositoryException,
-                   RepositoryConfigNotFoundException, RepositoryConfigurationException, DatabaseConnectException {
+                   RepositoryConfigurationException, DatabaseConnectException {
         init(basePath, parent, overrideConfig);
     }
 
     public void init(final String basePath, final IRepository parent, final RepositoryConfig overrideConfig)
             throws FileNotFoundException, RepositoryAlreadyExistsException, InvalidRepositoryException,
-                   RepositoryConfigNotFoundException, RepositoryConfigurationException, DatabaseConnectException {
+                   RepositoryConfigurationException, DatabaseConnectException {
 
         this.log = LoggerFactory.getLogger(this.getClass());
         instanceContent = new InstanceContent();

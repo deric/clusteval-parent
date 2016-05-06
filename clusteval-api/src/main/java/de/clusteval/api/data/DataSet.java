@@ -523,7 +523,7 @@ public abstract class DataSet extends RepositoryObject implements IDataSet, IRep
             final IConversionConfiguration configStandardToInput)
             throws IOException, InvalidDataSetFormatException,
                    RegisterException,
-                   FormatConversionException {
+                   FormatConversionException, UnknownProviderException {
 
         IDataSet result = null;
 

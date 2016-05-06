@@ -10,27 +10,28 @@
  ***************************************************************************** */
 package de.clusteval.cluster.paramOptimization;
 
-import de.clusteval.api.opt.ParameterOptimizationMethod;
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.Pair;
 import de.clusteval.api.cluster.ClusteringQualitySet;
+import de.clusteval.api.data.DataSetFormat;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.exceptions.InternalAttributeException;
 import de.clusteval.api.exceptions.RunResultParseException;
+import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.opt.NoParameterSetFoundException;
 import de.clusteval.api.opt.ParameterOptimizationException;
+import de.clusteval.api.opt.ParameterOptimizationMethod;
+import de.clusteval.api.opt.ParameterOptimizationRun;
+import de.clusteval.api.opt.ParameterSet;
 import de.clusteval.api.opt.ParameterSetAlreadyEvaluatedException;
+import de.clusteval.api.program.DoubleProgramParameter;
 import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.IProgramParameter;
-import de.clusteval.api.opt.ParameterSet;
-import de.clusteval.api.program.RegisterException;
-import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.data.DataSetFormat;
-import de.clusteval.api.program.DoubleProgramParameter;
 import de.clusteval.api.program.IntegerProgramParameter;
 import de.clusteval.api.program.ProgramParameter;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.program.StringProgramParameter;
-import de.clusteval.api.opt.ParameterOptimizationRun;
+import de.clusteval.api.repository.IRepository;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -133,11 +134,10 @@ public class LayeredDivisiveParameterOptimizationMethod
      * ()
      */
     @Override
-    public synchronized ParameterSet getNextParameterSet(
-            final ParameterSet forcedParameterSet)
+    public synchronized ParameterSet getNextParameterSet(final ParameterSet forcedParameterSet)
             throws InternalAttributeException, RegisterException,
                    NoParameterSetFoundException, InterruptedException,
-                   ParameterSetAlreadyEvaluatedException {
+                   ParameterSetAlreadyEvaluatedException, UnknownProviderException {
         if (this.currentDivisiveMethod == null
                 || (!this.currentDivisiveMethod.hasNext() && this.currentLayer < this.layerCount)) {
             boolean allParamSetsFinished = false;
@@ -199,7 +199,7 @@ public class LayeredDivisiveParameterOptimizationMethod
      *
      */
     protected void applyNextDivisiveMethod() throws InternalAttributeException,
-                                                    RegisterException, InterruptedException {
+                                                    RegisterException, InterruptedException, UnknownProviderException {
         /*
          * First we take the new optimum of the last divisive layer, if there
          * was one
@@ -338,8 +338,7 @@ public class LayeredDivisiveParameterOptimizationMethod
         try {
             this.currentDivisiveMethod = createDivisiveMethod(newParams,
                     newIterationsPerParameter);
-            this.currentDivisiveMethod.reset(new File(this.getResult()
-                    .getAbsolutePath()));
+            this.currentDivisiveMethod.reset(new File(this.getResult().getAbsolutePath()));
         } catch (ParameterOptimizationException | RunResultParseException e) {
             e.printStackTrace();
         }
@@ -437,7 +436,7 @@ public class LayeredDivisiveParameterOptimizationMethod
     @Override
     public void reset(final File absResultPath)
             throws ParameterOptimizationException, InternalAttributeException,
-                   RegisterException, RunResultParseException, InterruptedException {
+                   RegisterException, RunResultParseException, InterruptedException, UnknownProviderException {
         this.currentLayer = 0;
         this.remainingIterationCount = getTotalIterationCount();
         if (this.originalParameters != null) {

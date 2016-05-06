@@ -719,10 +719,10 @@ public abstract class Run extends RepositoryObject implements IRun {
      * @throws RunInitializationException
      */
     @SuppressWarnings("unused")
-    public void resume(final IScheduler runScheduler,
-            final String runIdentString) throws MissingParameterValueException,
-                                                IOException, NoRunResultFormatParserException,
-                                                RunRunnableInitializationException, RunInitializationException, UnknownProviderException {
+    public void resume(final IScheduler runScheduler, final String runIdentString)
+            throws MissingParameterValueException,
+                   IOException, NoRunResultFormatParserException,
+                   RunRunnableInitializationException, RunInitializationException, UnknownProviderException {
         beforeResume(runIdentString);
         doResume(runScheduler, runIdentString);
         waitForRunnablesToFinish();

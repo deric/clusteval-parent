@@ -12,7 +12,6 @@
  */
 package de.clusteval.cluster.paramOptimization;
 
-import de.clusteval.api.opt.ParameterOptimizationMethod;
 import ch.qos.logback.classic.Level;
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.ContextFactory;
@@ -37,19 +36,20 @@ import de.clusteval.api.exceptions.RunResultParseException;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.opt.NoParameterSetFoundException;
 import de.clusteval.api.opt.ParameterOptimizationException;
+import de.clusteval.api.opt.ParameterOptimizationMethod;
+import de.clusteval.api.opt.ParameterSet;
 import de.clusteval.api.opt.ParameterSetAlreadyEvaluatedException;
 import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
-import de.clusteval.api.opt.ParameterSet;
+import de.clusteval.api.program.ProgramConfig;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
+import de.clusteval.api.repository.RepositoryConfigurationException;
+import de.clusteval.api.run.Run;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
-import de.clusteval.api.repository.RepositoryConfigurationException;
-import de.clusteval.api.program.ProgramConfig;
-import de.clusteval.api.run.Run;
 import de.clusteval.utils.AbstractClustEvalTest;
 import java.io.File;
 import java.io.IOException;
@@ -59,6 +59,8 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import org.junit.Assert;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import org.junit.Test;
 
 /**
@@ -312,7 +314,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
             System.out.println(paramSet);
             Assert.assertEquals(itParams.next(), paramSet);
             method.giveQualityFeedback(paramSet, it.next());
-            Assert.assertEquals(itItNum.next().intValue(), method.currentCount);
+            assertEquals(itItNum.next().intValue(), method.currentCount);
         }
     }
 
@@ -402,7 +404,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
         method.reset(new File(
                 "testCaseRepository/results/04_06_2013-15_56_18_paper_run_synthetic/clusters/TransClust_2_synthetic_cassini250.results.qual.complete.test"));
 
-        Assert.assertFalse(method.hasNext());
+        assertFalse(method.hasNext());
     }
 
     @Test

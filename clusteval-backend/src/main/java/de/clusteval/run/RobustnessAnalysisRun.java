@@ -16,15 +16,16 @@
  */
 package de.clusteval.run;
 
-import de.clusteval.api.run.RunException;
-import de.clusteval.api.run.RunInitializationException;
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.IContext;
 import de.clusteval.api.Triple;
 import de.clusteval.api.cluster.ClustEvalValue;
 import de.clusteval.api.cluster.ClusteringQualitySet;
+import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.data.DataConfig;
 import de.clusteval.api.data.DataRandomizeException;
+import de.clusteval.api.data.DataSetConfigNotFoundException;
+import de.clusteval.api.data.DataSetConfigurationException;
 import de.clusteval.api.data.GoldStandard;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataRandomizer;
@@ -34,6 +35,7 @@ import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigurationException;
 import de.clusteval.api.exceptions.GoldStandardNotFoundException;
 import de.clusteval.api.exceptions.IncompatibleContextException;
+import de.clusteval.api.exceptions.InvalidConfigurationFileException;
 import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
@@ -46,36 +48,34 @@ import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.opt.InvalidOptimizationParameterException;
+import de.clusteval.api.opt.ParameterSet;
 import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
 import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.IProgramParameter;
-import de.clusteval.api.opt.ParameterSet;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.repository.RepositoryConfigurationException;
 import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.IRunResult;
+import de.clusteval.api.run.IRunResultPostprocessor;
+import de.clusteval.api.run.IRunRunnable;
 import de.clusteval.api.run.IScheduler;
-import de.clusteval.cluster.Clustering;
 import de.clusteval.api.run.IncompatibleParameterOptimizationMethodException;
+import de.clusteval.api.run.RunException;
+import de.clusteval.api.run.RunInitializationException;
+import de.clusteval.api.run.RunResultFactory;
+import de.clusteval.api.run.result.RunResult;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
-import de.clusteval.api.data.DataSetConfigNotFoundException;
-import de.clusteval.api.data.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
-import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
-import de.clusteval.api.repository.RepositoryConfigurationException;
 import de.clusteval.run.result.ClusteringRunResult;
 import de.clusteval.run.result.ParameterOptimizationResult;
-import de.clusteval.api.run.result.RunResult;
-import de.clusteval.api.run.result.RunResultPostprocessor;
 import de.clusteval.run.runnable.ExecutionRunRunnable;
 import de.clusteval.run.runnable.RobustnessAnalysisRunRunnable;
-import de.clusteval.api.run.RunRunnable;
 import de.clusteval.utils.FileUtils;
-import de.clusteval.api.exceptions.InvalidConfigurationFileException;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -133,7 +133,7 @@ public class RobustnessAnalysisRun extends ClusteringRun {
             List<IDataConfig> originalDataConfigs,
             List<ClusteringEvaluation> qualityMeasures,
             List<Map<IProgramParameter<?>, String>> parameterValues,
-            final List<RunResultPostprocessor> postProcessors,
+            final List<IRunResultPostprocessor> postProcessors,
             final IDataRandomizer randomizer,
             final List<ParameterSet> randomizerParams,
             final int numberOfRandomizedDataSets,
@@ -530,7 +530,6 @@ public class RobustnessAnalysisRun extends ClusteringRun {
                    NoRepositoryFoundException, InvalidOptimizationParameterException,
                    RunException, UnknownProgramTypeException, UnknownRProgramException,
                    IncompatibleParameterOptimizationMethodException,
-                   RepositoryConfigNotFoundException,
                    RepositoryConfigurationException,
                    IncompatibleDataSetConfigPreprocessorException,
                    IncompatibleContextException, InterruptedException,
@@ -553,7 +552,7 @@ public class RobustnessAnalysisRun extends ClusteringRun {
         for (String runIdentifier : this.uniqueRunAnalysisRunIdentifiers) {
             this.log.info("... parsing run result '" + runIdentifier + "'");
             List<IRunResult> results = new ArrayList<>();
-            RunResult.parseFromRunResultFolder(
+            RunResultFactory.parseFromRunResultFolder(
                     repository,
                     new File(FileUtils.buildPath(
                             repository.getBasePath(RunResult.class),
@@ -595,8 +594,7 @@ public class RobustnessAnalysisRun extends ClusteringRun {
                         Map<ClusteringEvaluation, ParameterSet> optParams = paramOptResult
                                 .getOptimalParameterSets();
                         ParameterSet bestParamSet = optParams.get(measure);
-                        Clustering cl = paramOptResult
-                                .getClustering(bestParamSet);
+                        IClustering cl = paramOptResult.getClustering(bestParamSet);
                         if (paramOptResult.get(bestParamSet) == null) {
                             continue;
                         }
@@ -711,8 +709,8 @@ public class RobustnessAnalysisRun extends ClusteringRun {
      * de.clusteval.framework.threading.RunSchedulerThread, int)
      */
     @Override
-    protected RunRunnable createAndScheduleRunnableForResumePair(
-            IScheduler runScheduler, int p) {
+    protected IRunRunnable createAndScheduleRunnableForResumePair(
+            IScheduler runScheduler, int p) throws UnknownProviderException {
         this.log.info(String.format("%s\t%s\t%s", this.runPairs.get(p)
                 .getFirst(), this.runPairs.get(p).getSecond(),
                 this.parameterValues.get(p)));

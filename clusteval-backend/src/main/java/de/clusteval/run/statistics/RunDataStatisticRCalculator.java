@@ -10,11 +10,14 @@
  ***************************************************************************** */
 package de.clusteval.run.statistics;
 
+import de.clusteval.api.data.DataSetConfigNotFoundException;
+import de.clusteval.api.data.DataSetConfigurationException;
 import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigurationException;
 import de.clusteval.api.exceptions.GoldStandardNotFoundException;
 import de.clusteval.api.exceptions.InternalAttributeException;
+import de.clusteval.api.exceptions.InvalidConfigurationFileException;
 import de.clusteval.api.exceptions.InvalidDataSetFormatException;
 import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
@@ -34,20 +37,16 @@ import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.stats.RunDataStatistic;
+import de.clusteval.api.repository.RepositoryConfigurationException;
 import de.clusteval.api.run.IncompatibleParameterOptimizationMethodException;
+import de.clusteval.api.run.RunException;
+import de.clusteval.api.stats.IncompatibleDataConfigDataStatisticException;
+import de.clusteval.api.stats.RunDataStatistic;
+import de.clusteval.api.stats.RunStatisticCalculateException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
-import de.clusteval.api.data.DataSetConfigNotFoundException;
-import de.clusteval.api.data.DataSetConfigurationException;
-import de.clusteval.api.stats.IncompatibleDataConfigDataStatisticException;
-import de.clusteval.api.stats.RunStatisticCalculateException;
-import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
-import de.clusteval.api.repository.RepositoryConfigurationException;
 import de.clusteval.run.InvalidRunModeException;
-import de.clusteval.api.run.RunException;
 import de.clusteval.run.result.AnalysisRunResultException;
-import de.clusteval.api.exceptions.InvalidConfigurationFileException;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -146,7 +145,7 @@ public abstract class RunDataStatisticRCalculator<T extends RunDataStatistic> ex
                    UnknownProgramTypeException,
                    UnknownRProgramException,
                    IncompatibleParameterOptimizationMethodException,
-                   AnalysisRunResultException, RepositoryConfigNotFoundException,
+                   AnalysisRunResultException,
                    RepositoryConfigurationException, RegisterException,
                    NoDataSetException,
                    RunResultParseException,

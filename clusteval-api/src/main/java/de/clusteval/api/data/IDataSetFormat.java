@@ -168,11 +168,11 @@ public interface IDataSetFormat extends IRepositoryObject {
      * Signals that an I/O exception has occurred.
      * @throws InvalidDataSetFormatException
      * @throws RegisterException
-     * @throws UnknownDataSetFormatException
+     * @throws UnknownProviderException
      */
     IDataSet convertToThisFormat(IDataSet dataSet, IDataSetFormat dataSetFormat, IConversionConfiguration config)
             throws IOException, InvalidDataSetFormatException,
-                   RegisterException;
+                   RegisterException, UnknownProviderException;
 
     /**
      *

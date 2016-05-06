@@ -10,27 +10,28 @@
  ***************************************************************************** */
 package de.clusteval.cluster.paramOptimization;
 
-import de.clusteval.api.opt.ParameterOptimizationMethod;
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.Pair;
 import de.clusteval.api.cluster.ClusteringQualitySet;
+import de.clusteval.api.data.DataSetFormat;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.exceptions.InternalAttributeException;
 import de.clusteval.api.exceptions.RunResultParseException;
+import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.opt.NoParameterSetFoundException;
 import de.clusteval.api.opt.ParameterOptimizationException;
+import de.clusteval.api.opt.ParameterOptimizationMethod;
+import de.clusteval.api.opt.ParameterOptimizationRun;
+import de.clusteval.api.opt.ParameterSet;
 import de.clusteval.api.opt.ParameterSetAlreadyEvaluatedException;
+import de.clusteval.api.program.DoubleProgramParameter;
 import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.IProgramParameter;
-import de.clusteval.api.opt.ParameterSet;
-import de.clusteval.api.program.RegisterException;
-import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.data.DataSetFormat;
-import de.clusteval.api.program.DoubleProgramParameter;
 import de.clusteval.api.program.IntegerProgramParameter;
 import de.clusteval.api.program.ProgramParameter;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.program.StringProgramParameter;
-import de.clusteval.api.opt.ParameterOptimizationRun;
+import de.clusteval.api.repository.IRepository;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -128,11 +129,9 @@ public class FlatteningLayeredDivisiveParameterOptimizationMethod
      * ()
      */
     @Override
-    public synchronized ParameterSet getNextParameterSet(
-            final ParameterSet forcedParameterSet)
-            throws InternalAttributeException, RegisterException,
-                   NoParameterSetFoundException, InterruptedException,
-                   ParameterSetAlreadyEvaluatedException {
+    public synchronized ParameterSet getNextParameterSet(final ParameterSet forcedParameterSet)
+            throws InternalAttributeException, RegisterException, NoParameterSetFoundException, InterruptedException,
+                   ParameterSetAlreadyEvaluatedException, UnknownProviderException {
         if (this.currentDivisiveMethod == null
                 || (!this.currentDivisiveMethod.hasNext() && this.currentLayer < this.layerCount)) {
             boolean allParamSetsFinished = false;
@@ -193,7 +192,7 @@ public class FlatteningLayeredDivisiveParameterOptimizationMethod
      *
      */
     protected void applyNextDivisiveMethod() throws InternalAttributeException,
-                                                    RegisterException, InterruptedException {
+                                                    RegisterException, InterruptedException, UnknownProviderException {
         /*
          * First we take the new optimum of the last divisive layer, if there
          * was one
@@ -333,8 +332,7 @@ public class FlatteningLayeredDivisiveParameterOptimizationMethod
         try {
             this.currentDivisiveMethod = createDivisiveMethod(newParams,
                     newIterationsPerParameter);
-            this.currentDivisiveMethod.reset(new File(this.getResult()
-                    .getAbsolutePath()));
+            this.currentDivisiveMethod.reset(new File(this.getResult().getAbsolutePath()));
         } catch (ParameterOptimizationException | RunResultParseException e) {
             e.printStackTrace();
         }
@@ -350,7 +348,7 @@ public class FlatteningLayeredDivisiveParameterOptimizationMethod
 
         double remainingIterationCount = this.iterationsPerLayer;
         int remainingParams = this.params.size();
-        final List<Integer> iterations = new ArrayList<Integer>();
+        final List<Integer> iterations = new ArrayList<>();
 
         // parameters that have a fixed number of options
         for (int i = 0; i < params.size(); i++) {
@@ -416,8 +414,7 @@ public class FlatteningLayeredDivisiveParameterOptimizationMethod
      * (java.util.Map)
      */
     @Override
-    public synchronized void giveQualityFeedback(final ParameterSet paramSet,
-            ClusteringQualitySet qualities) {
+    public synchronized void giveQualityFeedback(final ParameterSet paramSet, ClusteringQualitySet qualities) {
         super.giveQualityFeedback(paramSet, qualities);
         this.currentDivisiveMethod.giveQualityFeedback(paramSet, qualities);
         // wake up all threads, which are waiting for the parameter sets of the
@@ -425,15 +422,10 @@ public class FlatteningLayeredDivisiveParameterOptimizationMethod
         this.notifyAll();
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see cluster.paramOptimization.ParameterOptimizationMethod#reset()
-     */
     @Override
     public void reset(final File absResultPath)
             throws ParameterOptimizationException, InternalAttributeException,
-                   RegisterException, RunResultParseException, InterruptedException {
+                   RegisterException, RunResultParseException, InterruptedException, UnknownProviderException {
         this.currentLayer = 0;
         this.remainingIterationCount = getTotalIterationCount();
         if (this.originalParameters != null) {
@@ -443,35 +435,16 @@ public class FlatteningLayeredDivisiveParameterOptimizationMethod
         super.reset(absResultPath);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * cluster.paramOptimization.ParameterOptimizationMethod#getTotalIterationCount
-     * ()
-     */
     @Override
     public int getTotalIterationCount() {
         return this.totalIterationCount;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see cluster.paramOptimization.ParameterOptimizationMethod#
-     * getCompatibleDataSetFormatBaseClasses()
-     */
     @Override
     public List<Class<? extends DataSetFormat>> getCompatibleDataSetFormatBaseClasses() {
         return new ArrayList<Class<? extends DataSetFormat>>();
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see cluster.paramOptimization.ParameterOptimizationMethod#
-     * getCompatibleProgramClasses()
-     */
     @Override
     public List<String> getCompatibleProgramNames() {
         return new ArrayList<String>();

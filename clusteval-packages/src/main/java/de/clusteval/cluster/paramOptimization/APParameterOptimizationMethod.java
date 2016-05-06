@@ -15,17 +15,18 @@ import de.clusteval.api.cluster.ClusteringQualitySet;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.exceptions.InternalAttributeException;
 import de.clusteval.api.exceptions.RunResultParseException;
+import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.opt.IDivergingParameterOptimizationMethod;
 import de.clusteval.api.opt.NoParameterSetFoundException;
 import de.clusteval.api.opt.ParameterOptimizationException;
+import de.clusteval.api.opt.ParameterOptimizationRun;
+import de.clusteval.api.opt.ParameterSet;
 import de.clusteval.api.opt.ParameterSetAlreadyEvaluatedException;
 import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.IProgramParameter;
-import de.clusteval.api.opt.ParameterSet;
+import de.clusteval.api.program.ProgramParameter;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.program.ProgramParameter;
-import de.clusteval.api.opt.ParameterOptimizationRun;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -162,7 +163,7 @@ public class APParameterOptimizationMethod
             final ParameterSet forcedParameterSet)
             throws InternalAttributeException, RegisterException,
                    NoParameterSetFoundException, InterruptedException,
-                   ParameterSetAlreadyEvaluatedException {
+                   ParameterSetAlreadyEvaluatedException, UnknownProviderException {
         ParameterSet iterationParamSet = null;
         ParameterSet preferenceParamSet = null;
 

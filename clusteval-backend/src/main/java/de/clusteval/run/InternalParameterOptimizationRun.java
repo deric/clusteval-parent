@@ -12,7 +12,6 @@
  */
 package de.clusteval.run;
 
-import de.clusteval.api.run.ExecutionRun;
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.IContext;
 import de.clusteval.api.data.IDataConfig;
@@ -20,9 +19,10 @@ import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.IProgramParameter;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.run.ExecutionRun;
 import de.clusteval.api.run.IRun;
+import de.clusteval.api.run.IRunResultPostprocessor;
 import de.clusteval.api.run.IScheduler;
-import de.clusteval.api.run.result.RunResultPostprocessor;
 import de.clusteval.run.runnable.ExecutionRunRunnable;
 import de.clusteval.run.runnable.InternalParameterOptimizationRunRunnable;
 import java.io.File;
@@ -61,7 +61,7 @@ public class InternalParameterOptimizationRun extends ExecutionRun {
             List<IProgramConfig> programConfigs, List<IDataConfig> dataConfigs,
             List<ClusteringEvaluation> qualityMeasures,
             List<Map<IProgramParameter<?>, String>> parameterValues,
-            final List<RunResultPostprocessor> postProcessors,
+            final List<IRunResultPostprocessor> postProcessors,
             final Map<String, Integer> maxExecutionTimes)
             throws RegisterException {
         super(repository, context, true, changeDate, absPath, programConfigs,

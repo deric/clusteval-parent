@@ -800,8 +800,7 @@ public class ClustevalBackendServer implements IBackendServer {
                 }
                 result.put(Pair.getPair(dataConfig, programConfig), measureToOptimalQuality);
             }
-        } catch (DataSetConfigNotFoundException |
-                 GoldStandardConfigNotFoundException | DataConfigurationException |
+        } catch (DataSetConfigNotFoundException | GoldStandardConfigNotFoundException | DataConfigurationException |
                  DataConfigNotFoundException | IOException | UnknownRunResultFormatException | InvalidRunModeException | UnknownParameterOptimizationMethodException | NoOptimizableProgramParameterException | UnknownProgramParameterException | UnknownGoldStandardFormatException | InvalidConfigurationFileException | RepositoryAlreadyExistsException | InvalidRepositoryException |
                  NoRepositoryFoundException | GoldStandardNotFoundException |
                  InvalidOptimizationParameterException | RunException | UnknownProgramTypeException |

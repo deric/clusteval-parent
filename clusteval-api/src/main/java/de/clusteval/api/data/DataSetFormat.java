@@ -177,7 +177,7 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
      * @throws UnknownDataSetFormatException
      */
     public final IDataSet convertToThisFormat(IDataSet dataSet, IDataSetFormat dataSetFormat, IConversionConfiguration config)
-            throws IOException, InvalidDataSetFormatException, RegisterException {
+            throws IOException, InvalidDataSetFormatException, RegisterException, UnknownProviderException {
         final IDataSetFormatParser parser = getDataSetFormatParser();
         if (parser == null) {
             throw new IllegalArgumentException(

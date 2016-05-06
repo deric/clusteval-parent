@@ -10,9 +10,8 @@
  ***************************************************************************** */
 package de.clusteval.run;
 
-import de.clusteval.api.run.Run;
-import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.IRun;
 import de.clusteval.framework.repository.parse.Parser;
 import de.clusteval.utils.FileFinder;
@@ -67,7 +66,7 @@ public class RunFinder extends FileFinder<IRun> {
      * @see de.wiwie.wiutils.utils.FileFinder#parseObjectFromFile(java.io.File)
      */
     @Override
-    protected Run parseObjectFromFile(File file) throws Exception {
+    protected IRun parseObjectFromFile(File file) throws Exception {
         return Parser.parseRunFromFile(file);
     }
 }
