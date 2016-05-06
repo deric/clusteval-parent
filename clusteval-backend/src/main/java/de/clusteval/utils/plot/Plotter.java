@@ -22,7 +22,7 @@ import de.clusteval.api.data.RelativeDataSet;
 import de.clusteval.api.exceptions.InvalidDataSetFormatException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
-import de.clusteval.run.result.ParameterOptimizationResult;
+import de.clusteval.api.run.IRunResult;
 import de.clusteval.utils.ArraysExt;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
 import java.io.BufferedWriter;
@@ -42,9 +42,7 @@ public abstract class Plotter {
      * @param result
      * @throws InterruptedException
      */
-    public static void plotParameterOptimizationResult(
-            final ParameterOptimizationResult result)
-            throws InterruptedException {
+    public static void plotParameterOptimizationResult(final IRunResult result) throws InterruptedException {
 
         IRengine rEngine;
         try {

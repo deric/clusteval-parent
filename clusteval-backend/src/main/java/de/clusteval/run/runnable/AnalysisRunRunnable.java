@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.run.runnable;
 
+import de.clusteval.api.run.RunRunnable;
 import de.clusteval.api.exceptions.RunIterationException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
@@ -17,7 +18,7 @@ import de.clusteval.api.run.IRunResult;
 import de.clusteval.api.stats.IStatistic;
 import de.clusteval.api.stats.DataStatistic;
 import de.clusteval.run.AnalysisRun;
-import de.clusteval.run.Run;
+import de.clusteval.api.run.Run;
 import de.clusteval.utils.ProgressPrinter;
 import de.clusteval.utils.FileUtils;
 import java.io.File;

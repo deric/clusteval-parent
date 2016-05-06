@@ -15,7 +15,7 @@ package de.clusteval.run.runnable;
 import de.clusteval.api.exceptions.RunIterationException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.run.IScheduler;
-import de.clusteval.run.Run;
+import de.clusteval.api.run.Run;
 import de.clusteval.run.RunAnalysisRun;
 import de.clusteval.run.result.RunAnalysisRunResult;
 import de.clusteval.api.stats.RunStatistic;

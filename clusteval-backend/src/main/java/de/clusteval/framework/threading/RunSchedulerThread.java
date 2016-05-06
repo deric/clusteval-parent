@@ -10,26 +10,27 @@
  ***************************************************************************** */
 package de.clusteval.framework.threading;
 
+import de.clusteval.api.Pair;
+import de.clusteval.api.Triple;
+import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.IRunRunnable;
 import de.clusteval.api.run.IScheduler;
 import de.clusteval.api.run.IterationRunnable;
 import de.clusteval.api.run.IterationWrapper;
+import de.clusteval.api.run.MissingParameterValueException;
+import de.clusteval.api.run.NoRunResultFormatParserException;
 import de.clusteval.api.run.RUN_STATUS;
+import de.clusteval.api.run.Run;
+import de.clusteval.api.run.RunInitializationException;
+import de.clusteval.api.run.RunRunnable;
+import de.clusteval.api.run.RunRunnableInitializationException;
+import de.clusteval.api.run.result.RunResult;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.framework.ClustevalThread;
-import de.clusteval.run.MissingParameterValueException;
-import de.clusteval.run.Run;
-import de.clusteval.run.RunInitializationException;
-import de.clusteval.run.result.NoRunResultFormatParserException;
 import de.clusteval.run.result.ParameterOptimizationResult;
-import de.clusteval.run.result.RunResult;
-import de.clusteval.run.runnable.RunRunnable;
-import de.clusteval.run.runnable.RunRunnableInitializationException;
 import de.clusteval.utils.FileUtils;
-import de.clusteval.api.Pair;
-import de.clusteval.api.Triple;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -42,6 +43,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
+import org.openide.util.Exceptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -526,6 +528,8 @@ public class RunSchedulerThread extends ClustevalThread implements IScheduler {
                                 e.printStackTrace();
                             } catch (RunInitializationException e) {
                                 e.printStackTrace();
+                            } catch (UnknownProviderException ex) {
+                                Exceptions.printStackTrace(ex);
                             }
                         }
                     };
@@ -571,8 +575,9 @@ public class RunSchedulerThread extends ClustevalThread implements IScheduler {
                                 } catch (RunRunnableInitializationException e) {
                                     e.printStackTrace();
                                 } catch (RunInitializationException e) {
-                                    // TODO Auto-generated catch block
                                     e.printStackTrace();
+                                } catch (UnknownProviderException ex) {
+                                    Exceptions.printStackTrace(ex);
                                 }
                             }
                         };

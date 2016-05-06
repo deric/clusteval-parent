@@ -23,7 +23,7 @@ import de.clusteval.cluster.Clustering;
 import de.clusteval.api.ContextFactory;
 import de.clusteval.api.IContext;
 import de.clusteval.api.data.DataSetFormatFactory;
-import de.clusteval.program.Program;
+import de.clusteval.api.program.Program;
 import de.clusteval.api.run.RunResultFormatFactory;
 import de.clusteval.utils.FileUtils;
 import java.io.File;
@@ -68,10 +68,10 @@ public class DBSCANClusteringRProgram extends RelativeDataRProgram {
     /*
      * (non-Javadoc)
      *
-     * @see program.Program#getAlias()
+     * @see program.Program#getName()
      */
     @Override
-    public String getAlias() {
+    public String getName() {
         return "DBSCAN";
     }
 

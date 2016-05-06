@@ -44,4 +44,9 @@ public class AnalysisIterationWrapper<S extends IStatistic> extends IterationWra
     public void setStatistic(S statistic) {
         this.statistic = statistic;
     }
+
+    @Override
+    public int getOptId() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

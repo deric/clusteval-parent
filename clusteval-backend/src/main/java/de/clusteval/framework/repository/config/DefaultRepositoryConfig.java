@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.framework.repository.config;
 
+import de.clusteval.api.repository.RepositoryConfig;
 import de.clusteval.api.SQLConfig;
 import de.clusteval.api.SQLConfig.DB_TYPE;
 import java.util.HashMap;

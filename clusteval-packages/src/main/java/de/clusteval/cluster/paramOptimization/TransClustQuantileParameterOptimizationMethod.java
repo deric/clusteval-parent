@@ -19,7 +19,7 @@ import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.IProgramParameter;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.run.ParameterOptimizationRun;
+import de.clusteval.api.opt.ParameterOptimizationRun;
 import de.clusteval.utils.RangeCreationException;
 import java.io.File;
 import java.io.IOException;

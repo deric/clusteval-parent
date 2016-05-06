@@ -1,14 +1,14 @@
 package de.clusteval.run.runnable;
 
+import de.clusteval.api.data.DataConfig;
 import de.clusteval.api.data.IDataConfig;
-import de.clusteval.api.stats.DataStatisticFactory;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.stats.IDataStatistic;
-import de.clusteval.api.data.DataConfig;
 import de.clusteval.api.stats.DataStatisticCalculator;
-import de.clusteval.utils.FileUtils;
+import de.clusteval.api.stats.DataStatisticFactory;
+import de.clusteval.api.stats.IDataStatistic;
 import de.clusteval.api.stats.StatisticCalculator;
+import de.clusteval.utils.FileUtils;
 import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -80,4 +80,5 @@ public class DataAnalysisIterationRunnable extends AnalysisIterationRunnable<IDa
                 + this.getStatistic().getClass().getSimpleName()
                 + ".txt");
     }
+
 }

@@ -10,6 +10,8 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset;
 
+import de.clusteval.api.data.DataSetConfigurationException;
+import de.clusteval.api.data.DataSetConfigNotFoundException;
 import de.clusteval.api.Precision;
 import de.clusteval.api.data.DataSetConfig;
 import de.clusteval.api.data.DistanceMeasureFactory;
@@ -37,11 +39,11 @@ import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.RepositoryRemoveEvent;
 import de.clusteval.api.repository.RepositoryReplaceEvent;
-import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
+import de.clusteval.api.run.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
 import de.clusteval.framework.repository.parse.Parser;
-import de.clusteval.run.RunException;
+import de.clusteval.api.run.RunException;
 import de.clusteval.utils.AbstractClustEvalTest;
 import de.clusteval.utils.StubRepositoryObject;
 import java.io.File;

@@ -17,7 +17,7 @@ import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
-import de.clusteval.framework.repository.config.RepositoryConfigurationException;
+import de.clusteval.api.repository.RepositoryConfigurationException;
 import de.clusteval.serverclient.BackendClient;
 import java.io.File;
 import java.io.FileNotFoundException;

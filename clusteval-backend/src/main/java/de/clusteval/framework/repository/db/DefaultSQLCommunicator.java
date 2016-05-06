@@ -37,7 +37,7 @@ import de.clusteval.api.stats.DataStatisticFactory;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.IProgramParameter;
-import de.clusteval.api.program.ParameterSet;
+import de.clusteval.api.opt.ParameterSet;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RepositoryController;
 import de.clusteval.api.run.IRun;
@@ -46,31 +46,31 @@ import de.clusteval.api.stats.IDataStatistic;
 import de.clusteval.api.stats.IRunDataStatistic;
 import de.clusteval.api.stats.IRunStatistic;
 import de.clusteval.cluster.Clustering;
-import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
+import de.clusteval.api.opt.ParameterOptimizationMethod;
 import de.clusteval.framework.repository.RunResultRepository;
-import de.clusteval.program.DoubleProgramParameter;
-import de.clusteval.program.IntegerProgramParameter;
-import de.clusteval.program.Program;
-import de.clusteval.program.ProgramConfig;
-import de.clusteval.program.ProgramParameter;
-import de.clusteval.program.StringProgramParameter;
+import de.clusteval.api.program.DoubleProgramParameter;
+import de.clusteval.api.program.IntegerProgramParameter;
+import de.clusteval.api.program.Program;
+import de.clusteval.api.program.ProgramConfig;
+import de.clusteval.api.program.ProgramParameter;
+import de.clusteval.api.program.StringProgramParameter;
 import de.clusteval.run.AnalysisRun;
 import de.clusteval.run.ClusteringRun;
 import de.clusteval.run.DataAnalysisRun;
-import de.clusteval.run.ExecutionRun;
+import de.clusteval.api.run.ExecutionRun;
 import de.clusteval.run.InternalParameterOptimizationRun;
-import de.clusteval.run.ParameterOptimizationRun;
-import de.clusteval.run.Run;
+import de.clusteval.api.opt.ParameterOptimizationRun;
+import de.clusteval.api.run.Run;
 import de.clusteval.run.RunAnalysisRun;
 import de.clusteval.run.RunDataAnalysisRun;
 import de.clusteval.run.result.AnalysisRunResult;
 import de.clusteval.run.result.ClusteringRunResult;
 import de.clusteval.run.result.DataAnalysisRunResult;
-import de.clusteval.run.result.ExecutionRunResult;
+import de.clusteval.api.run.result.ExecutionRunResult;
 import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.run.result.RunAnalysisRunResult;
 import de.clusteval.run.result.RunDataAnalysisRunResult;
-import de.clusteval.run.result.RunResult;
+import de.clusteval.api.run.result.RunResult;
 import de.clusteval.api.stats.RunDataStatisticFactory;
 import de.clusteval.api.stats.RunStatisticFactory;
 import de.clusteval.utils.FileUtils;
@@ -1624,7 +1624,7 @@ public class DefaultSQLCommunicator extends SQLCommunicator implements Database 
                     this.getTablePrograms(),
                     new String[]{"repository_id", "abs_path", "alias"},
                     new String[]{"" + this.updateRepositoryId(),
-                        "" + object.getAbsolutePath(), object.getAlias()});
+                        "" + object.getAbsolutePath(), object.getName()});
 
             return id;
         } catch (SQLException e) {

@@ -18,14 +18,14 @@ import de.clusteval.api.exceptions.RunResultParseException;
 import de.clusteval.api.opt.IDivergingParameterOptimizationMethod;
 import de.clusteval.api.opt.NoParameterSetFoundException;
 import de.clusteval.api.opt.ParameterOptimizationException;
+import de.clusteval.api.opt.ParameterOptimizationRun;
 import de.clusteval.api.opt.ParameterSetAlreadyEvaluatedException;
 import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.IProgramParameter;
-import de.clusteval.api.program.ParameterSet;
+import de.clusteval.api.opt.ParameterSet;
+import de.clusteval.api.program.ProgramParameter;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.program.ProgramParameter;
-import de.clusteval.run.ParameterOptimizationRun;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,11 +35,8 @@ import java.util.List;
  *
  */
 @LoadableClassParentAnnotation(parent = "DivisiveParameterOptimizationMethod")
-public class APDivisiveParameterOptimizationMethod
-        extends
-        DivisiveParameterOptimizationMethod
-        implements
-        IDivergingParameterOptimizationMethod {
+public class APDivisiveParameterOptimizationMethod extends DivisiveParameterOptimizationMethod
+        implements IDivergingParameterOptimizationMethod {
 
     protected boolean lastIterationNotTerminated;
     protected int numberTriesOnNotTerminated;

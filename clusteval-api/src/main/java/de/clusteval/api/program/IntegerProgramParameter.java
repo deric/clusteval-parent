@@ -1,0 +1,238 @@
+/**
+ * *****************************************************************************
+ * Copyright (c) 2013 Christian Wiwie.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the GNU Public License v3.0
+ * which accompanies this distribution, and is available at
+ * http://www.gnu.org/licenses/gpl.html
+ *
+ * Contributors:
+ *     Christian Wiwie - initial API and implementation
+ *****************************************************************************
+ */
+package de.clusteval.api.program;
+
+import de.clusteval.api.program.ProgramParameter;
+import de.clusteval.api.program.ProgramConfig;
+import de.clusteval.api.data.IDataConfig;
+import de.clusteval.api.exceptions.InternalAttributeException;
+import de.clusteval.api.program.IProgramConfig;
+import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.program.RegisterException;
+import javax.script.ScriptException;
+
+/**
+ * A type of program parameter that only holds integer values.
+ *
+ * @author Christian Wiwie
+ *
+ */
+public class IntegerProgramParameter extends ProgramParameter<Integer> {
+
+    /**
+     * Parse an integer program parameter from strings.
+     *
+     * @param programConfig The program configuration defining this parameter.
+     * @param name          The name of the parameter.
+     * @param desc          The description of the parameter.
+     * @param minValue      The minimal value of the parameter.
+     * @param maxValue      The maximal value of the parameter.
+     * @param options
+     * @param def           The default value of the parameter.
+     * @return The parsed integer program parameter.
+     * @throws RegisterException
+     */
+    public static IntegerProgramParameter parseFromStrings(
+            final ProgramConfig programConfig, final String name,
+            final String desc, final String minValue, final String maxValue,
+            final String[] options, final String def) throws RegisterException {
+        final IRepository repo = programConfig.getRepository();
+
+        IntegerProgramParameter result = new IntegerProgramParameter(repo,
+                false, programConfig, name, desc, minValue, maxValue, options,
+                def);
+
+        IntegerProgramParameter registeredResult = programConfig.getRepository().getRegisteredObject(result);
+
+        // if our new object has not been found in the repository, we register
+        // it
+        if (registeredResult == null) {
+            result.register();
+            return result;
+        }
+        return registeredResult;
+    }
+
+    /**
+     * The constructor of integer program parameters.
+     *
+     * @param repository    The repository to register the new parameter.
+     * @param register      Whether to register the new parameter.
+     *
+     * @param programConfig The program configuration defining this parameter.
+     * @param name          The name of the parameter.
+     * @param desc          The description of the parameter.
+     * @param minValue      The minimal value of the parameter.
+     * @param maxValue      The maximal value of the parameter.
+     * @param options
+     * @param def           The default value of the parameter.
+     * @throws RegisterException
+     */
+    public IntegerProgramParameter(final IRepository repository,
+            final boolean register, final ProgramConfig programConfig,
+            final String name, final String desc, String minValue,
+            String maxValue, final String[] options, String def)
+            throws RegisterException {
+        super(repository, register, programConfig, name, desc, minValue,
+                maxValue, options, def);
+    }
+
+    /**
+     * The copy constructor of integer program parameters.
+     *
+     * @param other The object to clone.
+     * @throws RegisterException
+     */
+    public IntegerProgramParameter(final IntegerProgramParameter other)
+            throws RegisterException {
+        super(other);
+
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see program.ProgramParameter#clone(program.ProgramParameter)
+     */
+    @Override
+    public IntegerProgramParameter clone() {
+        try {
+            return new IntegerProgramParameter(this);
+        } catch (RegisterException e) {
+            // should not occur
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see program.ProgramParameter#isMinValueSet()
+     */
+    @Override
+    public boolean isMinValueSet() {
+        return !this.minValue.equals("");
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see program.ProgramParameter#isMaxValueSet()
+     */
+    @Override
+    public boolean isMaxValueSet() {
+        return !this.maxValue.equals("");
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see program.ProgramParameter#evaluateMinValue()
+     */
+    @Override
+    public Integer evaluateMinValue(final IDataConfig dataConfig, final IProgramConfig programConfig)
+            throws InternalAttributeException {
+
+        /*
+         * Parse minValue
+         */
+        String newMinValue = this.repository.evaluateInternalAttributes(
+                minValue, dataConfig, programConfig);
+
+        try {
+            newMinValue = this.repository.evaluateJavaScript(newMinValue);
+        } catch (ScriptException e) {
+            throw new InternalAttributeException("The expression '" + minValue
+                    + "' for parameter attribute " + this.programConfig + "/"
+                    + this.name + "/minValue is invalid");
+        }
+
+        return (int) Double.parseDouble(newMinValue);
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see program.ProgramParameter#evaluateMaxValue()
+     */
+    @Override
+    public Integer evaluateMaxValue(final IDataConfig dataConfig, final IProgramConfig programConfig)
+            throws InternalAttributeException {
+
+        /*
+         * Parse maxValue
+         */
+        String newMaxValue = this.repository.evaluateInternalAttributes(
+                maxValue, dataConfig, programConfig);
+
+        try {
+            newMaxValue = this.repository.evaluateJavaScript(newMaxValue);
+        } catch (ScriptException e) {
+            throw new InternalAttributeException("The expression '" + maxValue
+                    + "' for parameter attribute " + this.programConfig + "/"
+                    + this.name + "/maxValue is invalid");
+        }
+
+        return (int) Double.parseDouble(newMaxValue);
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see program.ProgramParameter#evaluateDefaultValue()
+     */
+    @Override
+    public Integer evaluateDefaultValue(final IDataConfig dataConfig, final IProgramConfig programConfig)
+            throws InternalAttributeException {
+
+        /*
+         * Parse default
+         */
+        String newDefaultValue = this.repository.evaluateInternalAttributes(
+                def, dataConfig, programConfig);
+
+        try {
+            newDefaultValue = this.repository
+                    .evaluateJavaScript(newDefaultValue);
+        } catch (ScriptException e) {
+            throw new InternalAttributeException("The expression '" + def
+                    + "' for parameter attribute " + this.programConfig + "/"
+                    + this.name + "/def is invalid");
+        }
+
+        return (int) Double.parseDouble(newDefaultValue);
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * de.clusteval.program.ProgramParameter#evaluateOptions(de.clusteval.data
+     * .DataConfig, de.clusteval.program.ProgramConfig)
+     */
+    @Override
+    public Integer[] evaluateOptions(IDataConfig dataConfig, IProgramConfig programConfig) throws InternalAttributeException {
+        return new Integer[0];
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see de.clusteval.program.ProgramParameter#isOptionsSet()
+     */
+    @Override
+    public boolean isOptionsSet() {
+        return false;
+    }
+}

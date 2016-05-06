@@ -18,6 +18,7 @@ import de.clusteval.api.data.DataSetConfig;
 import de.clusteval.api.data.DataSetFormat;
 import de.clusteval.api.data.DistanceMeasure;
 import de.clusteval.api.data.GoldStandardConfig;
+import de.clusteval.api.program.ProgramConfig;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.RunResultFormat;
 import de.clusteval.api.stats.DataStatistic;
@@ -31,13 +32,11 @@ import de.clusteval.data.dataset.generator.DataSetGenerator;
 import de.clusteval.data.dataset.generator.DataSetGeneratorFinderThread;
 import de.clusteval.data.goldstandard.GoldStandardConfigFinderThread;
 import de.clusteval.framework.ClustevalBackendServer;
-import de.clusteval.program.ProgramConfig;
 import de.clusteval.program.ProgramConfigFinderThread;
-import de.clusteval.program.r.RProgram;
 import de.clusteval.program.r.RProgramFinderThread;
-import de.clusteval.run.Run;
+import de.clusteval.api.run.Run;
 import de.clusteval.run.RunFinderThread;
-import de.clusteval.run.result.RunResult;
+import de.clusteval.api.run.result.RunResult;
 import de.clusteval.run.result.RunResultFinderThread;
 import de.clusteval.run.result.postprocessing.RunResultPostprocessorFinderThread;
 import de.clusteval.run.statistics.RunDataStatisticFinderThread;
@@ -81,9 +80,6 @@ import java.util.Map;
  * <li><b>DataConfigFinderThread</b>: A thread which checks
  * {@link IRepository#dataConfigBasePath} for new data configurations (see
  * {@link DataConfig}).</li>
- * <li><b>RProgramFinderThread</b>: A thread which checks
- * {@link IRepository#programBasePath} for new RPrograms (see
- * {@link RProgram}).</li>
  * <li><b>ProgramConfigFinderThread</b>: A thread which checks
  * {@link IRepository#programConfigBasePath} for new program configurations (see
  * {@link ProgramConfig}).</li>

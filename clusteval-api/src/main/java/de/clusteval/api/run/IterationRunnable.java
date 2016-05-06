@@ -16,8 +16,8 @@
  */
 package de.clusteval.api.run;
 
-import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.r.RLibraryNotLoadedException;
+import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.repository.IRepository;
 import java.io.IOException;
 import org.slf4j.Logger;
@@ -107,6 +107,8 @@ public abstract class IterationRunnable<IW extends IterationWrapper> implements 
     }
 
     protected abstract void doRun() throws InterruptedException;
+
+    public abstract boolean isExecution();
 
     protected void afterRun() {
         IRepository repo = getRun().getRepository();

@@ -34,10 +34,15 @@ import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.exceptions.InternalAttributeException;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.opt.IParameterOptimizationMethod;
+import de.clusteval.api.program.DoubleProgramParameter;
 import de.clusteval.api.program.INamedAttribute;
 import de.clusteval.api.program.IProgram;
 import de.clusteval.api.program.IProgramConfig;
+import de.clusteval.api.program.IntegerProgramParameter;
+import de.clusteval.api.program.ProgramConfig;
+import de.clusteval.api.program.ProgramParameter;
 import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.program.StringProgramParameter;
 import de.clusteval.api.r.IRProgram;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.InvalidRepositoryException;
@@ -58,7 +63,9 @@ import de.clusteval.api.run.IRunResult;
 import de.clusteval.api.run.IRunResultFormat;
 import de.clusteval.api.run.IRunResultFormatParser;
 import de.clusteval.api.run.IRunResultPostprocessor;
+import de.clusteval.api.run.Run;
 import de.clusteval.api.run.RunResultFormat;
+import de.clusteval.api.run.result.RunResult;
 import de.clusteval.api.run.result.RunResultFormatParser;
 import de.clusteval.api.stats.DataStatistic;
 import de.clusteval.api.stats.DataStatisticCalculator;
@@ -71,9 +78,9 @@ import de.clusteval.cluster.Clustering;
 import de.clusteval.data.goldstandard.format.GoldStandardFormat;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.framework.repository.config.DefaultRepositoryConfig;
-import de.clusteval.framework.repository.config.RepositoryConfig;
+import de.clusteval.api.repository.RepositoryConfig;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
-import de.clusteval.framework.repository.config.RepositoryConfigurationException;
+import de.clusteval.api.repository.RepositoryConfigurationException;
 import de.clusteval.framework.repository.db.DefaultSQLCommunicator;
 import de.clusteval.framework.repository.db.RunResultSQLCommunicator;
 import de.clusteval.framework.repository.db.SQLCommunicator;
@@ -81,13 +88,6 @@ import de.clusteval.framework.repository.db.StubSQLCommunicator;
 import de.clusteval.framework.threading.RepositorySupervisorThread;
 import de.clusteval.framework.threading.RunResultRepositorySupervisorThread;
 import de.clusteval.framework.threading.SupervisorThread;
-import de.clusteval.program.DoubleProgramParameter;
-import de.clusteval.program.IntegerProgramParameter;
-import de.clusteval.program.ProgramConfig;
-import de.clusteval.program.ProgramParameter;
-import de.clusteval.program.StringProgramParameter;
-import de.clusteval.run.Run;
-import de.clusteval.run.result.RunResult;
 import de.clusteval.run.statistics.RunDataStatisticCalculator;
 import de.clusteval.run.statistics.RunStatisticCalculator;
 import de.clusteval.utils.FileUtils;
@@ -318,8 +318,8 @@ public class Repository implements IRepository {
 
     private Map<Thread, MyRengine> rEngines;
 
-    private final transient InstanceContent instanceContent;
-    private final transient AbstractLookup lookup;
+    private transient InstanceContent instanceContent;
+    private transient AbstractLookup lookup;
 
     /**
      * Instantiates a new repository.
@@ -356,7 +356,12 @@ public class Repository implements IRepository {
     public Repository(final String basePath, final IRepository parent, final RepositoryConfig overrideConfig)
             throws FileNotFoundException, RepositoryAlreadyExistsException, InvalidRepositoryException,
                    RepositoryConfigNotFoundException, RepositoryConfigurationException, DatabaseConnectException {
-        super();
+        init(basePath, parent, overrideConfig);
+    }
+
+    public void init(final String basePath, final IRepository parent, final RepositoryConfig overrideConfig)
+            throws FileNotFoundException, RepositoryAlreadyExistsException, InvalidRepositoryException,
+                   RepositoryConfigNotFoundException, RepositoryConfigurationException, DatabaseConnectException {
 
         this.log = LoggerFactory.getLogger(this.getClass());
         instanceContent = new InstanceContent();
@@ -874,19 +879,19 @@ public class Repository implements IRepository {
 
     @Override
     public String getAnalysisResultsBasePath() {
-        return ((RunResultRepositoryEntity) this.staticRepositoryEntities.get(RunResult.class))
+        return ((RunResultRepositoryEntity) this.staticRepositoryEntities.get(IRunResult.class))
                 .getAnalysisResultsBasePath();
     }
 
     @Override
     public String getClusterResultsBasePath() {
-        return ((RunResultRepositoryEntity) this.staticRepositoryEntities.get(RunResult.class))
+        return ((RunResultRepositoryEntity) this.staticRepositoryEntities.get(IRunResult.class))
                 .getClusterResultsBasePath();
     }
 
     @Override
     public String getClusterResultsQualityBasePath() {
-        return ((RunResultRepositoryEntity) this.staticRepositoryEntities.get(RunResult.class))
+        return ((RunResultRepositoryEntity) this.staticRepositoryEntities.get(IRunResult.class))
                 .getClusterResultsQualityBasePath();
     }
 
@@ -1031,7 +1036,7 @@ public class Repository implements IRepository {
      */
     @Override
     public String getLogBasePath() {
-        return ((RunResultRepositoryEntity) this.staticRepositoryEntities.get(RunResult.class)).getResultLogBasePath();
+        return ((RunResultRepositoryEntity) this.staticRepositoryEntities.get(IRunResult.class)).getResultLogBasePath();
     }
 
     /**
@@ -1157,8 +1162,8 @@ public class Repository implements IRepository {
      * @param runIdentifier The identifier of the runresult.
      * @return The runresult with the given identifier.
      */
-    public RunResult getRegisteredRunResult(final String runIdentifier) {
-        return ((RunResultRepositoryEntity) this.staticRepositoryEntities.get(RunResult.class)).runResultIdentifier
+    public IRunResult getRegisteredRunResult(final String runIdentifier) {
+        return ((RunResultRepositoryEntity) this.staticRepositoryEntities.get(IRunResult.class)).runResultIdentifier
                 .get(runIdentifier);
     }
 
@@ -1364,7 +1369,7 @@ public class Repository implements IRepository {
 
         this.staticRepositoryEntities.put(IRunResult.class,
                 new RunResultRepositoryEntity(this,
-                        this.parent != null ? this.parent.getStaticEntities().get(RunResult.class) : null,
+                        this.parent != null ? this.parent.getStaticEntities().get(IRunResult.class) : null,
                         FileUtils.buildPath(this.basePath, "results")));
 
         this.staticRepositoryEntities.put(Finder.class, new FinderRepositoryEntity(this,
@@ -1958,6 +1963,11 @@ public class Repository implements IRepository {
     @Override
     public <T extends IRepositoryObject> Collection<T> getCollectionStaticEntities(Class<T> c) {
         return this.staticRepositoryEntities.get(c).asCollection();
+    }
+
+    @Override
+    public boolean isRunResultRepo() {
+        return false;
     }
 
 }

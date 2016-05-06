@@ -14,7 +14,7 @@ import de.clusteval.api.SQLConfig;
 import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.IRun;
-import de.clusteval.program.ProgramConfig;
+import de.clusteval.api.program.ProgramConfig;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;

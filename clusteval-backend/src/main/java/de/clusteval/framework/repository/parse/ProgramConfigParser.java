@@ -36,24 +36,26 @@ import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.opt.InvalidOptimizationParameterException;
 import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
+import de.clusteval.api.program.IProgram;
 import de.clusteval.api.program.IProgramParameter;
+import de.clusteval.api.program.Program;
+import de.clusteval.api.program.ProgramConfig;
+import de.clusteval.api.program.ProgramParameter;
 import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.program.StandaloneProgram;
+import de.clusteval.api.r.IRProgram;
+import de.clusteval.api.r.RProgramFactory;
 import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.run.IRunResultFormat;
+import de.clusteval.api.run.IncompatibleParameterOptimizationMethodException;
+import de.clusteval.api.run.RunException;
 import de.clusteval.api.run.RunResultFormatFactory;
-import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
-import de.clusteval.data.dataset.DataSetConfigNotFoundException;
-import de.clusteval.data.dataset.DataSetConfigurationException;
+import de.clusteval.api.data.DataSetConfigNotFoundException;
+import de.clusteval.api.data.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
-import de.clusteval.program.Program;
-import de.clusteval.program.ProgramConfig;
-import de.clusteval.program.ProgramParameter;
-import de.clusteval.program.StandaloneProgram;
-import de.clusteval.program.r.RProgram;
 import de.clusteval.program.r.RProgramConfig;
-import de.clusteval.run.RunException;
 import de.clusteval.utils.FileUtils;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -108,7 +110,7 @@ class ProgramConfigParser extends RepositoryObjectParser<ProgramConfig> {
             type = "standalone";
         }
 
-        Program programP = null;
+        IProgram programP = null;
         // initialize compatible dataset formats
         String[] compatibleDataSetFormatsStr;
 
@@ -154,10 +156,10 @@ class ProgramConfigParser extends RepositoryObjectParser<ProgramConfig> {
             }
 
             programP = new StandaloneProgram(repo, context, true, changeDate, programFile, alias, envVars);
-        } else if (repo.isClassRegistered(RProgram.class, "de.clusteval.program.r." + type)) {
-            programP = RProgram.parseFromString(repo, type);
+        } else if (repo.isClassRegistered(IRProgram.class, "de.clusteval.program.r." + type)) {
+            programP = RProgramFactory.parseFromString(repo, type);
 
-            RProgram rProgram = (RProgram) programP;
+            IRProgram rProgram = (IRProgram) programP;
             compatibleDataSetFormats = rProgram.getCompatibleDataSetFormats();
             runresultFormat = rProgram.getRunResultFormat();
         } else {

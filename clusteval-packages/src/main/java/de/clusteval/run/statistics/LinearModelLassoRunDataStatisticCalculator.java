@@ -19,7 +19,7 @@ import de.clusteval.api.cluster.ClusteringQualitySet;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.exceptions.RunResultParseException;
 import de.clusteval.api.program.IProgram;
-import de.clusteval.api.program.ParameterSet;
+import de.clusteval.api.opt.ParameterSet;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;

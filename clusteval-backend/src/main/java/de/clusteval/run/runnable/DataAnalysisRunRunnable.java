@@ -20,7 +20,7 @@ import de.clusteval.api.run.IScheduler;
 import de.clusteval.api.stats.IDataStatistic;
 import de.clusteval.api.data.DataConfig;
 import de.clusteval.run.DataAnalysisRun;
-import de.clusteval.run.Run;
+import de.clusteval.api.run.Run;
 import de.clusteval.run.result.DataAnalysisRunResult;
 import java.io.File;
 import java.util.List;

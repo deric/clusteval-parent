@@ -25,16 +25,16 @@ import de.clusteval.api.Triple;
 import de.clusteval.api.data.DataRandomizeException;
 import de.clusteval.api.data.DataRandomizer;
 import de.clusteval.api.data.DataRandomizerFactory;
+import de.clusteval.api.data.DataSetConfigNotFoundException;
 import de.clusteval.api.data.IDataRandomizer;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.exceptions.DataSetGenerationException;
-import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
-import de.clusteval.api.exceptions.GoldStandardConfigurationException;
 import de.clusteval.api.exceptions.GoldStandardGenerationException;
 import de.clusteval.api.exceptions.GoldStandardNotFoundException;
 import de.clusteval.api.exceptions.IncompatibleContextException;
+import de.clusteval.api.exceptions.InvalidConfigurationFileException;
 import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
@@ -58,37 +58,34 @@ import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.repository.RepositoryConfigurationException;
 import de.clusteval.api.repository.RepositoryController;
+import de.clusteval.api.run.ExecutionIterationRunnable;
 import de.clusteval.api.run.IScheduler;
+import de.clusteval.api.run.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.api.run.IterationRunnable;
 import de.clusteval.api.run.IterationWrapper;
 import de.clusteval.api.run.RUN_STATUS;
-import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
+import de.clusteval.api.run.Run;
+import de.clusteval.api.run.RunException;
+import de.clusteval.api.run.RunResultFactory;
+import de.clusteval.api.run.result.RunResult;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
-import de.clusteval.data.dataset.DataSetConfigNotFoundException;
-import de.clusteval.data.dataset.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.data.dataset.generator.DataSetGenerator;
 import de.clusteval.framework.repository.MyRengine;
 import de.clusteval.framework.repository.Repository;
-import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
-import de.clusteval.framework.repository.config.RepositoryConfigurationException;
 import de.clusteval.framework.threading.SupervisorThread;
 import de.clusteval.run.InvalidRunModeException;
-import de.clusteval.run.Run;
-import de.clusteval.run.RunException;
 import de.clusteval.run.result.ParameterOptimizationResult;
-import de.clusteval.run.result.RunResult;
 import de.clusteval.run.runnable.AnalysisIterationRunnable;
 import de.clusteval.run.runnable.DataAnalysisIterationRunnable;
 import de.clusteval.run.runnable.DataAnalysisRunRunnable;
-import de.clusteval.run.runnable.ExecutionIterationRunnable;
 import de.clusteval.run.runnable.ExecutionRunRunnable;
 import de.clusteval.run.runnable.RunAnalysisIterationRunnable;
 import de.clusteval.run.runnable.RunAnalysisRunRunnable;
 import de.clusteval.utils.FileUtils;
-import de.clusteval.utils.InvalidConfigurationFileException;
 import de.clusteval.utils.MyHighlightingCompositeConverter;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -285,14 +282,12 @@ public class ClustevalBackendServer implements IBackendServer {
      * @throws InvalidRepositoryException
      * @throws RepositoryAlreadyExistsException
      * @throws RepositoryConfigurationException
-     * @throws RepositoryConfigNotFoundException
      * @throws InterruptedException
      * @throws DatabaseConnectException
      */
     public ClustevalBackendServer(final String absRepositoryPath)
             throws FileNotFoundException, RepositoryAlreadyExistsException,
-                   InvalidRepositoryException, RepositoryConfigNotFoundException,
-                   RepositoryConfigurationException, InterruptedException, DatabaseConnectException {
+                   InvalidRepositoryException, RepositoryConfigurationException, InterruptedException, DatabaseConnectException {
         this(new Repository(absRepositoryPath, null));
     }
 
@@ -330,6 +325,7 @@ public class ClustevalBackendServer implements IBackendServer {
                 this.repository.initialize();
             }
         }
+        repository.lookupAdd(config);
     }
 
     /**
@@ -394,7 +390,7 @@ public class ClustevalBackendServer implements IBackendServer {
      * @throws DatabaseConnectException
      */
     public static void main(String[] args) throws FileNotFoundException, RepositoryAlreadyExistsException,
-                                                  InvalidRepositoryException, RepositoryConfigNotFoundException, RepositoryConfigurationException,
+                                                  InvalidRepositoryException, RepositoryConfigurationException,
                                                   InterruptedException, DatabaseConnectException {
 
         // bugfix for log4j warning
@@ -791,7 +787,7 @@ public class ClustevalBackendServer implements IBackendServer {
 
         List<ParameterOptimizationResult> list = new ArrayList<>();
         try {
-            ParameterOptimizationResult.parseFromRunResultFolder2(repository,
+            RunResultFactory.parseFromRunResultFolder2(repository,
                     new File(FileUtils.buildPath(repository.getBasePath(RunResult.class), uniqueRunIdentifier)), list,
                     false, false, false);
             for (ParameterOptimizationResult r : list) {
@@ -804,8 +800,7 @@ public class ClustevalBackendServer implements IBackendServer {
                 }
                 result.put(Pair.getPair(dataConfig, programConfig), measureToOptimalQuality);
             }
-        } catch (GoldStandardConfigurationException | DataSetConfigurationException |
-                 DataSetNotFoundException | DataSetConfigNotFoundException |
+        } catch (DataSetConfigNotFoundException |
                  GoldStandardConfigNotFoundException | DataConfigurationException |
                  DataConfigNotFoundException | IOException | UnknownRunResultFormatException | InvalidRunModeException | UnknownParameterOptimizationMethodException | NoOptimizableProgramParameterException | UnknownProgramParameterException | UnknownGoldStandardFormatException | InvalidConfigurationFileException | RepositoryAlreadyExistsException | InvalidRepositoryException |
                  NoRepositoryFoundException | GoldStandardNotFoundException |
@@ -968,7 +963,7 @@ public class ClustevalBackendServer implements IBackendServer {
             // .getValue().getParentRunnable());
             //
             // status = ((AnalysisIterationRunnable) e.getValue())
-            // .getStatistic().getAlias();
+            // .getStatistic().getName();
             // name = r.getRun().getName() + ": " + r.get;
             // }
 

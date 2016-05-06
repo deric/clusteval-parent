@@ -1,13 +1,26 @@
-/**
+/*
+ * Copyright (C) 2016 deric
  *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package de.clusteval.framework.repository;
 
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RepositoryController;
 import de.clusteval.api.repository.StaticRepositoryEntity;
-import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.run.IRunResult;
 import de.clusteval.run.result.ParameterOptimizationResult;
-import de.clusteval.run.result.RunResult;
 import de.clusteval.utils.FileUtils;
 import java.io.File;
 import java.util.HashMap;
@@ -17,9 +30,9 @@ import java.util.Map;
  * @author Christian Wiwie
  *
  */
-public class RunResultRepositoryEntity extends StaticRepositoryEntity<RunResult> {
+public class RunResultRepositoryEntity extends StaticRepositoryEntity<IRunResult> {
 
-    protected Map<String, RunResult> runResultIdentifier;
+    protected Map<String, IRunResult> runResultIdentifier;
 
     /**
      * @param repository
@@ -27,21 +40,13 @@ public class RunResultRepositoryEntity extends StaticRepositoryEntity<RunResult>
      * @param basePath
      */
     public RunResultRepositoryEntity(IRepository repository,
-            StaticRepositoryEntity<RunResult> parent, String basePath) {
+            StaticRepositoryEntity<IRunResult> parent, String basePath) {
         super(repository, parent, basePath);
         this.runResultIdentifier = new HashMap<>();
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * de.clusteval.framework.repository.RepositoryObjectEntity#registerWhenExisting
-     * (de.clusteval.framework.repository.RepositoryObject,
-     * de.clusteval.framework.repository.RepositoryObject)
-     */
     @Override
-    protected <S extends RunResult> boolean registerWhenExisting(S old, S object) {
+    protected <S extends IRunResult> boolean registerWhenExisting(S old, S object) {
         return false;
     }
 
@@ -53,7 +58,7 @@ public class RunResultRepositoryEntity extends StaticRepositoryEntity<RunResult>
      * (de.clusteval.framework.repository.RepositoryObject)
      */
     @Override
-    protected <S extends RunResult> boolean registerWithoutExisting(S object) {
+    protected <S extends IRunResult> boolean registerWithoutExisting(S object) {
         this.runResultIdentifier.put(object.getIdentifier(), object);
         return super.registerWithoutExisting(object);
     }
@@ -65,7 +70,7 @@ public class RunResultRepositoryEntity extends StaticRepositoryEntity<RunResult>
      * unregisterAfterRemove(de.clusteval.framework.repository.RepositoryObject)
      */
     @Override
-    protected <S extends RunResult> void unregisterAfterRemove(S object) {
+    protected <S extends IRunResult> void unregisterAfterRemove(S object) {
         this.runResultIdentifier.remove(object.getIdentifier());
 
         // added 07.01.2013: add unregister of sqlcommunicator

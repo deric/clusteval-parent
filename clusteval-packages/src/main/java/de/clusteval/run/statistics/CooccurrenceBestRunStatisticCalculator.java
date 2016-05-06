@@ -17,17 +17,18 @@ import cern.colt.matrix.tlong.impl.SparseLongMatrix2D;
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
-import de.clusteval.cluster.Clustering;
-import de.clusteval.api.stats.RunStatisticCalculateException;
+import de.clusteval.api.cluster.IClustering;
+import de.clusteval.api.opt.ParameterSet;
 import de.clusteval.api.program.RegisterException;
-import de.clusteval.api.program.ParameterSet;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.IRunResult;
+import de.clusteval.api.run.RunResultFactory;
+import de.clusteval.api.stats.RunStatisticCalculateException;
 import de.clusteval.run.result.ParameterOptimizationResult;
-import de.clusteval.utils.FileUtils;
 import de.clusteval.utils.ArraysExt;
+import de.clusteval.utils.FileUtils;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -82,7 +83,7 @@ public class CooccurrenceBestRunStatisticCalculator
 
             List<ParameterOptimizationResult> results = new ArrayList<>();
 
-            ParameterOptimizationResult.parseFromRunResultFolder2(
+            RunResultFactory.parseFromRunResultFolder2(
                     this.repository,
                     new File(FileUtils.buildPath(
                             this.repository.getBasePath(IRunResult.class),
@@ -119,7 +120,7 @@ public class CooccurrenceBestRunStatisticCalculator
                 try {
                     for (ParameterSet paramSet : paramSets.values()) {
                         this.log.info("Processing parameter set: " + paramSet);
-                        Clustering cl = result.getClustering(paramSet);
+                        IClustering cl = result.getClustering(paramSet);
 
                         if (cl == null) {
                             continue;

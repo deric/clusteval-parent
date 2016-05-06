@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.program;
 
+import de.clusteval.api.program.ProgramConfig;
 import de.clusteval.api.exceptions.UnknownProgramParameterException;
 import de.clusteval.api.program.IProgramParameter;
 import de.clusteval.utils.AbstractClustEvalTest;

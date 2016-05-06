@@ -65,13 +65,8 @@ public class CMeansClusteringRProgram extends AbsoluteAndRelativeDataRProgram {
         this(other.repository);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see program.Program#getAlias()
-     */
     @Override
-    public String getAlias() {
+    public String getName() {
         return "c-Means";
     }
 

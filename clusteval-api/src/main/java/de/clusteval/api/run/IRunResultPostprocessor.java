@@ -36,4 +36,6 @@ public interface IRunResultPostprocessor extends IRepositoryObject {
      */
     IClustering postprocess(final IClustering clustering);
 
+    IRunResultPostprocessor clone();
+
 }

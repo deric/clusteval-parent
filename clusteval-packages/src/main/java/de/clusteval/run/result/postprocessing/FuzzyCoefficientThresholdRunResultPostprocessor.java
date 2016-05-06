@@ -16,6 +16,8 @@
  */
 package de.clusteval.run.result.postprocessing;
 
+import de.clusteval.api.run.result.RunResultPostprocessorParameters;
+import de.clusteval.api.run.result.RunResultPostprocessor;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.api.cluster.IClustering;

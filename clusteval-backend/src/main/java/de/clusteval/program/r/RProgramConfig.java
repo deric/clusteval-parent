@@ -11,12 +11,13 @@
 package de.clusteval.program.r;
 
 import de.clusteval.api.data.IDataSetFormat;
+import de.clusteval.api.program.IProgram;
 import de.clusteval.api.program.IProgramParameter;
+import de.clusteval.api.program.ProgramConfig;
 import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.r.IRProgram;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.IRunResultFormat;
-import de.clusteval.program.Program;
-import de.clusteval.program.ProgramConfig;
 import java.io.File;
 import java.util.List;
 import java.util.Set;
@@ -64,7 +65,7 @@ public class RProgramConfig extends ProgramConfig {
      * @throws RegisterException
      */
     public RProgramConfig(IRepository repository, final boolean register,
-            long changeDate, File absPath, Program program,
+            long changeDate, File absPath, IProgram program,
             IRunResultFormat outputFormat,
             Set<IDataSetFormat> compatibleDataSetFormats,
             List<IProgramParameter<?>> params,
@@ -79,12 +80,12 @@ public class RProgramConfig extends ProgramConfig {
                 program,
                 outputFormat,
                 compatibleDataSetFormats,
-                ((RProgram) program).getInvocationFormat(),
+                ((IRProgram) program).getInvocationFormat(),
                 // TODO: maybe introduce several invocation format options in R
                 // program?
-                ((RProgram) program).getInvocationFormat(),
-                ((RProgram) program).getInvocationFormat(),
-                ((RProgram) program).getInvocationFormat(), params,
+                ((IRProgram) program).getInvocationFormat(),
+                ((IRProgram) program).getInvocationFormat(),
+                ((IRProgram) program).getInvocationFormat(), params,
                 optimizableParameters, expectsNormalizedDataSet,
                 maxExecutionTimeMinutes);
     }

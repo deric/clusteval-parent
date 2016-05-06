@@ -12,6 +12,7 @@
  */
 package de.clusteval.cluster.paramOptimization;
 
+import de.clusteval.api.opt.ParameterOptimizationMethod;
 import ch.qos.logback.classic.Level;
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.ContextFactory;
@@ -38,7 +39,7 @@ import de.clusteval.api.opt.NoParameterSetFoundException;
 import de.clusteval.api.opt.ParameterOptimizationException;
 import de.clusteval.api.opt.ParameterSetAlreadyEvaluatedException;
 import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
-import de.clusteval.api.program.ParameterSet;
+import de.clusteval.api.opt.ParameterSet;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RException;
@@ -46,9 +47,9 @@ import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
-import de.clusteval.framework.repository.config.RepositoryConfigurationException;
-import de.clusteval.program.ProgramConfig;
-import de.clusteval.run.Run;
+import de.clusteval.api.repository.RepositoryConfigurationException;
+import de.clusteval.api.program.ProgramConfig;
+import de.clusteval.api.run.Run;
 import de.clusteval.utils.AbstractClustEvalTest;
 import java.io.File;
 import java.io.IOException;

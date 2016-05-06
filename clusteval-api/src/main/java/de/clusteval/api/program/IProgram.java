@@ -125,5 +125,5 @@ public interface IProgram extends IRepositoryObject {
      *
      * @return The alias of this program.
      */
-    String getAlias();
+    String getName();
 }

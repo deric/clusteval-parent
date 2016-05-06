@@ -1,81 +1,51 @@
 /**
- * 
+ *
  */
 package de.clusteval.framework.repository;
 
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.StaticRepositoryEntity;
-import de.clusteval.run.result.RunResult;
+import de.clusteval.api.run.IRunResult;
 import de.clusteval.utils.FileUtils;
 
 /**
  * @author Christian Wiwie
- * 
+ *
  */
 public class RunResultRunResultRepositoryEntity extends RunResultRepositoryEntity {
 
-	/**
-	 * @param repository
-	 * @param parent
-	 * @param basePath
-	 */
-	public RunResultRunResultRepositoryEntity(Repository repository,
-			StaticRepositoryEntity<RunResult> parent, String basePath) {
-		super(repository, parent, basePath);
-	}
+    /**
+     * @param repository
+     * @param parent
+     * @param basePath
+     */
+    public RunResultRunResultRepositoryEntity(IRepository repository,
+            StaticRepositoryEntity<IRunResult> parent, String basePath) {
+        super(repository, parent, basePath);
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see de.clusteval.framework.repository.RepositoryEntity#getBasePath()
-	 */
-	@Override
-	public String getBasePath() {
-		return this.parent.getBasePath();
-	}
+    @Override
+    public String getBasePath() {
+        return this.parent.getBasePath();
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * de.clusteval.framework.repository.RunResultEntity#getClusterResultsBasePath
-	 * ()
-	 */
-	@Override
-	public String getClusterResultsBasePath() {
-		return FileUtils.buildPath(this.getBasePath(), "clusters");
-	}
+    @Override
+    public String getClusterResultsBasePath() {
+        return FileUtils.buildPath(this.getBasePath(), "clusters");
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see de.clusteval.framework.repository.RunResultEntity#
-	 * getClusterResultsQualityBasePath()
-	 */
-	@Override
-	public String getClusterResultsQualityBasePath() {
-		return FileUtils.buildPath(this.getBasePath(), "clusters");
-	}
+    @Override
+    public String getClusterResultsQualityBasePath() {
+        return FileUtils.buildPath(this.getBasePath(), "clusters");
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * de.clusteval.framework.repository.RunResultEntity#getAnalysisResultsBasePath
-	 * ()
-	 */
-	@Override
-	public String getAnalysisResultsBasePath() {
-		return FileUtils.buildPath(this.getBasePath(), "analyses");
-	}
+    @Override
+    public String getAnalysisResultsBasePath() {
+        return FileUtils.buildPath(this.getBasePath(), "analyses");
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * de.clusteval.framework.repository.RunResultEntity#getResultLogBasePath()
-	 */
-	@Override
-	public String getResultLogBasePath() {
-		return FileUtils.buildPath(this.getBasePath(), "logs");
-	}
+    @Override
+    public String getResultLogBasePath() {
+        return FileUtils.buildPath(this.getBasePath(), "logs");
+    }
 }

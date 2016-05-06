@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.cluster.paramOptimization;
 
+import de.clusteval.api.opt.ParameterOptimizationMethod;
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.exceptions.InternalAttributeException;
@@ -17,14 +18,14 @@ import de.clusteval.api.opt.NoParameterSetFoundException;
 import de.clusteval.api.opt.ParameterOptimizationException;
 import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.IProgramParameter;
-import de.clusteval.api.program.ParameterSet;
+import de.clusteval.api.opt.ParameterSet;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.data.DataSetFormat;
-import de.clusteval.program.DoubleProgramParameter;
-import de.clusteval.program.IntegerProgramParameter;
-import de.clusteval.program.StringProgramParameter;
-import de.clusteval.run.ParameterOptimizationRun;
+import de.clusteval.api.program.DoubleProgramParameter;
+import de.clusteval.api.program.IntegerProgramParameter;
+import de.clusteval.api.program.StringProgramParameter;
+import de.clusteval.api.opt.ParameterOptimizationRun;
 import de.clusteval.utils.ArraysExt;
 import de.clusteval.utils.RangeCreationException;
 import java.io.File;

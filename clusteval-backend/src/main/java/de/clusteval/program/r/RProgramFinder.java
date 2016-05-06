@@ -12,10 +12,11 @@
  */
 package de.clusteval.program.r;
 
-import de.clusteval.api.r.UnknownRProgramException;
-import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRProgram;
+import de.clusteval.api.r.RProgramFactory;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.utils.JARFinder;
 import de.wiwie.wiutils.utils.ArrayIterator;
 import java.io.File;
@@ -23,6 +24,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Iterator;
+import org.openide.util.Exceptions;
 
 /**
  * Objects of this class look for new RPrograms in the program-directory defined
@@ -83,7 +85,8 @@ public class RProgramFinder extends JARFinder<IRProgram> {
     @Override
     protected boolean isJARLoaded(File f) {
         return super.isJARLoaded(f)
-                && this.repository.isClassRegistered(RProgram.class,
+                && this.repository.isClassRegistered(
+                        IRProgram.class,
                         classNamesForJARFile(f)[0]);
     }
 
@@ -131,20 +134,18 @@ class RProgramURLClassLoader extends URLClassLoader {
                 && !name.equals("de.clusteval.program.r.AbsoluteAndRelativeDataRProgram")) {
             if (name.endsWith("RProgram")) {
                 @SuppressWarnings("unchecked")
-                Class<? extends RProgram> rProgram = (Class<? extends RProgram>) result;
+                Class<? extends IRProgram> rProgram = (Class<? extends IRProgram>) result;
 
-                this.parent.getRepository().registerClass(RProgram.class,
-                        rProgram);
+                this.parent.getRepository().registerClass(IRProgram.class, rProgram);
 
-                RProgram program;
+                IRProgram program;
                 try {
-                    program = RProgram.parseFromString(
-                            this.parent.getRepository(),
-                            rProgram.getSimpleName());
+                    program = RProgramFactory.parseFromString(this.parent.getRepository(), rProgram.getSimpleName());
                     program.register();
-                } catch (UnknownRProgramException e) {
                 } catch (RegisterException e) {
                     e.printStackTrace();
+                } catch (UnknownProviderException ex) {
+                    Exceptions.printStackTrace(ex);
                 }
             }
         }

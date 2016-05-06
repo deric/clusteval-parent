@@ -16,8 +16,13 @@
  */
 package de.clusteval.api.run;
 
+import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.exceptions.RunIterationException;
+import de.clusteval.api.opt.ParameterOptimizationMethod;
+import de.clusteval.api.program.IProgramConfig;
+import de.clusteval.api.program.IProgramParameter;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
@@ -28,6 +33,17 @@ import java.util.concurrent.Future;
  * @param <IW>
  */
 public interface IRunRunnable<IR extends IterationRunnable, IW extends IterationWrapper> extends Runnable {
+
+    /**
+     *
+     * @return unique identifier
+     */
+    String getName();
+
+    void init(IScheduler runScheduler, IRun run, IProgramConfig programConfig, IDataConfig dataConfig,
+            ParameterOptimizationMethod optimizationMethod,
+            String runIdentString, boolean isResume,
+            Map<IProgramParameter<?>, String> runParams);
 
     IRun getRun();
 
@@ -73,4 +89,21 @@ public interface IRunRunnable<IR extends IterationRunnable, IW extends Iteration
      * @see #future
      */
     Future<?> getFuture();
+
+    /**
+     * @return Get the optimization method of this parameter optimization run
+     *         runnable.
+     * @see #optimizationMethod
+     */
+    ParameterOptimizationMethod getOptimizationMethod();
+
+    /**
+     * @return The program configuration of this runnable.
+     */
+    IProgramConfig getProgramConfig();
+
+    /**
+     * @return The data configuration of this runnable.
+     */
+    IDataConfig getDataConfig();
 }

@@ -17,7 +17,7 @@
 package de.clusteval.run.runnable;
 
 import de.clusteval.api.program.IProgramConfig;
-import de.clusteval.api.program.ParameterSet;
+import de.clusteval.api.opt.ParameterSet;
 import de.clusteval.api.run.IterationWrapper;
 import de.clusteval.run.result.ClusteringRunResult;
 import java.io.File;
@@ -107,11 +107,11 @@ public class ExecutionIterationWrapper extends IterationWrapper {
         this.resultQualityFile = resultQualityFile;
     }
 
-    protected int getOptId() {
+    public int getOptId() {
         return optId;
     }
 
-    protected void setOptId(int optId) {
+    public void setOptId(int optId) {
         this.optId = optId;
     }
 

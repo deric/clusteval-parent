@@ -17,7 +17,6 @@
 package de.clusteval.api.opt;
 
 import de.clusteval.api.exceptions.InternalAttributeException;
-import de.clusteval.api.program.ParameterSet;
 import de.clusteval.api.repository.IRepositoryObject;
 import de.clusteval.api.program.RegisterException;
 

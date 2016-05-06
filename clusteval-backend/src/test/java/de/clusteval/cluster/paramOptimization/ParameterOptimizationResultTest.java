@@ -12,7 +12,7 @@
  */
 package de.clusteval.cluster.paramOptimization;
 
-import de.clusteval.run.Run;
+import de.clusteval.api.run.Run;
 import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.utils.AbstractClustEvalTest;
 import de.clusteval.utils.plot.Plotter;

@@ -12,6 +12,7 @@
  */
 package de.clusteval.cluster.paramOptimization;
 
+import de.clusteval.api.opt.ParameterOptimizationMethod;
 import de.clusteval.api.opt.IParameterOptimizationMethod;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;

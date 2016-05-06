@@ -29,7 +29,7 @@ import de.clusteval.framework.repository.Repository;
 import de.clusteval.api.repository.RepositoryObject;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
-import de.clusteval.framework.repository.config.RepositoryConfigurationException;
+import de.clusteval.api.repository.RepositoryConfigurationException;
 import de.clusteval.framework.repository.db.StubSQLCommunicator;
 import de.clusteval.utils.AbstractClustEvalTest;
 import java.io.File;

@@ -22,7 +22,7 @@ import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.config.DefaultRepositoryConfig;
 import de.clusteval.framework.repository.db.StubSQLCommunicator;
-import de.clusteval.run.result.RunResult;
+import de.clusteval.api.run.result.RunResult;
 import java.io.File;
 import org.junit.BeforeClass;
 import org.slf4j.Logger;

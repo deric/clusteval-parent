@@ -90,7 +90,6 @@ public abstract class AnalysisIterationRunnable<S extends IStatistic, IW extends
      * @throws InstantiationException
      * @throws IllegalAccessException
      * @throws InvocationTargetException
-     * @throws UnknownDataSetFormatException
      */
     protected abstract StatisticCalculator<S> getStatisticCalculator()
             throws FormatConversionException, IOException,
@@ -152,6 +151,10 @@ public abstract class AnalysisIterationRunnable<S extends IStatistic, IW extends
             // this.progress.update(iterationPercent);
         }
     }
-;
+
+    @Override
+    public boolean isExecution() {
+        return false;
+    }
 
 }

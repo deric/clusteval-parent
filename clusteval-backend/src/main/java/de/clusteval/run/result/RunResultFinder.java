@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.run.result;
 
+import de.clusteval.api.run.result.RunResult;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.IRepositoryObject;
 import de.clusteval.api.program.RegisterException;

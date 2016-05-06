@@ -10,6 +10,8 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset;
 
+import de.clusteval.api.data.DataSetConfigurationException;
+import de.clusteval.api.data.DataSetConfigNotFoundException;
 import ch.qos.logback.classic.Level;
 import de.clusteval.api.Matrix;
 import de.clusteval.api.Precision;
@@ -50,17 +52,17 @@ import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.r.UnknownRProgramException;
-import de.clusteval.cluster.paramOptimization.IncompatibleParameterOptimizationMethodException;
+import de.clusteval.api.run.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
-import de.clusteval.framework.repository.config.RepositoryConfigurationException;
+import de.clusteval.api.repository.RepositoryConfigurationException;
 import de.clusteval.framework.repository.db.StubSQLCommunicator;
 import de.clusteval.framework.repository.parse.Parser;
-import de.clusteval.run.RunException;
+import de.clusteval.api.run.RunException;
 import de.clusteval.utils.AbstractClustEvalTest;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
 import java.io.File;

@@ -27,7 +27,7 @@ import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.IRunResultFormat;
 import de.clusteval.api.run.RunResultFormatFactory;
 import de.clusteval.cluster.Clustering;
-import de.clusteval.program.Program;
+import de.clusteval.api.program.Program;
 import de.clusteval.utils.FileUtils;
 import java.io.File;
 import java.util.Map;
@@ -142,10 +142,10 @@ public class ClusterDPClusteringRProgram extends RelativeDataRProgram {
     /*
      * (non-Javadoc)
      *
-     * @see de.clusteval.program.Program#getAlias()
+     * @see de.clusteval.program.Program#getName()
      */
     @Override
-    public String getAlias() {
+    public String getName() {
         return "clusterdp";
     }
 

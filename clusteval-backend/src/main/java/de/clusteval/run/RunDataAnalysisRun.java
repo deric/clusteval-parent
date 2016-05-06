@@ -15,10 +15,9 @@ import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.IRunRunnable;
 import de.clusteval.api.run.IScheduler;
-import de.clusteval.framework.threading.RunSchedulerThread;
-import de.clusteval.run.runnable.RunDataAnalysisRunRunnable;
-import de.clusteval.run.runnable.RunRunnable;
+import de.clusteval.api.run.RunRunnable;
 import de.clusteval.api.stats.RunDataStatistic;
+import de.clusteval.run.runnable.RunDataAnalysisRunRunnable;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -156,16 +155,8 @@ public class RunDataAnalysisRun extends AnalysisRun<RunDataStatistic> {
         return 1;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see run.Run#createAndAddRunnableForResumePair(framework.RunScheduler,
-     * int)
-     */
-    @SuppressWarnings("unused")
     @Override
-    protected RunRunnable createAndScheduleRunnableForResumePair(
-            RunSchedulerThread runScheduler, int p) {
+    protected RunRunnable createAndScheduleRunnableForResumePair(IScheduler runScheduler, int p) {
 
         /*
          * We only operate on this copy, in order to avoid multithreading
@@ -193,7 +184,7 @@ public class RunDataAnalysisRun extends AnalysisRun<RunDataStatistic> {
     }
 
     @Override
-    protected IRunRunnable createAndScheduleRunnableForRunPair(IScheduler runScheduler, @SuppressWarnings("unused") int p) {
+    protected IRunRunnable createAndScheduleRunnableForRunPair(IScheduler runScheduler, int p) {
 
         /*
          * We only operate on this copy, in order to avoid multithreading

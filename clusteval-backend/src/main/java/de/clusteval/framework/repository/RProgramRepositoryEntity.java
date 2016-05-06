@@ -4,20 +4,20 @@
 package de.clusteval.framework.repository;
 
 import de.clusteval.api.program.IProgram;
-import de.clusteval.api.repository.StaticRepositoryEntity;
-import de.clusteval.api.repository.DynamicRepositoryEntity;
-import de.clusteval.api.r.RException;
-import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.r.IRProgram;
+import de.clusteval.api.r.RException;
+import de.clusteval.api.repository.DynamicRepositoryEntity;
+import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.repository.StaticRepositoryEntity;
 import de.clusteval.framework.ClustevalBackendServer;
-import de.clusteval.program.r.RProgram;
 import java.lang.reflect.InvocationTargetException;
 
 /**
  * @author Christian Wiwie
  *
  */
-public class RProgramRepositoryEntity extends DynamicRepositoryEntity<RProgram> {
+public class RProgramRepositoryEntity extends DynamicRepositoryEntity<IRProgram> {
 
     protected StaticRepositoryEntity<IProgram> programEntity;
 
@@ -29,26 +29,26 @@ public class RProgramRepositoryEntity extends DynamicRepositoryEntity<RProgram> 
      */
     public RProgramRepositoryEntity(IRepository repository,
             StaticRepositoryEntity<IProgram> programEntity,
-            DynamicRepositoryEntity<RProgram> parent, String basePath) {
+            DynamicRepositoryEntity<IRProgram> parent, String basePath) {
         super(repository, parent, basePath);
         this.programEntity = programEntity;
     }
 
     @Override
-    public boolean register(final RProgram rProgram) throws RegisterException {
+    public boolean register(final IRProgram rProgram) throws RegisterException {
         programEntity.register(rProgram);
         return super.register(rProgram);
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * de.clusteval.framework.repository.DynamicRepositoryEntity#registerClass
-	 * (java.lang.Class)
+     * (non-Javadoc)
+     *
+     * @see
+     * de.clusteval.framework.repository.DynamicRepositoryEntity#registerClass
+     * (java.lang.Class)
      */
     @Override
-    public <S extends RProgram> boolean registerClass(Class<S> object) {
+    public <S extends IRProgram> boolean registerClass(Class<S> object) {
         if (!super.registerClass(object)) {
             return false;
         }
@@ -66,14 +66,14 @@ public class RProgramRepositoryEntity extends DynamicRepositoryEntity<RProgram> 
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * de.clusteval.framework.repository.DynamicRepositoryEntity#ensureLibraries
-	 * (java.lang.Class)
+     * (non-Javadoc)
+     *
+     * @see
+     * de.clusteval.framework.repository.DynamicRepositoryEntity#ensureLibraries
+     * (java.lang.Class)
      */
     @Override
-    protected <S extends RProgram> boolean ensureLibraries(Class<S> classObject)
+    protected <S extends IRProgram> boolean ensureLibraries(Class<S> classObject)
             throws InterruptedException {
         boolean result;
         try {

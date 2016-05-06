@@ -16,15 +16,15 @@ import cern.colt.matrix.tlong.LongMatrix2D;
 import cern.colt.matrix.tlong.impl.SparseLongMatrix2D;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
-import de.clusteval.api.program.ParameterSet;
+import de.clusteval.api.cluster.IClustering;
+import de.clusteval.api.opt.ParameterSet;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.cluster.Clustering;
+import de.clusteval.api.run.result.RunResult;
 import de.clusteval.api.stats.RunStatisticCalculateException;
 import de.clusteval.run.result.ParameterOptimizationResult;
-import de.clusteval.run.result.RunResult;
 import de.clusteval.utils.ArraysExt;
 import de.clusteval.utils.FileUtils;
 import java.io.File;
@@ -113,7 +113,7 @@ public class CooccurrenceRunStatisticCalculator
                 try {
                     for (ParameterSet paramSet : result.getParameterSets()) {
                         this.log.info("Processing parameter set: " + paramSet);
-                        Clustering cl = result.getClustering(paramSet);
+                        IClustering cl = result.getClustering(paramSet);
 
                         if (cl == null) {
                             continue;

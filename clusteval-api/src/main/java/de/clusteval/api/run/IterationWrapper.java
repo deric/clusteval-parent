@@ -19,7 +19,7 @@ package de.clusteval.api.run;
 import de.clusteval.api.data.IDataConfig;
 import java.io.File;
 
-public class IterationWrapper {
+public abstract class IterationWrapper {
 
     /**
      * A temporary variable holding a file object pointing to the absolute path
@@ -68,4 +68,6 @@ public class IterationWrapper {
     public void setRunnable(IRunRunnable runnable) {
         this.runnable = runnable;
     }
+
+    public abstract int getOptId();
 }

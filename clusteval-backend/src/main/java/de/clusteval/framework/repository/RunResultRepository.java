@@ -15,9 +15,10 @@ package de.clusteval.framework.repository;
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.IContext;
 import de.clusteval.api.IDistanceMeasure;
+import de.clusteval.api.data.DataPreprocessor;
+import de.clusteval.api.data.DataRandomizer;
 import de.clusteval.api.data.GoldStandard;
 import de.clusteval.api.data.IDataConfig;
-import de.clusteval.api.data.DataPreprocessor;
 import de.clusteval.api.data.IDataRandomizer;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetConfig;
@@ -27,39 +28,36 @@ import de.clusteval.api.data.IDataSetType;
 import de.clusteval.api.data.IGoldStandardConfig;
 import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.opt.IParameterOptimizationMethod;
+import de.clusteval.api.program.DoubleProgramParameter;
 import de.clusteval.api.program.IProgramConfig;
+import de.clusteval.api.program.IntegerProgramParameter;
+import de.clusteval.api.program.Program;
 import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.program.StringProgramParameter;
 import de.clusteval.api.r.IRProgram;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.repository.DynamicRepositoryEntityMap;
 import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.repository.RepositoryConfigurationException;
 import de.clusteval.api.repository.StaticRepositoryEntity;
 import de.clusteval.api.repository.StaticRepositoryEntityMap;
 import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.IRunResultFormat;
 import de.clusteval.api.run.IRunResultPostprocessor;
+import de.clusteval.api.run.result.RunResult;
+import de.clusteval.api.run.result.RunResultPostprocessor;
 import de.clusteval.api.stats.IDataStatistic;
 import de.clusteval.api.stats.IRunDataStatistic;
 import de.clusteval.api.stats.IRunStatistic;
+import de.clusteval.api.stats.RunStatistic;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.data.dataset.DataSetRegisterException;
-import de.clusteval.api.data.DataPreprocessor;
-import de.clusteval.api.data.DataRandomizer;
-import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
-import de.clusteval.framework.repository.config.RepositoryConfigurationException;
 import de.clusteval.framework.repository.db.RunResultSQLCommunicator;
 import de.clusteval.framework.repository.db.SQLCommunicator;
 import de.clusteval.framework.repository.db.StubSQLCommunicator;
 import de.clusteval.framework.threading.RunResultRepositorySupervisorThread;
 import de.clusteval.framework.threading.SupervisorThread;
-import de.clusteval.program.DoubleProgramParameter;
-import de.clusteval.program.IntegerProgramParameter;
-import de.clusteval.program.Program;
-import de.clusteval.program.StringProgramParameter;
-import de.clusteval.run.result.RunResult;
-import de.clusteval.run.result.postprocessing.RunResultPostprocessor;
-import de.clusteval.api.stats.RunStatistic;
 import de.clusteval.utils.FileUtils;
 import de.clusteval.utils.Finder;
 import de.clusteval.utils.NamedDoubleAttribute;
@@ -93,13 +91,12 @@ public class RunResultRepository extends Repository implements IRepository {
      * @throws RepositoryAlreadyExistsException
      * @throws InvalidRepositoryException
      * @throws RepositoryConfigurationException
-     * @throws RepositoryConfigNotFoundException
      * @throws DatabaseConnectException
      */
     public RunResultRepository(String basePath, IRepository parent)
             throws FileNotFoundException, RepositoryAlreadyExistsException,
-            InvalidRepositoryException, RepositoryConfigNotFoundException,
-            RepositoryConfigurationException, DatabaseConnectException {
+                   InvalidRepositoryException,
+                   RepositoryConfigurationException, DatabaseConnectException {
         super(basePath, parent);
     }
 
@@ -185,21 +182,21 @@ public class RunResultRepository extends Repository implements IRepository {
         // .get(StringProgramParameter.class));
         this.staticRepositoryEntities.put(
                 DoubleProgramParameter.class,
-                new ProgramParameterRepositoryEntity<DoubleProgramParameter>(
+                new ProgramParameterRepositoryEntity<>(
                         this, this.parent != null
                               ? this.parent.getStaticEntities()
                                 .get(DoubleProgramParameter.class)
                               : null, null));
         this.staticRepositoryEntities.put(
                 IntegerProgramParameter.class,
-                new ProgramParameterRepositoryEntity<IntegerProgramParameter>(
+                new ProgramParameterRepositoryEntity<>(
                         this, this.parent != null
                               ? this.parent.getStaticEntities()
                                 .get(IntegerProgramParameter.class)
                               : null, null));
         this.staticRepositoryEntities.put(
                 StringProgramParameter.class,
-                new ProgramParameterRepositoryEntity<StringProgramParameter>(
+                new ProgramParameterRepositoryEntity<>(
                         this, this.parent != null
                               ? this.parent.getStaticEntities()
                                 .get(StringProgramParameter.class)
@@ -323,6 +320,11 @@ public class RunResultRepository extends Repository implements IRepository {
     protected SupervisorThread createSupervisorThread() {
         return new RunResultRepositorySupervisorThread(this,
                 this.getParent().getRepositoryConfig().getThreadSleepTimes());
+    }
+
+    @Override
+    public boolean isRunResultRepo() {
+        return true;
     }
 }
 

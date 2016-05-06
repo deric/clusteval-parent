@@ -5,7 +5,7 @@ package de.clusteval.framework.repository;
 
 import de.clusteval.api.repository.StaticRepositoryEntity;
 import de.clusteval.api.program.RegisterException;
-import de.clusteval.program.ProgramParameter;
+import de.clusteval.api.program.ProgramParameter;
 
 /**
  * @author Christian Wiwie

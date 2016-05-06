@@ -67,10 +67,10 @@ public class KMeansClusteringRProgram extends AbsoluteDataRProgram {
     /*
      * (non-Javadoc)
      *
-     * @see program.Program#getAlias()
+     * @see program.Program#getName()
      */
     @Override
-    public String getAlias() {
+    public String getName() {
         return "k-Means";
     }
 

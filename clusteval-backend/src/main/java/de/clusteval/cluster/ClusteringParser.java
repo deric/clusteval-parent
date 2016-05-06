@@ -20,7 +20,7 @@ import de.clusteval.api.cluster.ClusteringEvaluationParameters;
 import de.clusteval.api.cluster.ClusteringQualitySet;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.factory.UnknownProviderException;
-import de.clusteval.api.program.ParameterSet;
+import de.clusteval.api.opt.ParameterSet;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RepositoryController;
 import de.clusteval.utils.TextFileMapParser;

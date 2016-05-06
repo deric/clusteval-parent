@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.run.result.postprocessing;
 
+import de.clusteval.api.run.result.RunResultPostprocessor;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.run.IRunResultPostprocessor;

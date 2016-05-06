@@ -72,10 +72,10 @@ public class SpectralClusteringRProgram extends AbsoluteAndRelativeDataRProgram 
     /*
      * (non-Javadoc)
      *
-     * @see program.Program#getAlias()
+     * @see program.Program#getName()
      */
     @Override
-    public String getAlias() {
+    public String getName() {
         return "Spectral Clustering";
     }
 

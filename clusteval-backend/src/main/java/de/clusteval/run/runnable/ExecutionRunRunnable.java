@@ -36,28 +36,32 @@ import de.clusteval.api.exceptions.RunIterationException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.opt.NoParameterSetFoundException;
+import de.clusteval.api.opt.ParameterSet;
 import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.IProgramParameter;
-import de.clusteval.api.program.ParameterSet;
 import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.r.IRProgram;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RLibraryNotLoadedException;
 import de.clusteval.api.r.RNotAvailableException;
+import de.clusteval.api.r.RProcess;
 import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.run.ExecutionIterationRunnable;
+import de.clusteval.api.run.ExecutionRun;
 import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.IRunResultFormat;
+import de.clusteval.api.run.IRunRunnable;
 import de.clusteval.api.run.IScheduler;
+import de.clusteval.api.run.MissingParameterValueException;
+import de.clusteval.api.run.NoRunResultFormatParserException;
+import de.clusteval.api.run.RunRunnable;
+import de.clusteval.api.run.StreamGobbler;
 import de.clusteval.api.run.result.RunResultNotFoundException;
+import de.clusteval.api.run.result.RunResultPostprocessor;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.framework.repository.RunResultRepository;
-import de.clusteval.program.r.RProcess;
-import de.clusteval.program.r.RProgram;
-import de.clusteval.run.ExecutionRun;
-import de.clusteval.run.MissingParameterValueException;
 import de.clusteval.run.result.ClusteringRunResult;
-import de.clusteval.run.result.NoRunResultFormatParserException;
-import de.clusteval.run.result.postprocessing.RunResultPostprocessor;
 import de.clusteval.utils.FileUtils;
 import de.clusteval.utils.Formatter;
 import de.clusteval.utils.StringExt;
@@ -86,7 +90,8 @@ import org.slf4j.LoggerFactory;
  * @author Christian Wiwie
  *
  */
-public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIterationRunnable, ExecutionIterationWrapper> {
+public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIterationRunnable, ExecutionIterationWrapper>
+        implements IRunRunnable<ExecutionIterationRunnable, ExecutionIterationWrapper> {
 
     /**
      * The program configuration this thread combines with a data configuration.
@@ -134,6 +139,15 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
     public ExecutionRunRunnable(IRun run, IProgramConfig programConfig, IDataConfig dataConfig, String runIdentString,
             boolean isResume, Map<IProgramParameter<?>, String> runParams) {
         super(run, runIdentString, isResume);
+
+        this.programConfig = programConfig;
+        this.dataConfig = dataConfig;
+        this.runParams = runParams;
+    }
+
+    public void init(IRun run, IProgramConfig programConfig, IDataConfig dataConfig, String runIdentString,
+            boolean isResume, Map<IProgramParameter<?>, String> runParams) {
+        super.init(run, runIdentString, isResume);
 
         this.programConfig = programConfig;
         this.dataConfig = dataConfig;
@@ -260,7 +274,6 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
      *                           goldstandardto be checked.
      * @throws IOException
      * @throws UnknownGoldStandardFormatException
-     * @throws UnknownDataSetFormatException
      * @throws IncompleteGoldStandardException
      * @throws InvalidDataSetFormatException
      * @throws IllegalArgumentException
@@ -327,8 +340,8 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
      */
     protected String getInvocationFormat() {
         // added 16.01.2013
-        if (programConfig.getProgram() instanceof RProgram) {
-            return ((RProgram) programConfig.getProgram()).getInvocationFormat();
+        if (programConfig.getProgram() instanceof IRProgram) {
+            return ((IRProgram) programConfig.getProgram()).getInvocationFormat();
         }
         return programConfig.getInvocationFormat(!dataConfig.hasGoldStandardConfig());
     }
@@ -907,9 +920,9 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
                         } finally {
                             if (programConfig.getProgram() instanceof RProgram) {
                                 synchronized (bw) {
-                                    if (((RProgram) (programConfig.getProgram())).getRengine() != null) {
+                                    if (((IRProgram) (programConfig.getProgram())).getRengine() != null) {
                                         bw.append(
-                                                ((RProgram) (programConfig.getProgram())).getRengine().getLastError());
+                                                ((IRProgram) (programConfig.getProgram())).getRengine().getLastError());
                                     }
                                     bw.close();
                                 }
@@ -1499,4 +1512,5 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
 
         this.log.info("Run " + this.getRun() + " (" + this.programConfig + "," + this.dataConfig + ") finished");
     }
+
 }

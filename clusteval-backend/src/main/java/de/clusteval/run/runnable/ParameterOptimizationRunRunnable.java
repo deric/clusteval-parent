@@ -28,16 +28,16 @@ import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.opt.IDivergingParameterOptimizationMethod;
 import de.clusteval.api.opt.NoParameterSetFoundException;
 import de.clusteval.api.opt.ParameterOptimizationException;
+import de.clusteval.api.opt.ParameterOptimizationMethod;
+import de.clusteval.api.opt.ParameterOptimizationRun;
+import de.clusteval.api.opt.ParameterSet;
 import de.clusteval.api.opt.ParameterSetAlreadyEvaluatedException;
 import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.IProgramParameter;
-import de.clusteval.api.program.ParameterSet;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.run.IRun;
+import de.clusteval.api.run.IRunResult;
 import de.clusteval.api.run.IScheduler;
-import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethod;
-import de.clusteval.run.ParameterOptimizationRun;
-import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.utils.FileUtils;
 import de.clusteval.utils.plot.Plotter;
 import java.io.File;
@@ -59,6 +59,7 @@ import java.util.Map;
  */
 public class ParameterOptimizationRunRunnable extends ExecutionRunRunnable {
 
+    public static final String NAME = "ParameterOptimizationRunRunnable";
     /**
      * This attribute is set to some instance of an parameter optimization
      * method, that will determine the sequence of parameter sets during the
@@ -101,6 +102,25 @@ public class ParameterOptimizationRunRunnable extends ExecutionRunRunnable {
         this.future = runScheduler.registerRunRunnable(this);
     }
 
+    public void init(IScheduler runScheduler,
+            IRun run, IProgramConfig programConfig, IDataConfig dataConfig,
+            ParameterOptimizationMethod optimizationMethod,
+            String runIdentString, boolean isResume,
+            Map<IProgramParameter<?>, String> runParams) {
+        super.init(run, programConfig, dataConfig, runIdentString, isResume, runParams);
+
+        this.optimizationMethod = optimizationMethod;
+        if (optimizationMethod != null) {
+            this.optimizationMethod.setResume(isResume);
+        }
+        this.future = runScheduler.registerRunRunnable(this);
+    }
+
+    @Override
+    public String getName() {
+        return NAME;
+    }
+
     /**
      * This method replaces the optimization parameters with the values given in
      * the run configuration.
@@ -117,8 +137,7 @@ public class ParameterOptimizationRunRunnable extends ExecutionRunRunnable {
             // doRunIteration() in order to get the right iteration numbner
             // now here: get the parameter set created there
             // TODO: change this to iterationWrapper
-            List<ParameterSet> paramSets = optimizationMethod.getResult()
-                    .getParameterSets();
+            List<ParameterSet> paramSets = optimizationMethod.getResult().getParameterSets();
             ParameterSet optimizationParamValues = paramSets.get(paramSets
                     .size() - 1);
             for (int i = 0; i < parsed.length; i++) {
@@ -232,8 +251,7 @@ public class ParameterOptimizationRunRunnable extends ExecutionRunRunnable {
                         .getResult());
             } finally {
                 // clear memory-hungry internal attributes of clustering results
-                ParameterOptimizationResult result = this.optimizationMethod
-                        .getResult();
+                IRunResult result = this.optimizationMethod.getResult();
                 result.unloadFromMemory();
             }
         }
@@ -406,4 +424,5 @@ public class ParameterOptimizationRunRunnable extends ExecutionRunRunnable {
             this.progress.update(iterationPercent);
         }
     }
+
 }

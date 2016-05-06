@@ -16,7 +16,7 @@ import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.exceptions.ClusteringParseException;
 import de.clusteval.api.program.RegisterException;
-import de.clusteval.api.program.ParameterSet;
+import de.clusteval.api.opt.ParameterSet;
 import de.clusteval.utils.AbstractClustEvalTest;
 import de.clusteval.api.Pair;
 import java.io.File;

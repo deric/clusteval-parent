@@ -12,6 +12,7 @@
  */
 package de.clusteval.cluster.paramOptimization;
 
+import de.clusteval.api.opt.ParameterOptimizationMethod;
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.data.AbsoluteDataSet;
 import de.clusteval.api.data.AbsoluteDataSetFormat;
@@ -20,14 +21,14 @@ import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.exceptions.InvalidDataSetFormatException;
 import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.IProgramParameter;
-import de.clusteval.api.program.ParameterSet;
+import de.clusteval.api.opt.ParameterSet;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RExpr;
 import de.clusteval.api.r.RLibraryRequirement;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.run.ParameterOptimizationRun;
+import de.clusteval.api.opt.ParameterOptimizationRun;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;

@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.run;
 
+import de.clusteval.api.run.Run;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.utils.AbstractClustEvalTest;
 import java.io.File;

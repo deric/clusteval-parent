@@ -3,8 +3,6 @@
  */
 package de.clusteval.api.opt;
 
-import de.clusteval.api.program.ParameterSet;
-
 /**
  * @author Christian Wiwie
  *

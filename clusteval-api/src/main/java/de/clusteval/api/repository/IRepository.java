@@ -21,6 +21,7 @@ import de.clusteval.api.SQLConfig;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.data.IDataSetFormatParser;
+import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.exceptions.InternalAttributeException;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.INamedAttribute;
@@ -35,6 +36,7 @@ import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.IRunResultFormatParser;
 import de.clusteval.api.run.ISupervisorThread;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Collection;
@@ -49,6 +51,10 @@ import org.openide.util.Lookup;
  * @author deric
  */
 public interface IRepository {
+
+    void init(final String basePath, final IRepository parent, final RepositoryConfig overrideConfig)
+            throws FileNotFoundException, RepositoryAlreadyExistsException, InvalidRepositoryException,
+                   RepositoryConfigurationException, DatabaseConnectException;
 
     /**
      * Initializes this repository by creating a supervisor thread
@@ -320,6 +326,13 @@ public interface IRepository {
      * @return
      */
     boolean hasParent();
+
+    /**
+     * RunResult repository is usually a smaller instance of its parent
+     *
+     * @return
+     */
+    boolean isRunResultRepo();
 
     IRengine getRengine(final Thread thread) throws RException;
 
