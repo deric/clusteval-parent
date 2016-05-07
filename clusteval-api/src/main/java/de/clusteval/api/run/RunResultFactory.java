@@ -37,6 +37,7 @@ import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
 import de.clusteval.api.factory.ServiceFactory;
 import de.clusteval.api.factory.UnknownProviderException;
+import de.clusteval.api.opt.IParamOptResult;
 import de.clusteval.api.opt.InvalidOptimizationParameterException;
 import de.clusteval.api.opt.ParameterOptimizationMethod;
 import de.clusteval.api.opt.ParameterOptimizationRun;
@@ -167,8 +168,8 @@ public class RunResultFactory extends ServiceFactory<IRunResult> {
         return result;
     }
 
-    public static IRun parseFromRunResultFolder2(final IRepository parentRepository, final File runResultFolder,
-            final List<IRunResult> result, final boolean parseClusterings,
+    public static IRun parseParamOptResult(final IRepository parentRepository, final File runResultFolder,
+            final List<IParamOptResult> result, final boolean parseClusterings,
             final boolean storeClusterings, final boolean register)
             throws IOException, UnknownRunResultFormatException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
@@ -220,7 +221,7 @@ public class RunResultFactory extends ServiceFactory<IRunResult> {
                         final File completeFile = new File(FileUtils.buildPath(clusterFolder.getAbsolutePath(),
                                 method.getProgramConfig().toString() + "_" + method.getDataConfig().toString()
                                 + ".results.qual.complete"));
-                        final IRunResult tmpResult = parseFromRunResultCompleteFile(parentRepository,
+                        final IParamOptResult tmpResult = (IParamOptResult) parseFromRunResultCompleteFile(parentRepository,
                                 paramRun, method, completeFile, parseClusterings, storeClusterings, register);
                         if (tmpResult != null) {
                             result.add(tmpResult);

@@ -41,6 +41,7 @@ import de.clusteval.api.exceptions.UnknownProgramTypeException;
 import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
 import de.clusteval.api.factory.UnknownProviderException;
+import de.clusteval.api.opt.IParamOptResult;
 import de.clusteval.api.opt.InvalidOptimizationParameterException;
 import de.clusteval.api.opt.ParameterOptimizationRun;
 import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
@@ -53,7 +54,6 @@ import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RepositoryConfigurationException;
-import de.clusteval.api.run.IRunResult;
 import de.clusteval.api.run.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.api.run.RunException;
 import de.clusteval.api.run.RunResultFactory;
@@ -136,9 +136,9 @@ public class ClustQualityEval {
         this.repo = new RunResultRepository(absRepoPath, parent);
         this.repo.initialize();
 
-        List<IRunResult> result = new ArrayList<>();
+        List<IParamOptResult> result = new ArrayList<>();
         final ParameterOptimizationRun run = (ParameterOptimizationRun) RunResultFactory
-                .parseFromRunResultFolder2(parent, new File(absRepoPath),
+                .parseParamOptResult(parent, new File(absRepoPath),
                         result, false, false, false);
 
         this.dataConfig = this.repo.getStaticObjectWithName(DataConfig.class,

@@ -17,10 +17,13 @@
 package de.clusteval.api.opt;
 
 import de.clusteval.api.ClusteringEvaluation;
+import de.clusteval.api.Pair;
 import de.clusteval.api.cluster.ClusteringQualitySet;
 import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.data.IDataConfig;
+import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.run.IRunResult;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -117,5 +120,17 @@ public interface IParamOptResult extends IRunResult {
 
     void setRun(ParameterOptimizationRun run);
 
-    public void setMethod(ParameterOptimizationMethod aThis);
+    void setMethod(ParameterOptimizationMethod method);
+
+    /**
+     * @return The clustering corresponding to the highest achieved quality
+     *         value for the optimization criterion (see
+     *         {@link #getOptimalCriterionValue()}).
+     */
+    IClustering getOptimalClustering();
+
+    Iterator<Pair<ParameterSet, ClusteringQualitySet>> iterator();
+
+    IProgramConfig getProgramConfig();
+
 }

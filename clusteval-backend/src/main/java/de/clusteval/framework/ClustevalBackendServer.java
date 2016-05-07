@@ -25,50 +25,31 @@ import de.clusteval.api.Triple;
 import de.clusteval.api.data.DataRandomizeException;
 import de.clusteval.api.data.DataRandomizer;
 import de.clusteval.api.data.DataRandomizerFactory;
-import de.clusteval.api.data.DataSetConfigNotFoundException;
-import de.clusteval.api.data.DataSetConfigurationException;
 import de.clusteval.api.data.IDataRandomizer;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.exceptions.DataSetGenerationException;
-import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.api.exceptions.DatabaseConnectException;
-import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
-import de.clusteval.api.exceptions.GoldStandardConfigurationException;
 import de.clusteval.api.exceptions.GoldStandardGenerationException;
-import de.clusteval.api.exceptions.GoldStandardNotFoundException;
-import de.clusteval.api.exceptions.IncompatibleContextException;
-import de.clusteval.api.exceptions.InvalidConfigurationFileException;
-import de.clusteval.api.exceptions.NoDataSetException;
-import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
-import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.exceptions.RepositoryObjectDumpException;
-import de.clusteval.api.exceptions.RunResultParseException;
 import de.clusteval.api.exceptions.UnknownDataSetGeneratorException;
-import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.opt.IParamOptResult;
-import de.clusteval.api.opt.InvalidOptimizationParameterException;
-import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
 import de.clusteval.api.program.IProgram;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
-import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RepositoryConfigurationException;
 import de.clusteval.api.repository.RepositoryController;
 import de.clusteval.api.run.ExecutionIterationRunnable;
-import de.clusteval.api.run.IRunResult;
 import de.clusteval.api.run.IScheduler;
-import de.clusteval.api.run.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.api.run.IterationRunnable;
 import de.clusteval.api.run.IterationWrapper;
 import de.clusteval.api.run.OptStatus;
 import de.clusteval.api.run.RUN_STATUS;
 import de.clusteval.api.run.Run;
-import de.clusteval.api.run.RunException;
 import de.clusteval.api.run.RunResultFactory;
 import de.clusteval.api.run.result.RunResult;
 import de.clusteval.data.dataset.generator.DataSetGenerator;
@@ -111,7 +92,6 @@ import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
-import org.apache.commons.configuration.ConfigurationException;
 import org.openide.util.Exceptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -767,13 +747,12 @@ public class ClustevalBackendServer implements IBackendServer {
             throws RemoteException {
         Map<Pair<String, String>, Map<String, Double>> result = new HashMap<>();
 
-        List<IRunResult> list = new ArrayList<>();
+        List<IParamOptResult> list = new ArrayList<>();
         try {
-            RunResultFactory.parseFromRunResultFolder2(repository,
+            RunResultFactory.parseParamOptResult(repository,
                     new File(FileUtils.buildPath(repository.getBasePath(RunResult.class), uniqueRunIdentifier)), list,
                     false, false, false);
-            for (IRunResult res : list) {
-                IParamOptResult r = (IParamOptResult) res;
+            for (IParamOptResult r : list) {
                 String dataConfig = r.getMethod().getDataConfig().getName();
                 String programConfig = r.getMethod().getProgramConfig().getName();
                 Map<String, Double> measureToOptimalQuality = new HashMap<>();
@@ -783,7 +762,7 @@ public class ClustevalBackendServer implements IBackendServer {
                 }
                 result.put(Pair.getPair(dataConfig, programConfig), measureToOptimalQuality);
             }
-        } catch (IOException | UnknownParameterOptimizationMethodException | NoOptimizableProgramParameterException | UnknownGoldStandardFormatException | InvalidConfigurationFileException | RepositoryAlreadyExistsException | InvalidRepositoryException | NoRepositoryFoundException | GoldStandardNotFoundException | InvalidOptimizationParameterException | GoldStandardConfigurationException | DataSetConfigurationException | DataSetNotFoundException | DataSetConfigNotFoundException | GoldStandardConfigNotFoundException | RunException | UnknownRProgramException | IncompatibleParameterOptimizationMethodException | RepositoryConfigurationException | ConfigurationException | RegisterException | NumberFormatException | NoDataSetException | RunResultParseException | IncompatibleContextException | InterruptedException | UnknownProviderException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

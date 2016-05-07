@@ -16,54 +16,21 @@ import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.Pair;
 import de.clusteval.api.cluster.ClustEvalValue;
 import de.clusteval.api.cluster.ClusteringQualitySet;
-import de.clusteval.api.exceptions.DataSetNotFoundException;
-import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
-import de.clusteval.api.exceptions.GoldStandardConfigurationException;
-import de.clusteval.api.exceptions.GoldStandardNotFoundException;
-import de.clusteval.api.exceptions.IncompatibleContextException;
-import de.clusteval.api.exceptions.NoDataSetException;
-import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
-import de.clusteval.api.exceptions.NoRepositoryFoundException;
-import de.clusteval.api.exceptions.RunResultParseException;
-import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
-import de.clusteval.api.exceptions.UnknownParameterType;
-import de.clusteval.api.exceptions.UnknownProgramParameterException;
-import de.clusteval.api.exceptions.UnknownProgramTypeException;
-import de.clusteval.api.exceptions.UnknownRunResultFormatException;
-import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
-import de.clusteval.api.factory.UnknownProviderException;
-import de.clusteval.api.opt.InvalidOptimizationParameterException;
-import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
+import de.clusteval.api.opt.IParamOptResult;
 import de.clusteval.api.opt.ParameterSet;
 import de.clusteval.api.program.RegisterException;
-import de.clusteval.api.r.InvalidRepositoryException;
-import de.clusteval.api.r.RepositoryAlreadyExistsException;
-import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.run.IncompatibleParameterOptimizationMethodException;
-import de.clusteval.data.DataConfigNotFoundException;
-import de.clusteval.data.DataConfigurationException;
-import de.clusteval.api.data.DataSetConfigNotFoundException;
-import de.clusteval.api.data.DataSetConfigurationException;
-import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
-import de.clusteval.api.stats.RunStatisticCalculateException;
-import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
-import de.clusteval.api.repository.RepositoryConfigurationException;
-import de.clusteval.run.InvalidRunModeException;
-import de.clusteval.api.run.RunException;
-import de.clusteval.run.result.ParameterOptimizationResult;
+import de.clusteval.api.run.RunResultFactory;
 import de.clusteval.api.run.result.RunResult;
+import de.clusteval.api.stats.RunStatisticCalculateException;
 import de.clusteval.utils.ArraysExt;
 import de.clusteval.utils.FileUtils;
-import de.clusteval.api.exceptions.InvalidConfigurationFileException;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import org.apache.commons.configuration.ConfigurationException;
-import org.openide.util.Exceptions;
 
 /**
  * @author Christian Wiwie
@@ -109,9 +76,9 @@ public class ParameterImportanceRunStatisticCalculator
 
         try {
 
-            List<ParameterOptimizationResult> results = new ArrayList<>();
+            List<IParamOptResult> results = new ArrayList<>();
 
-            ParameterOptimizationResult.parseFromRunResultFolder2(
+            RunResultFactory.parseParamOptResult(
                     this.repository,
                     new File(FileUtils.buildPath(
                             this.repository.getBasePath(RunResult.class),
@@ -120,7 +87,7 @@ public class ParameterImportanceRunStatisticCalculator
 
             Map<Pair<String, String>, Map<String, Double>> paramImportances = new HashMap<>();
 
-            for (ParameterOptimizationResult result : results) {
+            for (IParamOptResult result : results) {
                 try {
                     result.loadIntoMemory();
 
@@ -132,7 +99,9 @@ public class ParameterImportanceRunStatisticCalculator
                     // ...)
                     Map<Pair<String, String>, Map<ClusteringEvaluation, List<ClustEvalValue>>> paramQualities = new HashMap<>();
 
-                    for (Pair<ParameterSet, ClusteringQualitySet> qualities : result) {
+                    Iterator<Pair<ParameterSet, ClusteringQualitySet>> iter = result.iterator();
+                    while (iter.hasNext()) {
+                        Pair<ParameterSet, ClusteringQualitySet> qualities = iter.next();
                         for (String paramName : qualities.getFirst().keySet()) {
                             Pair<String, String> p = Pair.getPair(programConfig
                                     + ":" + paramName, qualities.getFirst()
@@ -249,12 +218,9 @@ public class ParameterImportanceRunStatisticCalculator
 
             return new ParameterImportanceRunStatistic(repository, false,
                     changeDate, absPath, paramImportances);
-        } catch (IOException | UnknownRunResultFormatException | InvalidRunModeException | UnknownParameterOptimizationMethodException | NoOptimizableProgramParameterException | UnknownProgramParameterException | UnknownGoldStandardFormatException | InvalidConfigurationFileException | RepositoryAlreadyExistsException | InvalidRepositoryException | NoRepositoryFoundException | GoldStandardNotFoundException | InvalidOptimizationParameterException | GoldStandardConfigurationException | DataSetConfigurationException | DataSetNotFoundException | DataSetConfigNotFoundException | GoldStandardConfigNotFoundException | DataConfigurationException | DataConfigNotFoundException | RunException | UnknownProgramTypeException | UnknownRProgramException | IncompatibleParameterOptimizationMethodException | RepositoryConfigNotFoundException | RepositoryConfigurationException | ConfigurationException | RegisterException | NumberFormatException | NoDataSetException | RunResultParseException | IncompatibleDataSetConfigPreprocessorException | IncompatibleContextException | UnknownParameterType | InterruptedException | UnknownRunResultPostprocessorException e) {
+        } catch (Exception e) {
             throw new RunStatisticCalculateException(e);
-        } catch (UnknownProviderException ex) {
-            Exceptions.printStackTrace(ex);
         }
-        return null;
     }
 
     /*

@@ -18,19 +18,20 @@ import de.clusteval.api.cluster.ClustEvalValue;
 import de.clusteval.api.cluster.ClusteringQualitySet;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.exceptions.RunResultParseException;
-import de.clusteval.api.program.IProgram;
+import de.clusteval.api.opt.IParamOptResult;
 import de.clusteval.api.opt.ParameterSet;
+import de.clusteval.api.program.IProgram;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RExpr;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.IRunResult;
-import de.clusteval.api.stats.IDataStatistic;
-import de.clusteval.api.stats.DoubleValueDataStatistic;
-import de.clusteval.run.result.DataAnalysisRunResult;
-import de.clusteval.run.result.ParameterOptimizationResult;
+import de.clusteval.api.run.RunResultFactory;
 import de.clusteval.api.run.result.RunResult;
+import de.clusteval.api.stats.DoubleValueDataStatistic;
+import de.clusteval.api.stats.IDataStatistic;
+import de.clusteval.run.result.DataAnalysisRunResult;
 import de.clusteval.utils.FileUtils;
 import java.io.File;
 import java.util.ArrayList;
@@ -87,12 +88,12 @@ public class LinearModelRunDataStatisticCalculator
         /*
          * Get clustering results
          */
-        List<ParameterOptimizationResult> runResults = new ArrayList<>();
+        List<IParamOptResult> runResults = new ArrayList<>();
         for (String runIdentifier : this.uniqueRunIdentifiers) {
-            List<ParameterOptimizationResult> results = new ArrayList<>();
+            List<IParamOptResult> results = new ArrayList<>();
 
             try {
-                ParameterOptimizationResult.parseFromRunResultFolder2(
+                RunResultFactory.parseParamOptResult(
                         this.repository,
                         new File(FileUtils.buildPath(
                                 this.repository.getBasePath(RunResult.class),
@@ -103,7 +104,7 @@ public class LinearModelRunDataStatisticCalculator
         }
 
         try {
-            for (ParameterOptimizationResult result : runResults) {
+            for (IParamOptResult result : runResults) {
                 result.loadIntoMemory();
             }
 
@@ -223,7 +224,7 @@ public class LinearModelRunDataStatisticCalculator
                     final Map<Pair<String, String>, Double[]> yMap = new HashMap<>();
 
                     // iterate over run results
-                    for (ParameterOptimizationResult paramResult : runResults) {
+                    for (IParamOptResult paramResult : runResults) {
                         final IProgram p = paramResult.getMethod()
                                 .getProgramConfig().getProgram();
                         final IDataConfig dc = paramResult.getDataConfig();
@@ -317,7 +318,7 @@ public class LinearModelRunDataStatisticCalculator
                 }
             }
         } finally {
-            for (ParameterOptimizationResult result : runResults) {
+            for (IParamOptResult result : runResults) {
                 result.unloadFromMemory();
             }
         }

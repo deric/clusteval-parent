@@ -17,54 +17,23 @@ import de.clusteval.api.Pair;
 import de.clusteval.api.cluster.ClustEvalValue;
 import de.clusteval.api.cluster.ClusteringQualitySet;
 import de.clusteval.api.data.IDataConfig;
-import de.clusteval.api.exceptions.DataSetNotFoundException;
-import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
-import de.clusteval.api.exceptions.GoldStandardConfigurationException;
-import de.clusteval.api.exceptions.GoldStandardNotFoundException;
-import de.clusteval.api.exceptions.IncompatibleContextException;
-import de.clusteval.api.exceptions.NoDataSetException;
-import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
-import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.exceptions.RunResultParseException;
-import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
-import de.clusteval.api.exceptions.UnknownParameterType;
-import de.clusteval.api.exceptions.UnknownProgramParameterException;
-import de.clusteval.api.exceptions.UnknownProgramTypeException;
-import de.clusteval.api.exceptions.UnknownRunResultFormatException;
-import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
-import de.clusteval.api.factory.UnknownProviderException;
-import de.clusteval.api.opt.InvalidOptimizationParameterException;
-import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
-import de.clusteval.api.program.IProgram;
+import de.clusteval.api.opt.IParamOptResult;
 import de.clusteval.api.opt.ParameterSet;
+import de.clusteval.api.program.IProgram;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
-import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RExpr;
-import de.clusteval.api.r.RepositoryAlreadyExistsException;
-import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.IRunResult;
-import de.clusteval.api.stats.IDataStatistic;
-import de.clusteval.api.run.IncompatibleParameterOptimizationMethodException;
-import de.clusteval.data.DataConfigNotFoundException;
-import de.clusteval.data.DataConfigurationException;
-import de.clusteval.api.data.DataSetConfigNotFoundException;
-import de.clusteval.api.data.DataSetConfigurationException;
-import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
+import de.clusteval.api.run.RunResultFactory;
 import de.clusteval.api.stats.DoubleValueDataStatistic;
-import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
-import de.clusteval.api.repository.RepositoryConfigurationException;
-import de.clusteval.run.InvalidRunModeException;
-import de.clusteval.api.run.RunException;
+import de.clusteval.api.stats.IDataStatistic;
 import de.clusteval.run.result.DataAnalysisRunResult;
-import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.utils.FileUtils;
-import de.clusteval.api.exceptions.InvalidConfigurationFileException;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -72,7 +41,6 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import org.apache.commons.configuration.ConfigurationException;
 import org.openide.util.Exceptions;
 
 /**
@@ -121,34 +89,24 @@ public class LinearModelRidgeRunDataStatisticCalculator
         /*
          * Get clustering results
          */
-        List<ParameterOptimizationResult> runResults = new ArrayList<>();
+        List<IParamOptResult> runResults = new ArrayList<>();
         for (String runIdentifier : this.uniqueRunIdentifiers) {
-            List<ParameterOptimizationResult> results = new ArrayList<>();
+            List<IParamOptResult> results = new ArrayList<>();
 
             try {
-                ParameterOptimizationResult.parseFromRunResultFolder2(
+                RunResultFactory.parseParamOptResult(
                         this.repository,
                         new File(FileUtils.buildPath(
                                 this.repository.getBasePath(IRunResult.class),
                                 runIdentifier)), results, false, false, false);
                 runResults.addAll(results);
-            } catch (IOException | UnknownRunResultFormatException |
-                     InvalidRunModeException | UnknownParameterOptimizationMethodException |
-                     NoOptimizableProgramParameterException | UnknownProgramParameterException | UnknownGoldStandardFormatException |
-                     InvalidConfigurationFileException | RepositoryAlreadyExistsException | InvalidRepositoryException |
-                     NoRepositoryFoundException | GoldStandardNotFoundException | InvalidOptimizationParameterException |
-                     GoldStandardConfigurationException | DataSetConfigurationException | DataSetNotFoundException |
-                     DataSetConfigNotFoundException | GoldStandardConfigNotFoundException | DataConfigurationException |
-                     DataConfigNotFoundException | RunException | UnknownProgramTypeException |
-                     UnknownRProgramException | IncompatibleParameterOptimizationMethodException | RepositoryConfigNotFoundException | RepositoryConfigurationException | ConfigurationException | RegisterException | NumberFormatException | NoDataSetException | RunResultParseException | IncompatibleDataSetConfigPreprocessorException | IncompatibleContextException | UnknownParameterType | InterruptedException | UnknownRunResultPostprocessorException e) {
+            } catch (Exception e) {
                 Exceptions.printStackTrace(e);
-            } catch (UnknownProviderException ex) {
-                Exceptions.printStackTrace(ex);
             }
         }
 
         try {
-            for (ParameterOptimizationResult result : runResults) {
+            for (IParamOptResult result : runResults) {
                 result.loadIntoMemory();
             }
 
@@ -270,7 +228,7 @@ public class LinearModelRidgeRunDataStatisticCalculator
                     final Map<Pair<String, String>, Double[]> yMap = new HashMap<>();
 
                     // iterate over run results
-                    for (ParameterOptimizationResult paramResult : runResults) {
+                    for (IParamOptResult paramResult : runResults) {
                         final IProgram p = paramResult.getMethod()
                                 .getProgramConfig().getProgram();
                         final IDataConfig dc = paramResult.getDataConfig();
@@ -365,7 +323,7 @@ public class LinearModelRidgeRunDataStatisticCalculator
                 }
             }
         } finally {
-            for (ParameterOptimizationResult result : runResults) {
+            for (IParamOptResult result : runResults) {
                 result.unloadFromMemory();
             }
         }

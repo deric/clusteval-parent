@@ -18,6 +18,7 @@ import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.api.cluster.IClustering;
+import de.clusteval.api.opt.IParamOptResult;
 import de.clusteval.api.opt.ParameterSet;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
@@ -26,7 +27,6 @@ import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.IRunResult;
 import de.clusteval.api.run.RunResultFactory;
 import de.clusteval.api.stats.RunStatisticCalculateException;
-import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.utils.ArraysExt;
 import de.clusteval.utils.FileUtils;
 import java.io.File;
@@ -41,9 +41,7 @@ import java.util.Set;
  * @author Christian Wiwie
  *
  */
-public class CooccurrenceBestRunStatisticCalculator
-        extends
-        RunStatisticCalculator<CooccurrenceBestRunStatistic> {
+public class CooccurrenceBestRunStatisticCalculator extends RunStatisticCalculator<CooccurrenceBestRunStatistic> {
 
     /**
      * @param repository
@@ -70,20 +68,15 @@ public class CooccurrenceBestRunStatisticCalculator
         super(other);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see run.statistics.RunStatisticCalculator#calculateResult()
-     */
     @Override
     protected CooccurrenceBestRunStatistic calculateResult()
             throws RunStatisticCalculateException {
 
         try {
 
-            List<ParameterOptimizationResult> results = new ArrayList<>();
+            List<IParamOptResult> results = new ArrayList<>();
 
-            RunResultFactory.parseFromRunResultFolder2(
+            RunResultFactory.parseParamOptResult(
                     this.repository,
                     new File(FileUtils.buildPath(
                             this.repository.getBasePath(IRunResult.class),
@@ -93,8 +86,8 @@ public class CooccurrenceBestRunStatisticCalculator
             // keep ids common to all results
             results.get(0).loadIntoMemory();
             Map<ClusterItem, Integer> setIds = new HashMap<>();
-            for (ClusterItem item : results.get(0).getOptimalClustering()
-                    .getClusterItems()) {
+            IClustering clustering = results.get(0).getOptimalClustering();
+            for (ClusterItem item : clustering.getClusterItems()) {
                 setIds.put(item, setIds.size());
             }
 
@@ -102,20 +95,17 @@ public class CooccurrenceBestRunStatisticCalculator
                     setIds.size());
 
             // TODO: check for fuzzy?
-            for (ParameterOptimizationResult result : results) {
+            for (IParamOptResult result : results) {
                 this.log.info("Processing result: " + result);
                 result.loadIntoMemory();
-
-                Set<ClusterItem> items = result.getOptimalClustering()
-                        .getClusterItems();
+                Set<ClusterItem> items = result.getOptimalClustering().getClusterItems();
                 for (ClusterItem item : setIds.keySet()) {
                     if (!(items.contains(item))) {
                         setIds.remove(item);
                     }
                 }
 
-                Map<ClusteringEvaluation, ParameterSet> paramSets = result
-                        .getOptimalParameterSets();
+                Map<ClusteringEvaluation, ParameterSet> paramSets = result.getOptimalParameterSets();
 
                 try {
                     for (ParameterSet paramSet : paramSets.values()) {

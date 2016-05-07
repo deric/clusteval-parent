@@ -327,7 +327,7 @@ public class BackendClient extends Thread {
          * the - of options passed, since they are not kept in the
          * CommandLine#args attribute.
          */
-        List<String> notParsedArgs = new ArrayList<String>();
+        List<String> notParsedArgs = new ArrayList<>();
         for (String s : params) {
             String raw;
             if (s.startsWith("-")) {

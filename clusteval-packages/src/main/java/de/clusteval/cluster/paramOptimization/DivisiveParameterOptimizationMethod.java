@@ -143,10 +143,9 @@ public class DivisiveParameterOptimizationMethod extends ParameterOptimizationMe
         this.iterationPerParameter = other.iterationPerParameter;
     }
 
-    @SuppressWarnings("unused")
     @Override
-    protected void initParameterValues() throws ParameterOptimizationException,
-                                                InternalAttributeException {
+    public void initParameterValues() throws ParameterOptimizationException,
+                                             InternalAttributeException {
         this.parameterValues = new HashMap<>();
         currentPos = new HashMap<>();
         for (int p = 0; p < this.params.size(); p++) {

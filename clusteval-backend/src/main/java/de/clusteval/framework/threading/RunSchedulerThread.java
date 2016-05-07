@@ -13,6 +13,7 @@ package de.clusteval.framework.threading;
 import de.clusteval.api.Pair;
 import de.clusteval.api.Triple;
 import de.clusteval.api.factory.UnknownProviderException;
+import de.clusteval.api.opt.IParamOptResult;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.IRunResult;
@@ -531,9 +532,9 @@ public class RunSchedulerThread extends ClustevalThread implements IScheduler {
                     };
                     t.start();
                 } else {
-                    ArrayList<IRunResult> results = new ArrayList<>();
+                    ArrayList<IParamOptResult> results = new ArrayList<>();
                     try {
-                        run = RunResultFactory.parseFromRunResultFolder2(
+                        run = RunResultFactory.parseParamOptResult(
                                 repository,
                                 new File(FileUtils.buildPath(repository
                                         .getBasePath(IRunResult.class),

@@ -34,9 +34,9 @@ public class ParameterOptimizationResultTest extends AbstractClustEvalTest {
      */
     @Test
     public void test() throws Exception {
-        List<IRunResult> result = new ArrayList<>();
+        List<IParamOptResult> result = new ArrayList<>();
         final IRun run = RunResultFactory
-                .parseFromRunResultFolder2(
+                .parseParamOptResult(
                         getRepository(),
                         new File("testCaseRepository/results/11_20_2012-12_45_04_all_vs_DS1")
                         .getAbsoluteFile(), result, false, false, false);

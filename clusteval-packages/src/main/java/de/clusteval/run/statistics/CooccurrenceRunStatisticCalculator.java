@@ -17,14 +17,15 @@ import cern.colt.matrix.tlong.impl.SparseLongMatrix2D;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.api.cluster.IClustering;
+import de.clusteval.api.opt.IParamOptResult;
 import de.clusteval.api.opt.ParameterSet;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.run.RunResultFactory;
 import de.clusteval.api.run.result.RunResult;
 import de.clusteval.api.stats.RunStatisticCalculateException;
-import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.utils.ArraysExt;
 import de.clusteval.utils.FileUtils;
 import java.io.File;
@@ -77,9 +78,9 @@ public class CooccurrenceRunStatisticCalculator
     protected CooccurrenceRunStatistic calculateResult()
             throws RunStatisticCalculateException {
         try {
-            List<ParameterOptimizationResult> results = new ArrayList<>();
+            List<IParamOptResult> results = new ArrayList<>();
 
-            ParameterOptimizationResult.parseFromRunResultFolder2(
+            RunResultFactory.parseParamOptResult(
                     this.repository,
                     new File(FileUtils.buildPath(
                             this.repository.getBasePath(RunResult.class),
@@ -98,7 +99,7 @@ public class CooccurrenceRunStatisticCalculator
                     setIds.size());
 
             // TODO: check for fuzzy?
-            for (ParameterOptimizationResult result : results) {
+            for (IParamOptResult result : results) {
                 this.log.info("Processing result: " + result);
                 result.loadIntoMemory();
 

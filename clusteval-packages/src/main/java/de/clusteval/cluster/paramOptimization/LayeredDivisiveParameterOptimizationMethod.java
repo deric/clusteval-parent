@@ -173,16 +173,8 @@ public class LayeredDivisiveParameterOptimizationMethod
         }
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * cluster.paramOptimization.ParameterOptimizationMethod#initParameterValues
-     * ()
-     */
     @Override
-    protected void initParameterValues() throws ParameterOptimizationException,
-                                                InternalAttributeException {
+    public void initParameterValues() throws ParameterOptimizationException, InternalAttributeException {
         super.initParameterValues();
 
         for (IProgramParameter<?> param : params) {
