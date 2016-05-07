@@ -515,8 +515,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
                 System.out.println(paramSet);
                 assertEquals(itParams.next(), paramSet);
                 method.giveQualityFeedback(paramSet, it.next());
-                assertEquals(itItNum.next().intValue(),
-                        method.currentCount);
+                assertEquals(itItNum.next().intValue(), method.getStartedCount());
             } catch (ParameterSetAlreadyEvaluatedException e) {
                 continue;
             }

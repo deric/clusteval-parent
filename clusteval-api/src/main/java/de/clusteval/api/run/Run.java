@@ -238,7 +238,6 @@ public abstract class Run extends RepositoryObject implements IRun {
      * @param runIdentString The unique run identifier of the results directory,
      *                       corresponding to an execution of a run, that should by resumed.
      */
-    @SuppressWarnings("unused")
     protected void afterResume(final String runIdentString) {
         FileUtils.appendStringToFile(
                 this.logFilePath,
@@ -802,6 +801,14 @@ public abstract class Run extends RepositoryObject implements IRun {
     @Override
     public void addSubProgress(IProgress prog, long partOfSubProgress) {
         progress.addSubProgress(progress, partOfSubProgress);
+    }
+
+    public long getStartTime() {
+        return startTime;
+    }
+
+    public ProgressPrinter getProgress() {
+        return progress;
     }
 
 }

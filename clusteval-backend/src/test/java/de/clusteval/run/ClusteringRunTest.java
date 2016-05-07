@@ -89,19 +89,19 @@ public class ClusteringRunTest extends AbstractClustEvalTest {
             ClusteringRun run2 = Parser.parseFromFile(ClusteringRun.class,
                     new File("testCaseRepository/runs/all_vs_DS1_clustering.run").getAbsoluteFile());
 
-            assertEquals(run2.logFilePath, run.logFilePath);
-            assertEquals(run2.runIdentString, run.runIdentString);
-            assertEquals(run2.startTime, run.startTime);
-            assertEquals(run2.progress, run.progress);
-            assertEquals(run2.context, run.context);
-            assertEquals(run2.results, run.results);
-            assertEquals(run2.runnables, run.runnables);
-            assertEquals(run2.dataConfigs, run.dataConfigs);
-            assertEquals(run2.parameterValues, run.parameterValues);
-            assertEquals(run2.programConfigs, run.programConfigs);
-            assertEquals(run2.qualityMeasures, run.qualityMeasures);
-            assertEquals(run2.runPairs, run.runPairs);
-            assertEquals(run2.status, run.status);
+            assertEquals(run2.getLogFilePath(), run.getLogFilePath());
+            assertEquals(run2.getRunIdentificationString(), run.getRunIdentificationString());
+            assertEquals(run2.getStartTime(), run.getStartTime());
+            assertEquals(run2.getProgress(), run.getProgress());
+            assertEquals(run2.getContext(), run.getContext());
+            assertEquals(run2.getResults(), run.getResults());
+            assertEquals(run2.getRunRunnables(), run.getRunRunnables());
+            assertEquals(run2.getDataConfigs(), run.getDataConfigs());
+            assertEquals(run2.getParameterValues(), run.getParameterValues());
+            assertEquals(run2.getProgramConfigs(), run.getProgramConfigs());
+            assertEquals(run2.getQualityMeasures(), run.getQualityMeasures());
+            assertEquals(run2.getRunPairs(), run.getRunPairs());
+            assertEquals(run2.getStatus(), run.getStatus());
         } finally {
             newRepo.terminateSupervisorThread();
         }

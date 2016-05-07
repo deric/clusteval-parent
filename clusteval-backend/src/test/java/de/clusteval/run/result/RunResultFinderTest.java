@@ -10,22 +10,21 @@
  ***************************************************************************** */
 package de.clusteval.run.result;
 
-import de.clusteval.api.run.result.RunResult;
 import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
+import de.clusteval.api.repository.RepositoryConfigurationException;
 import de.clusteval.api.run.RUN_STATUS;
+import de.clusteval.api.run.Run;
+import de.clusteval.api.run.result.RunResult;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.framework.repository.Repository;
-import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
-import de.clusteval.api.repository.RepositoryConfigurationException;
 import de.clusteval.framework.repository.db.SQLCommunicator;
 import de.clusteval.framework.repository.db.StubSQLCommunicator;
 import de.clusteval.framework.threading.RepositorySupervisorThread;
 import de.clusteval.framework.threading.SupervisorThread;
-import de.clusteval.api.run.Run;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.security.NoSuchAlgorithmException;
@@ -72,7 +71,6 @@ public class RunResultFinderTest {
     // @Test
     public void testRunInProgressNotFound() throws FileNotFoundException,
                                                    RepositoryAlreadyExistsException, InvalidRepositoryException,
-                                                   RepositoryConfigNotFoundException,
                                                    RepositoryConfigurationException, NoRepositoryFoundException,
                                                    InterruptedException, NoSuchAlgorithmException,
                                                    DatabaseConnectException {
@@ -97,7 +95,6 @@ public class RunResultFinderTest {
     // @Test
     public void testRunNotInProgressNotFound() throws FileNotFoundException,
                                                       RepositoryAlreadyExistsException, InvalidRepositoryException,
-                                                      RepositoryConfigNotFoundException,
                                                       RepositoryConfigurationException, NoRepositoryFoundException,
                                                       InterruptedException, NoSuchAlgorithmException,
                                                       DatabaseConnectException {
@@ -139,7 +136,7 @@ class TestRepository extends Repository {
      */
     public TestRepository(String basePath, Repository parent)
             throws FileNotFoundException, RepositoryAlreadyExistsException,
-                   InvalidRepositoryException, RepositoryConfigNotFoundException,
+                   InvalidRepositoryException,
                    RepositoryConfigurationException, NoRepositoryFoundException,
                    NoSuchAlgorithmException, DatabaseConnectException {
         super(basePath, parent);
@@ -168,9 +165,8 @@ class TestRepository extends Repository {
     }
 
     public boolean register(RunResult object) throws RegisterException {
-        String runIdent = object.runIdentString;
-        Run run = this
-                .getStaticObjectWithName(Run.class, object.run.toString());
+        String runIdent = object.getIdentifier();
+        Run run = this.getStaticObjectWithName(Run.class, object.getRun().toString());
         if (!assertionFailed) {
             assertionFailed = !(run.getStatus().equals(RUN_STATUS.FINISHED) || run
                     .getStatus().equals(RUN_STATUS.INACTIVE))

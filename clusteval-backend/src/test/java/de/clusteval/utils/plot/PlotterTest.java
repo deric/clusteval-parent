@@ -15,6 +15,8 @@ import de.clusteval.api.IContext;
 import de.clusteval.api.Precision;
 import de.clusteval.api.data.DataConfig;
 import de.clusteval.api.data.DataSetConfig;
+import de.clusteval.api.data.DataSetConfigNotFoundException;
+import de.clusteval.api.data.DataSetConfigurationException;
 import de.clusteval.api.data.DataSetFormatFactory;
 import de.clusteval.api.data.DistanceMeasureFactory;
 import de.clusteval.api.data.IDataSet;
@@ -45,16 +47,13 @@ import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.r.UnknownRProgramException;
+import de.clusteval.api.repository.RepositoryConfigurationException;
 import de.clusteval.api.run.IncompatibleParameterOptimizationMethodException;
+import de.clusteval.api.run.RunException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
-import de.clusteval.api.data.DataSetConfigNotFoundException;
-import de.clusteval.api.data.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
-import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
-import de.clusteval.api.repository.RepositoryConfigurationException;
 import de.clusteval.framework.repository.parse.Parser;
-import de.clusteval.api.run.RunException;
 import de.clusteval.utils.AbstractClustEvalTest;
 import java.io.File;
 import java.io.IOException;
@@ -72,7 +71,7 @@ public class PlotterTest extends AbstractClustEvalTest {
 
     @Test
     public void testIsoMDS() throws RepositoryAlreadyExistsException,
-                                    InvalidRepositoryException, RepositoryConfigNotFoundException,
+                                    InvalidRepositoryException,
                                     RepositoryConfigurationException,
                                     RegisterException,
                                     InvalidDataSetFormatException, IllegalArgumentException,
@@ -143,7 +142,7 @@ public class PlotterTest extends AbstractClustEvalTest {
 
     @Test
     public void testPCA() throws RepositoryAlreadyExistsException,
-                                 InvalidRepositoryException, RepositoryConfigNotFoundException,
+                                 InvalidRepositoryException,
                                  RepositoryConfigurationException,
                                  RegisterException, InvalidDataSetFormatException, IllegalArgumentException,
                                  IOException, REngineException, FormatConversionException,

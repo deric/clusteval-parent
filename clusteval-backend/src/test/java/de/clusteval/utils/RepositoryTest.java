@@ -11,15 +11,14 @@
 package de.clusteval.utils;
 
 import de.clusteval.api.exceptions.DatabaseConnectException;
+import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
-import de.clusteval.api.exceptions.NoRepositoryFoundException;
-import de.clusteval.framework.repository.Repository;
+import de.clusteval.api.repository.RepositoryConfigurationException;
 import de.clusteval.api.repository.RepositoryController;
+import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.framework.repository.config.DefaultRepositoryConfig;
-import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
-import de.clusteval.api.repository.RepositoryConfigurationException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.security.NoSuchAlgorithmException;
@@ -40,19 +39,9 @@ public class RepositoryTest {
     @Rule
     public TestName name = new TestName();
 
-    /**
-     * @throws FileNotFoundException
-     * @throws RepositoryAlreadyExistsException
-     * @throws InvalidRepositoryException
-     * @throws NoRepositoryFoundException
-     * @throws RepositoryConfigurationException
-     * @throws RepositoryConfigNotFoundException
-     * @throws NoSuchAlgorithmException
-     * @throws DatabaseConnectException
-     */
     @Before
     public void setUp() throws FileNotFoundException, RepositoryAlreadyExistsException, InvalidRepositoryException,
-                               RepositoryConfigNotFoundException, RepositoryConfigurationException, NoRepositoryFoundException,
+                               RepositoryConfigurationException, NoRepositoryFoundException,
                                NoSuchAlgorithmException, DatabaseConnectException {
         System.out.println(
                 "################## Testcase: " + this.getClass().getSimpleName() + "." + name.getMethodName());
@@ -69,19 +58,9 @@ public class RepositoryTest {
         }
     }
 
-    /**
-     * @throws FileNotFoundException
-     * @throws RepositoryAlreadyExistsException
-     * @throws InvalidRepositoryException
-     * @throws NoRepositoryFoundException
-     * @throws RepositoryConfigurationException
-     * @throws RepositoryConfigNotFoundException
-     * @throws NoSuchAlgorithmException
-     * @throws DatabaseConnectException
-     */
     @Test(expected = InvalidRepositoryException.class)
     public void test1() throws FileNotFoundException, RepositoryAlreadyExistsException, InvalidRepositoryException,
-                               RepositoryConfigNotFoundException, RepositoryConfigurationException, NoRepositoryFoundException,
+                               RepositoryConfigurationException, NoRepositoryFoundException,
                                NoSuchAlgorithmException, DatabaseConnectException {
         /*
          * Nested without parantal relationship not allowed
@@ -89,37 +68,16 @@ public class RepositoryTest {
         Repository child = new RunResultRepository("testCaseRepository/results/01_30_2013-21_31_25_tc_vs_DS1", null);
     }
 
-    /**
-     * @throws FileNotFoundException
-     * @throws RepositoryAlreadyExistsException
-     * @throws InvalidRepositoryException
-     * @throws NoRepositoryFoundException
-     * @throws RepositoryConfigurationException
-     * @throws RepositoryConfigNotFoundException
-     * @throws NoSuchAlgorithmException
-     * @throws DatabaseConnectException
-     */
     @Test
     public void test2() throws FileNotFoundException, RepositoryAlreadyExistsException, InvalidRepositoryException,
-                               RepositoryConfigNotFoundException, RepositoryConfigurationException, NoRepositoryFoundException,
+                               RepositoryConfigurationException, NoRepositoryFoundException,
                                NoSuchAlgorithmException, DatabaseConnectException {
         Repository child = new RunResultRepository("testCaseRepository/results/01_30_2013-21_31_25_tc_vs_DS1", parent);
     }
 
-    /**
-     * @throws InvalidRepositoryException
-     * @throws RepositoryAlreadyExistsException
-     * @throws FileNotFoundException
-     * @throws NoRepositoryFoundException
-     * @throws RepositoryConfigurationException
-     * @throws RepositoryConfigNotFoundException
-     * @throws NoSuchAlgorithmException
-     * @throws DatabaseConnectException
-     *
-     */
     @Test
     public void testGetRepositoryForPathString() throws FileNotFoundException, RepositoryAlreadyExistsException,
-                                                        InvalidRepositoryException, RepositoryConfigNotFoundException, RepositoryConfigurationException,
+                                                        InvalidRepositoryException, RepositoryConfigurationException,
                                                         NoRepositoryFoundException, NoSuchAlgorithmException, DatabaseConnectException {
         File f = new File("repository2");
         f.deleteOnExit();

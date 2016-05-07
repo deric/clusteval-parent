@@ -10,11 +10,11 @@
  ***************************************************************************** */
 package de.clusteval.run.result.postprocessing;
 
-import de.clusteval.api.run.result.RunResultPostprocessorParameters;
-import de.clusteval.api.run.result.RunResultPostprocessor;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.api.cluster.IClustering;
+import de.clusteval.api.data.DataSetConfigNotFoundException;
+import de.clusteval.api.data.DataSetConfigurationException;
 import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigurationException;
@@ -34,32 +34,32 @@ import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.r.UnknownRProgramException;
-import de.clusteval.cluster.Clustering;
+import de.clusteval.api.repository.RepositoryConfigurationException;
 import de.clusteval.api.run.IncompatibleParameterOptimizationMethodException;
+import de.clusteval.api.run.RunException;
+import de.clusteval.api.run.result.RunResultPostprocessor;
+import de.clusteval.api.run.result.RunResultPostprocessorParameters;
+import de.clusteval.cluster.Clustering;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
-import de.clusteval.api.data.DataSetConfigNotFoundException;
-import de.clusteval.api.data.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
-import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
-import de.clusteval.api.repository.RepositoryConfigurationException;
-import de.clusteval.api.run.RunException;
 import de.clusteval.utils.AbstractClustEvalTest;
 import java.io.File;
 import java.io.IOException;
 import org.apache.commons.configuration.ConfigurationException;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author Christian Wiwie
  *
  */
-public class TestFuzzyCoefficientThresholdRunResultPostprocessor extends AbstractClustEvalTest {
+public class FuzzyCoefficientThresholdRunResultPostprocessorTest extends AbstractClustEvalTest {
 
     @Test
     public void test() throws RepositoryAlreadyExistsException,
-                              InvalidRepositoryException, RepositoryConfigNotFoundException,
+                              InvalidRepositoryException,
                               RepositoryConfigurationException, DataSetNotFoundException,
                               DataSetConfigurationException,
                               NoDataSetException, NumberFormatException, RegisterException,
