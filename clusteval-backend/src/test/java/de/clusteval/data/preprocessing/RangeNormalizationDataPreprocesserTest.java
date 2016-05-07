@@ -13,6 +13,8 @@ package de.clusteval.data.preprocessing;
 import de.clusteval.api.data.DataPreprocessor;
 import de.clusteval.api.data.DataPreprocessorFactory;
 import de.clusteval.api.data.DataSetAttributeFilterer;
+import de.clusteval.api.data.DataSetConfigNotFoundException;
+import de.clusteval.api.data.DataSetConfigurationException;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
@@ -35,16 +37,13 @@ import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.r.UnknownRProgramException;
+import de.clusteval.api.repository.RepositoryConfigurationException;
 import de.clusteval.api.run.IncompatibleParameterOptimizationMethodException;
+import de.clusteval.api.run.RunException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
-import de.clusteval.api.data.DataSetConfigNotFoundException;
-import de.clusteval.api.data.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
-import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
-import de.clusteval.api.repository.RepositoryConfigurationException;
 import de.clusteval.framework.repository.parse.Parser;
-import de.clusteval.api.run.RunException;
 import de.clusteval.utils.AbstractClustEvalTest;
 import java.io.File;
 import java.io.IOException;
@@ -60,13 +59,11 @@ public class RangeNormalizationDataPreprocesserTest extends AbstractClustEvalTes
 
     @Test
     public void test() throws RepositoryAlreadyExistsException,
-                              InvalidRepositoryException, RepositoryConfigNotFoundException,
-                              RepositoryConfigurationException, DataSetNotFoundException,
+                              InvalidRepositoryException, RepositoryConfigurationException, DataSetNotFoundException,
                               DataSetConfigurationException,
                               NoDataSetException, NumberFormatException, RegisterException,
                               NoRepositoryFoundException, UnknownProviderException,
-                              IOException,
-                              InterruptedException, GoldStandardNotFoundException,
+                              IOException, InterruptedException, GoldStandardNotFoundException,
                               GoldStandardConfigurationException, DataSetConfigNotFoundException,
                               GoldStandardConfigNotFoundException, DataConfigurationException,
                               DataConfigNotFoundException, ConfigurationException,

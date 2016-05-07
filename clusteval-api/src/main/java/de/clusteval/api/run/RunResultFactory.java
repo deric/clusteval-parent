@@ -152,8 +152,8 @@ public class RunResultFactory extends ServiceFactory<IRunResult> {
         if (completeFile.exists()) {
             result = parseFromString(completeFile.getParentFile().getParentFile().getName());
             result.init(repository, completeFile.lastModified(), completeFile);
-            result.setRun(run);
-            result.setMethod(method);
+            //result.setRun(run);
+            //result.setMethod(method);
 
             if (register) {
                 result.loadIntoMemory();
@@ -281,20 +281,16 @@ public class RunResultFactory extends ServiceFactory<IRunResult> {
      * @throws DataSetNotFoundException
      * @throws DataSetConfigNotFoundException
      * @throws GoldStandardConfigNotFoundException
-     * @throws DataConfigurationException
-     * @throws DataConfigNotFoundException
      * @throws RunException
      * @throws UnknownProgramTypeException
      * @throws UnknownRProgramException
      * @throws IncompatibleParameterOptimizationMethodException
      * @throws RepositoryConfigurationException
-     * @throws RepositoryConfigNotFoundException
      * @throws ConfigurationException
      * @throws RegisterException
      * @throws NoDataSetException
      * @throws NumberFormatException
      * @throws RunResultParseException
-     * @throws IncompatibleDataSetConfigPreprocessorException
      * @throws IncompatibleContextException
      * @throws UnknownParameterType
      * @throws InterruptedException

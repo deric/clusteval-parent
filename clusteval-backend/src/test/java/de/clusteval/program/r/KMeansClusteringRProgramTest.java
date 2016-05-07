@@ -13,16 +13,17 @@
 package de.clusteval.program.r;
 
 import de.clusteval.api.exceptions.IncompatibleDataSetFormatException;
+import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
+import de.clusteval.api.repository.RepositoryConfigurationException;
+import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.IRunRunnable;
 import de.clusteval.api.run.IScheduler;
-import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
-import de.clusteval.api.repository.RepositoryConfigurationException;
 import de.clusteval.api.run.Run;
 import de.clusteval.api.run.RunInitializationException;
-import de.clusteval.api.run.result.RunResult;
 import de.clusteval.api.run.RunRunnableInitializationException;
+import de.clusteval.api.run.result.RunResult;
 import de.clusteval.utils.AbstractClustEvalTest;
 import de.clusteval.utils.FileUtils;
 import java.io.File;
@@ -40,7 +41,6 @@ public class KMeansClusteringRProgramTest extends AbstractClustEvalTest {
     /**
      * @throws RepositoryAlreadyExistsException
      * @throws InvalidRepositoryException
-     * @throws RepositoryConfigNotFoundException
      * @throws RepositoryConfigurationException
      * @throws IOException
      * @throws RunRunnableInitializationException
@@ -49,12 +49,12 @@ public class KMeansClusteringRProgramTest extends AbstractClustEvalTest {
      */
     @Test
     public void testApplyToRelativeDataSet()
-            throws RepositoryAlreadyExistsException, InvalidRepositoryException, RepositoryConfigNotFoundException,
+            throws RepositoryAlreadyExistsException, InvalidRepositoryException,
                    RepositoryConfigurationException, IOException, RunRunnableInitializationException, InterruptedException,
-                   RunInitializationException {
+                   RunInitializationException, UnknownProviderException {
         IScheduler scheduler = this.getRepository().getSupervisorThread().getRunScheduler();
 
-        Run run = this.getRepository().getStaticObjectWithName(Run.class, "test_kmeans_sfld_layered_f2");
+        IRun run = this.getRepository().getStaticObjectWithName(Run.class, "test_kmeans_sfld_layered_f2");
         try {
             run.perform(scheduler);
 

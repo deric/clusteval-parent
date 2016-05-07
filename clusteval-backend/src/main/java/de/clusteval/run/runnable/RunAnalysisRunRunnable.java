@@ -12,15 +12,21 @@
  */
 package de.clusteval.run.runnable;
 
+import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.exceptions.RunIterationException;
+import de.clusteval.api.opt.ParameterOptimizationMethod;
+import de.clusteval.api.program.IProgramConfig;
+import de.clusteval.api.program.IProgramParameter;
 import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.IScheduler;
 import de.clusteval.api.run.Run;
+import de.clusteval.api.stats.RunStatistic;
 import de.clusteval.run.RunAnalysisRun;
 import de.clusteval.run.result.RunAnalysisRunResult;
-import de.clusteval.api.stats.RunStatistic;
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A type of analysis runnable, that corresponds to {@link RunAnalysisRun} and
@@ -58,6 +64,18 @@ public class RunAnalysisRunRunnable extends
             String uniqueRunIdentifier, List<RunStatistic> statistics) {
         super(run, runIdentString, statistics, isResume);
         this.uniqueRunAnalysisRunIdentifier = uniqueRunIdentifier;
+        this.future = runScheduler.registerRunRunnable(this);
+    }
+
+    @Override
+    public String getName() {
+        return "RunAnalysisRunRunnable";
+    }
+
+    @Override
+    public void init(IScheduler runScheduler, IRun run, IProgramConfig programConfig, IDataConfig dataConfig, ParameterOptimizationMethod optimizationMethod, String runIdentString, boolean isResume, Map<IProgramParameter<?>, String> runParams) {
+        super.init(run, runIdentString, isResume);
+        this.uniqueRunAnalysisRunIdentifier = runIdentString;
         this.future = runScheduler.registerRunRunnable(this);
     }
 
@@ -147,5 +165,20 @@ public class RunAnalysisRunRunnable extends
 
     public String getRunIdentifier() {
         return this.uniqueRunAnalysisRunIdentifier;
+    }
+
+    @Override
+    public ParameterOptimizationMethod getOptimizationMethod() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public IProgramConfig getProgramConfig() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public IDataConfig getDataConfig() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

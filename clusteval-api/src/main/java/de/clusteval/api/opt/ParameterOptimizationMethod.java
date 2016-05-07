@@ -29,7 +29,6 @@ import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RepositoryObject;
 import de.clusteval.api.run.IRun;
-import de.clusteval.api.run.IRunResult;
 import de.clusteval.api.run.RunResultFactory;
 import java.io.File;
 import java.lang.reflect.Constructor;
@@ -162,7 +161,7 @@ public abstract class ParameterOptimizationMethod extends RepositoryObject imple
      * This object holds the results that are calculated throughout execution of
      * the parameter optimization run.
      */
-    private IRunResult result;
+    private IParamOptResult result;
 
     /**
      * This boolean indicates, whether the run is a resumption of a previous run
@@ -552,7 +551,7 @@ public abstract class ParameterOptimizationMethod extends RepositoryObject imple
      * @return An wrapper object holding all the results that are calculated
      *         throughout execution of the parameter optimization run.
      */
-    public IRunResult getResult() {
+    public IParamOptResult getResult() {
         // Removed 27.11.2012
         // this.result.register();
         return this.result;
@@ -582,7 +581,7 @@ public abstract class ParameterOptimizationMethod extends RepositoryObject imple
     public void reset(final File absResultPath)
             throws ParameterOptimizationException, InternalAttributeException,
                    RegisterException, RunResultParseException, InterruptedException, UnknownProviderException {
-        this.result = RunResultFactory.getInstance().getProvider("parameter optimization result");
+        this.result = (IParamOptResult) RunResultFactory.getInstance().getProvider("parameter optimization result");
         result.init(dataConfig.getRepository(), System.currentTimeMillis(), absResultPath);
         result.setRun(run);
         result.setMethod(this);
@@ -596,14 +595,12 @@ public abstract class ParameterOptimizationMethod extends RepositoryObject imple
              * that all attributes of the method (also als subclass methods) are
              * valid and correspond to the result in the file.
              */
-            final IRunResult oldResults = RunResultFactory.getInstance()
-                    .parseFromRunResultCompleteFile(
-                            this.dataConfig.getRepository(), this.run, this,
-                            absResultPath, false, false, false);
+            final IParamOptResult oldResults = (IParamOptResult) RunResultFactory.getInstance().parseFromRunResultCompleteFile(
+                    this.dataConfig.getRepository(), this.run, this,
+                    absResultPath, false, false, false);
             oldResults.loadIntoMemory();
             try {
-                List<ParameterSet> parameterSets = oldResults
-                        .getParameterSets();
+                List<ParameterSet> parameterSets = oldResults.getParameterSets();
                 List<Long> iterationNumbers = oldResults.getIterationNumbers();
                 SortedMap<Long, ParameterSet> paramSetsWithOrdering = new TreeMap<>();
                 for (int i = 0; i < parameterSets.size(); i++) {
@@ -635,11 +632,10 @@ public abstract class ParameterOptimizationMethod extends RepositoryObject imple
      * This method initializes the parameter values of each optimization
      * parameter that should be assessed during the process.
      *
-     * @throws de.clusteval.cluster.paramOptimization.ParameterOptimizationException
+     * @throws de.clusteval.api.opt.ParameterOptimizationException
      * @throws InternalAttributeException
      */
-    protected void initParameterValues() throws ParameterOptimizationException,
-                                                InternalAttributeException {
+    public void initParameterValues() throws ParameterOptimizationException, InternalAttributeException {
 
     }
 

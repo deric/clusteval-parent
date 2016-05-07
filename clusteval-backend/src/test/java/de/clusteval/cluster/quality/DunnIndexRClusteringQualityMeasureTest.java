@@ -37,9 +37,8 @@ import de.clusteval.api.r.RCalculationException;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
-import de.clusteval.cluster.Clustering;
-import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.api.repository.RepositoryConfigurationException;
+import de.clusteval.cluster.Clustering;
 import de.clusteval.utils.AbstractClustEvalTest;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -58,7 +57,6 @@ public class DunnIndexRClusteringQualityMeasureTest extends AbstractClustEvalTes
     @Test
     public void test() throws InstantiationException, IllegalAccessException,
                               RepositoryAlreadyExistsException, InvalidRepositoryException,
-                              RepositoryConfigNotFoundException,
                               RepositoryConfigurationException, NoRepositoryFoundException,
                               RegisterException, NoSuchAlgorithmException,
                               FormatConversionException,

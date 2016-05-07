@@ -290,7 +290,8 @@ public class ParameterOptimizationRunRunnable extends ExecutionRunRunnable {
             sb.append(System.getProperty("line.separator"));
 
             FileUtils.appendStringToFile(completeQualityOutput, sb.toString());
-        } catch (InternalAttributeException | RegisterException | NoParameterSetFoundException | InterruptedException e) {
+        } catch (InternalAttributeException | RegisterException |
+                 NoParameterSetFoundException | InterruptedException | UnknownProviderException e) {
             throw new RunIterationException(e);
         }
         return this.optimizationMethod.getStartedCount();

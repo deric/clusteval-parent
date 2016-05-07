@@ -17,7 +17,9 @@
 package de.clusteval.api.run;
 
 import de.clusteval.api.IContext;
+import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.repository.IRepositoryObject;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -115,4 +117,35 @@ public interface IRun extends IRepositoryObject {
      * @return
      */
     long getUpperLimitProgress();
+
+    OptStatus getOptimizationStatus();
+
+    void perform(final IScheduler runScheduler)
+            throws IOException, RunRunnableInitializationException,
+                   RunInitializationException, UnknownProviderException;
+
+    /**
+     * This method will resume a previously started run. This method should only
+     * be invoked on a run, that was parsed from a runresult folder. Otherwise
+     * it will show unexpected behaviour.
+     *
+     * @param runScheduler   The run scheduler, this run should be executed by.
+     * @param runIdentString The unique run identifier of the results directory,
+     *                       corresponding to an execution of a run, that should by resumed.
+     *
+     * @throws MissingParameterValueException If a parameter required in the
+     * invocation line of some program, is neither set in the program nor in the
+     * run configuration, an exception will be thrown.
+     * @throws IOException Signals that an I/O exception has occurred.
+     * @throws NoRunResultFormatParserException For every
+     * {@link RunResultFormat} there needs to be a parser, that converts this
+     * format into the default format of the framework for later analysis. If no
+     * such parser exists for some format, this exception will be thrown.
+     * @throws RunRunnableInitializationException
+     * @throws RunInitializationException
+     * @throws de.clusteval.api.factory.UnknownProviderException
+     */
+    void resume(final IScheduler runScheduler, final String runIdentString)
+            throws MissingParameterValueException, IOException, NoRunResultFormatParserException,
+                   RunRunnableInitializationException, RunInitializationException, UnknownProviderException;
 }

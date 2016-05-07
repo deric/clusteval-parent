@@ -20,9 +20,9 @@ import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.RelativeDataSet;
 import de.clusteval.api.exceptions.InvalidDataSetFormatException;
+import de.clusteval.api.opt.IParamOptResult;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
-import de.clusteval.api.run.IRunResult;
 import de.clusteval.utils.ArraysExt;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
 import java.io.BufferedWriter;
@@ -42,7 +42,7 @@ public abstract class Plotter {
      * @param result
      * @throws InterruptedException
      */
-    public static void plotParameterOptimizationResult(final IRunResult result) throws InterruptedException {
+    public static void plotParameterOptimizationResult(final IParamOptResult result) throws InterruptedException {
 
         IRengine rEngine;
         try {
@@ -90,7 +90,6 @@ public abstract class Plotter {
      * similarity matrix file of the given data configuration.
      *
      * @param dataConfig
-     * @throws UnknownDataSetFormatException
      * @throws InvalidDataSetFormatException
      * @throws IllegalArgumentException
      * @throws IOException
@@ -178,7 +177,6 @@ public abstract class Plotter {
      * @throws IllegalArgumentException
      * @throws IOException
      * @throws REngineException
-     * @throws UnknownDataSetFormatException
      * @throws InterruptedException
      */
     public static void assessAndWritePCACoordinates(final IDataConfig dataConfig)

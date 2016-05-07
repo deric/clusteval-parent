@@ -18,6 +18,8 @@ import de.clusteval.api.cluster.ClusteringEvaluationFactory;
 import de.clusteval.api.cluster.ClusteringEvaluationParameters;
 import de.clusteval.api.cluster.ClusteringQualitySet;
 import de.clusteval.api.data.DataConfig;
+import de.clusteval.api.data.DataSetConfigNotFoundException;
+import de.clusteval.api.data.DataSetConfigurationException;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.api.exceptions.DatabaseConnectException;
@@ -26,6 +28,7 @@ import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigurationException;
 import de.clusteval.api.exceptions.GoldStandardNotFoundException;
 import de.clusteval.api.exceptions.IncompatibleContextException;
+import de.clusteval.api.exceptions.InvalidConfigurationFileException;
 import de.clusteval.api.exceptions.InvalidDataSetFormatException;
 import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
@@ -39,6 +42,7 @@ import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.opt.InvalidOptimizationParameterException;
+import de.clusteval.api.opt.ParameterOptimizationRun;
 import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
 import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.RegisterException;
@@ -48,25 +52,21 @@ import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.cluster.Clustering;
+import de.clusteval.api.repository.RepositoryConfigurationException;
+import de.clusteval.api.run.IRunResult;
 import de.clusteval.api.run.IncompatibleParameterOptimizationMethodException;
+import de.clusteval.api.run.RunException;
+import de.clusteval.api.run.RunResultFactory;
+import de.clusteval.cluster.Clustering;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
-import de.clusteval.api.data.DataSetConfigNotFoundException;
-import de.clusteval.api.data.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RunResultRepository;
-import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
-import de.clusteval.api.repository.RepositoryConfigurationException;
 import de.clusteval.framework.repository.parse.Parser;
 import de.clusteval.run.InvalidRunModeException;
-import de.clusteval.api.opt.ParameterOptimizationRun;
-import de.clusteval.api.run.RunException;
-import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.utils.FileUtils;
-import de.clusteval.api.exceptions.InvalidConfigurationFileException;
 import de.clusteval.utils.ProgressPrinter;
 import de.clusteval.utils.TextFileParser;
 import de.clusteval.utils.TextFileParser.OUTPUT_MODE;
@@ -99,8 +99,7 @@ public class ClustQualityEval {
     public ClustQualityEval(final String absRepoPath,
             final String dataConfigName, final String... qualityMeasures)
             throws RepositoryAlreadyExistsException,
-                   InvalidRepositoryException, RepositoryConfigNotFoundException,
-                   RepositoryConfigurationException, InterruptedException,
+                   InvalidRepositoryException, RepositoryConfigurationException, InterruptedException,
                    UnknownGoldStandardFormatException,
                    GoldStandardNotFoundException, GoldStandardConfigurationException,
                    DataSetConfigurationException, DataSetNotFoundException,
@@ -137,8 +136,8 @@ public class ClustQualityEval {
         this.repo = new RunResultRepository(absRepoPath, parent);
         this.repo.initialize();
 
-        List<ParameterOptimizationResult> result = new ArrayList<>();
-        final ParameterOptimizationRun run = (ParameterOptimizationRun) ParameterOptimizationResult
+        List<IRunResult> result = new ArrayList<>();
+        final ParameterOptimizationRun run = (ParameterOptimizationRun) RunResultFactory
                 .parseFromRunResultFolder2(parent, new File(absRepoPath),
                         result, false, false, false);
 
@@ -465,10 +464,8 @@ public class ClustQualityEval {
 
     public static void main(String[] args)
             throws RepositoryAlreadyExistsException,
-                   InvalidRepositoryException, RepositoryConfigNotFoundException,
-                   RepositoryConfigurationException, InterruptedException,
-                   UnknownGoldStandardFormatException,
-                   GoldStandardNotFoundException, GoldStandardConfigurationException,
+                   InvalidRepositoryException, RepositoryConfigurationException, InterruptedException,
+                   UnknownGoldStandardFormatException, GoldStandardNotFoundException, GoldStandardConfigurationException,
                    DataSetConfigurationException, DataSetNotFoundException,
                    DataSetConfigNotFoundException,
                    GoldStandardConfigNotFoundException, NoDataSetException,

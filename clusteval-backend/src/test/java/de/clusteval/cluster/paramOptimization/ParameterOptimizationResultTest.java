@@ -12,8 +12,10 @@
  */
 package de.clusteval.cluster.paramOptimization;
 
-import de.clusteval.api.run.Run;
-import de.clusteval.run.result.ParameterOptimizationResult;
+import de.clusteval.api.opt.IParamOptResult;
+import de.clusteval.api.run.IRun;
+import de.clusteval.api.run.IRunResult;
+import de.clusteval.api.run.RunResultFactory;
 import de.clusteval.utils.AbstractClustEvalTest;
 import de.clusteval.utils.plot.Plotter;
 import java.io.File;
@@ -32,13 +34,14 @@ public class ParameterOptimizationResultTest extends AbstractClustEvalTest {
      */
     @Test
     public void test() throws Exception {
-        List<ParameterOptimizationResult> result = new ArrayList<>();
-        final Run run = ParameterOptimizationResult
+        List<IRunResult> result = new ArrayList<>();
+        final IRun run = RunResultFactory
                 .parseFromRunResultFolder2(
                         getRepository(),
                         new File("testCaseRepository/results/11_20_2012-12_45_04_all_vs_DS1")
                         .getAbsoluteFile(), result, false, false, false);
-        for (ParameterOptimizationResult r : result) {
+        for (IRunResult res : result) {
+            IParamOptResult r = (IParamOptResult) res;
             Plotter.plotParameterOptimizationResult(r);
         }
         System.out.println(result);

@@ -20,7 +20,7 @@ package de.clusteval.api.run;
  * @author Christian Wiwie
  *
  */
-public abstract class ExecutionIterationRunnable<IW extends IterationWrapper> extends IterationRunnable<IterationWrapper> {
+public abstract class ExecutionIterationRunnable<IW extends IterationWrapper> extends IterationRunnable<IW> {
 
     protected Process proc;
 

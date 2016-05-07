@@ -24,6 +24,7 @@ import de.clusteval.api.cluster.ClusteringQualitySet;
 import de.clusteval.api.data.DataConfig;
 import de.clusteval.api.data.DataSetFormatFactory;
 import de.clusteval.api.data.DistanceMeasureFactory;
+import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.data.InputToStd;
@@ -49,7 +50,6 @@ import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.repository.RepositoryConfigurationException;
 import de.clusteval.api.run.Run;
 import de.clusteval.framework.ClustevalBackendServer;
-import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.utils.AbstractClustEvalTest;
 import java.io.File;
 import java.io.IOException;
@@ -74,8 +74,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
             throws UnknownParameterOptimizationMethodException,
                    InvalidDataSetFormatException, IllegalArgumentException,
                    IOException, RepositoryAlreadyExistsException,
-                   InvalidRepositoryException, RepositoryConfigNotFoundException,
-                   RepositoryConfigurationException, RunResultParseException,
+                   InvalidRepositoryException, RepositoryConfigurationException, RunResultParseException,
                    InternalAttributeException, RegisterException,
                    ParameterOptimizationException, FormatConversionException,
                    NoParameterSetFoundException,
@@ -207,8 +206,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
             throws UnknownParameterOptimizationMethodException,
                    InvalidDataSetFormatException, IllegalArgumentException,
                    IOException, RepositoryAlreadyExistsException,
-                   InvalidRepositoryException, RepositoryConfigNotFoundException,
-                   RepositoryConfigurationException, RunResultParseException,
+                   InvalidRepositoryException, RepositoryConfigurationException, RunResultParseException,
                    InternalAttributeException, RegisterException,
                    ParameterOptimizationException, FormatConversionException,
                    NoParameterSetFoundException,
@@ -314,7 +312,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
             System.out.println(paramSet);
             Assert.assertEquals(itParams.next(), paramSet);
             method.giveQualityFeedback(paramSet, it.next());
-            assertEquals(itItNum.next().intValue(), method.currentCount);
+            assertEquals(itItNum.next().intValue(), method.getStartedCount());
         }
     }
 
@@ -323,7 +321,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
             throws UnknownParameterOptimizationMethodException,
                    InvalidDataSetFormatException, IllegalArgumentException,
                    IOException, RepositoryAlreadyExistsException,
-                   InvalidRepositoryException, RepositoryConfigNotFoundException,
+                   InvalidRepositoryException,
                    RepositoryConfigurationException, RunResultParseException,
                    InternalAttributeException, RegisterException,
                    ParameterOptimizationException, FormatConversionException,
@@ -412,8 +410,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
             throws UnknownParameterOptimizationMethodException,
                    InvalidDataSetFormatException, IllegalArgumentException,
                    IOException, RepositoryAlreadyExistsException,
-                   InvalidRepositoryException, RepositoryConfigNotFoundException,
-                   RepositoryConfigurationException, RunResultParseException,
+                   InvalidRepositoryException, RepositoryConfigurationException, RunResultParseException,
                    InternalAttributeException, RegisterException,
                    ParameterOptimizationException, FormatConversionException,
                    NoParameterSetFoundException, RNotAvailableException,
@@ -423,8 +420,8 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
 
         IContext context = ContextFactory.parseFromString(getRepository(), "ClusteringContext");
 
-        DataConfig dataConfig = getRepository().getStaticObjectWithName(
-                DataConfig.class, "baechler2003");
+        IDataConfig dataConfig = getRepository().getStaticObjectWithName(
+                IDataConfig.class, "baechler2003");
         IDataSet ds = dataConfig.getDatasetConfig().getDataSet();
         IDataSetFormat internal = DataSetFormatFactory.parseFromString("SimMatrixDataSetFormat");
         ds = ds.preprocessAndConvertTo(context,
@@ -516,9 +513,9 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
             try {
                 ParameterSet paramSet = method.next();
                 System.out.println(paramSet);
-                Assert.assertEquals(itParams.next(), paramSet);
+                assertEquals(itParams.next(), paramSet);
                 method.giveQualityFeedback(paramSet, it.next());
-                Assert.assertEquals(itItNum.next().intValue(),
+                assertEquals(itItNum.next().intValue(),
                         method.currentCount);
             } catch (ParameterSetAlreadyEvaluatedException e) {
                 continue;

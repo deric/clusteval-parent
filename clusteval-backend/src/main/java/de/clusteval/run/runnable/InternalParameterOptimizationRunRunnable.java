@@ -18,6 +18,7 @@ import de.clusteval.api.exceptions.InvalidDataSetFormatException;
 import de.clusteval.api.exceptions.RunIterationException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.factory.UnknownProviderException;
+import de.clusteval.api.opt.ParameterOptimizationMethod;
 import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.IProgramParameter;
 import de.clusteval.api.program.RegisterException;
@@ -53,6 +54,17 @@ public class InternalParameterOptimizationRunRunnable extends ExecutionRunRunnab
                 runParams);
         this.future = runScheduler.registerRunRunnable(this);
     }
+
+    @Override
+    public String getName() {
+        return "InternalParameterOptimizationRunRunnable";
+    }
+
+    @Override
+    public void init(IScheduler runScheduler, IRun run, IProgramConfig programConfig, IDataConfig dataConfig, ParameterOptimizationMethod optimizationMethod, String runIdentString, boolean isResume, Map<IProgramParameter<?>, String> runParams) {
+        super.init(run, programConfig, dataConfig, runIdentString, isResume, runParams);
+    }
+
 
     /*
      * (non-Javadoc)
@@ -131,5 +143,10 @@ public class InternalParameterOptimizationRunRunnable extends ExecutionRunRunnab
     public int consumeNextIteration() throws RunIterationException {
         this.hasNext = false;
         return 1;
+    }
+
+    @Override
+    public ParameterOptimizationMethod getOptimizationMethod() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

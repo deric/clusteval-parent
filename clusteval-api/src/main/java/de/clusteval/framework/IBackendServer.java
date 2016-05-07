@@ -13,6 +13,7 @@ package de.clusteval.framework;
 import ch.qos.logback.classic.Level;
 import de.clusteval.api.Pair;
 import de.clusteval.api.Triple;
+import de.clusteval.api.run.OptStatus;
 import de.clusteval.api.run.RUN_STATUS;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -108,7 +109,7 @@ public interface IBackendServer extends Remote {
      * @return A collection with the names of all datasets contained in the
      *         repository of this server.
      * @throws RemoteException
-     *                         the remote exception
+     * the remote exception
      */
     public Collection<String> getDataSets() throws RemoteException;
 
@@ -229,7 +230,7 @@ public interface IBackendServer extends Remote {
      * @return
      * @throws RemoteException
      */
-    public Map<String, Pair<Pair<RUN_STATUS, Float>, Map<Pair<String, String>, Pair<Double, Map<String, Pair<Map<String, String>, String>>>>>> getOptimizationRunStatusForClientId(
+    public Map<String, Pair<Pair<RUN_STATUS, Float>, OptStatus>> getOptimizationRunStatusForClientId(
             String clientId) throws RemoteException;
 
     /**

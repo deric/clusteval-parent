@@ -10,6 +10,8 @@
  ***************************************************************************** */
 package de.clusteval.run.result;
 
+import de.clusteval.api.data.DataSetConfigNotFoundException;
+import de.clusteval.api.data.DataSetConfigurationException;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.api.exceptions.DatabaseConnectException;
@@ -17,6 +19,7 @@ import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigurationException;
 import de.clusteval.api.exceptions.GoldStandardNotFoundException;
 import de.clusteval.api.exceptions.IncompatibleContextException;
+import de.clusteval.api.exceptions.InvalidConfigurationFileException;
 import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
@@ -35,27 +38,22 @@ import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.repository.RepositoryConfigurationException;
 import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.IRunResult;
+import de.clusteval.api.run.IncompatibleParameterOptimizationMethodException;
+import de.clusteval.api.run.RunException;
 import de.clusteval.api.stats.DataStatistic;
 import de.clusteval.api.stats.IDataStatistic;
 import de.clusteval.api.stats.IStatistic;
-import de.clusteval.api.run.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
-import de.clusteval.api.data.DataSetConfigNotFoundException;
-import de.clusteval.api.data.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.framework.repository.RunResultRepository;
-import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
-import de.clusteval.api.repository.RepositoryConfigurationException;
 import de.clusteval.framework.repository.parse.Parser;
 import de.clusteval.run.DataAnalysisRun;
 import de.clusteval.run.InvalidRunModeException;
-import de.clusteval.api.run.Run;
-import de.clusteval.api.run.RunException;
 import de.clusteval.utils.FileUtils;
-import de.clusteval.api.exceptions.InvalidConfigurationFileException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -162,7 +160,7 @@ public class DataAnalysisRunResult extends AnalysisRunResult<IDataConfig, IDataS
                    UnknownProgramTypeException, UnknownRProgramException,
                    IncompatibleParameterOptimizationMethodException,
                    UnknownGoldStandardFormatException, AnalysisRunResultException,
-                   RepositoryConfigNotFoundException, RepositoryConfigurationException, ConfigurationException,
+                   RepositoryConfigurationException, ConfigurationException,
                    RegisterException, NumberFormatException, NoDataSetException,
                    IncompatibleDataSetConfigPreprocessorException,
                    IncompatibleContextException, UnknownParameterType, InterruptedException,
@@ -185,7 +183,7 @@ public class DataAnalysisRunResult extends AnalysisRunResult<IDataConfig, IDataS
             if (runFile == null) {
                 return null;
             }
-            final Run object = Parser.parseRunFromFile(runFile);
+            final IRun object = Parser.parseRunFromFile(runFile);
 
             DataAnalysisRunResult analysisResult = null;
 

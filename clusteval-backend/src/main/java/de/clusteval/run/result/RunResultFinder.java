@@ -10,14 +10,14 @@
  ***************************************************************************** */
 package de.clusteval.run.result;
 
-import de.clusteval.api.run.result.RunResult;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.IRepositoryObject;
-import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.IRunResult;
 import de.clusteval.api.run.IScheduler;
 import de.clusteval.api.run.RUN_STATUS;
+import de.clusteval.api.run.RunResultFactory;
 import de.clusteval.utils.FileFinder;
 import de.wiwie.wiutils.utils.ArrayIterator;
 import java.io.File;
@@ -143,7 +143,7 @@ class RunResultIterator implements Iterator<File> {
                 && basePath.hasNext()) {
             try {
                 List<IRunResult> newResults = new ArrayList<>();
-                RunResult.parseFromRunResultFolder(repo, basePath.next(),
+                RunResultFactory.parseFromRunResultFolder(repo, basePath.next(),
                         newResults, false, false, false);
                 this.parsedResults.addAll(newResults);
                 exception = false;

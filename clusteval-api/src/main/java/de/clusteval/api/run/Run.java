@@ -13,7 +13,6 @@
 package de.clusteval.api.run;
 
 import de.clusteval.api.IContext;
-import de.clusteval.api.Pair;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.IProgramParameter;
 import de.clusteval.api.program.RegisterException;
@@ -717,8 +716,8 @@ public abstract class Run extends RepositoryObject implements IRun {
      * such parser exists for some format, this exception will be thrown.
      * @throws RunRunnableInitializationException
      * @throws RunInitializationException
+     * @throws de.clusteval.api.factory.UnknownProviderException
      */
-    @SuppressWarnings("unused")
     public void resume(final IScheduler runScheduler, final String runIdentString)
             throws MissingParameterValueException,
                    IOException, NoRunResultFormatParserException,
@@ -754,7 +753,7 @@ public abstract class Run extends RepositoryObject implements IRun {
     /**
      * @return A map with the optimization status of this run.
      */
-    public Map<Pair<String, String>, Pair<Double, Map<String, Pair<Map<String, String>, String>>>> getOptimizationStatus() {
+    public OptStatus getOptimizationStatus() {
         return null;
     }
 

@@ -15,9 +15,8 @@ import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
-import de.clusteval.framework.repository.Repository;
-import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.api.repository.RepositoryConfigurationException;
+import de.clusteval.framework.repository.Repository;
 import de.clusteval.serverclient.BackendClient;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -28,6 +27,7 @@ import org.apache.commons.cli.ParseException;
 import org.apache.commons.io.FileUtils;
 import org.junit.AfterClass;
 import org.junit.Assert;
+import static org.junit.Assert.assertTrue;
 import org.junit.BeforeClass;
 
 /**
@@ -44,22 +44,9 @@ public class ClusteringEvalFrameworkTest {
 
     protected static int clientId;
 
-    /**
-     * @throws FileNotFoundException
-     * @throws ConnectException
-     * @throws InvalidRepositoryException
-     * @throws RepositoryAlreadyExistsException
-     * @throws NoRepositoryFoundException
-     * @throws RepositoryConfigurationException
-     * @throws RepositoryConfigNotFoundException
-     * @throws ParseException
-     * @throws NoSuchAlgorithmException
-     * @throws DatabaseConnectException
-     */
     @BeforeClass
     public static void setUp() throws FileNotFoundException, ConnectException,
                                       RepositoryAlreadyExistsException, InvalidRepositoryException,
-                                      RepositoryConfigNotFoundException,
                                       RepositoryConfigurationException, NoRepositoryFoundException,
                                       ParseException, NoSuchAlgorithmException, InterruptedException,
                                       DatabaseConnectException {
@@ -125,7 +112,7 @@ public class ClusteringEvalFrameworkTest {
                         + ".results.qual")).exists());
             }
 
-            Assert.assertTrue(new File(de.clusteval.utils.FileUtils.buildPath(
+            assertTrue(new File(de.clusteval.utils.FileUtils.buildPath(
                     resultsDirectory, programDataPair
                     + ".results.qual.complete")).exists());
         }

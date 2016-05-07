@@ -10,13 +10,13 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset;
 
-import de.clusteval.api.data.DataSetConfigurationException;
-import de.clusteval.api.data.DataSetConfigNotFoundException;
 import ch.qos.logback.classic.Level;
 import de.clusteval.api.Matrix;
 import de.clusteval.api.Precision;
 import de.clusteval.api.data.DataConfig;
 import de.clusteval.api.data.DataSetAttributeFilterer;
+import de.clusteval.api.data.DataSetConfigNotFoundException;
+import de.clusteval.api.data.DataSetConfigurationException;
 import de.clusteval.api.data.DataSetFormatFactory;
 import de.clusteval.api.data.DataSetTypeFactory;
 import de.clusteval.api.data.DistanceMeasureFactory;
@@ -52,17 +52,16 @@ import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.r.UnknownRProgramException;
+import de.clusteval.api.repository.RepositoryConfigurationException;
 import de.clusteval.api.run.IncompatibleParameterOptimizationMethodException;
+import de.clusteval.api.run.RunException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RunResultRepository;
-import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
-import de.clusteval.api.repository.RepositoryConfigurationException;
 import de.clusteval.framework.repository.db.StubSQLCommunicator;
 import de.clusteval.framework.repository.parse.Parser;
-import de.clusteval.api.run.RunException;
 import de.clusteval.utils.AbstractClustEvalTest;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
 import java.io.File;
@@ -133,15 +132,12 @@ public class DataSetTest extends AbstractClustEvalTest {
     @Test(expected = DataSetRegisterException.class)
     public void testRegisterRunResultRepositoryNotPresentInParent()
             throws FileNotFoundException, RepositoryAlreadyExistsException,
-                   InvalidRepositoryException, RepositoryConfigNotFoundException,
-                   RepositoryConfigurationException, NoRepositoryFoundException,
+                   InvalidRepositoryException, RepositoryConfigurationException, NoRepositoryFoundException,
                    DataSetNotFoundException, DataSetConfigurationException,
-                   RegisterException,
-                   UnknownProviderException, NoDataSetException,
+                   RegisterException, UnknownProviderException, NoDataSetException,
                    NoSuchAlgorithmException, InterruptedException,
                    GoldStandardNotFoundException, GoldStandardConfigurationException,
-                   DataSetConfigNotFoundException,
-                   GoldStandardConfigNotFoundException, DataConfigurationException,
+                   DataSetConfigNotFoundException, GoldStandardConfigNotFoundException, DataConfigurationException,
                    DataConfigNotFoundException, NumberFormatException,
                    ConfigurationException, UnknownParameterType,
                    RunException, IncompatibleContextException,
@@ -956,10 +952,8 @@ public class DataSetTest extends AbstractClustEvalTest {
 
     @Test
     public void testConvertMatrixToSimMatrix()
-            throws RepositoryAlreadyExistsException,
-                   InvalidRepositoryException, RepositoryConfigNotFoundException,
-                   RepositoryConfigurationException,
-                   InvalidDataSetFormatException, RegisterException,
+            throws RepositoryAlreadyExistsException, InvalidRepositoryException,
+                   RepositoryConfigurationException, InvalidDataSetFormatException, RegisterException,
                    FormatConversionException, IOException, RNotAvailableException,
                    InterruptedException, RException, UnknownProviderException {
         ClustevalBackendServer.logLevel(Level.INFO);

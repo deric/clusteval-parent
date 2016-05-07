@@ -25,10 +25,9 @@ import de.clusteval.api.r.RCalculationException;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
+import de.clusteval.api.repository.RepositoryConfigurationException;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.framework.ClustevalBackendServer;
-import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
-import de.clusteval.api.repository.RepositoryConfigurationException;
 import de.clusteval.utils.AbstractClustEvalTest;
 import java.io.File;
 import java.security.NoSuchAlgorithmException;
@@ -44,7 +43,6 @@ public class VMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
     public void test()
             throws InstantiationException, IllegalAccessException,
                    RepositoryAlreadyExistsException, InvalidRepositoryException,
-                   RepositoryConfigNotFoundException,
                    RepositoryConfigurationException, NoRepositoryFoundException,
                    RegisterException, NoSuchAlgorithmException,
                    RNotAvailableException, RCalculationException, InterruptedException, RException, UnknownProviderException {
@@ -122,7 +120,6 @@ public class VMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
     @Test
     public void test2() throws InstantiationException, IllegalAccessException,
                                RepositoryAlreadyExistsException, InvalidRepositoryException,
-                               RepositoryConfigNotFoundException,
                                RepositoryConfigurationException, NoRepositoryFoundException,
                                RegisterException, NoSuchAlgorithmException,
                                RNotAvailableException, RCalculationException, InterruptedException, RException, UnknownProviderException {
@@ -203,10 +200,8 @@ public class VMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
 
     @Test
     public void testSingleCluster()
-            throws InstantiationException,
-                   IllegalAccessException, RepositoryAlreadyExistsException,
-                   InvalidRepositoryException, RepositoryConfigNotFoundException,
-                   RepositoryConfigurationException, NoRepositoryFoundException,
+            throws InstantiationException, IllegalAccessException, RepositoryAlreadyExistsException,
+                   InvalidRepositoryException, RepositoryConfigurationException, NoRepositoryFoundException,
                    RegisterException, NoSuchAlgorithmException,
                    RNotAvailableException, RCalculationException, InterruptedException, RException, UnknownProviderException {
         try {
@@ -252,10 +247,8 @@ public class VMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
 
     @Test
     public void testSingleCluster2()
-            throws InstantiationException,
-                   IllegalAccessException, RepositoryAlreadyExistsException,
-                   InvalidRepositoryException, RepositoryConfigNotFoundException,
-                   RepositoryConfigurationException, NoRepositoryFoundException,
+            throws InstantiationException, IllegalAccessException, RepositoryAlreadyExistsException,
+                   InvalidRepositoryException, RepositoryConfigurationException, NoRepositoryFoundException,
                    RegisterException, NoSuchAlgorithmException,
                    RNotAvailableException, RCalculationException, InterruptedException, RException, UnknownProviderException {
         try {
@@ -306,10 +299,8 @@ public class VMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
 
     @Test
     public void testSingletonCluster()
-            throws InstantiationException,
-                   IllegalAccessException, RepositoryAlreadyExistsException,
-                   InvalidRepositoryException, RepositoryConfigNotFoundException,
-                   RepositoryConfigurationException, NoRepositoryFoundException,
+            throws InstantiationException, IllegalAccessException, RepositoryAlreadyExistsException,
+                   InvalidRepositoryException, RepositoryConfigurationException, NoRepositoryFoundException,
                    RegisterException, NoSuchAlgorithmException,
                    RNotAvailableException, RCalculationException, InterruptedException, RException, UnknownProviderException {
         try {

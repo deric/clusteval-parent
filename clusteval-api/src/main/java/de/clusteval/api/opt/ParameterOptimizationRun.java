@@ -36,6 +36,7 @@ import de.clusteval.api.run.IRunResultPostprocessor;
 import de.clusteval.api.run.IRunRunnable;
 import de.clusteval.api.run.IScheduler;
 import de.clusteval.api.run.IncompatibleParameterOptimizationMethodException;
+import de.clusteval.api.run.OptStatus;
 import de.clusteval.api.run.RunRunnableFactory;
 import java.io.File;
 import java.util.HashMap;
@@ -294,8 +295,8 @@ public class ParameterOptimizationRun extends ExecutionRun {
     }
 
     @Override
-    public Map<Pair<String, String>, Pair<Double, Map<String, Pair<Map<String, String>, String>>>> getOptimizationStatus() {
-        Map<Pair<String, String>, Pair<Double, Map<String, Pair<Map<String, String>, String>>>> result = new HashMap<>();
+    public OptStatus getOptimizationStatus() {
+        OptStatus result = new OptStatus();
         try {
             for (IRunRunnable thread : this.runnables) {
                 Pair<String, String> configs = Pair.getPair(thread.getProgramConfig().toString(),

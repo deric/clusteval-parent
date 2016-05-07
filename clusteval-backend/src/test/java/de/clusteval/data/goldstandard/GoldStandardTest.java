@@ -12,24 +12,23 @@
  */
 package de.clusteval.data.goldstandard;
 
-import de.clusteval.api.data.GoldStandard;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.api.cluster.IClustering;
+import de.clusteval.api.data.GoldStandard;
 import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.exceptions.GoldStandardNotFoundException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
-import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.repository.RepositoryConfigurationException;
+import de.clusteval.api.repository.RepositoryObject;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.framework.repository.Repository;
-import de.clusteval.api.repository.RepositoryObject;
 import de.clusteval.framework.repository.RunResultRepository;
-import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
-import de.clusteval.api.repository.RepositoryConfigurationException;
 import de.clusteval.framework.repository.db.StubSQLCommunicator;
 import de.clusteval.utils.AbstractClustEvalTest;
 import java.io.File;
@@ -102,8 +101,7 @@ public class GoldStandardTest extends AbstractClustEvalTest {
     @Test(expected = RegisterException.class)
     public void testRegisterRunResultRepositoryNotPresentInParent()
             throws FileNotFoundException, RepositoryAlreadyExistsException,
-                   InvalidRepositoryException, RepositoryConfigNotFoundException,
-                   RepositoryConfigurationException, NoRepositoryFoundException,
+                   InvalidRepositoryException, RepositoryConfigurationException, NoRepositoryFoundException,
                    GoldStandardNotFoundException, RegisterException,
                    NoSuchAlgorithmException, InterruptedException {
         getRepository().initialize();

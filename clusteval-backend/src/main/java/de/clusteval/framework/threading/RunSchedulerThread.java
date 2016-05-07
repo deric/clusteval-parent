@@ -15,12 +15,14 @@ import de.clusteval.api.Triple;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.IRun;
+import de.clusteval.api.run.IRunResult;
 import de.clusteval.api.run.IRunRunnable;
 import de.clusteval.api.run.IScheduler;
 import de.clusteval.api.run.IterationRunnable;
 import de.clusteval.api.run.IterationWrapper;
 import de.clusteval.api.run.MissingParameterValueException;
 import de.clusteval.api.run.NoRunResultFormatParserException;
+import de.clusteval.api.run.OptStatus;
 import de.clusteval.api.run.RUN_STATUS;
 import de.clusteval.api.run.Run;
 import de.clusteval.api.run.RunInitializationException;
@@ -30,7 +32,6 @@ import de.clusteval.api.run.RunRunnableInitializationException;
 import de.clusteval.api.run.result.RunResult;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.framework.ClustevalThread;
-import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.utils.FileUtils;
 import java.io.File;
 import java.io.IOException;
@@ -74,12 +75,12 @@ public class RunSchedulerThread extends ClustevalThread implements IScheduler {
      * A map containing all the runs that are executed right now. The map maps
      * from client id to collections of runs.
      */
-    protected Map<String, Collection<Run>> clientToRuns;
+    protected Map<String, Collection<IRun>> clientToRuns;
     /**
      * A map containing all the run resumes that are executed right now. The map
      * maps from client id to collections of runs.
      */
-    protected Map<String, Collection<Run>> clientToRunResumes;
+    protected Map<String, Collection<IRun>> clientToRunResumes;
 
     /**
      * The repository this run scheduler belongs to. This scheduler can only
@@ -147,11 +148,10 @@ public class RunSchedulerThread extends ClustevalThread implements IScheduler {
      * @return
      */
     // TODO
-    public Map<String, Pair<Pair<RUN_STATUS, Float>, Map<Pair<String, String>, Pair<Double, Map<String, Pair<Map<String, String>, String>>>>>> getOptimizationRunStatusForClientId(
-            String clientId) {
+    public Map<String, Pair<Pair<RUN_STATUS, Float>, OptStatus>> getOptimizationRunStatusForClientId(String clientId) {
 
         synchronized (this.runQueue) {
-            Map<String, Pair<Pair<RUN_STATUS, Float>, Map<Pair<String, String>, Pair<Double, Map<String, Pair<Map<String, String>, String>>>>>> result = new HashMap<>();
+            Map<String, Pair<Pair<RUN_STATUS, Float>, OptStatus>> result = new HashMap<>();
 
             // add the scheduled runs
             for (Triple<String, String, Boolean> runTriple : this.runQueue) {
@@ -161,15 +161,16 @@ public class RunSchedulerThread extends ClustevalThread implements IScheduler {
                             runTriple.getSecond(),
                             Pair.getPair(
                                     Pair.getPair(RUN_STATUS.SCHEDULED, 100f),
-                                    (Map<Pair<String, String>, Pair<Double, Map<String, Pair<Map<String, String>, String>>>>) new HashMap<Pair<String, String>, Pair<Double, Map<String, Pair<Map<String, String>, String>>>>()));
+                                    new OptStatus()
+                            ));
                 }
             }
 
-            Collection<Run> toRemove = new HashSet<>();
+            Collection<IRun> toRemove = new HashSet<>();
 
             // add the running runs
             if (this.clientToRuns.containsKey(clientId)) {
-                for (Run run : this.clientToRuns.get(clientId)) {
+                for (IRun run : this.clientToRuns.get(clientId)) {
                     result.put(
                             run.getRunIdentificationString(),
                             Pair.getPair(
@@ -183,7 +184,7 @@ public class RunSchedulerThread extends ClustevalThread implements IScheduler {
                 }
             }
 
-            for (Run run : toRemove) {
+            for (IRun run : toRemove) {
                 this.clientToRuns.get(clientId).remove(run);
             }
 
@@ -191,7 +192,7 @@ public class RunSchedulerThread extends ClustevalThread implements IScheduler {
 
             // add the running run resumes
             if (this.clientToRunResumes.containsKey(clientId)) {
-                for (Run run : this.clientToRunResumes.get(clientId)) {
+                for (IRun run : this.clientToRunResumes.get(clientId)) {
                     result.put(
                             run.getRunIdentificationString(),
                             Pair.getPair(
@@ -205,7 +206,7 @@ public class RunSchedulerThread extends ClustevalThread implements IScheduler {
                 }
             }
 
-            for (Run run : toRemove) {
+            for (IRun run : toRemove) {
                 this.clientToRunResumes.get(clientId).remove(run);
             }
 
@@ -246,7 +247,7 @@ public class RunSchedulerThread extends ClustevalThread implements IScheduler {
         }
         for (String client : this.clientToRuns.keySet()) {
             boolean found = false;
-            for (Run run : this.clientToRuns.get(client)) {
+            for (IRun run : this.clientToRuns.get(client)) {
                 if (run.getName().equals(runId)) {
                     if (run.getStatus().equals(RUN_STATUS.RUNNING)
                             || run.getStatus().equals(RUN_STATUS.SCHEDULED)) {
@@ -305,7 +306,7 @@ public class RunSchedulerThread extends ClustevalThread implements IScheduler {
         }
         for (String client : this.clientToRunResumes.keySet()) {
             boolean found = false;
-            for (Run run : this.clientToRunResumes.get(client)) {
+            for (IRun run : this.clientToRunResumes.get(client)) {
                 if (run.getRunIdentificationString().equals(
                         uniqueRunResultIdentifier)) {
                     if (run.getStatus().equals(RUN_STATUS.RUNNING)
@@ -364,7 +365,7 @@ public class RunSchedulerThread extends ClustevalThread implements IScheduler {
          * Run is being executed
          */
         if (this.clientToRuns.containsKey(clientId)) {
-            for (Run run : this.clientToRuns.get(clientId)) {
+            for (IRun run : this.clientToRuns.get(clientId)) {
                 if (run.getRunIdentificationString().equals(runId)) {
                     if (run.terminate()) {
                         return this.clientToRuns.get(clientId).remove(run);
@@ -376,7 +377,7 @@ public class RunSchedulerThread extends ClustevalThread implements IScheduler {
          * Run resume is being executed
          */
         if (this.clientToRunResumes.containsKey(clientId)) {
-            for (Run run : this.clientToRunResumes.get(clientId)) {
+            for (IRun run : this.clientToRunResumes.get(clientId)) {
                 if (run.getRunIdentificationString().equals(runId)) {
                     if (run.terminate()) {
                         return this.clientToRunResumes.get(clientId)
@@ -395,17 +396,17 @@ public class RunSchedulerThread extends ClustevalThread implements IScheduler {
     public Queue<String> getQueue() {
         final Queue<String> result = new ConcurrentLinkedQueue<>();
 
-        for (Map.Entry<String, Collection<Run>> entry : this.clientToRuns
+        for (Map.Entry<String, Collection<IRun>> entry : this.clientToRuns
                 .entrySet()) {
-            for (Run run : entry.getValue()) {
+            for (IRun run : entry.getValue()) {
                 if (run.getStatus().equals(RUN_STATUS.SCHEDULED)) {
                     result.add(run.getName());
                 }
             }
         }
-        for (Map.Entry<String, Collection<Run>> entry : this.clientToRunResumes
+        for (Map.Entry<String, Collection<IRun>> entry : this.clientToRunResumes
                 .entrySet()) {
-            for (Run run : entry.getValue()) {
+            for (IRun run : entry.getValue()) {
                 if (run.getStatus().equals(RUN_STATUS.SCHEDULED)) {
                     result.add(run.getRunIdentificationString());
                 }
@@ -425,10 +426,10 @@ public class RunSchedulerThread extends ClustevalThread implements IScheduler {
      */
     public Set<IRun> getRuns() {
         final Set<IRun> result = new HashSet<>();
-        for (Collection<Run> coll : this.clientToRunResumes.values()) {
+        for (Collection<IRun> coll : this.clientToRunResumes.values()) {
             result.addAll(coll);
         }
-        for (Collection<Run> coll : this.clientToRuns.values()) {
+        for (Collection<IRun> coll : this.clientToRuns.values()) {
             result.addAll(coll);
         }
         return result;
@@ -462,7 +463,7 @@ public class RunSchedulerThread extends ClustevalThread implements IScheduler {
 
         // iterate over all executing runs
         if (this.clientToRuns.containsKey(clientId)) {
-            for (Run run : this.clientToRuns.get(clientId)) {
+            for (IRun run : this.clientToRuns.get(clientId)) {
                 result.put(run.getRunIdentificationString(),
                         Pair.getPair(run.getStatus(), run.getPercentFinished()));
             }
@@ -472,7 +473,7 @@ public class RunSchedulerThread extends ClustevalThread implements IScheduler {
          * iterate over all executing run resumes
          */
         if (this.clientToRunResumes.containsKey(clientId)) {
-            for (Run run : this.clientToRunResumes.get(clientId)) {
+            for (IRun run : this.clientToRunResumes.get(clientId)) {
                 result.put(run.getRunIdentificationString(),
                         Pair.getPair(run.getStatus(), run.getPercentFinished()));
             }
@@ -495,17 +496,16 @@ public class RunSchedulerThread extends ClustevalThread implements IScheduler {
             if (pair != null) {
                 String clientId = pair.getFirst();
                 final String runId = pair.getSecond();
-                final Run run;
-                final RunSchedulerThread finalScheduler = this;
+                final IRun run;
+                final IScheduler finalScheduler = this;
                 boolean isResume = pair.getThird();
 
                 if (!isResume) {
                     // take a cloned copy of the run
-                    run = this.repository.getStaticObjectWithName(Run.class,
-                            runId).clone();
+                    run = this.repository.getStaticObjectWithName(IRun.class, runId).clone();
 
                     if (!this.clientToRuns.containsKey(clientId)) {
-                        this.clientToRuns.put(clientId, new HashSet<Run>());
+                        this.clientToRuns.put(clientId, new HashSet<>());
                     }
                     if (this.clientToRuns.get(clientId).contains(run)) {
                         this.clientToRuns.get(clientId).remove(run);
@@ -523,32 +523,26 @@ public class RunSchedulerThread extends ClustevalThread implements IScheduler {
                         public void run() {
                             try {
                                 run.perform(finalScheduler);
-                            } catch (IOException e1) {
-                                e1.printStackTrace();
-                            } catch (RunRunnableInitializationException e) {
-                                e.printStackTrace();
-                            } catch (RunInitializationException e) {
-                                e.printStackTrace();
-                            } catch (UnknownProviderException ex) {
+                            } catch (IOException | RunRunnableInitializationException |
+                                     RunInitializationException | UnknownProviderException ex) {
                                 Exceptions.printStackTrace(ex);
                             }
                         }
                     };
                     t.start();
                 } else {
-                    ArrayList<ParameterOptimizationResult> results = new ArrayList<ParameterOptimizationResult>();
+                    ArrayList<IRunResult> results = new ArrayList<>();
                     try {
                         run = RunResultFactory.parseFromRunResultFolder2(
                                 repository,
                                 new File(FileUtils.buildPath(repository
-                                        .getBasePath(RunResult.class),
+                                        .getBasePath(IRunResult.class),
                                         runId)), results, false, false,
                                 false).clone();
                         run.setStatus(RUN_STATUS.SCHEDULED);
 
                         if (!this.clientToRunResumes.containsKey(clientId)) {
-                            this.clientToRunResumes.put(clientId,
-                                    new HashSet<Run>());
+                            this.clientToRunResumes.put(clientId, new HashSet<>());
                         }
                         if (this.clientToRunResumes.get(clientId).contains(run)) {
                             this.clientToRunResumes.get(clientId).remove(run);
@@ -557,33 +551,18 @@ public class RunSchedulerThread extends ClustevalThread implements IScheduler {
 
                         Thread t = new Thread() {
 
-                            /*
-                             * (non-Javadoc)
-                             *
-                             * @see java.lang.Runnable#run()
-                             */
                             @Override
                             public void run() {
                                 try {
                                     run.resume(finalScheduler, runId);
-                                } catch (MissingParameterValueException e1) {
-                                    e1.printStackTrace();
-                                } catch (IOException e1) {
-                                    e1.printStackTrace();
-                                } catch (NoRunResultFormatParserException e1) {
-                                    e1.printStackTrace();
-                                } catch (RunRunnableInitializationException e) {
-                                    e.printStackTrace();
-                                } catch (RunInitializationException e) {
-                                    e.printStackTrace();
-                                } catch (UnknownProviderException ex) {
+                                } catch (MissingParameterValueException | IOException | NoRunResultFormatParserException | RunRunnableInitializationException | RunInitializationException | UnknownProviderException ex) {
                                     Exceptions.printStackTrace(ex);
                                 }
                             }
                         };
                         t.start();
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        Exceptions.printStackTrace(e);
                     }
 
                 }
@@ -603,8 +582,8 @@ public class RunSchedulerThread extends ClustevalThread implements IScheduler {
      */
     @Override
     public void interrupt() {
-        for (Collection<Run> runs : this.clientToRuns.values()) {
-            for (Run run : runs) {
+        for (Collection<IRun> runs : this.clientToRuns.values()) {
+            for (IRun run : runs) {
                 run.terminate();
             }
         }

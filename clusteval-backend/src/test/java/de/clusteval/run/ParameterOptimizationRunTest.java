@@ -10,8 +10,8 @@
  ***************************************************************************** */
 package de.clusteval.run;
 
-import de.clusteval.api.run.RunException;
-import de.clusteval.api.opt.ParameterOptimizationRun;
+import de.clusteval.api.data.DataSetConfigNotFoundException;
+import de.clusteval.api.data.DataSetConfigurationException;
 import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
@@ -28,23 +28,22 @@ import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.opt.InvalidOptimizationParameterException;
+import de.clusteval.api.opt.ParameterOptimizationRun;
 import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
 import de.clusteval.api.program.IProgramParameter;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.r.UnknownRProgramException;
+import de.clusteval.api.repository.RepositoryConfigurationException;
 import de.clusteval.api.repository.RepositoryController;
 import de.clusteval.api.run.IncompatibleParameterOptimizationMethodException;
+import de.clusteval.api.run.RunException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
-import de.clusteval.api.data.DataSetConfigNotFoundException;
-import de.clusteval.api.data.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.config.DefaultRepositoryConfig;
-import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
-import de.clusteval.api.repository.RepositoryConfigurationException;
 import de.clusteval.framework.repository.parse.Parser;
 import de.clusteval.utils.AbstractClustEvalTest;
 import java.io.File;
@@ -86,11 +85,11 @@ public class ParameterOptimizationRunTest extends AbstractClustEvalTest {
                 .getAbsoluteFile());
         List<IProgramParameter<?>> paramList = new ArrayList<>();
 
-        paramList.add(run.programConfigs.get(0).getParameterForName("T"));
+        paramList.add(run.getProgramConfigs().get(0).getParameterForName("T"));
 
         List<List<IProgramParameter<?>>> expected = new ArrayList<>();
         expected.add(paramList);
-        assertEquals(expected, run.optimizationParameters);
+        assertEquals(expected, run.getOptimizationParameters());
     }
 
     @Test
@@ -113,7 +112,7 @@ public class ParameterOptimizationRunTest extends AbstractClustEvalTest {
             UnknownProviderException,
             IncompatibleDataSetConfigPreprocessorException, IOException,
             InterruptedException, RepositoryAlreadyExistsException,
-            InvalidRepositoryException, RepositoryConfigNotFoundException,
+            InvalidRepositoryException,
             RepositoryConfigurationException,
             UnknownRunResultPostprocessorException,
             DatabaseConnectException {

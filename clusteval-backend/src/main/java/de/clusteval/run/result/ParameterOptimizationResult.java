@@ -15,6 +15,7 @@ import de.clusteval.api.Pair;
 import de.clusteval.api.cluster.ClusteringQualitySet;
 import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.exceptions.RunResultParseException;
+import de.clusteval.api.opt.IParamOptResult;
 import de.clusteval.api.opt.ParameterOptimizationMethod;
 import de.clusteval.api.opt.ParameterOptimizationRun;
 import de.clusteval.api.opt.ParameterSet;
@@ -39,7 +40,7 @@ import org.openide.util.lookup.ServiceProvider;
  *
  */
 @ServiceProvider(service = IRunResult.class)
-public class ParameterOptimizationResult extends ExecutionRunResult implements Iterable<Pair<ParameterSet, ClusteringQualitySet>>, IRunResult {
+public class ParameterOptimizationResult extends ExecutionRunResult implements Iterable<Pair<ParameterSet, ClusteringQualitySet>>, IParamOptResult {
 
     private static final String NAME = "parameter optimization result";
 
@@ -552,6 +553,17 @@ public class ParameterOptimizationResult extends ExecutionRunResult implements I
     public List<ParameterOptimizationMethod> getOptimizationMethods() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public void setRun(ParameterOptimizationRun run) {
+        this.run = run;
+    }
+
+    @Override
+    public void setMethod(ParameterOptimizationMethod method) {
+        this.method = method;
+    }
+
 }
 
 class ParameterOptimizationResultIterator implements Iterator<Pair<ParameterSet, ClusteringQualitySet>> {

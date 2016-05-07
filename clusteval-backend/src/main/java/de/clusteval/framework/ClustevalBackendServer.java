@@ -26,11 +26,14 @@ import de.clusteval.api.data.DataRandomizeException;
 import de.clusteval.api.data.DataRandomizer;
 import de.clusteval.api.data.DataRandomizerFactory;
 import de.clusteval.api.data.DataSetConfigNotFoundException;
+import de.clusteval.api.data.DataSetConfigurationException;
 import de.clusteval.api.data.IDataRandomizer;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.exceptions.DataSetGenerationException;
+import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
+import de.clusteval.api.exceptions.GoldStandardConfigurationException;
 import de.clusteval.api.exceptions.GoldStandardGenerationException;
 import de.clusteval.api.exceptions.GoldStandardNotFoundException;
 import de.clusteval.api.exceptions.IncompatibleContextException;
@@ -42,12 +45,8 @@ import de.clusteval.api.exceptions.RepositoryObjectDumpException;
 import de.clusteval.api.exceptions.RunResultParseException;
 import de.clusteval.api.exceptions.UnknownDataSetGeneratorException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
-import de.clusteval.api.exceptions.UnknownParameterType;
-import de.clusteval.api.exceptions.UnknownProgramParameterException;
-import de.clusteval.api.exceptions.UnknownProgramTypeException;
-import de.clusteval.api.exceptions.UnknownRunResultFormatException;
-import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
 import de.clusteval.api.factory.UnknownProviderException;
+import de.clusteval.api.opt.IParamOptResult;
 import de.clusteval.api.opt.InvalidOptimizationParameterException;
 import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
 import de.clusteval.api.program.IProgram;
@@ -61,24 +60,21 @@ import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RepositoryConfigurationException;
 import de.clusteval.api.repository.RepositoryController;
 import de.clusteval.api.run.ExecutionIterationRunnable;
+import de.clusteval.api.run.IRunResult;
 import de.clusteval.api.run.IScheduler;
 import de.clusteval.api.run.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.api.run.IterationRunnable;
 import de.clusteval.api.run.IterationWrapper;
+import de.clusteval.api.run.OptStatus;
 import de.clusteval.api.run.RUN_STATUS;
 import de.clusteval.api.run.Run;
 import de.clusteval.api.run.RunException;
 import de.clusteval.api.run.RunResultFactory;
 import de.clusteval.api.run.result.RunResult;
-import de.clusteval.data.DataConfigNotFoundException;
-import de.clusteval.data.DataConfigurationException;
-import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.data.dataset.generator.DataSetGenerator;
 import de.clusteval.framework.repository.MyRengine;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.threading.SupervisorThread;
-import de.clusteval.run.InvalidRunModeException;
-import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.run.runnable.AnalysisIterationRunnable;
 import de.clusteval.run.runnable.DataAnalysisIterationRunnable;
 import de.clusteval.run.runnable.DataAnalysisRunRunnable;
@@ -687,7 +683,7 @@ public class ClustevalBackendServer implements IBackendServer {
 
     // TODO
     @Override
-    public Map<String, Pair<Pair<RUN_STATUS, Float>, Map<Pair<String, String>, Pair<Double, Map<String, Pair<Map<String, String>, String>>>>>> getOptimizationRunStatusForClientId(
+    public Map<String, Pair<Pair<RUN_STATUS, Float>, OptStatus>> getOptimizationRunStatusForClientId(
             String clientId) throws RemoteException {
         return this.repository.getSupervisorThread().getRunScheduler().getOptimizationRunStatusForClientId(clientId);
     }
@@ -754,43 +750,30 @@ public class ClustevalBackendServer implements IBackendServer {
         return this.repository.getSupervisorThread().isAlive();
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see serverclient.EvalServer#getRunResumes()
-     */
-    @SuppressWarnings("unused")
     @Override
     public Collection<String> getRunResumes() throws RemoteException {
         Collection<String> result = new HashSet<>(this.repository.getRunResumes());
         return result;
     }
 
-    @SuppressWarnings("unused")
     @Override
     public Collection<String> getRunResults() throws RemoteException {
         Collection<String> result = new HashSet<>(this.repository.getRunResultIdentifier());
         return result;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see serverclient.EvalServer#getRunResults(java.lang.String,
-     * java.lang.String)
-     */
-    @SuppressWarnings("unused")
     @Override
     public Map<Pair<String, String>, Map<String, Double>> getRunResults(String uniqueRunIdentifier)
             throws RemoteException {
         Map<Pair<String, String>, Map<String, Double>> result = new HashMap<>();
 
-        List<ParameterOptimizationResult> list = new ArrayList<>();
+        List<IRunResult> list = new ArrayList<>();
         try {
             RunResultFactory.parseFromRunResultFolder2(repository,
                     new File(FileUtils.buildPath(repository.getBasePath(RunResult.class), uniqueRunIdentifier)), list,
                     false, false, false);
-            for (ParameterOptimizationResult r : list) {
+            for (IRunResult res : list) {
+                IParamOptResult r = (IParamOptResult) res;
                 String dataConfig = r.getMethod().getDataConfig().getName();
                 String programConfig = r.getMethod().getProgramConfig().getName();
                 Map<String, Double> measureToOptimalQuality = new HashMap<>();
@@ -800,14 +783,8 @@ public class ClustevalBackendServer implements IBackendServer {
                 }
                 result.put(Pair.getPair(dataConfig, programConfig), measureToOptimalQuality);
             }
-        } catch (DataSetConfigNotFoundException | GoldStandardConfigNotFoundException | DataConfigurationException |
-                 DataConfigNotFoundException | IOException | UnknownRunResultFormatException | InvalidRunModeException | UnknownParameterOptimizationMethodException | NoOptimizableProgramParameterException | UnknownProgramParameterException | UnknownGoldStandardFormatException | InvalidConfigurationFileException | RepositoryAlreadyExistsException | InvalidRepositoryException |
-                 NoRepositoryFoundException | GoldStandardNotFoundException |
-                 InvalidOptimizationParameterException | RunException | UnknownProgramTypeException |
-                 UnknownRProgramException | IncompatibleParameterOptimizationMethodException | RepositoryConfigNotFoundException | RepositoryConfigurationException | ConfigurationException | RegisterException | NumberFormatException | NoDataSetException | RunResultParseException | IncompatibleDataSetConfigPreprocessorException | IncompatibleContextException | UnknownParameterType | InterruptedException | UnknownRunResultPostprocessorException e) {
+        } catch (IOException | UnknownParameterOptimizationMethodException | NoOptimizableProgramParameterException | UnknownGoldStandardFormatException | InvalidConfigurationFileException | RepositoryAlreadyExistsException | InvalidRepositoryException | NoRepositoryFoundException | GoldStandardNotFoundException | InvalidOptimizationParameterException | GoldStandardConfigurationException | DataSetConfigurationException | DataSetNotFoundException | DataSetConfigNotFoundException | GoldStandardConfigNotFoundException | RunException | UnknownRProgramException | IncompatibleParameterOptimizationMethodException | RepositoryConfigurationException | ConfigurationException | RegisterException | NumberFormatException | NoDataSetException | RunResultParseException | IncompatibleContextException | InterruptedException | UnknownProviderException e) {
             e.printStackTrace();
-        } catch (UnknownProviderException ex) {
-            Exceptions.printStackTrace(ex);
         }
 
         return result;

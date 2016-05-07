@@ -38,10 +38,9 @@ import de.clusteval.api.r.RCalculationException;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
+import de.clusteval.api.repository.RepositoryConfigurationException;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.framework.ClustevalBackendServer;
-import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
-import de.clusteval.api.repository.RepositoryConfigurationException;
 import de.clusteval.utils.AbstractClustEvalTest;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -67,8 +66,7 @@ public class CVNNClusteringQualityMeasureTest extends AbstractClustEvalTest {
     public void testSingleCluster()
             throws InstantiationException,
                    IllegalAccessException, RepositoryAlreadyExistsException,
-                   InvalidRepositoryException, RepositoryConfigNotFoundException,
-                   RepositoryConfigurationException, NoRepositoryFoundException,
+                   InvalidRepositoryException, RepositoryConfigurationException, NoRepositoryFoundException,
                    RegisterException, NoSuchAlgorithmException,
                    RNotAvailableException, RCalculationException,
                    FormatConversionException,
@@ -118,10 +116,8 @@ public class CVNNClusteringQualityMeasureTest extends AbstractClustEvalTest {
     }
 
     //@Test
-    public void testTwoClusters() throws InstantiationException,
-                                         IllegalAccessException, RepositoryAlreadyExistsException,
-                                         InvalidRepositoryException, RepositoryConfigNotFoundException,
-                                         RepositoryConfigurationException, NoRepositoryFoundException,
+    public void testTwoClusters() throws InstantiationException, IllegalAccessException, RepositoryAlreadyExistsException,
+                                         InvalidRepositoryException, RepositoryConfigurationException, NoRepositoryFoundException,
                                          RegisterException, NoSuchAlgorithmException,
                                          RNotAvailableException, RCalculationException,
                                          FormatConversionException,

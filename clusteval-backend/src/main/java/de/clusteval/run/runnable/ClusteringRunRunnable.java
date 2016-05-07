@@ -18,6 +18,7 @@ import de.clusteval.api.exceptions.InvalidDataSetFormatException;
 import de.clusteval.api.exceptions.RunIterationException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.factory.UnknownProviderException;
+import de.clusteval.api.opt.ParameterOptimizationMethod;
 import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.IProgramParameter;
 import de.clusteval.api.program.RegisterException;
@@ -45,6 +46,7 @@ public class ClusteringRunRunnable extends ExecutionRunRunnable {
 
     protected boolean hasNext = true;
     protected boolean finished;
+    public static final String NAME = "ClusteringRunRunnable";
 
     /**
      * @param runScheduler
@@ -71,6 +73,17 @@ public class ClusteringRunRunnable extends ExecutionRunRunnable {
             Map<IProgramParameter<?>, String> runParams) {
         super(run, programConfig, dataConfig, runIdentString, isResume,
                 runParams);
+        this.future = runScheduler.registerRunRunnable(this);
+    }
+
+    @Override
+    public String getName() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void init(IScheduler runScheduler, IRun run, IProgramConfig programConfig, IDataConfig dataConfig, ParameterOptimizationMethod optimizationMethod, String runIdentString, boolean isResume, Map<IProgramParameter<?>, String> runParams) {
+        super.init(run, programConfig, dataConfig, runIdentString, isResume, runParams);
         this.future = runScheduler.registerRunRunnable(this);
     }
 
@@ -164,5 +177,10 @@ public class ClusteringRunRunnable extends ExecutionRunRunnable {
                 + ") The result of this run could not be found. Please consult the log files of the program");
 
         super.handleMissingRunResult(iterationWrapper);
+    }
+
+    @Override
+    public ParameterOptimizationMethod getOptimizationMethod() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

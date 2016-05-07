@@ -12,18 +12,23 @@
  */
 package de.clusteval.run.runnable;
 
+import de.clusteval.api.data.DataConfig;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.exceptions.RunIterationException;
+import de.clusteval.api.opt.ParameterOptimizationMethod;
+import de.clusteval.api.program.IProgramConfig;
+import de.clusteval.api.program.IProgramParameter;
 import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.IScheduler;
-import de.clusteval.api.stats.IDataStatistic;
-import de.clusteval.api.data.DataConfig;
-import de.clusteval.run.DataAnalysisRun;
 import de.clusteval.api.run.Run;
+import de.clusteval.api.stats.IDataStatistic;
+import de.clusteval.run.DataAnalysisRun;
 import de.clusteval.run.result.DataAnalysisRunResult;
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A type of analysis runnable, that corresponds to {@link DataAnalysisRun} and
@@ -59,6 +64,18 @@ public class DataAnalysisRunRunnable extends
             String runIdentString, final boolean isResume,
             IDataConfig dataConfig, List<IDataStatistic> statistics) {
         super(run, runIdentString, statistics, isResume);
+        this.dataConfig = dataConfig;
+        this.future = runScheduler.registerRunRunnable(this);
+    }
+
+    @Override
+    public String getName() {
+        return "DataAnalysisRunRunnable";
+    }
+
+    @Override
+    public void init(IScheduler runScheduler, IRun run, IProgramConfig programConfig, IDataConfig dataConfig, ParameterOptimizationMethod optimizationMethod, String runIdentString, boolean isResume, Map<IProgramParameter<?>, String> runParams) {
+        super.init(run, runIdentString, isResume);
         this.dataConfig = dataConfig;
         this.future = runScheduler.registerRunRunnable(this);
     }
@@ -192,5 +209,15 @@ public class DataAnalysisRunRunnable extends
 
     public IDataConfig getDataConfig() {
         return this.dataConfig;
+    }
+
+    @Override
+    public ParameterOptimizationMethod getOptimizationMethod() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public IProgramConfig getProgramConfig() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

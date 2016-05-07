@@ -133,7 +133,7 @@ public interface IScheduler {
      */
     Map<String, Pair<RUN_STATUS, Float>> getRunStatusForClientId(String clientId);
 
-    Map<String, Pair<Pair<RUN_STATUS, Float>, Map<Pair<String, String>, Pair<Double, Map<String, Pair<Map<String, String>, String>>>>>> getOptimizationRunStatusForClientId(
+    Map<String, Pair<Pair<RUN_STATUS, Float>, OptStatus>> getOptimizationRunStatusForClientId(
             String clientId);
 
     Map<Thread, IterationRunnable<? extends IterationWrapper>> getActiveIterationRunnables();

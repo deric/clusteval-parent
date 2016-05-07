@@ -16,12 +16,12 @@ import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.cluster.ClustEvalValue;
 import de.clusteval.api.cluster.ClusteringQualitySet;
 import de.clusteval.api.exceptions.ClusteringParseException;
-import de.clusteval.api.program.IProgramParameter;
-import de.clusteval.api.opt.ParameterSet;
-import de.clusteval.cluster.Clustering;
 import de.clusteval.api.opt.ParameterOptimizationMethod;
 import de.clusteval.api.opt.ParameterOptimizationRun;
-import de.clusteval.api.run.result.RunResultPostprocessor;
+import de.clusteval.api.opt.ParameterSet;
+import de.clusteval.api.program.IProgramParameter;
+import de.clusteval.api.run.IRunResultPostprocessor;
+import de.clusteval.cluster.Clustering;
 import de.clusteval.utils.StringExt;
 import de.clusteval.utils.TextFileParser;
 import java.io.File;
@@ -138,7 +138,7 @@ public class ParameterOptimizationResultParser extends TextFileParser {
                 String clusteringFilePath = new File(
                         this.getAbsoluteFilePath().replace("results.qual.complete", iterationId + ".results.conv"))
                         .getAbsolutePath();
-                for (RunResultPostprocessor postprocessor : run.getPostProcessors()) {
+                for (IRunResultPostprocessor postprocessor : run.getPostProcessors()) {
                     String newPath = String.format("%s.%s", clusteringFilePath,
                             postprocessor.getClass().getSimpleName());
                     if (new File(newPath).exists()) {

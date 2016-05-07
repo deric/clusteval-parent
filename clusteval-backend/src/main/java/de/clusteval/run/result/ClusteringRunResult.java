@@ -12,9 +12,9 @@
  */
 package de.clusteval.run.result;
 
-import de.clusteval.api.run.result.ExecutionRunResult;
-import de.clusteval.api.run.NoRunResultFormatParserException;
 import de.clusteval.api.Pair;
+import de.clusteval.api.data.DataSetConfigNotFoundException;
+import de.clusteval.api.data.DataSetConfigurationException;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.api.exceptions.DatabaseConnectException;
@@ -22,6 +22,7 @@ import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigurationException;
 import de.clusteval.api.exceptions.GoldStandardNotFoundException;
 import de.clusteval.api.exceptions.IncompatibleContextException;
+import de.clusteval.api.exceptions.InvalidConfigurationFileException;
 import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
@@ -33,38 +34,36 @@ import de.clusteval.api.exceptions.UnknownRunResultFormatException;
 import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.opt.InvalidOptimizationParameterException;
+import de.clusteval.api.opt.ParameterSet;
 import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
 import de.clusteval.api.program.IProgramConfig;
-import de.clusteval.api.opt.ParameterSet;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.repository.RepositoryConfigurationException;
 import de.clusteval.api.run.IClusteringRunResult;
 import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.IRunResult;
 import de.clusteval.api.run.IRunResultFormat;
 import de.clusteval.api.run.IRunResultFormatParser;
+import de.clusteval.api.run.IncompatibleParameterOptimizationMethodException;
+import de.clusteval.api.run.NoRunResultFormatParserException;
+import de.clusteval.api.run.Run;
+import de.clusteval.api.run.RunException;
 import de.clusteval.api.run.RunResultFormat;
+import de.clusteval.api.run.result.ExecutionRunResult;
 import de.clusteval.api.run.result.RunResultNotFoundException;
 import de.clusteval.cluster.Clustering;
-import de.clusteval.api.run.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
-import de.clusteval.api.data.DataSetConfigNotFoundException;
-import de.clusteval.api.data.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.framework.repository.RunResultRepository;
-import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
-import de.clusteval.api.repository.RepositoryConfigurationException;
 import de.clusteval.framework.repository.parse.Parser;
 import de.clusteval.run.ClusteringRun;
 import de.clusteval.run.InvalidRunModeException;
-import de.clusteval.api.run.Run;
-import de.clusteval.api.run.RunException;
 import de.clusteval.utils.FileUtils;
-import de.clusteval.api.exceptions.InvalidConfigurationFileException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -72,6 +71,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Map;
 import org.apache.commons.configuration.ConfigurationException;
+import org.openide.util.Exceptions;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -339,7 +339,7 @@ public class ClusteringRunResult extends ExecutionRunResult implements IClusteri
         return result;
     }
 
-    public static Run parseFromRunResultFolder(final IRepository parentRepository, final File runResultFolder,
+    public static IRun parseFromRunResultFolder(final IRepository parentRepository, final File runResultFolder,
             final List<ExecutionRunResult> result, final boolean register)
             throws IOException, UnknownRunResultFormatException, InvalidRunModeException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
@@ -351,7 +351,7 @@ public class ClusteringRunResult extends ExecutionRunResult implements IClusteri
                    DataConfigNotFoundException, RunException,
                    UnknownProgramTypeException, UnknownRProgramException,
                    IncompatibleParameterOptimizationMethodException,
-                   RepositoryConfigNotFoundException, RepositoryConfigurationException,
+                   RepositoryConfigurationException,
                    ConfigurationException, RegisterException, NumberFormatException,
                    NoDataSetException,
                    IncompatibleDataSetConfigPreprocessorException,
@@ -377,7 +377,7 @@ public class ClusteringRunResult extends ExecutionRunResult implements IClusteri
             if (runFile == null) {
                 return null;
             }
-            final Run run = Parser.parseRunFromFile(runFile);
+            final IRun run = Parser.parseRunFromFile(runFile);
 
             if (run instanceof ClusteringRun) {
                 final ClusteringRun paramRun = (ClusteringRun) run;
@@ -421,25 +421,16 @@ public class ClusteringRunResult extends ExecutionRunResult implements IClusteri
                 this.clustering = Pair.getPair(paramSet, pair.getSecond());
                 this.clustering.getSecond().loadIntoMemory();
             } catch (Exception e) {
+                Exceptions.printStackTrace(e);
             }
         }
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.clusteval.run.result.RunResult#isInMemory()
-     */
     @Override
     public boolean isInMemory() {
         return this.clustering != null;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.clusteval.run.result.RunResult#unloadFromMemory()
-     */
     @Override
     public void unloadFromMemory() {
         this.clustering.getSecond().unloadFromMemory();
@@ -448,6 +439,6 @@ public class ClusteringRunResult extends ExecutionRunResult implements IClusteri
 
     @Override
     public void convertToStandardFormat() throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

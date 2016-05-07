@@ -11,12 +11,15 @@
 package de.clusteval.run.result;
 
 import de.clusteval.api.Pair;
+import de.clusteval.api.data.DataSetConfigNotFoundException;
+import de.clusteval.api.data.DataSetConfigurationException;
 import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigurationException;
 import de.clusteval.api.exceptions.GoldStandardNotFoundException;
 import de.clusteval.api.exceptions.IncompatibleContextException;
+import de.clusteval.api.exceptions.InvalidConfigurationFileException;
 import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
@@ -35,26 +38,21 @@ import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.repository.RepositoryConfigurationException;
 import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.IRunResult;
+import de.clusteval.api.run.IncompatibleParameterOptimizationMethodException;
+import de.clusteval.api.run.RunException;
 import de.clusteval.api.stats.RunDataStatistic;
 import de.clusteval.api.stats.Statistic;
-import de.clusteval.api.run.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
-import de.clusteval.api.data.DataSetConfigNotFoundException;
-import de.clusteval.api.data.DataSetConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.framework.repository.RunResultRepository;
-import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
-import de.clusteval.api.repository.RepositoryConfigurationException;
 import de.clusteval.framework.repository.parse.Parser;
 import de.clusteval.run.InvalidRunModeException;
-import de.clusteval.api.run.Run;
 import de.clusteval.run.RunDataAnalysisRun;
-import de.clusteval.api.run.RunException;
 import de.clusteval.utils.FileUtils;
-import de.clusteval.api.exceptions.InvalidConfigurationFileException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -178,7 +176,6 @@ public class RunDataAnalysisRunResult extends AnalysisRunResult<Pair<List<String
      * @throws UnknownParameterOptimizationMethodException
      * @throws InvalidRunModeException
      * @throws InvalidConfigurationFileException
-     * @throws UnknownDataSetFormatException
      * @throws UnknownRunResultFormatException
      * @throws IOException
      * @throws DataConfigNotFoundException
@@ -190,7 +187,6 @@ public class RunDataAnalysisRunResult extends AnalysisRunResult<Pair<List<String
      * @throws GoldStandardConfigurationException
      * @throws UnknownGoldStandardFormatException
      * @throws RepositoryConfigurationException
-     * @throws RepositoryConfigNotFoundException
      * @throws ConfigurationException
      * @throws RegisterException
      * @throws NoDataSetException
@@ -214,8 +210,7 @@ public class RunDataAnalysisRunResult extends AnalysisRunResult<Pair<List<String
                    InvalidOptimizationParameterException, RunException,
                    UnknownProgramTypeException, UnknownRProgramException,
                    IncompatibleParameterOptimizationMethodException,
-                   UnknownGoldStandardFormatException, RepositoryConfigNotFoundException,
-                   RepositoryConfigurationException, ConfigurationException, RegisterException,
+                   UnknownGoldStandardFormatException, RepositoryConfigurationException, ConfigurationException, RegisterException,
                    NumberFormatException, NoDataSetException,
                    RunResultParseException,
                    IncompatibleDataSetConfigPreprocessorException,
@@ -239,7 +234,7 @@ public class RunDataAnalysisRunResult extends AnalysisRunResult<Pair<List<String
             if (runFile == null) {
                 return null;
             }
-            final Run run = Parser.parseRunFromFile(runFile);
+            final IRun run = Parser.parseRunFromFile(runFile);
 
             RunDataAnalysisRunResult analysisResult = null;
 

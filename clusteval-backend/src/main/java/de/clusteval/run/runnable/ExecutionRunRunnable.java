@@ -50,6 +50,7 @@ import de.clusteval.api.run.ExecutionIterationRunnable;
 import de.clusteval.api.run.ExecutionRun;
 import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.IRunResultFormat;
+import de.clusteval.api.run.IRunResultPostprocessor;
 import de.clusteval.api.run.IRunRunnable;
 import de.clusteval.api.run.IScheduler;
 import de.clusteval.api.run.MissingParameterValueException;
@@ -57,7 +58,6 @@ import de.clusteval.api.run.NoRunResultFormatParserException;
 import de.clusteval.api.run.RunRunnable;
 import de.clusteval.api.run.StreamGobbler;
 import de.clusteval.api.run.result.RunResultNotFoundException;
-import de.clusteval.api.run.result.RunResultPostprocessor;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.framework.repository.RunResultRepository;
@@ -750,9 +750,9 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
      * clusteval .run.runnable.IterationWrapper)
      */
     @Override
-    protected ExecutionIterationRunnable createIterationRunnable(ExecutionIterationWrapper iterationWrapper) {
+    protected ExecutionIterationRunnable<ExecutionIterationWrapper> createIterationRunnable(ExecutionIterationWrapper iterationWrapper) {
 
-        return new ExecutionIterationRunnable(iterationWrapper) {
+        return new ExecutionIterationRunnable<ExecutionIterationWrapper>(iterationWrapper) {
 
             @Override
             public void doRun() {
@@ -761,7 +761,6 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
                         if (isInterrupted()) {
                             return;
                         }
-
                         IProgramConfig programConfig = iterationWrapper.getProgramConfig();
                         IDataConfig dataConfig = iterationWrapper.getDataConfig();
 
@@ -827,7 +826,7 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
                                 // execute runresult postprocessors
                                 ExecutionRun run = (ExecutionRun) this.iterationWrapper.getRunnable().getRun();
                                 ClusteringRunResult tmpResult = iterationWrapper.getConvertedClusteringRunResult();
-                                for (RunResultPostprocessor postprocessor : run.getPostProcessors()) {
+                                for (IRunResultPostprocessor postprocessor : run.getPostProcessors()) {
                                     try {
                                         tmpResult.loadIntoMemory();
 
@@ -918,11 +917,11 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
                         } catch (RunResultNotFoundException | RunResultConversionException e) {
                             handleMissingRunResult(iterationWrapper);
                         } finally {
-                            if (programConfig.getProgram() instanceof RProgram) {
+                            if (programConfig.getProgram() instanceof IRProgram) {
                                 synchronized (bw) {
-                                    if (((IRProgram) (programConfig.getProgram())).getRengine() != null) {
+                                    if (((IRProgram) (programConfig.getProgram())).getEngine() != null) {
                                         bw.append(
-                                                ((IRProgram) (programConfig.getProgram())).getRengine().getLastError());
+                                                ((IRProgram) (programConfig.getProgram())).getEngine().getLastError());
                                     }
                                     bw.close();
                                 }
@@ -947,6 +946,11 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
                     // behaviour in the thread pool
                     t.printStackTrace();
                 }
+            }
+
+            @Override
+            public boolean isExecution() {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
         };
     }
@@ -1371,6 +1375,11 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
                         scheduler.informOnFinishedIterationRunnable(Thread.currentThread(), this);
                     }
                 }
+
+                @Override
+                public boolean isExecution() {
+                    return true;
+                }
             };
 
             this.submitIterationRunnable(iterationRunnable);
@@ -1408,6 +1417,11 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
                     } finally {
                         scheduler.informOnFinishedIterationRunnable(Thread.currentThread(), this);
                     }
+                }
+
+                @Override
+                public boolean isExecution() {
+                    return true;
                 }
             };
 

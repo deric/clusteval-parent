@@ -13,12 +13,11 @@
 package de.clusteval.program.r;
 
 import de.clusteval.api.data.IDataSetFormat;
+import de.clusteval.api.program.ProgramConfig;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
-import de.clusteval.api.run.IRunResultFormat;
-import de.clusteval.framework.repository.config.RepositoryConfigNotFoundException;
 import de.clusteval.api.repository.RepositoryConfigurationException;
-import de.clusteval.api.program.ProgramConfig;
+import de.clusteval.api.run.IRunResultFormat;
 import de.clusteval.utils.AbstractClustEvalTest;
 import java.io.FileNotFoundException;
 import java.util.Set;
@@ -35,7 +34,7 @@ public class RProgramConfigTest extends AbstractClustEvalTest {
     @Test
     public void testKMeansCompatibleDataSetFormats()
             throws FileNotFoundException, RepositoryAlreadyExistsException, InvalidRepositoryException,
-                   RepositoryConfigNotFoundException, RepositoryConfigurationException, InterruptedException {
+                   RepositoryConfigurationException, InterruptedException {
 
         ProgramConfig programConfig = this.getRepository().getStaticObjectWithName(ProgramConfig.class,
                 "KMeans_Clustering");
@@ -49,7 +48,7 @@ public class RProgramConfigTest extends AbstractClustEvalTest {
     @Test
     public void testKMeansRunResultFormat()
             throws FileNotFoundException, RepositoryAlreadyExistsException, InvalidRepositoryException,
-                   RepositoryConfigNotFoundException, RepositoryConfigurationException, InterruptedException {
+                   RepositoryConfigurationException, InterruptedException {
 
         ProgramConfig programConfig = this.getRepository().getStaticObjectWithName(ProgramConfig.class,
                 "KMeans_Clustering");
