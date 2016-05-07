@@ -18,6 +18,7 @@ import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.FileAppender;
 import de.clusteval.api.Pair;
 import de.clusteval.api.Triple;
+import de.clusteval.api.run.OptStatus;
 import de.clusteval.api.run.RUN_STATUS;
 import de.clusteval.framework.IBackendServer;
 import de.clusteval.utils.ArraysExt;
@@ -580,7 +581,7 @@ public class BackendClient extends Thread {
 
                     // runId ->
                     // ((Status,%),(ProgramConfig,DataConfig)->(QualityMeasure->(ParameterSet->Quality)))
-                    Map<String, Pair<Pair<RUN_STATUS, Float>, Map<Pair<String, String>, Pair<Double, Map<String, Pair<Map<String, String>, String>>>>>> optStatus = null;
+                    Map<String, Pair<Pair<RUN_STATUS, Float>, OptStatus>> optStatus = null;
                     if ((optStatus = this.getMyOptimizationRunStatus()) != null && optStatus.size() > 0) {
                         RUN_STATUS newStatus;
                         Float percent;
@@ -593,8 +594,7 @@ public class BackendClient extends Thread {
                         percent = optStatus.get(runName).getFirst().getSecond();
                         System.out.println();
                         System.out.println("\r Status:\t" + newStatus + " " + String.format("%.3f", percent) + "%");
-                        Map<Pair<String, String>, Pair<Double, Map<String, Pair<Map<String, String>, String>>>> qualities = optStatus
-                                .get(runName).getSecond();
+                        OptStatus qualities = optStatus.get(runName).getSecond();
 
                         // print the quality measures; just take them from the
                         // first pair of programConfig and dataConfig (runnable)
@@ -621,8 +621,8 @@ public class BackendClient extends Thread {
 
                         // 06.06.2014: added sets to keep order when printing
                         // the results
-                        Set<String> programConfigs = new HashSet<String>();
-                        Set<String> dataConfigs = new HashSet<String>();
+                        Set<String> programConfigs = new HashSet<>();
+                        Set<String> dataConfigs = new HashSet<>();
 
                         for (Pair<String, String> pcDcPair : qualities.keySet()) {
                             programConfigs.add(pcDcPair.getFirst());
@@ -900,7 +900,7 @@ public class BackendClient extends Thread {
         return server.getRunResumes();
     }
 
-    public Map<String, Pair<Pair<RUN_STATUS, Float>, Map<Pair<String, String>, Pair<Double, Map<String, Pair<Map<String, String>, String>>>>>> getMyOptimizationRunStatus()
+    public Map<String, Pair<Pair<RUN_STATUS, Float>, OptStatus>> getMyOptimizationRunStatus()
             throws RemoteException {
         return server.getOptimizationRunStatusForClientId(this.clientId);
     }
@@ -968,7 +968,7 @@ public class BackendClient extends Thread {
      * @return A collection with all datasets contained in the server's
      *         repository.
      * @throws RemoteException
-     *                         the remote exception
+     * the remote exception
      */
     public Collection<String> getDataSets() throws RemoteException {
         return server.getDataSets();
@@ -1013,7 +1013,7 @@ public class BackendClient extends Thread {
      *              The id of the run to be terminated.
      * @return true, if successful
      * @throws RemoteException
-     *                         the remote exception
+     * the remote exception
      */
     public boolean terminateRun(final String runId) throws RemoteException {
         return server.terminateRun(this.clientId, runId);

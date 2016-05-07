@@ -17,8 +17,10 @@
 package de.clusteval.api.run;
 
 import de.clusteval.api.Pair;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  *
@@ -38,6 +40,14 @@ public class OptStatus {
 
     public void put(Pair<String, String> key, Pair<Double, Map<String, Pair<Map<String, String>, String>>> value) {
         status.put(key, value);
+    }
+
+    public Collection<Pair<Double, Map<String, Pair<Map<String, String>, String>>>> values() {
+        return status.values();
+    }
+
+    public Set<Pair<String, String>> keySet() {
+        return status.keySet();
     }
 
 }
