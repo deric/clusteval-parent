@@ -16,6 +16,7 @@ import de.clusteval.api.cluster.ClusteringQualityMeasure;
 import de.clusteval.api.data.DataConfig;
 import de.clusteval.api.data.DataSetConfig;
 import de.clusteval.api.data.DataSetFormat;
+import de.clusteval.api.data.DataSetGenerator;
 import de.clusteval.api.data.DistanceMeasure;
 import de.clusteval.api.data.GoldStandardConfig;
 import de.clusteval.api.program.ProgramConfig;
@@ -29,8 +30,6 @@ import de.clusteval.api.stats.RunStatistic;
 import de.clusteval.data.DataConfigFinderThread;
 import de.clusteval.data.dataset.DataSetConfigFinderThread;
 import de.clusteval.data.dataset.DataSetFinderThread;
-import de.clusteval.data.dataset.generator.DataSetGenerator;
-import de.clusteval.data.dataset.generator.DataSetGeneratorFinderThread;
 import de.clusteval.data.goldstandard.GoldStandardConfigFinderThread;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.program.ProgramConfigFinderThread;
@@ -148,7 +147,7 @@ public class RepositorySupervisorThread extends SupervisorThread {
                         DataConfigFinderThread.class,
                         RProgramFinderThread.class,
                         ProgramConfigFinderThread.class, RunFinderThread.class,
-                        DataSetGeneratorFinderThread.class,
+                        //DataSetGeneratorFinderThread.class,
                         //DataRandomizerFinderThread.class,
                         RunResultFinderThread.class) : createList(
                         // normal elements
@@ -169,8 +168,8 @@ public class RepositorySupervisorThread extends SupervisorThread {
                         GoldStandardConfigFinderThread.class,
                         DataConfigFinderThread.class,
                         RProgramFinderThread.class,
-                        ProgramConfigFinderThread.class, RunFinderThread.class,
-                        DataSetGeneratorFinderThread.class
+                        ProgramConfigFinderThread.class,
+                        RunFinderThread.class
                 ), threadSleepTimes,
                 checkOnce);
 

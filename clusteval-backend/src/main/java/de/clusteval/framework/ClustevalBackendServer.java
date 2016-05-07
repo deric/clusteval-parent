@@ -25,13 +25,15 @@ import de.clusteval.api.Triple;
 import de.clusteval.api.data.DataRandomizeException;
 import de.clusteval.api.data.DataRandomizer;
 import de.clusteval.api.data.DataRandomizerFactory;
+import de.clusteval.api.data.DataSetGenerator;
+import de.clusteval.api.data.DataSetGeneratorFactory;
 import de.clusteval.api.data.IDataRandomizer;
 import de.clusteval.api.data.IDataSet;
+import de.clusteval.api.data.IDataSetGenerator;
 import de.clusteval.api.exceptions.DataSetGenerationException;
 import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.exceptions.GoldStandardGenerationException;
 import de.clusteval.api.exceptions.RepositoryObjectDumpException;
-import de.clusteval.api.exceptions.UnknownDataSetGeneratorException;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.opt.IParamOptResult;
 import de.clusteval.api.program.IProgram;
@@ -52,7 +54,6 @@ import de.clusteval.api.run.RUN_STATUS;
 import de.clusteval.api.run.Run;
 import de.clusteval.api.run.RunResultFactory;
 import de.clusteval.api.run.result.RunResult;
-import de.clusteval.data.dataset.generator.DataSetGenerator;
 import de.clusteval.framework.repository.MyRengine;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.threading.SupervisorThread;
@@ -827,20 +828,14 @@ public class ClustevalBackendServer implements IBackendServer {
         return result;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see serverclient.IBackendServer#getOptionsForDataSetGenerator(java.lang.
-     * String )
-     */
     @Override
     public Options getOptionsForDataSetGenerator(String generatorName) {
         try {
 
-            DataSetGenerator generator = DataSetGenerator.parseFromString(repository, generatorName);
+            IDataSetGenerator generator = DataSetGeneratorFactory.parseFromString(repository, generatorName);
             return generator.getAllOptions();
-        } catch (SecurityException | IllegalArgumentException | UnknownDataSetGeneratorException e) {
-            e.printStackTrace();
+        } catch (UnknownProviderException ex) {
+            Exceptions.printStackTrace(ex);
         }
         return null;
     }
@@ -855,10 +850,9 @@ public class ClustevalBackendServer implements IBackendServer {
     @Override
     public boolean generateDataSet(String generatorName, String[] args) throws RemoteException {
         try {
-            DataSetGenerator generator = DataSetGenerator.parseFromString(this.repository, generatorName);
+            IDataSetGenerator generator = DataSetGeneratorFactory.parseFromString(this.repository, generatorName);
             generator.generate(args);
-        } catch (UnknownDataSetGeneratorException | ParseException |
-                 DataSetGenerationException | GoldStandardGenerationException |
+        } catch (ParseException | DataSetGenerationException | GoldStandardGenerationException |
                  InterruptedException | RepositoryObjectDumpException |
                  RegisterException e) {
             e.printStackTrace();

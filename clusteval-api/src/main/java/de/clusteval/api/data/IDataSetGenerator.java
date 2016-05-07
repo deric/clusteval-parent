@@ -18,6 +18,9 @@ package de.clusteval.api.data;
 
 import de.clusteval.api.exceptions.DataSetGenerationException;
 import de.clusteval.api.exceptions.GoldStandardGenerationException;
+import de.clusteval.api.exceptions.RepositoryObjectDumpException;
+import de.clusteval.api.factory.UnknownProviderException;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.IRepositoryObject;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
@@ -28,6 +31,8 @@ import org.apache.commons.cli.ParseException;
  * @author deric
  */
 public interface IDataSetGenerator extends IRepositoryObject {
+
+    String getName();
 
     /**
      * @return A wrapper object keeping the options of your dataset generator.
@@ -88,4 +93,24 @@ public interface IDataSetGenerator extends IRepositoryObject {
      */
     IGoldStandard generateGoldStandard() throws GoldStandardGenerationException;
 
+    Options getAllOptions();
+
+    /**
+     * This method has to be invoked with command line arguments for this
+     * generator. Valid arguments are defined by the options returned by
+     * {@link #getOptions()}.
+     *
+     * @param cliArguments
+     * @return The generated {@link DataSet}.
+     * @throws ParseException This exception is thrown, if the passed arguments
+     * are not valid.
+     * @throws DataSetGenerationException
+     * @throws GoldStandardGenerationException
+     * @throws InterruptedException
+     * @throws RegisterException
+     * @throws RepositoryObjectDumpException
+     */
+    IDataSet generate(final String[] cliArguments) throws ParseException,
+                                                          DataSetGenerationException, GoldStandardGenerationException, InterruptedException,
+                                                          RepositoryObjectDumpException, RegisterException, UnknownProviderException;
 }

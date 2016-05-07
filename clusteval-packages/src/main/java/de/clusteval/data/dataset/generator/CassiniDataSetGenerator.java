@@ -10,6 +10,8 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset.generator;
 
+import de.clusteval.api.data.DataSetGenerator;
+import de.clusteval.api.data.GoldStandard;
 import de.clusteval.api.data.IDataSetGenerator;
 import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.exceptions.DataSetGenerationException;
@@ -19,7 +21,6 @@ import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RLibraryRequirement;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.data.GoldStandard;
 import de.clusteval.utils.FileUtils;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -31,12 +32,14 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * @author Christian Wiwie
  *
  */
 @RLibraryRequirement(requiredRLibraries = {"mlbench"})
+@ServiceProvider(service = IDataSetGenerator.class)
 public class CassiniDataSetGenerator extends DataSetGenerator implements IDataSetGenerator {
 
     protected int numberOfPoints;
@@ -56,6 +59,15 @@ public class CassiniDataSetGenerator extends DataSetGenerator implements IDataSe
     public CassiniDataSetGenerator(IRepository repository, boolean register, long changeDate, File absPath)
             throws RegisterException {
         super(repository, register, changeDate, absPath);
+    }
+
+    public CassiniDataSetGenerator() {
+        super();
+    }
+
+    @Override
+    public String getName() {
+        return "cassini";
     }
 
     /**

@@ -56,6 +56,10 @@ public abstract class AbstractDataSetProvider extends RepositoryObject {
         super(other);
     }
 
+    public AbstractDataSetProvider() {
+        super();
+    }
+
     protected IDataConfig writeConfigFiles(final IDataSet newDataSet,
             final IGoldStandard newGoldStandard, final String configFileName)
             throws RepositoryObjectDumpException, RegisterException, UnknownProviderException {
