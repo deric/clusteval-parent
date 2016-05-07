@@ -10,17 +10,15 @@
  ***************************************************************************** */
 package de.clusteval.run;
 
+import de.clusteval.api.data.DataConfig;
+import de.clusteval.api.data.DataSetConfig;
+import de.clusteval.api.data.GoldStandardConfig;
+import de.clusteval.api.program.ProgramConfig;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.ISupervisorThread;
-import de.clusteval.api.opt.ParameterOptimizationMethod;
-import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethodFinderThread;
-import de.clusteval.api.data.DataConfig;
 import de.clusteval.data.RunResultDataConfigFinderThread;
-import de.clusteval.api.data.DataSetConfig;
 import de.clusteval.data.dataset.RunResultDataSetConfigFinderThread;
-import de.clusteval.api.data.GoldStandardConfig;
 import de.clusteval.data.goldstandard.GoldStandardConfigFinderThread;
-import de.clusteval.api.program.ProgramConfig;
 import de.clusteval.program.ProgramConfigFinderThread;
 
 /**
@@ -31,7 +29,6 @@ import de.clusteval.program.ProgramConfigFinderThread;
  *
  */
 public class RunResultRunFinderThread extends RunFinderThread {
-
 
     /**
      * @param supervisorThread
@@ -75,11 +72,6 @@ public class RunResultRunFinderThread extends RunFinderThread {
         if (!this.repository.isInitialized(ProgramConfig.class)) {
             this.supervisorThread.getThread(ProgramConfigFinderThread.class)
                     .waitFor();
-        }
-
-        if (!this.repository.isInitialized(ParameterOptimizationMethod.class)) {
-            this.supervisorThread.getThread(
-                    ParameterOptimizationMethodFinderThread.class).waitFor();
         }
 
         this.log.debug("Checking for Runs...");

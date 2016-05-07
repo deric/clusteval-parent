@@ -20,11 +20,12 @@ import de.clusteval.api.data.DistanceMeasure;
 import de.clusteval.api.data.GoldStandardConfig;
 import de.clusteval.api.program.ProgramConfig;
 import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.run.Run;
 import de.clusteval.api.run.RunResultFormat;
+import de.clusteval.api.run.result.RunResult;
 import de.clusteval.api.stats.DataStatistic;
 import de.clusteval.api.stats.RunDataStatistic;
 import de.clusteval.api.stats.RunStatistic;
-import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethodFinderThread;
 import de.clusteval.data.DataConfigFinderThread;
 import de.clusteval.data.dataset.DataSetConfigFinderThread;
 import de.clusteval.data.dataset.DataSetFinderThread;
@@ -34,9 +35,7 @@ import de.clusteval.data.goldstandard.GoldStandardConfigFinderThread;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.program.ProgramConfigFinderThread;
 import de.clusteval.program.r.RProgramFinderThread;
-import de.clusteval.api.run.Run;
 import de.clusteval.run.RunFinderThread;
-import de.clusteval.api.run.result.RunResult;
 import de.clusteval.run.result.RunResultFinderThread;
 import de.clusteval.run.result.postprocessing.RunResultPostprocessorFinderThread;
 import de.clusteval.run.statistics.RunDataStatisticFinderThread;
@@ -143,7 +142,7 @@ public class RepositorySupervisorThread extends SupervisorThread {
                         //RunStatisticFinderThread.class,
                         RunDataStatisticFinderThread.class,
                         //ClusteringQualityMeasureFinderThread.class,
-                        ParameterOptimizationMethodFinderThread.class,
+                        //ParameterOptimizationMethodFinderThread.class,
                         DataSetConfigFinderThread.class,
                         GoldStandardConfigFinderThread.class,
                         DataConfigFinderThread.class,
@@ -165,7 +164,7 @@ public class RepositorySupervisorThread extends SupervisorThread {
                         //RunStatisticFinderThread.class,
                         RunDataStatisticFinderThread.class,
                         //ClusteringQualityMeasureFinderThread.class,
-                        ParameterOptimizationMethodFinderThread.class,
+                        //ParameterOptimizationMethodFinderThread.class,
                         DataSetConfigFinderThread.class,
                         GoldStandardConfigFinderThread.class,
                         DataConfigFinderThread.class,

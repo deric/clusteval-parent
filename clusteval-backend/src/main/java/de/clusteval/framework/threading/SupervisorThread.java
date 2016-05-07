@@ -15,7 +15,6 @@ package de.clusteval.framework.threading;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.IScheduler;
 import de.clusteval.api.run.ISupervisorThread;
-import de.clusteval.cluster.paramOptimization.ParameterOptimizationMethodFinderThread;
 import de.clusteval.data.dataset.DataSetConfigFinderThread;
 import de.clusteval.framework.ClustevalThread;
 import de.clusteval.run.RunFinderThread;
@@ -136,7 +135,7 @@ public abstract class SupervisorThread extends Thread implements ISupervisorThre
                                     this, repository, sleep, checkOnce);
                     this.threads.put(thread, inst);
                 } catch (IllegalArgumentException | SecurityException | InstantiationException |
-                        IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                         IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
                     e.printStackTrace();
                 }
             }
@@ -178,8 +177,8 @@ public abstract class SupervisorThread extends Thread implements ISupervisorThre
                                 this.threads.put(threadClass, constr
                                         .newInstance(this, repository, getSleepTime(threadClass), false));
                             } catch (NoSuchMethodException | SecurityException |
-                                    InstantiationException | IllegalAccessException |
-                                    IllegalArgumentException | InvocationTargetException e) {
+                                     InstantiationException | IllegalAccessException |
+                                     IllegalArgumentException | InvocationTargetException e) {
                                 e.printStackTrace();
                             }
                         }
@@ -245,14 +244,6 @@ public abstract class SupervisorThread extends Thread implements ISupervisorThre
     @Override
     public IScheduler getRunScheduler() {
         return (RunSchedulerThread) this.threads.get(RunSchedulerThread.class);
-    }
-
-    /**
-     * @return The thread which finds parameter optimization methods.
-     */
-    public ParameterOptimizationMethodFinderThread getParameterOptimizationMethodFinderThread() {
-        return (ParameterOptimizationMethodFinderThread) this.threads
-                .get(ParameterOptimizationMethodFinderThread.class);
     }
 
     /**
