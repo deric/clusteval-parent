@@ -14,6 +14,7 @@ import de.clusteval.api.Matrix;
 import de.clusteval.api.Pair;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
+import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataSetConfig;
 import de.clusteval.api.data.IGoldStandard;
@@ -27,7 +28,6 @@ import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.stats.DataStatisticCalculator;
 import de.clusteval.api.stats.IncompatibleDataConfigDataStatisticException;
 import de.clusteval.api.stats.StatisticCalculateException;
-import de.clusteval.cluster.Clustering;
 import de.clusteval.utils.ArraysExt;
 import java.io.File;
 import java.io.IOException;
@@ -89,9 +89,9 @@ public class IntraInterOverlapDataStatisticCalculator extends
 
             IGoldStandardConfig goldStandardConfig = dataConfig.getGoldstandardConfig();
             IGoldStandard goldStandard = goldStandardConfig.getGoldstandard();
-            Clustering gsClustering;
+            IClustering gsClustering;
 
-            gsClustering = (Clustering) goldStandard.getClustering();
+            gsClustering = goldStandard.getClustering();
 
             Map<String, Integer> idToClass = new HashMap<>();
             int clId = 0;

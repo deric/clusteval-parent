@@ -12,6 +12,7 @@ package de.clusteval.program.r;
 
 import de.clusteval.api.ContextFactory;
 import de.clusteval.api.IContext;
+import de.clusteval.api.cluster.ClusteringFactory;
 import de.clusteval.api.data.DataSetFormatFactory;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.factory.UnknownProviderException;
@@ -23,7 +24,6 @@ import de.clusteval.api.r.RLibraryRequirement;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.IRunResultFormat;
 import de.clusteval.api.run.RunResultFormatFactory;
-import de.clusteval.cluster.Clustering;
 import de.clusteval.utils.FileUtils;
 import java.io.File;
 import java.util.Set;
@@ -93,9 +93,8 @@ public class SOMClusteringRProgram extends AbsoluteDataRProgram {
             throws InterruptedException, RException {
         RExpr result = rEngine.eval("result$unit.classif");
         int[] clusterIds = result.asIntegers();
-        return Clustering.clusterIdsToFuzzyCoeff(clusterIds);
+        return ClusteringFactory.clusterIdsToFuzzyCoeff(clusterIds);
     }
-
 
     @Override
     public Set<IDataSetFormat> getCompatibleDataSetFormats() throws UnknownProviderException {

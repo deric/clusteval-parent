@@ -12,6 +12,8 @@
  */
 package de.clusteval.program.r;
 
+import de.clusteval.api.cluster.ClusteringFactory;
+import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.program.IProgram;
 import de.clusteval.api.program.IProgramConfig;
@@ -30,7 +32,6 @@ import de.clusteval.api.r.RProcess;
 import de.clusteval.api.r.RProgramThread;
 import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.cluster.Clustering;
 import de.clusteval.utils.StringExt;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -321,7 +322,7 @@ public abstract class RProgram extends Program implements RLibraryInferior, IRPr
             Map<String, String> effectiveParams,
             Map<String, String> internalParams) throws RException,
                                                        ROperationNotSupported, InterruptedException {
-        Clustering resultClustering = Clustering.parseFromFuzzyCoeffMatrix(
+        IClustering resultClustering = ClusteringFactory.parseFromFuzzyCoeffMatrix(
                 dataConfig.getRepository(), new File(internalParams.get("o")),
                 ids, getFuzzyCoeffMatrixFromExecResult());
 

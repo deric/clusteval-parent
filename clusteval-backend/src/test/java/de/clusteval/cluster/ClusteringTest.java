@@ -12,13 +12,15 @@
  */
 package de.clusteval.cluster;
 
-import de.clusteval.api.cluster.ClusterItem;
-import de.clusteval.api.cluster.Cluster;
-import de.clusteval.api.exceptions.ClusteringParseException;
-import de.clusteval.api.program.RegisterException;
-import de.clusteval.api.opt.ParameterSet;
-import de.clusteval.utils.AbstractClustEvalTest;
 import de.clusteval.api.Pair;
+import de.clusteval.api.cluster.Cluster;
+import de.clusteval.api.cluster.ClusterItem;
+import de.clusteval.api.cluster.ClusteringFactory;
+import de.clusteval.api.cluster.IClustering;
+import de.clusteval.api.exceptions.ClusteringParseException;
+import de.clusteval.api.opt.ParameterSet;
+import de.clusteval.api.program.RegisterException;
+import de.clusteval.utils.AbstractClustEvalTest;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -53,7 +55,7 @@ public class ClusteringTest extends AbstractClustEvalTest {
         cluster2.add(new ClusterItem("5"), 1.0f);
         expected.addCluster(cluster2);
 
-        Clustering clustering = Clustering.parseFromIntArray(
+        IClustering clustering = ClusteringFactory.parseFromIntArray(
                 this.getRepository(), new File(""), ids, clusterIds);
         assertEquals(expected, clustering);
     }
@@ -63,7 +65,7 @@ public class ClusteringTest extends AbstractClustEvalTest {
         String[] ids = new String[]{"1", "2", "3", "4", "5"};
         int[] clusterIds = new int[]{1, 1, 1, 2, 2};
 
-        Clustering clustering = Clustering.parseFromIntArray(
+        IClustering clustering = ClusteringFactory.parseFromIntArray(
                 this.getRepository(), new File(""), ids, clusterIds);
         assertEquals("1:1.0,2:1.0,3:1.0;4:1.0,5:1.0",
                 clustering.toFormattedString());
@@ -74,7 +76,7 @@ public class ClusteringTest extends AbstractClustEvalTest {
         String[] ids = new String[]{};
         int[] clusterIds = new int[]{};
 
-        Clustering clustering = Clustering.parseFromIntArray(
+        IClustering clustering = ClusteringFactory.parseFromIntArray(
                 this.getRepository(), new File(""), ids, clusterIds);
         assertEquals("", clustering.toFormattedString());
     }
@@ -84,7 +86,7 @@ public class ClusteringTest extends AbstractClustEvalTest {
         String[] ids = new String[]{};
         int[] clusterIds = new int[]{};
 
-        Clustering clustering = Clustering.parseFromIntArray(
+        IClustering clustering = ClusteringFactory.parseFromIntArray(
                 this.getRepository(), new File(""), ids, clusterIds);
         assertEquals(
                 new Clustering(this.getRepository(),
@@ -96,7 +98,7 @@ public class ClusteringTest extends AbstractClustEvalTest {
         String[] ids = new String[]{};
         int[] clusterIds = new int[]{1};
 
-        Clustering.parseFromIntArray(this.getRepository(), new File(""), ids,
+        ClusteringFactory.parseFromIntArray(this.getRepository(), new File(""), ids,
                 clusterIds);
     }
 
@@ -105,7 +107,7 @@ public class ClusteringTest extends AbstractClustEvalTest {
         String[] ids = new String[]{"1", "2", "3", "4", "5"};
         int[] clusterIds = new int[]{1, 1, 1, 2, 2};
 
-        Clustering clustering = Clustering.parseFromIntArray(
+        IClustering clustering = ClusteringFactory.parseFromIntArray(
                 this.getRepository(), new File(""), ids, clusterIds);
         assertTrue(clustering
                 .getClusterForItem(clustering.getClusterItemWithId("1"))
@@ -127,7 +129,7 @@ public class ClusteringTest extends AbstractClustEvalTest {
     @Test
     public void testClusterIdsToFuzzyCoeff() {
         int[] clusterIds = new int[]{1, 2, 2, 2, 5, 3, 4, 1, 1};
-        float[][] result = Clustering.clusterIdsToFuzzyCoeff(clusterIds);
+        float[][] result = ClusteringFactory.clusterIdsToFuzzyCoeff(clusterIds);
         float[][] expected = new float[][]{{1f, 0f, 0f, 0f, 0f},
         {0f, 1f, 0f, 0f, 0f}, {0f, 1f, 0f, 0f, 0f},
         {0f, 1f, 0f, 0f, 0f}, {0f, 0f, 1f, 0f, 0f},
@@ -148,7 +150,7 @@ public class ClusteringTest extends AbstractClustEvalTest {
                                 "testCaseRepository/results/01_30_2013-21_31_25_tc_vs_DS1/clusters/fuzzyClustering.txt")
                         .getAbsoluteFile(), false);
         p.getSecond().loadIntoMemory();
-        Set<ClusterItem> clusterItems = new HashSet<ClusterItem>();
+        Set<ClusterItem> clusterItems = new HashSet<>();
         ClusterItem expectedItem1 = new ClusterItem("id1");
         ClusterItem expectedItem2 = new ClusterItem("id2");
         ClusterItem expectedItem3 = new ClusterItem("id3");
@@ -209,7 +211,7 @@ public class ClusteringTest extends AbstractClustEvalTest {
         Clustering hardClustering = p.getSecond().toHardClustering();
         System.out.println(hardClustering);
 
-        Set<ClusterItem> clusterItems = new HashSet<ClusterItem>();
+        Set<ClusterItem> clusterItems = new HashSet<>();
         ClusterItem expectedItem1 = new ClusterItem("id1");
         ClusterItem expectedItem2 = new ClusterItem("id2");
         ClusterItem expectedItem3 = new ClusterItem("id3");

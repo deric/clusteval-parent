@@ -10,6 +10,10 @@
  ***************************************************************************** */
 package de.clusteval.program.r;
 
+import de.clusteval.api.ContextFactory;
+import de.clusteval.api.IContext;
+import de.clusteval.api.cluster.ClusteringFactory;
+import de.clusteval.api.data.DataSetFormatFactory;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.IProgram;
@@ -19,10 +23,6 @@ import de.clusteval.api.r.RExpr;
 import de.clusteval.api.r.RLibraryRequirement;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.IRunResultFormat;
-import de.clusteval.cluster.Clustering;
-import de.clusteval.api.ContextFactory;
-import de.clusteval.api.IContext;
-import de.clusteval.api.data.DataSetFormatFactory;
 import de.clusteval.api.run.RunResultFormatFactory;
 import de.clusteval.utils.FileUtils;
 import java.io.File;
@@ -92,7 +92,7 @@ public class PPAMClusteringRProgram extends RelativeDataRProgram {
     public float[][] getFuzzyCoeffMatrixFromExecResult() throws RException, InterruptedException {
         RExpr result = rEngine.eval("result$clustering");
         int[] clusterIds = result.asIntegers();
-        return Clustering.clusterIdsToFuzzyCoeff(clusterIds);
+        return ClusteringFactory.clusterIdsToFuzzyCoeff(clusterIds);
     }
 
     @Override

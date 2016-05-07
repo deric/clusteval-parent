@@ -16,13 +16,9 @@
  */
 package de.clusteval.data.distance;
 
-import de.clusteval.api.repository.IRepositoryObject;
 import de.clusteval.api.AbsContext;
-import de.clusteval.framework.ClustevalBackendServer;
-import de.clusteval.framework.repository.Repository;
-import de.clusteval.framework.repository.config.DefaultRepositoryConfig;
-import de.clusteval.framework.repository.db.StubSQLCommunicator;
-import de.clusteval.api.run.result.RunResult;
+import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.repository.IRepositoryObject;
 import java.io.File;
 import org.junit.BeforeClass;
 import org.slf4j.Logger;
@@ -34,7 +30,7 @@ import org.slf4j.LoggerFactory;
  */
 public class AbstractTest {
 
-    protected static Repository repository;
+    protected static IRepository repository;
     protected static IRepositoryObject repositoryObject;
     protected static AbsContext context;
     protected boolean useDatabase;
@@ -44,17 +40,17 @@ public class AbstractTest {
     public static void setUpBeforeClass() throws Exception {
         File path = new File("testCaseRepository");
 
-        repository = new Repository(path.getAbsolutePath(), null, new DefaultRepositoryConfig());
-        repository.setSQLCommunicator(new StubSQLCommunicator(repository));
-
-        ClustevalBackendServer.getBackendServerConfiguration().setCheckForRunResults(false);
-        repository.initialize();
-
-        if (ClustevalBackendServer.getBackendServerConfiguration().getCheckForRunResults()) {
-            while (!repository.isInitialized(RunResult.class)) {
-                Thread.sleep(100);
-            }
-        }
+        /* repository = new Repository(path.getAbsolutePath(), null, new DefaultRepositoryConfig());
+         * repository.setSQLCommunicator(new StubSQLCommunicator(repository));
+         *
+         * ClustevalBackendServer.getBackendServerConfiguration().setCheckForRunResults(false);
+         * repository.initialize();
+         *
+         * if (ClustevalBackendServer.getBackendServerConfiguration().getCheckForRunResults()) {
+         * while (!repository.isInitialized(RunResult.class)) {
+         * Thread.sleep(100);
+         * }
+         * } */
         //repositoryObject = new StubRepositoryObject(repository, false, System.currentTimeMillis(),new File("test"));
         //context = Context.parseFromString(repository, "ClusteringContext");
     }
