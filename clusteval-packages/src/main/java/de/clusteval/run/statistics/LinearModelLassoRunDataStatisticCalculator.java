@@ -30,6 +30,7 @@ import de.clusteval.api.run.IRunResult;
 import de.clusteval.api.run.RunResultFactory;
 import de.clusteval.api.stats.DoubleValueDataStatistic;
 import de.clusteval.api.stats.IDataStatistic;
+import de.clusteval.api.stats.RunDataStatisticRCalculator;
 import de.clusteval.run.result.DataAnalysisRunResult;
 import de.clusteval.utils.FileUtils;
 import java.io.File;
@@ -136,12 +137,11 @@ public class LinearModelLassoRunDataStatisticCalculator extends
                     result.loadIntoMemory();
                 }
 
-                List<String> commonDataConfigNames = new ArrayList<String>();
+                List<String> commonDataConfigNames = new ArrayList<>();
                 for (IDataConfig first : commonDataConfigs) {
                     commonDataConfigNames.add(first.getName());
                 }
-                commonDataConfigNames = new ArrayList<String>(
-                        new LinkedHashSet<>(commonDataConfigNames));
+                commonDataConfigNames = new ArrayList<>(new LinkedHashSet<>(commonDataConfigNames));
 
                 /*
                  * Get data statistics calculated for dataconfigs
@@ -327,22 +327,11 @@ public class LinearModelLassoRunDataStatisticCalculator extends
         }
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see run.statistics.RunStatisticCalculator#getStatistic()
-     */
     @Override
     public LinearModelLassoRunDataStatistic getStatistic() {
         return this.lastResult;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see utils.StatisticCalculator#writeOutputTo(java.io.File)
-     */
-    @SuppressWarnings("unused")
     @Override
     public void writeOutputTo(File absFolderPath) {
     }

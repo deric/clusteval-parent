@@ -8,14 +8,10 @@
  * Contributors:
  *     Christian Wiwie - initial API and implementation
  ***************************************************************************** */
-package de.clusteval.run.statistics;
+package de.clusteval.api.stats;
 
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.stats.RunDataStatistic;
-import de.clusteval.api.stats.RunStatisticCalculateException;
-import de.clusteval.api.stats.StatisticCalculateException;
-import de.clusteval.api.stats.StatisticCalculator;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -75,8 +71,8 @@ public abstract class RunDataStatisticCalculator<T extends RunDataStatistic> ext
                     .getConstructor(RunDataStatisticCalculator.class)
                     .newInstance(this);
         } catch (IllegalArgumentException | SecurityException |
-                InstantiationException | IllegalAccessException |
-                InvocationTargetException | NoSuchMethodException e) {
+                 InstantiationException | IllegalAccessException |
+                 InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
         this.log.warn("Cloning instance of class "

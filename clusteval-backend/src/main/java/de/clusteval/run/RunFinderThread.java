@@ -17,11 +17,9 @@ import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.ISupervisorThread;
-import de.clusteval.api.stats.IRunDataStatistic;
 import de.clusteval.data.dataset.DataSetConfigFinderThread;
 import de.clusteval.data.goldstandard.GoldStandardConfigFinderThread;
 import de.clusteval.program.ProgramConfigFinderThread;
-import de.clusteval.run.statistics.RunDataStatisticFinderThread;
 import de.clusteval.utils.Finder;
 import de.clusteval.utils.FinderThread;
 
@@ -69,11 +67,6 @@ public class RunFinderThread extends FinderThread<IRun> {
 
         if (!this.repository.isInitialized(IProgramConfig.class)) {
             this.supervisorThread.getThread(ProgramConfigFinderThread.class)
-                    .waitFor();
-        }
-
-        if (!this.repository.isInitialized(IRunDataStatistic.class)) {
-            this.supervisorThread.getThread(RunDataStatisticFinderThread.class)
                     .waitFor();
         }
 

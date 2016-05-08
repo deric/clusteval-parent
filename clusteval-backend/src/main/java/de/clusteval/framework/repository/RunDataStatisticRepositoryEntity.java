@@ -18,7 +18,7 @@ package de.clusteval.framework.repository;
 
 import de.clusteval.api.repository.DynamicRepositoryEntity;
 import de.clusteval.api.stats.RunDataStatistic;
-import de.clusteval.run.statistics.RunDataStatisticCalculator;
+import de.clusteval.api.stats.RunDataStatisticCalculator;
 import java.util.Map;
 
 /**

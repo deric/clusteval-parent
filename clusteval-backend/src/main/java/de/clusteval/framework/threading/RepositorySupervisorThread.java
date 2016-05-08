@@ -17,7 +17,6 @@ import de.clusteval.api.data.DataConfig;
 import de.clusteval.api.data.DataSetConfig;
 import de.clusteval.api.data.DataSetFormat;
 import de.clusteval.api.data.DataSetGenerator;
-import de.clusteval.api.data.DistanceMeasure;
 import de.clusteval.api.data.GoldStandardConfig;
 import de.clusteval.api.program.ProgramConfig;
 import de.clusteval.api.repository.IRepository;
@@ -25,7 +24,6 @@ import de.clusteval.api.run.Run;
 import de.clusteval.api.run.RunResultFormat;
 import de.clusteval.api.run.result.RunResult;
 import de.clusteval.api.stats.DataStatistic;
-import de.clusteval.api.stats.RunDataStatistic;
 import de.clusteval.api.stats.RunStatistic;
 import de.clusteval.data.DataConfigFinderThread;
 import de.clusteval.data.dataset.DataSetConfigFinderThread;
@@ -37,7 +35,6 @@ import de.clusteval.program.r.RProgramFinderThread;
 import de.clusteval.run.RunFinderThread;
 import de.clusteval.run.result.RunResultFinderThread;
 import de.clusteval.run.result.postprocessing.RunResultPostprocessorFinderThread;
-import de.clusteval.run.statistics.RunDataStatisticFinderThread;
 import java.util.Map;
 
 /**
@@ -48,18 +45,12 @@ import java.util.Map;
  * <ul>
  * <li><b>DataSetFinderThread</b>: A thread which checks
  * {@link IRepository#basePath} for new datasets (see {@link DataSet}).</li>
- * <li><b>DistanceMeasureFinderThread</b>: A thread which checks
- * {@link IRepository#distanceMeasureBasePath} for new distance measures (see
- * {@link DistanceMeasure}).</li>
  * <li><b>DataStatisticFinderThread</b>: A thread which checks
  * {@link IRepository#dataStatisticBasePath} for new data statistics (see
  * {@link DataStatistic}).</li>
  * <li><b>RunStatisticFinderThread</b>: A thread which checks
  * {@link IRepository#runStatisticBasePath} for new run statistics (see
  * {@link RunStatistic}).</li>
- * <li><b>RunDataStatisticFinderThread</b>: A thread which checks
- * {@link IRepository#runDataStatisticBasePath} for new run data statistics (see
- * {@link RunDataStatistic}).</li>
  * <li><b>RunResultFormatFinderThread</b>: A thread which checks
  * {@link IRepository#runResultFormatBasePath} for new runresult formats (see
  * {@link RunResultFormat}).</li>
@@ -139,7 +130,7 @@ public class RepositorySupervisorThread extends SupervisorThread {
                         //DistanceMeasureFinderThread.class,
                         //DataStatisticFinderThread.class,
                         //RunStatisticFinderThread.class,
-                        RunDataStatisticFinderThread.class,
+                        //RunDataStatisticFinderThread.class,
                         //ClusteringQualityMeasureFinderThread.class,
                         //ParameterOptimizationMethodFinderThread.class,
                         DataSetConfigFinderThread.class,
@@ -161,7 +152,7 @@ public class RepositorySupervisorThread extends SupervisorThread {
                         //DistanceMeasureFinderThread.class,
                         // DataStatisticFinderThread.class,
                         //RunStatisticFinderThread.class,
-                        RunDataStatisticFinderThread.class,
+                        //RunDataStatisticFinderThread.class,
                         //ClusteringQualityMeasureFinderThread.class,
                         //ParameterOptimizationMethodFinderThread.class,
                         DataSetConfigFinderThread.class,

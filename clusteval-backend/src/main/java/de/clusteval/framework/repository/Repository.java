@@ -87,7 +87,7 @@ import de.clusteval.framework.repository.db.StubSQLCommunicator;
 import de.clusteval.framework.threading.RepositorySupervisorThread;
 import de.clusteval.framework.threading.RunResultRepositorySupervisorThread;
 import de.clusteval.framework.threading.SupervisorThread;
-import de.clusteval.run.statistics.RunDataStatisticCalculator;
+import de.clusteval.api.stats.RunDataStatisticCalculator;
 import de.clusteval.api.stats.RunStatisticCalculator;
 import de.clusteval.utils.FileUtils;
 import de.clusteval.utils.Finder;
