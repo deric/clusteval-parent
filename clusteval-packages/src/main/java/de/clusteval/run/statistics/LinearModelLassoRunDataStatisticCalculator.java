@@ -26,6 +26,7 @@ import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RExpr;
 import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.run.IAnalysisRun;
 import de.clusteval.api.run.IRunResult;
 import de.clusteval.api.run.RunResultFactory;
 import de.clusteval.api.stats.DoubleValueDataStatistic;
@@ -111,18 +112,18 @@ public class LinearModelLassoRunDataStatisticCalculator extends
             /*
              * Get data configs common for all data analysis runs
              */
-            final List<DataAnalysisRunResult> dataResults = new ArrayList<>();
+            final List<IRunResult> dataResults = new ArrayList<>();
             List<IDataConfig> commonDataConfigs = new ArrayList<>();
             for (String dataIdentifier : this.uniqueDataIdentifiers) {
                 try {
-                    DataAnalysisRunResult dataResult = DataAnalysisRunResult
-                            .parseFromRunResultFolder(
-                                    this.repository,
-                                    new File(
-                                            FileUtils.buildPath(
-                                                    this.repository
-                                                    .getBasePath(IRunResult.class),
-                                                    dataIdentifier)));
+                    IRunResult res = RunResultFactory.getInstance().getProvider("DataAnalysisRunResult");
+                    IAnalysisRun dataResult = (IAnalysisRun) res.parseFromRunResultFolder(
+                            this.repository,
+                            new File(
+                                    FileUtils.buildPath(
+                                            this.repository
+                                            .getBasePath(IRunResult.class),
+                                            dataIdentifier)));
                     if (dataResult != null) {
                         dataResults.add(dataResult);
                         commonDataConfigs.addAll(dataResult.getDataConfigs());
@@ -133,7 +134,7 @@ public class LinearModelLassoRunDataStatisticCalculator extends
             }
 
             try {
-                for (DataAnalysisRunResult result : dataResults) {
+                for (IRunResult result : dataResults) {
                     result.loadIntoMemory();
                 }
 

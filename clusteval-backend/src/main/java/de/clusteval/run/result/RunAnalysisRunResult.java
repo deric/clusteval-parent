@@ -143,7 +143,8 @@ public class RunAnalysisRunResult extends AnalysisRunResult<String, RunStatistic
         return null;
     }
 
-    public static RunAnalysisRunResult parseFromRunResultFolder(final IRepository repository, final File runResultFolder)
+    @Override
+    public RunAnalysisRunResult parseFromRunResultFolder(final IRepository repository, final File runResultFolder)
             throws RepositoryAlreadyExistsException, InvalidRepositoryException, GoldStandardConfigurationException,
                    DataSetConfigurationException, DataSetNotFoundException, DataSetConfigNotFoundException,
                    GoldStandardConfigNotFoundException, DataConfigurationException, DataConfigNotFoundException, IOException,

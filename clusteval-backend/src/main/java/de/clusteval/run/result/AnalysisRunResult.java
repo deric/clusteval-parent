@@ -10,10 +10,11 @@
  ***************************************************************************** */
 package de.clusteval.run.result;
 
-import de.clusteval.api.run.result.RunResult;
-import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.run.IAnalysisRun;
 import de.clusteval.api.run.IRun;
+import de.clusteval.api.run.result.RunResult;
 import de.clusteval.api.stats.IStatistic;
 import java.io.File;
 import java.util.HashMap;
@@ -28,7 +29,7 @@ import java.util.Map;
  *            Type of the Statistics
  *
  */
-public abstract class AnalysisRunResult<S extends Object, T extends IStatistic> extends RunResult {
+public abstract class AnalysisRunResult<S extends Object, T extends IStatistic> extends RunResult implements IAnalysisRun {
 
     protected Map<S, List<T>> statistics;
 
@@ -44,6 +45,11 @@ public abstract class AnalysisRunResult<S extends Object, T extends IStatistic> 
             File absPath, String runIdentString, final IRun run)
             throws RegisterException {
         super(repository, changeDate, absPath, runIdentString, run);
+        this.statistics = new HashMap<>();
+    }
+
+    public AnalysisRunResult() {
+        super();
         this.statistics = new HashMap<>();
     }
 

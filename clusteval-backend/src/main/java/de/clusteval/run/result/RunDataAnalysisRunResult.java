@@ -198,7 +198,8 @@ public class RunDataAnalysisRunResult extends AnalysisRunResult<Pair<List<String
      * @throws InterruptedException
      * @throws UnknownRunResultPostprocessorException
      */
-    public static RunDataAnalysisRunResult parseFromRunResultFolder(final IRepository parentRepository,
+    @Override
+    public RunDataAnalysisRunResult parseFromRunResultFolder(final IRepository parentRepository,
             final File runResultFolder)
             throws RepositoryAlreadyExistsException, InvalidRepositoryException,
                    GoldStandardConfigurationException, DataSetConfigurationException, DataSetNotFoundException,
@@ -213,7 +214,6 @@ public class RunDataAnalysisRunResult extends AnalysisRunResult<Pair<List<String
                    UnknownGoldStandardFormatException, RepositoryConfigurationException, ConfigurationException, RegisterException,
                    NumberFormatException, NoDataSetException,
                    RunResultParseException,
-                   IncompatibleDataSetConfigPreprocessorException,
                    IncompatibleContextException, UnknownParameterType, InterruptedException,
                    UnknownRunResultPostprocessorException, FileNotFoundException, UnknownProviderException {
         try {

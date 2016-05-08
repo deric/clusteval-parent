@@ -63,6 +63,10 @@ public abstract class RunResult extends RepositoryObject implements IRunResult {
         this.run = other.run.clone();
     }
 
+    public RunResult() {
+        super();
+    }
+
     /*
      * (non-Javadoc)
      *

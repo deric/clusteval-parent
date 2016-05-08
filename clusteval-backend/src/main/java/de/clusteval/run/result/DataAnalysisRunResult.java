@@ -48,7 +48,6 @@ import de.clusteval.api.stats.IDataStatistic;
 import de.clusteval.api.stats.IStatistic;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
-import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.framework.repository.parse.Parser;
 import de.clusteval.run.DataAnalysisRun;
@@ -63,14 +62,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import org.apache.commons.configuration.ConfigurationException;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * @author Christian Wiwie
  *
  */
-public class DataAnalysisRunResult extends AnalysisRunResult<IDataConfig, IDataStatistic> {
+@ServiceProvider(service = IRunResult.class)
+public class DataAnalysisRunResult extends AnalysisRunResult<IDataConfig, IDataStatistic> implements IRunResult {
 
-    private static final String NAME = "data-analysis-result";
+    private static final String NAME = "DataAnalysisRunResult";
 
     /**
      * @param repository
@@ -83,6 +84,10 @@ public class DataAnalysisRunResult extends AnalysisRunResult<IDataConfig, IDataS
     public DataAnalysisRunResult(IRepository repository, long changeDate, File absPath, String runIdentString,
             final IRun run) throws RegisterException {
         super(repository, changeDate, absPath, runIdentString, run);
+    }
+
+    public DataAnalysisRunResult() {
+        super();
     }
 
     /**
@@ -146,8 +151,8 @@ public class DataAnalysisRunResult extends AnalysisRunResult<IDataConfig, IDataS
      * folder.
      *
      */
-    public static DataAnalysisRunResult parseFromRunResultFolder(final IRepository parentRepository,
-            final File runResultFolder)
+    @Override
+    public DataAnalysisRunResult parseFromRunResultFolder(final IRepository parentRepository, final File runResultFolder)
             throws RepositoryAlreadyExistsException, InvalidRepositoryException,
                    GoldStandardConfigurationException, DataSetConfigurationException, DataSetNotFoundException,
                    DataSetConfigNotFoundException, GoldStandardConfigNotFoundException, DataConfigurationException,
@@ -162,7 +167,6 @@ public class DataAnalysisRunResult extends AnalysisRunResult<IDataConfig, IDataS
                    UnknownGoldStandardFormatException, AnalysisRunResultException,
                    RepositoryConfigurationException, ConfigurationException,
                    RegisterException, NumberFormatException, NoDataSetException,
-                   IncompatibleDataSetConfigPreprocessorException,
                    IncompatibleContextException, UnknownParameterType, InterruptedException,
                    UnknownRunResultPostprocessorException, FileNotFoundException, UnknownProviderException {
         try {

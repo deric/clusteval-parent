@@ -15,6 +15,7 @@ import de.clusteval.api.Pair;
 import de.clusteval.api.cluster.ClusteringQualitySet;
 import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.exceptions.RunResultParseException;
+import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.opt.IParamOptResult;
 import de.clusteval.api.opt.ParameterOptimizationMethod;
 import de.clusteval.api.opt.ParameterOptimizationRun;
@@ -25,6 +26,7 @@ import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.IRunResult;
 import de.clusteval.api.run.result.ExecutionRunResult;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -562,6 +564,11 @@ public class ParameterOptimizationResult extends ExecutionRunResult implements I
     @Override
     public void setMethod(ParameterOptimizationMethod method) {
         this.method = method;
+    }
+
+    @Override
+    public IRunResult parseFromRunResultFolder(IRepository parentRepository, File runResultFolder) throws FileNotFoundException, UnknownProviderException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

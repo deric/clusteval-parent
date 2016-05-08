@@ -339,6 +339,41 @@ public class ClusteringRunResult extends ExecutionRunResult implements IClusteri
         return result;
     }
 
+    @Override
+    public void loadIntoMemory() {
+        if (absPath.exists()) {
+            try {
+                final Pair<ParameterSet, Clustering> pair = Clustering.parseFromFile(repository,
+                        new File(absPath.getAbsolutePath().replace("results.qual.complete", "1.results.conv")), true);
+
+                ParameterSet paramSet = new ParameterSet();
+                for (String param : pair.getFirst().keySet()) {
+                    paramSet.put(param, pair.getFirst().get(param));
+                }
+                this.clustering = Pair.getPair(paramSet, pair.getSecond());
+                this.clustering.getSecond().loadIntoMemory();
+            } catch (Exception e) {
+                Exceptions.printStackTrace(e);
+            }
+        }
+    }
+
+    @Override
+    public boolean isInMemory() {
+        return this.clustering != null;
+    }
+
+    @Override
+    public void unloadFromMemory() {
+        this.clustering.getSecond().unloadFromMemory();
+        this.clustering = null;
+    }
+
+    @Override
+    public void convertToStandardFormat() throws IOException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
     public static IRun parseFromRunResultFolder(final IRepository parentRepository, final File runResultFolder,
             final List<ExecutionRunResult> result, final boolean register)
             throws IOException, UnknownRunResultFormatException, InvalidRunModeException,
@@ -402,43 +437,9 @@ public class ClusteringRunResult extends ExecutionRunResult implements IClusteri
         }
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.clusteval.run.result.RunResult#loadIntoMemory()
-     */
     @Override
-    public void loadIntoMemory() {
-        if (absPath.exists()) {
-            try {
-                final Pair<ParameterSet, Clustering> pair = Clustering.parseFromFile(repository,
-                        new File(absPath.getAbsolutePath().replace("results.qual.complete", "1.results.conv")), true);
-
-                ParameterSet paramSet = new ParameterSet();
-                for (String param : pair.getFirst().keySet()) {
-                    paramSet.put(param, pair.getFirst().get(param));
-                }
-                this.clustering = Pair.getPair(paramSet, pair.getSecond());
-                this.clustering.getSecond().loadIntoMemory();
-            } catch (Exception e) {
-                Exceptions.printStackTrace(e);
-            }
-        }
-    }
-
-    @Override
-    public boolean isInMemory() {
-        return this.clustering != null;
-    }
-
-    @Override
-    public void unloadFromMemory() {
-        this.clustering.getSecond().unloadFromMemory();
-        this.clustering = null;
-    }
-
-    @Override
-    public void convertToStandardFormat() throws IOException {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public IRunResult parseFromRunResultFolder(IRepository parentRepository, File runResultFolder) throws FileNotFoundException, UnknownProviderException {
+        //TODO: convert static method
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

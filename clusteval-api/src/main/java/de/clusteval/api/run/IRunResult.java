@@ -16,8 +16,38 @@
  */
 package de.clusteval.api.run;
 
+import de.clusteval.api.data.DataSetConfigNotFoundException;
+import de.clusteval.api.data.DataSetConfigurationException;
+import de.clusteval.api.exceptions.DataSetNotFoundException;
+import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
+import de.clusteval.api.exceptions.GoldStandardConfigurationException;
+import de.clusteval.api.exceptions.GoldStandardNotFoundException;
+import de.clusteval.api.exceptions.IncompatibleContextException;
+import de.clusteval.api.exceptions.InvalidConfigurationFileException;
+import de.clusteval.api.exceptions.NoDataSetException;
+import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
+import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.exceptions.RunResultParseException;
+import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
+import de.clusteval.api.exceptions.UnknownParameterType;
+import de.clusteval.api.exceptions.UnknownProgramParameterException;
+import de.clusteval.api.exceptions.UnknownProgramTypeException;
+import de.clusteval.api.exceptions.UnknownRunResultFormatException;
+import de.clusteval.api.exceptions.UnknownRunResultPostprocessorException;
+import de.clusteval.api.factory.UnknownProviderException;
+import de.clusteval.api.opt.InvalidOptimizationParameterException;
+import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
+import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.r.InvalidRepositoryException;
+import de.clusteval.api.r.RepositoryAlreadyExistsException;
+import de.clusteval.api.r.UnknownRProgramException;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.IRepositoryObject;
+import de.clusteval.api.repository.RepositoryConfigurationException;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import org.apache.commons.configuration.ConfigurationException;
 
 /**
  *
@@ -63,5 +93,24 @@ public interface IRunResult extends IRepositoryObject {
      * parameter optimization run results.
      */
     void unloadFromMemory();
+
+    IRunResult parseFromRunResultFolder(final IRepository parentRepository, final File runResultFolder)
+            throws
+            RepositoryAlreadyExistsException, InvalidRepositoryException,
+            GoldStandardConfigurationException, DataSetConfigurationException, DataSetNotFoundException,
+            DataSetConfigNotFoundException, GoldStandardConfigNotFoundException,
+            IOException, UnknownRunResultFormatException,
+            InvalidConfigurationFileException,
+            UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
+            UnknownProgramParameterException, NoRepositoryFoundException, GoldStandardNotFoundException,
+            InvalidOptimizationParameterException, RunException,
+            UnknownProgramTypeException, UnknownRProgramException,
+            IncompatibleParameterOptimizationMethodException,
+            UnknownGoldStandardFormatException, RepositoryConfigurationException, ConfigurationException, RegisterException,
+            NumberFormatException, NoDataSetException,
+            RunResultParseException,
+            IncompatibleContextException, UnknownParameterType, InterruptedException,
+            UnknownRunResultPostprocessorException,
+            FileNotFoundException, UnknownProviderException;
 
 }
