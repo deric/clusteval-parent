@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import de.clusteval.api.stats.RunStatistic;
-import de.clusteval.run.statistics.RunStatisticCalculator;
+import de.clusteval.api.stats.RunStatisticCalculator;
 
 /**
  * @author Christian Wiwie

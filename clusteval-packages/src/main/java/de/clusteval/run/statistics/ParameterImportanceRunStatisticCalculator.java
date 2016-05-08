@@ -12,6 +12,7 @@
  */
 package de.clusteval.run.statistics;
 
+import de.clusteval.api.stats.RunStatisticCalculator;
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.Pair;
 import de.clusteval.api.cluster.ClustEvalValue;

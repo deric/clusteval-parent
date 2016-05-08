@@ -26,6 +26,7 @@ import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.RunResultFactory;
 import de.clusteval.api.run.result.RunResult;
 import de.clusteval.api.stats.RunStatisticCalculateException;
+import de.clusteval.api.stats.RunStatisticCalculator;
 import de.clusteval.utils.ArraysExt;
 import de.clusteval.utils.FileUtils;
 import java.io.File;
@@ -103,8 +104,7 @@ public class CooccurrenceRunStatisticCalculator
                 this.log.info("Processing result: " + result);
                 result.loadIntoMemory();
 
-                Set<ClusterItem> items = result.getOptimalClustering()
-                        .getClusterItems();
+                Set<ClusterItem> items = result.getOptimalClustering().getClusterItems();
                 for (ClusterItem item : setIds.keySet()) {
                     if (!(items.contains(item))) {
                         setIds.remove(item);

@@ -8,7 +8,7 @@
  * Contributors:
  *     Christian Wiwie - initial API and implementation
  ***************************************************************************** */
-package de.clusteval.run.statistics;
+package de.clusteval.api.stats;
 
 import de.clusteval.api.data.DataSetConfigNotFoundException;
 import de.clusteval.api.data.DataSetConfigurationException;
@@ -33,26 +33,15 @@ import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RException;
-import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RepositoryConfigurationException;
 import de.clusteval.api.run.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.api.run.RunException;
-import de.clusteval.api.stats.IncompatibleDataConfigDataStatisticException;
-import de.clusteval.api.stats.RunStatistic;
-import de.clusteval.api.stats.RunStatisticCalculateException;
-import de.clusteval.data.DataConfigNotFoundException;
-import de.clusteval.data.DataConfigurationException;
-import de.clusteval.run.InvalidRunModeException;
-import de.clusteval.run.result.AnalysisRunResultException;
 import java.io.File;
 import java.io.IOException;
 import org.apache.commons.configuration.ConfigurationException;
-import org.rosuda.REngine.REXPMismatchException;
-import org.rosuda.REngine.REngineException;
-import org.rosuda.REngine.Rserve.RserveException;
 
 /**
  * @author Christian Wiwie
@@ -95,25 +84,18 @@ public abstract class RunStatisticRCalculator<T extends RunStatistic> extends Ru
     @Override
     protected final T calculateResult() throws RunStatisticCalculateException {
         try {
+
+            IRengine rEngine = repository.getRengineForCurrentThread();
             try {
-                IRengine rEngine = repository.getRengineForCurrentThread();
-                try {
-                    try {
-                        return calculateResultHelper(rEngine);
-                    } catch (REXPMismatchException e) {
-                        // handle this type of exception as an REngineException
-                        throw new RException(rEngine, e.getMessage());
-                    }
-                } catch (REngineException e) {
-                    this.log.warn("R-framework ("
-                            + this.getClass().getSimpleName() + "): "
-                            + rEngine.getLastError());
-                    throw e;
-                } finally {
-                    rEngine.clear();
-                }
-            } catch (RserveException e) {
-                throw new RNotAvailableException(e.getMessage());
+
+                return calculateResultHelper(rEngine);
+            } catch (RException e) {
+                this.log.warn("R-framework ("
+                        + this.getClass().getSimpleName() + "): "
+                        + rEngine.getLastError());
+                throw e;
+            } finally {
+                rEngine.clear();
             }
         } catch (Exception e) {
             throw new RunStatisticCalculateException(e);
@@ -127,19 +109,16 @@ public abstract class RunStatisticRCalculator<T extends RunStatistic> extends Ru
                    InvalidDataSetFormatException, ConfigurationException,
                    GoldStandardConfigurationException, DataSetConfigurationException,
                    DataSetNotFoundException, DataSetConfigNotFoundException,
-                   GoldStandardConfigNotFoundException, DataConfigurationException,
-                   DataConfigNotFoundException, UnknownRunResultFormatException,
-                   InvalidRunModeException, UnknownParameterOptimizationMethodException,
+                   GoldStandardConfigNotFoundException,
+                   UnknownRunResultFormatException,
+                   UnknownParameterOptimizationMethodException,
                    NoOptimizableProgramParameterException,
                    UnknownProgramParameterException, InternalAttributeException,
                    InvalidConfigurationFileException,
                    RepositoryAlreadyExistsException, InvalidRepositoryException,
                    NoRepositoryFoundException, GoldStandardNotFoundException,
                    InvalidOptimizationParameterException, RunException,
-                   UnknownProgramTypeException,
-                   UnknownRProgramException, IncompatibleParameterOptimizationMethodException,
-                   AnalysisRunResultException,
-                   RepositoryConfigurationException, RegisterException,
-                   NoDataSetException, RunResultParseException,
-                   REngineException, REXPMismatchException;
+                   UnknownProgramTypeException, UnknownRProgramException, IncompatibleParameterOptimizationMethodException,
+                   RException, RepositoryConfigurationException, RegisterException,
+                   NoDataSetException, RunResultParseException;
 }
