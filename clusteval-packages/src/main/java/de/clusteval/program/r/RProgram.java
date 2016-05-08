@@ -40,7 +40,6 @@ import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
-import org.rosuda.REngine.REngineException;
 
 /**
  * A type of program that encapsulates a program embedded in R.
@@ -304,10 +303,7 @@ public abstract class RProgram extends Program implements RLibraryInferior, IRPr
                 bw.append(resultAsString);
             }
         } catch (StringIndexOutOfBoundsException e) {
-            REngineException e2 = new REngineException(null,
-                    "The R program returned an empty clustering");
-            e2.initCause(e);
-            throw new RException(e2.getMessage(), e2);
+            throw new RException("The R program returned an empty clustering - " + e.getMessage(), e);
         }
         // } finally {
         // rEngine.close();
