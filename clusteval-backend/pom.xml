@@ -102,6 +102,12 @@
             <artifactId>org-openide-util-lookup</artifactId>
             <version>RELEASE802</version>
         </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>clusteval-packages</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     <build>
         <resources>
