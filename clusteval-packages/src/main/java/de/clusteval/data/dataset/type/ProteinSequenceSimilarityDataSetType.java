@@ -11,13 +11,20 @@
 package de.clusteval.data.dataset.type;
 
 import de.clusteval.api.data.AbsDataType;
+import de.clusteval.api.data.IDataSetType;
 import de.clusteval.api.program.RegisterException;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * @author Christian Wiwie
  *
  */
+@ServiceProvider(service = IDataSetType.class)
 public class ProteinSequenceSimilarityDataSetType extends AbsDataType {
+
+    public ProteinSequenceSimilarityDataSetType() {
+        super();
+    }
 
     /**
      * The copy constructor for this type.

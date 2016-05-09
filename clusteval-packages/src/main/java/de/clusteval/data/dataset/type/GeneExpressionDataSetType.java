@@ -11,13 +11,20 @@
 package de.clusteval.data.dataset.type;
 
 import de.clusteval.api.data.AbsDataType;
+import de.clusteval.api.data.IDataSetType;
 import de.clusteval.api.program.RegisterException;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * @author Christian Wiwie
  *
  */
+@ServiceProvider(service = IDataSetType.class)
 public class GeneExpressionDataSetType extends AbsDataType {
+
+    public GeneExpressionDataSetType() {
+        super();
+    }
 
     /**
      * The copy constructor for this type.
@@ -31,11 +38,6 @@ public class GeneExpressionDataSetType extends AbsDataType {
         super(other);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see data.dataset.type.DataSetType#getAlias()
-     */
     @Override
     public String getName() {
         return "Gene Expression";

@@ -44,6 +44,7 @@ public class DataSetTypeFactory extends ServiceFactory<IDataSetType> {
         Collection<? extends IDataSetType> list = Lookup.getDefault().lookupAll(IDataSetType.class);
         for (IDataSetType c : list) {
             providers.put(c.getName(), c);
+            providers.put(c.getClass().getSimpleName(), c);
         }
         sort();
     }
