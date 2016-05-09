@@ -46,6 +46,7 @@ public class DataSetFormatFactory extends ServiceFactory<IDataSetFormat> {
         Collection<? extends IDataSetFormat> list = Lookup.getDefault().lookupAll(IDataSetFormat.class);
         for (IDataSetFormat c : list) {
             providers.put(c.getName(), c);
+            providers.put(c.getClass().getSimpleName(), c);
         }
         sort();
     }

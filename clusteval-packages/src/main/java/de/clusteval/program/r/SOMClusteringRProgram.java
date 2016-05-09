@@ -17,16 +17,13 @@ import de.clusteval.api.data.DataSetFormatFactory;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.IProgram;
-import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RExpr;
 import de.clusteval.api.r.RLibraryRequirement;
-import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.IRunResultFormat;
 import de.clusteval.api.run.RunResultFormatFactory;
-import de.clusteval.utils.FileUtils;
-import java.io.File;
 import java.util.Set;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * This class is an implementation of Self Organizing Maps using the R-framework
@@ -36,58 +33,19 @@ import java.util.Set;
  *
  */
 @RLibraryRequirement(requiredRLibraries = {"kohonen"})
+@ServiceProvider(service = IProgram.class)
 public class SOMClusteringRProgram extends AbsoluteDataRProgram {
 
-    /**
-     * @param repository
-     * @throws RegisterException
-     */
-    public SOMClusteringRProgram(IRepository repository)
-            throws RegisterException {
-        super(repository, new File(FileUtils.buildPath(
-                repository.getBasePath(IProgram.class),
-                "SOMClusteringRProgram.jar")).lastModified(), new File(
-                FileUtils.buildPath(repository.getBasePath(IProgram.class),
-                        "SOMClusteringRProgram.jar")));
-    }
-
-    /**
-     * The copy constructor of SOM.
-     *
-     * @param other
-     *              The object to clone.
-     *
-     * @throws RegisterException
-     */
-    public SOMClusteringRProgram(SOMClusteringRProgram other) throws RegisterException {
-        this(other.repository);
-    }
-
-    /*
-     * (non-Javadoc)
-     *
-     * @see program.Program#getName()
-     */
     @Override
     public String getName() {
         return "Self Organizing Maps";
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see program.r.RProgram#getInvocationFormat()
-     */
     @Override
     public String getInvocationFormat() {
         return "som(x,keep.data=T,grid=somgrid(%x%,%y%))";
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.clusteval.program.r.RProgram#getClusterIdsFromExecResult()
-     */
     @Override
     public float[][] getFuzzyCoeffMatrixFromExecResult()
             throws InterruptedException, RException {

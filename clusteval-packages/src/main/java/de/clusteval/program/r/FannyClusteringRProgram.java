@@ -16,75 +16,35 @@ import de.clusteval.api.data.DataSetFormatFactory;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.IProgram;
-import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RExpr;
 import de.clusteval.api.r.RLibraryRequirement;
-import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.IRunResultFormat;
 import de.clusteval.api.run.RunResultFormatFactory;
-import de.clusteval.api.program.Program;
 import de.clusteval.utils.ArraysExt;
-import de.clusteval.utils.FileUtils;
-import java.io.File;
 import java.util.Set;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * @author Christian Wiwie
  *
  */
 @RLibraryRequirement(requiredRLibraries = {"cluster"})
+@ServiceProvider(service = IProgram.class)
 public class FannyClusteringRProgram extends AbsoluteAndRelativeDataRProgram {
 
-    /**
-     * @param repository
-     * @throws RegisterException
-     */
-    public FannyClusteringRProgram(IRepository repository)
-            throws RegisterException {
-        super(repository, new File(FileUtils.buildPath(
-                repository.getBasePath(Program.class),
-                "FannyClusteringRProgram.jar")).lastModified(), new File(
-                FileUtils.buildPath(repository.getBasePath(IProgram.class),
-                        "FannyClusteringRProgram.jar")));
-    }
-
-    /**
-     * @param rProgram
-     * @throws RegisterException
-     */
-    public FannyClusteringRProgram(FannyClusteringRProgram rProgram) throws RegisterException {
-        this(rProgram.repository);
-    }
-
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.clusteval.program.r.RProgram#getInvocationFormat()
-     */
     @Override
     public String getInvocationFormat() {
         return "fanny(x,k=%k%, memb.exp = %membexp%)";
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.clusteval.program.Program#getName()
-     */
     @Override
     public String getName() {
         return "fanny";
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.clusteval.program.r.RProgram#getClusterIdsFromExecResult()
-     */
     @Override
-    public float[][] getFuzzyCoeffMatrixFromExecResult()
-            throws RException, InterruptedException {
+    public float[][] getFuzzyCoeffMatrixFromExecResult() throws RException, InterruptedException {
         RExpr result = rEngine.eval("result$membership");
         double[][] fuzzyCoeffs = result.asDoubleMatrix();
         return ArraysExt.toFloatArray(fuzzyCoeffs);

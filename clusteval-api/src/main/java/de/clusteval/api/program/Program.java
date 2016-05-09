@@ -34,6 +34,9 @@ import java.util.Map;
  */
 public abstract class Program extends RepositoryObject implements IProgram {
 
+    public Program() {
+        super();
+    }
     /**
      * Instantiates a new program.
      *

@@ -19,19 +19,16 @@ import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.IProgram;
 import de.clusteval.api.program.IProgramConfig;
-import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RExpr;
 import de.clusteval.api.r.RLibraryNotLoadedException;
 import de.clusteval.api.r.RLibraryRequirement;
 import de.clusteval.api.r.RNotAvailableException;
-import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.IRunResultFormat;
 import de.clusteval.api.run.RunResultFormatFactory;
-import de.clusteval.utils.FileUtils;
-import java.io.File;
 import java.util.Map;
 import java.util.Set;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * This class is an implementation of Spectral Clustering using the R-framework
@@ -41,49 +38,14 @@ import java.util.Set;
  *
  */
 @RLibraryRequirement(requiredRLibraries = {"kernlab"})
+@ServiceProvider(service = IProgram.class)
 public class SpectralClusteringRProgram extends AbsoluteAndRelativeDataRProgram {
 
-    /**
-     * @param repository
-     * @throws RegisterException
-     */
-    public SpectralClusteringRProgram(IRepository repository)
-            throws RegisterException {
-        super(repository, new File(FileUtils.buildPath(
-                repository.getBasePath(IProgram.class),
-                "SpectralClusteringRProgram.jar")).lastModified(), new File(
-                FileUtils.buildPath(repository.getBasePath(IProgram.class),
-                        "SpectralClusteringRProgram.jar")));
-    }
-
-    /**
-     * The copy constructor of Spectral clustering.
-     *
-     * @param other
-     *              The object to clone.
-     *
-     * @throws RegisterException
-     */
-    public SpectralClusteringRProgram(SpectralClusteringRProgram other)
-            throws RegisterException {
-        this(other.repository);
-    }
-
-    /*
-     * (non-Javadoc)
-     *
-     * @see program.Program#getName()
-     */
     @Override
     public String getName() {
         return "Spectral Clustering";
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see program.r.RProgram#getInvocationFormat()
-     */
     @Override
     public String getInvocationFormat() {
         return "{ for (i in 1:10) {tryCatch({"
@@ -94,11 +56,6 @@ public class SpectralClusteringRProgram extends AbsoluteAndRelativeDataRProgram 
                 + "resultTmp}";
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.clusteval.program.r.RProgram#getClusterIdsFromExecResult()
-     */
     @Override
     public float[][] getFuzzyCoeffMatrixFromExecResult() throws RException, InterruptedException {
         RExpr result = rEngine.eval("result@.Data");
@@ -122,25 +79,11 @@ public class SpectralClusteringRProgram extends AbsoluteAndRelativeDataRProgram 
         return ContextFactory.parseFromString(repository, "ClusteringContext");
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.clusteval.program.r.AbsoluteAndRelativeDataRProgram#
-     * convertDistancesToAppropriateDatastructure()
-     */
     @Override
     protected void convertDistancesToAppropriateDatastructure() throws RException, InterruptedException {
         rEngine.eval("x <- as.kernelMatrix(x)");
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * de.clusteval.program.r.AbsoluteAndRelativeDataRProgram#beforeExec(de.
-     * clusteval.data.DataConfig, de.clusteval.program.ProgramConfig,
-     * java.lang.String[], java.util.Map, java.util.Map)
-     */
     @Override
     public void beforeExec(IDataConfig dataConfig,
             IProgramConfig programConfig, String[] invocationLine,

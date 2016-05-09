@@ -44,6 +44,7 @@ public class ContextFactory extends ServiceFactory<IContext> {
         Collection<? extends IContext> list = Lookup.getDefault().lookupAll(IContext.class);
         for (IContext c : list) {
             providers.put(c.getName(), c);
+            providers.put(c.getClass().getSimpleName(), c);
         }
         sort();
     }

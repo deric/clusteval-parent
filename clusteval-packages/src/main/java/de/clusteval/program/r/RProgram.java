@@ -145,13 +145,17 @@ public abstract class RProgram extends Program implements RLibraryInferior, IRPr
             RProgram program = constr.newInstance(repository);
             return program;
         } catch (InstantiationException | IllegalAccessException | NoSuchMethodException |
-                 SecurityException | IllegalArgumentException | InvocationTargetException e) {
+                SecurityException | IllegalArgumentException | InvocationTargetException e) {
             e.printStackTrace();
         } catch (NullPointerException e) {
 
         }
         throw new UnknownRProgramException("\"" + rProgram
                 + "\" is not a known RProgram.");
+    }
+
+    public RProgram() {
+        super();
     }
 
     /**
@@ -186,7 +190,7 @@ public abstract class RProgram extends Program implements RLibraryInferior, IRPr
         try {
             return this.getClass().getConstructor(this.getClass()).newInstance(this);
         } catch (IllegalArgumentException | SecurityException | InstantiationException |
-                 IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
         this.log.warn("Cloning instance of class "
@@ -346,7 +350,7 @@ public abstract class RProgram extends Program implements RLibraryInferior, IRPr
         try {
             return this.getClass().getConstructor(this.getClass()).newInstance(this);
         } catch (IllegalArgumentException | SecurityException | InstantiationException |
-                 IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
         this.log.warn("Cloning instance of class "

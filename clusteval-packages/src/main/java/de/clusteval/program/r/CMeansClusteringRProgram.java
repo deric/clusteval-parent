@@ -27,6 +27,7 @@ import de.clusteval.utils.ArraysExt;
 import de.clusteval.utils.FileUtils;
 import java.io.File;
 import java.util.Set;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * This class is an implementation of C-Means Clustering based on the
@@ -37,7 +38,12 @@ import java.util.Set;
  *
  */
 @RLibraryRequirement(requiredRLibraries = {"e1071"})
+@ServiceProvider(service = IProgram.class)
 public class CMeansClusteringRProgram extends AbsoluteAndRelativeDataRProgram {
+
+    public CMeansClusteringRProgram() {
+        super();
+    }
 
     /**
      * @param repository

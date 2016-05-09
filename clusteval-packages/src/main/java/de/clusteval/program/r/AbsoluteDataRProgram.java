@@ -12,15 +12,15 @@
  */
 package de.clusteval.program.r;
 
+import de.clusteval.api.data.AbsoluteDataSet;
+import de.clusteval.api.data.DataMatrix;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.program.IProgramConfig;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RLibraryNotLoadedException;
 import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.program.RegisterException;
-import de.clusteval.api.data.AbsoluteDataSet;
-import de.clusteval.api.data.DataMatrix;
 import java.io.File;
 import java.util.Map;
 
@@ -51,6 +51,10 @@ public abstract class AbsoluteDataRProgram extends RProgram {
     public AbsoluteDataRProgram(final AbsoluteDataRProgram rProgram)
             throws RegisterException {
         super(rProgram);
+    }
+
+    public AbsoluteDataRProgram() {
+        super();
     }
 
     /*

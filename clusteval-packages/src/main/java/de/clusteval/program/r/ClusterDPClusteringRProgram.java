@@ -19,56 +19,27 @@ import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.IProgram;
 import de.clusteval.api.program.IProgramConfig;
-import de.clusteval.api.program.Program;
-import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RExpr;
 import de.clusteval.api.r.RLibraryNotLoadedException;
 import de.clusteval.api.r.RNotAvailableException;
-import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.IRunResultFormat;
 import de.clusteval.api.run.RunResultFormatFactory;
-import de.clusteval.utils.FileUtils;
-import java.io.File;
 import java.util.Map;
 import java.util.Set;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * @author Christian Wiwie
  *
  */
+@ServiceProvider(service = IProgram.class)
 public class ClusterDPClusteringRProgram extends RelativeDataRProgram {
 
-    /**
-     * @param repository
-     * @throws RegisterException
-     */
-    public ClusterDPClusteringRProgram(IRepository repository)
-            throws RegisterException {
-        super(repository, new File(FileUtils.buildPath(
-                repository.getBasePath(Program.class),
-                "ClusterDPClusteringRProgram.jar")).lastModified(), new File(
-                FileUtils.buildPath(repository.getBasePath(IProgram.class),
-                        "ClusterDPClusteringRProgram.jar")));
+    public ClusterDPClusteringRProgram() {
+        super();
     }
 
-    /**
-     * @param rProgram
-     * @throws RegisterException
-     */
-    public ClusterDPClusteringRProgram(ClusterDPClusteringRProgram rProgram)
-            throws RegisterException {
-        this(rProgram.repository);
-    }
-
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * de.clusteval.program.r.AbsoluteAndRelativeDataRProgram#beforeExec(de.
-     * clusteval.data.DataConfig, de.clusteval.program.ProgramConfig,
-     * java.lang.String[], java.util.Map, java.util.Map)
-     */
     @Override
     public void beforeExec(IDataConfig dataConfig,
             IProgramConfig programConfig, String[] invocationLine,
@@ -129,34 +100,18 @@ public class ClusterDPClusteringRProgram extends RelativeDataRProgram {
                 + "  };" + "  result <- cl;" + "};" + "return (0);");
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.clusteval.program.r.RProgram#getInvocationFormat()
-     */
     @Override
     public String getInvocationFormat() {
         return "clusterdp(%dc%, %k%)";
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.clusteval.program.Program#getName()
-     */
     @Override
     public String getName() {
         return "clusterdp";
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.clusteval.program.r.RProgram#getClusterIdsFromExecResult()
-     */
     @Override
-    public float[][] getFuzzyCoeffMatrixFromExecResult()
-            throws RException, InterruptedException {
+    public float[][] getFuzzyCoeffMatrixFromExecResult() throws RException, InterruptedException {
         RExpr result = rEngine.eval("result");
         int[] clusterIds = result.asIntegers();
         return ClusteringFactory.clusterIdsToFuzzyCoeff(clusterIds);

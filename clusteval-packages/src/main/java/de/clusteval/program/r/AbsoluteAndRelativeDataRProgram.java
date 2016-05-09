@@ -13,16 +13,16 @@
 package de.clusteval.program.r;
 
 import de.clusteval.api.Matrix;
+import de.clusteval.api.data.AbsoluteDataSet;
+import de.clusteval.api.data.DataMatrix;
 import de.clusteval.api.data.IDataConfig;
+import de.clusteval.api.data.RelativeDataSet;
 import de.clusteval.api.program.IProgramConfig;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RLibraryNotLoadedException;
 import de.clusteval.api.r.RNotAvailableException;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.program.RegisterException;
-import de.clusteval.api.data.AbsoluteDataSet;
-import de.clusteval.api.data.DataMatrix;
-import de.clusteval.api.data.RelativeDataSet;
 import java.io.File;
 import java.util.Map;
 
@@ -35,6 +35,9 @@ import java.util.Map;
  */
 public abstract class AbsoluteAndRelativeDataRProgram extends RProgram {
 
+    public AbsoluteAndRelativeDataRProgram() {
+        super();
+    }
     /**
      * @param repository
      * @param changeDate

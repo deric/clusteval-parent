@@ -17,16 +17,13 @@ import de.clusteval.api.data.DataSetFormatFactory;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.IProgram;
-import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RExpr;
 import de.clusteval.api.r.RLibraryRequirement;
-import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.IRunResultFormat;
 import de.clusteval.api.run.RunResultFormatFactory;
-import de.clusteval.utils.FileUtils;
-import java.io.File;
 import java.util.Set;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * This class is a parallized implementation of K-Medoids Clustering based on
@@ -36,58 +33,19 @@ import java.util.Set;
  *
  */
 @RLibraryRequirement(requiredRLibraries = {"sprint"})
+@ServiceProvider(service = IProgram.class)
 public class PPAMClusteringRProgram extends RelativeDataRProgram {
 
-    /**
-     * @param repository
-     * @throws RegisterException
-     */
-    public PPAMClusteringRProgram(IRepository repository) throws RegisterException {
-        super(repository, new File(FileUtils.buildPath(
-                repository.getBasePath(IProgram.class),
-                "PPAMClusteringRProgram.jar")).lastModified(), new File(
-                FileUtils.buildPath(repository.getBasePath(IProgram.class),
-                        "PPAMClusteringRProgram.jar")));
-    }
-
-    /**
-     * The copy constructor of K-Medoids clustering.
-     *
-     * @param other
-     *              The object to clone.
-     *
-     * @throws RegisterException
-     */
-    public PPAMClusteringRProgram(PPAMClusteringRProgram other)
-            throws RegisterException {
-        this(other.repository);
-    }
-
-    /*
-     * (non-Javadoc)
-     *
-     * @see program.Program#getName()
-     */
     @Override
     public String getName() {
         return "k-Medoids (pPAM)";
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see program.r.RProgram#getInvocationFormat()
-     */
     @Override
     public String getInvocationFormat() {
         return "ppam(x,k=%k%)";
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.clusteval.program.r.RProgram#getClusterIdsFromExecResult()
-     */
     @Override
     public float[][] getFuzzyCoeffMatrixFromExecResult() throws RException, InterruptedException {
         RExpr result = rEngine.eval("result$clustering");

@@ -44,6 +44,7 @@ public class RunResultFormatFactory extends ServiceFactory<IRunResultFormat> {
         Collection<? extends IRunResultFormat> list = Lookup.getDefault().lookupAll(IRunResultFormat.class);
         for (IRunResultFormat c : list) {
             providers.put(c.getName(), c);
+            providers.put(c.getClass().getSimpleName(), c);
         }
         sort();
     }

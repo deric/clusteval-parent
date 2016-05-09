@@ -30,6 +30,10 @@ import java.util.Map;
  */
 public abstract class RelativeDataRProgram extends RProgram {
 
+    public RelativeDataRProgram() {
+        super();
+    }
+
     /**
      * @param repository the repository this program should be registered at.
      * @param changeDate The change date of this program is used for equality
