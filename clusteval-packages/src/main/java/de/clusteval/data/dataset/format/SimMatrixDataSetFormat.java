@@ -10,10 +10,10 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset.format;
 
-import de.clusteval.api.data.RelativeDataSetFormat;
 import de.clusteval.api.FormatVersion;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.data.IDataSetFormatParser;
+import de.clusteval.api.data.RelativeDataSetFormat;
 import de.clusteval.api.program.RegisterException;
 import org.openide.util.lookup.ServiceProvider;
 
@@ -26,19 +26,14 @@ import org.openide.util.lookup.ServiceProvider;
 public class SimMatrixDataSetFormat extends RelativeDataSetFormat {
 
     public SimMatrixDataSetFormat() {
-
+        super();
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see data.dataset.format.DataSetFormat#getName()
-     */
     @Override
     public String getName() {
-        return "Similarity Matrix";
+        //return "Similarity Matrix";
+        return "SimMatrixDataSetFormat";
     }
-
 
     /**
      * The copy constructor for this format.
@@ -52,15 +47,9 @@ public class SimMatrixDataSetFormat extends RelativeDataSetFormat {
         super(other);
     }
 
-
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * de.clusteval.data.dataset.format.DataSetFormat#getDataSetFormatParser()
-     */
     @Override
     public IDataSetFormatParser getDataSetFormatParser() {
         return new SimMatrixDataSetFormatParser();
     }
+
 }

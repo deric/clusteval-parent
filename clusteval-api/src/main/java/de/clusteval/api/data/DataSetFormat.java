@@ -10,6 +10,7 @@
  ***************************************************************************** */
 package de.clusteval.api.data;
 
+import de.clusteval.api.FormatVersion;
 import de.clusteval.api.Precision;
 import de.clusteval.api.exceptions.InvalidDataSetFormatException;
 import de.clusteval.api.factory.UnknownProviderException;
@@ -65,19 +66,12 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
         return result;
     }
 
+    protected int version = -1;
+
     /**
      * A boolean indicating, whether the dataset format is normalized.
      */
     private boolean normalized;
-
-    /**
-     * The version number of the dataset format.
-     *
-     * <p>
-     * This is used for compatibility reasons to ensure, that if at some point a
-     * format specification changes, the framework can recognize this.
-     */
-    private int version;
 
     /**
      * @param dataSet
@@ -129,7 +123,7 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
      *                The configuration to use to convert the passed dataset.
      * @return The converted dataset.
      * @throws IOException
-     * Signals that an I/O exception has occurred.
+     *                                       Signals that an I/O exception has occurred.
      * @throws InvalidDataSetFormatException
      * @throws RegisterException
      * @throws RNotAvailableException
@@ -171,10 +165,9 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
      *                      The configuration to use to convert the passed dataset.
      * @return The converted dataset.
      * @throws IOException
-     * Signals that an I/O exception has occurred.
+     *                                       Signals that an I/O exception has occurred.
      * @throws InvalidDataSetFormatException
      * @throws RegisterException
-     * @throws UnknownDataSetFormatException
      */
     public final IDataSet convertToThisFormat(IDataSet dataSet, IDataSetFormat dataSetFormat, IConversionConfiguration config)
             throws IOException, InvalidDataSetFormatException, RegisterException, UnknownProviderException {
@@ -197,7 +190,6 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
         super(other);
 
         this.normalized = other.normalized;
-        this.version = other.version;
     }
 
     /**
@@ -220,14 +212,15 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
      */
     @Override
     public int getVersion() {
-        return this.version;
+        if (version < 0) {
+            FormatVersion f = this.getClass().getAnnotation(FormatVersion.class);
+            if (f != null) {
+                return f.version();
+            }
+        }
+        return version;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof DataSetFormat)) {
@@ -252,7 +245,7 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
             return this.getClass().getConstructor(this.getClass())
                     .newInstance(this);
         } catch (IllegalArgumentException | SecurityException | InstantiationException |
-                 IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
         this.log.warn("Cloning instance of class "

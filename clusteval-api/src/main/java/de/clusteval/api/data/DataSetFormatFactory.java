@@ -86,7 +86,9 @@ public class DataSetFormatFactory extends ServiceFactory<IDataSetFormat> {
 
         IDataSetFormat format = parseFromString(repository, datasetFormat);
         if (format.getVersion() != formatVersion) {
-            throw new UnknownProviderException("could not find requested version " + formatVersion + " of " + datasetFormat);
+            throw new UnknownProviderException("Could not find requested version "
+                    + formatVersion + " of " + datasetFormat
+                    + ". Just version '" + format.getVersion() + "' is available.");
         }
 
         return format;

@@ -11,8 +11,8 @@
 package de.clusteval.data.goldstandard;
 
 import de.clusteval.api.data.IGoldStandardConfig;
-import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.utils.FileFinder;
 import de.wiwie.wiutils.utils.ArrayIterator;
 import java.io.File;
@@ -40,21 +40,11 @@ public class GoldStandardConfigFinder extends FileFinder<IGoldStandardConfig> {
         super(repository, IGoldStandardConfig.class);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.wiwie.wiutils.utils.Finder#checkFile(java.io.File)
-     */
     @Override
     public boolean checkFile(File file) {
         return file.isFile() && file.getName().endsWith(".gsconfig");
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.wiwie.wiutils.utils.Finder#getIterator()
-     */
     @Override
     public Iterator<File> getIterator() {
         return new ArrayIterator<>(getBaseDir().listFiles());

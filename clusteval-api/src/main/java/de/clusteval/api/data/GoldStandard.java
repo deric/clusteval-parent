@@ -113,7 +113,6 @@ public class GoldStandard extends RepositoryObject implements IGoldStandard {
     public static IGoldStandard parseFromFile(final File absGoldStandardPath)
             throws NoRepositoryFoundException, GoldStandardNotFoundException,
                    RegisterException {
-
         if (!absGoldStandardPath.exists()) {
             throw new GoldStandardNotFoundException("Goldstandard \""
                     + absGoldStandardPath + "\" does not exist!");

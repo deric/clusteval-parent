@@ -25,10 +25,12 @@ import de.clusteval.api.data.IDataSetConfig;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.data.IDataSetGenerator;
 import de.clusteval.api.data.IDataSetType;
+import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.data.IGoldStandardConfig;
 import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.opt.IParameterOptimizationMethod;
 import de.clusteval.api.program.DoubleProgramParameter;
+import de.clusteval.api.program.IFinder;
 import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.IntegerProgramParameter;
 import de.clusteval.api.program.Program;
@@ -43,9 +45,9 @@ import de.clusteval.api.repository.RepositoryConfigurationException;
 import de.clusteval.api.repository.StaticRepositoryEntity;
 import de.clusteval.api.repository.StaticRepositoryEntityMap;
 import de.clusteval.api.run.IRun;
+import de.clusteval.api.run.IRunResult;
 import de.clusteval.api.run.IRunResultFormat;
 import de.clusteval.api.run.IRunResultPostprocessor;
-import de.clusteval.api.run.result.RunResult;
 import de.clusteval.api.run.result.RunResultPostprocessor;
 import de.clusteval.api.stats.IDataStatistic;
 import de.clusteval.api.stats.IRunDataStatistic;
@@ -59,7 +61,6 @@ import de.clusteval.framework.repository.db.StubSQLCommunicator;
 import de.clusteval.framework.threading.RunResultRepositorySupervisorThread;
 import de.clusteval.framework.threading.SupervisorThread;
 import de.clusteval.utils.FileUtils;
-import de.clusteval.utils.Finder;
 import de.clusteval.utils.NamedDoubleAttribute;
 import de.clusteval.utils.NamedIntegerAttribute;
 import de.clusteval.utils.NamedStringAttribute;
@@ -150,7 +151,7 @@ public class RunResultRepository extends Repository implements IRepository {
                 new RunResultRepositoryGoldStandardObjectEntity(this,
                         this.parent != null
                         ? this.parent.getStaticEntities()
-                                .get(GoldStandard.class) : null,
+                                .get(IGoldStandard.class) : null,
                         FileUtils.buildPath(this.basePath, "goldstandards")));
 
         this.staticRepositoryEntities.put(Program.class,
@@ -163,11 +164,11 @@ public class RunResultRepository extends Repository implements IRepository {
         // new RunResultRunResultRepositoryEntity(this,
         // this.parent.staticRepositoryEntities
         // .get(RunResult.class), this.getBasePath()));
-        this.staticRepositoryEntities.put(RunResult.class,
-                this.parent.getStaticEntities().get(RunResult.class));
+        this.staticRepositoryEntities.put(IRunResult.class,
+                this.parent.getStaticEntities().get(IRunResult.class));
 
-        this.staticRepositoryEntities.put(Finder.class,
-                this.parent.getStaticEntities().get(Finder.class));
+        this.staticRepositoryEntities.put(IFinder.class,
+                this.parent.getStaticEntities().get(IFinder.class));
 
         // this.staticRepositoryEntities.put(DoubleProgramParameter.class,
         // this.parent.staticRepositoryEntities
@@ -362,17 +363,15 @@ class RunResultRepositoryDataSetObjectEntity
     }
 }
 
-class RunResultRepositoryGoldStandardObjectEntity
-        extends
-        StaticRepositoryEntity<GoldStandard> {
+class RunResultRepositoryGoldStandardObjectEntity extends StaticRepositoryEntity<IGoldStandard> {
 
     /**
      * @param repository
      * @param parent
      * @param basePath
      */
-    public RunResultRepositoryGoldStandardObjectEntity(Repository repository,
-            StaticRepositoryEntity<GoldStandard> parent, String basePath) {
+    public RunResultRepositoryGoldStandardObjectEntity(IRepository repository,
+            StaticRepositoryEntity<IGoldStandard> parent, String basePath) {
         super(repository, parent, basePath);
     }
 
@@ -384,9 +383,9 @@ class RunResultRepositoryGoldStandardObjectEntity
      * clusteval.framework.repository.RepositoryObject)
      */
     @Override
-    public boolean register(GoldStandard object) throws RegisterException {
-        GoldStandard gsInParentRepository = object.getRepository().getParent()
-                .getStaticObjectWithName(GoldStandard.class, object.toString());
+    public boolean register(IGoldStandard object) throws RegisterException {
+        IGoldStandard gsInParentRepository = object.getRepository().getParent()
+                .getStaticObjectWithName(IGoldStandard.class, object.toString());
         if (gsInParentRepository != null) {
             return super.register(object);
         }

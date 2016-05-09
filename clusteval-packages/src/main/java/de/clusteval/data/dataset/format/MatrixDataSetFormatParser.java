@@ -46,16 +46,8 @@ import java.util.List;
 @FormatVersion(version = 1)
 public class MatrixDataSetFormatParser extends DataSetFormatParser {
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * data.dataset.format.DataSetFormatParser#convertToStandardFormat(data.
-     * dataset.DataSet)
-     */
     @Override
-    public IDataSet convertToStandardFormat(IDataSet dataSet,
-            IConversionInputToStandardConfiguration config)
+    public IDataSet convertToStandardFormat(IDataSet dataSet, IConversionInputToStandardConfiguration config)
             throws IOException, RegisterException, InvalidParameterException, RNotAvailableException,
                    InterruptedException, UnknownProviderException {
 
@@ -126,29 +118,14 @@ public class MatrixDataSetFormatParser extends DataSetFormatParser {
         return newDataSet;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * data.dataset.format.DataSetFormatParser#convertToThisFormat(data.dataset
-     * .DataSet, data.dataset.format.DataSetFormat)
-     */
     @Override
-    public IDataSet convertToThisFormat(IDataSet dataSet,
-            IDataSetFormat dataSetFormat, IConversionConfiguration config)
+    public IDataSet convertToThisFormat(IDataSet dataSet, IDataSetFormat dataSetFormat, IConversionConfiguration config)
             throws InvalidDataSetFormatException {
-        throw new InvalidDataSetFormatException(
-                "Cannot convert to this format");
+        throw new InvalidDataSetFormatException("Cannot convert to this format");
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see data.dataset.format.DataSetFormatParser#parse(data.dataset.DataSet)
-     */
     @Override
-    public DataMatrix parse(IDataSet dataSet, Precision precision)
-            throws IOException {
+    public DataMatrix parse(IDataSet dataSet, Precision precision) throws IOException {
         MatrixParser parser = new MatrixParser(dataSet.getAbsolutePath());
         parser.process();
         List<Pair<String, double[]>> coords = parser.getCoordinates();
@@ -175,24 +152,12 @@ public class MatrixDataSetFormatParser extends DataSetFormatParser {
             this.idToCoordinates = new ArrayList<>();
         }
 
-        /*
-         * (non-Javadoc)
-         *
-         * @see utils.parse.TextFileParser#checkLine(java.lang.String)
-         */
         @Override
         protected boolean checkLine(String line) {
             return !DataSetAttributeParser.attributeLinePrefixPattern.matcher(
                     line).matches();
         }
 
-        /*
-         * (non-Javadoc)
-         *
-         * @see utils.parse.TextFileParser#processLine(java.lang.String[],
-         * java.lang.String[])
-         */
-        @SuppressWarnings("unused")
         @Override
         protected void processLine(String[] key, String[] value) {
             double[] coords = new double[value.length - 1];
@@ -207,13 +172,6 @@ public class MatrixDataSetFormatParser extends DataSetFormatParser {
         }
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * de.clusteval.data.dataset.format.DataSetFormatParser#writeToFile(de.clusteval
-     * .data.dataset.DataSet)
-     */
     @Override
     public void writeToFileHelper(IDataSet dataSet, BufferedWriter writer)
             throws IOException {

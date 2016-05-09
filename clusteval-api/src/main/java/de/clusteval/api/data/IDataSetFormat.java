@@ -66,7 +66,7 @@ public interface IDataSetFormat extends IRepositoryObject {
      *                The configuration to use to convert the passed dataset.
      * @return The converted dataset.
      * @throws IOException
-     * Signals that an I/O exception has occurred.
+     *                                       Signals that an I/O exception has occurred.
      * @throws InvalidDataSetFormatException
      * @throws RegisterException
      * @throws RNotAvailableException
@@ -130,6 +130,8 @@ public interface IDataSetFormat extends IRepositoryObject {
     boolean moveDataSetTo(final IDataSet dataSet, final File moveDestination, final boolean overwrite);
 
     /**
+     * By default version is set by @link{FormatVersion} annotation.
+     *
      * @return The version number of the dataset format.
      */
     public int getVersion();
@@ -165,7 +167,7 @@ public interface IDataSetFormat extends IRepositoryObject {
      *                      The configuration to use to convert the passed dataset.
      * @return The converted dataset.
      * @throws IOException
-     * Signals that an I/O exception has occurred.
+     *                                       Signals that an I/O exception has occurred.
      * @throws InvalidDataSetFormatException
      * @throws RegisterException
      * @throws UnknownProviderException
