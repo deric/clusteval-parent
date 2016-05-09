@@ -13,18 +13,17 @@ package de.clusteval.run.result;
 import de.clusteval.api.Pair;
 import de.clusteval.api.data.DataSetConfigNotFoundException;
 import de.clusteval.api.data.DataSetConfigurationException;
+import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigurationException;
 import de.clusteval.api.exceptions.GoldStandardNotFoundException;
 import de.clusteval.api.exceptions.IncompatibleContextException;
-import de.clusteval.api.exceptions.InvalidConfigurationFileException;
 import de.clusteval.api.exceptions.NoDataSetException;
 import de.clusteval.api.exceptions.NoOptimizableProgramParameterException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.exceptions.RunResultParseException;
-import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.exceptions.UnknownParameterType;
 import de.clusteval.api.exceptions.UnknownProgramParameterException;
 import de.clusteval.api.exceptions.UnknownProgramTypeException;
@@ -43,6 +42,7 @@ import de.clusteval.api.run.IRun;
 import de.clusteval.api.run.IRunResult;
 import de.clusteval.api.run.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.api.run.RunException;
+import de.clusteval.api.stats.IDataStatistic;
 import de.clusteval.api.stats.RunDataStatistic;
 import de.clusteval.api.stats.Statistic;
 import de.clusteval.data.DataConfigNotFoundException;
@@ -50,12 +50,10 @@ import de.clusteval.data.DataConfigurationException;
 import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.framework.repository.parse.Parser;
-import de.clusteval.run.InvalidRunModeException;
 import de.clusteval.run.RunDataAnalysisRun;
 import de.clusteval.utils.FileUtils;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -174,25 +172,17 @@ public class RunDataAnalysisRunResult extends AnalysisRunResult<Pair<List<String
      * @throws UnknownProgramParameterException
      * @throws NoOptimizableProgramParameterException
      * @throws UnknownParameterOptimizationMethodException
-     * @throws InvalidRunModeException
-     * @throws InvalidConfigurationFileException
      * @throws UnknownRunResultFormatException
-     * @throws IOException
-     * @throws DataConfigNotFoundException
-     * @throws DataConfigurationException
      * @throws GoldStandardConfigNotFoundException
      * @throws DataSetConfigNotFoundException
      * @throws DataSetNotFoundException
      * @throws DataSetConfigurationException
      * @throws GoldStandardConfigurationException
-     * @throws UnknownGoldStandardFormatException
      * @throws RepositoryConfigurationException
      * @throws ConfigurationException
      * @throws RegisterException
      * @throws NoDataSetException
      * @throws NumberFormatException
-     * @throws RunResultParseException
-     * @throws IncompatibleDataSetConfigPreprocessorException
      * @throws IncompatibleContextException
      * @throws UnknownParameterType
      * @throws InterruptedException
@@ -201,21 +191,7 @@ public class RunDataAnalysisRunResult extends AnalysisRunResult<Pair<List<String
     @Override
     public RunDataAnalysisRunResult parseFromRunResultFolder(final IRepository parentRepository,
             final File runResultFolder)
-            throws RepositoryAlreadyExistsException, InvalidRepositoryException,
-                   GoldStandardConfigurationException, DataSetConfigurationException, DataSetNotFoundException,
-                   DataSetConfigNotFoundException, GoldStandardConfigNotFoundException, DataConfigurationException,
-                   DataConfigNotFoundException, IOException, UnknownRunResultFormatException,
-                   InvalidConfigurationFileException, InvalidRunModeException,
-                   UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
-                   UnknownProgramParameterException, NoRepositoryFoundException, GoldStandardNotFoundException,
-                   InvalidOptimizationParameterException, RunException,
-                   UnknownProgramTypeException, UnknownRProgramException,
-                   IncompatibleParameterOptimizationMethodException,
-                   UnknownGoldStandardFormatException, RepositoryConfigurationException, ConfigurationException, RegisterException,
-                   NumberFormatException, NoDataSetException,
-                   RunResultParseException,
-                   IncompatibleContextException, UnknownParameterType, InterruptedException,
-                   UnknownRunResultPostprocessorException, FileNotFoundException, UnknownProviderException {
+            throws FileNotFoundException, UnknownProviderException, RepositoryAlreadyExistsException, InterruptedException, InvalidRepositoryException, RepositoryConfigurationException, RegisterException, GoldStandardConfigurationException, GoldStandardNotFoundException, DataSetConfigurationException, DataSetNotFoundException, DataSetConfigNotFoundException, GoldStandardConfigNotFoundException, NoDataSetException, NumberFormatException, ConfigurationException, UnknownParameterType, NoRepositoryFoundException, RunException, IncompatibleContextException, UnknownRunResultFormatException, InvalidOptimizationParameterException, UnknownProgramParameterException, UnknownProgramTypeException, UnknownRProgramException, IncompatibleParameterOptimizationMethodException, UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException, UnknownRunResultPostprocessorException, RunResultParseException {
         try {
             IRepository childRepository = new RunResultRepository(runResultFolder.getAbsolutePath(), parentRepository);
             childRepository.initialize();
@@ -257,7 +233,14 @@ public class RunDataAnalysisRunResult extends AnalysisRunResult<Pair<List<String
         } catch (DatabaseConnectException e) {
             // cannot happen
             return null;
+        } catch (DataConfigurationException ex) {
+            Exceptions.printStackTrace(ex);
+        } catch (DataConfigNotFoundException ex) {
+            Exceptions.printStackTrace(ex);
+        } catch (IncompatibleDataSetConfigPreprocessorException ex) {
+            Exceptions.printStackTrace(ex);
         }
+        return null;
     }
 
     /*
@@ -378,13 +361,18 @@ public class RunDataAnalysisRunResult extends AnalysisRunResult<Pair<List<String
         return analysisResult;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see java.lang.Object#toString()
-     */
     @Override
     public String toString() {
         return this.getAbsolutePath();
+    }
+
+    @Override
+    public Set<IDataConfig> getDataConfigs() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public List<IDataStatistic> getDataStatistics(IDataConfig dataConfig) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

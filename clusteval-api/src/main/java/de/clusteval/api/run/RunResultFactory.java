@@ -266,7 +266,6 @@ public class RunResultFactory extends ServiceFactory<IRunResult> {
      * @return A runresult object for the given runresult folder.
      * @throws IOException
      * @throws UnknownRunResultFormatException
-     * @throws InvalidRunModeException
      * @throws UnknownParameterOptimizationMethodException
      * @throws NoOptimizableProgramParameterException
      * @throws UnknownProgramParameterException

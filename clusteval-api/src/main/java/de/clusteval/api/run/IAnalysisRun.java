@@ -17,6 +17,8 @@
 package de.clusteval.api.run;
 
 import de.clusteval.api.data.IDataConfig;
+import de.clusteval.api.stats.IDataStatistic;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -30,4 +32,13 @@ public interface IAnalysisRun extends IRunResult {
      *         analysed.
      */
     Set<IDataConfig> getDataConfigs();
+
+    /**
+     * @param dataConfig
+     *                   The data configuration for which we want to know which data
+     *                   statistics were evaluated.
+     * @return The data statistics that were assessed for the given data
+     *         configuration.
+     */
+    List<IDataStatistic> getDataStatistics(final IDataConfig dataConfig);
 }

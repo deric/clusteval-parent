@@ -32,7 +32,6 @@ import de.clusteval.api.run.RunResultFactory;
 import de.clusteval.api.stats.DoubleValueDataStatistic;
 import de.clusteval.api.stats.IDataStatistic;
 import de.clusteval.api.stats.RunDataStatisticRCalculator;
-import de.clusteval.run.result.DataAnalysisRunResult;
 import de.clusteval.utils.FileUtils;
 import java.io.File;
 import java.util.ArrayList;
@@ -151,10 +150,10 @@ public class LinearModelLassoRunDataStatisticCalculator extends
                 final Set<String> dataStatisticNames = new HashSet<>();
 
                 final Map<String, Map<String, IDataStatistic>> calculatedDataStatistics = new HashMap<>();
-                for (DataAnalysisRunResult dataResult : dataResults) {
-                    for (IDataConfig dataConfig : dataResult.getDataConfigs()) {
-                        final List<IDataStatistic> dataStatistics = dataResult
-                                .getDataStatistics(dataConfig);
+                for (IRunResult dataResult : dataResults) {
+                    IAnalysisRun analysisResult = (IAnalysisRun) dataResult;
+                    for (IDataConfig dataConfig : analysisResult.getDataConfigs()) {
+                        final List<IDataStatistic> dataStatistics = analysisResult.getDataStatistics(dataConfig);
 
                         // take only data statistics with a double value
                         for (IDataStatistic ds : dataStatistics) {
@@ -317,7 +316,7 @@ public class LinearModelLassoRunDataStatisticCalculator extends
 
                 return null;
             } finally {
-                for (DataAnalysisRunResult result : dataResults) {
+                for (IRunResult result : dataResults) {
                     result.unloadFromMemory();
                 }
             }

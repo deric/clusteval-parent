@@ -12,7 +12,6 @@
  */
 package de.clusteval.run.statistics;
 
-import de.clusteval.api.stats.RunDataStatisticRCalculator;
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.Pair;
 import de.clusteval.api.cluster.ClustEvalValue;
@@ -27,11 +26,12 @@ import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
 import de.clusteval.api.r.RExpr;
 import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.run.IAnalysisRun;
 import de.clusteval.api.run.IRunResult;
 import de.clusteval.api.run.RunResultFactory;
 import de.clusteval.api.stats.DoubleValueDataStatistic;
 import de.clusteval.api.stats.IDataStatistic;
-import de.clusteval.run.result.DataAnalysisRunResult;
+import de.clusteval.api.stats.RunDataStatisticRCalculator;
 import de.clusteval.utils.FileUtils;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -114,17 +114,16 @@ public class LinearModelRidgeRunDataStatisticCalculator
             /*
              * Get data configs common for all data analysis runs
              */
-            final List<DataAnalysisRunResult> dataResults = new ArrayList<>();
+            final List<IRunResult> dataResults = new ArrayList<>();
             List<IDataConfig> commonDataConfigs = new ArrayList<>();
             for (String dataIdentifier : this.uniqueDataIdentifiers) {
                 try {
-                    DataAnalysisRunResult dataResult = DataAnalysisRunResult
-                            .parseFromRunResultFolder(
-                                    this.repository,
-                                    new File(FileUtils.buildPath(
-                                            this.repository
-                                            .getBasePath(IRunResult.class),
-                                            dataIdentifier)));
+                    IRunResult res = RunResultFactory.getInstance().getProvider("DataAnalysisRunResult");
+                    IAnalysisRun dataResult = (IAnalysisRun) res.parseFromRunResultFolder(this.repository,
+                            new File(FileUtils.buildPath(
+                                    this.repository
+                                    .getBasePath(IRunResult.class),
+                                    dataIdentifier)));
                     if (dataResult != null) {
                         dataResults.add(dataResult);
                         commonDataConfigs.addAll(dataResult.getDataConfigs());
@@ -134,7 +133,7 @@ public class LinearModelRidgeRunDataStatisticCalculator
             }
 
             try {
-                for (DataAnalysisRunResult result : dataResults) {
+                for (IRunResult result : dataResults) {
                     result.loadIntoMemory();
                 }
 
@@ -142,19 +141,19 @@ public class LinearModelRidgeRunDataStatisticCalculator
                 for (IDataConfig first : commonDataConfigs) {
                     commonDataConfigNames.add(first.getName());
                 }
-                commonDataConfigNames = new ArrayList<>(
-                        new LinkedHashSet<>(commonDataConfigNames));
+                commonDataConfigNames = new ArrayList<>(new LinkedHashSet<>(commonDataConfigNames));
 
                 /*
                  * Get data statistics calculated for dataconfigs
                  */
                 // mapping from dataconfig,dataStatisticName -> data statistic
-                final Set<String> dataStatisticNames = new HashSet<String>();
+                final Set<String> dataStatisticNames = new HashSet<>();
 
                 final Map<String, Map<String, IDataStatistic>> calculatedDataStatistics = new HashMap<>();
-                for (DataAnalysisRunResult dataResult : dataResults) {
-                    for (IDataConfig dataConfig : dataResult.getDataConfigs()) {
-                        final List<IDataStatistic> dataStatistics = dataResult
+                for (IRunResult dataResult : dataResults) {
+                    IAnalysisRun analysisResult = (IAnalysisRun) dataResult;
+                    for (IDataConfig dataConfig : analysisResult.getDataConfigs()) {
+                        final List<IDataStatistic> dataStatistics = analysisResult
                                 .getDataStatistics(dataConfig);
 
                         // take only data statistics with a double value
@@ -169,8 +168,7 @@ public class LinearModelRidgeRunDataStatisticCalculator
                                 if (!calculatedDataStatistics
                                         .containsKey(dataConfig.getName())) {
                                     calculatedDataStatistics
-                                            .put(dataConfig.getName(),
-                                                    new HashMap<>());
+                                            .put(dataConfig.getName(), new HashMap<>());
                                 }
                                 calculatedDataStatistics.get(
                                         dataConfig.getName()).put(
@@ -319,7 +317,7 @@ public class LinearModelRidgeRunDataStatisticCalculator
 
                 return null;
             } finally {
-                for (DataAnalysisRunResult result : dataResults) {
+                for (IRunResult result : dataResults) {
                     result.unloadFromMemory();
                 }
             }
