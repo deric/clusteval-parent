@@ -47,6 +47,7 @@ public class DistanceMeasureFactory extends ServiceFactory<IDistanceMeasure> {
         Collection<? extends IDistanceMeasure> list = Lookup.getDefault().lookupAll(IDistanceMeasure.class);
         for (IDistanceMeasure c : list) {
             providers.put(c.getName(), c);
+            providers.put(c.getClass().getSimpleName(), c);
         }
         sort();
     }

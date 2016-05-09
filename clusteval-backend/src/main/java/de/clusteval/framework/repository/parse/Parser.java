@@ -157,6 +157,7 @@ public abstract class Parser<P extends IRepositoryObject> { // implements IParse
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
                    UnknownRunResultPostprocessorException, UnknownProviderException {
         Parser<T> parser = getParserForClass(c);
+        LoggerFactory.getLogger(Parser.class.getName()).info("parsing " + absPath + ", parser: " + parser);
         parser.parseFromFile(absPath);
         return parser.getResult();
     }

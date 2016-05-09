@@ -75,7 +75,9 @@ import de.clusteval.api.stats.IDataStatistic;
 import de.clusteval.api.stats.IRunDataStatistic;
 import de.clusteval.api.stats.IRunStatistic;
 import de.clusteval.api.stats.RunDataStatistic;
+import de.clusteval.api.stats.RunDataStatisticCalculator;
 import de.clusteval.api.stats.RunStatistic;
+import de.clusteval.api.stats.RunStatisticCalculator;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.data.goldstandard.format.GoldStandardFormat;
 import de.clusteval.framework.ClustevalBackendServer;
@@ -87,8 +89,6 @@ import de.clusteval.framework.repository.db.StubSQLCommunicator;
 import de.clusteval.framework.threading.RepositorySupervisorThread;
 import de.clusteval.framework.threading.RunResultRepositorySupervisorThread;
 import de.clusteval.framework.threading.SupervisorThread;
-import de.clusteval.api.stats.RunDataStatisticCalculator;
-import de.clusteval.api.stats.RunStatisticCalculator;
 import de.clusteval.utils.FileUtils;
 import de.clusteval.utils.Finder;
 import de.clusteval.utils.NamedDoubleAttribute;
@@ -1472,7 +1472,7 @@ public class Repository implements IRepository {
      * {@link #isInitialized()} returns true.
      *
      * @throws InterruptedException Is thrown, if the current thread is
-     * interrupted while waiting for finishing the initialization process.
+     *                              interrupted while waiting for finishing the initialization process.
      */
     public void initialize() throws InterruptedException {
         if (isInitialized() || this.supervisorThread != null) {
@@ -1622,8 +1622,12 @@ public class Repository implements IRepository {
         Type sooper = object.getClass().getGenericSuperclass();
         Type t = ((ParameterizedType) sooper).getActualTypeArguments()[0];
         switch (t.getTypeName()) {
-            case "Double":
+            case "java.lang.Double":
                 this.internalDoubleAttributes.put(object.getName(), (NamedDoubleAttribute) object);
+                this.pathToRepositoryObject.put(object.getAbsPath(), object);
+                break;
+            case "java.lang.Integer":
+                this.internalIntegerAttributes.put(object.getName(), (NamedIntegerAttribute) object);
                 this.pathToRepositoryObject.put(object.getAbsPath(), object);
                 break;
             default:

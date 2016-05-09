@@ -14,9 +14,9 @@ package de.clusteval.utils;
 
 import de.clusteval.api.program.IFinder;
 import de.clusteval.api.program.IFinderThread;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.IRepositoryObject;
-import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.run.ISupervisorThread;
 import de.clusteval.framework.ClustevalThread;
 import org.slf4j.Logger;
@@ -88,11 +88,6 @@ public abstract class FinderThread<T extends IRepositoryObject> extends Clusteva
         repository.setInitialized(classToFind);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see java.lang.Thread#run()
-     */
     @Override
     public void run() {
         while (!this.isInterrupted()) {

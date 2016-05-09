@@ -13,9 +13,9 @@
 package de.clusteval.utils;
 
 import de.clusteval.api.program.IFinder;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.IRepositoryObject;
-import de.clusteval.api.program.RegisterException;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -60,11 +60,6 @@ public abstract class JARFinder<T extends IRepositoryObject> extends Finder<T> i
 
     public abstract String[] classNamesForJARFile(final File f);
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.wiwie.wiutils.utils.Finder#doOnFileFound(java.io.File)
-     */
     @Override
     public void doOnFileFound(File file) throws Exception {
         loadJAR(file);

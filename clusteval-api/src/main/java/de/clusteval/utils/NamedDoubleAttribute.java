@@ -44,21 +44,11 @@ public class NamedDoubleAttribute extends NamedAttribute<Double> {
         super(other);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.wiwie.wiutils.utils.NamedAttribute#cloneValue(java.lang.Object)
-     */
     @Override
     public Double cloneValue(Double value) {
         return value;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see framework.repository.RepositoryObject#clone()
-     */
     @Override
     public NamedDoubleAttribute clone() {
         try {
@@ -70,9 +60,6 @@ public class NamedDoubleAttribute extends NamedAttribute<Double> {
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see de.clusteval.framework.repository.RepositoryObject#register()
-     */
     @Override
     public boolean register() throws RegisterException {
         this.repository.lookupAdd(this);
@@ -80,9 +67,6 @@ public class NamedDoubleAttribute extends NamedAttribute<Double> {
         //return this.repository.register(this);
     }
 
-    /* (non-Javadoc)
-     * @see de.clusteval.framework.repository.RepositoryObject#unregister()
-     */
     @Override
     public boolean unregister() {
         return this.repository.unregister(this);

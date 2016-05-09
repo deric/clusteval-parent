@@ -135,7 +135,7 @@ class DataSetParser extends RepositoryObjectParser<IDataSet> {
 
             IDataSetType dsType;
             if (attributeValues.containsKey("dataSetType")) {
-                dsType = DataSetTypeFactory.parseFromString(attributeValues.get("dataSetType"));
+                dsType = DataSetTypeFactory.parseFromString(repo, attributeValues.get("dataSetType"));
             } else {
                 throw new DataSetConfigurationException("No type specified for dataset " + absPath.getAbsolutePath());
             }
