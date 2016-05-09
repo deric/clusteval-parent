@@ -58,7 +58,6 @@ import de.clusteval.api.run.result.RunResultNotFoundException;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
-import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.framework.repository.parse.Parser;
 import de.clusteval.run.ClusteringRun;
@@ -389,7 +388,6 @@ public class ClusteringRunResult extends ExecutionRunResult implements IClusteri
                    RepositoryConfigurationException,
                    ConfigurationException, RegisterException, NumberFormatException,
                    NoDataSetException,
-                   IncompatibleDataSetConfigPreprocessorException,
                    IncompatibleContextException, UnknownParameterType, InterruptedException,
                    UnknownRunResultPostprocessorException, UnknownProviderException {
 

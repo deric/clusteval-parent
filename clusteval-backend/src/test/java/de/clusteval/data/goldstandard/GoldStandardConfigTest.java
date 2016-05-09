@@ -10,6 +10,8 @@
  ***************************************************************************** */
 package de.clusteval.data.goldstandard;
 
+import de.clusteval.api.data.DataSetConfigNotFoundException;
+import de.clusteval.api.data.DataSetConfigurationException;
 import de.clusteval.api.data.GoldStandard;
 import de.clusteval.api.data.GoldStandardConfig;
 import de.clusteval.api.data.IGoldStandard;
@@ -34,13 +36,10 @@ import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.RepositoryRemoveEvent;
 import de.clusteval.api.repository.RepositoryReplaceEvent;
 import de.clusteval.api.run.IncompatibleParameterOptimizationMethodException;
+import de.clusteval.api.run.RunException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
-import de.clusteval.api.data.DataSetConfigNotFoundException;
-import de.clusteval.api.data.DataSetConfigurationException;
-import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.framework.repository.parse.Parser;
-import de.clusteval.api.run.RunException;
 import de.clusteval.utils.AbstractClustEvalTest;
 import de.clusteval.utils.StubRepositoryObject;
 import java.io.File;
@@ -74,7 +73,6 @@ public class GoldStandardConfigTest extends AbstractClustEvalTest {
                                       UnknownProgramParameterException, UnknownProgramTypeException,
                                       UnknownRProgramException,
                                       UnknownProviderException,
-                                      IncompatibleDataSetConfigPreprocessorException,
                                       IncompatibleParameterOptimizationMethodException,
                                       UnknownParameterOptimizationMethodException,
                                       NoOptimizableProgramParameterException,
@@ -117,7 +115,6 @@ public class GoldStandardConfigTest extends AbstractClustEvalTest {
                                         UnknownProgramParameterException, UnknownProgramTypeException,
                                         UnknownRProgramException,
                                         UnknownProviderException,
-                                        IncompatibleDataSetConfigPreprocessorException,
                                         IncompatibleParameterOptimizationMethodException,
                                         UnknownParameterOptimizationMethodException,
                                         NoOptimizableProgramParameterException,
@@ -154,7 +151,6 @@ public class GoldStandardConfigTest extends AbstractClustEvalTest {
                    InvalidOptimizationParameterException,
                    UnknownProgramParameterException, UnknownProgramTypeException,
                    UnknownRProgramException, UnknownProviderException,
-                   IncompatibleDataSetConfigPreprocessorException,
                    IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException,
                    NoOptimizableProgramParameterException,
@@ -235,7 +231,6 @@ public class GoldStandardConfigTest extends AbstractClustEvalTest {
                    UnknownRunResultFormatException, InvalidOptimizationParameterException,
                    UnknownProgramParameterException, UnknownProgramTypeException,
                    UnknownRProgramException, UnknownProviderException,
-                   IncompatibleDataSetConfigPreprocessorException,
                    IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException,
                    NoOptimizableProgramParameterException,
@@ -272,7 +267,6 @@ public class GoldStandardConfigTest extends AbstractClustEvalTest {
                                            UnknownProgramParameterException, UnknownProgramTypeException,
                                            UnknownRProgramException,
                                            UnknownProviderException,
-                                           IncompatibleDataSetConfigPreprocessorException,
                                            IncompatibleParameterOptimizationMethodException,
                                            UnknownParameterOptimizationMethodException,
                                            NoOptimizableProgramParameterException,
@@ -314,7 +308,6 @@ public class GoldStandardConfigTest extends AbstractClustEvalTest {
                    UnknownProgramParameterException, UnknownProgramTypeException,
                    UnknownRProgramException,
                    UnknownProviderException,
-                   IncompatibleDataSetConfigPreprocessorException,
                    IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException,
                    NoOptimizableProgramParameterException,
@@ -358,7 +351,6 @@ public class GoldStandardConfigTest extends AbstractClustEvalTest {
                                                       UnknownProgramParameterException, UnknownProgramTypeException,
                                                       UnknownRProgramException,
                                                       UnknownProviderException,
-                                                      IncompatibleDataSetConfigPreprocessorException,
                                                       IncompatibleParameterOptimizationMethodException,
                                                       UnknownParameterOptimizationMethodException,
                                                       NoOptimizableProgramParameterException,
@@ -385,7 +377,6 @@ public class GoldStandardConfigTest extends AbstractClustEvalTest {
                    UnknownProgramParameterException, UnknownProgramTypeException,
                    UnknownRProgramException,
                    UnknownProviderException,
-                   IncompatibleDataSetConfigPreprocessorException,
                    IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException,
                    NoOptimizableProgramParameterException,
@@ -418,7 +409,6 @@ public class GoldStandardConfigTest extends AbstractClustEvalTest {
                                       UnknownProgramParameterException, UnknownProgramTypeException,
                                       UnknownRProgramException,
                                       UnknownProviderException,
-                                      IncompatibleDataSetConfigPreprocessorException,
                                       IncompatibleParameterOptimizationMethodException,
                                       UnknownParameterOptimizationMethodException,
                                       NoOptimizableProgramParameterException,

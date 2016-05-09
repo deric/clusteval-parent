@@ -18,6 +18,8 @@ package de.clusteval.framework.repository.parse;
 
 import de.clusteval.api.ContextFactory;
 import de.clusteval.api.IContext;
+import de.clusteval.api.data.DataSetConfigNotFoundException;
+import de.clusteval.api.data.DataSetConfigurationException;
 import de.clusteval.api.data.DataSetFormatFactory;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.exceptions.DataSetNotFoundException;
@@ -52,9 +54,6 @@ import de.clusteval.api.run.RunException;
 import de.clusteval.api.run.RunResultFormatFactory;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
-import de.clusteval.api.data.DataSetConfigNotFoundException;
-import de.clusteval.api.data.DataSetConfigurationException;
-import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.program.r.RProgramConfig;
 import de.clusteval.utils.FileUtils;
 import java.io.File;
@@ -83,7 +82,7 @@ class ProgramConfigParser extends RepositoryObjectParser<ProgramConfig> {
                    GoldStandardNotFoundException, GoldStandardConfigurationException, DataSetConfigurationException,
                    DataSetNotFoundException, DataSetConfigNotFoundException, GoldStandardConfigNotFoundException,
                    NoDataSetException, DataConfigurationException, DataConfigNotFoundException, NumberFormatException,
-                   IncompatibleDataSetConfigPreprocessorException, IncompatibleParameterOptimizationMethodException,
+                   IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
                    UnknownRunResultPostprocessorException, UnknownProviderException {
         super.parseFromFile(absPath);

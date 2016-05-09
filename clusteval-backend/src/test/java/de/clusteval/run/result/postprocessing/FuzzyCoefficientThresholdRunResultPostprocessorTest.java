@@ -42,14 +42,12 @@ import de.clusteval.api.run.result.RunResultPostprocessorParameters;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
-import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.utils.AbstractClustEvalTest;
 import java.io.File;
 import java.io.IOException;
 import org.apache.commons.configuration.ConfigurationException;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
-import static org.junit.Assert.assertEquals;
 
 /**
  * @author Christian Wiwie
@@ -73,7 +71,6 @@ public class FuzzyCoefficientThresholdRunResultPostprocessorTest extends Abstrac
                               InvalidOptimizationParameterException,
                               UnknownProgramParameterException, UnknownProgramTypeException,
                               UnknownRProgramException,
-                              IncompatibleDataSetConfigPreprocessorException,
                               IncompatibleParameterOptimizationMethodException,
                               UnknownParameterOptimizationMethodException,
                               NoOptimizableProgramParameterException,

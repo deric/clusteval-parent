@@ -41,7 +41,6 @@ import de.clusteval.api.run.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.api.run.RunException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
-import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.config.DefaultRepositoryConfig;
 import de.clusteval.framework.repository.parse.Parser;
@@ -76,7 +75,6 @@ public class ParameterOptimizationRunTest extends AbstractClustEvalTest {
                               UnknownProgramTypeException, UnknownRProgramException,
                               IncompatibleParameterOptimizationMethodException,
                               UnknownProviderException,
-                              IncompatibleDataSetConfigPreprocessorException,
                               IncompatibleContextException,
                               UnknownRunResultPostprocessorException {
         ParameterOptimizationRun run = Parser.parseFromFile(
@@ -110,7 +108,7 @@ public class ParameterOptimizationRunTest extends AbstractClustEvalTest {
             UnknownProgramTypeException, UnknownRProgramException,
             IncompatibleContextException,
             UnknownProviderException,
-            IncompatibleDataSetConfigPreprocessorException, IOException,
+            IOException,
             InterruptedException, RepositoryAlreadyExistsException,
             InvalidRepositoryException,
             RepositoryConfigurationException,

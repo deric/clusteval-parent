@@ -21,6 +21,8 @@ import de.clusteval.api.Precision;
 import de.clusteval.api.data.DataPreprocessor;
 import de.clusteval.api.data.DataPreprocessorFactory;
 import de.clusteval.api.data.DataSetConfig;
+import de.clusteval.api.data.DataSetConfigNotFoundException;
+import de.clusteval.api.data.DataSetConfigurationException;
 import de.clusteval.api.data.DistanceMeasureFactory;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.InputToStd;
@@ -44,13 +46,10 @@ import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.run.IncompatibleParameterOptimizationMethodException;
+import de.clusteval.api.run.RunException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
-import de.clusteval.api.data.DataSetConfigNotFoundException;
-import de.clusteval.api.data.DataSetConfigurationException;
-import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.framework.repository.RunResultRepository;
-import de.clusteval.api.run.RunException;
 import de.clusteval.utils.FileUtils;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -81,7 +80,7 @@ class DataSetConfigParser extends RepositoryObjectParser<DataSetConfig> {
                    GoldStandardNotFoundException, GoldStandardConfigurationException, DataSetConfigurationException,
                    DataSetNotFoundException, DataSetConfigNotFoundException, GoldStandardConfigNotFoundException,
                    NoDataSetException, DataConfigurationException, DataConfigNotFoundException, NumberFormatException,
-                   IncompatibleDataSetConfigPreprocessorException, IncompatibleParameterOptimizationMethodException,
+                   IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
                    UnknownRunResultPostprocessorException, UnknownProviderException {
         super.parseFromFile(absPath);
@@ -131,7 +130,7 @@ class DataSetConfigParser extends RepositoryObjectParser<DataSetConfig> {
                 for (DataPreprocessor proc : preprocessorBeforeDistance) {
                     if (!proc.getCompatibleDataSetFormats()
                             .contains(dataSet.getDataSetFormat().getClass().getSimpleName())) {
-                        throw new IncompatibleDataSetConfigPreprocessorException("The data preprocessor "
+                        throw new DataSetConfigurationException("The data preprocessor "
                                 + proc.getClass().getSimpleName() + " cannot be applied to a dataset with format "
                                 + dataSet.getDataSetFormat().getClass().getSimpleName());
                     }
@@ -169,7 +168,6 @@ class DataSetConfigParser extends RepositoryObjectParser<DataSetConfig> {
                    UnknownParameterType, RunException, IncompatibleContextException,
                    UnknownRunResultFormatException, InvalidOptimizationParameterException, UnknownProgramParameterException,
                    UnknownProgramTypeException, UnknownRProgramException,
-                   IncompatibleDataSetConfigPreprocessorException,
                    IncompatibleParameterOptimizationMethodException, UnknownParameterOptimizationMethodException,
                    NoOptimizableProgramParameterException, UnknownRunResultPostprocessorException, UnknownProviderException {
         if (repo instanceof RunResultRepository) {

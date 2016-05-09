@@ -46,7 +46,6 @@ import de.clusteval.api.stats.IDataStatistic;
 import de.clusteval.api.stats.IStatistic;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
-import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.framework.repository.parse.Parser;
 import de.clusteval.run.DataAnalysisRun;
@@ -211,8 +210,6 @@ public class DataAnalysisRunResult extends AnalysisRunResult<IDataConfig, IDataS
         } catch (DataConfigurationException ex) {
             Exceptions.printStackTrace(ex);
         } catch (DataConfigNotFoundException ex) {
-            Exceptions.printStackTrace(ex);
-        } catch (IncompatibleDataSetConfigPreprocessorException ex) {
             Exceptions.printStackTrace(ex);
         }
         return null;

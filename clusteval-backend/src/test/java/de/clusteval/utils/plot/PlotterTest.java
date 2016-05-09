@@ -52,7 +52,6 @@ import de.clusteval.api.run.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.api.run.RunException;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
-import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.framework.repository.parse.Parser;
 import de.clusteval.utils.AbstractClustEvalTest;
 import java.io.File;
@@ -89,7 +88,6 @@ public class PlotterTest extends AbstractClustEvalTest {
                                     InvalidOptimizationParameterException,
                                     UnknownProgramParameterException, UnknownProgramTypeException,
                                     UnknownRProgramException,
-                                    IncompatibleDataSetConfigPreprocessorException,
                                     IncompatibleParameterOptimizationMethodException,
                                     UnknownParameterOptimizationMethodException,
                                     NoOptimizableProgramParameterException,
@@ -159,7 +157,6 @@ public class PlotterTest extends AbstractClustEvalTest {
                                  InvalidOptimizationParameterException,
                                  UnknownProgramParameterException, UnknownProgramTypeException,
                                  UnknownRProgramException,
-                                 IncompatibleDataSetConfigPreprocessorException,
                                  IncompatibleParameterOptimizationMethodException,
                                  UnknownParameterOptimizationMethodException,
                                  NoOptimizableProgramParameterException,

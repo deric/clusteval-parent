@@ -35,11 +35,6 @@ public class DataSetFinderThread extends FinderThread<IDataSet> {
         super(supervisorThread, framework, IDataSet.class, sleepTime, checkOnce);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.wiwie.wiutils.utils.FinderThread#getFinder()
-     */
     @Override
     public DataSetFinder getFinder() throws RegisterException {
         return new DataSetFinder(repository);

@@ -10,6 +10,8 @@
  ***************************************************************************** */
 package de.clusteval.utils;
 
+import de.clusteval.api.data.DataSetConfigNotFoundException;
+import de.clusteval.api.data.DataSetConfigurationException;
 import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigurationException;
@@ -19,9 +21,6 @@ import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.RepositoryObject;
 import de.clusteval.api.repository.RepositoryReplaceEvent;
-import de.clusteval.api.data.DataSetConfigNotFoundException;
-import de.clusteval.api.data.DataSetConfigurationException;
-import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.framework.repository.Repository;
 import java.io.File;
 import java.io.IOException;
@@ -276,7 +275,6 @@ public final class RepositoryObjectTest extends AbstractClustEvalTest {
      * @throws RegisterException
      * @throws NoDataSetException
      * @throws NumberFormatException
-     * @throws IncompatibleDataSetConfigPreprocessorException
      */
     @SuppressWarnings("unused")
     @Test
@@ -287,8 +285,7 @@ public final class RepositoryObjectTest extends AbstractClustEvalTest {
                    DataSetConfigurationException, DataSetConfigNotFoundException,
                    GoldStandardConfigNotFoundException,
                    RegisterException, NoDataSetException,
-                   NumberFormatException,
-                   IncompatibleDataSetConfigPreprocessorException {
+                   NumberFormatException {
 
         /*
          * Create two stub repository objects

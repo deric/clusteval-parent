@@ -60,7 +60,6 @@ import de.clusteval.api.run.RunResultFactory;
 import de.clusteval.cluster.Clustering;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
-import de.clusteval.data.dataset.IncompatibleDataSetConfigPreprocessorException;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RunResultRepository;
@@ -118,7 +117,6 @@ public class ClustQualityEval {
                    UnknownProgramTypeException,
                    UnknownRProgramException,
                    IncompatibleParameterOptimizationMethodException,
-                   IncompatibleDataSetConfigPreprocessorException,
                    IncompatibleContextException, InvalidDataSetFormatException,
                    RNotAvailableException, FormatConversionException,
                    UnknownRunResultPostprocessorException,
@@ -482,7 +480,6 @@ public class ClustQualityEval {
                    UnknownProgramTypeException,
                    UnknownRProgramException,
                    IncompatibleParameterOptimizationMethodException,
-                   IncompatibleDataSetConfigPreprocessorException,
                    IncompatibleContextException, InvalidDataSetFormatException,
                    RNotAvailableException, FormatConversionException,
                    UnknownRunResultPostprocessorException,
