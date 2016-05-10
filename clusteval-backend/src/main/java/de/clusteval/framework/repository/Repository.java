@@ -556,11 +556,6 @@ public class Repository implements IRepository {
         return true;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
     @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof Repository)) {
@@ -716,7 +711,24 @@ public class Repository implements IRepository {
 
     @Override
     public <T extends IRepositoryObject> T getStaticObjectWithName(final Class<T> c, final String name) {
-        return (T) this.staticRepositoryEntities.get(c).findByString(name);
+        Collection<? extends T> res = getLookup().lookupAll(c);
+        //TODO speedup by rebuilding a hashmap on change?
+        for (T item : res) {
+            if (name.equals(getBaseName(item.getAbsPath()))) {
+                return item;
+            }
+        }
+        //return (T) this.staticRepositoryEntities.get(c).findByString(name);
+        return null;
+    }
+
+    private String getBaseName(File f) {
+        String fn = f.getName();
+        int pos = fn.indexOf('.');
+        if (pos > 0) {
+            return fn.substring(0, pos);
+        }
+        return fn;
     }
 
     @Override
@@ -752,7 +764,7 @@ public class Repository implements IRepository {
         } else if (dynamicEntityFound) {
             return (S) this.dynamicRepositoryEntities.get(c).getRegisteredObject(object, ignoreChangeDate);
         }
-        log.warn("could not found registered object" + object + " of class " + c);
+        log.warn("could not found registered object: " + object.getAbsolutePath() + " of " + c);
         return null;
     }
 
@@ -1542,39 +1554,22 @@ public class Repository implements IRepository {
     }
 
     /**
-     * This method checks, whether this repository has been initialized. A
-     * repository is initialized, if the following invocations return true:
-     *
-     * <ul>
-     * <li><b>getDataSetFormatsInitialized()</b></li>
-     * <li><b>getDataSetTypesInitialized()</b></li>
-     * <li><b>getDataStatisticsInitialized()</b></li>
-     * <li><b>getRunStatisticsInitialized()</b></li>
-     * <li><b>getRunDataStatisticsInitialized()</b></li>
-     * <li><b>getRunResultFormatsInitialized()</b></li>
-     * <li><b>getClusteringQualityMeasuresInitialized()</b></li>
-     * <li><b>getParameterOptimizationMethodsInitialized()</b></li>
-     * <li><b>getRunsInitialized()</b></li>
-     * <li><b>getRProgramsInitialized()</b></li>
-     * <li><b>getDataSetConfigsInitialized()</b></li>
-     * <li><b>getGoldStandardConfigsInitialized()</b></li>
-     * <li><b>getDataConfigsInitialized()</b></li>
-     * <li><b>getProgramConfigsInitialized()</b></li>
-     * <li><b>getDataSetGeneratorsInitialized()</b></li>
-     * <li><b>getDistanceMeasuresInitialized()</b></li>
-     * </ul>
+     * This method checks, whether this repository has been initialized.
      *
      * @return True, if this repository is initialized.
      */
     public boolean isInitialized() {
-        // TODO: for loop?
-        return isInitialized(IRunDataStatistic.class)
-                && isInitialized(ClusteringEvaluation.class) && isInitialized(IParameterOptimizationMethod.class)
-                && isInitialized(IRun.class) && isInitialized(IRProgram.class) && isInitialized(IDataSetConfig.class)
-                && isInitialized(IDataSet.class) && isInitialized(IGoldStandardConfig.class)
-                && isInitialized(IDataConfig.class) && isInitialized(IProgramConfig.class)
-                && isInitialized(IDataSetGenerator.class) && isInitialized(IContext.class)
-                && isInitialized(DataPreprocessor.class) && isInitialized(IDistanceMeasure.class);
+        Class[] req = new Class[]{
+            IRun.class, IDataSetConfig.class,
+            IDataSet.class, IGoldStandardConfig.class,
+            IDataConfig.class, IProgramConfig.class
+        };
+
+        boolean ready = true;
+        for (Class c : req) {
+            ready &= isInitialized(c);
+        }
+        return ready;
     }
 
     /**

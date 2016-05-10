@@ -13,8 +13,6 @@
 package de.clusteval.cluster.quality;
 
 import de.clusteval.api.ClusteringEvaluation;
-import de.clusteval.api.ContextFactory;
-import de.clusteval.api.IContext;
 import de.clusteval.api.Precision;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
@@ -47,6 +45,7 @@ import java.util.ArrayList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
+import org.openide.util.Exceptions;
 
 /**
  * @author Christian Wiwie
@@ -64,8 +63,6 @@ public class DaviesBouldinIndexRClusteringQualityMeasureTest extends AbstractClu
                               FormatConversionException, RNotAvailableException,
                               RCalculationException {
         try {
-
-            IContext context = ContextFactory.parseFromString(getRepository(), "ClusteringContext");
 
             Clustering clustering = new Clustering(this.getRepository(),
                     System.currentTimeMillis(), new File(""));
@@ -105,6 +102,7 @@ public class DaviesBouldinIndexRClusteringQualityMeasureTest extends AbstractClu
         } catch (UnknownProviderException | RegisterException |
                  FormatConversionException | IOException | InvalidDataSetFormatException |
                  RNotAvailableException | InterruptedException | RException | IllegalArgumentException e) {
+            Exceptions.printStackTrace(e);
             assertTrue(false);
         }
 

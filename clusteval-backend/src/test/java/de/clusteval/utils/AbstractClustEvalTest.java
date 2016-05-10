@@ -18,7 +18,7 @@ import de.clusteval.api.IContext;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.IRepositoryObject;
 import de.clusteval.api.repository.RepositoryController;
-import de.clusteval.api.run.result.RunResult;
+import de.clusteval.api.run.IRunResult;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.config.DefaultRepositoryConfig;
@@ -102,7 +102,7 @@ public abstract class AbstractClustEvalTest {
         getRepository().initialize();
 
         if (ClustevalBackendServer.getBackendServerConfiguration().getCheckForRunResults()) {
-            while (!getRepository().isInitialized(RunResult.class)) {
+            while (!getRepository().isInitialized(IRunResult.class)) {
                 Thread.sleep(100);
             }
         }
