@@ -68,11 +68,6 @@ public class RelativeDataSet extends DataSet implements IDataSet {
         super(dataset);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see data.dataset.DataSet#clone()
-     */
     @Override
     public RelativeDataSet clone() {
         try {
@@ -84,21 +79,11 @@ public class RelativeDataSet extends DataSet implements IDataSet {
         return null;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see data.dataset.DataSet#getDataSetFormat()
-     */
     @Override
     public RelativeDataSetFormat getDataSetFormat() {
         return (RelativeDataSetFormat) super.getDataSetFormat();
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see data.dataset.DataSet#loadIntoMemory()
-     */
     @Override
     public boolean loadIntoMemory(Precision precision) throws IllegalArgumentException, IOException,
                                                               InvalidDataSetFormatException {
@@ -108,12 +93,6 @@ public class RelativeDataSet extends DataSet implements IDataSet {
         return true;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * de.clusteval.data.dataset.DataSet#setDataSetContent(java.lang.Object)
-     */
     @Override
     public boolean setDataSetContent(Object newContent) {
         if (!(newContent instanceof Matrix)) {
@@ -124,42 +103,22 @@ public class RelativeDataSet extends DataSet implements IDataSet {
         return true;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see data.dataset.DataSet#isInMemory()
-     */
     @Override
     public boolean isInMemory() {
         return this.similarities != null;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see data.dataset.DataSet#getDataSetContent()
-     */
     @Override
     public Matrix getDataSetContent() {
         return similarities;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see data.dataset.DataSet#unloadFromMemory()
-     */
     @Override
     public boolean unloadFromMemory() {
         this.similarities = null;
         return true;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see data.dataset.DataSet#getIds()
-     */
     @Override
     public List<String> getIds() {
         String[] result = new String[this.similarities.getIds().size()];

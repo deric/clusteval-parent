@@ -385,8 +385,8 @@ public abstract class DataSet extends RepositoryObject implements IDataSet, IRep
     @Override
     public IDataSet preprocessAndConvertTo(final IContext context,
             final IDataSetFormat targetFormat,
-            final IConversionInputToStandardConfiguration configInputToStandard,
-            final IConversionConfiguration configStandardToInput)
+            final InputToStd configInputToStandard,
+            final ConvConf configStandardToInput)
             throws FormatConversionException, IOException,
                    InvalidDataSetFormatException, RegisterException,
                    RNotAvailableException, InterruptedException, RException, UnknownProviderException {
@@ -520,7 +520,7 @@ public abstract class DataSet extends RepositoryObject implements IDataSet, IRep
      */
     public IDataSet convertStandardToDirectly(final IContext context,
             final IDataSetFormat targetFormat,
-            final IConversionConfiguration configStandardToInput)
+            final ConvConf configStandardToInput)
             throws IOException, InvalidDataSetFormatException,
                    RegisterException,
                    FormatConversionException, UnknownProviderException {
@@ -581,7 +581,7 @@ public abstract class DataSet extends RepositoryObject implements IDataSet, IRep
      */
     @Override
     public IDataSet convertToStandardDirectly(final IContext context,
-            final IConversionInputToStandardConfiguration configInputToStandard)
+            final InputToStd configInputToStandard)
             throws IOException, InvalidDataSetFormatException,
                    RegisterException, InvalidParameterException, RNotAvailableException,
                    InterruptedException, UnknownProviderException {

@@ -143,12 +143,11 @@ public interface IDataSet extends IRepositoryObject {
      * @throws IOException Signals that an I/O exception has occurred.
      * @throws InvalidDataSetFormatException
      * @throws RegisterException
-     * @throws UnknownDataSetFormatException
      * @throws RNotAvailableException
      * @throws InvalidParameterException
      * @throws InterruptedException
      */
-    IDataSet convertToStandardDirectly(final IContext context, final IConversionInputToStandardConfiguration configInputToStandard)
+    IDataSet convertToStandardDirectly(final IContext context, final InputToStd configInputToStandard)
             throws IOException, InvalidDataSetFormatException,
                    RegisterException,
                    InvalidParameterException, RNotAvailableException,
@@ -174,7 +173,7 @@ public interface IDataSet extends IRepositoryObject {
      */
     IDataSet convertStandardToDirectly(final IContext context,
             final IDataSetFormat targetFormat,
-            final IConversionConfiguration configStandardToInput)
+            final ConvConf configStandardToInput)
             throws IOException, InvalidDataSetFormatException,
                    RegisterException, UnknownProviderException,
                    FormatConversionException;
@@ -206,8 +205,8 @@ public interface IDataSet extends IRepositoryObject {
      */
     public IDataSet preprocessAndConvertTo(final IContext context,
             final IDataSetFormat targetFormat,
-            final IConversionInputToStandardConfiguration configInputToStandard,
-            final IConversionConfiguration configStandardToInput)
+            final InputToStd configInputToStandard,
+            final ConvConf configStandardToInput)
             throws FormatConversionException, IOException,
                    InvalidDataSetFormatException, RegisterException,
                    RNotAvailableException, InterruptedException, RException, UnknownProviderException;

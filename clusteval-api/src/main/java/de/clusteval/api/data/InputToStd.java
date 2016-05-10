@@ -19,7 +19,7 @@ import java.util.List;
  * @author Christian Wiwie
  *
  */
-public class InputToStd implements IConversionInputToStandardConfiguration {
+public class InputToStd implements ConvConf {
 
     protected static List<DataPreprocessor> clonePreprocessors(List<DataPreprocessor> preprocessors) {
         List<DataPreprocessor> result = new ArrayList<>();
@@ -74,17 +74,11 @@ public class InputToStd implements IConversionInputToStandardConfiguration {
         this.preprocessorsAfterDistance = clonePreprocessors(other.preprocessorsAfterDistance);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see java.lang.Object#clone()
-     */
     @Override
     public InputToStd clone() {
         return new InputToStd(this);
     }
 
-    @Override
     public Precision getSimilarityPrecision() {
         return this.similarityPrecision;
     }
@@ -93,7 +87,6 @@ public class InputToStd implements IConversionInputToStandardConfiguration {
      * @return The distance measure to use during the conversion of absolute to
      *         relative datasets.
      */
-    @Override
     public IDistanceMeasure getDistanceMeasureAbsoluteToRelative() {
         return this.distanceMeasureAbsoluteToRelative;
     }
@@ -114,11 +107,6 @@ public class InputToStd implements IConversionInputToStandardConfiguration {
         return this.preprocessorsAfterDistance;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
     @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof InputToStd)) {

@@ -15,10 +15,9 @@ import de.clusteval.api.FormatVersion;
 import de.clusteval.api.Matrix;
 import de.clusteval.api.Precision;
 import de.clusteval.api.data.DataSetFormatParser;
-import de.clusteval.api.data.IConversionConfiguration;
-import de.clusteval.api.data.IConversionInputToStandardConfiguration;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetFormat;
+import de.clusteval.api.data.InputToStd;
 import de.clusteval.api.data.RelativeDataSet;
 import de.clusteval.api.exceptions.InvalidDataSetFormatException;
 import de.clusteval.api.program.RegisterException;
@@ -30,6 +29,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
+import de.clusteval.api.data.ConvConf;
 
 /**
  * @author Christian Wiwie
@@ -53,7 +53,6 @@ public class SimMatrixDataSetFormatParser extends DataSetFormatParser {
             throws IllegalArgumentException, IOException,
                    InvalidDataSetFormatException {
 
-
         Lock l = locks.get(dataSet.getAbsolutePath());
         l.lock();
         try {
@@ -74,17 +73,8 @@ public class SimMatrixDataSetFormatParser extends DataSetFormatParser {
         }
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * de.clusteval.data.dataset.format.DataSetFormatParser#convertToStandardFormat
-     * (de.clusteval.data.dataset.DataSet,
-     * de.clusteval.data.dataset.format.ConversionInputToStandardConfiguration)
-     */
     @Override
-    public IDataSet convertToStandardFormat(IDataSet dataSet,
-            IConversionInputToStandardConfiguration config)
+    public IDataSet convertToStandardFormat(IDataSet dataSet, InputToStd config)
             throws IOException, InvalidDataSetFormatException, RegisterException {
         return null;
     }
@@ -100,19 +90,12 @@ public class SimMatrixDataSetFormatParser extends DataSetFormatParser {
      */
     @Override
     public IDataSet convertToThisFormat(IDataSet dataSet,
-            IDataSetFormat dataSetFormat, IConversionConfiguration config)
+            IDataSetFormat dataSetFormat, ConvConf config)
             throws IOException, InvalidDataSetFormatException,
                    RegisterException {
         return null;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * de.clusteval.data.dataset.format.DataSetFormatParser#writeToFile(de.clusteval
-     * .data.dataset.DataSet)
-     */
     @Override
     public void writeToFileHelper(IDataSet dataSet, BufferedWriter writer) throws IOException {
         RelativeDataSet absDataSet = (RelativeDataSet) dataSet;

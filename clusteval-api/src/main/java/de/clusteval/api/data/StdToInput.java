@@ -14,7 +14,7 @@ package de.clusteval.api.data;
  * @author Christian Wiwie
  *
  */
-public class StdToInput implements IConversionConfiguration {
+public class StdToInput implements ConvConf {
 
     public StdToInput() {
         super();

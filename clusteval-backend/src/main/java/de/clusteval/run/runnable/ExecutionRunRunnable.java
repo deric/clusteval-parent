@@ -18,13 +18,13 @@ import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.api.cluster.ClusteringQualitySet;
 import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.data.AbsoluteDataSet;
-import de.clusteval.api.data.IConversionInputToStandardConfiguration;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetConfig;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.data.IGoldStandardConfig;
+import de.clusteval.api.data.InputToStd;
 import de.clusteval.api.data.RelativeDataSet;
 import de.clusteval.api.data.StdToInput;
 import de.clusteval.api.exceptions.FormatConversionException;
@@ -208,7 +208,7 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
     protected boolean preprocessAndCheckCompatibleDataSetFormat()
             throws IOException, RegisterException, InterruptedException, RException, UnknownProviderException {
 
-        IConversionInputToStandardConfiguration configInputToStandard = dataConfig.getDatasetConfig()
+        InputToStd configInputToStandard = dataConfig.getDatasetConfig()
                 .getConversionInputToStandardConfiguration();
         StdToInput configStandardToInput = dataConfig.getDatasetConfig()
                 .getConversionStandardToInputConfiguration();
@@ -232,29 +232,22 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
                 try {
                     IDataSet ds = dataConfig.getDatasetConfig().getDataSet().preprocessAndConvertTo(
                             this.run.getContext(), compFormat, configInputToStandard, configStandardToInput);
-
-                    // added 23.01.2013: rename the new dataset, unique for the
-                    // program configuration
                     int indexOfLastExt = ds.getAbsolutePath().lastIndexOf(".");
                     if (indexOfLastExt == -1) {
                         indexOfLastExt = ds.getAbsolutePath().length();
                     }
                     String newFileName = ds.getAbsolutePath().substring(0, indexOfLastExt) + "_"
                             + programConfig.getName() + ds.getAbsolutePath().substring(indexOfLastExt);
-                    // if the new dataset file is the same file as the old one,
-                    // we copy it instead of moving
                     if (ds.getAbsolutePath().equals(dataConfig.getDatasetConfig().getDataSet().getAbsolutePath())) {
                         ds.copyTo(new File(newFileName), false, true);
                     } else {
                         ds.moveTo(new File(newFileName), false);
                     }
-
                     dataConfig.getDatasetConfig().setDataSet(ds);
-                    // found a convertable compatible format
                     found = true;
                     break;
-                } catch (InvalidDataSetFormatException | RNotAvailableException | FormatConversionException e) {
-                    e.printStackTrace();
+                } catch (FormatConversionException | InvalidDataSetFormatException | RNotAvailableException ex) {
+                    Exceptions.printStackTrace(ex);
                 }
             }
             return found;

@@ -14,7 +14,7 @@ package de.clusteval.data.distance;
 
 import de.clusteval.api.IDistanceMeasure;
 import de.clusteval.api.data.DistanceMeasure;
-import de.clusteval.api.data.IConversionInputToStandardConfiguration;
+import de.clusteval.api.data.InputToStd;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
@@ -44,12 +44,6 @@ public abstract class DistanceMeasureR extends DistanceMeasure implements IDista
         super(other);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.clusteval.data.distance.DistanceMeasure#getDistance(double[],
-     * double[])
-     */
     @Override
     public final double getDistance(double[] point1, double[] point2)
             throws RNotAvailableException, InterruptedException {
@@ -70,14 +64,8 @@ public abstract class DistanceMeasureR extends DistanceMeasure implements IDista
         }
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.clusteval.data.distance.DistanceMeasure#getDistances(double[][])
-     */
     @Override
-    public final SimilarityMatrix getDistances(
-            IConversionInputToStandardConfiguration config, double[][] matrix)
+    public final SimilarityMatrix getDistances(InputToStd config, double[][] matrix)
             throws RNotAvailableException, InterruptedException {
         try {
             IRengine rEngine = repository.getRengineForCurrentThread();

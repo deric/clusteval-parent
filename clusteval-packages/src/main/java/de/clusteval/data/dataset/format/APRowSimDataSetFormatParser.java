@@ -14,10 +14,9 @@ import de.clusteval.api.FormatVersion;
 import de.clusteval.api.Precision;
 import de.clusteval.api.data.DataSetAttributeParser;
 import de.clusteval.api.data.DataSetFormatParser;
-import de.clusteval.api.data.IConversionConfiguration;
-import de.clusteval.api.data.IConversionInputToStandardConfiguration;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetFormat;
+import de.clusteval.api.data.InputToStd;
 import de.clusteval.api.data.RelativeDataSet;
 import de.clusteval.api.data.WEBSITE_VISIBILITY;
 import de.clusteval.api.exceptions.InvalidDataSetFormatException;
@@ -32,6 +31,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import de.clusteval.api.data.ConvConf;
 
 /**
  * @author Christian Wiwie
@@ -49,13 +49,13 @@ public class APRowSimDataSetFormatParser extends DataSetFormatParser {
      */
     @SuppressWarnings("unused")
     @Override
-    public IDataSet convertToStandardFormat(IDataSet ds, IConversionInputToStandardConfiguration config) {
+    public IDataSet convertToStandardFormat(IDataSet ds, InputToStd config) {
         return null;
     }
 
     @Override
     public IDataSet convertToThisFormat(IDataSet dataSet,
-            IDataSetFormat dataSetFormat, IConversionConfiguration config)
+            IDataSetFormat dataSetFormat, ConvConf config)
             throws IOException, InvalidDataSetFormatException, RegisterException, UnknownProviderException {
         switch (dataSetFormat.getVersion()) {
             case 1:
@@ -69,7 +69,7 @@ public class APRowSimDataSetFormatParser extends DataSetFormatParser {
     }
 
     protected IDataSet convertToThisFormat_v1(IDataSet dataSet,
-            IDataSetFormat dataSetFormat, IConversionConfiguration config)
+            IDataSetFormat dataSetFormat, ConvConf config)
             throws IOException, RegisterException, UnknownProviderException {
 
         // check if file already exists

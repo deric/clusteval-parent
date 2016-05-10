@@ -15,10 +15,9 @@ import de.clusteval.api.Precision;
 import de.clusteval.api.data.DataSetAttributeFilterer;
 import de.clusteval.api.data.DataSetFormatFactory;
 import de.clusteval.api.data.DataSetFormatParser;
-import de.clusteval.api.data.IConversionConfiguration;
-import de.clusteval.api.data.IConversionInputToStandardConfiguration;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetFormat;
+import de.clusteval.api.data.InputToStd;
 import de.clusteval.api.data.RelativeDataSet;
 import de.clusteval.api.data.RelativeDataSetFormat;
 import de.clusteval.api.data.WEBSITE_VISIBILITY;
@@ -37,6 +36,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import de.clusteval.api.data.ConvConf;
 
 /**
  * @author Christian Wiwie
@@ -53,8 +53,7 @@ public class TransClustSimMatrixDataSetFormatParser extends DataSetFormatParser 
      * dataset.DataSet)
      */
     @Override
-    public IDataSet convertToStandardFormat(IDataSet dataSet,
-            IConversionInputToStandardConfiguration config)
+    public IDataSet convertToStandardFormat(IDataSet dataSet, InputToStd config)
             throws IOException, InvalidDataSetFormatException, RegisterException,
                    UnknownProviderException {
         switch (dataSet.getDataSetFormat().getVersion()) {
@@ -69,8 +68,7 @@ public class TransClustSimMatrixDataSetFormatParser extends DataSetFormatParser 
     }
 
     @SuppressWarnings("unused")
-    protected IDataSet convertToStandardFormat_v1(IDataSet dataSet,
-            IConversionInputToStandardConfiguration config)
+    protected IDataSet convertToStandardFormat_v1(IDataSet dataSet, InputToStd config)
             throws IOException, RegisterException, UnknownProviderException {
         // check if file already exists
         String resultFileName = dataSet.getAbsolutePath();
@@ -101,16 +99,9 @@ public class TransClustSimMatrixDataSetFormatParser extends DataSetFormatParser 
                 dataSet.getDataSetType(), WEBSITE_VISIBILITY.HIDE);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * data.dataset.format.DataSetFormatParser#convertToThisFormat(data.dataset
-     * .DataSet)
-     */
     @Override
     public IDataSet convertToThisFormat(IDataSet dataSet,
-            IDataSetFormat dataSetFormat, IConversionConfiguration config) {
+            IDataSetFormat dataSetFormat, ConvConf config) {
         return null;
     }
 

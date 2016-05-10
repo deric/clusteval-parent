@@ -13,7 +13,7 @@
 package de.clusteval.data.distance;
 
 import de.clusteval.api.IDistanceMeasure;
-import de.clusteval.api.data.IConversionInputToStandardConfiguration;
+import de.clusteval.api.data.InputToStd;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
@@ -77,8 +77,7 @@ public class EuclidianDistanceMeasure extends DistanceMeasureR {
     }
 
     @Override
-    public double[][] getDistancesHelper(
-            IConversionInputToStandardConfiguration config, double[][] matrix,
+    public double[][] getDistancesHelper(InputToStd config, double[][] matrix,
             IRengine rEngine, int firstRow, int lastRow)
             throws RException, ROperationNotSupported, InterruptedException {
         return rEngine.eval(String.format(

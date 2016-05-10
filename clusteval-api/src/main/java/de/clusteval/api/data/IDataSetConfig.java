@@ -47,7 +47,7 @@ public interface IDataSetConfig extends IRepositoryObject {
      *         to the standard format.
      * @see #configInputToStandard
      */
-    IConversionInputToStandardConfiguration getConversionInputToStandardConfiguration();
+    InputToStd getConversionInputToStandardConfiguration();
 
     /**
      * @param dataset The new dataset

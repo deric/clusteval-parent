@@ -11,7 +11,7 @@
 package de.clusteval.data.distance;
 
 import de.clusteval.api.IDistanceMeasure;
-import de.clusteval.api.data.IConversionInputToStandardConfiguration;
+import de.clusteval.api.data.InputToStd;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.RException;
@@ -49,11 +49,6 @@ public class AbsoluteSpearmanCorrelationRDistanceMeasure extends DistanceMeasure
         super(other);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see utils.Distance#getDistance(double[], double[])
-     */
     @Override
     public double getDistanceHelper(double[] point1, double[] point2,
             final IRengine rEngine) throws RException, ROperationNotSupported, InterruptedException {
@@ -74,24 +69,13 @@ public class AbsoluteSpearmanCorrelationRDistanceMeasure extends DistanceMeasure
         return true;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.clusteval.data.distance.DistanceMeasure#isSymmetric()
-     */
     @Override
     public boolean isSymmetric() {
         return true;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see data.distance.DistanceMeasure#getDistances(double[][])
-     */
     @Override
-    public double[][] getDistancesHelper(
-            IConversionInputToStandardConfiguration config, double[][] matrix,
+    public double[][] getDistancesHelper(InputToStd config, double[][] matrix,
             final IRengine rEngine, int firstRow, int lastRow)
             throws RException, ROperationNotSupported, InterruptedException {
         return rEngine

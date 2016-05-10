@@ -123,7 +123,7 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
      *                The configuration to use to convert the passed dataset.
      * @return The converted dataset.
      * @throws IOException
-     *                                       Signals that an I/O exception has occurred.
+     * Signals that an I/O exception has occurred.
      * @throws InvalidDataSetFormatException
      * @throws RegisterException
      * @throws RNotAvailableException
@@ -132,7 +132,7 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
      */
     @Override
     public final IDataSet convertToStandardFormat(IDataSet dataSet,
-            IConversionInputToStandardConfiguration config)
+            InputToStd config)
             throws IOException,
                    InvalidDataSetFormatException, RegisterException,
                    RNotAvailableException,
@@ -164,12 +164,11 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
      * @param config
      *                      The configuration to use to convert the passed dataset.
      * @return The converted dataset.
-     * @throws IOException
-     *                                       Signals that an I/O exception has occurred.
+     * @throws IOException Signals that an I/O exception has occurred.
      * @throws InvalidDataSetFormatException
      * @throws RegisterException
      */
-    public final IDataSet convertToThisFormat(IDataSet dataSet, IDataSetFormat dataSetFormat, IConversionConfiguration config)
+    public final IDataSet convertToThisFormat(IDataSet dataSet, IDataSetFormat dataSetFormat, ConvConf config)
             throws IOException, InvalidDataSetFormatException, RegisterException, UnknownProviderException {
         final IDataSetFormatParser parser = getDataSetFormatParser();
         if (parser == null) {
@@ -245,7 +244,7 @@ public abstract class DataSetFormat extends RepositoryObject implements IDataSet
             return this.getClass().getConstructor(this.getClass())
                     .newInstance(this);
         } catch (IllegalArgumentException | SecurityException | InstantiationException |
-                IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                 IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
         this.log.warn("Cloning instance of class "

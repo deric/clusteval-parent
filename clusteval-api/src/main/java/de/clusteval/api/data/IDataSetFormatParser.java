@@ -54,7 +54,7 @@ public interface IDataSetFormatParser extends IRepositoryObject {
      * @throws InterruptedException
      * @throws InvalidParameterException
      */
-    IDataSet convertToStandardFormat(IDataSet dataSet, IConversionInputToStandardConfiguration config)
+    IDataSet convertToStandardFormat(IDataSet dataSet, InputToStd config)
             throws IOException, InvalidDataSetFormatException, RegisterException,
                    RNotAvailableException, InvalidParameterException, InterruptedException, UnknownProviderException;
 
@@ -105,7 +105,7 @@ public interface IDataSetFormatParser extends IRepositoryObject {
      * @throws InvalidDataSetFormatException
      * @throws RegisterException
      */
-    IDataSet convertToThisFormat(IDataSet dataSet, IDataSetFormat dataSetFormat, IConversionConfiguration config)
+    IDataSet convertToThisFormat(IDataSet dataSet, IDataSetFormat dataSetFormat, ConvConf config)
             throws IOException, InvalidDataSetFormatException, RegisterException, UnknownProviderException;
 
 }

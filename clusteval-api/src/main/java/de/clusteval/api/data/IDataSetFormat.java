@@ -66,14 +66,14 @@ public interface IDataSetFormat extends IRepositoryObject {
      *                The configuration to use to convert the passed dataset.
      * @return The converted dataset.
      * @throws IOException
-     *                                       Signals that an I/O exception has occurred.
+     * Signals that an I/O exception has occurred.
      * @throws InvalidDataSetFormatException
      * @throws RegisterException
      * @throws RNotAvailableException
      * @throws InterruptedException
      * @throws InvalidParameterException
      */
-    IDataSet convertToStandardFormat(IDataSet dataSet, IConversionInputToStandardConfiguration config)
+    IDataSet convertToStandardFormat(IDataSet dataSet, InputToStd config)
             throws IOException,
                    InvalidDataSetFormatException, RegisterException,
                    RNotAvailableException, InvalidParameterException, InterruptedException, UnknownProviderException;
@@ -167,12 +167,12 @@ public interface IDataSetFormat extends IRepositoryObject {
      *                      The configuration to use to convert the passed dataset.
      * @return The converted dataset.
      * @throws IOException
-     *                                       Signals that an I/O exception has occurred.
+     * Signals that an I/O exception has occurred.
      * @throws InvalidDataSetFormatException
      * @throws RegisterException
      * @throws UnknownProviderException
      */
-    IDataSet convertToThisFormat(IDataSet dataSet, IDataSetFormat dataSetFormat, IConversionConfiguration config)
+    IDataSet convertToThisFormat(IDataSet dataSet, IDataSetFormat dataSetFormat, ConvConf config)
             throws IOException, InvalidDataSetFormatException,
                    RegisterException, UnknownProviderException;
 

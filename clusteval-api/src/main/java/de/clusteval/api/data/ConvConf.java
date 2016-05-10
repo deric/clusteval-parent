@@ -17,6 +17,6 @@ package de.clusteval.api.data;
  * @author Christian Wiwie
  *
  */
-public interface IConversionConfiguration {
+public interface ConvConf {
 
 }

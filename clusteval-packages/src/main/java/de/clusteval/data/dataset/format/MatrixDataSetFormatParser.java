@@ -19,10 +19,9 @@ import de.clusteval.api.data.DataMatrix;
 import de.clusteval.api.data.DataSetAttributeParser;
 import de.clusteval.api.data.DataSetFormatFactory;
 import de.clusteval.api.data.DataSetFormatParser;
-import de.clusteval.api.data.IConversionConfiguration;
-import de.clusteval.api.data.IConversionInputToStandardConfiguration;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetFormat;
+import de.clusteval.api.data.InputToStd;
 import de.clusteval.api.data.RelativeDataSet;
 import de.clusteval.api.data.RelativeDataSetFormat;
 import de.clusteval.api.data.WEBSITE_VISIBILITY;
@@ -38,6 +37,7 @@ import java.io.IOException;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
+import de.clusteval.api.data.ConvConf;
 
 /**
  * @author Christian Wiwie
@@ -47,7 +47,7 @@ import java.util.List;
 public class MatrixDataSetFormatParser extends DataSetFormatParser {
 
     @Override
-    public IDataSet convertToStandardFormat(IDataSet dataSet, IConversionInputToStandardConfiguration config)
+    public IDataSet convertToStandardFormat(IDataSet dataSet, InputToStd config)
             throws IOException, RegisterException, InvalidParameterException, RNotAvailableException,
                    InterruptedException, UnknownProviderException {
 
@@ -119,7 +119,7 @@ public class MatrixDataSetFormatParser extends DataSetFormatParser {
     }
 
     @Override
-    public IDataSet convertToThisFormat(IDataSet dataSet, IDataSetFormat dataSetFormat, IConversionConfiguration config)
+    public IDataSet convertToThisFormat(IDataSet dataSet, IDataSetFormat dataSetFormat, ConvConf config)
             throws InvalidDataSetFormatException {
         throw new InvalidDataSetFormatException("Cannot convert to this format");
     }
