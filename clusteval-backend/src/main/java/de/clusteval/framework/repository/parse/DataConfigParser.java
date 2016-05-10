@@ -59,13 +59,6 @@ import org.apache.commons.configuration.ConfigurationException;
  */
 class DataConfigParser extends RepositoryObjectParser<DataConfig> {
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * de.clusteval.framework.repository.RepositoryObjectParser#parseFromFile
-     * (java.io.File)
-     */
     @Override
     public void parseFromFile(File absPath)
             throws NoRepositoryFoundException, ConfigurationException,

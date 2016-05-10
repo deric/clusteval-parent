@@ -10,16 +10,17 @@
  ***************************************************************************** */
 package de.clusteval.api.program;
 
-import de.clusteval.api.program.Program;
 import de.clusteval.api.IContext;
 import de.clusteval.api.data.IDataConfig;
-import de.clusteval.api.program.IProgramConfig;
-import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.data.IDataSetFormat;
+import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.run.IRunResultFormat;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * A type of program that corresponds to executables on the filesystem.
@@ -96,11 +97,6 @@ public class StandaloneProgram extends Program {
         this.envVars = new HashMap<>(program.envVars);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see program.Program#clone()
-     */
     @Override
     public StandaloneProgram duplicate() {
         try {
@@ -112,13 +108,6 @@ public class StandaloneProgram extends Program {
         return null;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see program.Program#exec(program.ProgramConfig, java.lang.String,
-     * java.util.Map)
-     */
-    @SuppressWarnings("unused")
     @Override
     public Process exec(final IDataConfig dataConfig,
             final IProgramConfig programConfig, final String[] invocationLine,
@@ -140,11 +129,6 @@ public class StandaloneProgram extends Program {
                 .getParentFile());
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see program.Program#getName()
-     */
     @Override
     public String getName() {
         return this.alias;
@@ -153,6 +137,21 @@ public class StandaloneProgram extends Program {
     @Override
     public IContext getContext() {
         return this.context;
+    }
+
+    @Override
+    public String getInvocationFormat() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Set<IDataSetFormat> getCompatibleDataSetFormats() throws UnknownProviderException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public IRunResultFormat getRunResultFormat() throws UnknownProviderException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

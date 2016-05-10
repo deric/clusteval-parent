@@ -102,11 +102,6 @@ public class RProgramConfig extends ProgramConfig {
         super(programConfig);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see program.ProgramConfig#clone()
-     */
     @Override
     public RProgramConfig clone() {
         try {

@@ -198,11 +198,6 @@ public abstract class SupervisorThread extends Thread implements ISupervisorThre
         }
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see java.lang.Thread#interrupt()
-     */
     @Override
     // TODO: fixme: not all threads (iteration/runrunnable threads?!) are terminated
     public void interrupt() {

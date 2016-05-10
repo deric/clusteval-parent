@@ -12,10 +12,8 @@ package de.clusteval.program;
 
 import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.RegisterException;
-import de.clusteval.api.r.IRProgram;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.ISupervisorThread;
-import de.clusteval.program.r.RProgramFinderThread;
 import de.clusteval.utils.Finder;
 import de.clusteval.utils.FinderThread;
 
@@ -43,27 +41,11 @@ public class ProgramConfigFinderThread extends FinderThread<IProgramConfig> {
                 checkOnce);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.wiwie.wiutils.utils.FinderThread#beforeFind()
-     */
     @Override
     protected void beforeFind() {
-
-        if (!this.repository.isInitialized(IRProgram.class)) {
-            this.supervisorThread.getThread(RProgramFinderThread.class)
-                    .waitFor();
-        }
-
         super.beforeFind();
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.wiwie.wiutils.utils.FinderThread#getFinder()
-     */
     @Override
     public Finder<IProgramConfig> getFinder() throws RegisterException {
         return new ProgramConfigFinder(repository);

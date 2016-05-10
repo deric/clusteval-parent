@@ -17,14 +17,10 @@
 package de.clusteval.api.r;
 
 import de.clusteval.api.data.IDataConfig;
-import de.clusteval.api.data.IDataSetFormat;
-import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.IProgram;
 import de.clusteval.api.program.IProgramConfig;
-import de.clusteval.api.run.IRunResultFormat;
 import java.io.IOException;
 import java.util.Map;
-import java.util.Set;
 
 /**
  *
@@ -37,25 +33,6 @@ public interface IRProgram extends IProgram {
      * @return unique program identifier
      */
     String getName();
-
-    /**
-     * @return The format of the invocation line of this RProgram.
-     */
-    String getInvocationFormat();
-
-    /**
-     * @return A set containing dataset formats, which this r program can take
-     *         as input.
-     * @throws UnknownProviderException
-     */
-    Set<IDataSetFormat> getCompatibleDataSetFormats() throws UnknownProviderException;
-
-    /**
-     * @return The runresult formats, the results of this r program will be
-     *         generated in.
-     * @throws UnknownProviderException
-     */
-    IRunResultFormat getRunResultFormat() throws UnknownProviderException;
 
     IRProgram clone();
 

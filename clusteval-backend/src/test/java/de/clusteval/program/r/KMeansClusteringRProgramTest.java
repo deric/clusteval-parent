@@ -38,15 +38,6 @@ import org.junit.Test;
  */
 public class KMeansClusteringRProgramTest extends AbstractClustEvalTest {
 
-    /**
-     * @throws RepositoryAlreadyExistsException
-     * @throws InvalidRepositoryException
-     * @throws RepositoryConfigurationException
-     * @throws IOException
-     * @throws RunRunnableInitializationException
-     * @throws java.lang.InterruptedException
-     * @throws RunInitializationException
-     */
     @Test
     public void testApplyToRelativeDataSet()
             throws RepositoryAlreadyExistsException, InvalidRepositoryException,

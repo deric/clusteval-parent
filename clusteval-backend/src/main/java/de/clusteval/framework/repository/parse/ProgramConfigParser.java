@@ -40,13 +40,11 @@ import de.clusteval.api.opt.InvalidOptimizationParameterException;
 import de.clusteval.api.opt.UnknownParameterOptimizationMethodException;
 import de.clusteval.api.program.IProgram;
 import de.clusteval.api.program.IProgramParameter;
-import de.clusteval.api.program.Program;
 import de.clusteval.api.program.ProgramConfig;
 import de.clusteval.api.program.ProgramParameter;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.program.StandaloneProgram;
-import de.clusteval.api.r.IRProgram;
-import de.clusteval.api.r.RProgramFactory;
+import de.clusteval.api.r.ProgramFactory;
 import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.run.IRunResultFormat;
 import de.clusteval.api.run.IncompatibleParameterOptimizationMethodException;
@@ -116,8 +114,9 @@ class ProgramConfigParser extends RepositoryObjectParser<ProgramConfig> {
         IRunResultFormat runresultFormat;
         Set<IDataSetFormat> compatibleDataSetFormats;
         boolean expectsNormalizedDataSet = false;
+        ProgramFactory pf = ProgramFactory.getInstance();
         if (type.equals("standalone")) {
-            String program = FileUtils.buildPath(repo.getBasePath(Program.class), getProps().getString("program"));
+            String program = FileUtils.buildPath(repo.getBasePath(IProgram.class), getProps().getString("program"));
 
             File programFile = new File(program);
             if (!(programFile).exists()) {
@@ -155,12 +154,11 @@ class ProgramConfigParser extends RepositoryObjectParser<ProgramConfig> {
             }
 
             programP = new StandaloneProgram(repo, context, true, changeDate, programFile, alias, envVars);
-        } else if (repo.isClassRegistered(IRProgram.class, "de.clusteval.program.r." + type)) {
-            programP = RProgramFactory.parseFromString(repo, type);
+        } else if (pf.hasProvider(type)) {
+            programP = ProgramFactory.parseFromString(repo, type);
 
-            IRProgram rProgram = (IRProgram) programP;
-            compatibleDataSetFormats = rProgram.getCompatibleDataSetFormats();
-            runresultFormat = rProgram.getRunResultFormat();
+            compatibleDataSetFormats = programP.getCompatibleDataSetFormats();
+            runresultFormat = programP.getRunResultFormat();
         } else {
             throw new UnknownProgramTypeException("The type " + type + " is unknown.");
         }

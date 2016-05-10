@@ -708,7 +708,6 @@ public class Repository implements IRepository {
 
     @Override
     public String getBasePath(final Class<? extends IRepositoryObject> c) {
-        System.out.println("searching for " + c.getName());
         if (this.staticRepositoryEntities.containsKey(c)) {
             return this.staticRepositoryEntities.get(c).getBasePath();
         }

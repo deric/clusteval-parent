@@ -31,7 +31,6 @@ import de.clusteval.data.dataset.DataSetFinderThread;
 import de.clusteval.data.goldstandard.GoldStandardConfigFinderThread;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.program.ProgramConfigFinderThread;
-import de.clusteval.program.r.RProgramFinderThread;
 import de.clusteval.run.RunFinderThread;
 import de.clusteval.run.result.RunResultFinderThread;
 import de.clusteval.run.result.postprocessing.RunResultPostprocessorFinderThread;
@@ -136,7 +135,7 @@ public class RepositorySupervisorThread extends SupervisorThread {
                         DataSetConfigFinderThread.class,
                         GoldStandardConfigFinderThread.class,
                         DataConfigFinderThread.class,
-                        RProgramFinderThread.class,
+                        //RProgramFinderThread.class,
                         ProgramConfigFinderThread.class, RunFinderThread.class,
                         //DataSetGeneratorFinderThread.class,
                         //DataRandomizerFinderThread.class,
@@ -158,7 +157,7 @@ public class RepositorySupervisorThread extends SupervisorThread {
                         DataSetConfigFinderThread.class,
                         GoldStandardConfigFinderThread.class,
                         DataConfigFinderThread.class,
-                        RProgramFinderThread.class,
+                        // RProgramFinderThread.class,
                         ProgramConfigFinderThread.class,
                         RunFinderThread.class
                 ), threadSleepTimes,

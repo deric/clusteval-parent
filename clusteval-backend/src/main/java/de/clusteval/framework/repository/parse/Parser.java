@@ -19,6 +19,8 @@ package de.clusteval.framework.repository.parse;
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.data.DataConfig;
 import de.clusteval.api.data.DataRandomizerFactory;
+import de.clusteval.api.data.DataSet;
+import de.clusteval.api.data.DataSetConfig;
 import de.clusteval.api.data.DataSetConfigNotFoundException;
 import de.clusteval.api.data.DataSetConfigurationException;
 import de.clusteval.api.data.GoldStandard;
@@ -110,7 +112,6 @@ public abstract class Parser<P extends IRepositoryObject> { // implements IParse
      * @param c
      * @return
      */
-    @SuppressWarnings("unchecked")
     protected static <T extends IRepositoryObject> Parser<T> getParserForClass(final Class<T> c) {
         if (c.equals(ClusteringRun.class)) {
             return (Parser<T>) new ClusteringRunParser();
@@ -126,19 +127,19 @@ public abstract class Parser<P extends IRepositoryObject> { // implements IParse
             return (Parser<T>) new RunDataAnalysisRunParser();
         } else if (c.equals(RobustnessAnalysisRun.class)) {
             return (Parser<T>) new RobustnessAnalysisRunParser();
-        } else if (c.equals(IDataSetConfig.class)) {
+        } else if (c.equals(DataSetConfig.class) || c.equals(IDataSetConfig.class)) {
             return (Parser<T>) new DataSetConfigParser();
         } else if (c.equals(RunResultDataSetConfig.class)) {
             return (Parser<T>) new RunResultDataSetConfigParser();
-        } else if (c.equals(IDataSet.class)) {
+        } else if (c.equals(DataSet.class) || c.equals(IDataSet.class)) {
             return (Parser<T>) new DataSetParser();
-        } else if (c.equals(IGoldStandardConfig.class)) {
+        } else if (c.equals(GoldStandardConfig.class) || c.equals(IGoldStandardConfig.class)) {
             return (Parser<T>) new GoldStandardConfigParser();
-        } else if (c.equals(IProgramConfig.class)) {
+        } else if (c.equals(IProgramConfig.class) || c.equals(ProgramConfig.class)) {
             return (Parser<T>) new ProgramConfigParser();
         } else if (c.equals(IRun.class)) {
             return (Parser<T>) new RunParser<>();
-        } else if (c.equals(IDataConfig.class)) {
+        } else if (c.equals(IDataConfig.class) || c.equals(DataConfig.class)) {
             return (Parser<T>) new DataConfigParser();
         }
         throw new RuntimeException("could not find parser for " + c.getName());
@@ -240,13 +241,6 @@ class AnalysisRunParser<T extends AnalysisRun<?>> extends RunParser<T> {
 
 class ClusteringRunParser extends ExecutionRunParser<ClusteringRun> {
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * de.clusteval.framework.repository.ExecutionRunParser#parseFromFile(java
-     * .io.File)
-     */
     @Override
     public void parseFromFile(File absPath)
             throws ConfigurationException, NoRepositoryFoundException, RunException,
@@ -948,7 +942,6 @@ class RepositoryObjectParser<T extends IRepositoryObject> extends Parser<T> {
     }
 
     protected HierarchicalINIConfiguration getProps() throws ConfigurationException {
-        log.debug("getting props " + props);
         if (props == null) {
             props = new HierarchicalINIConfiguration(absPath.getAbsolutePath());
         }

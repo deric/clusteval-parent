@@ -18,6 +18,7 @@ package de.clusteval.api.r;
 
 import de.clusteval.api.factory.ServiceFactory;
 import de.clusteval.api.factory.UnknownProviderException;
+import de.clusteval.api.program.IProgram;
 import de.clusteval.api.repository.IRepository;
 import java.io.File;
 import java.util.Collection;
@@ -30,39 +31,39 @@ import org.openide.util.Lookup;
  *
  * @author deric
  */
-public class RProgramFactory extends ServiceFactory<IRProgram> {
+public class ProgramFactory extends ServiceFactory<IProgram> {
 
-    private static RProgramFactory instance;
+    private static ProgramFactory instance;
 
-    public static RProgramFactory getInstance() {
+    public static ProgramFactory getInstance() {
         if (instance == null) {
-            instance = new RProgramFactory();
+            instance = new ProgramFactory();
         }
         return instance;
     }
 
-    private RProgramFactory() {
+    private ProgramFactory() {
         providers = new LinkedHashMap<>();
-        Collection<? extends IRProgram> list = Lookup.getDefault().lookupAll(IRProgram.class);
-        for (IRProgram c : list) {
+        Collection<? extends IProgram> list = Lookup.getDefault().lookupAll(IProgram.class);
+        for (IProgram c : list) {
             providers.put(c.getName(), c);
             providers.put(c.getClass().getSimpleName(), c);
         }
         sort();
     }
 
-    public static IRProgram parseFromString(String name) throws UnknownProviderException {
+    public static IProgram parseFromString(String name) throws UnknownProviderException {
         return getInstance().getProvider(name);
     }
 
-    public static IRProgram parseFromString(IRepository repo, String name) throws UnknownProviderException {
-        IRProgram inst = getInstance().getProvider(name);
+    public static IProgram parseFromString(IRepository repo, String name) throws UnknownProviderException {
+        IProgram inst = getInstance().getProvider(name);
         inst.init(repo, System.currentTimeMillis(), new File(name));
         return inst;
     }
 
-    public static List<IRProgram> parseFromString(IRepository repo, String[] names) throws UnknownProviderException {
-        List<IRProgram> res = new LinkedList<>();
+    public static List<IProgram> parseFromString(IRepository repo, String[] names) throws UnknownProviderException {
+        List<IProgram> res = new LinkedList<>();
         for (String name : names) {
             res.add(parseFromString(repo, name));
         }
