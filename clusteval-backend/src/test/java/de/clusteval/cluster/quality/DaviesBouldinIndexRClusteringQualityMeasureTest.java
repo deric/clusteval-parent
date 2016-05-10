@@ -82,9 +82,8 @@ public class DaviesBouldinIndexRClusteringQualityMeasureTest extends AbstractClu
             ds.preprocessAndConvertTo(context,
                     DataSetFormatFactory.parseFromString(this.getRepository(),
                             "SimMatrixDataSetFormat"),
-                    new InputToStd(DistanceMeasureFactory
-                            .parseFromString(getRepository(),
-                                    "EuclidianDistanceMeasure"),
+                    new InputToStd(DistanceMeasureFactory.parseFromString(getRepository(),
+                            "EuclidianDistanceMeasure"),
                             Precision.DOUBLE,
                             new ArrayList<>(),
                             new ArrayList<>()),

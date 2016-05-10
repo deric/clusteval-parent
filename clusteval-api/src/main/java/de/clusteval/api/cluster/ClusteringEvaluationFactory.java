@@ -45,6 +45,7 @@ public class ClusteringEvaluationFactory extends ServiceFactory<ClusteringEvalua
         Collection<? extends ClusteringEvaluation> list = Lookup.getDefault().lookupAll(ClusteringEvaluation.class);
         for (ClusteringEvaluation c : list) {
             providers.put(c.getName(), c);
+            providers.put(c.getClass().getSimpleName(), c);
         }
         sort();
     }

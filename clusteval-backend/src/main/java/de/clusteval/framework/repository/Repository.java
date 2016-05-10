@@ -1705,32 +1705,6 @@ public class Repository implements IRepository {
     }
 
     /**
-     * This method registers a dataset format parser.
-     *
-     * @param dsFormatParser The dataset format parser to register.
-     * @return True, if the dataset format parser replaced an old object.
-     */
-    @Override
-    public boolean registerDataSetFormatParser(final Class<? extends IDataSetFormatParser> dsFormatParser) {
-        return ((DataSetFormatRepositoryEntity) this.dynamicRepositoryEntities.get(IDataSetFormat.class))
-                .registerDataSetFormatParser(dsFormatParser);
-    }
-
-    /**
-     * This method checks whether a parser has been registered for the given
-     * dataset format class.
-     *
-     * @param dsFormat The class for which we want to know whether a parser has
-     *                 been registered.
-     * @return True, if the parser has been registered.
-     */
-    @Override
-    public boolean isRegisteredForDataSetFormat(final Class<? extends IDataSetFormat> dsFormat) {
-        return ((DataSetFormatRepositoryEntity) this.dynamicRepositoryEntities.get(IDataSetFormat.class))
-                .isRegisteredForDataSetFormat(dsFormat);
-    }
-
-    /**
      * This method registers a new runresult format parser class.
      *
      * @param runResultFormatParser The new class to register.

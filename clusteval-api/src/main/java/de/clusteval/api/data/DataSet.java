@@ -153,13 +153,6 @@ public abstract class DataSet extends RepositoryObject implements IDataSet, IRep
         locks = Striped.lock(15);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * de.clusteval.framework.repository.RepositoryObject#setAbsolutePath(java
-     * .io.File)
-     */
     @Override
     public void setAbsolutePath(File absFilePath) {
         super.setAbsolutePath(absFilePath);
@@ -256,21 +249,11 @@ public abstract class DataSet extends RepositoryObject implements IDataSet, IRep
         return getMajorName() + "/" + getMinorName();
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see java.lang.Object#toString()
-     */
     @Override
     public String toString() {
         return getFullName();
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.wiwie.wiutils.utils.RepositoryObject#copyTo(java.io.File, boolean)
-     */
     @Override
     public boolean copyTo(File copyDestination, final boolean overwrite) {
         return copyTo(copyDestination, overwrite, false);
@@ -289,11 +272,6 @@ public abstract class DataSet extends RepositoryObject implements IDataSet, IRep
         return result;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.wiwie.wiutils.utils.RepositoryObject#copyToFolder(java.io.File, boolean)
-     */
     @Override
     public boolean copyToFolder(File copyFolderDestination, final boolean overwrite) {
         return this.datasetFormat.copyDataSetToFolder(this, copyFolderDestination, overwrite);
@@ -310,7 +288,6 @@ public abstract class DataSet extends RepositoryObject implements IDataSet, IRep
      * datasets in {@link RelativeDataSet#similarities}
      *
      * @return true, if successful
-     * @throws UnknownDataSetFormatException
      * @throws InvalidDataSetFormatException
      * @throws IOException
      * @throws IllegalArgumentException
@@ -333,7 +310,6 @@ public abstract class DataSet extends RepositoryObject implements IDataSet, IRep
      *
      * @param precision
      * @return true, if successful
-     * @throws UnknownDataSetFormatException
      * @throws InvalidDataSetFormatException
      * @throws IOException
      * @throws IllegalArgumentException
@@ -404,21 +380,6 @@ public abstract class DataSet extends RepositoryObject implements IDataSet, IRep
                     && targetFormat instanceof AbsoluteDataSetFormat) {
                 throw new FormatConversionException(
                         "No conversion from relative to absolute dataset format possible.");
-            }
-
-            // check, whether dataset format parsers are registered.
-            if ((!sourceFormat.equals(context.getStandardInputFormat()) && !this
-                    .getRepository().isRegisteredForDataSetFormat(sourceFormat.getClass()))
-                    || (!targetFormat.equals(context.getStandardInputFormat()) && !this
-                    .getRepository().isRegisteredForDataSetFormat(targetFormat.getClass()))) {
-                throw new FormatConversionException(
-                        "No conversion from "
-                        + sourceFormat
-                        + " to "
-                        + targetFormat
-                        + " via internal standard format "
-                        + context.getStandardInputFormat()
-                        + " possible, because of missing dataset format parsers.");
             }
 
             // 13.04.2013: update the original dataset of the dataset to itself
@@ -515,7 +476,6 @@ public abstract class DataSet extends RepositoryObject implements IDataSet, IRep
      * @throws IOException Signals that an I/O exception has occurred.
      * @throws InvalidDataSetFormatException
      * @throws RegisterException
-     * @throws UnknownDataSetFormatException
      * @throws FormatConversionException
      */
     public IDataSet convertStandardToDirectly(final IContext context,
