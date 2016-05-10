@@ -132,11 +132,6 @@ public class InputToStd implements IConversionInputToStandardConfiguration {
                 && this.similarityPrecision.equals(other.similarityPrecision);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see java.lang.Object#hashCode()
-     */
     @Override
     public int hashCode() {
         return (this.distanceMeasureAbsoluteToRelative.toString() + this.similarityPrecision

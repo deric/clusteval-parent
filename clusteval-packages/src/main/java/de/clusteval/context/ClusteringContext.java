@@ -24,6 +24,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import org.openide.util.Exceptions;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * This is the default context of the framework, concerning clustering tasks.
@@ -31,10 +32,15 @@ import org.openide.util.Exceptions;
  * @author Christian Wiwie
  *
  */
+@ServiceProvider(service = IContext.class)
 public class ClusteringContext extends AbsContext implements IContext {
 
     private IDataSetFormat df;
     private IRunResultFormat rf;
+
+    public ClusteringContext() {
+        super();
+    }
 
     /**
      * @param repository

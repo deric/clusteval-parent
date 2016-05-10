@@ -54,6 +54,6 @@ public interface IDataSetConfig extends IRepositoryObject {
      */
     void setDataSet(IDataSet dataset);
 
-    IConversionStandardToInputConfiguration getConversionStandardToInputConfiguration();
+    StdToInput getConversionStandardToInputConfiguration();
 
 }

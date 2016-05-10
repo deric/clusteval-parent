@@ -14,7 +14,7 @@ package de.clusteval.api.data;
  * @author Christian Wiwie
  *
  */
-public class StdToInput implements IConversionStandardToInputConfiguration {
+public class StdToInput implements IConversionConfiguration {
 
     public StdToInput() {
         super();
@@ -31,11 +31,6 @@ public class StdToInput implements IConversionStandardToInputConfiguration {
         super();
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see java.lang.Object#clone()
-     */
     @Override
     public StdToInput clone() {
         return new StdToInput(this);

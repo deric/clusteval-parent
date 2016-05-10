@@ -19,7 +19,6 @@ import de.clusteval.api.cluster.ClusteringQualitySet;
 import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.data.AbsoluteDataSet;
 import de.clusteval.api.data.IConversionInputToStandardConfiguration;
-import de.clusteval.api.data.IConversionStandardToInputConfiguration;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetConfig;
@@ -27,6 +26,7 @@ import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.data.IGoldStandardConfig;
 import de.clusteval.api.data.RelativeDataSet;
+import de.clusteval.api.data.StdToInput;
 import de.clusteval.api.exceptions.FormatConversionException;
 import de.clusteval.api.exceptions.IncompatibleDataSetFormatException;
 import de.clusteval.api.exceptions.IncompleteGoldStandardException;
@@ -210,7 +210,7 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
 
         IConversionInputToStandardConfiguration configInputToStandard = dataConfig.getDatasetConfig()
                 .getConversionInputToStandardConfiguration();
-        IConversionStandardToInputConfiguration configStandardToInput = dataConfig.getDatasetConfig()
+        StdToInput configStandardToInput = dataConfig.getDatasetConfig()
                 .getConversionStandardToInputConfiguration();
 
         /*

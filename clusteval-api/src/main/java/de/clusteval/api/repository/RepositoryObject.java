@@ -70,6 +70,8 @@ public abstract class RepositoryObject implements RepositoryListener, IRepositor
     protected Logger log;
 
     public RepositoryObject() {
+        this.listener = Collections.synchronizedSet(new HashSet<RepositoryListener>());
+        this.log = LoggerFactory.getLogger(this.getClass());
     }
 
     /**

@@ -24,6 +24,10 @@ import java.lang.reflect.InvocationTargetException;
  */
 public abstract class AbsContext extends RepositoryObject implements IContext {
 
+    public AbsContext() {
+        super();
+    }
+
     /**
      * @param repository
      * @param register
@@ -44,13 +48,6 @@ public abstract class AbsContext extends RepositoryObject implements IContext {
         this(other.repository, false, other.changeDate, other.absPath);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * de.clusteval.framework.repository.RepositoryObject#equals(java.lang.Object
-     * )
-     */
     @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof AbsContext)) {
@@ -61,11 +58,6 @@ public abstract class AbsContext extends RepositoryObject implements IContext {
         return this.getName().equals(other.getName());
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.clusteval.framework.repository.RepositoryObject#hashCode()
-     */
     @Override
     public int hashCode() {
         return this.getName().hashCode();
@@ -77,7 +69,7 @@ public abstract class AbsContext extends RepositoryObject implements IContext {
             return this.getClass().getConstructor(this.getClass())
                     .newInstance(this);
         } catch (IllegalArgumentException | SecurityException | InstantiationException |
-                IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                 IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
         this.log.warn("Cloning instance of class "
