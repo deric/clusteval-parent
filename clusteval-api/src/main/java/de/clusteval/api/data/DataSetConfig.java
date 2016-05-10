@@ -122,11 +122,6 @@ public class DataSetConfig extends DumpableRepositoryObject implements IDataSetC
                 .clone();
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see framework.repository.RepositoryObject#clone()
-     */
     @Override
     public DataSetConfig clone() {
         try {

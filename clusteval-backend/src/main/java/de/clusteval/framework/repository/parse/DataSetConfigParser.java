@@ -153,7 +153,7 @@ class DataSetConfigParser extends RepositoryObjectParser<DataSetConfig> {
 
             result = new DataSetConfig(repo, changeDate, absPath, dataSet, configInputToStandard,
                     configStandardToInput);
-            result = repo.getRegisteredObject(result);
+            //result = repo.getRegisteredObject(result);
         } catch (NoSuchElementException e) {
             throw new DataSetConfigurationException(e);
         }

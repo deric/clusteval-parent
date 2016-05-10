@@ -16,22 +16,18 @@
  */
 package de.clusteval.framework.repository.parse;
 
+import de.clusteval.api.repository.RepositoryObject;
 import java.util.HashMap;
 import java.util.Map;
-
-import de.clusteval.api.repository.RepositoryObject;
 
 //TODO: rename
 public class ParserMap {
 
     protected Map<Class<? extends RepositoryObject>, Parser<? extends RepositoryObject>> map;
 
-    /**
-     *
-     */
     public ParserMap() {
         super();
-        this.map = new HashMap<Class<? extends RepositoryObject>, Parser<? extends RepositoryObject>>();
+        this.map = new HashMap<>();
     }
 
     @SuppressWarnings("unchecked")

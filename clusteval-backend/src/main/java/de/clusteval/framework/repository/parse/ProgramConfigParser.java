@@ -284,6 +284,6 @@ class ProgramConfigParser extends RepositoryObjectParser<ProgramConfig> {
             }
         }
 
-        result = repo.getRegisteredObject(result);
+        //result = repo.getRegisteredObject(result);
     }
 }

@@ -263,7 +263,7 @@ class ClusteringRunParser extends ExecutionRunParser<ClusteringRun> {
 
         result = new ClusteringRun(repo, context, changeDate, absPath, programConfigs, dataConfigs, qualityMeasures,
                 runParamValues, postprocessor, maxExecutionTimes);
-        result = repo.getRegisteredObject(result, false);
+        //result = repo.getRegisteredObject(result, false);
     }
 }
 
@@ -329,7 +329,7 @@ class RobustnessAnalysisRunParser extends ExecutionRunParser<RobustnessAnalysisR
         result = new RobustnessAnalysisRun(repo, context, changeDate, absPath, uniqueRunIdentifiers, programConfigs,
                 dataConfigs, originalDataConfigs, qualityMeasures, runParamValues, postprocessor, randomizer, paramSets,
                 numberOfRandomizedDataSets, maxExecutionTimes);
-        result = repo.getRegisteredObject(result, false);
+        //result = repo.getRegisteredObject(result, false);
     }
 
     /*
@@ -437,7 +437,7 @@ class DataAnalysisRunParser extends AnalysisRunParser<DataAnalysisRun> {
         }
 
         result = new DataAnalysisRun(repo, context, changeDate, absPath, dataConfigs, dataStatistics);
-        result = repo.getRegisteredObject(result, false);
+        //result = repo.getRegisteredObject(result, false);
     }
 }
 
@@ -523,7 +523,7 @@ class ExecutionRunParser<T extends ExecutionRun> extends RunParser<T> {
                         + ") and program context (" + newProgramConfig.getProgram().getContext() + ")");
             }
 
-            newProgramConfig = repo.getRegisteredObject(newProgramConfig);
+            //newProgramConfig = repo.getRegisteredObject(newProgramConfig);
             programConfigs.add(newProgramConfig);
 
             /**
@@ -690,7 +690,7 @@ class InternalParameterOptimizationRunParser extends ExecutionRunParser<Internal
 
         result = new InternalParameterOptimizationRun(repo, context, changeDate, absPath, programConfigs, dataConfigs,
                 qualityMeasures, runParamValues, postprocessor, maxExecutionTimes);
-        result = repo.getRegisteredObject(result, false);
+        //result = repo.getRegisteredObject(result, false);
 
     }
 }
@@ -982,7 +982,7 @@ class RunAnalysisRunParser extends AnalysisRunParser<RunAnalysisRun> {
         uniqueRunIdentifiers.addAll(Arrays.asList(getProps().getStringArray("uniqueRunIdentifiers")));
 
         result = new RunAnalysisRun(repo, context, changeDate, absPath, uniqueRunIdentifiers, runStatistics);
-        result = repo.getRegisteredObject(result, false);
+        //result = repo.getRegisteredObject(result, false);
     }
 ;
 
@@ -1014,7 +1014,7 @@ class RunDataAnalysisRunParser extends AnalysisRunParser<RunDataAnalysisRun> {
 
         result = new RunDataAnalysisRun(repo, context, changeDate, absPath, uniqueRunAnalysisRunIdentifiers,
                 uniqueDataAnalysisRunIdentifiers, runDataStatistics);
-        result = repo.getRegisteredObject(result, false);
+        //result = repo.getRegisteredObject(result, false);
 
     }
 }

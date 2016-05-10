@@ -105,7 +105,7 @@ class DataConfigParser extends RepositoryObjectParser<DataConfig> {
             }
 
             result = new DataConfig(repo, changeDate, absPath, dataSetConfig, goldStandardConfig);
-            result = repo.getRegisteredObject(result);
+            //result = repo.getRegisteredObject(result);
         } catch (NoSuchElementException e) {
             throw new DataConfigurationException(e);
         }

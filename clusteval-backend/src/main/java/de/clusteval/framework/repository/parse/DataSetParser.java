@@ -172,7 +172,8 @@ class DataSetParser extends RepositoryObjectParser<IDataSet> {
                 result = new AbsoluteDataSet(repo, true, changeDate, absPath, alias, (AbsoluteDataSetFormat) dsFormat,
                         dsType, websiteVisibility);
             }
-            result = repo.getRegisteredObject(result);
+            //wtf? why replace just created object?
+            //result = repo.getRegisteredObject(result);
             LoggerFactory.getLogger(IDataSet.class).debug("Dataset parsed");
         } catch (IOException e) {
             throw new UnknownProviderException(e);
