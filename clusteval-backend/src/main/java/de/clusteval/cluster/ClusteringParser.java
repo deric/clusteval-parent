@@ -58,9 +58,9 @@ public class ClusteringParser extends TextFileParser {
      *
      * @param repository
      *
-     * @param absFilePath the abs file path
+     * @param absFilePath    the abs file path
      * @param parseQualities True, if the qualities of the clusterings should
-     * also be parsed. Those will be taken from .qual-files.
+     *                       also be parsed. Those will be taken from .qual-files.
      * @throws IOException Signals that an I/O exception has occurred.
      */
     public ClusteringParser(final IRepository repository,
@@ -74,10 +74,10 @@ public class ClusteringParser extends TextFileParser {
     }
 
     /*
-	 * (non-Javadoc)
-	 *
-	 * @see de.wiwie.wiutils.utils.parse.TextFileParser#processLine(java.lang.String[],
-	 * java.lang.String[])
+     * (non-Javadoc)
+     *
+     * @see de.wiwie.wiutils.utils.parse.TextFileParser#processLine(java.lang.String[],
+     * java.lang.String[])
      */
     @Override
     protected void processLine(String[] key, String[] value) {
@@ -118,11 +118,6 @@ public class ClusteringParser extends TextFileParser {
         }
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.wiwie.wiutils.utils.parse.TextFileParser#finishProcess()
-     */
     @Override
     public void finishProcess() {
         // parse qualities

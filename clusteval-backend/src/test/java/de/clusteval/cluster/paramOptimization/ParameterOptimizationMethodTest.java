@@ -83,10 +83,8 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
 
         ClustevalBackendServer.logLevel(Level.INFO);
 
-        IContext context = ContextFactory.parseFromString(getRepository(), "ClusteringContext");
-
-        DataConfig dataConfig = getRepository().getStaticObjectWithName(
-                DataConfig.class, "synthetic_cassini250");
+        IDataConfig dataConfig = getRepository().getStaticObjectWithName(
+                IDataConfig.class, "synthetic_cassini250");
         IDataSet ds = dataConfig.getDatasetConfig().getDataSet();
         IDataSetFormat internal = DataSetFormatFactory.parseFromString("SimMatrixDataSetFormat");
         ds = ds.preprocessAndConvertTo(context,
