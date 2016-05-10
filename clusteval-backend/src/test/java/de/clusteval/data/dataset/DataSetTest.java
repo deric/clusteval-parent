@@ -128,12 +128,12 @@ public class DataSetTest extends AbstractClustEvalTest {
      * the parent repository should not be possible.
      *
      */
-    @Test(expected = DataSetRegisterException.class)
+    @Test(expected = RegisterException.class)
     public void testRegisterRunResultRepositoryNotPresentInParent()
             throws FileNotFoundException, RepositoryAlreadyExistsException,
                    InvalidRepositoryException, RepositoryConfigurationException, NoRepositoryFoundException,
                    DataSetNotFoundException, DataSetConfigurationException,
-                   RegisterException, UnknownProviderException, NoDataSetException,
+                   UnknownProviderException, NoDataSetException,
                    NoSuchAlgorithmException, InterruptedException,
                    GoldStandardNotFoundException, GoldStandardConfigurationException,
                    DataSetConfigNotFoundException, GoldStandardConfigNotFoundException, DataConfigurationException,
@@ -147,7 +147,7 @@ public class DataSetTest extends AbstractClustEvalTest {
                    IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException,
                    NoOptimizableProgramParameterException,
-                   UnknownRunResultPostprocessorException {
+                   UnknownRunResultPostprocessorException, RegisterException {
         try {
             Repository runResultRepository = new RunResultRepository(
                     new File(

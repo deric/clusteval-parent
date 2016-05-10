@@ -54,7 +54,6 @@ import de.clusteval.api.stats.IRunDataStatistic;
 import de.clusteval.api.stats.IRunStatistic;
 import de.clusteval.api.stats.RunStatistic;
 import de.clusteval.cluster.Clustering;
-import de.clusteval.data.dataset.DataSetRegisterException;
 import de.clusteval.framework.repository.db.RunResultSQLCommunicator;
 import de.clusteval.framework.repository.db.SQLCommunicator;
 import de.clusteval.framework.repository.db.StubSQLCommunicator;
@@ -357,7 +356,7 @@ class RunResultRepositoryDataSetObjectEntity
         if (dataSetInParentRepository != null) {
             return super.register(object);
         }
-        throw new DataSetRegisterException("The dataset '"
+        throw new RegisterException("The dataset '"
                 + object.getAbsolutePath()
                 + "' of a runresult is missing in its parent repository.");
     }
@@ -389,7 +388,7 @@ class RunResultRepositoryGoldStandardObjectEntity extends StaticRepositoryEntity
         if (gsInParentRepository != null) {
             return super.register(object);
         }
-        throw new DataSetRegisterException("The goldstandard '"
+        throw new RegisterException("The goldstandard '"
                 + object.getAbsolutePath()
                 + "' of a runresult is missing in its parent repository.");
     }
