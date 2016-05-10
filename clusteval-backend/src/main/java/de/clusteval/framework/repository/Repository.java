@@ -329,7 +329,6 @@ public class Repository implements IRepository {
      * @throws InvalidRepositoryException
      * @throws RepositoryAlreadyExistsException
      * @throws RepositoryConfigurationException
-     * @throws RepositoryConfigNotFoundException
      * @throws DatabaseConnectException
      */
     public Repository(final String basePath, final IRepository parent)
@@ -349,7 +348,6 @@ public class Repository implements IRepository {
      * @throws InvalidRepositoryException
      * @throws RepositoryAlreadyExistsException
      * @throws RepositoryConfigurationException
-     * @throws RepositoryConfigNotFoundException
      * @throws DatabaseConnectException
      */
     public Repository(final String basePath, final IRepository parent, final RepositoryConfig overrideConfig)
@@ -735,7 +733,6 @@ public class Repository implements IRepository {
     }
 
     public <T extends IRepositoryObject> T getRegisteredObject(final T object, final boolean ignoreChangeDate) {
-        @SuppressWarnings("unchecked")
         Class<T> c = (Class<T>) object.getClass();
         return this.getRegisteredObject(c, object, ignoreChangeDate);
     }
@@ -756,16 +753,15 @@ public class Repository implements IRepository {
         } else if (dynamicEntityFound) {
             return (S) this.dynamicRepositoryEntities.get(c).getRegisteredObject(object, ignoreChangeDate);
         }
+        log.warn("could not found registered object" + object + " of class " + c);
         return null;
     }
 
     public <T extends RepositoryObject, S extends T> boolean unregister(final S object) {
-        @SuppressWarnings("unchecked")
         Class<S> c = (Class<S>) object.getClass();
         return this.unregister(c, object);
     }
 
-    @SuppressWarnings("unchecked")
     public <T extends RepositoryObject, S extends T> boolean unregister(final Class<T> c, final S object) {
         boolean staticEntityFound;
         boolean dynamicEntityFound = false;
@@ -1472,7 +1468,7 @@ public class Repository implements IRepository {
      * {@link #isInitialized()} returns true.
      *
      * @throws InterruptedException Is thrown, if the current thread is
-     *                              interrupted while waiting for finishing the initialization process.
+     * interrupted while waiting for finishing the initialization process.
      */
     public void initialize() throws InterruptedException {
         if (isInitialized() || this.supervisorThread != null) {
@@ -1959,6 +1955,7 @@ public class Repository implements IRepository {
 
     @Override
     public <T extends IRepositoryObject, S extends T> boolean register(S object) throws RegisterException {
+        createAndAddDynamicEntity(object.getClass(), object.getAbsolutePath());
         lookupAdd(object);
         return true;
     }

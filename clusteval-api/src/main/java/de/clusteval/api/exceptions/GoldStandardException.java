@@ -16,9 +16,6 @@ package de.clusteval.api.exceptions;
  */
 public abstract class GoldStandardException extends DataException {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = -7235966832673486396L;
 
     /**

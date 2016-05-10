@@ -11,9 +11,9 @@
 package de.clusteval.utils;
 
 import de.clusteval.api.program.IFinder;
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.IRepositoryObject;
-import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.RepositoryEvent;
 import de.clusteval.api.repository.RepositoryObject;
 import de.clusteval.api.repository.RepositoryRemoveEvent;
@@ -63,11 +63,6 @@ public abstract class Finder<T extends IRepositoryObject> extends RepositoryObje
         super(other);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see java.lang.Object#clone()
-     */
     @Override
     public Finder<T> clone() {
         try {
@@ -91,9 +86,7 @@ public abstract class Finder<T extends IRepositoryObject> extends RepositoryObje
      * @throws RegisterException
      * @throws InterruptedException
      */
-    @SuppressWarnings("unused")
-    public void findAndRegisterObjects() throws RegisterException,
-                                                InterruptedException {
+    public void findAndRegisterObjects() throws RegisterException, InterruptedException {
         Iterator<File> fileIt = getIterator();
 
         while (fileIt.hasNext()) {
@@ -144,11 +137,6 @@ public abstract class Finder<T extends IRepositoryObject> extends RepositoryObje
         }
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
     @Override
     public boolean equals(Object obj) {
         if (!(obj.getClass().equals(this.getClass()))) {
@@ -159,11 +147,6 @@ public abstract class Finder<T extends IRepositoryObject> extends RepositoryObje
         return this.repository.equals(rf.getRepository());
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see java.lang.Object#hashCode()
-     */
     @Override
     public int hashCode() {
         return this.repository.hashCode();

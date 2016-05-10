@@ -65,8 +65,7 @@ public class GoldStandardConfig extends DumpableRepositoryObject implements IGol
      *                     The encapsulated goldstandard.
      * @throws RegisterException
      */
-    public GoldStandardConfig(final IRepository repository,
-            final long changeDate, final File absPath,
+    public GoldStandardConfig(final IRepository repository, final long changeDate, final File absPath,
             final IGoldStandard goldstandard) throws RegisterException {
         super(repository, false, changeDate, absPath);
 
@@ -83,8 +82,7 @@ public class GoldStandardConfig extends DumpableRepositoryObject implements IGol
      *                           The goldstandard configuration to be cloned.
      * @throws RegisterException
      */
-    public GoldStandardConfig(GoldStandardConfig goldstandardConfig)
-            throws RegisterException {
+    public GoldStandardConfig(GoldStandardConfig goldstandardConfig) throws RegisterException {
         super(goldstandardConfig);
         this.goldStandard = goldstandardConfig.goldStandard.clone();
     }

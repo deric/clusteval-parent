@@ -156,9 +156,12 @@ public abstract class Parser<P extends IRepositoryObject> { // implements IParse
                    IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
                    UnknownRunResultPostprocessorException, UnknownProviderException {
-        LoggerFactory.getLogger(Parser.class.getName()).info("parsing " + absPath);
+        LoggerFactory.getLogger(Parser.class.getName()).info("parsing " + absPath.getName());
         Parser<T> parser = getParserForClass(c);
         parser.parseFromFile(absPath);
+        if (parser.result == null) {
+            LoggerFactory.getLogger(Parser.class.getName()).warn("result is " + parser.result);
+        }
         return parser.getResult();
     }
 
@@ -650,7 +653,7 @@ class GoldStandardConfigParser extends RepositoryObjectParser<GoldStandardConfig
                    UnknownRunResultPostprocessorException, UnknownProviderException {
         super.parseFromFile(absPath);
 
-        log.debug("Parsing goldstandard config \"" + absPath + "\"");
+        log.debug("Parsing goldstandard config \"" + absPath.getName() + "\"" + "(" + absPath.getAbsolutePath() + ")");
 
         try {
             getProps().setThrowExceptionOnMissing(true);
@@ -660,9 +663,10 @@ class GoldStandardConfigParser extends RepositoryObjectParser<GoldStandardConfig
 
             result = new GoldStandardConfig(repo, changeDate, absPath, GoldStandard.parseFromFile(
                     new File(FileUtils.buildPath(repo.getBasePath(IGoldStandard.class), gsName, gsFile))));
-            result = repo.getRegisteredObject(result);
+            //result = repo.getRegisteredObject(result);
             log.debug("Goldstandard config parsed");
         } catch (NoSuchElementException e) {
+            log.error("could not find element in " + absPath.getName() + ": " + e.getMessage());
             throw new GoldStandardConfigurationException(e);
         }
     }
@@ -670,13 +674,6 @@ class GoldStandardConfigParser extends RepositoryObjectParser<GoldStandardConfig
 
 class InternalParameterOptimizationRunParser extends ExecutionRunParser<InternalParameterOptimizationRun> {
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * de.clusteval.framework.repository.ExecutionRunParser#parseFromFile(java
-     * .io.File)
-     */
     @Override
     public void parseFromFile(File absPath)
             throws ConfigurationException, NoRepositoryFoundException, RunException,
@@ -951,6 +948,7 @@ class RepositoryObjectParser<T extends IRepositoryObject> extends Parser<T> {
     }
 
     protected HierarchicalINIConfiguration getProps() throws ConfigurationException {
+        log.debug("getting props " + props);
         if (props == null) {
             props = new HierarchicalINIConfiguration(absPath.getAbsolutePath());
         }

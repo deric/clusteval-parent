@@ -44,8 +44,7 @@ public class RunFinderTest extends AbstractClustEvalTest {
 
     @Test
     public void testRunChangeNumberOfIterations()
-            throws RepositoryAlreadyExistsException,
-                   InvalidRepositoryException,
+            throws RepositoryAlreadyExistsException, InvalidRepositoryException,
                    RepositoryConfigurationException, NoRepositoryFoundException,
                    IOException, InterruptedException, NoSuchAlgorithmException, DatabaseConnectException {
         String base = new File("testCaseRepository").getAbsolutePath();
@@ -120,11 +119,6 @@ class TestRepository extends Repository {
                         .getBasePath(Run.class)));
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see framework.repository.Repository#createSupervisorThread()
-     */
     @Override
     protected SupervisorThread createSupervisorThread() {
         // no scanning for runresults
