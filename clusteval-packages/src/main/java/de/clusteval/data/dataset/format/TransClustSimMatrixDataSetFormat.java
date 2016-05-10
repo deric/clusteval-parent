@@ -10,10 +10,10 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset.format;
 
-import de.clusteval.api.data.DataSetFormatParser;
-import de.clusteval.api.data.RelativeDataSetFormat;
 import de.clusteval.api.FormatVersion;
+import de.clusteval.api.data.DataSetFormatParser;
 import de.clusteval.api.data.IDataSetFormat;
+import de.clusteval.api.data.RelativeDataSetFormat;
 import de.clusteval.api.program.RegisterException;
 import org.openide.util.lookup.ServiceProvider;
 
@@ -41,22 +41,11 @@ public class TransClustSimMatrixDataSetFormat extends RelativeDataSetFormat {
         super(other);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.clusteval.data.dataset.format.DataSetFormat#getName()
-     */
     @Override
     public String getName() {
         return "Similarity Matrix (TransClust)";
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.clusteval.data.dataset.format.SimMatrixDataSetFormat#
-     * getDataSetFormatParser()
-     */
     @Override
     public DataSetFormatParser getDataSetFormatParser() {
         return new TransClustSimMatrixDataSetFormatParser();

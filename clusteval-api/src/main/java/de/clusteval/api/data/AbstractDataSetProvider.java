@@ -79,7 +79,7 @@ public abstract class AbstractDataSetProvider extends RepositoryObject {
 
         if (newGoldStandard != null) {
 
-            File gsConfigFile = new File(FileUtils.buildPath(repository.getBasePath(GoldStandardConfig.class),
+            File gsConfigFile = new File(FileUtils.buildPath(repository.getBasePath(IGoldStandardConfig.class),
                     configFileName + ".gsconfig"));
 
             // write goldstandard config file
@@ -91,7 +91,7 @@ public abstract class AbstractDataSetProvider extends RepositoryObject {
 
         // write data config file
         File dataConfigFile = new File(
-                FileUtils.buildPath(repository.getBasePath(DataConfig.class), configFileName + ".dataconfig"));
+                FileUtils.buildPath(repository.getBasePath(IDataConfig.class), configFileName + ".dataconfig"));
         DataConfig dataConfig = new DataConfig(this.repository, System.currentTimeMillis(), dataConfigFile, dsConfig,
                 gsConfig);
 

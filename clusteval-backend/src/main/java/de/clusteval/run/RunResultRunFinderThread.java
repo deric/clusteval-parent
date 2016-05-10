@@ -10,10 +10,10 @@
  ***************************************************************************** */
 package de.clusteval.run;
 
-import de.clusteval.api.data.DataConfig;
-import de.clusteval.api.data.DataSetConfig;
-import de.clusteval.api.data.GoldStandardConfig;
-import de.clusteval.api.program.ProgramConfig;
+import de.clusteval.api.data.IDataConfig;
+import de.clusteval.api.data.IDataSetConfig;
+import de.clusteval.api.data.IGoldStandardConfig;
+import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.ISupervisorThread;
 import de.clusteval.data.RunResultDataConfigFinderThread;
@@ -46,30 +46,25 @@ public class RunResultRunFinderThread extends RunFinderThread {
         super(supervisorThread, repository, sleepTime, checkOnce);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.wiwie.wiutils.utils.FinderThread#beforeFind()
-     */
     @Override
     protected void beforeFind() {
 
-        if (!this.repository.isInitialized(DataSetConfig.class)) {
+        if (!this.repository.isInitialized(IDataSetConfig.class)) {
             this.supervisorThread.getThread(
                     RunResultDataSetConfigFinderThread.class).waitFor();
         }
 
-        if (!this.repository.isInitialized(GoldStandardConfig.class)) {
+        if (!this.repository.isInitialized(IGoldStandardConfig.class)) {
             this.supervisorThread.getThread(
                     GoldStandardConfigFinderThread.class).waitFor();
         }
 
-        if (!this.repository.isInitialized(DataConfig.class)) {
+        if (!this.repository.isInitialized(IDataConfig.class)) {
             this.supervisorThread.getThread(
                     RunResultDataConfigFinderThread.class).waitFor();
         }
 
-        if (!this.repository.isInitialized(ProgramConfig.class)) {
+        if (!this.repository.isInitialized(IProgramConfig.class)) {
             this.supervisorThread.getThread(ProgramConfigFinderThread.class)
                     .waitFor();
         }

@@ -156,8 +156,8 @@ public abstract class Parser<P extends IRepositoryObject> { // implements IParse
                    IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
                    UnknownRunResultPostprocessorException, UnknownProviderException {
+        LoggerFactory.getLogger(Parser.class.getName()).info("parsing " + absPath);
         Parser<T> parser = getParserForClass(c);
-        LoggerFactory.getLogger(Parser.class.getName()).info("parsing " + absPath + ", parser: " + parser);
         parser.parseFromFile(absPath);
         return parser.getResult();
     }
@@ -636,13 +636,6 @@ class ExecutionRunParser<T extends ExecutionRun> extends RunParser<T> {
 
 class GoldStandardConfigParser extends RepositoryObjectParser<GoldStandardConfig> {
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * de.clusteval.framework.repository.RepositoryObjectParser#parseFromFile
-     * (java.io.File)
-     */
     @Override
     public void parseFromFile(File absPath)
             throws NoRepositoryFoundException, ConfigurationException, RunException,

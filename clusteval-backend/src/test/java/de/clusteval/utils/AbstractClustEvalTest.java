@@ -17,13 +17,14 @@ import de.clusteval.api.ContextFactory;
 import de.clusteval.api.IContext;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.IRepositoryObject;
+import de.clusteval.api.repository.RepositoryController;
+import de.clusteval.api.run.result.RunResult;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.framework.repository.Repository;
-import de.clusteval.api.repository.RepositoryController;
 import de.clusteval.framework.repository.config.DefaultRepositoryConfig;
 import de.clusteval.framework.repository.db.StubSQLCommunicator;
-import de.clusteval.api.run.result.RunResult;
 import java.io.File;
+import org.apache.log4j.BasicConfigurator;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -70,8 +71,8 @@ public abstract class AbstractClustEvalTest {
      */
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
-        ClustevalBackendServer.logLevel(Level.WARN);
-//        BasicConfigurator.configure();
+        ClustevalBackendServer.logLevel(Level.ALL);
+        BasicConfigurator.configure();
 
         logger.info("Starting tests");
     }

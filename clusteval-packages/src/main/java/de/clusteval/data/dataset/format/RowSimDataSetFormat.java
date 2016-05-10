@@ -10,16 +10,19 @@
  ***************************************************************************** */
 package de.clusteval.data.dataset.format;
 
-import de.clusteval.api.data.DataSetFormatParser;
-import de.clusteval.api.data.RelativeDataSetFormat;
 import de.clusteval.api.FormatVersion;
+import de.clusteval.api.data.DataSetFormatParser;
+import de.clusteval.api.data.IDataSetFormat;
+import de.clusteval.api.data.RelativeDataSetFormat;
 import de.clusteval.api.program.RegisterException;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * @author Christian Wiwie
  *
  */
 @FormatVersion(version = 1)
+@ServiceProvider(service = IDataSetFormat.class)
 public class RowSimDataSetFormat extends RelativeDataSetFormat {
 
     public static final String NAME = "Rowwise Similarity";
@@ -40,17 +43,10 @@ public class RowSimDataSetFormat extends RelativeDataSetFormat {
      *              The object to clone.
      * @throws RegisterException
      */
-    public RowSimDataSetFormat(final RowSimDataSetFormat other)
-            throws RegisterException {
+    public RowSimDataSetFormat(final RowSimDataSetFormat other) throws RegisterException {
         super(other);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * de.clusteval.data.dataset.format.DataSetFormat#getDataSetFormatParser()
-     */
     @Override
     public DataSetFormatParser getDataSetFormatParser() {
         return new RowSimDataSetFormatParser();

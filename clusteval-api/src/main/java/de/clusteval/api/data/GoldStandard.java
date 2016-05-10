@@ -78,11 +78,6 @@ public class GoldStandard extends RepositoryObject implements IGoldStandard {
         this.absPath = goldStandard.getAbsPath();
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see framework.repository.RepositoryObject#clone()
-     */
     @Override
     public GoldStandard clone() {
         try {
@@ -248,7 +243,7 @@ public class GoldStandard extends RepositoryObject implements IGoldStandard {
      *
      * @return The clustering object representing the goldstandard.
      * @throws UnknownGoldStandardFormatException the unknown gold standard
-     *                                            format exception
+     * format exception
      */
     @Override
     public IClustering getClustering() throws UnknownGoldStandardFormatException {
@@ -258,11 +253,6 @@ public class GoldStandard extends RepositoryObject implements IGoldStandard {
         return this.clustering;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see java.lang.Object#toString()
-     */
     @Override
     public String toString() {
         return this.getFullName();

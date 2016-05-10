@@ -89,11 +89,6 @@ public class GoldStandardConfig extends DumpableRepositoryObject implements IGol
         this.goldStandard = goldstandardConfig.goldStandard.clone();
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see framework.repository.RepositoryObject#clone()
-     */
     @Override
     public GoldStandardConfig clone() {
         try {
@@ -119,11 +114,6 @@ public class GoldStandardConfig extends DumpableRepositoryObject implements IGol
         this.goldStandard = goldStandard;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.wiwie.wiutils.utils.RepositoryObject#notify(utils.RepositoryEvent)
-     */
     @Override
     public void notify(RepositoryEvent e) throws RegisterException {
         if (e instanceof RepositoryReplaceEvent) {
@@ -169,23 +159,11 @@ public class GoldStandardConfig extends DumpableRepositoryObject implements IGol
         }
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see java.lang.Object#toString()
-     */
     @Override
     public String toString() {
         return this.absPath.getName().replace(".gsconfig", "");
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * de.clusteval.framework.repository.DumpableRepositoryObject#dumpToFileHelper
-     * ()
-     */
     @Override
     protected void dumpToFileHelper() throws RepositoryObjectDumpException {
         BufferedWriter writer;

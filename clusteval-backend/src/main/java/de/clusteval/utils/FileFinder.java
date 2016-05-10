@@ -12,9 +12,9 @@
  */
 package de.clusteval.utils;
 
+import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.IRepositoryObject;
-import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.RepositoryRemoveEvent;
 import de.clusteval.framework.repository.parse.Parser;
 import java.io.File;
@@ -23,6 +23,7 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import org.openide.util.Exceptions;
 
 /**
  * @author Christian Wiwie
@@ -40,11 +41,6 @@ public abstract class FileFinder<T extends IRepositoryObject> extends Finder<T> 
         super(repository, classToFind);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.wiwie.wiutils.utils.Finder#doOnFileFound(java.io.File)
-     */
     @Override
     public void doOnFileFound(File file) throws InterruptedException, Exception {
         try {
@@ -105,6 +101,7 @@ public abstract class FileFinder<T extends IRepositoryObject> extends Finder<T> 
                 for (int i = 1; i < split.length; i++) {
                     this.getLog().warn("|--> " + split[i]);
                 }
+                Exceptions.printStackTrace(e);
             }
 
             /*
