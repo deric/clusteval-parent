@@ -366,6 +366,7 @@ public class FMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
                         new ClusteringEvaluationParameters());
         double quality = measure.getQualityOfClustering(clustering,
                 goldStandard, null).getValue();
+        assertEquals(0.6853146853146853, quality, DELTA);
         System.out.println(measure.getName() + " " + quality);
 
         measure = ClusteringEvaluationFactory.parseFromString(getRepository(),
@@ -375,6 +376,7 @@ public class FMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
                 .getQualityOfClustering(clustering, goldStandard, null)
                 .getValue();
         System.out.println(measure.getName() + " " + quality);
+        assertEquals(0.8392857142857143, quality, DELTA);
     }
 
 }

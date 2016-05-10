@@ -86,7 +86,7 @@ public class SilhouetteValueGlobalRClusteringQualityMeasureTest extends
                     null).getValue();
             assertEquals(-1.0, quality, DELTA);
         } catch (IllegalArgumentException | InvalidDataSetFormatException e) {
-            e.printStackTrace();
+            Exceptions.printStackTrace(e);
         }
     }
 

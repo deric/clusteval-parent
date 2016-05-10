@@ -48,6 +48,7 @@ import java.util.ArrayList;
 import org.junit.Assert;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
+import org.openide.util.Exceptions;
 
 /**
  * @author Christian Wiwie
@@ -85,7 +86,7 @@ public class SilhouetteValueFuzzyRClusteringQualityMeasureTest extends AbstractC
                             new ClusteringEvaluationParameters());
             double quality = measure.getQualityOfClustering(clustering, null,
                     null).getValue();
-            Assert.assertEquals(-1.0, quality, 0.0);
+            assertEquals(-1.0, quality, 0.0);
         } catch (IllegalArgumentException | InvalidDataSetFormatException e) {
             e.printStackTrace();
         }
@@ -208,7 +209,7 @@ public class SilhouetteValueFuzzyRClusteringQualityMeasureTest extends AbstractC
                    InvalidRepositoryException, RepositoryConfigurationException, NoRepositoryFoundException,
                    RegisterException, NoSuchAlgorithmException,
                    RNotAvailableException, RCalculationException, FormatConversionException,
-                   InterruptedException, RException, UnknownProviderException {
+                   InterruptedException, RException, UnknownProviderException, IOException {
         try {
 
             IContext context = ContextFactory.parseFromString(getRepository(),
@@ -258,11 +259,10 @@ public class SilhouetteValueFuzzyRClusteringQualityMeasureTest extends AbstractC
             double qualitySil = measureSil.getQualityOfClustering(clustering,
                     null, dc).getValue();
             ds.getInStandardFormat().unloadFromMemory();
-            Assert.assertEquals(qualitySil, quality, 0.0);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IllegalArgumentException | InvalidDataSetFormatException | IOException e) {
-            e.printStackTrace();
+            assertEquals(qualitySil, quality, DELTA);
+        } catch (IllegalArgumentException | InvalidDataSetFormatException |
+                 FileNotFoundException e) {
+            Exceptions.printStackTrace(e);
         }
     }
 }

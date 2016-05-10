@@ -31,15 +31,15 @@ import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.utils.AbstractClustEvalTest;
 import java.io.File;
 import java.security.NoSuchAlgorithmException;
+import static org.junit.Assert.assertEquals;
 import org.junit.Test;
+import org.openide.util.Exceptions;
 
 /**
  * @author Christian Wiwie
  *
  */
-public class PairwiseFMeasureClusteringQualityMeasureTest
-        extends
-        AbstractClustEvalTest {
+public class PairwiseFMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest {
 
     static {
         ClustevalBackendServer.logLevel(Level.WARN);
@@ -52,7 +52,6 @@ public class PairwiseFMeasureClusteringQualityMeasureTest
                    RegisterException, NoSuchAlgorithmException,
                    RNotAvailableException, RCalculationException, InterruptedException, RException, UnknownProviderException, InvalidDataSetFormatException {
         try {
-            ClustevalBackendServer.logLevel(Level.WARN);
             Clustering goldStandard = new Clustering(this.getRepository(),
                     System.currentTimeMillis(), new File(""));
             Cluster gsCluster1 = new Cluster("1");
@@ -87,8 +86,9 @@ public class PairwiseFMeasureClusteringQualityMeasureTest
             double quality = measure.getQualityOfClustering(clustering,
                     goldStandard, null).getValue();
             System.out.println(measure.getName() + " " + quality);
+            assertEquals(0.8269230769230769, quality, DELTA);
         } catch (IllegalArgumentException | InvalidDataSetFormatException e) {
-            e.printStackTrace();
+            Exceptions.printStackTrace(e);
         }
     }
 
@@ -135,9 +135,11 @@ public class PairwiseFMeasureClusteringQualityMeasureTest
                             new ClusteringEvaluationParameters());
             double quality = measure.getQualityOfClustering(clustering,
                     goldStandard, null).getValue();
+
+            assertEquals(0.8444444444444444, quality, DELTA);
             System.out.println(measure.getName() + " " + quality);
         } catch (IllegalArgumentException | InvalidDataSetFormatException e) {
-            e.printStackTrace();
+            Exceptions.printStackTrace(e);
         }
     }
 }

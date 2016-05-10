@@ -669,11 +669,6 @@ public class ClustevalBackendServer implements IBackendServer {
         return this.repository.getSupervisorThread().getRunScheduler().getOptimizationRunStatusForClientId(clientId);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see serverclient.EvalServer#getRuns()
-     */
     @Override
     public Collection<String> getRuns() {
         Collection<String> result = new HashSet<>();
@@ -683,11 +678,6 @@ public class ClustevalBackendServer implements IBackendServer {
         return result;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see serverclient.EvalServer#getDataSets()
-     */
     @Override
     public Collection<String> getDataSets() {
         Collection<String> result = new HashSet<>();
@@ -697,11 +687,6 @@ public class ClustevalBackendServer implements IBackendServer {
         return result;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see serverclient.EvalServer#getPrograms()
-     */
     @Override
     public Collection<String> getPrograms() {
         Collection<String> result = new HashSet<String>();
@@ -770,13 +755,6 @@ public class ClustevalBackendServer implements IBackendServer {
         return result;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * serverclient.IBackendServer#setLogLevel(ch.qos.logback.classic.Level)
-     */
-    @SuppressWarnings("unused")
     @Override
     public void setLogLevel(Level logLevel) throws RemoteException {
         ((ch.qos.logback.classic.Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME)).setLevel(logLevel);
@@ -810,11 +788,6 @@ public class ClustevalBackendServer implements IBackendServer {
         return result;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see serverclient.IBackendServer#getDataSetRandomizers()
-     */
     @Override
     public Collection<String> getDataRandomizers() {
         Collection<String> result = new HashSet<>();
@@ -840,13 +813,6 @@ public class ClustevalBackendServer implements IBackendServer {
         return null;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see serverclient.IBackendServer#generateDataSet(java.lang.String,
-     * java.lang.String[])
-     */
-    @SuppressWarnings("unused")
     @Override
     public boolean generateDataSet(String generatorName, String[] args) throws RemoteException {
         try {
@@ -862,12 +828,6 @@ public class ClustevalBackendServer implements IBackendServer {
         return false;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see serverclient.IBackendServer#getQueue()
-     */
-    @SuppressWarnings("unused")
     @Override
     public Collection<String> getQueue() throws RemoteException {
         final Collection<String> result = this.repository.getSupervisorThread().getRunScheduler().getQueue();
@@ -921,13 +881,6 @@ public class ClustevalBackendServer implements IBackendServer {
         return result;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * serverclient.IBackendServer#getOptionsForDataRandomizer(java.lang.String
-     * )
-     */
     @Override
     public Options getOptionsForDataRandomizer(String randomizerName) {
         try {
@@ -940,13 +893,6 @@ public class ClustevalBackendServer implements IBackendServer {
         return null;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see serverclient.IBackendServer#randomizeDataConfig(java.lang.String,
-     * java.lang.String[])
-     */
-    @SuppressWarnings("unused")
     @Override
     public boolean randomizeDataConfig(String randomizerName, String[] args) throws RemoteException {
         try {
@@ -958,11 +904,6 @@ public class ClustevalBackendServer implements IBackendServer {
         return false;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.clusteval.serverclient.IBackendServer#setThreadNumber(int)
-     */
     @Override
     public void setThreadNumber(int threadNumber) throws RemoteException {
         this.repository.getSupervisorThread().getRunScheduler().updateThreadPoolSize(threadNumber);

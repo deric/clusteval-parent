@@ -39,11 +39,6 @@ public class ClusteringEvaluationParameters extends HashMap<String, String> {
         this.putAll(other);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see java.util.HashMap#clone()
-     */
     @Override
     public ClusteringEvaluationParameters clone() {
         return new ClusteringEvaluationParameters(this);

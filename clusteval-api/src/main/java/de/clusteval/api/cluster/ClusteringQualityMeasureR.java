@@ -39,6 +39,7 @@ public abstract class ClusteringQualityMeasureR extends RepositoryObject impleme
 
     public ClusteringQualityMeasureR() {
         super();
+        parameters = new ClusteringEvaluationParameters();
     }
 
     /**
@@ -79,14 +80,6 @@ public abstract class ClusteringQualityMeasureR extends RepositoryObject impleme
         this.parameters = params;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * de.clusteval.cluster.quality.ClusteringQualityMeasure#getQualityOfClustering
-     * (de.clusteval.cluster.Clustering, de.clusteval.cluster.Clustering,
-     * de.clusteval.data.DataConfig)
-     */
     public ClustEvalValue getQualityOfClustering(
             IClustering clustering, IClustering goldStandard,
             IDataConfig dataConfig, final IRengine rEngine)

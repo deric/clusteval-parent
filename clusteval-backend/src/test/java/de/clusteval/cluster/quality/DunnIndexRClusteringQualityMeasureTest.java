@@ -13,8 +13,6 @@
 package de.clusteval.cluster.quality;
 
 import de.clusteval.api.ClusteringEvaluation;
-import de.clusteval.api.ContextFactory;
-import de.clusteval.api.IContext;
 import de.clusteval.api.Precision;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
@@ -46,7 +44,9 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import org.junit.Test;
+import org.openide.util.Exceptions;
 
 /**
  * @author Christian Wiwie
@@ -59,12 +59,9 @@ public class DunnIndexRClusteringQualityMeasureTest extends AbstractClustEvalTes
                               RepositoryAlreadyExistsException, InvalidRepositoryException,
                               RepositoryConfigurationException, NoRepositoryFoundException,
                               RegisterException, NoSuchAlgorithmException,
-                              FormatConversionException,
-                              RNotAvailableException,
-                              RCalculationException, InterruptedException, RException, UnknownProviderException {
+                              FormatConversionException, RNotAvailableException,
+                              RCalculationException, InterruptedException, RException, UnknownProviderException, IOException {
         try {
-
-            IContext context = ContextFactory.parseFromString(getRepository(), "ClusteringContext");
             Clustering clustering = new Clustering(this.getRepository(),
                     System.currentTimeMillis(), new File(""));
             Cluster cluster1 = new Cluster("1");
@@ -98,10 +95,10 @@ public class DunnIndexRClusteringQualityMeasureTest extends AbstractClustEvalTes
             ds.getInStandardFormat().unloadFromMemory();
             System.out.println("Dunn Index: " + quality);
             assertEquals(2.0326861833688232, quality, DELTA);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IllegalArgumentException | InvalidDataSetFormatException | IOException e) {
-            e.printStackTrace();
+        } catch (IllegalArgumentException | InvalidDataSetFormatException |
+                 FileNotFoundException e) {
+            Exceptions.printStackTrace(e);
+            assertTrue(false);
         }
 
     }

@@ -32,6 +32,7 @@ import de.clusteval.utils.AbstractClustEvalTest;
 import java.io.File;
 import java.security.NoSuchAlgorithmException;
 import org.junit.Test;
+import org.openide.util.Exceptions;
 
 /**
  * @author Christian Wiwie
@@ -86,7 +87,7 @@ public class RandIndexClusteringQualityMeasureTest extends AbstractClustEvalTest
                     goldStandard, null).getValue();
             System.out.println(measure.getName() + " " + quality);
         } catch (IllegalArgumentException | InvalidDataSetFormatException e) {
-            e.printStackTrace();
+            Exceptions.printStackTrace(e);
         }
     }
 
@@ -135,7 +136,7 @@ public class RandIndexClusteringQualityMeasureTest extends AbstractClustEvalTest
                     goldStandard, null).getValue();
             System.out.println(measure.getName() + " " + quality);
         } catch (IllegalArgumentException | InvalidDataSetFormatException e) {
-            e.printStackTrace();
+            Exceptions.printStackTrace(e);
         }
     }
 }
