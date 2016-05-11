@@ -105,6 +105,7 @@ public abstract class AbstractClustEvalTest {
 
         if (ClustevalBackendServer.getBackendServerConfiguration().getCheckForRunResults()) {
             while (!getRepository().isInitialized(IRunResult.class)) {
+                logger.debug("no run result");
                 Thread.sleep(100);
             }
         }

@@ -1487,7 +1487,7 @@ public class Repository implements IRepository {
      * {@link #isInitialized()} returns true.
      *
      * @throws InterruptedException Is thrown, if the current thread is
-     *                              interrupted while waiting for finishing the initialization process.
+     * interrupted while waiting for finishing the initialization process.
      */
     public void initialize() throws InterruptedException {
         if (isInitialized() || this.supervisorThread != null) {
@@ -1534,6 +1534,8 @@ public class Repository implements IRepository {
                 this.warn("You can use the following command to install them in R:");
                 this.warn(sb.toString());
             }
+        } else {
+            this.warn("Can't connect to Rserve");
         }
     }
 

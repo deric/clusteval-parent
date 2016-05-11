@@ -42,11 +42,6 @@ public class DataSetConfigFinderThread extends FinderThread<IDataSetConfig> {
                 checkOnce);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.wiwie.wiutils.utils.FinderThread#beforeFind()
-     */
     @Override
     protected void beforeFind() {
         if (!this.repository.isInitialized(IDataSet.class)) {
@@ -57,11 +52,6 @@ public class DataSetConfigFinderThread extends FinderThread<IDataSetConfig> {
         super.beforeFind();
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.wiwie.wiutils.utils.FinderThread#getFinder()
-     */
     @Override
     public Finder<IDataSetConfig> getFinder() throws RegisterException {
         return new DataSetConfigFinder(repository);

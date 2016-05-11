@@ -169,8 +169,7 @@ public class ClusteringFactory extends ServiceFactory<IClustering> {
             IClusteringParser parser = Lookup.getDefault().lookup(IClusteringParser.class);
             IClusteringParser inst = parser.getClass().newInstance();
 
-            inst.init(repository,
-                    absFilePath.getAbsolutePath(), parseQualities);
+            inst.init(repository, absFilePath.getAbsolutePath(), parseQualities);
             parser.process();
 
             return parser.getClusterings();

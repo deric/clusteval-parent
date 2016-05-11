@@ -13,8 +13,8 @@ package de.clusteval.data;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataSetConfig;
 import de.clusteval.api.data.IGoldStandardConfig;
-import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.ISupervisorThread;
 import de.clusteval.data.dataset.DataSetConfigFinderThread;
 import de.clusteval.data.goldstandard.GoldStandardConfigFinderThread;
@@ -44,11 +44,6 @@ public class DataConfigFinderThread extends FinderThread<IDataConfig> {
                 checkOnce);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.wiwie.wiutils.utils.FinderThread#beforeFind()
-     */
     @Override
     protected void beforeFind() {
         if (!this.repository.isInitialized(IDataSetConfig.class)) {
@@ -63,11 +58,6 @@ public class DataConfigFinderThread extends FinderThread<IDataConfig> {
         super.beforeFind();
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.wiwie.wiutils.utils.FinderThread#getFinder()
-     */
     @Override
     public Finder<IDataConfig> getFinder() throws RegisterException {
         return new DataConfigFinder(repository);

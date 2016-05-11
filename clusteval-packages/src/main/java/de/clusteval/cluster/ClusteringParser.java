@@ -33,12 +33,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import org.openide.util.Exceptions;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * A parser for files containing parameter sets and clusterings.
  *
  * @author Christian Wiwie
  */
+@ServiceProvider(service = IClusteringParser.class)
 public class ClusteringParser extends TextFileParser implements IClusteringParser {
 
     protected IRepository repository;
@@ -54,6 +56,12 @@ public class ClusteringParser extends TextFileParser implements IClusteringParse
      * A temporary variable of no use after parsing.
      */
     protected List<String> params;
+
+    public ClusteringParser() {
+        this.setLockTargetFile(true);
+        this.params = new ArrayList<>();
+        this.parseQualities = parseQualities;
+    }
 
     /**
      * Instantiates a new clustering parser.
@@ -76,6 +84,7 @@ public class ClusteringParser extends TextFileParser implements IClusteringParse
     }
 
     public void init(final IRepository repository, final String absFilePath, final boolean parseQualities) throws IOException {
+        this.setFile(absFilePath);
         this.repository = repository;
         this.setLockTargetFile(true);
         this.params = new ArrayList<>();

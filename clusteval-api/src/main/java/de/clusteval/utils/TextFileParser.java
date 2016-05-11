@@ -88,6 +88,10 @@ public abstract class TextFileParser {
     protected Pattern attributeLinePrefixPattern = Pattern.compile("\\s*"
             + attributeLinePrefix + ".*");
 
+    public TextFileParser() {
+
+    }
+
     /**
      * Instantiates a new text file parser.
      *
