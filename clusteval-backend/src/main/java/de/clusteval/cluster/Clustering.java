@@ -36,10 +36,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * A clustering contains several clusters. Every cluster contains cluster items.
  */
+@ServiceProvider(service = IClustering.class)
 public class Clustering extends RepositoryObject implements Iterable<Cluster>, IClustering {
 
     /**
@@ -75,6 +77,10 @@ public class Clustering extends RepositoryObject implements Iterable<Cluster>, I
      * attribute.
      */
     protected ClusteringQualitySet qualities;
+
+    public Clustering() {
+        super();
+    }
 
     /**
      * Instantiates a new clustering.

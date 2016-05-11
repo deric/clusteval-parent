@@ -361,8 +361,7 @@ public class GoldStandardTest extends AbstractClustEvalTest {
         this.repositoryObject = GoldStandard.parseFromFile(f);
         ((GoldStandard) this.repositoryObject).loadIntoMemory();
 
-        IClustering clustering = ((IGoldStandard) this.repositoryObject)
-                .getClustering();
+        IClustering clustering = ((IGoldStandard) this.repositoryObject).getClustering();
 
         assertEquals(34, clustering.size());
     }

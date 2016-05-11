@@ -14,10 +14,12 @@ package de.clusteval.api.data;
 
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
+import de.clusteval.api.cluster.ClusteringFactory;
 import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.exceptions.GoldStandardNotFoundException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
+import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RepositoryController;
@@ -187,8 +189,10 @@ public class GoldStandard extends RepositoryObject implements IGoldStandard {
                     }
                 }
             }
-            Class c = repository.getLookup().lookup(IClustering.class).getClass();
-            clustering = (IClustering) c.newInstance();
+
+            ClusteringFactory cf = ClusteringFactory.getInstance();
+            IClustering c = cf.getProvider("Clustering");
+            clustering = c.getClass().newInstance();
             clustering.init(this.repository, this.absPath.lastModified(), this.absPath);
             for (String clusterId : clusterMap.keySet()) {
                 this.clustering.addCluster(clusterMap.get(clusterId));
@@ -197,9 +201,7 @@ public class GoldStandard extends RepositoryObject implements IGoldStandard {
         } catch (IOException | NumberFormatException | UnknownGoldStandardFormatException e) {
             e.printStackTrace();
             throw new UnknownGoldStandardFormatException(e.getMessage());
-        } catch (InstantiationException ex) {
-            Exceptions.printStackTrace(ex);
-        } catch (IllegalAccessException ex) {
+        } catch (InstantiationException | IllegalAccessException | UnknownProviderException ex) {
             Exceptions.printStackTrace(ex);
         }
         return false;
