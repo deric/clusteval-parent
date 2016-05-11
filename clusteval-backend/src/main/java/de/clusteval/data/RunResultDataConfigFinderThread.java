@@ -13,6 +13,7 @@ package de.clusteval.data;
 import de.clusteval.api.data.IDataSetConfig;
 import de.clusteval.api.data.IGoldStandardConfig;
 import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.run.ISupervisorThread;
 import de.clusteval.data.dataset.RunResultDataSetConfigFinderThread;
 import de.clusteval.data.goldstandard.GoldStandardConfigFinderThread;
 import de.clusteval.framework.threading.SupervisorThread;
@@ -33,7 +34,7 @@ public class RunResultDataConfigFinderThread extends DataConfigFinderThread {
      *
      */
     public RunResultDataConfigFinderThread(
-            final SupervisorThread supervisorThread,
+            final ISupervisorThread supervisorThread,
             final IRepository repository, final boolean checkOnce) {
         super(supervisorThread, repository, 30000, checkOnce);
     }
@@ -55,11 +56,6 @@ public class RunResultDataConfigFinderThread extends DataConfigFinderThread {
         super(supervisorThread, repository, sleepTime, checkOnce);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.wiwie.wiutils.utils.FinderThread#beforeFind()
-     */
     @Override
     protected void beforeFind() {
         if (!this.repository.isInitialized(IDataSetConfig.class)) {
