@@ -941,7 +941,7 @@ public class Repository implements IRepository {
      *                    current version.
      *
      * @return The current version for the given dataset format class.
-     * @throws UnknownDataSetFormatException
+     * @throws UnknownProviderException
      */
     @Override
     public int getCurrentDataSetFormatVersion(final String formatClass) throws UnknownProviderException {

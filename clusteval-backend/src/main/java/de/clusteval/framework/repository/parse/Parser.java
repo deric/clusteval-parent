@@ -137,7 +137,7 @@ public abstract class Parser<P extends IRepositoryObject> { // implements IParse
             return (Parser<T>) new GoldStandardConfigParser();
         } else if (c.equals(IProgramConfig.class) || c.equals(ProgramConfig.class)) {
             return (Parser<T>) new ProgramConfigParser();
-        } else if (c.equals(IRun.class)) {
+        } else if (c.equals(IRun.class) || c.equals(Run.class)) {
             return (Parser<T>) new RunParser<>();
         } else if (c.equals(IDataConfig.class) || c.equals(DataConfig.class)) {
             return (Parser<T>) new DataConfigParser();
@@ -510,7 +510,7 @@ class ExecutionRunParser<T extends ExecutionRun> extends RunParser<T> {
         list = new ArrayList<>(new HashSet<>(Arrays.asList(list))).toArray(new String[0]);
         for (String programConfig : list) {
             ProgramConfig newProgramConfig = Parser.parseFromFile(ProgramConfig.class,
-                    new File(FileUtils.buildPath(repo.getBasePath(ProgramConfig.class), programConfig + ".config")));
+                    new File(FileUtils.buildPath(repo.getBasePath(IProgramConfig.class), programConfig + ".config")));
 
             if (!newProgramConfig.getProgram().getContext().equals(context)) {
                 throw new IncompatibleContextException("Incompatible run context (" + context
@@ -540,7 +540,6 @@ class ExecutionRunParser<T extends ExecutionRun> extends RunParser<T> {
         if (getProps().getStringArray("qualityMeasures").length == 0) {
             throw new RunException("At least one quality measure must be specified");
         }
-
     }
 
     protected void parseDataConfigurations()
@@ -561,8 +560,9 @@ class ExecutionRunParser<T extends ExecutionRun> extends RunParser<T> {
         // 10.07.2014: remove duplicates.
         list = new ArrayList<>(new HashSet<>(Arrays.asList(list))).toArray(new String[0]);
         for (String dataConfig : list) {
+            log.debug("requiring " + dataConfig);
             dataConfigs.add(repo.getRegisteredObject(Parser.parseFromFile(DataConfig.class,
-                    new File(FileUtils.buildPath(repo.getBasePath(DataConfig.class), dataConfig + ".dataconfig")))));
+                    new File(FileUtils.buildPath(repo.getBasePath(IDataConfig.class), dataConfig + ".dataconfig")))));
         }
     }
 

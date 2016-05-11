@@ -79,13 +79,6 @@ public class InternalParameterOptimizationRun extends ExecutionRun {
         super(other);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see run.ExecutionRun#createRunRunnableFor(framework.RunScheduler,
-     * run.Run, program.ProgramConfig, data.DataConfig, java.lang.String,
-     * boolean)
-     */
     @Override
     protected ExecutionRunRunnable createRunRunnableFor(
             IScheduler runScheduler, IRun run,
@@ -96,11 +89,6 @@ public class InternalParameterOptimizationRun extends ExecutionRun {
                 programConfig, dataConfig, runIdentString, isResume, runParams);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see run.ExecutionRun#clone()
-     */
     @Override
     public InternalParameterOptimizationRun clone() {
         try {

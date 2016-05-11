@@ -609,7 +609,7 @@ public abstract class ExecutionRun extends Run {
      * @param dataConfigs     The data configurations to check.
      * @param qualityMeasures The quality measures to check.
      * @throws RunException An exception that indicates, that some quality
-     * measures and data configurations are not compatible.
+     *                      measures and data configurations are not compatible.
      */
     public static void checkCompatibilityQualityMeasuresDataConfigs(
             final List<IDataConfig> dataConfigs,

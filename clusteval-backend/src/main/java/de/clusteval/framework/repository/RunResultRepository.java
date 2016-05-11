@@ -100,11 +100,6 @@ public class RunResultRepository extends Repository implements IRepository {
         super(basePath, parent);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.wiwie.wiutils.utils.Repository#createSQLCommunicator()
-     */
     @Override
     protected SQLCommunicator createSQLCommunicator()
             throws DatabaseConnectException {
@@ -115,11 +110,6 @@ public class RunResultRepository extends Repository implements IRepository {
         return new StubSQLCommunicator(this);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.wiwie.wiutils.utils.Repository#initAttributes()
-     */
     @Override
     protected void initAttributes() {
 
@@ -289,33 +279,18 @@ public class RunResultRepository extends Repository implements IRepository {
         this.typesBasePath = this.parent.getTypesBasePath();
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.wiwie.wiutils.utils.Repository#log(java.lang.String)
-     */
     @Override
     public void info(String message) {
         // reduce visibility of log messages
         this.log.debug(message);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see framework.repository.Repository#warn(java.lang.String)
-     */
     @Override
     public void warn(String message) {
         // reduce visibility of log messages
         this.log.debug(message);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.wiwie.wiutils.utils.Repository#createSupervisorThread()
-     */
     @Override
     protected SupervisorThread createSupervisorThread() {
         return new RunResultRepositorySupervisorThread(this,
@@ -342,13 +317,6 @@ class RunResultRepositoryDataSetObjectEntity
         super(repository, parent, basePath);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * de.clusteval.framework.repository.RepositoryObjectEntity#register(de.
-     * clusteval.framework.repository.RepositoryObject)
-     */
     @Override
     public boolean register(IDataSet object) throws RegisterException {
         IDataSet dataSetInParentRepository = object.getRepository().getParent()
@@ -374,13 +342,6 @@ class RunResultRepositoryGoldStandardObjectEntity extends StaticRepositoryEntity
         super(repository, parent, basePath);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * de.clusteval.framework.repository.RepositoryObjectEntity#register(de.
-     * clusteval.framework.repository.RepositoryObject)
-     */
     @Override
     public boolean register(IGoldStandard object) throws RegisterException {
         IGoldStandard gsInParentRepository = object.getRepository().getParent()

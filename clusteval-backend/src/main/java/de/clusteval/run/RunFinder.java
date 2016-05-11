@@ -40,31 +40,16 @@ public class RunFinder extends FileFinder<IRun> {
         super(repository, IRun.class);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.wiwie.wiutils.utils.Finder#checkFile(java.io.File)
-     */
     @Override
     public boolean checkFile(File file) {
         return file.isFile() && file.getName().endsWith(".run");
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.wiwie.wiutils.utils.Finder#getIterator()
-     */
     @Override
     public Iterator<File> getIterator() {
         return new ArrayIterator<>(getBaseDir().listFiles());
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.wiwie.wiutils.utils.FileFinder#parseObjectFromFile(java.io.File)
-     */
     @Override
     protected IRun parseObjectFromFile(File file) throws Exception {
         return Parser.parseRunFromFile(file);

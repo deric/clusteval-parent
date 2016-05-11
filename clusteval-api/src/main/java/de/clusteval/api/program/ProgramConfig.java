@@ -357,8 +357,7 @@ public class ProgramConfig extends RepositoryObject implements IProgramConfig {
      * @throws UnknownProgramParameterException
      * @return The program parameter with the appropriate name
      */
-    public IProgramParameter<?> getParamWithId(final String id)
-            throws UnknownProgramParameterException {
+    public IProgramParameter<?> getParamWithId(final String id) throws UnknownProgramParameterException {
         for (IProgramParameter<?> param : this.params) {
             if (param.getName().equals(id)) {
                 return param;

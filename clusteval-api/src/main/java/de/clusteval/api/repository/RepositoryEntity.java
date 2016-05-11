@@ -17,6 +17,8 @@
 package de.clusteval.api.repository;
 
 import de.clusteval.api.program.RegisterException;
+import java.io.File;
+import org.slf4j.LoggerFactory;
 
 public abstract class RepositoryEntity<T extends IRepositoryObject> {
 
@@ -40,7 +42,7 @@ public abstract class RepositoryEntity<T extends IRepositoryObject> {
         super();
         this.repository = repository;
         this.initialized = false;
-        this.basePath = basePath;
+        setBasePath(basePath);
     }
 
     public void setInitialized() {
@@ -55,8 +57,25 @@ public abstract class RepositoryEntity<T extends IRepositoryObject> {
         return this.basePath;
     }
 
-    public abstract <S extends T> boolean register(final S object)
-            throws RegisterException;
+    /**
+     * Basepath must be a directory
+     *
+     * @param path
+     */
+    public final void setBasePath(String path) {
+        if (path == null) {
+            LoggerFactory.getLogger(RepositoryEntity.class.getName()).warn("base path is null");
+            return;
+        }
+        File f = new File(path);
+        if (!f.isDirectory()) {
+            basePath = f.getParent();
+        } else {
+            basePath = path;
+        }
+    }
+
+    public abstract <S extends T> boolean register(final S object) throws RegisterException;
 
     public abstract <S extends T> boolean unregister(final S object);
 }
