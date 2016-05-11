@@ -49,8 +49,6 @@ import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.run.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.api.run.RunException;
-import de.clusteval.data.DataConfigNotFoundException;
-import de.clusteval.data.DataConfigurationException;
 import de.clusteval.framework.repository.RunResultRepository;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -85,7 +83,7 @@ class DataSetParser extends RepositoryObjectParser<IDataSet> {
                    UnknownProgramParameterException, UnknownProgramTypeException, UnknownRProgramException,
                    GoldStandardNotFoundException, GoldStandardConfigurationException, DataSetConfigurationException,
                    DataSetNotFoundException, DataSetConfigNotFoundException, GoldStandardConfigNotFoundException,
-                   NoDataSetException, DataConfigurationException, DataConfigNotFoundException, NumberFormatException,
+                   NoDataSetException, NumberFormatException,
                    IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
                    UnknownRunResultPostprocessorException, UnknownProviderException {

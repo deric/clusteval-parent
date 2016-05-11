@@ -59,8 +59,6 @@ import de.clusteval.api.repository.RepositoryConfigurationException;
 import de.clusteval.api.run.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.api.run.RunException;
 import de.clusteval.api.run.RunResultFactory;
-import de.clusteval.data.DataConfigNotFoundException;
-import de.clusteval.data.DataConfigurationException;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.RunResultRepository;
@@ -105,7 +103,6 @@ public class ClustQualityEval {
                    DataSetConfigurationException, DataSetNotFoundException,
                    DataSetConfigNotFoundException,
                    GoldStandardConfigNotFoundException, NoDataSetException,
-                   DataConfigurationException, DataConfigNotFoundException,
                    NumberFormatException, RunResultParseException,
                    ConfigurationException, RegisterException,
                    UnknownParameterType, IOException, UnknownRunResultFormatException,
@@ -422,22 +419,10 @@ public class ClustQualityEval {
                 null, false, "", run.getAbsolutePath() + ".new",
                 OUTPUT_MODE.STREAM) {
 
-            /*
-             * (non-Javadoc)
-             *
-             * @see de.wiwie.wiutils.utils.parse.TextFileParser#processLine(java.lang.String[],
-             * java.lang.String[])
-             */
             @Override
             protected void processLine(String[] key, String[] value) {
             }
 
-            /*
-             * (non-Javadoc)
-             *
-             * @see de.wiwie.wiutils.utils.parse.TextFileParser#getLineOutput(java.lang.String[],
-             * java.lang.String[])
-             */
             @Override
             protected String getLineOutput(String[] key, String[] value) {
                 StringBuilder sb = new StringBuilder();
@@ -468,18 +453,14 @@ public class ClustQualityEval {
                    DataSetConfigurationException, DataSetNotFoundException,
                    DataSetConfigNotFoundException,
                    GoldStandardConfigNotFoundException, NoDataSetException,
-                   DataConfigurationException, DataConfigNotFoundException,
                    NumberFormatException, RunResultParseException,
                    ConfigurationException, RegisterException,
                    UnknownParameterType, IOException, UnknownRunResultFormatException,
-                   InvalidRunModeException,
-                   UnknownParameterOptimizationMethodException,
-                   NoOptimizableProgramParameterException,
-                   UnknownProgramParameterException,
+                   InvalidRunModeException, UnknownParameterOptimizationMethodException,
+                   NoOptimizableProgramParameterException, UnknownProgramParameterException,
                    InvalidConfigurationFileException, NoRepositoryFoundException,
                    InvalidOptimizationParameterException, RunException,
-                   UnknownProgramTypeException,
-                   UnknownRProgramException,
+                   UnknownProgramTypeException, UnknownRProgramException,
                    IncompatibleParameterOptimizationMethodException,
                    IncompatibleContextException, InvalidDataSetFormatException,
                    RNotAvailableException, FormatConversionException,
@@ -492,19 +473,11 @@ public class ClustQualityEval {
 
 class MyProgressPrinter extends ProgressPrinter {
 
-    /**
-     *
-     */
     public MyProgressPrinter(final long upperLimit,
             final boolean printOnNewPercent) {
         super(upperLimit, printOnNewPercent);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.wiwie.wiutils.utils.ProgressPrinter#log(java.lang.String)
-     */
     @Override
     protected void log(String message) {
         this.log.info(message);

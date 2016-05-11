@@ -45,8 +45,6 @@ import de.clusteval.api.run.RunException;
 import de.clusteval.api.stats.IDataStatistic;
 import de.clusteval.api.stats.RunDataStatistic;
 import de.clusteval.api.stats.Statistic;
-import de.clusteval.data.DataConfigNotFoundException;
-import de.clusteval.data.DataConfigurationException;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.framework.repository.parse.Parser;
 import de.clusteval.run.RunDataAnalysisRun;
@@ -232,12 +230,7 @@ public class RunDataAnalysisRunResult extends AnalysisRunResult<Pair<List<String
         } catch (DatabaseConnectException e) {
             // cannot happen
             return null;
-        } catch (DataConfigurationException ex) {
-            Exceptions.printStackTrace(ex);
-        } catch (DataConfigNotFoundException ex) {
-            Exceptions.printStackTrace(ex);
         }
-        return null;
     }
 
     /*

@@ -50,8 +50,6 @@ import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.repository.RepositoryConfigurationException;
 import de.clusteval.api.run.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.api.run.RunException;
-import de.clusteval.data.DataConfigNotFoundException;
-import de.clusteval.data.DataConfigurationException;
 import de.clusteval.framework.repository.parse.Parser;
 import de.clusteval.utils.AbstractClustEvalTest;
 import java.io.File;
@@ -77,12 +75,9 @@ public class PlotterTest extends AbstractClustEvalTest {
                                     IOException, REngineException, FormatConversionException,
                                     DataSetNotFoundException, DataSetConfigurationException,
                                     NoDataSetException, NoRepositoryFoundException,
-                                    RNotAvailableException,
-                                    InterruptedException, GoldStandardNotFoundException,
+                                    RNotAvailableException, InterruptedException, GoldStandardNotFoundException,
                                     GoldStandardConfigurationException, DataSetConfigNotFoundException,
-                                    GoldStandardConfigNotFoundException, DataConfigurationException,
-                                    DataConfigNotFoundException, ConfigurationException,
-                                    UnknownParameterType,
+                                    GoldStandardConfigNotFoundException, ConfigurationException, UnknownParameterType,
                                     RunException, IncompatibleContextException,
                                     UnknownRunResultFormatException,
                                     InvalidOptimizationParameterException,
@@ -149,9 +144,7 @@ public class PlotterTest extends AbstractClustEvalTest {
                                  RNotAvailableException,
                                  InterruptedException, GoldStandardNotFoundException,
                                  GoldStandardConfigurationException, DataSetConfigNotFoundException,
-                                 GoldStandardConfigNotFoundException, DataConfigurationException,
-                                 DataConfigNotFoundException, ConfigurationException,
-                                 UnknownParameterType,
+                                 GoldStandardConfigNotFoundException, ConfigurationException, UnknownParameterType,
                                  RunException, IncompatibleContextException,
                                  UnknownRunResultFormatException,
                                  InvalidOptimizationParameterException,

@@ -68,8 +68,6 @@ import de.clusteval.api.run.RunException;
 import de.clusteval.api.run.RunInitializationException;
 import de.clusteval.api.run.RunResultFactory;
 import de.clusteval.api.run.result.RunResult;
-import de.clusteval.data.DataConfigNotFoundException;
-import de.clusteval.data.DataConfigurationException;
 import de.clusteval.run.result.ClusteringRunResult;
 import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.run.runnable.ExecutionRunRunnable;
@@ -510,7 +508,6 @@ public class RobustnessAnalysisRun extends ClusteringRun {
                    GoldStandardConfigurationException, DataSetConfigurationException,
                    DataSetNotFoundException, DataSetConfigNotFoundException,
                    GoldStandardConfigNotFoundException, NoDataSetException,
-                   DataConfigurationException, DataConfigNotFoundException,
                    NumberFormatException, RunResultParseException,
                    ConfigurationException, RegisterException,
                    UnknownParameterType, IOException, UnknownRunResultFormatException,

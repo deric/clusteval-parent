@@ -39,8 +39,6 @@ import de.clusteval.api.repository.RepositoryConfigurationException;
 import de.clusteval.api.repository.RepositoryController;
 import de.clusteval.api.run.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.api.run.RunException;
-import de.clusteval.data.DataConfigNotFoundException;
-import de.clusteval.data.DataConfigurationException;
 import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.config.DefaultRepositoryConfig;
 import de.clusteval.framework.repository.parse.Parser;
@@ -64,7 +62,6 @@ public class ParameterOptimizationRunTest extends AbstractClustEvalTest {
                               DataSetConfigurationException, DataSetNotFoundException,
                               DataSetConfigNotFoundException,
                               GoldStandardConfigNotFoundException, NoDataSetException,
-                              DataConfigurationException, DataConfigNotFoundException,
                               NumberFormatException, ConfigurationException, RegisterException,
                               UnknownParameterType, IOException,
                               UnknownRunResultFormatException,
@@ -96,10 +93,8 @@ public class ParameterOptimizationRunTest extends AbstractClustEvalTest {
             DataSetConfigurationException, DataSetNotFoundException,
             DataSetConfigNotFoundException,
             GoldStandardConfigNotFoundException, NoDataSetException,
-            NumberFormatException, DataConfigurationException,
-            DataConfigNotFoundException, RegisterException,
-            ConfigurationException,
-            UnknownParameterType,
+            NumberFormatException, RegisterException,
+            ConfigurationException, UnknownParameterType,
             IncompatibleParameterOptimizationMethodException,
             UnknownParameterOptimizationMethodException, RunException,
             NoOptimizableProgramParameterException,

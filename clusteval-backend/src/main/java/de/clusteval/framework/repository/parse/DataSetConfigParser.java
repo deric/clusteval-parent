@@ -47,8 +47,6 @@ import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.r.UnknownRProgramException;
 import de.clusteval.api.run.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.api.run.RunException;
-import de.clusteval.data.DataConfigNotFoundException;
-import de.clusteval.data.DataConfigurationException;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.utils.FileUtils;
 import java.io.File;
@@ -79,7 +77,7 @@ class DataSetConfigParser extends RepositoryObjectParser<DataSetConfig> {
                    UnknownProgramParameterException, UnknownProgramTypeException, UnknownRProgramException,
                    GoldStandardNotFoundException, GoldStandardConfigurationException, DataSetConfigurationException,
                    DataSetNotFoundException, DataSetConfigNotFoundException, GoldStandardConfigNotFoundException,
-                   NoDataSetException, DataConfigurationException, DataConfigNotFoundException, NumberFormatException,
+                   NoDataSetException, NumberFormatException,
                    IncompatibleParameterOptimizationMethodException,
                    UnknownParameterOptimizationMethodException, NoOptimizableProgramParameterException,
                    UnknownRunResultPostprocessorException, UnknownProviderException {
@@ -163,8 +161,8 @@ class DataSetConfigParser extends RepositoryObjectParser<DataSetConfig> {
             throws DataSetNotFoundException, DataSetConfigurationException,
                    NoDataSetException, NumberFormatException, RegisterException, NoRepositoryFoundException,
                    GoldStandardNotFoundException, GoldStandardConfigurationException,
-                   DataSetConfigNotFoundException, GoldStandardConfigNotFoundException, DataConfigurationException,
-                   DataConfigNotFoundException, ConfigurationException, FileNotFoundException,
+                   DataSetConfigNotFoundException, GoldStandardConfigNotFoundException,
+                   ConfigurationException, FileNotFoundException,
                    UnknownParameterType, RunException, IncompatibleContextException,
                    UnknownRunResultFormatException, InvalidOptimizationParameterException, UnknownProgramParameterException,
                    UnknownProgramTypeException, UnknownRProgramException,

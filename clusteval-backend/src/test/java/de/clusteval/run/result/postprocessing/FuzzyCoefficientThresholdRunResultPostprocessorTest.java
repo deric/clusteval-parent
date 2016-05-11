@@ -41,8 +41,6 @@ import de.clusteval.api.run.RunException;
 import de.clusteval.api.run.result.RunResultPostprocessor;
 import de.clusteval.api.run.result.RunResultPostprocessorParameters;
 import de.clusteval.cluster.Clustering;
-import de.clusteval.data.DataConfigNotFoundException;
-import de.clusteval.data.DataConfigurationException;
 import de.clusteval.utils.AbstractClustEvalTest;
 import java.io.File;
 import java.io.IOException;
@@ -65,10 +63,9 @@ public class FuzzyCoefficientThresholdRunResultPostprocessorTest extends Abstrac
                               NoRepositoryFoundException, IOException,
                               InterruptedException, GoldStandardNotFoundException,
                               GoldStandardConfigurationException, DataSetConfigNotFoundException,
-                              GoldStandardConfigNotFoundException, DataConfigurationException,
-                              DataConfigNotFoundException, ConfigurationException,
-                              UnknownParameterType, RunException,
-                              IncompatibleContextException, UnknownRunResultFormatException,
+                              GoldStandardConfigNotFoundException, ConfigurationException,
+                              UnknownParameterType, RunException, IncompatibleContextException,
+                              UnknownRunResultFormatException,
                               InvalidOptimizationParameterException,
                               UnknownProgramParameterException, UnknownProgramTypeException,
                               UnknownRProgramException,
