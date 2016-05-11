@@ -43,7 +43,6 @@ import de.clusteval.api.program.ProgramConfig;
 import de.clusteval.api.program.ProgramParameter;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.program.StringProgramParameter;
-import de.clusteval.api.r.IRProgram;
 import de.clusteval.api.r.IRengine;
 import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RException;
@@ -769,6 +768,7 @@ public class Repository implements IRepository {
         } else if (dynamicEntityFound) {
             return (S) this.dynamicRepositoryEntities.get(c).getRegisteredObject(object, ignoreChangeDate);
         }
+
         log.warn("could not found registered object: " + object.getAbsolutePath() + " of " + c);
         return null;
     }
@@ -801,7 +801,6 @@ public class Repository implements IRepository {
         return this.register(c, object);
     }
 
-    @SuppressWarnings("unchecked")
     public <T extends RepositoryObject, S extends T> boolean register(final Class<T> c, final S object)
             throws RegisterException {
         boolean staticEntityFound;
@@ -1434,13 +1433,6 @@ public class Repository implements IRepository {
                 FileUtils.buildPath(this.supplementaryBasePath, "preprocessing"));
         this.createAndAddDynamicEntity(IRunResultPostprocessor.class,
                 FileUtils.buildPath(this.supplementaryBasePath, "postprocessing"));
-
-        this.dynamicRepositoryEntities.put(IRProgram.class,
-                new RProgramRepositoryEntity(this, this.staticRepositoryEntities.get(IProgram.class),
-                        this.parent != null
-                        ? (RProgramRepositoryEntity) this.parent.getDynamicEntities().get(IRProgram.class)
-                        : null,
-                        this.getBasePath(IProgram.class)));
 
         this.createAndAddDynamicEntity(ClusteringEvaluation.class,
                 FileUtils.buildPath(this.suppClusteringBasePath, "qualityMeasures"));

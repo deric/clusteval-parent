@@ -74,8 +74,7 @@ public class DynamicRepositoryEntity<T extends IRepositoryObject> extends Reposi
         return this.getRegisteredObject(obj, true);
     }
 
-    public <S extends T> S getRegisteredObject(final S object,
-            final boolean ignoreChangeDate) {
+    public <S extends T> S getRegisteredObject(final S object, final boolean ignoreChangeDate) {
         // get object without changedate
         S other = null;
 
@@ -146,8 +145,7 @@ public class DynamicRepositoryEntity<T extends IRepositoryObject> extends Reposi
      * @param classToRegister The class to look up.
      * @return True, if the class was registered.
      */
-    public <S extends T> boolean isClassRegistered(
-            final Class<S> classToRegister) {
+    public <S extends T> boolean isClassRegistered(final Class<S> classToRegister) {
         return this.isClassRegistered(classToRegister.getName());
     }
 
@@ -197,8 +195,7 @@ public class DynamicRepositoryEntity<T extends IRepositoryObject> extends Reposi
      * @throws RegisterException
      */
     @Override
-    public <S extends T> boolean register(final S object)
-            throws RegisterException {
+    public <S extends T> boolean register(final S object) throws RegisterException {
         synchronized (this.objects) {
             this.objects.get(object.getClass().getSimpleName()).add(object);
             // TODO: check duplicates in list?

@@ -191,11 +191,9 @@ public class GoldStandardConfigTest extends AbstractClustEvalTest {
         assertFalse(gsConfig.getGoldstandard() == gs);
         assertTrue(gsConfig.getGoldstandard() == gs2);
 
-        /*
-         * REMOVE
-         */
-
- /*
+        /**
+         * REMOVAL
+         *
          * First check, whether listeners of goldstandardconfigs are notified
          * correctly when the goldstandardconfig is replaced
          */

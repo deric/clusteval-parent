@@ -29,7 +29,6 @@ import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataRandomizer;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetConfig;
-import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.data.IGoldStandardConfig;
 import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
@@ -661,7 +660,7 @@ class GoldStandardConfigParser extends RepositoryObjectParser<GoldStandardConfig
             String gsFile = getProps().getString("goldstandardFile");
 
             result = new GoldStandardConfig(repo, changeDate, absPath, GoldStandard.parseFromFile(
-                    new File(FileUtils.buildPath(repo.getBasePath(IGoldStandard.class), gsName, gsFile))));
+                    new File(FileUtils.buildPath(repo.getBasePath(GoldStandard.class), gsName, gsFile))));
             //result = repo.getRegisteredObject(result);
             log.debug("Goldstandard config parsed");
         } catch (NoSuchElementException e) {

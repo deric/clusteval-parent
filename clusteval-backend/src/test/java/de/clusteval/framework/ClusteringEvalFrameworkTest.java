@@ -73,7 +73,7 @@ public class ClusteringEvalFrameworkTest {
 
     }
 
-    // @Test
+    //@Test
     public void testPerformParamOptimizationRun() throws ConnectException,
                                                          InterruptedException, ParseException {
         String uniqueRunId = "11_20_2012-12_45_04_all_vs_DS1";
