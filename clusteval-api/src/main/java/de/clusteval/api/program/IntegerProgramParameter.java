@@ -12,13 +12,9 @@
  */
 package de.clusteval.api.program;
 
-import de.clusteval.api.program.ProgramParameter;
-import de.clusteval.api.program.ProgramConfig;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.exceptions.InternalAttributeException;
-import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.program.RegisterException;
 import javax.script.ScriptException;
 
 /**

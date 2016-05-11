@@ -13,7 +13,7 @@ package de.clusteval.data.dataset;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.IRepository;
-import de.clusteval.framework.threading.SupervisorThread;
+import de.clusteval.api.run.ISupervisorThread;
 
 /**
  * @author Christian Wiwie
@@ -29,27 +29,17 @@ public class RunResultDataSetFinderThread extends DataSetFinderThread {
      *
      */
     public RunResultDataSetFinderThread(
-            final SupervisorThread supervisorThread,
+            final ISupervisorThread supervisorThread,
             final IRepository framework, final long sleepTime,
             final boolean checkOnce) {
         super(supervisorThread, framework, sleepTime, checkOnce);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.wiwie.wiutils.utils.FinderThread#getFinder()
-     */
     @Override
     public RunResultDataSetFinder getFinder() throws RegisterException {
         return new RunResultDataSetFinder(repository);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.wiwie.wiutils.utils.FinderThread#afterFind()
-     */
     @Override
     protected void afterFind() {
         this.repository.setInitialized(IDataSet.class);

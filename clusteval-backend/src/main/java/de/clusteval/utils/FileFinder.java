@@ -136,11 +136,6 @@ public abstract class FileFinder<T extends IRepositoryObject> extends Finder<T> 
         }
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.wiwie.wiutils.utils.Finder#findAndRegisterObjects()
-     */
     @Override
     public void findAndRegisterObjects() throws RegisterException, InterruptedException {
         validateRegisteredObjects();

@@ -42,8 +42,7 @@ public abstract class Finder<T extends IRepositoryObject> extends RepositoryObje
      * @param classToFind
      * @throws RegisterException
      */
-    public Finder(IRepository repository, Class<T> classToFind)
-            throws RegisterException {
+    public Finder(IRepository repository, Class<T> classToFind) throws RegisterException {
         super(repository, System.currentTimeMillis(), new File(
                 repository.getBasePath(classToFind)));
 
@@ -69,7 +68,7 @@ public abstract class Finder<T extends IRepositoryObject> extends RepositoryObje
             return (Finder<T>) this.getClass().getConstructor(Finder.class)
                     .newInstance(this);
         } catch (IllegalArgumentException | SecurityException | InstantiationException |
-                 IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
         this.log.warn("Cloning instance of class "

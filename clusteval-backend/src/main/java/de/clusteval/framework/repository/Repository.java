@@ -92,6 +92,7 @@ import de.clusteval.utils.Finder;
 import de.clusteval.utils.NamedDoubleAttribute;
 import de.clusteval.utils.NamedIntegerAttribute;
 import de.clusteval.utils.NamedStringAttribute;
+import gnu.trove.map.hash.THashMap;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.lang.reflect.ParameterizedType;
@@ -318,9 +319,12 @@ public class Repository implements IRepository {
     private transient InstanceContent instanceContent;
     private transient AbstractLookup lookup;
 
+    private THashMap<String, IRepositoryObject> entities;
+
     public Repository() {
         super();
     }
+
     /**
      * Instantiates a new repository.
      *
@@ -364,6 +368,7 @@ public class Repository implements IRepository {
         this.log = LoggerFactory.getLogger(this.getClass());
         instanceContent = new InstanceContent();
         lookup = new AbstractLookup(instanceContent);
+        entities = new THashMap<>();
 
         this.basePath = basePath;
         // remove trailing file separator
@@ -536,7 +541,6 @@ public class Repository implements IRepository {
         this.ensureFolder(this.getBasePath(IDataSetConfig.class));
         this.ensureFolder(this.getBasePath(GoldStandard.class));
         this.ensureFolder(this.getBasePath(IGoldStandardConfig.class));
-        this.ensureFolder(this.getBasePath(IProgram.class));
         this.ensureFolder(this.getBasePath(IProgramConfig.class));
         this.ensureFolder(this.getBasePath(IRun.class));
         this.ensureFolder(this.getBasePath(IRunResult.class));
@@ -546,13 +550,8 @@ public class Repository implements IRepository {
         this.ensureFolder(this.getBasePath(IContext.class));
         this.ensureFolder(this.getBasePath(IParameterOptimizationMethod.class));
         this.ensureFolder(this.getBasePath(IDataStatistic.class));
-        this.ensureFolder(this.getBasePath(IRunStatistic.class));
         this.ensureFolder(this.getBasePath(IRunDataStatistic.class));
-        this.ensureFolder(this.getBasePath(IDistanceMeasure.class));
         this.ensureFolder(this.generatorBasePath);
-        this.ensureFolder(this.getBasePath(IDataSetGenerator.class));
-        this.ensureFolder(this.getBasePath(IDataRandomizer.class));
-        this.ensureFolder(this.getBasePath(DataPreprocessor.class));
 
         return true;
     }
@@ -768,8 +767,11 @@ public class Repository implements IRepository {
         } else if (dynamicEntityFound) {
             return (S) this.dynamicRepositoryEntities.get(c).getRegisteredObject(object, ignoreChangeDate);
         }
+        if (this.entities.containsKey(object.getAbsolutePath())) {
+            return (S) entities.get(object.getAbsolutePath());
+        }
 
-        log.warn("could not found registered object: " + object.getAbsolutePath() + " of " + c);
+        log.warn("could not find registered object: " + object.getAbsolutePath() + " of " + c);
         return null;
     }
 
@@ -793,6 +795,12 @@ public class Repository implements IRepository {
         } else if (dynamicEntityFound) {
             return this.dynamicRepositoryEntities.get(c).unregister(object);
         }
+
+        if (this.entities.containsKey(object.getAbsolutePath())) {
+            entities.remove(object.getAbsolutePath());
+            return true;
+        }
+
         return false;
     }
 
@@ -818,6 +826,9 @@ public class Repository implements IRepository {
         } else if (dynamicEntityFound) {
             return this.dynamicRepositoryEntities.get(c).register(object);
         }
+
+        entities.put(object.getAbsolutePath(), object);
+
         return false;
     }
 
@@ -1387,20 +1398,20 @@ public class Repository implements IRepository {
 
         this.staticRepositoryEntities
                 .put(DoubleProgramParameter.class,
-                        new ProgramParameterRepositoryEntity<DoubleProgramParameter>(this,
+                        new ProgramParameterRepositoryEntity<>(this,
                                 this.parent != null
                                 ? this.parent.getStaticEntities().get(DoubleProgramParameter.class)
                                 : null,
                                 null));
         this.staticRepositoryEntities.put(IntegerProgramParameter.class,
-                new ProgramParameterRepositoryEntity<IntegerProgramParameter>(this,
+                new ProgramParameterRepositoryEntity<>(this,
                         this.parent != null
                         ? this.parent.getStaticEntities().get(IntegerProgramParameter.class)
                         : null,
                         null));
         this.staticRepositoryEntities
                 .put(StringProgramParameter.class,
-                        new ProgramParameterRepositoryEntity<StringProgramParameter>(this,
+                        new ProgramParameterRepositoryEntity<>(this,
                                 this.parent != null
                                 ? this.parent.getStaticEntities().get(StringProgramParameter.class)
                                 : null,

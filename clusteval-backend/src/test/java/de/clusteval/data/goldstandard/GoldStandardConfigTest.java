@@ -211,7 +211,7 @@ public class GoldStandardConfigTest extends AbstractClustEvalTest {
         gsConfig.notify(new RepositoryRemoveEvent(gs2));
 
         // not registered anymore
-        assertTrue(getRepository().getRegisteredObject(gsConfig) == null);
+        assertEquals(null, getRepository().getRegisteredObject(gsConfig));
     }
 
     @Test(expected = GoldStandardConfigurationException.class)

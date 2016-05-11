@@ -661,6 +661,7 @@ class GoldStandardConfigParser extends RepositoryObjectParser<GoldStandardConfig
 
             result = new GoldStandardConfig(repo, changeDate, absPath, GoldStandard.parseFromFile(
                     new File(FileUtils.buildPath(repo.getBasePath(GoldStandard.class), gsName, gsFile))));
+            result.register();
             //result = repo.getRegisteredObject(result);
             log.debug("Goldstandard config parsed");
         } catch (NoSuchElementException e) {
