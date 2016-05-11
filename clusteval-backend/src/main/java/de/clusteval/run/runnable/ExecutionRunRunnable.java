@@ -58,7 +58,6 @@ import de.clusteval.api.run.NoRunResultFormatParserException;
 import de.clusteval.api.run.RunRunnable;
 import de.clusteval.api.run.StreamGobbler;
 import de.clusteval.api.run.result.RunResultNotFoundException;
-import de.clusteval.cluster.Clustering;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.framework.repository.RunResultRepository;
 import de.clusteval.run.result.ClusteringRunResult;
@@ -968,7 +967,7 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
             final String qualityFile = internalParams.get("q");
             convertedResult.loadIntoMemory();
             try {
-                final Pair<ParameterSet, Clustering> pair = convertedResult.getClustering();
+                final Pair<ParameterSet, IClustering> pair = convertedResult.getClustering();
                 ClusteringQualitySet quals = pair.getSecond().assessQuality(dataConfig,
                         this.getRun().getQualityMeasures());
                 qualities.add(Pair.getPair(pair.getFirst(), quals));

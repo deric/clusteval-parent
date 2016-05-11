@@ -16,7 +16,14 @@
  */
 package de.clusteval.api.cluster;
 
+import de.clusteval.api.ClusteringEvaluation;
+import de.clusteval.api.data.IDataConfig;
+import de.clusteval.api.exceptions.ClusteringParseException;
+import de.clusteval.api.exceptions.InvalidDataSetFormatException;
+import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.repository.IRepositoryObject;
+import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -110,4 +117,22 @@ public interface IClustering extends IRepositoryObject, Iterable<Cluster> {
      *         before.
      */
     boolean addCluster(final Cluster cluster);
+
+    ClusteringQualitySet assessQuality(final IDataConfig dataConfig, final List<ClusteringEvaluation> qualityMeasures)
+            throws UnknownGoldStandardFormatException, IOException,
+                   InvalidDataSetFormatException;
+
+    void loadIntoMemory() throws ClusteringParseException;
+
+    void unloadFromMemory();
+
+    /**
+     * This method converts a fuzzy to a hard clustering by assigning each item
+     * to the cluster, with the highest according fuzzy coefficient. If there
+     * are ties, the assigned cluster is randomly selected.
+     *
+     * @return A hard clustering resulting from converting this fuzzy
+     *         clustering.
+     */
+    IClustering toHardClustering();
 }

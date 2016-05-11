@@ -16,7 +16,9 @@ import ch.qos.logback.classic.Level;
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.cluster.ClusteringEvaluationFactory;
 import de.clusteval.api.cluster.ClusteringEvaluationParameters;
+import de.clusteval.api.cluster.ClusteringFactory;
 import de.clusteval.api.cluster.ClusteringQualitySet;
+import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.data.DataConfig;
 import de.clusteval.api.data.DataSetConfigNotFoundException;
 import de.clusteval.api.data.DataSetConfigurationException;
@@ -57,7 +59,6 @@ import de.clusteval.api.repository.RepositoryConfigurationException;
 import de.clusteval.api.run.IncompatibleParameterOptimizationMethodException;
 import de.clusteval.api.run.RunException;
 import de.clusteval.api.run.RunResultFactory;
-import de.clusteval.cluster.Clustering;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
 import de.clusteval.framework.ClustevalBackendServer;
@@ -207,7 +208,7 @@ public class ClustQualityEval {
 
                         for (File clusteringFile : childs) {
                             try {
-                                Clustering cl = Clustering.parseFromFile(repo,
+                                IClustering cl = ClusteringFactory.parseFromFile(repo,
                                         clusteringFile.getAbsoluteFile(), true)
                                         .getSecond();
 

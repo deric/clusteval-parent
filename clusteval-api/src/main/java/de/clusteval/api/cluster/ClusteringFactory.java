@@ -16,10 +16,13 @@
  */
 package de.clusteval.api.cluster;
 
+import de.clusteval.api.Pair;
 import de.clusteval.api.factory.ServiceFactory;
 import de.clusteval.api.factory.UnknownProviderException;
+import de.clusteval.api.opt.ParameterSet;
 import de.clusteval.api.repository.IRepository;
 import java.io.File;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -96,7 +99,7 @@ public class ClusteringFactory extends ServiceFactory<IClustering> {
      * @return A clustering wrapper object.
      */
     public static IClustering parseFromIntArray(final IRepository repository,
-            final File absPath, final String[] objectIds, final int[] clusterIds) {
+            final File absPath, final String[] objectIds, final int[] clusterIds) throws UnknownProviderException {
         return parseFromFuzzyCoeffMatrix(repository, absPath, objectIds,
                 clusterIdsToFuzzyCoeff(clusterIds));
     }
@@ -111,7 +114,7 @@ public class ClusteringFactory extends ServiceFactory<IClustering> {
      */
     public static IClustering parseFromFuzzyCoeffMatrix(
             final IRepository repository, final File absPath,
-            final String[] objectIds, final float[][] fuzzyCoeffs) {
+            final String[] objectIds, final float[][] fuzzyCoeffs) throws UnknownProviderException {
         if (objectIds.length != fuzzyCoeffs.length) {
             throw new IllegalArgumentException(
                     "The number of object ids and cluster ids needs to be the same.");
@@ -133,13 +136,44 @@ public class ClusteringFactory extends ServiceFactory<IClustering> {
         }
         IClustering clustering;
         try {
-            IClustering c = Lookup.getDefault().lookup(IClustering.class);
+            IClustering c = ClusteringFactory.getInstance().getProvider("Clustering");
             clustering = c.getClass().newInstance();
             clustering.init(repository, System.currentTimeMillis(), absPath);
             for (Cluster cl : clusters.values()) {
                 clustering.addCluster(cl);
             }
             return clustering;
+        } catch (InstantiationException ex) {
+            Exceptions.printStackTrace(ex);
+        } catch (IllegalAccessException ex) {
+            Exceptions.printStackTrace(ex);
+        }
+        return null;
+    }
+
+    /**
+     * This method parses clusterings together with the corresponding parameter
+     * sets from a file.
+     *
+     * @param repository
+     *
+     * @param absFilePath    The absolute path to the input file.
+     * @param parseQualities True, if the qualities of the clusterings should
+     *                       also be parsed. Those will be taken from .qual-files.
+     * @return A map containing parameter sets and corresponding clusterings.
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
+    public static Pair<ParameterSet, IClustering> parseFromFile(final IRepository repository, final File absFilePath,
+            final boolean parseQualities) throws IOException {
+        try {
+            IClusteringParser parser = Lookup.getDefault().lookup(IClusteringParser.class);
+            IClusteringParser inst = parser.getClass().newInstance();
+
+            inst.init(repository,
+                    absFilePath.getAbsolutePath(), parseQualities);
+            parser.process();
+
+            return parser.getClusterings();
         } catch (InstantiationException ex) {
             Exceptions.printStackTrace(ex);
         } catch (IllegalAccessException ex) {

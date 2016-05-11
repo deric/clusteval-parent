@@ -14,14 +14,15 @@ package de.clusteval.run.result;
 
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.cluster.ClustEvalValue;
+import de.clusteval.api.cluster.ClusteringFactory;
 import de.clusteval.api.cluster.ClusteringQualitySet;
+import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.exceptions.ClusteringParseException;
 import de.clusteval.api.opt.ParameterOptimizationMethod;
 import de.clusteval.api.opt.ParameterOptimizationRun;
 import de.clusteval.api.opt.ParameterSet;
 import de.clusteval.api.program.IProgramParameter;
 import de.clusteval.api.run.IRunResultPostprocessor;
-import de.clusteval.cluster.Clustering;
 import de.clusteval.utils.StringExt;
 import de.clusteval.utils.TextFileParser;
 import java.io.File;
@@ -201,9 +202,9 @@ public class ParameterOptimizationResultParser extends TextFileParser {
                 tmpResult.parameterSets.add(paramSet);
                 tmpResult.iterationNumbers.add(iterationNumber);
 
-                Clustering clustering = null;
+                IClustering clustering = null;
                 if (absFile.exists()) {
-                    clustering = Clustering.parseFromFile(method.getRepository(), absFile, false).getSecond();
+                    clustering = ClusteringFactory.parseFromFile(method.getRepository(), absFile, false).getSecond();
                 }
 
                 tmpResult.put(iterationNumber, paramSet, qualitySet, clustering);

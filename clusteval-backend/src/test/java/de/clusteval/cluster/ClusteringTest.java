@@ -18,6 +18,7 @@ import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.api.cluster.ClusteringFactory;
 import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.exceptions.ClusteringParseException;
+import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.opt.ParameterSet;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.utils.AbstractClustEvalTest;
@@ -39,7 +40,7 @@ import org.junit.Test;
 public class ClusteringTest extends AbstractClustEvalTest {
 
     @Test
-    public void testParseFromIntArray() throws RegisterException {
+    public void testParseFromIntArray() throws RegisterException, UnknownProviderException {
         String[] ids = new String[]{"1", "2", "3", "4", "5"};
         int[] clusterIds = new int[]{1, 1, 1, 2, 2};
 
@@ -61,7 +62,7 @@ public class ClusteringTest extends AbstractClustEvalTest {
     }
 
     @Test
-    public void testToFormattedString() {
+    public void testToFormattedString() throws UnknownProviderException {
         String[] ids = new String[]{"1", "2", "3", "4", "5"};
         int[] clusterIds = new int[]{1, 1, 1, 2, 2};
 
@@ -72,7 +73,7 @@ public class ClusteringTest extends AbstractClustEvalTest {
     }
 
     @Test
-    public void testToFormattedStringEmpty() {
+    public void testToFormattedStringEmpty() throws UnknownProviderException {
         String[] ids = new String[]{};
         int[] clusterIds = new int[]{};
 
@@ -82,7 +83,7 @@ public class ClusteringTest extends AbstractClustEvalTest {
     }
 
     @Test
-    public void testParseFromIntArrayEmpty() throws RegisterException {
+    public void testParseFromIntArrayEmpty() throws RegisterException, UnknownProviderException {
         String[] ids = new String[]{};
         int[] clusterIds = new int[]{};
 
@@ -94,7 +95,7 @@ public class ClusteringTest extends AbstractClustEvalTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testParseFromIntArrayDifferentLength() {
+    public void testParseFromIntArrayDifferentLength() throws UnknownProviderException {
         String[] ids = new String[]{};
         int[] clusterIds = new int[]{1};
 
@@ -103,7 +104,7 @@ public class ClusteringTest extends AbstractClustEvalTest {
     }
 
     @Test
-    public void testParseFromIntArraySameObjects() {
+    public void testParseFromIntArraySameObjects() throws UnknownProviderException {
         String[] ids = new String[]{"1", "2", "3", "4", "5"};
         int[] clusterIds = new int[]{1, 1, 1, 2, 2};
 
@@ -143,7 +144,7 @@ public class ClusteringTest extends AbstractClustEvalTest {
     @Test
     public void testFuzzyClustering() throws IOException,
                                              ClusteringParseException {
-        Pair<ParameterSet, Clustering> p = Clustering
+        Pair<ParameterSet, IClustering> p = ClusteringFactory
                 .parseFromFile(
                         null,
                         new File(
@@ -200,7 +201,7 @@ public class ClusteringTest extends AbstractClustEvalTest {
     @Test
     public void testFuzzyToHardClustering() throws IOException,
                                                    ClusteringParseException {
-        Pair<ParameterSet, Clustering> p = Clustering
+        Pair<ParameterSet, IClustering> p = ClusteringFactory
                 .parseFromFile(
                         null,
                         new File(
@@ -208,7 +209,7 @@ public class ClusteringTest extends AbstractClustEvalTest {
                         .getAbsoluteFile(), false);
 
         p.getSecond().loadIntoMemory();
-        Clustering hardClustering = p.getSecond().toHardClustering();
+        IClustering hardClustering = p.getSecond().toHardClustering();
         System.out.println(hardClustering);
 
         Set<ClusterItem> clusterItems = new HashSet<>();
@@ -226,17 +227,17 @@ public class ClusteringTest extends AbstractClustEvalTest {
         Cluster expectedCluster2 = new Cluster("2");
         expectedCluster2.add(expectedItem2, 1.0f);
 
-        Map<ClusterItem, Map<Cluster, Float>> expectedClusters = new HashMap<ClusterItem, Map<Cluster, Float>>();
+        Map<ClusterItem, Map<Cluster, Float>> expectedClusters = new HashMap<>();
 
-        Map<Cluster, Float> expectedClusters1 = new HashMap<Cluster, Float>();
+        Map<Cluster, Float> expectedClusters1 = new HashMap<>();
         expectedClusters1.put(expectedCluster1, 1.0f);
         expectedClusters.put(expectedItem1, expectedClusters1);
 
-        Map<Cluster, Float> expectedClusters2 = new HashMap<Cluster, Float>();
+        Map<Cluster, Float> expectedClusters2 = new HashMap<>();
         expectedClusters2.put(expectedCluster2, 1.0f);
         expectedClusters.put(expectedItem2, expectedClusters2);
 
-        Map<Cluster, Float> expectedClusters3 = new HashMap<Cluster, Float>();
+        Map<Cluster, Float> expectedClusters3 = new HashMap<>();
         expectedClusters3.put(expectedCluster1, 1.0f);
         expectedClusters.put(expectedItem3, expectedClusters3);
 

@@ -78,7 +78,6 @@ import de.clusteval.api.stats.RunDataStatistic;
 import de.clusteval.api.stats.RunDataStatisticCalculator;
 import de.clusteval.api.stats.RunStatistic;
 import de.clusteval.api.stats.RunStatisticCalculator;
-import de.clusteval.cluster.Clustering;
 import de.clusteval.data.goldstandard.format.GoldStandardFormat;
 import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.framework.repository.config.DefaultRepositoryConfig;
@@ -1373,7 +1372,7 @@ public class Repository implements IRepository {
 
         this.staticRepositoryEntities.put(IClustering.class,
                 new ClusteringRepositoryEntity(this,
-                        this.parent != null ? this.parent.getStaticEntities().get(Clustering.class) : null,
+                        this.parent != null ? this.parent.getStaticEntities().get(IClustering.class) : null,
                         FileUtils.buildPath(this.basePath, "results")));
 
         this.staticRepositoryEntities.put(IRunResult.class,

@@ -12,6 +12,7 @@ package de.clusteval.run.result.postprocessing;
 
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
+import de.clusteval.api.cluster.ClusteringFactory;
 import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.data.DataSetConfigNotFoundException;
 import de.clusteval.api.data.DataSetConfigurationException;
@@ -117,7 +118,7 @@ public class FuzzyCoefficientThresholdRunResultPostprocessorTest extends Abstrac
     //@Test
     public void test2() throws IOException,
                                UnknownRunResultPostprocessorException {
-        Clustering clustering = Clustering
+        IClustering clustering = ClusteringFactory
                 .parseFromFile(
                         null,
                         new File(

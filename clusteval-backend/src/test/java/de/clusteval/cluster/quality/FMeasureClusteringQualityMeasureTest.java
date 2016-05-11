@@ -16,6 +16,8 @@ import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.api.cluster.ClusteringEvaluationFactory;
 import de.clusteval.api.cluster.ClusteringEvaluationParameters;
+import de.clusteval.api.cluster.ClusteringFactory;
+import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.data.DataConfig;
 import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.exceptions.ClusteringParseException;
@@ -302,7 +304,7 @@ public class FMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
 
         IGoldStandard goldStandard = dataConfig.getGoldstandardConfig().getGoldstandard();
 
-        Clustering clustering = Clustering
+        IClustering clustering = ClusteringFactory
                 .parseFromFile(
                         this.getRepository(),
                         new File(

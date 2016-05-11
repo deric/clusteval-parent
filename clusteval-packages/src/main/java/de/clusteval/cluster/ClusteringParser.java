@@ -18,6 +18,8 @@ import de.clusteval.api.cluster.ClustEvalValue;
 import de.clusteval.api.cluster.ClusteringEvaluationFactory;
 import de.clusteval.api.cluster.ClusteringEvaluationParameters;
 import de.clusteval.api.cluster.ClusteringQualitySet;
+import de.clusteval.api.cluster.IClustering;
+import de.clusteval.api.cluster.IClusteringParser;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.opt.ParameterSet;
@@ -37,7 +39,7 @@ import org.openide.util.Exceptions;
  *
  * @author Christian Wiwie
  */
-public class ClusteringParser extends TextFileParser {
+public class ClusteringParser extends TextFileParser implements IClusteringParser {
 
     protected IRepository repository;
 
@@ -46,7 +48,7 @@ public class ClusteringParser extends TextFileParser {
     /**
      * This variable holds the results after parsing
      */
-    protected Pair<ParameterSet, Clustering> result;
+    protected Pair<ParameterSet, IClustering> result;
 
     /**
      * A temporary variable of no use after parsing.
@@ -73,12 +75,13 @@ public class ClusteringParser extends TextFileParser {
         this.parseQualities = parseQualities;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.wiwie.wiutils.utils.parse.TextFileParser#processLine(java.lang.String[],
-     * java.lang.String[])
-     */
+    public void init(final IRepository repository, final String absFilePath, final boolean parseQualities) throws IOException {
+        this.repository = repository;
+        this.setLockTargetFile(true);
+        this.params = new ArrayList<>();
+        this.parseQualities = parseQualities;
+    }
+
     @Override
     protected void processLine(String[] key, String[] value) {
 
@@ -157,7 +160,7 @@ public class ClusteringParser extends TextFileParser {
     /**
      * @return A map containing parameter sets and corresponding clusterings.
      */
-    public Pair<ParameterSet, Clustering> getClusterings() {
+    public Pair<ParameterSet, IClustering> getClusterings() {
         return this.result;
     }
 }

@@ -15,6 +15,7 @@ package de.clusteval.framework.repository;
 import de.clusteval.api.ClusteringEvaluation;
 import de.clusteval.api.IContext;
 import de.clusteval.api.IDistanceMeasure;
+import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.data.DataPreprocessor;
 import de.clusteval.api.data.DataRandomizer;
 import de.clusteval.api.data.GoldStandard;
@@ -53,7 +54,6 @@ import de.clusteval.api.stats.IDataStatistic;
 import de.clusteval.api.stats.IRunDataStatistic;
 import de.clusteval.api.stats.IRunStatistic;
 import de.clusteval.api.stats.RunStatistic;
-import de.clusteval.cluster.Clustering;
 import de.clusteval.framework.repository.db.RunResultSQLCommunicator;
 import de.clusteval.framework.repository.db.SQLCommunicator;
 import de.clusteval.framework.repository.db.StubSQLCommunicator;
@@ -145,8 +145,8 @@ public class RunResultRepository extends Repository implements IRepository {
 
         this.staticRepositoryEntities.put(Program.class,
                 this.parent.getStaticEntities().get(Program.class));
-        this.staticRepositoryEntities.put(Clustering.class,
-                this.parent.getStaticEntities().get(Clustering.class));
+        this.staticRepositoryEntities.put(IClustering.class,
+                this.parent.getStaticEntities().get(IClustering.class));
 
         // this.staticRepositoryEntities.put(
         // RunResult.class,

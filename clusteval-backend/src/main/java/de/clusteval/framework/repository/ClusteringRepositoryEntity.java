@@ -3,14 +3,14 @@
  */
 package de.clusteval.framework.repository;
 
+import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.repository.StaticRepositoryEntity;
-import de.clusteval.cluster.Clustering;
 
 /**
  * @author Christian Wiwie
  *
  */
-public class ClusteringRepositoryEntity extends StaticRepositoryEntity<Clustering> {
+public class ClusteringRepositoryEntity extends StaticRepositoryEntity<IClustering> {
 
     /**
      * @param repository
@@ -18,7 +18,7 @@ public class ClusteringRepositoryEntity extends StaticRepositoryEntity<Clusterin
      * @param basePath
      */
     public ClusteringRepositoryEntity(Repository repository,
-            StaticRepositoryEntity<Clustering> parent, String basePath) {
+            StaticRepositoryEntity<IClustering> parent, String basePath) {
         super(repository, parent, basePath);
         this.printOnRegister = false;
     }

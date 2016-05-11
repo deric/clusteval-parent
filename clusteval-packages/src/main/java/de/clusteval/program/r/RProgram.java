@@ -15,6 +15,7 @@ package de.clusteval.program.r;
 import de.clusteval.api.cluster.ClusteringFactory;
 import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.data.IDataConfig;
+import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.IProgram;
 import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.IProgramParameter;
@@ -40,6 +41,7 @@ import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
+import org.openide.util.Exceptions;
 
 /**
  * A type of program that encapsulates a program embedded in R.
@@ -308,6 +310,8 @@ public abstract class RProgram extends Program implements RLibraryInferior, IRPr
             }
         } catch (StringIndexOutOfBoundsException e) {
             throw new RException("The R program returned an empty clustering - " + e.getMessage(), e);
+        } catch (UnknownProviderException ex) {
+            Exceptions.printStackTrace(ex);
         }
         // } finally {
         // rEngine.close();
@@ -321,7 +325,7 @@ public abstract class RProgram extends Program implements RLibraryInferior, IRPr
             IProgramConfig programConfig, String[] invocationLine,
             Map<String, String> effectiveParams,
             Map<String, String> internalParams) throws RException,
-                                                       ROperationNotSupported, InterruptedException {
+                                                       ROperationNotSupported, InterruptedException, UnknownProviderException {
         IClustering resultClustering = ClusteringFactory.parseFromFuzzyCoeffMatrix(
                 dataConfig.getRepository(), new File(internalParams.get("o")),
                 ids, getFuzzyCoeffMatrixFromExecResult());

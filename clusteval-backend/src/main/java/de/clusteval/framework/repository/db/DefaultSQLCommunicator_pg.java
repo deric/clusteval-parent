@@ -33,15 +33,27 @@ import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.data.IGoldStandardConfig;
 import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
-import de.clusteval.api.stats.DataStatisticFactory;
 import de.clusteval.api.factory.UnknownProviderException;
+import de.clusteval.api.opt.ParameterOptimizationMethod;
+import de.clusteval.api.opt.ParameterOptimizationRun;
+import de.clusteval.api.opt.ParameterSet;
+import de.clusteval.api.program.DoubleProgramParameter;
 import de.clusteval.api.program.IProgramConfig;
 import de.clusteval.api.program.IProgramParameter;
-import de.clusteval.api.opt.ParameterSet;
+import de.clusteval.api.program.IntegerProgramParameter;
+import de.clusteval.api.program.Program;
+import de.clusteval.api.program.ProgramConfig;
+import de.clusteval.api.program.ProgramParameter;
+import de.clusteval.api.program.StringProgramParameter;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RepositoryController;
+import de.clusteval.api.run.ExecutionRun;
 import de.clusteval.api.run.IRun;
+import de.clusteval.api.run.Run;
 import de.clusteval.api.run.RunResultFormat;
+import de.clusteval.api.run.result.ExecutionRunResult;
+import de.clusteval.api.run.result.RunResult;
+import de.clusteval.api.stats.DataStatisticFactory;
 import de.clusteval.api.stats.IDataStatistic;
 import de.clusteval.api.stats.IRunDataStatistic;
 import de.clusteval.api.stats.IRunStatistic;
@@ -49,32 +61,19 @@ import de.clusteval.api.stats.IStatistic;
 import de.clusteval.api.stats.RunDataStatisticFactory;
 import de.clusteval.api.stats.RunStatisticFactory;
 import de.clusteval.api.stats.Statistic;
-import de.clusteval.cluster.Clustering;
-import de.clusteval.api.opt.ParameterOptimizationMethod;
 import de.clusteval.framework.repository.RunResultRepository;
-import de.clusteval.api.program.DoubleProgramParameter;
-import de.clusteval.api.program.IntegerProgramParameter;
-import de.clusteval.api.program.Program;
-import de.clusteval.api.program.ProgramConfig;
-import de.clusteval.api.program.ProgramParameter;
-import de.clusteval.api.program.StringProgramParameter;
 import de.clusteval.run.AnalysisRun;
 import de.clusteval.run.ClusteringRun;
 import de.clusteval.run.DataAnalysisRun;
-import de.clusteval.api.run.ExecutionRun;
 import de.clusteval.run.InternalParameterOptimizationRun;
-import de.clusteval.api.opt.ParameterOptimizationRun;
-import de.clusteval.api.run.Run;
 import de.clusteval.run.RunAnalysisRun;
 import de.clusteval.run.RunDataAnalysisRun;
 import de.clusteval.run.result.AnalysisRunResult;
 import de.clusteval.run.result.ClusteringRunResult;
 import de.clusteval.run.result.DataAnalysisRunResult;
-import de.clusteval.api.run.result.ExecutionRunResult;
 import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.run.result.RunAnalysisRunResult;
 import de.clusteval.run.result.RunDataAnalysisRunResult;
-import de.clusteval.api.run.result.RunResult;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
@@ -2127,7 +2126,7 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
      * .cluster.Clustering)
      */
     @Override
-    protected int unregister(Clustering object) {
+    protected int unregister(IClustering object) {
         try {
             if (this.delete(this.getTableClusterings(),
                     object.getAbsolutePath(), "abs_path")) {
@@ -2610,7 +2609,7 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
             int dataConfigId = getObjectId(object.getDataConfig());
             int programConfigId = getObjectId(object.getProgramConfig());
 
-            final Pair<ParameterSet, Clustering> pair = object.getClustering();
+            final Pair<ParameterSet, IClustering> pair = object.getClustering();
 
             final ClusteringQualitySet qualities = pair.getSecond()
                     .getQualities();

@@ -13,7 +13,6 @@
 package de.clusteval.cluster;
 
 import de.clusteval.api.ClusteringEvaluation;
-import de.clusteval.api.Pair;
 import de.clusteval.api.cluster.ClustEvalValue;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
@@ -23,7 +22,6 @@ import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.exceptions.ClusteringParseException;
 import de.clusteval.api.exceptions.InvalidDataSetFormatException;
 import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
-import de.clusteval.api.opt.ParameterSet;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RepositoryObject;
@@ -437,7 +435,7 @@ public class Clustering extends RepositoryObject implements Iterable<Cluster>, I
      * @return A hard clustering resulting from converting this fuzzy
      *         clustering.
      */
-    public Clustering toHardClustering() {
+    public IClustering toHardClustering() {
 
         Clustering result;
         try {
@@ -479,28 +477,6 @@ public class Clustering extends RepositoryObject implements Iterable<Cluster>, I
             e.printStackTrace();
         }
         return null;
-    }
-
-    /**
-     * This method parses clusterings together with the corresponding parameter
-     * sets from a file.
-     *
-     * @param repository
-     *
-     * @param absFilePath    The absolute path to the input file.
-     * @param parseQualities True, if the qualities of the clusterings should
-     *                       also be parsed. Those will be taken from .qual-files.
-     * @return A map containing parameter sets and corresponding clusterings.
-     * @throws IOException Signals that an I/O exception has occurred.
-     */
-    public static Pair<ParameterSet, Clustering> parseFromFile(
-            final IRepository repository, final File absFilePath,
-            final boolean parseQualities) throws IOException {
-        ClusteringParser parser = new ClusteringParser(repository,
-                absFilePath.getAbsolutePath(), parseQualities);
-        parser.process();
-
-        return parser.getClusterings();
     }
 
     /**
@@ -623,7 +599,7 @@ public class Clustering extends RepositoryObject implements Iterable<Cluster>, I
                 }
                 // convert the clustering to a hard clustering if the measure
                 // does not support fuzzy clusterings
-                Clustering cl = this;
+                IClustering cl = this;
                 if (!qualityMeasure.supportsFuzzyClusterings()) {
                     cl = this.toHardClustering();
                 }

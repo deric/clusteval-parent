@@ -13,6 +13,8 @@
 package de.clusteval.run.result;
 
 import de.clusteval.api.Pair;
+import de.clusteval.api.cluster.ClusteringFactory;
+import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.data.DataSetConfigNotFoundException;
 import de.clusteval.api.data.DataSetConfigurationException;
 import de.clusteval.api.data.IDataConfig;
@@ -55,7 +57,6 @@ import de.clusteval.api.run.RunException;
 import de.clusteval.api.run.RunResultFormat;
 import de.clusteval.api.run.result.ExecutionRunResult;
 import de.clusteval.api.run.result.RunResultNotFoundException;
-import de.clusteval.cluster.Clustering;
 import de.clusteval.data.DataConfigNotFoundException;
 import de.clusteval.data.DataConfigurationException;
 import de.clusteval.framework.repository.RunResultRepository;
@@ -87,7 +88,7 @@ public class ClusteringRunResult extends ExecutionRunResult implements IClusteri
      */
     protected IRunResultFormat resultFormat;
 
-    protected Pair<ParameterSet, Clustering> clustering;
+    protected Pair<ParameterSet, IClustering> clustering;
 
     private static final String NAME = "clustering result";
 
@@ -251,7 +252,7 @@ public class ClusteringRunResult extends ExecutionRunResult implements IClusteri
     /**
      * @return The clustering corresponding to this clustering run result.
      */
-    public Pair<ParameterSet, Clustering> getClustering() {
+    public Pair<ParameterSet, IClustering> getClustering() {
         return this.clustering;
     }
 
@@ -342,7 +343,7 @@ public class ClusteringRunResult extends ExecutionRunResult implements IClusteri
     public void loadIntoMemory() {
         if (absPath.exists()) {
             try {
-                final Pair<ParameterSet, Clustering> pair = Clustering.parseFromFile(repository,
+                final Pair<ParameterSet, IClustering> pair = ClusteringFactory.parseFromFile(repository,
                         new File(absPath.getAbsolutePath().replace("results.qual.complete", "1.results.conv")), true);
 
                 ParameterSet paramSet = new ParameterSet();

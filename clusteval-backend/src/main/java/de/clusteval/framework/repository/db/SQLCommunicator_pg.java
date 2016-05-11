@@ -12,6 +12,8 @@ package de.clusteval.framework.repository.db;
 
 import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
 import de.clusteval.api.AbsContext;
+import de.clusteval.api.cluster.ClusteringQualityMeasure;
+import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.data.DataConfig;
 import de.clusteval.api.data.DataSetConfig;
 import de.clusteval.api.data.DataSetFormat;
@@ -19,40 +21,38 @@ import de.clusteval.api.data.GoldStandard;
 import de.clusteval.api.data.GoldStandardConfig;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetType;
-import de.clusteval.api.repository.IRepository;
-import de.clusteval.api.repository.IRepositoryObject;
-import de.clusteval.api.repository.RepositoryObject;
-import de.clusteval.api.run.RunResultFormat;
-import de.clusteval.cluster.Clustering;
 import de.clusteval.api.opt.ParameterOptimizationMethod;
-import de.clusteval.api.cluster.ClusteringQualityMeasure;
-import de.clusteval.api.stats.DataStatistic;
+import de.clusteval.api.opt.ParameterOptimizationRun;
 import de.clusteval.api.program.DoubleProgramParameter;
 import de.clusteval.api.program.IntegerProgramParameter;
 import de.clusteval.api.program.Program;
 import de.clusteval.api.program.ProgramConfig;
 import de.clusteval.api.program.ProgramParameter;
 import de.clusteval.api.program.StringProgramParameter;
+import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.repository.IRepositoryObject;
+import de.clusteval.api.repository.RepositoryObject;
+import de.clusteval.api.run.ExecutionRun;
+import de.clusteval.api.run.Run;
+import de.clusteval.api.run.RunResultFormat;
+import de.clusteval.api.run.result.ExecutionRunResult;
+import de.clusteval.api.run.result.RunResult;
+import de.clusteval.api.stats.DataStatistic;
+import de.clusteval.api.stats.RunDataStatistic;
+import de.clusteval.api.stats.RunStatistic;
+import de.clusteval.api.stats.Statistic;
 import de.clusteval.run.AnalysisRun;
 import de.clusteval.run.ClusteringRun;
 import de.clusteval.run.DataAnalysisRun;
-import de.clusteval.api.run.ExecutionRun;
 import de.clusteval.run.InternalParameterOptimizationRun;
-import de.clusteval.api.opt.ParameterOptimizationRun;
-import de.clusteval.api.run.Run;
 import de.clusteval.run.RunAnalysisRun;
 import de.clusteval.run.RunDataAnalysisRun;
 import de.clusteval.run.result.AnalysisRunResult;
 import de.clusteval.run.result.ClusteringRunResult;
 import de.clusteval.run.result.DataAnalysisRunResult;
-import de.clusteval.api.run.result.ExecutionRunResult;
 import de.clusteval.run.result.ParameterOptimizationResult;
 import de.clusteval.run.result.RunAnalysisRunResult;
 import de.clusteval.run.result.RunDataAnalysisRunResult;
-import de.clusteval.api.run.result.RunResult;
-import de.clusteval.api.stats.RunDataStatistic;
-import de.clusteval.api.stats.RunStatistic;
-import de.clusteval.api.stats.Statistic;
 import de.wiwie.wiutils.utils.Formatter;
 import java.net.ConnectException;
 import java.sql.Connection;
@@ -581,8 +581,8 @@ public abstract class SQLCommunicator_pg {
             result = this.register((RunResult) object);
         } else if (object instanceof StringProgramParameter) {
             result = this.register((StringProgramParameter) object);
-        } else if (object instanceof Clustering) {
-            result = this.register((Clustering) object);
+        } else if (object instanceof IClustering) {
+            result = this.register((IClustering) object);
         } else {
             return false;
         }
@@ -635,8 +635,8 @@ public abstract class SQLCommunicator_pg {
             result = this.unregister((RunDataAnalysisRunResult) object);
         } else if (object instanceof StringProgramParameter) {
             result = this.unregister((StringProgramParameter) object);
-        } else if (object instanceof Clustering) {
-            result = this.unregister((Clustering) object);
+        } else if (object instanceof IClustering) {
+            result = this.unregister((IClustering) object);
         } else {
             return false;
         }
@@ -733,7 +733,7 @@ public abstract class SQLCommunicator_pg {
     protected abstract int register(final DataSetConfig object,
             final boolean updateOnly);
 
-    protected abstract int register(final Clustering object);
+    protected abstract int register(final IClustering object);
 
     protected abstract boolean unregisterRunResultFormat(
             final Class<? extends RunResultFormat> object);
@@ -748,7 +748,7 @@ public abstract class SQLCommunicator_pg {
 
     protected abstract int unregister(final GoldStandard object);
 
-    protected abstract int unregister(final Clustering object);
+    protected abstract int unregister(final IClustering object);
 
     protected abstract boolean unregisterDataSetFormatClass(
             final Class<? extends DataSetFormat> object);
