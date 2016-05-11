@@ -193,13 +193,11 @@ public class DataSetConfigTest extends AbstractClustEvalTest {
         gsConfig.notify(new RepositoryReplaceEvent(gs, gs2));
 
         assertFalse(gsConfig.getDataSet() == gs);
-        assertTrue(gsConfig.getDataSet() == gs2);
+        assertEquals(gs2, gsConfig.getDataSet());
 
-        /*
-         * REMOVE
-         */
-
- /*
+        /**
+         * REMOVAL
+         *
          * First check, whether listeners of DataSetconfigs are notified
          * correctly when the DataSetconfig is replaced
          */
@@ -212,12 +210,12 @@ public class DataSetConfigTest extends AbstractClustEvalTest {
          * DataSet is removed
          */
         // gsconfig has to be registered
-        assertTrue(getRepository().getRegisteredObject(gsConfig) == gsConfig);
+        assertEquals(gsConfig, getRepository().getRegisteredObject(gsConfig));
 
         gsConfig.notify(new RepositoryRemoveEvent(gs2));
 
         // not registered anymore
-        assertTrue(getRepository().getRegisteredObject(gsConfig) == null);
+        assertEquals(null, getRepository().getRegisteredObject(gsConfig));
     }
 
     @Test(expected = DataSetConfigurationException.class)

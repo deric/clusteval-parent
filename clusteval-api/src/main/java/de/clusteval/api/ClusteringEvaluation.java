@@ -34,7 +34,7 @@ import de.clusteval.api.repository.IRepositoryObject;
 public interface ClusteringEvaluation extends IRepositoryObject {
 
     /**
-     * This method has to be implemented in subclasses to indiciate, whether a
+     * This method has to be implemented in subclasses to indicate, whether a
      * quality measure supports validating fuzzy clusterings.
      *
      * @return True, if this measure supports fuzzy clusterings, false
@@ -44,11 +44,9 @@ public interface ClusteringEvaluation extends IRepositoryObject {
 
     ClusteringEvaluation clone();
 
-    boolean isBetterThan(ClustEvalValue quality1,
-            ClustEvalValue quality2);
+    boolean isBetterThan(ClustEvalValue quality1, ClustEvalValue quality2);
 
-    boolean isBetterThanHelper(ClustEvalValue quality1,
-            ClustEvalValue quality2);
+    boolean isBetterThanHelper(ClustEvalValue quality1, ClustEvalValue quality2);
 
     /**
      * @return The minimal value of the range of possible values of this quality

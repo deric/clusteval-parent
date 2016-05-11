@@ -93,8 +93,7 @@ public class DaviesBouldinIndexRClusteringQualityMeasureTest extends AbstractClu
                     .parseFromString(getRepository(),
                             "DaviesBouldinIndexRClusteringQualityMeasure",
                             new ClusteringEvaluationParameters());
-            double quality = measure.getQualityOfClustering(clustering, null,
-                    dc).getValue();
+            double quality = measure.getQualityOfClustering(clustering, null, dc).getValue();
             ds.getInStandardFormat().unloadFromMemory();
             System.out.println("Davies Bouldin Index: " + quality);
             assertEquals(0.49195985498493144, quality, DELTA);

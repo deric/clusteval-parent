@@ -141,11 +141,6 @@ public class DataSetConfig extends DumpableRepositoryObject implements IDataSetC
         return dataset;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.wiwie.wiutils.utils.RepositoryObject#notify(utils.RepositoryEvent)
-     */
     @Override
     public void notify(RepositoryEvent e) throws RegisterException {
         if (e instanceof RepositoryReplaceEvent) {
@@ -205,11 +200,6 @@ public class DataSetConfig extends DumpableRepositoryObject implements IDataSetC
         }
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see java.lang.Object#toString()
-     */
     @Override
     public String toString() {
         return this.absPath.getName().replace(".dsconfig", "");
@@ -241,12 +231,6 @@ public class DataSetConfig extends DumpableRepositoryObject implements IDataSetC
         this.dataset = dataset;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * de.clusteval.framework.repository.DumpableRepositoryObject#dumpToFile()
-     */
     @Override
     public void dumpToFileHelper() throws RepositoryObjectDumpException {
         BufferedWriter writer;

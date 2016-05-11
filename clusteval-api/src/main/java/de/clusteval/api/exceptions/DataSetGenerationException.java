@@ -14,7 +14,7 @@ package de.clusteval.api.exceptions;
  * @author Christian Wiwie
  *
  */
-public class DataSetGenerationException extends Exception {
+public class DataSetGenerationException extends DataException {
 
     /**
      *

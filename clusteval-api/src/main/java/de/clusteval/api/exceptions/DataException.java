@@ -18,9 +18,6 @@ package de.clusteval.api.exceptions;
  */
 public abstract class DataException extends ClustEvalException {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = -5782785078643769340L;
 
     /**
