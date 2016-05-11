@@ -28,7 +28,6 @@ import de.clusteval.api.data.DataSetTypeFactory;
 import de.clusteval.api.data.GoldStandard;
 import de.clusteval.api.data.IDataRandomizer;
 import de.clusteval.api.data.IDataSet;
-import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.data.RelativeDataSet;
 import de.clusteval.api.data.RelativeDataSetFormat;
 import de.clusteval.api.data.WEBSITE_VISIBILITY;
@@ -144,18 +143,12 @@ public class RemoveAndAddNoiseDataRandomizer extends DataRandomizer implements I
         }
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * de.clusteval.data.dataset.randomizer.DataRandomizer#randomizeDataConfig()
-     */
     @Override
-    public Pair<IDataSet, IGoldStandard> randomizeDataConfig() throws InterruptedException, RException {
+    public Pair<IDataSet, GoldStandard> randomizeDataConfig() throws InterruptedException, RException {
         if (this.dataConfig.getDatasetConfig().getDataSet() instanceof AbsoluteDataSet) {
             final AbsoluteDataSet dataSet = (AbsoluteDataSet) this.dataConfig
                     .getDatasetConfig().getDataSet();
-            final IGoldStandard goldStandard = this.dataConfig
+            final GoldStandard goldStandard = this.dataConfig
                     .getGoldstandardConfig().getGoldstandard();
 
             IRengine rEngine = repository.getRengineForCurrentThread();
@@ -300,7 +293,7 @@ public class RemoveAndAddNoiseDataRandomizer extends DataRandomizer implements I
         //
         final RelativeDataSet dataSet = (RelativeDataSet) this.dataConfig
                 .getDatasetConfig().getDataSet();
-        final IGoldStandard goldStandard = this.dataConfig
+        final GoldStandard goldStandard = this.dataConfig
                 .getGoldstandardConfig().getGoldstandard();
 
         IRengine rEngine = repository.getRengineForCurrentThread();
@@ -433,7 +426,8 @@ public class RemoveAndAddNoiseDataRandomizer extends DataRandomizer implements I
 
             return new Pair<>(newDs, newGsObject);
 
-        } catch (IOException | UnknownProviderException | RegisterException | InvalidDataSetFormatException | IllegalArgumentException | UnknownGoldStandardFormatException e) {
+        } catch (IOException | UnknownProviderException | RegisterException |
+                InvalidDataSetFormatException | IllegalArgumentException | UnknownGoldStandardFormatException e) {
             e.printStackTrace();
         } finally {
             rEngine.clear();
@@ -444,12 +438,6 @@ public class RemoveAndAddNoiseDataRandomizer extends DataRandomizer implements I
         return null;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * de.clusteval.data.randomizer.DataRandomizer#getDataSetFileNamePostFix()
-     */
     @Override
     protected String getDataSetFileNamePostFix() {
         return "remove_" + removePercentage + "_noise_" + addPercentage;

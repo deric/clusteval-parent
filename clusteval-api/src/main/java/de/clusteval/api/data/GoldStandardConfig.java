@@ -48,7 +48,7 @@ public class GoldStandardConfig extends DumpableRepositoryObject implements IGol
      * A goldstandard configuration encapsulates a goldstandard. This attribute
      * stores a reference to the goldstandard wrapper object.
      */
-    private IGoldStandard goldStandard;
+    private GoldStandard goldStandard;
 
     /**
      * Instantiates a new goldstandard configuration.
@@ -66,7 +66,7 @@ public class GoldStandardConfig extends DumpableRepositoryObject implements IGol
      * @throws RegisterException
      */
     public GoldStandardConfig(final IRepository repository, final long changeDate, final File absPath,
-            final IGoldStandard goldstandard) throws RegisterException {
+            final GoldStandard goldstandard) throws RegisterException {
         super(repository, false, changeDate, absPath);
 
         this.goldStandard = goldstandard;
@@ -103,12 +103,12 @@ public class GoldStandardConfig extends DumpableRepositoryObject implements IGol
      * @see #goldStandard
      */
     @Override
-    public IGoldStandard getGoldstandard() {
+    public GoldStandard getGoldstandard() {
         return goldStandard;
     }
 
     @Override
-    public void setGoldStandard(final IGoldStandard goldStandard) {
+    public void setGoldStandard(final GoldStandard goldStandard) {
         this.goldStandard = goldStandard;
     }
 

@@ -24,10 +24,10 @@ import de.clusteval.api.repository.IRepositoryObject;
  */
 public interface IGoldStandardConfig extends IRepositoryObject {
 
-    IGoldStandard getGoldstandard();
+    GoldStandard getGoldstandard();
 
     IGoldStandardConfig clone();
 
-    void setGoldStandard(final IGoldStandard goldStandard);
+    void setGoldStandard(final GoldStandard goldStandard);
 
 }

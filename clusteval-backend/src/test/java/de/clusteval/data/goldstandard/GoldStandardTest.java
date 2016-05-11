@@ -16,7 +16,6 @@ import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.data.GoldStandard;
-import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.exceptions.GoldStandardNotFoundException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
@@ -53,7 +52,7 @@ public class GoldStandardTest extends AbstractClustEvalTest {
     @Test
     public void testParseFromFile() throws NoRepositoryFoundException,
                                            GoldStandardNotFoundException, RegisterException {
-        IGoldStandard newObject = GoldStandard
+        GoldStandard newObject = GoldStandard
                 .parseFromFile(new File(
                         "testCaseRepository/data/goldstandards/DS1/Zachary_karate_club_gold_standard.txt")
                         .getAbsoluteFile());
@@ -243,7 +242,7 @@ public class GoldStandardTest extends AbstractClustEvalTest {
                 .loadIntoMemory();
         assertTrue(success);
 
-        IClustering clustering = ((IGoldStandard) repositoryObject).getClustering();
+        IClustering clustering = ((GoldStandard) repositoryObject).getClustering();
 
         assertTrue(((GoldStandard) this.repositoryObject).isInMemory());
 
@@ -361,7 +360,7 @@ public class GoldStandardTest extends AbstractClustEvalTest {
         this.repositoryObject = GoldStandard.parseFromFile(f);
         ((GoldStandard) this.repositoryObject).loadIntoMemory();
 
-        IClustering clustering = ((IGoldStandard) this.repositoryObject).getClustering();
+        IClustering clustering = ((GoldStandard) this.repositoryObject).getClustering();
 
         assertEquals(34, clustering.size());
     }
@@ -383,7 +382,7 @@ public class GoldStandardTest extends AbstractClustEvalTest {
         this.repositoryObject = GoldStandard.parseFromFile(f);
         ((GoldStandard) this.repositoryObject).loadIntoMemory();
 
-        IClustering clustering = ((IGoldStandard) this.repositoryObject).getClustering();
+        IClustering clustering = ((GoldStandard) this.repositoryObject).getClustering();
 
         assertEquals(34f, clustering.fuzzySize(), 1e-5);
     }

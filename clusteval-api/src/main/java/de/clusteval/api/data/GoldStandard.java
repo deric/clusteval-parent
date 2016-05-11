@@ -22,6 +22,7 @@ import de.clusteval.api.exceptions.UnknownGoldStandardFormatException;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.IRepository;
+import de.clusteval.api.repository.IRepositoryObject;
 import de.clusteval.api.repository.RepositoryController;
 import de.clusteval.api.repository.RepositoryObject;
 import de.clusteval.utils.TextFileMapParser;
@@ -37,7 +38,7 @@ import org.openide.util.Exceptions;
  * @author Christian Wiwie
  *
  */
-public class GoldStandard extends RepositoryObject implements IGoldStandard {
+public class GoldStandard extends RepositoryObject implements IRepositoryObject {
 
     /**
      * This attribute holds the clustering that corresponds to the goldstandard.
@@ -74,8 +75,7 @@ public class GoldStandard extends RepositoryObject implements IGoldStandard {
      * @param goldStandard The goldstandard to be cloned.
      * @throws RegisterException
      */
-    public GoldStandard(final IGoldStandard goldStandard)
-            throws RegisterException {
+    public GoldStandard(final GoldStandard goldStandard) throws RegisterException {
         super(goldStandard);
         this.absPath = goldStandard.getAbsPath();
     }
@@ -107,7 +107,7 @@ public class GoldStandard extends RepositoryObject implements IGoldStandard {
      * @throws GoldStandardNotFoundException
      * @throws RegisterException
      */
-    public static IGoldStandard parseFromFile(final File absGoldStandardPath)
+    public static GoldStandard parseFromFile(final File absGoldStandardPath)
             throws NoRepositoryFoundException, GoldStandardNotFoundException,
                    RegisterException {
         if (!absGoldStandardPath.exists()) {
@@ -128,7 +128,6 @@ public class GoldStandard extends RepositoryObject implements IGoldStandard {
      *
      * @return true, if is in memory
      */
-    @Override
     public boolean isInMemory() {
         return this.clustering != null;
     }
@@ -140,7 +139,6 @@ public class GoldStandard extends RepositoryObject implements IGoldStandard {
      * @return true, if successful
      * @throws UnknownGoldStandardFormatException
      */
-    @Override
     public boolean loadIntoMemory() throws UnknownGoldStandardFormatException {
         try {
             TextFileMapParser parser = new TextFileMapParser(
@@ -245,9 +243,8 @@ public class GoldStandard extends RepositoryObject implements IGoldStandard {
      *
      * @return The clustering object representing the goldstandard.
      * @throws UnknownGoldStandardFormatException the unknown gold standard
-     * format exception
+     *                                            format exception
      */
-    @Override
     public IClustering getClustering() throws UnknownGoldStandardFormatException {
         if (!isInMemory()) {
             loadIntoMemory();
@@ -276,7 +273,6 @@ public class GoldStandard extends RepositoryObject implements IGoldStandard {
      *
      * @return The major name
      */
-    @Override
     public String getMajorName() {
         return absPath.getParentFile().getName();
     }
@@ -287,7 +283,6 @@ public class GoldStandard extends RepositoryObject implements IGoldStandard {
      *
      * @return The minor name
      */
-    @Override
     public String getMinorName() {
         return absPath.getName();
     }

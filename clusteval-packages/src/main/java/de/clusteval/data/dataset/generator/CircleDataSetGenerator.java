@@ -13,7 +13,6 @@ package de.clusteval.data.dataset.generator;
 import de.clusteval.api.data.DataSetGenerator;
 import de.clusteval.api.data.GoldStandard;
 import de.clusteval.api.data.IDataSetGenerator;
-import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.exceptions.DataSetGenerationException;
 import de.clusteval.api.exceptions.GoldStandardGenerationException;
 import de.clusteval.api.program.RegisterException;
@@ -67,11 +66,6 @@ public class CircleDataSetGenerator extends DataSetGenerator {
         super(other);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see data.dataset.generator.DataSetGenerator#getOptions()
-     */
     @Override
     public Options getOptions() {
         Options options = new Options();
@@ -128,11 +122,6 @@ public class CircleDataSetGenerator extends DataSetGenerator {
         }
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see data.dataset.generator.DataSetGenerator#generateDataSet()
-     */
     @Override
     public void generateDataSet() throws DataSetGenerationException, InterruptedException {
         try {
@@ -147,17 +136,12 @@ public class CircleDataSetGenerator extends DataSetGenerator {
         }
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see data.dataset.generator.DataSetGenerator#generateGoldStandard()
-     */
     @Override
     public GoldStandard generateGoldStandard() throws GoldStandardGenerationException {
 
         try {
             // goldstandard file
-            File goldStandardFile = new File(FileUtils.buildPath(this.repository.getBasePath(IGoldStandard.class),
+            File goldStandardFile = new File(FileUtils.buildPath(this.repository.getBasePath(GoldStandard.class),
                     this.getFolderName(), this.getFileName()));
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(goldStandardFile))) {
                 for (int row = 0; row < classes.length; row++) {

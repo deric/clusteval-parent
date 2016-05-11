@@ -29,7 +29,6 @@ import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetConfig;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.data.IDataSetType;
-import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.data.IGoldStandardConfig;
 import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
@@ -252,11 +251,6 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
         return "dataset_formats";
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.wiwie.wiutils.utils.SQLCommunicator#getTableGoldStandardConfigs()
-     */
     @Override
     protected String getTableGoldStandardConfigs() {
         return "goldstandard_configs";
@@ -1678,12 +1672,7 @@ public class DefaultSQLCommunicator_pg extends SQLCommunicator {
         return -1;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.wiwie.wiutils.utils.SQLCommunicator#register(data.goldstandard.GoldStandard)
-     */
-    public int register(IGoldStandard object, final boolean updateOnly) {
+    public int register(GoldStandard object, final boolean updateOnly) {
         try {
             String[] columns;
             String[] values;

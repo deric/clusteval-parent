@@ -30,7 +30,6 @@ import de.clusteval.api.data.GoldStandard;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataRandomizer;
 import de.clusteval.api.data.IDataSet;
-import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigurationException;
@@ -227,7 +226,7 @@ public class RobustnessAnalysisRun extends ClusteringRun {
             newDataSetDir.mkdir();
             // the directory, the new gold standards will be stored in
             String goldStandardBasePath = this.getRepository().getParent()
-                    .getBasePath(IGoldStandard.class);
+                    .getBasePath(GoldStandard.class);
             File newGoldStandardDir = new File(FileUtils.buildPath(
                     goldStandardBasePath, this.getRunIdentificationString()));
             newGoldStandardDir.mkdir();
@@ -434,7 +433,7 @@ public class RobustnessAnalysisRun extends ClusteringRun {
                     this.getRunIdentificationString()));
             newDataSetDir.mkdir();
             // the directory, the new gold standards will be stored in
-            String goldStandardBasePath = this.getRepository().getBasePath(IGoldStandard.class);
+            String goldStandardBasePath = this.getRepository().getBasePath(GoldStandard.class);
             File newGoldStandardDir = new File(FileUtils.buildPath(
                     goldStandardBasePath, this.getRunIdentificationString()));
             newGoldStandardDir.mkdir();

@@ -18,11 +18,11 @@ import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.api.cluster.ClusteringQualitySet;
 import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.data.AbsoluteDataSet;
+import de.clusteval.api.data.GoldStandard;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetConfig;
 import de.clusteval.api.data.IDataSetFormat;
-import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.data.IGoldStandardConfig;
 import de.clusteval.api.data.InputToStd;
 import de.clusteval.api.data.RelativeDataSet;
@@ -263,11 +263,9 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
      *                           checked.
      * @param goldStandardConfig
      *                           The goldstandard configuration encapsulating the
-     *                           goldstandardto be checked.
-     * @throws IOException
+     *                           goldstandard to be checked.
      * @throws UnknownGoldStandardFormatException
      * @throws IncompleteGoldStandardException
-     * @throws InvalidDataSetFormatException
      * @throws IllegalArgumentException
      */
     protected void checkCompatibilityDataSetGoldStandard(IDataSetConfig dataSetConfig,
@@ -277,7 +275,7 @@ public abstract class ExecutionRunRunnable extends RunRunnable<ExecutionIteratio
         IDataSet dataSet = dataSetConfig.getDataSet().getInStandardFormat();
         File dataSetFile = ClustevalBackendServer.getCommonFile(new File(dataSet.getAbsolutePath()));
         synchronized (dataSetFile) {
-            IGoldStandard goldStandard = goldStandardConfig.getGoldstandard();
+            GoldStandard goldStandard = goldStandardConfig.getGoldstandard();
             File goldStandardFile = ClustevalBackendServer.getCommonFile(new File(goldStandard.getAbsolutePath()));
             synchronized (goldStandardFile) {
 

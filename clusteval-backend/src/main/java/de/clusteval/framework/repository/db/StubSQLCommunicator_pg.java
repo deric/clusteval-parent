@@ -22,7 +22,6 @@ import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetConfig;
 import de.clusteval.api.data.IDataSetType;
-import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.data.IGoldStandardConfig;
 import de.clusteval.api.opt.ParameterOptimizationMethod;
 import de.clusteval.api.opt.ParameterOptimizationRun;
@@ -586,7 +585,7 @@ public class StubSQLCommunicator_pg extends SQLCommunicator {
      * @see de.wiwie.wiutils.utils.SQLCommunicator#register(data.goldstandard.GoldStandard)
      */
     @Override
-    protected int register(IGoldStandard object, final boolean updateOnly) {
+    protected int register(GoldStandard object, final boolean updateOnly) {
         return -1;
     }
 
@@ -1519,36 +1518,17 @@ public class StubSQLCommunicator_pg extends SQLCommunicator {
         return false;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * framework.repository.SQLCommunicator#registerDataSetTypeClass(java.lang
-     * .Class)
-     */
     @Override
     protected boolean registerDataSetTypeClass(
             Class<? extends IDataSetType> object) {
         return false;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see framework.repository.SQLCommunicator#
-     * getTableRunsAnalysisRunDataRunIdentifiers()
-     */
     @Override
     protected String getTableRunsAnalysisRunDataRunIdentifiers() {
         return null;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.clusteval.framework.repository.SQLCommunicator#
-     * getTableRunResultsClusteringsQuality()
-     */
     @Override
     protected String getTableRunResultsClusteringsQuality() {
         return null;
@@ -1564,25 +1544,11 @@ public class StubSQLCommunicator_pg extends SQLCommunicator {
         return false;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * de.clusteval.framework.repository.SQLCommunicator#unregister(de.clusteval
-     * .run.result.ParameterOptimizationResult)
-     */
     @Override
     protected int unregister(ParameterOptimizationResult object) {
         return -1;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * de.clusteval.framework.repository.SQLCommunicator#getRepositoryTypeId
-     * (java.lang.String)
-     */
     @Override
     protected int getRepositoryTypeId(String repositoryType)
             throws SQLException {

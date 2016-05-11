@@ -189,11 +189,11 @@ public abstract class DataSetGenerator extends AbstractDataSetProvider implement
             throw new DataSetGenerationException("The dataset could not be generated!");
         }
 
-        IGoldStandard gs = null;
+        GoldStandard gs = null;
 
         if (this.generatesGoldStandard()) {
             // Ensure, that the goldstandard target file does not exist yet
-            targetFile = new File(FileUtils.buildPath(this.repository.getBasePath(IGoldStandard.class), this.folderName,
+            targetFile = new File(FileUtils.buildPath(this.repository.getBasePath(GoldStandard.class), this.folderName,
                     this.fileName));
 
             if (targetFile.exists()) {

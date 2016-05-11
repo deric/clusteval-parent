@@ -19,7 +19,7 @@ import de.clusteval.api.cluster.ClusteringEvaluationParameters;
 import de.clusteval.api.cluster.ClusteringFactory;
 import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.data.DataConfig;
-import de.clusteval.api.data.IGoldStandard;
+import de.clusteval.api.data.GoldStandard;
 import de.clusteval.api.exceptions.ClusteringParseException;
 import de.clusteval.api.exceptions.InvalidDataSetFormatException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
@@ -302,7 +302,7 @@ public class FMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
         DataConfig dataConfig = this.getRepository().getStaticObjectWithName(
                 DataConfig.class, "astral_40");
 
-        IGoldStandard goldStandard = dataConfig.getGoldstandardConfig().getGoldstandard();
+        GoldStandard goldStandard = dataConfig.getGoldstandardConfig().getGoldstandard();
 
         IClustering clustering = ClusteringFactory
                 .parseFromFile(

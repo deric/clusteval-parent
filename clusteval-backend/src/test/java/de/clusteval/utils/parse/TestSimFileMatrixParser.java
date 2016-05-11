@@ -13,10 +13,10 @@
 package de.clusteval.utils.parse;
 
 import de.clusteval.api.data.DataSetAttributeFilterer;
+import de.clusteval.utils.TextFileParser.OUTPUT_MODE;
 import de.wiwie.wiutils.utils.SimilarityMatrix;
 import de.wiwie.wiutils.utils.parse.SimFileMatrixParser;
 import de.wiwie.wiutils.utils.parse.SimFileParser.SIM_FILE_FORMAT;
-import de.clusteval.utils.TextFileParser.OUTPUT_MODE;
 import java.io.File;
 import java.io.IOException;
 import junitx.framework.FileAssert;
@@ -38,9 +38,6 @@ public class TestSimFileMatrixParser {
     @Rule
     public TestName name = new TestName();
 
-    /**
-     *
-     */
     @Before
     public void setUp() {
         System.out.println("################## Testcase: "

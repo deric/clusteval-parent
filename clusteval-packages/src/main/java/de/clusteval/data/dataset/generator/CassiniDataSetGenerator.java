@@ -13,7 +13,6 @@ package de.clusteval.data.dataset.generator;
 import de.clusteval.api.data.DataSetGenerator;
 import de.clusteval.api.data.GoldStandard;
 import de.clusteval.api.data.IDataSetGenerator;
-import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.exceptions.DataSetGenerationException;
 import de.clusteval.api.exceptions.GoldStandardGenerationException;
 import de.clusteval.api.program.RegisterException;
@@ -98,11 +97,6 @@ public class CassiniDataSetGenerator extends DataSetGenerator implements IDataSe
         return options;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see data.dataset.generator.DataSetGenerator#generatesGoldStandard()
-     */
     @Override
     public boolean generatesGoldStandard() {
         return true;
@@ -149,17 +143,12 @@ public class CassiniDataSetGenerator extends DataSetGenerator implements IDataSe
 
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see data.dataset.generator.DataSetGenerator#generateGoldStandard()
-     */
     @Override
     public GoldStandard generateGoldStandard() throws GoldStandardGenerationException {
 
         try {
             // goldstandard file
-            File goldStandardFile = new File(FileUtils.buildPath(this.repository.getBasePath(IGoldStandard.class),
+            File goldStandardFile = new File(FileUtils.buildPath(this.repository.getBasePath(GoldStandard.class),
                     this.getFolderName(), this.getFileName()));
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(goldStandardFile))) {
                 for (int row = 0; row < classes.length; row++) {

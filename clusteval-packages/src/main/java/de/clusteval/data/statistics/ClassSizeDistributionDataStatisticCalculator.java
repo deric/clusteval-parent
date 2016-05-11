@@ -13,9 +13,9 @@ package de.clusteval.data.statistics;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.api.cluster.IClustering;
+import de.clusteval.api.data.GoldStandard;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataSet;
-import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.program.RegisterException;
 import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.stats.DataStatisticCalculator;
@@ -59,11 +59,6 @@ public class ClassSizeDistributionDataStatisticCalculator
         super(other);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see data.statistics.DataStatisticCalculator#calculate(data.DataConfig)
-     */
     @Override
     protected ClassSizeDistributionDataStatistic calculateResult()
             throws StatisticCalculateException {
@@ -72,8 +67,7 @@ public class ClassSizeDistributionDataStatisticCalculator
             ds.loadIntoMemory();
             List<String> dataSetIds = ds.getIds();
             ds.unloadFromMemory();
-            IGoldStandard gs = dataConfig.getGoldstandardConfig()
-                    .getGoldstandard();
+            GoldStandard gs = dataConfig.getGoldstandardConfig().getGoldstandard();
             gs.loadIntoMemory();
             IClustering clazzes = gs.getClustering();
             gs.unloadFromMemory();

@@ -14,7 +14,6 @@ import de.clusteval.api.data.DataSetConfigNotFoundException;
 import de.clusteval.api.data.DataSetConfigurationException;
 import de.clusteval.api.data.GoldStandard;
 import de.clusteval.api.data.GoldStandardConfig;
-import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.exceptions.DataSetNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigNotFoundException;
 import de.clusteval.api.exceptions.GoldStandardConfigurationException;
@@ -184,7 +183,7 @@ public class GoldStandardConfigTest extends AbstractClustEvalTest {
          * Now check, whether goldstandard configs update their references
          * correctly, when their goldstandard is replaced
          */
-        IGoldStandard gs = gsConfig.getGoldstandard();
+        GoldStandard gs = gsConfig.getGoldstandard();
         GoldStandard gs2 = new GoldStandard(gs);
 
         gsConfig.notify(new RepositoryReplaceEvent(gs, gs2));
@@ -387,8 +386,8 @@ public class GoldStandardConfigTest extends AbstractClustEvalTest {
                         new File(
                                 "testCaseRepository/data/goldstandards/configs/DS1_1.gsconfig")
                         .getAbsoluteFile());
-        IGoldStandard gs = gsConfig.getGoldstandard();
-        IGoldStandard expected = GoldStandard
+        GoldStandard gs = gsConfig.getGoldstandard();
+        GoldStandard expected = GoldStandard
                 .parseFromFile(new File(
                         "testCaseRepository/data/goldstandards/DS1/Zachary_karate_club_gold_standard.txt")
                         .getAbsoluteFile());

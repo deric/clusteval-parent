@@ -91,7 +91,7 @@ public interface IDataSetGenerator extends IRepositoryObject {
      * @throws GoldStandardGenerationException If something goes wrong during
      * the generation process, this exception is thrown.
      */
-    IGoldStandard generateGoldStandard() throws GoldStandardGenerationException;
+    GoldStandard generateGoldStandard() throws GoldStandardGenerationException;
 
     Options getAllOptions();
 

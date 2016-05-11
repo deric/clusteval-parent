@@ -27,7 +27,6 @@ import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetConfig;
 import de.clusteval.api.data.IDataSetType;
-import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.data.IGoldStandardConfig;
 import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.opt.ParameterOptimizationMethod;
@@ -634,7 +633,7 @@ public abstract class SQLCommunicator implements Database {
 
     public abstract int register(final IGoldStandardConfig object, final boolean updateOnly);
 
-    protected abstract int register(final IGoldStandard object, final boolean updateOnly);
+    protected abstract int register(final GoldStandard object, final boolean updateOnly);
 
     protected abstract int register(final DoubleProgramParameter object);
 

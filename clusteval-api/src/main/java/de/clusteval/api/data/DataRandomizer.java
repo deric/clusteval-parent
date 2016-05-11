@@ -135,7 +135,7 @@ public abstract class DataRandomizer extends AbstractDataSetProvider implements 
 
             this.handleOptions(cmd);
 
-            Pair<IDataSet, IGoldStandard> newObjects = randomizeDataConfig();
+            Pair<IDataSet, GoldStandard> newObjects = randomizeDataConfig();
 
             IDataConfig dataConfig = this.writeConfigFiles(newObjects.getFirst(), newObjects.getSecond(), this.uniqueId
                     + "_" + this.dataConfig.getGoldstandardConfig().toString() + getDataSetFileNamePostFix());

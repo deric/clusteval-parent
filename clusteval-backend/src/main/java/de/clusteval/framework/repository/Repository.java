@@ -20,6 +20,7 @@ import de.clusteval.api.SQLConfig;
 import de.clusteval.api.cluster.IClustering;
 import de.clusteval.api.data.DataConfig;
 import de.clusteval.api.data.DataPreprocessor;
+import de.clusteval.api.data.GoldStandard;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataRandomizer;
 import de.clusteval.api.data.IDataSet;
@@ -28,7 +29,6 @@ import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.data.IDataSetFormatParser;
 import de.clusteval.api.data.IDataSetGenerator;
 import de.clusteval.api.data.IDataSetType;
-import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.data.IGoldStandardConfig;
 import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.exceptions.InternalAttributeException;
@@ -319,6 +319,9 @@ public class Repository implements IRepository {
     private transient InstanceContent instanceContent;
     private transient AbstractLookup lookup;
 
+    public Repository() {
+        super();
+    }
     /**
      * Instantiates a new repository.
      *
@@ -532,7 +535,7 @@ public class Repository implements IRepository {
         //this.ensureFolder(this.getBasePath(DataSetFormat.class));
         this.ensureFolder(this.getBasePath(IDataSetType.class));
         this.ensureFolder(this.getBasePath(IDataSetConfig.class));
-        this.ensureFolder(this.getBasePath(IGoldStandard.class));
+        this.ensureFolder(this.getBasePath(GoldStandard.class));
         this.ensureFolder(this.getBasePath(IGoldStandardConfig.class));
         this.ensureFolder(this.getBasePath(IProgram.class));
         this.ensureFolder(this.getBasePath(IProgramConfig.class));
@@ -1360,7 +1363,7 @@ public class Repository implements IRepository {
         this.createAndAddStaticEntity(IDataSet.class, FileUtils.buildPath(this.basePath, "data", "datasets"));
         this.createAndAddStaticEntity(IDataSetConfig.class,
                 FileUtils.buildPath(this.basePath, "data", "datasets", "configs"));
-        this.createAndAddStaticEntity(IGoldStandard.class, FileUtils.buildPath(this.basePath, "data", "goldstandards"));
+        this.createAndAddStaticEntity(GoldStandard.class, FileUtils.buildPath(this.basePath, "data", "goldstandards"));
         this.createAndAddStaticEntity(IGoldStandardConfig.class,
                 FileUtils.buildPath(this.basePath, "data", "goldstandards", "configs"));
         this.createAndAddStaticEntity(IDataConfig.class, FileUtils.buildPath(this.basePath, "data", "configs"));

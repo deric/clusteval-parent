@@ -13,7 +13,6 @@ package de.clusteval.data.dataset.generator;
 import de.clusteval.api.data.DataSetGenerator;
 import de.clusteval.api.data.GoldStandard;
 import de.clusteval.api.data.IDataSetGenerator;
-import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.exceptions.DataSetGenerationException;
 import de.clusteval.api.exceptions.GoldStandardGenerationException;
 import de.clusteval.api.program.RegisterException;
@@ -110,13 +109,6 @@ public class SimplexCornersDataSetGenerator extends DataSetGenerator {
         return true;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * data.dataset.generator.DataSetGenerator#handleOptions(org.apache.commons
-     * .cli.CommandLine)
-     */
     @Override
     public void handleOptions(CommandLine cmd) throws ParseException {
         if (cmd.getArgList().size() > 0) {
@@ -163,17 +155,12 @@ public class SimplexCornersDataSetGenerator extends DataSetGenerator {
         }
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see data.dataset.generator.DataSetGenerator#generateGoldStandard()
-     */
     @Override
     public GoldStandard generateGoldStandard() throws GoldStandardGenerationException {
 
         try {
             // goldstandard file
-            File goldStandardFile = new File(FileUtils.buildPath(this.repository.getBasePath(IGoldStandard.class),
+            File goldStandardFile = new File(FileUtils.buildPath(this.repository.getBasePath(GoldStandard.class),
                     this.getFolderName(), this.getFileName()));
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(goldStandardFile))) {
                 for (int row = 0; row < classes.length; row++) {

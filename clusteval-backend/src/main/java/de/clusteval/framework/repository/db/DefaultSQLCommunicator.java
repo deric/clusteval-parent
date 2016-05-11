@@ -29,7 +29,6 @@ import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetConfig;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.data.IDataSetType;
-import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.data.IGoldStandardConfig;
 import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.exceptions.NoRepositoryFoundException;
@@ -875,12 +874,6 @@ public class DefaultSQLCommunicator extends SQLCommunicator implements Database 
         return -1;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * framework.repository.SQLCommunicator#register(run.config.RunAnalysisRun )
-     */
     @Override
     protected int register(RunAnalysisRun object, final boolean updateOnly) {
         try {
@@ -1116,12 +1109,6 @@ public class DefaultSQLCommunicator extends SQLCommunicator implements Database 
         return -1;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see framework.repository.SQLCommunicator#register(run.config.
-     * ParameterOptimizationRun)
-     */
     @Override
     protected int register(ParameterOptimizationRun object,
             final boolean updateOnly) {
@@ -1687,13 +1674,8 @@ public class DefaultSQLCommunicator extends SQLCommunicator implements Database 
         return -1;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.wiwie.wiutils.utils.SQLCommunicator#register(data.goldstandard.GoldStandard)
-     */
     @Override
-    public int register(IGoldStandard object, final boolean updateOnly) {
+    public int register(GoldStandard object, final boolean updateOnly) {
         try {
             String[] columns;
             String[] values;
@@ -1730,11 +1712,6 @@ public class DefaultSQLCommunicator extends SQLCommunicator implements Database 
         return -1;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.wiwie.wiutils.utils.SQLCommunicator#registerDataSetFormat(java.lang.Class)
-     */
     @Override
     protected boolean registerDataSetFormatClass(Class<? extends DataSetFormat> object) {
         try {

@@ -15,9 +15,9 @@ import de.clusteval.api.Pair;
 import de.clusteval.api.cluster.Cluster;
 import de.clusteval.api.cluster.ClusterItem;
 import de.clusteval.api.cluster.IClustering;
+import de.clusteval.api.data.GoldStandard;
 import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataSetConfig;
-import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.data.IGoldStandardConfig;
 import de.clusteval.api.data.RelativeDataSet;
 import de.clusteval.api.data.RelativeDataSetFormat;
@@ -75,11 +75,6 @@ public class IntraInterDistributionDataStatisticCalculator extends
         super(other);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see data.statistics.DataStatisticCalculator#calculate(data.DataConfig)
-     */
     @Override
     protected IntraInterDistributionDataStatistic calculateResult()
             throws StatisticCalculateException {
@@ -92,7 +87,7 @@ public class IntraInterDistributionDataStatisticCalculator extends
 
             IGoldStandardConfig goldStandardConfig = dataConfig
                     .getGoldstandardConfig();
-            IGoldStandard goldStandard = goldStandardConfig.getGoldstandard();
+            GoldStandard goldStandard = goldStandardConfig.getGoldstandard();
             IClustering gsClustering;
 
             gsClustering = goldStandard.getClustering();

@@ -23,7 +23,6 @@ import de.clusteval.api.data.IDataConfig;
 import de.clusteval.api.data.IDataSet;
 import de.clusteval.api.data.IDataSetConfig;
 import de.clusteval.api.data.IDataSetType;
-import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.data.IGoldStandardConfig;
 import de.clusteval.api.opt.ParameterOptimizationMethod;
 import de.clusteval.api.opt.ParameterOptimizationRun;
@@ -581,13 +580,8 @@ public class StubSQLCommunicator extends SQLCommunicator {
         return -1;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.wiwie.wiutils.utils.SQLCommunicator#register(data.goldstandard.GoldStandard)
-     */
     @Override
-    public int register(IGoldStandard object, final boolean updateOnly) {
+    public int register(GoldStandard object, final boolean updateOnly) {
         return -1;
     }
 
@@ -1605,26 +1599,12 @@ public class StubSQLCommunicator extends SQLCommunicator {
         return -1;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * de.clusteval.framework.repository.SQLCommunicator#getRepositoryTypeId
-     * (java.lang.String)
-     */
     @Override
     protected int getRepositoryTypeId(String repositoryType)
             throws SQLException {
         return 0;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * de.clusteval.framework.repository.SQLCommunicator#register(de.clusteval
-     * .cluster.Clustering)
-     */
     @Override
     public int register(IClustering object) {
         return -1;

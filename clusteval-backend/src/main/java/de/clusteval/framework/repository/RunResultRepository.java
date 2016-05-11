@@ -26,7 +26,6 @@ import de.clusteval.api.data.IDataSetConfig;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.data.IDataSetGenerator;
 import de.clusteval.api.data.IDataSetType;
-import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.data.IGoldStandardConfig;
 import de.clusteval.api.exceptions.DatabaseConnectException;
 import de.clusteval.api.opt.IParameterOptimizationMethod;
@@ -66,6 +65,7 @@ import de.clusteval.utils.NamedStringAttribute;
 import java.io.FileNotFoundException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * A runresult repository corresponds to a runresult directory in the results
@@ -80,7 +80,12 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Christian Wiwie
  *
  */
+@ServiceProvider(service = IRepository.class)
 public class RunResultRepository extends Repository implements IRepository {
+
+    public RunResultRepository() {
+        super();
+    }
 
     // TODO: check, whether all those are needed for a RunResultRepository
     /**
@@ -140,7 +145,7 @@ public class RunResultRepository extends Repository implements IRepository {
                 new RunResultRepositoryGoldStandardObjectEntity(this,
                         this.parent != null
                         ? this.parent.getStaticEntities()
-                                .get(IGoldStandard.class) : null,
+                                .get(GoldStandard.class) : null,
                         FileUtils.buildPath(this.basePath, "goldstandards")));
 
         this.staticRepositoryEntities.put(Program.class,
@@ -330,7 +335,7 @@ class RunResultRepositoryDataSetObjectEntity
     }
 }
 
-class RunResultRepositoryGoldStandardObjectEntity extends StaticRepositoryEntity<IGoldStandard> {
+class RunResultRepositoryGoldStandardObjectEntity extends StaticRepositoryEntity<GoldStandard> {
 
     /**
      * @param repository
@@ -338,14 +343,14 @@ class RunResultRepositoryGoldStandardObjectEntity extends StaticRepositoryEntity
      * @param basePath
      */
     public RunResultRepositoryGoldStandardObjectEntity(IRepository repository,
-            StaticRepositoryEntity<IGoldStandard> parent, String basePath) {
+            StaticRepositoryEntity<GoldStandard> parent, String basePath) {
         super(repository, parent, basePath);
     }
 
     @Override
-    public boolean register(IGoldStandard object) throws RegisterException {
-        IGoldStandard gsInParentRepository = object.getRepository().getParent()
-                .getStaticObjectWithName(IGoldStandard.class, object.toString());
+    public boolean register(GoldStandard object) throws RegisterException {
+        GoldStandard gsInParentRepository = object.getRepository().getParent()
+                .getStaticObjectWithName(GoldStandard.class, object.toString());
         if (gsInParentRepository != null) {
             return super.register(object);
         }

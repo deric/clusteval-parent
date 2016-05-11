@@ -71,7 +71,7 @@ public interface IDataRandomizer extends IRepositoryObject {
      * @throws DataSetGenerationException If something goes wrong during the
      * generation process, this exception is thrown.
      */
-    Pair<IDataSet, IGoldStandard> randomizeDataConfig() throws InterruptedException, RException;
+    Pair<IDataSet, GoldStandard> randomizeDataConfig() throws InterruptedException, RException;
 
     IDataConfig randomize(final String[] cliArguments) throws DataRandomizeException, UnknownProviderException;
 
