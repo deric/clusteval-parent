@@ -46,13 +46,6 @@ public class DataSetAttributeParser extends TextFileParser {
         this.attributeValues = new HashMap<>();
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.wiwie.wiutils.utils.parse.TextFileParser#processLine(java.lang.String[],
-     * java.lang.String[])
-     */
-    @SuppressWarnings("unused")
     @Override
     protected void processLine(String[] key, String[] value) {
         String line = value[0];

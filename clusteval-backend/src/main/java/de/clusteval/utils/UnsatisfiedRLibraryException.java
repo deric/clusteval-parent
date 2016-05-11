@@ -18,9 +18,6 @@ package de.clusteval.utils;
  */
 public class UnsatisfiedRLibraryException extends Exception {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = -8833659127209418140L;
 
     /**

@@ -93,11 +93,6 @@ public class RunAnalysisRun extends AnalysisRun<RunStatistic> {
         }
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see run.AnalysisRun#cloneStatistics(java.util.List)
-     */
     @Override
     protected List<RunStatistic> cloneStatistics(List<RunStatistic> statistics) {
         final List<RunStatistic> result = new ArrayList<>();
@@ -109,11 +104,6 @@ public class RunAnalysisRun extends AnalysisRun<RunStatistic> {
         return result;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see run.Run#clone()
-     */
     @Override
     public RunAnalysisRun clone() {
         try {
@@ -124,21 +114,11 @@ public class RunAnalysisRun extends AnalysisRun<RunStatistic> {
         return null;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see run.Run#terminate()
-     */
     @Override
     public boolean terminate() {
         return true;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see run.Run#getUpperLimitProgress()
-     */
     @Override
     public long getUpperLimitProgress() {
         return this.statistics.size() * 100;
@@ -166,11 +146,6 @@ public class RunAnalysisRun extends AnalysisRun<RunStatistic> {
         return t;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see run.Run#getNumberOfRunRunnables()
-     */
     @Override
     public int getNumberOfRunRunnables() {
         return this.getUniqueRunAnalysisRunIdentifiers().size();

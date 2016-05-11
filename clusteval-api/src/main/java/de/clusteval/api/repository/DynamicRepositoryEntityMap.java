@@ -24,9 +24,6 @@ public class DynamicRepositoryEntityMap {
 
     protected Map<Class<? extends IRepositoryObject>, DynamicRepositoryEntity<? extends IRepositoryObject>> map;
 
-    /**
-     *
-     */
     public DynamicRepositoryEntityMap() {
         super();
         this.map = new HashMap<>();

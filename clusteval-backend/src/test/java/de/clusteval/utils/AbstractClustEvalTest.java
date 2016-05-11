@@ -13,6 +13,7 @@
 package de.clusteval.utils;
 
 import ch.qos.logback.classic.Level;
+import ch.qos.logback.core.Appender;
 import de.clusteval.api.ContextFactory;
 import de.clusteval.api.IContext;
 import de.clusteval.api.repository.IRepository;
@@ -50,9 +51,6 @@ public abstract class AbstractClustEvalTest {
     protected boolean useDatabase;
     static Logger logger = LoggerFactory.getLogger(AbstractClustEvalTest.class);
 
-    /**
-     *
-     */
     public AbstractClustEvalTest() {
         this(false);
     }
@@ -71,9 +69,13 @@ public abstract class AbstractClustEvalTest {
      */
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
-        ClustevalBackendServer.logLevel(Level.ALL);
+        ClustevalBackendServer.logLevel(Level.TRACE);
         BasicConfigurator.configure();
-
+        ch.qos.logback.classic.Logger lg = ((ch.qos.logback.classic.Logger) LoggerFactory.getLogger("org.apache.commons.configuration.ConfigurationUtils"));
+        Appender app = lg.getAppender("org.apache.commons.configuration.ConfigurationUtils");
+        lg.detachAppender(app);
+        //ignore certain classes
+        ClustevalBackendServer.logLevel("org.apache.commons.configuration.ConfigurationUtils", Level.OFF);
         logger.info("Starting tests");
     }
 

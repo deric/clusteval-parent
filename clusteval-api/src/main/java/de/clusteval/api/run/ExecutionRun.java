@@ -36,6 +36,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import org.slf4j.LoggerFactory;
 
 /**
  * An abstract class for all run types, that involve execution of clustering
@@ -629,6 +630,7 @@ public abstract class ExecutionRun extends Run {
 
         Set<IDataConfig> dataConfigsWithoutGS = new HashSet<>();
         for (IDataConfig dataConfig : dataConfigs) {
+            LoggerFactory.getLogger(IRunRunnable.class.getName()).debug("checking conifg " + dataConfig);
             if (!dataConfig.hasGoldStandardConfig()
                     && qualityMeasuresRequireGS.size() > 0) {
                 dataConfigsWithoutGS.add(dataConfig);

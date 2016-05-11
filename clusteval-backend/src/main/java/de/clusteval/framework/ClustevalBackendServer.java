@@ -769,6 +769,10 @@ public class ClustevalBackendServer implements IBackendServer {
         ((ch.qos.logback.classic.Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME)).setLevel(logLevel);
     }
 
+    public static void logLevel(String klassName, Level logLevel) {
+        ((ch.qos.logback.classic.Logger) LoggerFactory.getLogger(klassName)).setLevel(logLevel);
+    }
+
     /*
      * (non-Javadoc)
      *
@@ -819,8 +823,8 @@ public class ClustevalBackendServer implements IBackendServer {
             IDataSetGenerator generator = DataSetGeneratorFactory.parseFromString(this.repository, generatorName);
             generator.generate(args);
         } catch (ParseException | DataSetGenerationException | GoldStandardGenerationException |
-                 InterruptedException | RepositoryObjectDumpException |
-                 RegisterException e) {
+                InterruptedException | RepositoryObjectDumpException |
+                RegisterException e) {
             e.printStackTrace();
         } catch (UnknownProviderException ex) {
             Exceptions.printStackTrace(ex);

@@ -48,7 +48,7 @@ import org.junit.Test;
 public class FMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest {
 
     static {
-        ClustevalBackendServer.logLevel(Level.WARN);
+        ClustevalBackendServer.logLevel(Level.ERROR);
     }
 
     @Test

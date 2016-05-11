@@ -560,14 +560,13 @@ public abstract class TextFileParser {
         }
 
         synchronized (targetFile) {
-            log.debug("Parsing " + this.absoluteFilePath);
+            log.debug("Parsing " + new File(this.absoluteFilePath).getName());
 
             if (this.outputFile != null) {
                 log.debug("Output will be written to " + this.outputFile);
             }
             this.resetReader();
             String line = null;
-            long lineNumber = 0;
             this.parsingComments = true;
             while ((line = this.readLine()) != null && !this.terminated) {
                 try {
@@ -598,8 +597,6 @@ public abstract class TextFileParser {
                             && this.outputMode.equals(OUTPUT_MODE.STREAM)) {
                         this.checkForOutput(this.key, this.value);
                     }
-
-                    lineNumber++;
                 } catch (IndexOutOfBoundsException e) {
                     log.error("Error while parsing line " + currentLine
                             + " of file " + this.absoluteFilePath);

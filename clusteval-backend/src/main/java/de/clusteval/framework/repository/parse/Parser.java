@@ -561,8 +561,13 @@ class ExecutionRunParser<T extends ExecutionRun> extends RunParser<T> {
         list = new ArrayList<>(new HashSet<>(Arrays.asList(list))).toArray(new String[0]);
         for (String dataConfig : list) {
             log.debug("requiring " + dataConfig);
-            dataConfigs.add(repo.getRegisteredObject(Parser.parseFromFile(DataConfig.class,
-                    new File(FileUtils.buildPath(repo.getBasePath(IDataConfig.class), dataConfig + ".dataconfig")))));
+            File f = new File(FileUtils.buildPath(repo.getBasePath(IDataConfig.class), dataConfig + ".dataconfig"));
+            log.debug("searching in " + f.getAbsolutePath());
+            IDataConfig obj = repo.getRegisteredObject(Parser.parseFromFile(DataConfig.class, f));
+            if (obj == null) {
+                throw new RuntimeException("Could not find data config " + f.getAbsolutePath());
+            }
+            dataConfigs.add(obj);
         }
     }
 
