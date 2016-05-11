@@ -125,6 +125,11 @@ public abstract class RepositoryObject implements RepositoryListener, IRepositor
         this.listener = Collections.synchronizedSet(new HashSet<RepositoryListener>());
         this.absPath = absPath;
         this.log = LoggerFactory.getLogger(this.getClass());
+        initCompleted();
+    }
+
+    public void initCompleted() {
+        //by default does nothing
     }
 
     /**
@@ -178,8 +183,8 @@ public abstract class RepositoryObject implements RepositoryListener, IRepositor
      *
      * @return true, if successful
      * @throws RegisterException An exception is thrown if something goes wrong
-     * during the registering process, that might be interesting to handle
-     * individually.
+     *                           during the registering process, that might be interesting to handle
+     *                           individually.
      */
     @Override
     public boolean register() throws RegisterException {
@@ -470,18 +475,16 @@ public abstract class RepositoryObject implements RepositoryListener, IRepositor
         return hash;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
     @Override
     public boolean equals(Object obj) {
-        RepositoryObject other = (RepositoryObject) obj;
+        if (obj instanceof RepositoryObject) {
+            RepositoryObject other = (RepositoryObject) obj;
 
-        return this.repository.equals(other.repository)
-                && ((this.absPath == null && other.absPath == null) || this.absPath
-                .equals(other.absPath));
+            return this.repository.equals(other.repository)
+                    && ((this.absPath == null && other.absPath == null) || this.absPath
+                    .equals(other.absPath));
+        }
+        return false;
     }
 
 }

@@ -705,8 +705,11 @@ public class Repository implements IRepository {
     public String getBasePath(final Class<? extends IRepositoryObject> c) {
         if (this.staticRepositoryEntities.containsKey(c)) {
             return this.staticRepositoryEntities.get(c).getBasePath();
+        } else if (this.dynamicRepositoryEntities.containsKey(c)) {
+            return this.dynamicRepositoryEntities.get(c).getBasePath();
         }
-        return this.dynamicRepositoryEntities.get(c).getBasePath();
+        dumpEntities();
+        throw new RuntimeException("could not find object " + c);
     }
 
     @Override
@@ -1479,7 +1482,7 @@ public class Repository implements IRepository {
      * {@link #isInitialized()} returns true.
      *
      * @throws InterruptedException Is thrown, if the current thread is
-     * interrupted while waiting for finishing the initialization process.
+     *                              interrupted while waiting for finishing the initialization process.
      */
     public void initialize() throws InterruptedException {
         if (isInitialized() || this.supervisorThread != null) {

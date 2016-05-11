@@ -10,12 +10,12 @@
  ***************************************************************************** */
 package de.clusteval.utils;
 
-import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.program.RegisterException;
+import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.repository.RepositoryEvent;
+import de.clusteval.api.repository.RepositoryObject;
 import de.clusteval.api.repository.RepositoryRemoveEvent;
 import de.clusteval.api.repository.RepositoryReplaceEvent;
-import de.clusteval.api.repository.RepositoryObject;
 import java.io.File;
 
 /**
@@ -45,16 +45,10 @@ public class StubRepositoryObject extends RepositoryObject {
      *              The object to clone.
      * @throws RegisterException
      */
-    public StubRepositoryObject(final StubRepositoryObject other)
-            throws RegisterException {
+    public StubRepositoryObject(final StubRepositoryObject other) throws RegisterException {
         super(other);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see framework.repository.RepositoryObject#clone()
-     */
     @Override
     public StubRepositoryObject clone() {
         try {
@@ -66,11 +60,6 @@ public class StubRepositoryObject extends RepositoryObject {
         return null;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see utils.RepositoryObject#notify(utils.RepositoryReplaceEvent)
-     */
     @Override
     public void notify(RepositoryEvent e) throws RegisterException {
         if (e instanceof RepositoryReplaceEvent) {

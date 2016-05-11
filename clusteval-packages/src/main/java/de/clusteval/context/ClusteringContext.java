@@ -16,7 +16,6 @@ import de.clusteval.api.data.DataSetFormatFactory;
 import de.clusteval.api.data.IDataSetFormat;
 import de.clusteval.api.factory.UnknownProviderException;
 import de.clusteval.api.program.RegisterException;
-import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.IRunResultFormat;
 import de.clusteval.api.run.RunResultFormatFactory;
 import java.io.File;
@@ -43,23 +42,10 @@ public class ClusteringContext extends AbsContext implements IContext {
     }
 
     /**
-     * @param repository
-     * @param register
-     * @param changeDate
-     * @param absPath
-     * @throws RegisterException
-     */
-    public ClusteringContext(IRepository repository, boolean register,
-            long changeDate, File absPath) throws RegisterException {
-        super(repository, register, changeDate, absPath);
-    }
-
-    /**
      * @param other
      * @throws RegisterException
      */
-    public ClusteringContext(final ClusteringContext other)
-            throws RegisterException {
+    public ClusteringContext(final ClusteringContext other) throws RegisterException {
         super(other);
     }
 
@@ -71,8 +57,8 @@ public class ClusteringContext extends AbsContext implements IContext {
     @Override
     public Set<String> getRequiredJavaClassFullNames() {
         return new HashSet<>(Arrays.asList(new String[]{
-            "de.clusteval.data.dataset.format.SimMatrixDataSetFormat",
-            "de.clusteval.run.result.format.TabSeparatedRunResultFormat"}));
+            "SimMatrixDataSetFormat",
+            "TabSeparatedRunResultFormat"}));
     }
 
     @Override

@@ -90,7 +90,6 @@ public class GoldStandardTest extends AbstractClustEvalTest {
      *
      * @throws NoRepositoryFoundException
      * @throws RepositoryConfigurationException
-     * @throws RepositoryConfigNotFoundException
      * @throws InvalidRepositoryException
      * @throws RepositoryAlreadyExistsException
      * @throws FileNotFoundException

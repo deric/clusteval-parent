@@ -13,6 +13,7 @@ package de.clusteval.data.dataset.generator;
 import de.clusteval.api.data.DataSetGenerator;
 import de.clusteval.api.data.GoldStandard;
 import de.clusteval.api.data.IDataSetGenerator;
+import de.clusteval.api.data.IGoldStandard;
 import de.clusteval.api.exceptions.DataSetGenerationException;
 import de.clusteval.api.exceptions.GoldStandardGenerationException;
 import de.clusteval.api.program.RegisterException;
@@ -166,18 +167,13 @@ public class SpiralsDataSetGenerator extends DataSetGenerator {
         }
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see data.dataset.generator.DataSetGenerator#generateGoldStandard()
-     */
     @Override
     public GoldStandard generateGoldStandard() throws GoldStandardGenerationException {
 
         try {
             // goldstandard file
             File goldStandardFile = new File(FileUtils.buildPath(
-                    this.repository.getBasePath(GoldStandard.class),
+                    this.repository.getBasePath(IGoldStandard.class),
                     this.getFolderName(), this.getFileName()));
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(
                     goldStandardFile))) {

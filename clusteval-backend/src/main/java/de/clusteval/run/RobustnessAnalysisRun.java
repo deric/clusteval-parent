@@ -415,11 +415,6 @@ public class RobustnessAnalysisRun extends ClusteringRun {
         }
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.clusteval.run.Run#beforePerform()
-     */
     @Override
     protected void beforePerform() throws IOException,
                                           RunInitializationException {
@@ -439,8 +434,7 @@ public class RobustnessAnalysisRun extends ClusteringRun {
                     this.getRunIdentificationString()));
             newDataSetDir.mkdir();
             // the directory, the new gold standards will be stored in
-            String goldStandardBasePath = this.getRepository().getBasePath(
-                    GoldStandard.class);
+            String goldStandardBasePath = this.getRepository().getBasePath(IGoldStandard.class);
             File newGoldStandardDir = new File(FileUtils.buildPath(
                     goldStandardBasePath, this.getRunIdentificationString()));
             newGoldStandardDir.mkdir();
@@ -666,11 +660,6 @@ public class RobustnessAnalysisRun extends ClusteringRun {
         }
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.clusteval.run.Run#afterPerform()
-     */
     @Override
     protected void afterPerform() {
         this.createAnalysesDirectory();
@@ -700,13 +689,6 @@ public class RobustnessAnalysisRun extends ClusteringRun {
         return r;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * de.clusteval.run.ExecutionRun#createAndScheduleRunnableForResumePair(
-     * de.clusteval.framework.threading.RunSchedulerThread, int)
-     */
     @Override
     protected IRunRunnable createAndScheduleRunnableForResumePair(
             IScheduler runScheduler, int p) throws UnknownProviderException {
@@ -716,11 +698,6 @@ public class RobustnessAnalysisRun extends ClusteringRun {
         return super.createAndScheduleRunnableForResumePair(runScheduler, p);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.clusteval.run.ExecutionRun#getRunParameterForRunPair(int)
-     */
     @Override
     protected Map<IProgramParameter<? extends Object>, String> getRunParameterForRunPair(
             int p) {

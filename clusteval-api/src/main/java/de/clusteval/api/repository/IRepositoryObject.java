@@ -37,6 +37,12 @@ public interface IRepositoryObject extends RepositoryListener {
     void init(final IRepository repository, final long changeDate, final File absPath);
 
     /**
+     * Called after finishing object's initialization. Could be overridden in
+     * child classes.
+     */
+    void initCompleted();
+
+    /**
      * Any subclass needs to implement this method. It will be responsible to
      * register a new object of the subclass at the repository.
      *
@@ -44,8 +50,8 @@ public interface IRepositoryObject extends RepositoryListener {
      *
      * @return true, if successful
      * @throws RegisterException An exception is thrown if something goes wrong
-     * during the registering process, that might be interesting to handle
-     * individually.
+     *                           during the registering process, that might be interesting to handle
+     *                           individually.
      */
     boolean register() throws RegisterException;
 
