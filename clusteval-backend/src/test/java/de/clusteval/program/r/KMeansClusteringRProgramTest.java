@@ -18,12 +18,11 @@ import de.clusteval.api.r.InvalidRepositoryException;
 import de.clusteval.api.r.RepositoryAlreadyExistsException;
 import de.clusteval.api.repository.RepositoryConfigurationException;
 import de.clusteval.api.run.IRun;
+import de.clusteval.api.run.IRunResult;
 import de.clusteval.api.run.IRunRunnable;
 import de.clusteval.api.run.IScheduler;
-import de.clusteval.api.run.Run;
 import de.clusteval.api.run.RunInitializationException;
 import de.clusteval.api.run.RunRunnableInitializationException;
-import de.clusteval.api.run.result.RunResult;
 import de.clusteval.utils.AbstractClustEvalTest;
 import de.clusteval.utils.FileUtils;
 import java.io.File;
@@ -45,7 +44,7 @@ public class KMeansClusteringRProgramTest extends AbstractClustEvalTest {
                    RunInitializationException, UnknownProviderException {
         IScheduler scheduler = this.getRepository().getSupervisorThread().getRunScheduler();
 
-        IRun run = this.getRepository().getStaticObjectWithName(Run.class, "test_kmeans_sfld_layered_f2");
+        IRun run = this.getRepository().getStaticObjectWithName(IRun.class, "test_kmeans_sfld_layered_f2");
         try {
             run.perform(scheduler);
 
@@ -59,7 +58,7 @@ public class KMeansClusteringRProgramTest extends AbstractClustEvalTest {
             assertEquals(IncompatibleDataSetFormatException.class, t.getClass());
         } finally {
             if (run != null) {
-                FileUtils.delete(new File(FileUtils.buildPath(this.getRepository().getBasePath(RunResult.class),
+                FileUtils.delete(new File(FileUtils.buildPath(this.getRepository().getBasePath(IRunResult.class),
                         run.getRunIdentificationString())));
             }
         }

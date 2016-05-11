@@ -33,7 +33,6 @@ import de.clusteval.framework.ClustevalBackendServer;
 import de.clusteval.program.ProgramConfigFinderThread;
 import de.clusteval.run.RunFinderThread;
 import de.clusteval.run.result.RunResultFinderThread;
-import de.clusteval.run.result.postprocessing.RunResultPostprocessorFinderThread;
 import java.util.Map;
 
 /**
@@ -125,7 +124,7 @@ public class RepositorySupervisorThread extends SupervisorThread {
                         //DataSetTypeFinderThread.class,
                         DataSetFinderThread.class,
                         //DataPreprocessorFinderThread.class,
-                        RunResultPostprocessorFinderThread.class,
+                        //RunResultPostprocessorFinderThread.class,
                         //DistanceMeasureFinderThread.class,
                         //DataStatisticFinderThread.class,
                         //RunStatisticFinderThread.class,
@@ -147,7 +146,7 @@ public class RepositorySupervisorThread extends SupervisorThread {
                         //DataSetTypeFinderThread.class,
                         DataSetFinderThread.class,
                         //DataPreprocessorFinderThread.class,
-                        RunResultPostprocessorFinderThread.class,
+                        //RunResultPostprocessorFinderThread.class,
                         //DistanceMeasureFinderThread.class,
                         // DataStatisticFinderThread.class,
                         //RunStatisticFinderThread.class,

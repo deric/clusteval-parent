@@ -23,7 +23,6 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import org.openide.util.Exceptions;
 
 /**
  * @author Christian Wiwie
@@ -101,7 +100,6 @@ public abstract class FileFinder<T extends IRepositoryObject> extends Finder<T> 
                 for (int i = 1; i < split.length; i++) {
                     this.getLog().warn("|--> " + split[i]);
                 }
-                Exceptions.printStackTrace(e);
             }
 
             /*

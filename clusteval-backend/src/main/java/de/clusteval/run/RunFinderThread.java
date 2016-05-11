@@ -47,11 +47,6 @@ public class RunFinderThread extends FinderThread<IRun> {
         super(supervisorThread, repository, IRun.class, sleepTime, checkOnce);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see de.wiwie.wiutils.utils.FinderThread#beforeFind()
-     */
     @Override
     protected void beforeFind() {
 
