@@ -137,7 +137,7 @@ public class ClustQualityEval {
                 .parseParamOptResult(parent, new File(absRepoPath),
                         result, false, false, false);
 
-        this.dataConfig = this.repo.getStaticObjectWithName(DataConfig.class,
+        this.dataConfig = this.repo.findByName(DataConfig.class,
                 dataConfigName);
 
         final List<ClusteringEvaluation> measures = new ArrayList<>();

@@ -713,11 +713,12 @@ public class Repository implements IRepository {
     }
 
     @Override
-    public <T extends IRepositoryObject> T getStaticObjectWithName(final Class<T> c, final String name) {
+    public <T extends IRepositoryObject> T findByName(final Class<T> c, final String name) {
         Collection<? extends T> res = getLookup().lookupAll(c);
         //TODO speedup by rebuilding a hashmap on change?
         for (T item : res) {
-            if (name.equals(getBaseName(item.getAbsPath()))) {
+            //name might contain folder + name of the file with extensions part
+            if (item.getAbsolutePath().endsWith(name) || name.equals(getBaseName(item.getAbsPath()))) {
                 return item;
             }
         }
@@ -1528,14 +1529,11 @@ public class Repository implements IRepository {
                     }
                 }
                 sb.deleteCharAt(sb.length() - 1);
-
                 sb.append("))");
 
                 this.warn("You can use the following command to install them in R:");
                 this.warn(sb.toString());
             }
-        } else {
-            this.warn("Can't connect to Rserve");
         }
     }
 

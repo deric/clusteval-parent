@@ -299,7 +299,7 @@ public class FMeasureClusteringQualityMeasureTest extends AbstractClustEvalTest 
                    ClusteringParseException, InterruptedException, IllegalArgumentException, RException, UnknownProviderException {
         ClustevalBackendServer.logLevel(Level.WARN);
 
-        DataConfig dataConfig = this.getRepository().getStaticObjectWithName(
+        DataConfig dataConfig = this.getRepository().findByName(
                 DataConfig.class, "astral_40");
 
         GoldStandard goldStandard = dataConfig.getGoldstandardConfig().getGoldstandard();

@@ -763,7 +763,7 @@ public class DefaultSQLCommunicator extends SQLCommunicator implements Database 
                         + getRunId(object
                         .getRepository()
                         .getParent()
-                        .getStaticObjectWithName(Run.class,
+                        .findByName(Run.class,
                         object.toString())),
                         "" + object.getStatus()};
                 } else {
@@ -1309,7 +1309,7 @@ public class DefaultSQLCommunicator extends SQLCommunicator implements Database 
                     + getObjectId(object
                     .getRepository()
                     .getParent()
-                    .getStaticObjectWithName(
+                    .findByName(
                     ProgramConfig.class,
                     object.toString()))};
             } else {
@@ -1645,7 +1645,7 @@ public class DefaultSQLCommunicator extends SQLCommunicator implements Database 
                     + getObjectId(object
                     .getRepository()
                     .getParent()
-                    .getStaticObjectWithName(
+                    .findByName(
                     GoldStandardConfig.class,
                     object.toString()))};
             } else {
@@ -1689,7 +1689,7 @@ public class DefaultSQLCommunicator extends SQLCommunicator implements Database 
                     + getObjectId(object
                     .getRepository()
                     .getParent()
-                    .getStaticObjectWithName(
+                    .findByName(
                     GoldStandard.class,
                     object.toString()))};
             } else {
@@ -2065,7 +2065,7 @@ public class DefaultSQLCommunicator extends SQLCommunicator implements Database 
                     + getObjectId(object
                     .getRepository()
                     .getParent()
-                    .getStaticObjectWithName(IDataSet.class,
+                    .findByName(IDataSet.class,
                     object.getFullName())),
                     object.getChecksum() + "",
                     getDataSetTypeId(object.getDataSetType().getClass()
@@ -2165,7 +2165,7 @@ public class DefaultSQLCommunicator extends SQLCommunicator implements Database 
                         + getObjectId(object
                         .getRepository()
                         .getParent()
-                        .getStaticObjectWithName(
+                        .findByName(
                         DataConfig.class,
                         object.getName()))};
 
@@ -2182,7 +2182,7 @@ public class DefaultSQLCommunicator extends SQLCommunicator implements Database 
                         + getObjectId(object
                         .getRepository()
                         .getParent()
-                        .getStaticObjectWithName(
+                        .findByName(
                         DataConfig.class,
                         object.getName()))};
                 }
@@ -2250,7 +2250,7 @@ public class DefaultSQLCommunicator extends SQLCommunicator implements Database 
                     + getObjectId(object
                     .getRepository()
                     .getParent()
-                    .getStaticObjectWithName(
+                    .findByName(
                     DataSetConfig.class,
                     object.toString()))};
             } else {

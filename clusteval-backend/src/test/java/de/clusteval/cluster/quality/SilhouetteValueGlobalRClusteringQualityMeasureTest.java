@@ -112,7 +112,7 @@ public class SilhouetteValueGlobalRClusteringQualityMeasureTest extends
             cluster2.add(new ClusterItem("id3"), 1.0f);
             clustering.addCluster(cluster2);
 
-            DataConfig dc = this.getRepository().getStaticObjectWithName(
+            DataConfig dc = this.getRepository().findByName(
                     DataConfig.class, "dunnIndexMatrixTest");
             IDataSetConfig dsc = dc.getDatasetConfig();
             IDataSet ds = dsc.getDataSet();

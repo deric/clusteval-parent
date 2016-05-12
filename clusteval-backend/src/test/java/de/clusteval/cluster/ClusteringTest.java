@@ -142,8 +142,7 @@ public class ClusteringTest extends AbstractClustEvalTest {
     }
 
     @Test
-    public void testFuzzyClustering() throws IOException,
-                                             ClusteringParseException {
+    public void testFuzzyClustering() throws IOException, ClusteringParseException {
         Pair<ParameterSet, IClustering> p = ClusteringFactory
                 .parseFromFile(
                         null,
@@ -187,7 +186,7 @@ public class ClusteringTest extends AbstractClustEvalTest {
         expectedClusters2.put(expectedCluster3, 0.1f);
         expectedClusters.put(expectedItem2, expectedClusters2);
 
-        Map<Cluster, Float> expectedClusters3 = new HashMap<Cluster, Float>();
+        Map<Cluster, Float> expectedClusters3 = new HashMap<>();
         expectedClusters3.put(expectedCluster1, 0.9f);
         expectedClusters3.put(expectedCluster2, 0.05f);
         expectedClusters3.put(expectedCluster3, 0.05f);
@@ -199,8 +198,7 @@ public class ClusteringTest extends AbstractClustEvalTest {
     }
 
     @Test
-    public void testFuzzyToHardClustering() throws IOException,
-                                                   ClusteringParseException {
+    public void testFuzzyToHardClustering() throws IOException, ClusteringParseException {
         Pair<ParameterSet, IClustering> p = ClusteringFactory
                 .parseFromFile(
                         null,

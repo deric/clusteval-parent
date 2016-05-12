@@ -69,7 +69,7 @@ public class RunFinderTest extends AbstractClustEvalTest {
         new ClustevalBackendServer(repo, false);
         try {
 
-            Run run = repo.getStaticObjectWithName(Run.class, "testCase");
+            Run run = repo.findByName(Run.class, "testCase");
             Assert.assertEquals(100, ((ParameterOptimizationRun) run)
                     .getOptimizationMethods().get(0).getTotalIterationCount());
 
@@ -93,7 +93,7 @@ public class RunFinderTest extends AbstractClustEvalTest {
                 Thread.sleep(100);
             }
 
-            run = repo.getStaticObjectWithName(Run.class, "testCase");
+            run = repo.findByName(Run.class, "testCase");
             Assert.assertEquals(1000, ((ParameterOptimizationRun) run)
                     .getOptimizationMethods().get(0).getTotalIterationCount());
 

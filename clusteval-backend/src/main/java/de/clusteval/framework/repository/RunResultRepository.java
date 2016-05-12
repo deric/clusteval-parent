@@ -325,7 +325,7 @@ class RunResultRepositoryDataSetObjectEntity
     @Override
     public boolean register(IDataSet object) throws RegisterException {
         IDataSet dataSetInParentRepository = object.getRepository().getParent()
-                .getStaticObjectWithName(IDataSet.class, object.getFullName());
+                .findByName(IDataSet.class, object.getFullName());
         if (dataSetInParentRepository != null) {
             return super.register(object);
         }
@@ -350,7 +350,7 @@ class RunResultRepositoryGoldStandardObjectEntity extends StaticRepositoryEntity
     @Override
     public boolean register(GoldStandard object) throws RegisterException {
         GoldStandard gsInParentRepository = object.getRepository().getParent()
-                .getStaticObjectWithName(GoldStandard.class, object.toString());
+                .findByName(GoldStandard.class, object.toString());
         if (gsInParentRepository != null) {
             return super.register(object);
         }

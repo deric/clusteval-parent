@@ -114,7 +114,7 @@ public interface IRepository {
 
     SQLConfig getDbConfig();
 
-    <T extends IRepositoryObject> T getStaticObjectWithName(final Class<T> c, final String name);
+    <T extends IRepositoryObject> T findByName(final Class<T> c, final String name);
 
     <T extends IRepositoryObject> Collection<T> getCollectionStaticEntities(final Class<T> c);
     //<T extends IRepositoryObject> T getCollectionStaticEntities(final Class<T> c);

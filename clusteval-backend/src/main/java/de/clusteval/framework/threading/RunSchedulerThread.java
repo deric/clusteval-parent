@@ -234,7 +234,7 @@ public class RunSchedulerThread extends ClustevalThread implements IScheduler {
         /*
          * Check if this run exists
          */
-        if (this.repository.getStaticObjectWithName(Run.class, runId) == null) {
+        if (this.repository.findByName(Run.class, runId) == null) {
             this.log.warn("A job with id " + runId + " does not exist");
             return false;
         }
@@ -263,7 +263,7 @@ public class RunSchedulerThread extends ClustevalThread implements IScheduler {
             }
         }
 
-        this.repository.getStaticObjectWithName(Run.class, runId).setStatus(
+        this.repository.findByName(Run.class, runId).setStatus(
                 RUN_STATUS.SCHEDULED);
 
         this.log.info("Run scheduled..." + runId);
@@ -503,7 +503,7 @@ public class RunSchedulerThread extends ClustevalThread implements IScheduler {
 
                 if (!isResume) {
                     // take a cloned copy of the run
-                    run = this.repository.getStaticObjectWithName(IRun.class, runId).clone();
+                    run = this.repository.findByName(IRun.class, runId).clone();
 
                     if (!this.clientToRuns.containsKey(clientId)) {
                         this.clientToRuns.put(clientId, new HashSet<>());

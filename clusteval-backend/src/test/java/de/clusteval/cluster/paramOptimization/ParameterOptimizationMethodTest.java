@@ -83,7 +83,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
 
         ClustevalBackendServer.logLevel(Level.INFO);
 
-        IDataConfig dataConfig = getRepository().getStaticObjectWithName(
+        IDataConfig dataConfig = getRepository().findByName(
                 IDataConfig.class, "synthetic_cassini250");
         IDataSet ds = dataConfig.getDatasetConfig().getDataSet();
         IDataSetFormat internal = DataSetFormatFactory.parseFromString("SimMatrixDataSetFormat");
@@ -136,7 +136,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
                         + ":numberOfElements)")
                 .setValue(ds.getIds().size());
         ds.unloadFromMemory();
-        ProgramConfig programConfig = getRepository().getStaticObjectWithName(
+        ProgramConfig programConfig = getRepository().findByName(
                 ProgramConfig.class, "TransClust_2");
 
         ClusteringEvaluation f2 = ClusteringEvaluationFactory.parseFromString(getRepository(), "TransClustF2ClusteringQualityMeasure",
@@ -145,7 +145,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
                 .parseFromString(
                         getRepository(),
                         "LayeredDivisiveParameterOptimizationMethod",
-                        getRepository().getStaticObjectWithName(Run.class,
+                        getRepository().findByName(Run.class,
                                 "paper_run_synthetic"), programConfig,
                         dataConfig, programConfig.getOptimizableParams(), f2,
                         1001, false);
@@ -215,7 +215,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
 
         IContext context = ContextFactory.parseFromString(getRepository(), "ClusteringContext");
 
-        DataConfig dataConfig = getRepository().getStaticObjectWithName(
+        DataConfig dataConfig = getRepository().findByName(
                 DataConfig.class, "synthetic_cassini250");
         IDataSet ds = dataConfig.getDatasetConfig().getDataSet();
         IDataSetFormat internal = DataSetFormatFactory.parseFromString("SimMatrixDataSetFormat");
@@ -268,7 +268,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
                         + ":numberOfElements)")
                 .setValue(ds.getIds().size());
         ds.unloadFromMemory();
-        ProgramConfig programConfig = getRepository().getStaticObjectWithName(
+        ProgramConfig programConfig = getRepository().findByName(
                 ProgramConfig.class, "TransClust_2");
 
         ClusteringEvaluation f2 = ClusteringEvaluationFactory.parseFromString(getRepository(), "TransClustF2ClusteringQualityMeasure",
@@ -277,7 +277,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
                 .parseFromString(
                         getRepository(),
                         "LayeredDivisiveParameterOptimizationMethod",
-                        getRepository().getStaticObjectWithName(Run.class,
+                        getRepository().findByName(Run.class,
                                 "paper_run_synthetic"), programConfig,
                         dataConfig, programConfig.getOptimizableParams(), f2,
                         1001, true);
@@ -331,7 +331,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
 
         IContext context = ContextFactory.parseFromString(getRepository(), "ClusteringContext");
 
-        DataConfig dataConfig = getRepository().getStaticObjectWithName(
+        DataConfig dataConfig = getRepository().findByName(
                 DataConfig.class, "synthetic_cassini250");
         IDataSet ds = dataConfig.getDatasetConfig().getDataSet();
         IDataSetFormat internal = DataSetFormatFactory.parseFromString("SimMatrixDataSetFormat");
@@ -384,7 +384,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
                         + ":numberOfElements)")
                 .setValue(ds.getIds().size());
         ds.unloadFromMemory();
-        ProgramConfig programConfig = getRepository().getStaticObjectWithName(
+        ProgramConfig programConfig = getRepository().findByName(
                 ProgramConfig.class, "TransClust_2");
 
         ClusteringEvaluation f2 = ClusteringEvaluationFactory.parseFromString(getRepository(), "TransClustF2ClusteringQualityMeasure",
@@ -393,7 +393,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
                 .parseFromString(
                         getRepository(),
                         "LayeredDivisiveParameterOptimizationMethod",
-                        getRepository().getStaticObjectWithName(Run.class,
+                        getRepository().findByName(Run.class,
                                 "paper_run_synthetic"), programConfig,
                         dataConfig, programConfig.getOptimizableParams(), f2,
                         1001, true);
@@ -418,7 +418,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
 
         IContext context = ContextFactory.parseFromString(getRepository(), "ClusteringContext");
 
-        IDataConfig dataConfig = getRepository().getStaticObjectWithName(
+        IDataConfig dataConfig = getRepository().findByName(
                 IDataConfig.class, "baechler2003");
         IDataSet ds = dataConfig.getDatasetConfig().getDataSet();
         IDataSetFormat internal = DataSetFormatFactory.parseFromString("SimMatrixDataSetFormat");
@@ -471,7 +471,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
                         + ":numberOfElements)")
                 .setValue(ds.getIds().size());
         ds.unloadFromMemory();
-        ProgramConfig programConfig = getRepository().getStaticObjectWithName(
+        ProgramConfig programConfig = getRepository().findByName(
                 ProgramConfig.class, "TransClust_2");
 
         ClusteringEvaluation f2 = ClusteringEvaluationFactory.parseFromString(getRepository(), "TransClustF2ClusteringQualityMeasure",
@@ -480,7 +480,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
                 .parseFromString(
                         getRepository(),
                         "LayeredDivisiveParameterOptimizationMethod",
-                        getRepository().getStaticObjectWithName(Run.class,
+                        getRepository().findByName(Run.class,
                                 "baechler2003"), programConfig, dataConfig,
                         programConfig.getOptimizableParams(), f2, 1001, true);
         method.reset(new File(
@@ -531,7 +531,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
 
         IContext context = ContextFactory.parseFromString(getRepository(), "ClusteringContext");
 
-        DataConfig dataConfig = getRepository().getStaticObjectWithName(
+        DataConfig dataConfig = getRepository().findByName(
                 DataConfig.class, "DS1");
         // DataSet ds = dataConfig.getDatasetConfig().getDataSet();
         // DataSetFormat internal =
@@ -587,7 +587,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
         // + ":numberOfElements)")
         // .setValue(ds.getIds().size());
         // ds.unloadFromMemory();
-        ProgramConfig programConfig = getRepository().getStaticObjectWithName(
+        ProgramConfig programConfig = getRepository().findByName(
                 ProgramConfig.class, "Hierarchical_Clustering");
 
         ClusteringEvaluation f2 = ClusteringEvaluationFactory.parseFromString(getRepository(), "TransClustF2ClusteringQualityMeasure",
@@ -596,7 +596,7 @@ public class ParameterOptimizationMethodTest extends AbstractClustEvalTest {
                 .parseFromString(
                         getRepository(),
                         "DivisiveParameterOptimizationMethod",
-                        getRepository().getStaticObjectWithName(Run.class,
+                        getRepository().findByName(Run.class,
                                 "hclust_vs_DS1"), programConfig, dataConfig,
                         programConfig.getOptimizableParams(), f2, 70, true);
         method.initParameterValues();

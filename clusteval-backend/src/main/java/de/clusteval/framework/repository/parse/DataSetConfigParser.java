@@ -169,7 +169,7 @@ class DataSetConfigParser extends RepositoryObjectParser<DataSetConfig> {
                    IncompatibleParameterOptimizationMethodException, UnknownParameterOptimizationMethodException,
                    NoOptimizableProgramParameterException, UnknownRunResultPostprocessorException, UnknownProviderException {
         if (repo instanceof RunResultRepository) {
-            return repo.getStaticObjectWithName(IDataSet.class, datasetName + "/" + datasetFile);
+            return repo.findByName(IDataSet.class, datasetName + "/" + datasetFile);
         }
         return Parser.parseFromFile(IDataSet.class,
                 new File(FileUtils.buildPath(repo.getBasePath(IDataSet.class), datasetName, datasetFile)));

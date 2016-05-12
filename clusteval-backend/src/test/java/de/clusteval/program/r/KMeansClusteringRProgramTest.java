@@ -44,7 +44,7 @@ public class KMeansClusteringRProgramTest extends AbstractClustEvalTest {
                    RunInitializationException, UnknownProviderException {
         IScheduler scheduler = this.getRepository().getSupervisorThread().getRunScheduler();
 
-        IRun run = this.getRepository().getStaticObjectWithName(IRun.class, "test_kmeans_sfld_layered_f2");
+        IRun run = this.getRepository().findByName(IRun.class, "test_kmeans_sfld_layered_f2");
         try {
             run.perform(scheduler);
 

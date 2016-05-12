@@ -36,7 +36,7 @@ public class RProgramConfigTest extends AbstractClustEvalTest {
             throws FileNotFoundException, RepositoryAlreadyExistsException, InvalidRepositoryException,
                    RepositoryConfigurationException, InterruptedException {
 
-        ProgramConfig programConfig = this.getRepository().getStaticObjectWithName(ProgramConfig.class,
+        ProgramConfig programConfig = this.getRepository().findByName(ProgramConfig.class,
                 "KMeans_Clustering");
         assertNotNull("failed to load KMeans_Clustering config", programConfig);
         Set<IDataSetFormat> dataSetFormats = programConfig.getCompatibleDataSetFormats();
@@ -50,7 +50,7 @@ public class RProgramConfigTest extends AbstractClustEvalTest {
             throws FileNotFoundException, RepositoryAlreadyExistsException, InvalidRepositoryException,
                    RepositoryConfigurationException, InterruptedException {
 
-        ProgramConfig programConfig = this.getRepository().getStaticObjectWithName(ProgramConfig.class,
+        ProgramConfig programConfig = this.getRepository().findByName(ProgramConfig.class,
                 "KMeans_Clustering");
         assertNotNull("failed to load KMeans_Clustering config", programConfig);
         IRunResultFormat format = programConfig.getOutputFormat();

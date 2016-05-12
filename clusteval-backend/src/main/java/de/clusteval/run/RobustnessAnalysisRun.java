@@ -290,7 +290,7 @@ public class RobustnessAnalysisRun extends ClusteringRun {
                                 IDataSet ds = this
                                         .getRepository()
                                         .getParent()
-                                        .getStaticObjectWithName(
+                                        .findByName(
                                                 IDataSet.class,
                                                 targetDataSetFile
                                                 .getParentFile()
@@ -311,7 +311,7 @@ public class RobustnessAnalysisRun extends ClusteringRun {
                                         .add(this
                                                 .getRepository()
                                                 .getParent()
-                                                .getStaticObjectWithName(
+                                                .findByName(
                                                         DataConfig.class,
                                                         newDataConfig.getName()));
                             }

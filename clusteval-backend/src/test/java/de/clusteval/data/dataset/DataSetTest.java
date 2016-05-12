@@ -72,6 +72,7 @@ import java.util.ArrayList;
 import org.apache.commons.configuration.ConfigurationException;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
@@ -566,7 +567,6 @@ public class DataSetTest extends AbstractClustEvalTest {
      * result file is created in the end. verification of the conversion result
      * itself is not done here.
      *
-     * @throws UnknownDataSetFormatException
      * @throws NoRepositoryFoundException
      * @throws IOException
      * @throws FormatConversionException
@@ -596,10 +596,11 @@ public class DataSetTest extends AbstractClustEvalTest {
         /*
          * SimMatrixDataSetFormat.convertTo() is a special case
          */
-        this.repositoryObject = this
-                .getRepository()
-                .getStaticObjectWithName(IDataSet.class,
-                        "nora_cancer/all_expression_spearman.txt").clone();
+        assertNotNull(this.getRepository());
+        IDataSet obj = getRepository().findByName(IDataSet.class,
+                "nora_cancer/all_expression_spearman.txt");
+        assertNotNull(obj);
+        this.repositoryObject = obj.clone();
         IDataSet newDataSet = ((IDataSet) this.repositoryObject)
                 .preprocessAndConvertTo(context,
                         DataSetFormatFactory.parseFromString(getRepository(),
@@ -612,21 +613,19 @@ public class DataSetTest extends AbstractClustEvalTest {
                                 new ArrayList<>(),
                                 new ArrayList<>()),
                         new StdToInput());
-        assertEquals(this.repositoryObject.getAbsolutePath(),
-                newDataSet.getAbsolutePath());
+        assertEquals(repositoryObject.getAbsolutePath(), newDataSet.getAbsolutePath());
         /*
          * SimMatrixDataSetFormat.convertTo(APRowSimDataSetFormat)
          */
         this.repositoryObject = this
                 .getRepository()
-                .getStaticObjectWithName(IDataSet.class,
+                .findByName(IDataSet.class,
                         "nora_cancer/all_expression_spearman.txt").clone();
         newDataSet = ((IDataSet) this.repositoryObject).preprocessAndConvertTo(context,
                 DataSetFormatFactory.parseFromString(getRepository(),
                         "APRowSimDataSetFormat"),
                 new InputToStd(DistanceMeasureFactory
-                        .parseFromString(getRepository(),
-                                "EuclidianDistanceMeasure"),
+                        .parseFromString(getRepository(), "EuclidianDistanceMeasure"),
                         Precision.DOUBLE,
                         new ArrayList<>(),
                         new ArrayList<>()),
@@ -637,7 +636,7 @@ public class DataSetTest extends AbstractClustEvalTest {
          */
         this.repositoryObject = this
                 .getRepository()
-                .getStaticObjectWithName(IDataSet.class,
+                .findByName(IDataSet.class,
                         "rowSimTest/rowSimTestFile.sim").clone();
         ((IDataSet) this.repositoryObject).preprocessAndConvertTo(context,
                 DataSetFormatFactory.parseFromString(getRepository(),
@@ -658,7 +657,7 @@ public class DataSetTest extends AbstractClustEvalTest {
          */
         this.repositoryObject = this
                 .getRepository()
-                .getStaticObjectWithName(IDataSet.class,
+                .findByName(IDataSet.class,
                         "rowSimTest/rowSimTestFile.sim").clone();
         ((IDataSet) this.repositoryObject).preprocessAndConvertTo(context,
                 DataSetFormatFactory.parseFromString(getRepository(),
@@ -938,7 +937,7 @@ public class DataSetTest extends AbstractClustEvalTest {
                    InterruptedException, RException, UnknownProviderException {
         ClustevalBackendServer.logLevel(Level.INFO);
 
-        DataConfig dataConfig = getRepository().getStaticObjectWithName(
+        DataConfig dataConfig = getRepository().findByName(
                 DataConfig.class, "synthetic_cassini250");
         IDataSet ds = dataConfig.getDatasetConfig().getDataSet();
         IDataSetFormat internal = DataSetFormatFactory.parseFromString(getRepository(),

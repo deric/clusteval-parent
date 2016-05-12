@@ -16,7 +16,6 @@ import de.clusteval.api.repository.IRepository;
 import de.clusteval.api.run.ISupervisorThread;
 import de.clusteval.data.dataset.RunResultDataSetConfigFinderThread;
 import de.clusteval.data.goldstandard.GoldStandardConfigFinderThread;
-import de.clusteval.framework.threading.SupervisorThread;
 
 /**
  * @author Christian Wiwie
@@ -50,7 +49,7 @@ public class RunResultDataConfigFinderThread extends DataConfigFinderThread {
      *
      */
     public RunResultDataConfigFinderThread(
-            final SupervisorThread supervisorThread,
+            final ISupervisorThread supervisorThread,
             final IRepository repository, final long sleepTime,
             final boolean checkOnce) {
         super(supervisorThread, repository, sleepTime, checkOnce);

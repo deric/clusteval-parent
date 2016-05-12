@@ -354,7 +354,7 @@ class RobustnessAnalysisRunParser extends ExecutionRunParser<RobustnessAnalysisR
             // 10.07.2014: remove duplicates.
             list = new ArrayList<>(new HashSet<String>(Arrays.asList(list))).toArray(new String[0]);
             for (String dataConfig : list) {
-                this.originalDataConfigs.add(repo.getParent().getStaticObjectWithName(DataConfig.class, dataConfig));
+                this.originalDataConfigs.add(repo.getParent().findByName(DataConfig.class, dataConfig));
             }
             this.dataConfigs = new ArrayList<>(this.originalDataConfigs);
 
@@ -1024,6 +1024,6 @@ class RunResultDataSetConfigParser extends DataSetConfigParser {
      */
     @Override
     protected IDataSet getDataSet() {
-        return repo.getStaticObjectWithName(IDataSet.class, datasetName + "/" + datasetFile);
+        return repo.findByName(IDataSet.class, datasetName + "/" + datasetFile);
     }
 }
