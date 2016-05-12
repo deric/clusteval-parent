@@ -72,6 +72,7 @@ import java.util.ArrayList;
 import org.apache.commons.configuration.ConfigurationException;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
@@ -600,20 +601,22 @@ public class DataSetTest extends AbstractClustEvalTest {
         IDataSet obj = getRepository().findByName(IDataSet.class,
                 "nora_cancer/all_expression_spearman.txt");
         assertNotNull(obj);
-        this.repositoryObject = obj.clone();
-        IDataSet newDataSet = ((IDataSet) this.repositoryObject)
-                .preprocessAndConvertTo(context,
-                        DataSetFormatFactory.parseFromString(getRepository(),
-                                "SimMatrixDataSetFormat"),
-                        new InputToStd(
-                                DistanceMeasureFactory.parseFromString(
-                                        getRepository(),
-                                        "EuclidianDistanceMeasure"),
-                                Precision.DOUBLE,
-                                new ArrayList<>(),
-                                new ArrayList<>()),
-                        new StdToInput());
-        assertEquals(repositoryObject.getAbsolutePath(), newDataSet.getAbsolutePath());
+        repositoryObject = obj;
+        IDataSet dataset = obj.clone();
+        assertNotNull(dataset.getAbsolutePath());
+        dataset.preprocessAndConvertTo(context,
+                DataSetFormatFactory.parseFromString(getRepository(),
+                        "SimMatrixDataSetFormat"),
+                new InputToStd(
+                        DistanceMeasureFactory.parseFromString(
+                                getRepository(),
+                                "EuclidianDistanceMeasure"),
+                        Precision.DOUBLE,
+                        new ArrayList<>(),
+                        new ArrayList<>()),
+                new StdToInput());
+        //dataset will be saved as different file
+        assertNotEquals(repositoryObject.getAbsolutePath(), dataset.getAbsolutePath());
         /*
          * SimMatrixDataSetFormat.convertTo(APRowSimDataSetFormat)
          */
@@ -621,7 +624,7 @@ public class DataSetTest extends AbstractClustEvalTest {
                 .getRepository()
                 .findByName(IDataSet.class,
                         "nora_cancer/all_expression_spearman.txt").clone();
-        newDataSet = ((IDataSet) this.repositoryObject).preprocessAndConvertTo(context,
+        dataset = ((IDataSet) this.repositoryObject).preprocessAndConvertTo(context,
                 DataSetFormatFactory.parseFromString(getRepository(),
                         "APRowSimDataSetFormat"),
                 new InputToStd(DistanceMeasureFactory

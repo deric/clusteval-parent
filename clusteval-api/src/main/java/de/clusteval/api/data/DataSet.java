@@ -153,27 +153,6 @@ public abstract class DataSet extends RepositoryObject implements IDataSet, IRep
         locks = Striped.lock(15);
     }
 
-    @Override
-    public void setAbsolutePath(File absFilePath) {
-        super.setAbsolutePath(absFilePath);
-
-        try {
-            createAndRegisterInternalAttributes();
-        } catch (RegisterException e) {
-        }
-    }
-
-    private void createAndRegisterInternalAttributes() throws RegisterException {
-        new NamedDoubleAttribute(this.repository, this.getAbsolutePath()
-                + ":meanSimilarity", new Double(Float.NEGATIVE_INFINITY));
-        new NamedDoubleAttribute(this.repository, this.getAbsolutePath()
-                + ":minSimilarity", new Double(Float.NEGATIVE_INFINITY));
-        new NamedDoubleAttribute(this.repository, this.getAbsolutePath()
-                + ":maxSimilarity", new Double(Float.NEGATIVE_INFINITY));
-        new NamedIntegerAttribute(this.repository, this.getAbsolutePath()
-                + ":numberOfElements", new Integer(Integer.MIN_VALUE));
-    }
-
     /**
      * Copy constructor for the DataSet class.
      *
@@ -196,6 +175,29 @@ public abstract class DataSet extends RepositoryObject implements IDataSet, IRep
         } else {
             this.originalDataSet = dataset.originalDataSet;
         }
+        locks = Striped.lock(15);
+    }
+
+    @Override
+    public void setAbsolutePath(File absFilePath) {
+        super.setAbsolutePath(absFilePath);
+
+        try {
+            createAndRegisterInternalAttributes();
+        } catch (RegisterException e) {
+            Exceptions.printStackTrace(e);
+        }
+    }
+
+    private void createAndRegisterInternalAttributes() throws RegisterException {
+        new NamedDoubleAttribute(this.repository, this.getAbsolutePath()
+                + ":meanSimilarity", new Double(Float.NEGATIVE_INFINITY));
+        new NamedDoubleAttribute(this.repository, this.getAbsolutePath()
+                + ":minSimilarity", new Double(Float.NEGATIVE_INFINITY));
+        new NamedDoubleAttribute(this.repository, this.getAbsolutePath()
+                + ":maxSimilarity", new Double(Float.NEGATIVE_INFINITY));
+        new NamedIntegerAttribute(this.repository, this.getAbsolutePath()
+                + ":numberOfElements", new Integer(Integer.MIN_VALUE));
     }
 
     @Override
@@ -421,8 +423,8 @@ public abstract class DataSet extends RepositoryObject implements IDataSet, IRep
                     result = preprocessed.convertToStandardDirectly(context,
                             configInputToStandard);
                 } catch (IOException | InvalidDataSetFormatException |
-                         RegisterException |
-                         InvalidParameterException | RNotAvailableException | InterruptedException e) {
+                        RegisterException |
+                        InvalidParameterException | RNotAvailableException | InterruptedException e) {
                     e.printStackTrace();
                     // throw e;
                 }
@@ -473,7 +475,7 @@ public abstract class DataSet extends RepositoryObject implements IDataSet, IRep
      *                              during the conversion from the internal standard format to the target
      *                              format.
      * @return The dataset in the target format.
-     * @throws IOException Signals that an I/O exception has occurred.
+     * @throws IOException                   Signals that an I/O exception has occurred.
      * @throws InvalidDataSetFormatException
      * @throws RegisterException
      * @throws FormatConversionException
@@ -532,7 +534,7 @@ public abstract class DataSet extends RepositoryObject implements IDataSet, IRep
      *                              during the conversion from the original format to the internal standard
      *                              format.
      * @return The dataset in the target format.
-     * @throws IOException Signals that an I/O exception has occurred.
+     * @throws IOException                   Signals that an I/O exception has occurred.
      * @throws InvalidDataSetFormatException
      * @throws RegisterException
      * @throws RNotAvailableException
