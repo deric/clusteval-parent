@@ -13,7 +13,8 @@
 package de.clusteval.utils;
 
 import ch.qos.logback.classic.Level;
-import ch.qos.logback.core.Appender;
+import ch.qos.logback.classic.LoggerContext;
+import ch.qos.logback.core.joran.util.ConfigurationWatchListUtil;
 import de.clusteval.api.ContextFactory;
 import de.clusteval.api.IContext;
 import de.clusteval.api.repository.IRepository;
@@ -25,6 +26,7 @@ import de.clusteval.framework.repository.Repository;
 import de.clusteval.framework.repository.config.DefaultRepositoryConfig;
 import de.clusteval.framework.repository.db.StubSQLCommunicator;
 import java.io.File;
+import java.net.URL;
 import org.apache.log4j.BasicConfigurator;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -71,9 +73,11 @@ public abstract class AbstractClustEvalTest {
     public static void setUpBeforeClass() throws Exception {
         ClustevalBackendServer.logLevel(Level.TRACE);
         BasicConfigurator.configure();
-        ch.qos.logback.classic.Logger lg = ((ch.qos.logback.classic.Logger) LoggerFactory.getLogger("org.apache.commons.configuration.ConfigurationUtils"));
-        Appender app = lg.getAppender("org.apache.commons.configuration.ConfigurationUtils");
-        lg.detachAppender(app);
+        LoggerContext loggerContext = ((ch.qos.logback.classic.Logger) logger).getLoggerContext();
+        URL mainURL = ConfigurationWatchListUtil.getMainWatchURL(loggerContext);
+        System.out.println(mainURL);
+        // or even
+        logger.info("Logback used '{}' as the configuration file.", mainURL);
         //ignore certain classes
         ClustevalBackendServer.logLevel("org.apache.commons.configuration.ConfigurationUtils", Level.OFF);
         logger.info("Starting tests");

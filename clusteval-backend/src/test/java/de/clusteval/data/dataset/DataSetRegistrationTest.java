@@ -86,8 +86,7 @@ public class DataSetRegistrationTest extends AbstractClustEvalTest {
         // adding a DataSetConfig equal to another one already registered
         // does
         // not register the second object.
-        this.repositoryObject = new DataSetConfig(
-                (DataSetConfig) this.repositoryObject);
+        this.repositoryObject = new DataSetConfig((DataSetConfig) this.repositoryObject);
         assertEquals(
                 this.getRepository().getRegisteredObject(
                         (DataSetConfig) this.repositoryObject),

@@ -25,6 +25,7 @@ import de.clusteval.api.data.DataSetConfigNotFoundException;
 import de.clusteval.api.data.DataSetConfigurationException;
 import de.clusteval.api.data.DistanceMeasureFactory;
 import de.clusteval.api.data.IDataSet;
+import de.clusteval.api.data.IDataSetConfig;
 import de.clusteval.api.data.InputToStd;
 import de.clusteval.api.data.StdToInput;
 import de.clusteval.api.exceptions.DataSetNotFoundException;
@@ -151,8 +152,10 @@ class DataSetConfigParser extends RepositoryObjectParser<DataSetConfig> {
 
             result = new DataSetConfig(repo, changeDate, absPath, dataSet, configInputToStandard,
                     configStandardToInput);
-            result.register();
-            //result = repo.getRegisteredObject(result);
+            boolean b = result.register();
+            log.debug("trying to register. success? " + b + ", " + result.getAbsolutePath());
+            IDataSetConfig conf = repo.getRegisteredObject(result);
+            log.debug("result " + conf);
         } catch (NoSuchElementException e) {
             throw new DataSetConfigurationException(e);
         }

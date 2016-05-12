@@ -763,11 +763,12 @@ public class Repository implements IRepository {
             return this.getRegisteredObject((Class<IRepositoryObject>) c.getSuperclass(), object,
                     ignoreChangeDate);
         }
+        log.debug("static " + staticEntityFound + ", dynamic " + dynamicEntityFound);
         if (staticEntityFound) {
             return this.staticRepositoryEntities.get(c).getRegisteredObject(object, ignoreChangeDate);
-        } else if (dynamicEntityFound) {
-            return (S) this.dynamicRepositoryEntities.get(c).getRegisteredObject(object, ignoreChangeDate);
         }
+        /* else if (dynamicEntityFound) {            return (S) this.dynamicRepositoryEntities.get(c).getRegisteredObject(object, ignoreChangeDate);
+        } */
         if (this.entities.containsKey(object.getAbsolutePath())) {
             return (S) entities.get(object.getAbsolutePath());
         }

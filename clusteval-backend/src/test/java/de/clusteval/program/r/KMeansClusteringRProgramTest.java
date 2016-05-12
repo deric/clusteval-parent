@@ -29,6 +29,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import org.junit.Test;
 
 /**
@@ -45,6 +46,7 @@ public class KMeansClusteringRProgramTest extends AbstractClustEvalTest {
         IScheduler scheduler = this.getRepository().getSupervisorThread().getRunScheduler();
 
         IRun run = this.getRepository().findByName(IRun.class, "test_kmeans_sfld_layered_f2");
+        assertNotNull(run);
         try {
             run.perform(scheduler);
 
@@ -57,10 +59,9 @@ public class KMeansClusteringRProgramTest extends AbstractClustEvalTest {
             Throwable t = exceptions.get(0);
             assertEquals(IncompatibleDataSetFormatException.class, t.getClass());
         } finally {
-            if (run != null) {
-                FileUtils.delete(new File(FileUtils.buildPath(this.getRepository().getBasePath(IRunResult.class),
-                        run.getRunIdentificationString())));
-            }
+            FileUtils.delete(new File(FileUtils.buildPath(this.getRepository().getBasePath(IRunResult.class),
+                    run.getRunIdentificationString())));
+
         }
     }
 }

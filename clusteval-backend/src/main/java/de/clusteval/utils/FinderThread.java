@@ -66,8 +66,7 @@ public abstract class FinderThread<T extends IRepositoryObject> extends Clusteva
             final long sleepTime, boolean checkOnce) {
         super(supervisorThread);
         this.classToFind = classToFind;
-        this.setName(this.getName().replace("Thread",
-                this.getClass().getSimpleName()));
+        this.setName(this.getName().replace("Thread", this.getClass().getSimpleName()));
         this.log = LoggerFactory.getLogger(this.getClass());
         this.repository = repository;
         this.sleepTime = sleepTime;
