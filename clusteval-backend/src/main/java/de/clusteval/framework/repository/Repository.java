@@ -1488,7 +1488,7 @@ public class Repository implements IRepository {
      * {@link #isInitialized()} returns true.
      *
      * @throws InterruptedException Is thrown, if the current thread is
-     * interrupted while waiting for finishing the initialization process.
+     *                              interrupted while waiting for finishing the initialization process.
      */
     public void initialize() throws InterruptedException {
         if (isInitialized() || this.supervisorThread != null) {
@@ -1933,7 +1933,11 @@ public class Repository implements IRepository {
     public <T extends IRepositoryObject, S extends T> boolean register(S object) throws RegisterException {
         createAndAddDynamicEntity(object.getClass(), object.getAbsolutePath());
         lookupAdd(object);
-        return true;
+        if (entities.containsKey(object.getAbsolutePath())) {
+            return true;
+        }
+        entities.put(object.getAbsolutePath(), object);
+        return false;
     }
 
     @Override

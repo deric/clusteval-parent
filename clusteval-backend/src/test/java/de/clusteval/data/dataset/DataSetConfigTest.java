@@ -62,46 +62,6 @@ import org.junit.Test;
  */
 public class DataSetConfigTest extends AbstractClustEvalTest {
 
-    public void testRegister() throws DataSetConfigurationException,
-                                      NoRepositoryFoundException, DataSetNotFoundException,
-                                      DataSetConfigNotFoundException,
-                                      RegisterException, NoDataSetException,
-                                      NumberFormatException,
-                                      GoldStandardNotFoundException, GoldStandardConfigurationException,
-                                      GoldStandardConfigNotFoundException,
-                                      ConfigurationException,
-                                      FileNotFoundException, UnknownParameterType,
-                                      RunException, IncompatibleContextException,
-                                      UnknownRunResultFormatException,
-                                      InvalidOptimizationParameterException,
-                                      UnknownProgramParameterException, UnknownProgramTypeException,
-                                      UnknownRProgramException,
-                                      IncompatibleParameterOptimizationMethodException,
-                                      UnknownParameterOptimizationMethodException,
-                                      NoOptimizableProgramParameterException,
-                                      UnknownRunResultPostprocessorException,
-                                      UnknownProviderException {
-        this.repositoryObject = Parser
-                .parseFromFile(
-                        DataSetConfig.class,
-                        new File(
-                                "testCaseRepository/data/datasets/configs/astral_1.dsconfig")
-                        .getAbsoluteFile());
-        assertEquals(this.repositoryObject, this.getRepository()
-                .getRegisteredObject((DataSetConfig) this.repositoryObject));
-
-        // adding a DataSetConfig equal to another one already registered
-        // does
-        // not register the second object.
-        this.repositoryObject = new DataSetConfig(
-                (DataSetConfig) this.repositoryObject);
-        assertEquals(
-                this.getRepository().getRegisteredObject(
-                        (DataSetConfig) this.repositoryObject),
-                this.repositoryObject);
-        assertFalse(this.getRepository().getRegisteredObject(
-                (DataSetConfig) this.repositoryObject) == this.repositoryObject);
-    }
 
     public void testUnregister() throws DataSetConfigurationException,
                                         NoRepositoryFoundException, DataSetNotFoundException,
@@ -157,11 +117,9 @@ public class DataSetConfigTest extends AbstractClustEvalTest {
                    NoOptimizableProgramParameterException,
                    UnknownRunResultPostprocessorException {
 
-        /*
-         * REPLACE
-         */
-
- /*
+        /**
+         * REPLACEMENT
+         *
          * First check, whether listeners of DataSetconfigs are notified
          * correctly when the DataSetconfig is replaced
          */
@@ -171,6 +129,9 @@ public class DataSetConfigTest extends AbstractClustEvalTest {
                         new File(
                                 "testCaseRepository/data/datasets/configs/astral_1.dsconfig")
                         .getAbsoluteFile());
+        //is object really registered?
+        assertEquals(gsConfig, getRepository().getRegisteredObject(gsConfig));
+
         StubRepositoryObject child = new StubRepositoryObject(getRepository(),
                 false, System.currentTimeMillis(), new File(
                         "testCaseRepository/Bla"));
